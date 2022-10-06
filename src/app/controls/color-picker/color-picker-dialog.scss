@@ -1,0 +1,44 @@
+.mat-dialog-title {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-flow: column;
+}
+
+[spacer] {
+  flex: 1 1 auto;
+}
+
+.dialog {
+  display: flex;
+  flex-flow: row;
+  background: white;
+  z-index: 10000;
+
+  [controls] {
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+.color {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+  outline: 1px solid black;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+}
+
+.current {
+  border: 1px solid black;
+  border-radius: 0.2em;
+}

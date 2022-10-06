@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // client id for cloud_data, works also on port 4200
+  GAPI_CLIENT_ID: '64295298707-r0gl8n8skteopiulflqo04fbi0qbd00h.apps.googleusercontent.com',
 };
 
 /*

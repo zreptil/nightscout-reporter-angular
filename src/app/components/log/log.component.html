@@ -1,0 +1,12 @@
+<ng-container *ngFor="let type of ['error', 'info', 'debug']">
+  <div *ngIf="showType(type)" [class]="type" content>
+    <button (click)="onClickDelete($event, type)" mat-flat-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+    <div lines>
+      <ng-container *ngFor="let line of msg[type]">
+        <div>{{line | log}}</div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

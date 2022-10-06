@@ -1,0 +1,29 @@
+input[type=file] {
+  display: none;
+}
+
+.img {
+  display: none;
+}
+
+.lens {
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  border-radius: 50%;
+  background: transparent;
+  display: none;
+  border: 5px solid black;
+}
+
+canvas {
+  cursor: crosshair;
+}
+
+[image] {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}

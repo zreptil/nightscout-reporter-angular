@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 1em;
+
+  div {
+    flex: 1;
+  }
+}
+
+::ng-deep {
+  .mat-slider.mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+    background-color: #ff4081 !important;
+  }
+}
+
+[col-r] {
+  border: 1px solid red;
+}
+
+[col-g] {
+  border: 1px solid lime;
+}
+
+[col-b] {
+  border: 1px solid blue;
+}
+
+[col-h] {
+  background: linear-gradient(0turn, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+[col-s] {
+  background: red;
+}
+
+[col-l] {
+  background: red;
+}

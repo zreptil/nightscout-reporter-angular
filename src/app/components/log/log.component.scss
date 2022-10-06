@@ -1,0 +1,85 @@
+:host::-webkit-scrollbar {
+  background-color: var(--logInfoBack);
+}
+
+:host {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: var(--logInfoBack);
+  color: var(--logInfoFore);
+  width: 100vw;
+  max-height: 50%;
+  overflow-y: auto;
+}
+
+[content] {
+  display: flex;
+  flex-flow: row;
+  position: relative;
+  padding: 0.5em;
+
+  [lines] {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+
+    div:not(:last-child) {
+      border-bottom: 1px solid #000;
+    }
+  }
+
+  button {
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    height: 1em;
+    line-height: 0;
+  }
+}
+
+.info {
+  color: var(--logInfoFore);
+  background-color: var(--logInfoBack);
+
+  button {
+    color: var(--logInfoFore);
+  }
+
+  [lines] {
+    div:not(:last-child) {
+      border-bottom-color: var(--logInfoFore);
+    }
+  }
+}
+
+.error {
+  color: var(--logErrorFore);
+  background-color: var(--logErrorBack);
+
+  button {
+    color: var(--logErrorFore);
+  }
+
+  [lines] {
+    div:not(:last-child) {
+      border-bottom-color: var(--logErrorFore);
+    }
+  }
+}
+
+.debug {
+  color: var(--logDebugFore);
+  background: var(--logDebugBack);
+  font-weight: bold;
+
+  button {
+    color: var(--logDebugFore);
+  }
+
+  [lines] {
+    div:not(:last-child) {
+      border-bottom-color: var(--logDebugFore);
+    }
+  }
+}

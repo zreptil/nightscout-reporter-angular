@@ -1,0 +1,18 @@
+<div [ngStyle]="{backgroundColor: 'rgba(' + color.value[0] + ',0,0)'}" col-r>
+  <mat-slider (change)="rgbChange()" [(value)]="color.value[0]" max="255" min="0" vertical></mat-slider>
+</div>
+<div [ngStyle]="{backgroundColor: 'rgba(0,' + color.value[1] + ',0)'}" col-g>
+  <mat-slider (change)="rgbChange()" [(value)]="color.value[1]" max="255" min="0" vertical></mat-slider>
+</div>
+<div [ngStyle]="{backgroundColor: 'rgba(0,0,' + color.value[2] + ')'}" col-b>
+  <mat-slider (change)="rgbChange()" [(value)]="color.value[2]" max="255" min="0" vertical></mat-slider>
+</div>
+<div col-h>
+  <mat-slider [(value)]="hue" max="360" min="0" vertical></mat-slider>
+</div>
+<div col-s>
+  <mat-slider [(value)]="saturation" max="100" min="0" vertical></mat-slider>
+</div>
+<div col-l>
+  <mat-slider [(value)]="lightness" max="100" min="0" vertical></mat-slider>
+</div>

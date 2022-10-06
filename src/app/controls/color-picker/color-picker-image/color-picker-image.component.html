@@ -1,0 +1,12 @@
+<input #imgSelect (change)="fileSelected($event)" type="file">
+<div #canvasBox image>
+  <canvas #canvasImage
+          (click)="clickCanvas($event)"
+          (mouseenter)="canvasMouseEnter($event)"
+          (mousemove)="paintLens($event)"
+          (mouseout)="canvasMouseOut($event)"
+          (wheel)="wheelLens($event)"></canvas>
+</div>
+<canvas #canvasLens class="lens" height="100"
+        width="100"></canvas>
+<img #img [src]="data.imageDataUrl" alt="" class="img" id="img">
