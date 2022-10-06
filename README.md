@@ -1,27 +1,66 @@
-# NightscoutReporter
+# Nightscout Reporter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.6.
+A web app based on AngularDart to create PDF documents from nightscout data.
 
-## Development server
+It uses the api from cgm-remote-monitor to access the nightscout data and
+creates some PDFs for handing out to diabetes doctors or coaches.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This is the transfer from Dart to Angular which is neccessary, since Dart is no longer maintained by the creators and the community-version of dart is not good enough handling the dependencies of the
+framework.
+Hopefully Angular support will last longer than that of Dart.
 
-## Code scaffolding
+Online version available at: https://nightscout-reporter.zreptil.de/  
+Compiled project avaialbe at: https://nightscout-reporter.zreptil.de/nightscout-reporter_local.zip
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Getting started
 
-## Build
+Initial steps to compile, deploy, and run nightscout reporter on your own infrastructure.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Preparation
 
-## Running unit tests
+* Download or git clone the repository
+* Download an install dart sdk in the stated version (see above) to "C:\tools\dart-sdk"
+* Download the [compiled version](https://nightscout-reporter.zreptil.de/nightscout-reporter_local.zip) and extract it
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Build
 
-## Running end-to-end tests
+* Call build.bat from the repository folder in cmd
+* Result will be avaialbe in .\build directory
+* Copy pdfmake from the downloaded zip to the build folder
+* Open .\build\settings.json and set the `urlPDF` and "urlPlayground" option to the location of your pdfmake installation:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+{
+  "urlPDF":"http://your-domain.de/path-to-reporter/pdfmake/pdfmake.php",
+  "urlPlayground":"http://your-domain.de/path-to-reporter/pdfmake/playground.php"
+}
+```
 
-## Further help
+### Deploy
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* Get a web server (or online web space) with php support
+* Copy content of .\build to the content folder of your web server (or any subfolder)
+
+You can run your own nightscout-reporter instance by calling the URL of your web-server in a browser.
+
+## IIS Hosting
+
+### Web.config
+
+When hosting on an IIS you need to add the following to the web.config to enable the url for Night Watch at http://your-domain.de/path-to-reporter/watch.
+
+```
+<system.webServer>
+  <rewrite>
+    <rules>
+      <rule name="watch" stopProcessing="true">
+        <match url="^watch$" />
+        <action type="Rewrite" url="?watch" />
+      </rule>
+    </rules>
+  </rewrite>
+</system.webServer>
+```
+
+If anybody knows what to add on other hosting systems just let me know and i will add it here. The technical basis is, that the url nightscout-reporter/watch has to be mapped to
+nightscout-reporter?watch without causing an illegal page error. With this, it is possible to add nightscout reporter as a WebApp to Windows or to the startscreen of an android phone or iphone.
