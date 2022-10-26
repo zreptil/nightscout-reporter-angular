@@ -1,5 +1,5 @@
 import {JsonData} from '@/_model/json-data';
-import {AgeData} from '@/_model/age-data';
+import {AgeData} from '@/_model/nightscout/age-data';
 
 export class ExtendedSettingsData extends JsonData {
   upbatEnableAlerts: boolean;

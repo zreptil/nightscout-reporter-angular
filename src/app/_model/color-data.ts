@@ -1,6 +1,5 @@
 import {ColorUtils} from '@/controls/color-picker/color-utils';
 import {BaseData} from '@/_model/base-data';
-import {JsonData} from '@/_model/json-data';
 import {Utils} from '@/classes/utils';
 
 export class ColorData extends BaseData {
@@ -53,7 +52,7 @@ export class ColorData extends BaseData {
   _fillFromJson(json: any, def: ColorData): void {
     const v = [0, 0, 0];
     const d = ColorUtils.rgb2string(def?.value ?? [0, 0, 0]);
-    const src = JsonData.toString(json, 'v', d) ?? '';
+    const src = BaseData.toString(json, 'v', d) ?? '';
     Utils.pad(src, 6);
     for (let i = 0; i < v.length; i++) {
       v[i] = parseInt(src.substring(i * 2, i * 2 + 2), 16);

@@ -14,6 +14,13 @@ export abstract class BaseData {
     return null;
   }
 
+  static toString(json: any, key: string, def = ''): string {
+    if (json == null || json[key] == null) {
+      return def;
+    }
+    return `${json[key]}`;
+  }
+
   abstract _fillFromJson(json: any, def?: any): void;
 
   fillFromJson(json: any, def?: any): void {

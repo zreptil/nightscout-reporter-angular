@@ -1,4 +1,36 @@
 export class Utils {
+  static pushAll<T>(dst: T[], src: T[]): void {
+    for (const entry of src ?? []) {
+      dst.push(entry);
+    }
+  }
+
+  static addTimeSeconds(date: Date, value: number): Date {
+    const ret = new Date();
+    ret.setTime(date.getTime() + value * 1000);
+    return ret;
+  }
+
+  static addTimeMinutes(date: Date, value: number): Date {
+    const ret = new Date();
+    ret.setTime(date.getTime() + value * 1000 * 60);
+    return ret;
+  }
+
+  static addDateDays(date: Date, value: number): Date {
+    const ret = new Date();
+    ret.setTime(date.getTime());
+    ret.setDate(ret.getDate() + value);
+    return ret;
+  }
+
+  static addDateMonths(date: Date, value: number): Date {
+    const ret = new Date();
+    ret.setTime(date.getTime());
+    ret.setMonth(ret.getMonth() + value);
+    return ret;
+  }
+
   static show(msg: any): void {
     console.log(msg);
   }
@@ -50,9 +82,6 @@ export class Utils {
   }
 
   static fmtDate(date: Date, fmt: string = null): string {
-    if (date == null) {
-
-    }
     if (fmt === null) {
       fmt = $localize`dd.MM.yyyy, hh:mm`;
     }
@@ -117,5 +146,86 @@ export class Utils {
       return text.length === 0;
     }
     return false;
+  }
+
+  static compare(a: any, b: any): number {
+    if (a === b) {
+      return 0;
+    }
+    return (a < b) ? -1 : 1;
+  }
+
+  static compareDate(a: Date, b: Date): number {
+    return Utils.compare(a?.getTime(), b?.getTime());
+  }
+
+  static join(dst: string[], separator: string) {
+    return dst.join(separator);
+  }
+
+  static decimalPlaces(value: number): number {
+    let v = `${value}`;
+    while (v.endsWith('0')) {
+      v = v.substring(0, v.length - 1);
+    }
+    var ret = Math.max(v.length - v.lastIndexOf('.') - 1, 0);
+    return Math.min(ret, 3);
+  }
+
+  static isAfter(date1: Date, date2: Date): boolean {
+    return date1?.getTime() > date2?.getTime();
+  }
+
+  static isBefore(date1: Date, date2: Date): boolean {
+    return date1?.getTime() < date2?.getTime();
+  }
+
+  static isSameDay(date1: Date, date2: Date) {
+    return date1.getFullYear() === date2.getFullYear()
+      && date1.getMonth() === date2.getMonth()
+      && date1.getDate() === date2.getDate();
+  }
+
+  static isOnOrBefore(date1: Date, date2: Date) {
+    return this.isBefore(date1, date2) || this.isSameDay(date1, date2);
+  }
+
+  static isOnOrAfter(date1: Date, date2: Date) {
+    return this.isAfter(date1, date2) || this.isSameDay(date1, date2);
+  }
+
+  static differenceInDays(date1: Date, date2: Date): number {
+    const ret = date1?.getTime() - date2?.getTime();
+    return Math.floor(ret / 1000 / 60 / 60 / 24);
+  }
+
+  static differenceInSeconds(date1: Date, date2: Date): number {
+    const ret = date1?.getTime() - date2?.getTime();
+    return Math.floor(ret / 1000);
+  }
+
+  static differenceInMinutes(date1: Date, date2: Date): number {
+    const ret = date1?.getTime() - date2?.getTime();
+    return Math.floor(ret / 1000 / 60);
+  }
+
+  static differenceInMilliseconds(date1: Date, date2: Date): number {
+    return date1?.getTime() - date2?.getTime();
+  }
+
+  static findLast<T>(list: T[], method: (e: T) => boolean) {
+    const temp = list.filter(method);
+    if (temp != null && temp.length > 0) {
+      return temp[temp.length - 1];
+    }
+    return null;
+  }
+
+  static plural(value: number, options: any): string {
+    return options[value] ?? options.other;
+  }
+
+  static jsonize(data: any) {
+    return JSON.parse(JSON.stringify(data));
   }
 }

@@ -1,0 +1,99 @@
+import {GLOBALS, GlobalsData} from '../globals-data';
+import {JsonData} from '../json-data';
+import {Log} from '@/_services/log.service';
+import {Utils} from '@/classes/utils';
+
+export class UrlData {
+  url: string;
+  token: string;
+  startDate: Date;
+  endDate: Date;
+
+  constructor() {
+  }
+
+  get asJson(): any {
+    return {
+      u: this.url,
+      t: this.token,
+      sd: JsonData.fromDate(this.startDate, '19700101'),
+      ed: JsonData.fromDate(this.endDate)
+    };
+  }
+
+  get startDateEdit(): string {
+    return this.startDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.startDate);
+  }
+
+  set startDateEdit(v: string) {
+    Log.debug('Das setzen von UrlData.startDateEdit Könnte ein Problem sein');
+    this.startDate = new Date(v);
+  }
+
+  get endDateEdit(): string {
+    return this.endDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.endDate);
+  }
+
+  set endDateEdit(v: string) {
+    Log.debug('Das setzen von UrlData.endDateEdit Könnte ein Problem sein');
+    this.endDate = new Date(v);
+  }
+
+  static fromString(g: GlobalsData, src: string): UrlData {
+    try {
+      return UrlData.fromJson(JSON.parse(src));
+    } catch (ex) {
+      return new UrlData();
+    }
+  }
+
+// creates an instance and fills it with data from a json-structure
+  static fromJson(json: any): UrlData {
+    const ret = new UrlData();
+    try {
+      ret.url = JsonData.toText(json['u']);
+      ret.token = JsonData.toText(json['t']);
+      var sd = JsonData.toText(json['sd']);
+      ret.startDate = sd == null ? new Date(1970, 1, 1) : JsonData.parseDate(sd);
+      ret.endDate = JsonData.parseDate(json['ed']);
+    } catch (ex) {
+      var msg = ex.toString();
+      Log.debug('Fehler bei UrlData.fromJson: ${msg}');
+    }
+    return ret;
+  }
+
+  fullUrl(cmd: string, params = '', noApi = false): string {
+    let ret = this.url;
+    if (ret == null) {
+      return ret;
+    }
+    if (ret.startsWith('@')) {
+      return ret.substring(1);
+    }
+    if (!ret.endsWith('/')) {
+      ret = `${ret}/`;
+    }
+    if (!noApi) {
+      if (!ret.endsWith('/api/v1/')) {
+        ret = `${ret}api/v1/`;
+      }
+    }
+    if (Utils.isEmpty(cmd)) {
+      ret = ret.substring(0, ret.length - 1);
+    } else {
+      ret = `${ret}${cmd}`;
+    }
+    if (this.token != null && !Utils.isEmpty(this.token)) {
+      ret = `${ret}?token=${this.token}&`;
+    } else {
+      ret = `${ret}?`;
+    }
+    if (Utils.isEmpty(params)) {
+      ret = ret.substring(0, ret.length - 1);
+    } else {
+      ret = `${ret}${params}`;
+    }
+    return ret;
+  }
+}

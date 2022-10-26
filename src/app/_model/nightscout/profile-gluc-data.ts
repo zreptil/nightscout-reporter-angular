@@ -1,4 +1,7 @@
-/*
+import {ProfileEntryData} from '@/_model/nightscout/profile-entry-data';
+import {ProfileStoreData} from '@/_model/nightscout/profile-store-data';
+import {Utils} from '@/classes/utils';
+
 export class ProfileGlucData {
   day: Date;
   targetLow: number = 70;
@@ -14,12 +17,13 @@ export class ProfileGlucData {
   }
 
   find(date: Date, time: Date, list: ProfileEntryData[]): ProfileEntryData {
-    let ret = ProfileEntryData(this.store.timezone);
+    let ret = new ProfileEntryData(this.store.timezone);
     const check = new Date(date.getFullYear(), date.getMonth(), date.getDay(), time.getHours(), time.getMinutes(), time.getSeconds());
-    for (const entry in list) {
-      if (!entry.time(date).isAfter(check)) ret = entry;
+    for (const entry of list) {
+      if (!Utils.isAfter(entry.time(date), check)) {
+        ret = entry;
+      }
     }
     return ret;
   }
 }
-*/

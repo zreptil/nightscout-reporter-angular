@@ -8,6 +8,25 @@ export class JsonData {
   constructor() {
   }
 
+  static parseDate(value: string): Date {
+    let ret = null;
+    if (value != null && value.length == 8) {
+      ret = new Date(+value.substring(0, 4), +value.substring(4, 6), +value.substring(6, 8));
+    }
+    return ret;
+  }
+
+  static fromDate(date: Date, def: string = null): string {
+    if (date == null) {
+      return def;
+    }
+    const ret: string[] = [];
+    ret.push(`${date.getFullYear()}`.padStart(4, '0'));
+    ret.push(`${date.getMonth()}`.padStart(2, '0'));
+    ret.push(`${date.getDate()}`.padStart(2, '0'));
+    return Utils.join(ret, '');
+  }
+
   static ensureJson(json: any): any {
     if (typeof json === 'string') {
       json = JSON.parse(json);
@@ -15,7 +34,6 @@ export class JsonData {
     return json;
   }
 
-  // To calculate the limits in the same way throughout the whole program,
   // here are the methods to check against low and high limits
   static isLow(value: number, low: number): boolean {
     return value < low;
@@ -24,6 +42,8 @@ export class JsonData {
   static isHigh(value: number, high: number): boolean {
     return value >= high;
   }
+
+  // To calculate the limits in the same way throughout the whole program,
 
   static isNorm(value: number, low: number, high: number): boolean {
     return !JsonData.isLow(value, low) && !JsonData.isHigh(value, high);
@@ -107,5 +127,30 @@ export class JsonData {
       return value ? def : 1 - def;
     }
     return def;
+  }
+
+  static copyList(list: any[]): any[] {
+    const ret = [];
+    for (const entry of list) {
+      ret.push(entry.copy);
+    }
+    return ret;
+  }
+
+  keys(o: {}): string[] {
+    const ret = Object.keys(o ?? {});
+    return ret;
+  }
+
+  fillFrom(src: any): void {
+    for (const key of Object.keys(src)) {
+      const v = src[key];
+      if (v instanceof Date) {
+        (this as any)[key] = new Date();
+        (this as any)[key].setTime(v.getTime());
+      } else {
+        (this as any)[key] = src[key];
+      }
+    }
   }
 }

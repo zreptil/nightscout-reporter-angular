@@ -18,6 +18,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from '@/material.module';
 import {AppRoutingModule} from '@/app-routing.module';
 import { MainComponent } from './components/main/main.component';
+import { WhatsNewComponent } from './components/whats-new/whats-new.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MainComponent } from './components/main/main.component';
     ColorPickerMixerComponent,
     ColorPickerBaseComponent,
     ColorPickerRGBComponent,
-    MainComponent
+    MainComponent,
+    WhatsNewComponent
   ],
   imports: [
     BrowserModule,

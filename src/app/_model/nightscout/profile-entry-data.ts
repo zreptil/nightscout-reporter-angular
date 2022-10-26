@@ -1,5 +1,7 @@
-/*
+//*
 import {JsonData, Uploader} from '@/_model/json-data';
+import {ProfileTimezone} from '@/_model/nightscout/profile-timezone-data';
+import {TreatmentData} from '@/_model/nightscout/treatment-data';
 
 export class ProfileEntryData extends JsonData {
   _time: Date;
@@ -56,17 +58,20 @@ export class ProfileEntryData extends JsonData {
 
   get copy(): ProfileEntryData {
     const ret = new ProfileEntryData();
-    ret.value = this.value;
-    ret.duration = this.duration;
-    ret.timeAsSeconds = this.timeAsSeconds;
-    ret._absoluteRate = this._absoluteRate;
-    ret._timezone = this._timezone;
-    ret._percentAdjust = this._percentAdjust;
-    ret._time = this._time;
-    ret.forceText = this.forceText;
-    ret.orgValue = this.orgValue;
-    ret._timezone = this._timezone;
-    ret.from = this.from;
+    ret.fillFrom(this);
+    /*
+        ret.value = this.value;
+        ret.duration = this.duration;
+        ret.timeAsSeconds = this.timeAsSeconds;
+        ret._absoluteRate = this._absoluteRate;
+        ret._timezone = this._timezone;
+        ret._percentAdjust = this._percentAdjust;
+        ret._time = this._time;
+        ret.forceText = this.forceText;
+        ret.orgValue = this.orgValue;
+        ret._timezone = this._timezone;
+        ret.from = this.from;
+    */
     return ret;
   }
 
@@ -77,7 +82,7 @@ export class ProfileEntryData extends JsonData {
   static fromTreatment(timezone: ProfileTimezone, src: TreatmentData): ProfileEntryData {
     const ret = new ProfileEntryData(timezone, src.createdAt);
     if (src._percent != null) {
-      ret.percentAdjust = src._percent.toDouble();
+      ret.percentAdjust = src._percent;
     } else if (src._rate != null) {
       ret.absoluteRate = src._rate;
     }
@@ -169,4 +174,5 @@ export class ProfileEntryData extends JsonData {
     return v;
   }
 }
-*/
+
+// */

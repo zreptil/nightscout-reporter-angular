@@ -1,0 +1,105 @@
+// @import '../colors.sass';
+// @import '../base';
+// @import 'package:angular_components/material_dialog/mixins';
+
+material-dialog {
+  ::ng-deep main::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  ::ng-deep main::-webkit-scrollbar-track {
+    background-color: var(--whatsnewBodyBack);
+  }
+
+  ::ng-deep main::-webkit-scrollbar-thumb {
+    background-color: var(--whatsnewScrollThumb);
+  }
+
+  ::ng-deep main {
+    scrollbar-color: var(--whatsnewScrollThumb) var(--whatsnewBodyBack);
+  }
+
+  // @include material-dialog-header-color(var(--whatsnewHeaderBack));
+  // @include material-dialog-header-shadow();
+  // @include material-dialog-body-padding(0);
+}
+
+material-dialog.headered-dialog {
+  // @include material-dialog-header-color(var(--whatsnewHeaderBack));
+
+  ::ng-deep h1 {
+    color: var(--whatsnewHeaderFore) !important;
+  }
+}
+
+div[header] {
+  display: flex;
+  flex-flow: row;
+  color: var(--whatsnewHeaderFore);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.root {
+  padding: 1em;
+  font-size: 1.2em;
+  background-color: var(--whatsnewBodyBack);
+  color: var(--whatsnewBodyFore);
+}
+
+h2 {
+  font-size: 1.3em;
+  padding: 0 0.5em;
+
+  span:first-child {
+    padding-right: 0.5em;
+  }
+}
+
+ul {
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+  padding: 0 0 1.5em 0;
+}
+
+li {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 2.0em;
+  text-indent: -0.6em;
+}
+
+li:not(first-child) {
+  padding-top: 0.5em;
+}
+
+li:before {
+  content: "-";
+  margin-right: 1.0em;
+  margin-left: -1.0em;
+}
+
+.added:before {
+  content: "+";
+}
+
+.changed:before {
+  content: "~";
+}
+
+.removed:before {
+  content: "-";
+  margin-right: 1.34em;
+}
+
+.fixed:before {
+  content: "#";
+}
+
+.newline {
+  width: 100%;
+  height: 1px;
+  background: var(--whatsnewBodyFore);
+  margin: 0.5em 0;
+}

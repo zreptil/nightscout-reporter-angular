@@ -1,4 +1,4 @@
-import {ThresholdData} from './threshold-data';
+import {ThresholdData} from './nightscout/threshold-data';
 import {JsonData} from '@/_model/json-data';
 import {GlobalsData} from '@/_model/globals-data';
 
