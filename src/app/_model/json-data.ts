@@ -76,15 +76,11 @@ export class JsonData {
     if (typeof value === 'number') {
       return new Date(value);
     }
-    return JsonData.toLocal(Date.parse(value)) ?? new Date(0, 1, 1);
+    return JsonData.toLocal(new Date(Date.parse(value))) ?? new Date(0, 1, 1);
   }
 
-  static toLocal(value: any): Date {
-    var ret = value?.toLocal();
-    if (ret != null) {
-      ret = ret.setTime(ret.getTime() + JsonData.hourDiff);
-    }
-    return ret;
+  static toLocal(ret: Date): Date {
+    return Utils.addTimeHours(ret, JsonData.hourDiff);
   }
 
   static toText(value: any, def = ''): string {
@@ -138,8 +134,7 @@ export class JsonData {
   }
 
   keys(o: {}): string[] {
-    const ret = Object.keys(o ?? {});
-    return ret;
+    return Object.keys(o ?? {});
   }
 
   fillFrom(src: any): void {

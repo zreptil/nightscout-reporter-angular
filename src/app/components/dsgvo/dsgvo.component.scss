@@ -1,0 +1,39 @@
+[mat-dialog-title] {
+  background-color: var(--legalHeaderBack);
+  color: var(--legalHeaderFore);
+}
+
+div[header] {
+  display: flex;
+  flex-direction: row;
+  color: var(--legalHeaderFore);
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  background-color: var(--legalHeaderBack);
+  color: var(--legalHeaderFore);
+
+  material-checkbox {
+    color: var(--legalHeaderFore);
+  }
+}
+
+.root {
+  padding: 1em;
+  font-size: 1.2em;
+  color: var(--legalBodyFore);
+  background-color: var(--legalBodyBack);
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--legalLink);
+}

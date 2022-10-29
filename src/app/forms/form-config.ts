@@ -23,7 +23,6 @@ export class FormConfig {
   }
 
   set checked(value: boolean) {
-    console.log('check', value);
     this._checked = value;
   }
 

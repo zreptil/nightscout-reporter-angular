@@ -68,7 +68,7 @@ export class ReportData {
 // get profile for a specific time
   profile(time: Date, treatments: TreatmentData[] = null, doMix = true): ProfileGlucData {
 //    DateTime check = DateTime(time.year, time.month, time.day);
-    let ret = new ProfileGlucData(new ProfileStoreData('${time.toIso8601String()}'));
+    let ret = new ProfileGlucData(new ProfileStoreData(`${time.toISOString()}`));
     let profile: ProfileData;
 
     let idx = -1;

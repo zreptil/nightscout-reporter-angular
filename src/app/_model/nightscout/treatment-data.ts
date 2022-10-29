@@ -1,5 +1,5 @@
 import {JsonData, Uploader} from '@/_model/json-data';
-import {GlobalsData, Settings} from '@/_model/globals-data';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {InsulinInjectionData} from '@/_model/nightscout/insulin-injection-data';
 import {Log} from '@/_services/log.service';
 import {BoluscalcData} from '@/_model/nightscout/bolus-calc-data';
@@ -8,6 +8,7 @@ import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {Utils} from '@/classes/utils';
 import {DayData} from '@/_model/nightscout/day-data';
 import {ReportData} from '@/_model/report-data';
+import {Settings} from '@/_model/settings';
 
 export class TreatmentData extends JsonData {
   raw: any;
@@ -165,6 +166,7 @@ export class TreatmentData extends JsonData {
     if (this.isMealBolus) {
       return true;
     }
+    // noinspection RedundantIfStatementJS
     if (this.isBolusWizard && this.carbs > 0) {
       return true;
     }
@@ -189,7 +191,7 @@ export class TreatmentData extends JsonData {
     return ret;
   }
 
-  static fromJson(g: GlobalsData, json: any): TreatmentData {
+  static fromJson(json: any): TreatmentData {
     const ret = new TreatmentData();
     if (json == null) {
       return ret;
@@ -231,10 +233,10 @@ export class TreatmentData extends JsonData {
     ret.targetBottom = JsonData.toNumber(json['targetBottom']);
 
     var temp = JsonData.toText(json['units']);
-    if (temp.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() && !g.glucMGDLFromStatus) {
+    if (temp.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() && !GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop / 18.02;
       ret.targetBottom = ret.targetBottom / 18.02;
-    } else if (temp.toLowerCase() == Settings.msgUnitMMOL.toLowerCase() && g.glucMGDLFromStatus) {
+    } else if (temp.toLowerCase() == Settings.msgUnitMMOL.toLowerCase() && GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop * 18.02;
       ret.targetBottom = ret.targetBottom * 18.02;
     }
@@ -248,16 +250,16 @@ export class TreatmentData extends JsonData {
     } catch (ex) {
     }
     for (const entry of list) {
-      ret.insulinInjections.push(InsulinInjectionData.fromJson(g, entry));
+      ret.insulinInjections.push(InsulinInjectionData.fromJson(entry));
     }
 
     ret.glucose = JsonData.toNumber(json['glucose']);
     if (json['units'] != null) {
       if (json['units'].toLowerCase() == Settings.msgUnitMGDL.toLowerCase() &&
-        g.getGlucInfo()['unit'] == Settings.msgUnitMMOL) {
+        GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMMOL) {
         ret.glucose = ret.glucose / 18.02;
       } else if (json['units'].toLowerCase() == Settings.msgUnitMMOL.toLowerCase() &&
-        g.getGlucInfo()['unit'] == Settings.msgUnitMGDL) {
+        GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMGDL) {
         ret.glucose = ret.glucose * 18.02;
       }
     }
@@ -267,9 +269,9 @@ export class TreatmentData extends JsonData {
       Log.debug('Auswertung von key600 für MiniMed in TreatmentData muss noch korrekt implementiert werden!');
       ret._from = Uploader.Minimed600;
       ret._key600 = JsonData.toText(json['key600']);
-      const reg = RegExp(/microbolus (.*)U/);
-      const m = reg.exec(ret.notes)?.[0];
+      // const reg = RegExp(/microbolus (.*)U/);
       // Der folgende Code muss noch aktiviert und korrekt implementiert werden
+      // const m = reg.exec(ret.notes)?.[0];
       // if (m != null && m.groupCount == 1) {
       //   if ((ret._absolute ?? 0) > 0) {
       //     ret.microbolus = ret._absolute / 3600 * ret.duration;
@@ -368,6 +370,7 @@ export class TreatmentData extends JsonData {
         initialCarbs = this.carbs + minutesleft * carbs_min;
       }
       const startDecay = Utils.addTimeMinutes(carbTime, delay);
+      // noinspection RedundantIfStatementJS
       if (time.getTime() < lastDecayedBy ||
         time.getTime() > startDecay.getTime()) {
         isDecaying = true;

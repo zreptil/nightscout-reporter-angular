@@ -9,7 +9,8 @@
   background-color: var(--logInfoBack);
   color: var(--logInfoFore);
   width: 100vw;
-  max-height: 50%;
+  max-width: 100vw;
+  max-height: 40%;
   overflow-y: auto;
 }
 
@@ -17,12 +18,19 @@
   display: flex;
   flex-flow: row;
   position: relative;
-  padding: 0.5em;
+  padding: 0;
+  max-width: 100%;
 
   [lines] {
     display: flex;
+    flex-wrap: wrap;
     flex-flow: column;
     flex: 1;
+    max-width: 100%;
+
+    div {
+      word-break: break-all;
+    }
 
     div:not(:last-child) {
       border-bottom: 1px solid #000;
@@ -30,11 +38,8 @@
   }
 
   button {
-    left: 0;
-    top: 0;
     background-color: transparent;
-    height: 1em;
-    line-height: 0;
+    margin: 0.5em;
   }
 }
 
@@ -49,6 +54,21 @@
   [lines] {
     div:not(:last-child) {
       border-bottom-color: var(--logInfoFore);
+    }
+  }
+}
+
+.warn {
+  color: var(--logWarnFore);
+  background-color: var(--logWarnBack);
+
+  button {
+    color: var(--logWarnFore);
+  }
+
+  [lines] {
+    div:not(:last-child) {
+      border-bottom-color: var(--logWarnFore);
     }
   }
 }
@@ -81,5 +101,34 @@
     div:not(:last-child) {
       border-bottom-color: var(--logDebugFore);
     }
+  }
+}
+
+[links] {
+  --pad: 0.3em;
+  --pad-button: 2.5em;
+
+  display: inline-flex;
+  padding: var(--pad) var(--pad-button) var(--pad) var(--pad);
+  flex-wrap: wrap;
+  position: relative;
+  gap: var(--pad);
+  width: calc(100% - var(--pad-button) - var(--pad));
+
+  [close] {
+    position: absolute;
+    background: transparent;
+    right: 0;
+    top: 0;
+  }
+
+  button {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: var(--pad);
+  }
+
+  .action {
+    background: rgba(255, 0, 0, 0.5);
   }
 }

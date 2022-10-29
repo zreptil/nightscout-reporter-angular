@@ -1,0 +1,25 @@
+<!--
+<div mat-dialog-title>
+  <div>
+    <h1>
+      <button *ngIf="tileHelp.length>1" mat-dialog-close mat-icon-button>
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      {{tileHelp.last.form.title}}
+    </h1>
+  </div>
+</div>
+<div class="root" mat-dialog-content>
+  <material-dialog headered class="headered-dialog" hideFooter>
+    <div header>
+      <button mat-dialog-close mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="root">
+      <ng-container *ngFor="let item of tileHelp.last.form.helpStrings;let idx=index">
+        <span *ngIf="item.type=='text'" [innerHtml]="item.text"></span>
+        <span *ngIf="item.type=='btn'" class="btn" (click)="fire('btn',idx)">{{item.cfg.form.title}}</span>
+      </ng-container>
+    </div>
+-->

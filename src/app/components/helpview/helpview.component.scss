@@ -1,0 +1,39 @@
+div[header] {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: var(--helpHeaderFore);
+  align-items: center;
+}
+
+.root {
+  flex: 1;
+  padding: 1em;
+  font-size: 1.2em;
+  color: var(--helpBodyFore);
+  background-color: var(--helpBodyBack);
+  text-align: justify;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--helpHeaderBack);
+}
+
+material-button {
+  text-transform: none;
+  font-weight: bold;
+}
+
+.btn {
+  font-weight: bold;
+  cursor: pointer;
+}

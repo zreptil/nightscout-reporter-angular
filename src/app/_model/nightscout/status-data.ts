@@ -1,6 +1,6 @@
 import {JsonData} from '@/_model/json-data';
 import {ExtendedSettingsData} from '@/_model/extended-settings-data';
-import {SettingsData} from '@/_model/settings-data';
+import {SettingsData} from '@/_model/nightscout/settings-data';
 
 export class StatusData extends JsonData {
   raw: any;

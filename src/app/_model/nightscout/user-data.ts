@@ -132,7 +132,7 @@ export class UserData {
       }
     } catch (ex) {
       const msg = ex.toString();
-      Log.debug('Fehler bei UserData.fromJson: ${msg}');
+      Log.debug(`Fehler bei UserData.fromJson: ${msg}`);
     }
     return ret;
   }
@@ -145,13 +145,12 @@ export class UserData {
 
   // retrieves the url to the api for a data
   apiUrl(date: Date, cmd: string, params?: { params?: string, noApi?: boolean }): string {
-    params ??= {params: null, noApi: null};
+    params ??= {};
     params.params ??= '';
     params.noApi ??= false;
     if (Utils.isEmpty(this.listApiUrl)) {
       return null;
     }
-
     const found = this.urlDataFor(date);
     return found.fullUrl(cmd, params.params, params.noApi);
   }

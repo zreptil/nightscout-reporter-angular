@@ -98,7 +98,7 @@ export class DatepickerPeriod {
 
     let beg = this.start;
     while (beg != null && this.end != null && Utils.isOnOrBefore(beg, this.end)) {
-      if (this.isDowActive(beg.getDate() - 1)) {
+      if (this.isDowActive(beg.getDay())) {
         return false;
       }
       beg = Utils.addDateDays(beg, 1);
@@ -199,15 +199,15 @@ export class DatepickerPeriod {
   reset(src: string): void {
     try {
       const parts = (src ?? '').split('|');
-      let start = null;
-      let end = null;
-      let entryKey = null;
-      let firstDayOfWeek = 1;
+      this.start = null;
+      this.end = null;
+      this.entryKey = null;
+      this.firstDayOfWeek = 1;
       if (parts.length >= 4) {
-        start = parseInt(parts[0]);
-        end = parseInt(parts[1]);
-        entryKey = parts[2] === '' || parts[2] === 'null' ? null : parts[2];
-        firstDayOfWeek = parseInt(parts[3]) ?? 0;
+        this.start = new Date(parseInt(parts[0]));
+        this.end = new Date(parseInt(parts[1]));
+        this.entryKey = parts[2] === '' || parts[2] === 'null' ? null : parts[2];
+        this.firstDayOfWeek = parseInt(parts[3]) ?? 0;
       }
       for (let i = 0; i < 7; i++) {
         this.activateDow(i, true);

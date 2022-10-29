@@ -293,7 +293,7 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infotitle'},
         {text: this.msgReadingsCount, style: 'infotitle'},
         {text: GLOBALS.fmtNumber(count), style: 'infodata'},
-        {text: `🏀(${countPeriod})`, style: 'infounit', colSpan: 3},
+        {text: `(${countPeriod})`, style: 'infounit', colSpan: 3},
         {text: '', style: 'infounit'},
       ],
       [
@@ -346,7 +346,7 @@ export class PrintAnalysis extends BasePrint {
           {text: '', style: 'infotitle'},
           {
             text: this.msgValuesAbove(
-              `'${GLOBALS.glucFromData(this.repData.status.settings.bgTargetTop)} ${GLOBALS.getGlucInfo().unit}'`),
+              `${GLOBALS.glucFromData(this.repData.status.settings.bgTargetTop)} ${GLOBALS.getGlucInfo().unit}`),
             style: 'infotitle'
           },
           {
@@ -361,7 +361,7 @@ export class PrintAnalysis extends BasePrint {
           },
           {text: '', style: 'infounit'},
           {
-            'canvas': [
+            canvas: [
               {
                 type: 'rect',
                 x: this.cm(cvsLeft),
@@ -515,7 +515,7 @@ export class PrintAnalysis extends BasePrint {
           {
             text: this.fillLimitInfo(data.stat['stdNormHigh']),
             style: 'infounit',
-            'colSpan': 2
+            colSpan: 2
           },
           {text: '', style: 'infounit'},
           {text: '', style: 'infounit'},
@@ -674,7 +674,7 @@ export class PrintAnalysis extends BasePrint {
     }
     if (this.showHypoGlucs) {
       let uzCount = 0;
-      let lastEntry: EntryData;
+      let lastEntry: EntryData = null;
       for (const entry of data.stat['stdVeryLow'].entries) {
         if (lastEntry == null ||
           Utils.differenceInMinutes(entry.time, lastEntry.time) > 30) {
@@ -732,7 +732,7 @@ export class PrintAnalysis extends BasePrint {
           text: GLOBALS.fmtNumber(totalDay.stdAbw(GLOBALS.glucMGDL), 1),
           style: 'infodata'
         },
-        {text: GLOBALS.getGlucInfo().unit, style: 'infounit', 'colSpan': 2},
+        {text: GLOBALS.getGlucInfo().unit, style: 'infounit', colSpan: 2},
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
       ],
@@ -816,7 +816,7 @@ export class PrintAnalysis extends BasePrint {
           text: `${GLOBALS.fmtNumber(data.TDD(!this.useDailyBasalrate) / this.repData.dayCount, 1)}`,
           style: 'infodata'
         },
-        {text: '$msgInsulinUnit', style: 'infounit', 'colSpan': 2},
+        {text: `${this.msgInsulinUnit}`, style: 'infounit', colSpan: 2},
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
       ]
@@ -830,7 +830,7 @@ export class PrintAnalysis extends BasePrint {
       },
       {
         text:
-          'bolus (${g.fmtNumber(data.ieBolusPrz(!useDailyBasalrate), 1)} %)',
+          `bolus (${GLOBALS.fmtNumber(data.ieBolusPrz(!this.useDailyBasalrate), 1)} %)`,
         style: 'infounit',
         colSpan: 2
       },
@@ -863,7 +863,7 @@ export class PrintAnalysis extends BasePrint {
       },
       {
         text:
-          'bolus (${g.fmtNumber(data.ieMicroBolusPrz(!useDailyBasalrate), 1)} %)',
+          `bolus (${GLOBALS.fmtNumber(data.ieMicroBolusPrz(!this.useDailyBasalrate), 1)} %)`,
         style: 'infounit',
         colSpan: 2
       },
@@ -921,37 +921,37 @@ export class PrintAnalysis extends BasePrint {
   }
 
   /*
-    // List<Object> getInfoPage(ReportData src) {
-    //   titleInfo = null;
-    //   subtitle = 'Erklärungen';
+    // getInfoPage(src: ReportData ): any[] {
+    //   this.titleInfo = null;
+    //   this.subtitle = 'Erklärungen';
     //   const ret = [
     //     headerFooter(),
     //     {
-    //       'margin': [this.cm(0), this.cm(yorg), this.cm(0), this.cm(0)],
-    //       'columns': [
+    //       margin: [this.cm(0), this.cm(yorg), this.cm(0), this.cm(0)],
+    //       columns: [
     //         {
-    //           'width': this.cm(width),
+    //           width: this.cm(width),
     //           text: 'Hinweise',
-    //           'fontSize': fs(20),
-    //           'alignment': 'center'
+    //           fontSize: fs(20),
+    //           alignment: 'center'
     //         }
     //       ]
     //     },
     //     {
-    //       'margin': [this.cm(2.2), this.cm(0.5), this.cm(2.2), this.cm(0)],
+    //       margin: [this.cm(2.2), this.cm(0.5), this.cm(2.2), this.cm(0)],
     //       text: 'Der DVI ist ein Wert, der einem Wert gleicht, der ein Wert sein soll, der hoffentlich zu einem'
     //           ' Zeilenumbruch führt, was aber nicht klar ist. Nun ist es klar und wir sind sowas von froh, dass es'
     //           ' funktioniert. Einfach Toll :)',
-    //       'fontSize': fs(12),
-    //       'alignment': 'justify'
+    //       fontSize: fs(12),
+    //       alignment: 'justify'
     //     },
     //     {
-    //       'margin': [this.cm(2.2), this.cm(0.2), this.cm(2.2), this.cm(0)],
+    //       margin: [this.cm(2.2), this.cm(0.2), this.cm(2.2), this.cm(0)],
     //       text: 'Der DVI ist ein Wert, der einem Wert gleicht, der ein Wert sein soll, der hoffentlich zu einem'
     //           ' Zeilenumbruch führt, was aber nicht klar ist. Nun ist es klar und wir sind sowas von froh, dass es'
     //           ' funktioniert. Einfach Toll :)',
-    //       'fontSize': fs(12),
-    //       'alignment': 'justify',
+    //       fontSize: fs(12),
+    //       alignment: 'justify',
     //      color: 'red'
     //     },
     //   ];

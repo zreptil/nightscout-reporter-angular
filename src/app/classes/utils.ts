@@ -5,29 +5,35 @@ export class Utils {
     }
   }
 
-  static addTimeSeconds(date: Date, value: number): Date {
+  static addTimeSeconds(date: Date, seconds: number): Date {
     const ret = new Date();
-    ret.setTime(date.getTime() + value * 1000);
+    ret.setTime(date.getTime() + seconds * 1000);
     return ret;
   }
 
-  static addTimeMinutes(date: Date, value: number): Date {
+  static addTimeMinutes(date: Date, minutes: number): Date {
     const ret = new Date();
-    ret.setTime(date.getTime() + value * 1000 * 60);
+    ret.setTime(date.getTime() + minutes * 1000 * 60);
     return ret;
   }
 
-  static addDateDays(date: Date, value: number): Date {
+  static addTimeHours(date: Date, hours: number): Date {
+    const ret = new Date();
+    ret.setTime(date.getTime() + hours * 1000 * 60 * 60);
+    return ret;
+  }
+
+  static addDateDays(date: Date, days: number): Date {
     const ret = new Date();
     ret.setTime(date.getTime());
-    ret.setDate(ret.getDate() + value);
+    ret.setDate(ret.getDate() + days);
     return ret;
   }
 
-  static addDateMonths(date: Date, value: number): Date {
+  static addDateMonths(date: Date, months: number): Date {
     const ret = new Date();
     ret.setTime(date.getTime());
-    ret.setMonth(ret.getMonth() + value);
+    ret.setMonth(ret.getMonth() + months);
     return ret;
   }
 
@@ -186,6 +192,10 @@ export class Utils {
       && date1.getDate() === date2.getDate();
   }
 
+  static isSameMoment(date1: Date, date2: Date) {
+    return date1.getTime() === date2.getTime();
+  }
+
   static isOnOrBefore(date1: Date, date2: Date) {
     return this.isBefore(date1, date2) || this.isSameDay(date1, date2);
   }
@@ -227,5 +237,9 @@ export class Utils {
 
   static jsonize(data: any) {
     return JSON.parse(JSON.stringify(data));
+  }
+
+  static rnd(max: number): number {
+    return Math.floor(Math.random() * max);
   }
 }

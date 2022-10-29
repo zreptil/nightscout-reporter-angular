@@ -6,6 +6,12 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {Log} from '@/_services/log.service';
 import {BaseData} from '@/_model/base-data';
+import {WhatsNewComponent} from '@/components/whats-new/whats-new.component';
+import {ComponentType} from '@angular/cdk/overlay';
+import {ImpressumComponent} from '@/components/impressum/impressum.component';
+import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
+import {SettingsComponent} from '@/components/settings/settings.component';
+import {HelpviewComponent} from '@/components/helpview/helpview.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -23,24 +29,28 @@ export class SessionService {
 
   public data: GlobalData;
   private dlgRef: MatDialogRef<any>;
+  private dlgList: { [key: string]: ComponentType<any> } = {
+    whatsnew: WhatsNewComponent,
+    impressum: ImpressumComponent,
+    dsgvo: DsgvoComponent,
+    settings: SettingsComponent,
+    helpview: HelpviewComponent
+  }
 
-  constructor(public ss: StorageService, private dialog: MatDialog) {
-    this.load();
+  constructor(public ss: StorageService,
+              private dialog: MatDialog) {
   }
 
   get mayDebug(): boolean {
     return Log.mayDebug;
   }
 
-  load(): void {
-    this.data = new GlobalData();
-    const src = this.ss.read('pillman');
-
-    this.data.fillFromString(src);
-  }
-
-  save(): void {
-    this.ss.write('pillman', this.data);
+  showPopup(id: string): Observable<DialogResult> {
+    if (this.dlgList[id] != null) {
+      const dlgRef = this.dialog.open(this.dlgList[id], {panelClass: 'dialog-box'});
+      return dlgRef.afterClosed();
+    }
+    return of(null);
   }
 
   info(content: string | string[], type = DialogType.info): Observable<DialogResult> {

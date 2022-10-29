@@ -1,12 +1,11 @@
-<h1 mat-dialog-title>
+<div mat-dialog-title>
   <div>
     <h1 i18n="title of whatsnew">Was bisher geschah...</h1>
-    <p></p>
   </div>
-  <button (click)="fire('normal')" icon mat-flat-button>
+  <button mat-dialog-close="ok" mat-icon-button>
     <mat-icon>close</mat-icon>
   </button>
-</h1>
+</div>
 <div class="root" mat-dialog-content>
   <h2><span i18n="version">Version</span><span i18n="v302">3.0.2 - 22.09.2022</span></h2>
   <ul>

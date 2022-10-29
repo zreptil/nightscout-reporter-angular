@@ -1,0 +1,126 @@
+.root {
+  padding: 1em;
+  font-size: 1.2em;
+  color: var(--settingsBodyFore);
+  background-color: var(--settingsBodyBack);
+}
+
+.languagePanel {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.subtitle {
+  display: flex;
+  flex-flow: row;
+  color: var(--settingsHeaderBack);
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div[header] {
+  display: flex;
+  flex-flow: row;
+  color: var(--settingsHeaderFore);
+  justify-content: space-between;
+  align-items: center;
+
+  div:nth-child(2) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+div[footer] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+}
+
+.error {
+  color: var(--settingsError);
+  padding-bottom: 1em;
+}
+
+.progress {
+  padding: 2em;
+  font-size: 1.2em;
+}
+
+.date {
+  width: 6em;
+  flex-grow: 0 !important;
+}
+
+material-dialog[confirm] {
+  background-color: var(--settingsBodyBack);
+  color: var(--settingsBodyFore);
+
+  .content {
+    font-size: 120%;
+    padding: 2em;
+
+    .marked {
+      padding: 1em 0;
+      font-weight: bold;
+    }
+  }
+}
+
+.pdfSliderHead {
+  display: flex;
+  width: 90%;
+  padding: 1em;
+}
+
+.sub {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-align: justify;
+}
+
+.pdfSlider {
+  display: flex;
+  flex-flow: row;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 1em;
+  margin-bottom: 2em;
+
+  > div {
+    width: 5%;
+  }
+}
+
+material-input {
+  ::ng-deep .focused-underline {
+    background: var(--settingsHeaderBack);
+  }
+
+  ::ng-deep .focused.label-text {
+    color: var(--settingsHeaderBack);
+  }
+}
+
+material-fab.is-local, div.is-local, material-button.is-local {
+  background: var(--localBack) !important;
+  color: var(--localFore) !important;
+}
+
+.navControls {
+  display: flex;
+  align-items: center;
+  font-size: 0.7em;
+}
+
+#exportForm {
+  display: none;
+}
+
+#importData {
+  display: none;
+}

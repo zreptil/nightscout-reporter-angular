@@ -1,58 +1,16 @@
 import {UserData} from '@/_model/nightscout/user-data';
 import {Utils} from '@/classes/utils';
 import {DatePipe, formatNumber, getLocaleNumberSymbol, NumberSymbol} from '@angular/common';
-import {LangData} from '@/_model/nightscout/lang-data';
 import {FormConfig} from '@/forms/form-config';
 import {BasePrint} from '@/forms/base-print';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {PeriodShift} from '@/_model/period-shift';
 import {DatepickerEntry} from '@/_model/datepicker-entry';
-
-export class Settings {
-  static SharedData = 'sharedData';
-  static DeviceData = 'deviceData';
-  static WebData = 'webData';
-  static DebugFlag = 'debug';
-  static skipStorageClear = false;
-  static showDebugInConsole = false;
-  version = '4.0.0';
-
-  // subversion is used nowhere. It is just there to trigger another signature
-  // for the cache.
-  subVersion = '1';
-
-  static get msgThemeAuto(): string {
-    return $localize`:theme selection - automatic|:Automatisch`;
-  }
-
-  static get msgThemeStandard(): string {
-    return $localize`:theme selection - standard|:Standard`;
-  }
-
-  static get msgThemeXmas(): string {
-    return $localize`:theme selection - christmas|:Weihnachten`;
-  }
-
-  static get msgUnitMGDL(): string {
-    return $localize`mg/dL`;
-  }
-
-  static get msgUnitMMOL(): string {
-    return $localize`mmol/L`;
-  }
-
-  static get msgUnitBoth(): string {
-    return $localize`Beide`;
-  }
-
-  static get msgUnlimited(): string {
-    return $localize`Unbegrenzt`;
-  }
-
-  static get lblGlucUnits(): string {
-    return $localize`Einheit der Glukosemessung`;
-  }
-}
+import {UrlData} from '@/_model/nightscout/url-data';
+import {Settings} from '@/_model/settings';
+import {ShortcutData} from '@/_model/shortcut-data';
+import {WatchElement} from './watch-element';
+import {Log} from '@/_services/log.service';
 
 export let GLOBALS: GlobalsData;
 
@@ -72,30 +30,16 @@ export class GlobalsData extends Settings {
   static stdVeryHigh = 250;
   static PDFUNLIMITED = 4000000;
   static PDFDIVIDER = 100000;
-  _userIdx: number = 0;
   userList: UserData[] = [];
+  shortcutList: ShortcutData[] = [];
   glucMGDLIdx: number;
   glucMGDLFromStatus = true;
   hasMGDL = false;
-  languageList: LangData[] = [
-    new LangData('de_DE', $localize`Deutsch`, 'de'),
-    new LangData('en_US', $localize`English (USA)`, 'us'),
-    new LangData('en_GB', $localize`English (GB)`, 'gb'),
-    new LangData('es_ES', $localize`Español`, 'es'),
-    new LangData('pl_PL', $localize`Polski`, 'pl'),
-    new LangData('ja_JP', $localize`日本の`, 'jp'),
-    new LangData('sk_SK', $localize`Slovenský`, 'sk'),
-    new LangData('fr_FR', $localize`Français`, 'fr'),
-    new LangData('pt_PT', $localize`Português`, 'pt'),
-    new LangData('nl_NL', $localize`Dansk`, 'nl')
-  ];
   showAllTileParams = false;
   showCurrentGluc = false;
   showInfo = false;
   tileShowImage = true;
   isDataSmoothing = true;
-  _pdfOrder = '';
-  _viewType = '';
   ppMaxInsulinEffectInMS = 3 * 60 * 60 * 1000;
   ppCGPAlwaysStandardLimits = true;
   ppComparable = false;
@@ -115,6 +59,11 @@ export class GlobalsData extends Settings {
   canDebug = false;
   isDebug = false;
   isBeta = window.location.href.indexOf('/beta/') >= 0;
+  basalPrecisionAuto = 1;
+  ppBasalPrecisionIdx = 0;
+  isWatchColor = true;
+  timestamp = 0;
+  userListLoaded = false;
 
   constructor() {
     super();
@@ -197,6 +146,91 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  _pdfOrder = '';
+
+  get pdfOrder(): string {
+    return this._pdfOrder;
+  }
+
+  set pdfOrder(value: string) {
+    this._pdfOrder = value;
+    this.sortConfigs();
+  }
+
+  _watchList: WatchElement[] = [];
+
+  get watchList(): WatchElement[] {
+    this._watchList ??= [];
+    return this._watchList;
+  }
+
+  set watchList(value: WatchElement[]) {
+    this._watchList = value;
+  }
+
+  get currentFormsAsMap(): any {
+    const ret: { [key: string]: any } = {};
+    for (const cfg of this.listConfig) {
+      if (cfg.checked) {
+        ret[cfg.form.dataId] = cfg.asJson;
+      }
+    }
+    return ret;
+  }
+
+  _userIdx: number = 0;
+
+  get userIdx(): number {
+    return this._userIdx;
+  }
+
+  set userIdx(value: number) {
+    if (value != this._userIdx) {
+      this.user.loadParamsFromForms();
+    }
+    if (value < 0 || value >= this.userList.length) {
+      value = 0;
+      if (Utils.isEmpty(this.userList)) {
+        this.userList.push(new UserData());
+      }
+    }
+    this.userList[value].saveParamsToForms();
+    this._userIdx = value;
+  }
+
+  get userDisplay(): string {
+    return this.user.display;
+  }
+
+  get user(): UserData {
+    if (this._userIdx >= 0 && this._userIdx < this.userList.length) {
+      return this.userList[this._userIdx];
+    }
+    this._userIdx = 0;
+    if (Utils.isEmpty(this.userList)) {
+      this.userList.push(new UserData());
+    }
+    return this.userList[0];
+  }
+
+  _viewType = '';
+
+  get viewType(): string {
+    return this._viewType === '' ? 'tile' : this._viewType;
+  }
+
+  set viewType(value: string) {
+    switch (value) {
+      case 'tile':
+      case 'list':
+        break;
+      default:
+        value = 'tile';
+        break;
+    }
+    this._viewType = value;
   }
 
   get runsLocal(): boolean {
@@ -284,16 +318,6 @@ export class GlobalsData extends Settings {
     return this.glucMGDL ? 0 : 2;
   }
 
-  _language: LangData;
-
-  get language(): LangData {
-    return this._language ?? this.languageList[0];
-  }
-
-  set language(value: LangData) {
-    this._language = value;
-  }
-
   get listPeriodShift(): PeriodShift[] {
     return [
       new PeriodShift($localize`Ausgewählter Zeitraum`, 0),
@@ -324,6 +348,14 @@ export class GlobalsData extends Settings {
     value = Math.max(value, GlobalsData.PDFDIVIDER);
     value = Math.min(value, GlobalsData.PDFUNLIMITED);
     this._pdfCreationMaxSize = value;
+  }
+
+  get basalPrecision(): number {
+    return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
+  }
+
+  get basalPrecisionValues(): number[] {
+    return [null, 0, 1, 2, 3];
   }
 
   static updatePeriod(period: DatepickerPeriod): void {
@@ -396,6 +428,55 @@ export class GlobalsData extends Settings {
     return b;
   }
 
+  sortConfigs() {
+    Log.debug('GlobalsData.sortConfigs ist noch nicht implementiert');
+    /*
+        if (_pdfOrder == '' || listConfig.isEmpty) return;
+        user.saveParamsToForms();
+        var srcList = listConfig.sublist(0);
+        listConfig.clear();
+        var idxList = <String>[];
+        if (_pdfOrder.length < 48) {
+          for (var i = 0; i < _pdfOrder.length; i += 2) {
+            idxList.add(_pdfOrder.substring(i, i + 2));
+          }
+        } else {
+          for (var i = 0; i < _pdfOrder.length; i += 3) {
+            idxList.add(_pdfOrder.substring(i, i + 3));
+          }
+        }
+    //    var idList = _pdfOrder.split(",");
+        for (var i = 0; i < idxList.length; i++) {
+          var cfg = srcList.firstWhere((cfg) => cfg.idx == idxList[i], orElse: () => null);
+          if (cfg != null) {
+            srcList.remove(cfg);
+            listConfig.add(cfg);
+          }
+        }
+        for (var cfg in srcList) {
+          listConfig.add(cfg);
+        }
+        user.loadParamsFromForms();
+        savePdfOrder();
+    */
+  }
+
+  findUrlDataFor(begDate: Date, endDate: Date): UrlData[] {
+    const ret: UrlData[] = [];
+
+    let d1 = Utils.addDateDays(begDate, -1);
+    const d2 = Utils.addDateDays(endDate, 0);
+    while (Utils.isOnOrBefore(d1, d2)) {
+      const url = GlobalsData.user.urlDataFor(d1);
+      if (ret.find((entry) => entry === url) == null) {
+        ret.push(url);
+      }
+      d1 = Utils.addDateDays(d1, 1);
+    }
+
+    return ret;
+  }
+
   msgUrlFailure(url: string): string {
     if (url.startsWith('http:') && window.location.protocol.startsWith('https')) {
       return this.msgUrlNotSafe;
@@ -443,9 +524,9 @@ export class GlobalsData extends Settings {
 
   glucFromData(gluc: any, precision: number = null): string {
     if (typeof gluc === 'string') {
-      gluc = +gluc ?? 0;
+      gluc = +(gluc ?? 0);
     }
-    if (!isNaN(gluc) || gluc == 0) {
+    if (isNaN(gluc) || gluc === 0) {
       return '';
     }
 
@@ -458,9 +539,9 @@ export class GlobalsData extends Settings {
 
   glucFromStatusMGDL(gluc: any, precision: number = null): string {
     if (typeof gluc === 'string') {
-      gluc = +gluc ?? 0;
+      gluc = +(gluc ?? 0);
     }
-    if (!isNaN(gluc) || gluc == 0) {
+    if (isNaN(gluc) || gluc === 0) {
       return '';
     }
 
@@ -484,9 +565,9 @@ export class GlobalsData extends Settings {
       return nullText;
     }
 
-    let fmt = '#,##0';
+    // let fmt = '#,##0';
     if (decimals > 0) {
-      fmt = `${fmt}.`.padEnd(decimals + 6, '0');
+      // fmt = `${fmt}.`.padEnd(decimals + 6, '0');
       value = Math.round((value * (10 ^ decimals)) / (10 ^ decimals));
     }
     let ret = formatNumber(value, this.language.code);
@@ -519,7 +600,7 @@ export class GlobalsData extends Settings {
   }
 
   fmtDate(date: Date | any, params?: { def?: string, withShortWeekday?: boolean, withLongWeekday?: boolean }): string {
-    params ??= {def: '', withShortWeekday: false, withLongWeekday: false};
+    params ??= {};
     params.def ??= '';
     params.withShortWeekday ??= false;
     params.withLongWeekday ??= false;
@@ -528,7 +609,6 @@ export class GlobalsData extends Settings {
     }
 
     let dt: Date;
-
     try {
       if (date instanceof Date) {
         dt = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -556,7 +636,7 @@ export class GlobalsData extends Settings {
   }
 
   fmtDateTime(date: Date | any, params?: { def?: string, withSeconds?: boolean }): string {
-    params ??= {def: '', withSeconds: false};
+    params ??= {};
     params.def ??= '';
     params.withSeconds ??= false;
     if (date == null) {
@@ -578,7 +658,7 @@ export class GlobalsData extends Settings {
   }
 
   fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
-    params ??= {def: '', withUnit: false, withMinutes: true, withSeconds: false};
+    params ??= {};
     params.withUnit ??= false;
     params.withMinutes ??= true;
     params.withSeconds ??= false;

@@ -19,6 +19,11 @@ import {MaterialModule} from '@/material.module';
 import {AppRoutingModule} from '@/app-routing.module';
 import { MainComponent } from './components/main/main.component';
 import { WhatsNewComponent } from './components/whats-new/whats-new.component';
+import { StartComponent } from './components/start/start.component';
+import { ImpressumComponent } from './components/impressum/impressum.component';
+import { DsgvoComponent } from './components/dsgvo/dsgvo.component';
+import { HelpviewComponent } from './components/helpview/helpview.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,12 @@ import { WhatsNewComponent } from './components/whats-new/whats-new.component';
     ColorPickerBaseComponent,
     ColorPickerRGBComponent,
     MainComponent,
-    WhatsNewComponent
+    WhatsNewComponent,
+    StartComponent,
+    ImpressumComponent,
+    DsgvoComponent,
+    HelpviewComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

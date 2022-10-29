@@ -1,4 +1,182 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'google-fonts.css';
+@import 'assets/themes/standard/index.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  --logInfoBack: #606099;
+  --logInfoFore: #fff;
+  --logWarnBack: #ff8020;
+  --logWarnFore: #fff;
+  --logErrorBack: #ff2020;
+  --logErrorFore: #fff;
+  --logDebugColor: 255, 255, 0;
+  --logDebugBack: repeating-linear-gradient(45deg, rgba(var(--logDebugColor), 0.6), rgba(var(--logDebugColor), 0.6) 10px, rgba(var(--logDebugColor), 0.8) 10px, rgba(var(--logDebugColor), 0.8) 20px);
+  --logDebugFore: #000;
+  --toolbarBack: rgba(0, 0, 0, 0.3);
+  --toolbarFore: #fff;
+  --helpBack: #fff;
+  --helpFore: #000;
+  --markBorder: 1px solid #000;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-box {
+  mat-dialog-container {
+    padding: 0;
+
+    [mat-dialog-title] {
+      padding: 1em;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+
+      h1 {
+        margin: 0;
+      }
+    }
+
+    [mat-dialog-content] {
+      margin: 0;
+    }
+  }
+}
+
+* {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 76px;
+  margin-left: -38px;
+  height: 64px;
+}
+
+.owl {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 64px;
+  margin-left: -24px;
+  animation: owl 3s ease-in-out normal infinite;
+}
+
+@keyframes owl {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.landscape {
+  position: absolute;
+  top: 40px;
+  margin-left: -17px;
+}
+
+.portrait {
+  position: absolute;
+  top: 29px;
+  margin-left: -12px;
+}
+
+.p1 {
+  transform: rotate(180deg);
+  _animation: p1 3s linear normal infinite;
+}
+
+@keyframes p1 {
+  0% {
+    top: 29px;
+    opacity: 1.0;
+  }
+  20% {
+    top: 29px;
+  }
+  30% {
+    top: 65px;
+  }
+  50% {
+    top: 65px;
+    opacity: 1.0;
+  }
+  60% {
+    top: 65px;
+    opacity: 0;
+  }
+  100% {
+    top: 65px;
+    opacity: 0;
+  }
+}
+
+.p2 {
+  transform: rotate(180deg);
+  _animation: p2 3s linear normal infinite;
+}
+
+@keyframes p2 {
+  0% {
+    top: 65px;
+    opacity: 1.0;
+  }
+  10% {
+    top: 65px;
+    opacity: 0.0;
+  }
+  50% {
+    top: 39px;
+    opacity: 0.0;
+  }
+  70% {
+    top: 39px;
+    opacity: 1.0;
+  }
+  80% {
+    top: 65px;
+  }
+  100% {
+    top: 65px;
+  }
+}

@@ -94,21 +94,21 @@ export class ListData {
   }
 
   calcStatistics(data: ReportData): void {
-    const stat = {
-      'low': new StatisticData(0, 0),
-      'norm': new StatisticData(0, 0),
-      'high': new StatisticData(0, 0),
-      'stdLow': new StatisticData(1, GlobalsData.stdLow),
-      'stdNorm': new StatisticData(GlobalsData.stdLow, GlobalsData.stdHigh),
-      'stdHigh': new StatisticData(GlobalsData.stdHigh, 9999),
-      'stdVeryHigh': new StatisticData(GlobalsData.stdVeryHigh, 9999),
-      'stdNormHigh': new StatisticData(GlobalsData.stdHigh, GlobalsData.stdVeryHigh),
-      'stdNormLow': new StatisticData(GlobalsData.stdVeryLow, GlobalsData.stdLow),
-      'stdVeryLow': new StatisticData(0, GlobalsData.stdVeryLow),
+    this.stat = {
+      low: new StatisticData(0, 0),
+      norm: new StatisticData(0, 0),
+      high: new StatisticData(0, 0),
+      stdLow: new StatisticData(1, GlobalsData.stdLow),
+      stdNorm: new StatisticData(GlobalsData.stdLow, GlobalsData.stdHigh),
+      stdHigh: new StatisticData(GlobalsData.stdHigh, 9999),
+      stdVeryHigh: new StatisticData(GlobalsData.stdVeryHigh, 9999),
+      stdNormHigh: new StatisticData(GlobalsData.stdHigh, GlobalsData.stdVeryHigh),
+      stdNormLow: new StatisticData(GlobalsData.stdVeryLow, GlobalsData.stdLow),
+      stdVeryLow: new StatisticData(0, GlobalsData.stdVeryLow),
     };
     this.min = 999999.0;
     this.max = -1.0;
-    let last;
+    let last: EntryData = null;
     // calculation of gvi and rms based on
     // https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/report_plugins/glucosedistribution.js#L150
     this.gvi = 0.0;
@@ -116,19 +116,20 @@ export class ListData {
     this.gviTotal = 0.0;
     let glucTotal = 0.0;
     let rmsTotal = 0.0;
-    let firstGluc;
-    let lastGluc;
+    let firstGluc: number = null;
+    let lastGluc: number = null;
     let usedRecords = 0;
     this.validCount = 0;
 
     for (const day of this.days) {
       for (const entry of day.entries) {
-        var glucData = data.profile(entry.time);
+        const glucData = data.profile(entry.time);
         this.stat['low'].max = glucData.targetLow; // - 0.0001;
         this.stat['norm'].min = glucData.targetLow;
         this.stat['norm'].max = glucData.targetHigh; // + 0.0001;
         this.stat['high'].min = glucData.targetHigh;
         this.stat['high'].max = 9999.9999;
+        // noinspection PointlessBooleanExpressionJS
         if (glucData != null) {
           const gluc = entry.gluc;
           if (gluc > 0) {
@@ -153,11 +154,10 @@ export class ListData {
         if (last == null) {
           glucTotal += entry.gluc;
         } else {
-          var timeDelta = Utils.differenceInMilliseconds(entry.time, last.time);
-
+          const timeDelta = Utils.differenceInMilliseconds(entry.time, last.time);
           if (timeDelta <= 6 * 60000 && entry.gluc > 0 && last.gluc > 0) {
             usedRecords++;
-            var delta = entry.gluc - last.gluc;
+            const delta = entry.gluc - last.gluc;
 //          deltaTotal += delta;
 //          total += delta;
 //          if (delta >= t1)t1Count++;
@@ -211,7 +211,7 @@ export class ListData {
       return;
     }
 
-    let lastDay;
+    let lastDay: Date = null;
     this.days = [];
     for (const entry of allEntries) {
       if (entry.isInvalidOrGluc0) {
@@ -241,7 +241,6 @@ export class ListData {
     this.ampulleCount = 0;
     this.sensorCount = 0;
     let eCarbs = 0.0;
-    let delay = 0;
     this.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
 
     if (Utils.isEmpty(this.addList)) {
@@ -322,7 +321,7 @@ export class ListData {
         t.isECarb = true;
       }
 
-      var idx = this.days.findIndex((d) => d.isSameDay(JsonData.toLocal(t.createdAt)));
+      const idx = this.days.findIndex((d) => d.isSameDay(JsonData.toLocal(t.createdAt)));
       if (idx >= 0) {
         this.days[idx].treatments.push(t);
       }
@@ -335,15 +334,15 @@ export class ListData {
       this.ieBolusSum += t.bolusInsulin;
       this.ieMicroBolusSum += t.microbolus; // / 3600 * t.duration;
     }
-    let ieBasalSumDaily = 0.0;
-    let ieBasalSumStore = 0.0;
+    this.ieBasalSumDaily = 0.0;
+    this.ieBasalSumStore = 0.0;
     for (let i = 1; i < this.days.length; i++) {
       const day = this.days[i];
       day.prevDay = i > 0 ? this.days[i - 1] : null;
       day.init((i < this.days.length - 1 ? this.days[i + 1] : null));
 
-      ieBasalSumStore += day.ieBasalSum(true);
-      ieBasalSumDaily += day.ieBasalSum(false);
+      this.ieBasalSumStore += day.ieBasalSum(true);
+      this.ieBasalSumDaily += day.ieBasalSum(false);
       day.devicestatusList = [];
       Utils.pushAll(day.devicestatusList, this.devicestatusList.filter((ds) => day.isSameDay(JsonData.toLocal(ds.createdAt))));
       day.activityList = [];

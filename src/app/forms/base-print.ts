@@ -65,7 +65,7 @@ export abstract class BasePrint extends FormConfig {
   baseId: string;
   baseIdx: string;
   suffix = '-';
-  subtitle: string;
+  subtitle: string = null; // must not be undefined else the output will be invalid
   needed = new DataNeeded();
   help: string;
   titleInfo: string;
@@ -236,8 +236,8 @@ export abstract class BasePrint extends FormConfig {
       text = text.substring(1);
       const pos1 = text.indexOf('@');
       if (pos1 >= 0) {
-        var id = text.substring(0, pos1);
-        var cfg = GLOBALS.listConfig.find((cfg) => cfg.form.baseIdx === id);
+        const id = text.substring(0, pos1);
+        const cfg = GLOBALS.listConfig.find((cfg) => cfg.form.baseIdx === id);
         if (cfg != null) {
           ret.push(new HelpItem('btn', cfg.form.title, cfg));
         }
@@ -972,8 +972,8 @@ export abstract class BasePrint extends FormConfig {
     return size * this.scale;
   }
 
-  loadUserData(user: UserData): void {
-  } // war Future<void>
+  async loadUserData(_: UserData) {
+  }
 
   hba1c(avgGluc: number): string {
     return avgGluc == null ? '' : GLOBALS.fmtNumber(this.hba1cValue(avgGluc), 1);
@@ -1071,7 +1071,7 @@ export abstract class BasePrint extends FormConfig {
     return $localize`:@@msgTargetArea:Zielbereich (${min} - ${max} ${units})`;
   }
 
-  msgTargetValue(value: string): string {
+  msgTargetValue(_: string): string {
     return $localize`:@@msgTargetValue:Zielwert`;
   }
 
@@ -1088,14 +1088,14 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgBolusInsulin(value: string): string {
-    return $localize`:@@msgBolusInsulin:Bolus Insulin ($value)`;
+    return $localize`:@@msgBolusInsulin:Bolus Insulin (${value})`;
   }
 
   msgCorrectBolusInsulin(value: string): string {
     return $localize`:@@msgCorrectBolusInsulin:Korrektur Bolus (${value})`;
   }
 
-  checkValue(param: ParamInfo, value: any): void {
+  checkValue(_: ParamInfo, __: any): void {
   }
 
   msgCarbBolusInsulin(value: string): string {
@@ -1143,7 +1143,7 @@ export abstract class BasePrint extends FormConfig {
     return $localize`${Utils.plural(howMany, {
       0: `Keine Messwerte vorhanden`,
       1: `1 Messung pro Minute`,
-      other: `Messung alle $fmt Minuten`
+      other: `Messung alle ${fmt} Minuten`
     })}`;
   }
 
@@ -1227,7 +1227,7 @@ export abstract class BasePrint extends FormConfig {
 
   msgHigh(value: number): string {
     const text = `\n>=${GLOBALS.glucFromData(value)}`;
-    return $localize`Hoch${value}`;
+    return $localize`Hoch${text}`;
   }
 
   msgISF(unit: string): string {
@@ -1243,7 +1243,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgDaySum(value: number): string {
-    return $localize`$value Tage`;
+    return $localize`${value} Tage`;
   }
 
   msgGVINone(min: number): string {
@@ -1254,18 +1254,18 @@ export abstract class BasePrint extends FormConfig {
   msgGVIVeryGood(min: number, max: number): string {
     const txtMin = GLOBALS.fmtNumber(min, 1);
     const txtMax = GLOBALS.fmtNumber(max, 1);
-    return $localize`sehr gut (${min} bis ${max})`;
+    return $localize`sehr gut (${txtMin} bis ${txtMax})`;
   }
 
   msgGVIGood(min: number, max: number): string {
     const txtMin = GLOBALS.fmtNumber(min, 1);
     const txtMax = GLOBALS.fmtNumber(max, 1);
-    return $localize`gut (${min} bis ${max})`;
+    return $localize`gut (${txtMin} bis ${txtMax})`;
   }
 
   msgGVIBad(max: number): string {
     const txtMax = GLOBALS.fmtNumber(max, 1);
-    return $localize`schlecht (grösser ${max})`;
+    return $localize`schlecht (grösser ${txtMax})`;
   }
 
   gviQuality(gvi: number): string {
@@ -1280,25 +1280,25 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgPGSVeryGood(min: number): string {
-    const textMin = GLOBALS.fmtNumber(min);
-    return $localize`exzellent (kleiner ${min})`;
+    const txtMin = GLOBALS.fmtNumber(min);
+    return $localize`exzellent (kleiner ${txtMin})`;
   }
 
   msgPGSGood(min: number, max: number): string {
-    const textMin = GLOBALS.fmtNumber(min);
-    const textMax = GLOBALS.fmtNumber(max);
-    return $localize`gut (${min} bis ${max})`;
+    const txtMin = GLOBALS.fmtNumber(min);
+    const txtMax = GLOBALS.fmtNumber(max);
+    return $localize`gut (${txtMin} bis ${txtMax})`;
   }
 
   msgPGSBad(min: number, max: number): string {
-    const textMin = GLOBALS.fmtNumber(min);
-    const textMax = GLOBALS.fmtNumber(max);
-    return $localize`schlecht (${min} bis ${max})`;
+    const txtMin = GLOBALS.fmtNumber(min);
+    const txtMax = GLOBALS.fmtNumber(max);
+    return $localize`schlecht (${txtMin} bis ${txtMax})`;
   }
 
   msgPGSVeryBad(max: number): string {
-    const textMax = GLOBALS.fmtNumber(max);
-    return $localize`sehr schlecht (grösser ${max})`;
+    const txtMax = GLOBALS.fmtNumber(max);
+    return $localize`sehr schlecht (grösser ${txtMax})`;
   }
 
   pgsQuality(pgs: number): string {
@@ -1374,8 +1374,9 @@ export abstract class BasePrint extends FormConfig {
     return ret;
   }
 
-  headerFooter(params?: { skipFooter: boolean, date?: Date }): any {
-    params ??= {skipFooter: false, date: null};
+  headerFooter(params?: { skipFooter?: boolean, date?: Date }): any {
+    params ??= {};
+    params.skipFooter ??= false;
     const isInput = false;
     const stack: any[] = [];
     const ret = {stack: stack, 'pageBreak': ''};
@@ -1424,7 +1425,7 @@ export abstract class BasePrint extends FormConfig {
     stack.push({
       relativePosition: {x: this.cm(this.xframe), y: this.cm(1.0)},
       columns: [
-        {width: 'auto', text: this.title, fontSize: this.fs(36), color: this.colText, bold: true},
+        {width: 'auto', text: `${this.title}`, fontSize: this.fs(36), color: this.colText, bold: true},
         {
           width: 'auto',
           text: this.subtitle,
@@ -1632,7 +1633,7 @@ export abstract class BasePrint extends FormConfig {
     return this.titleInfoDateRange(this.repData.begDate, this.repData.endDate);
   }
 
-  titleInfoDateRange(begDate: Date, endDate: Date, withTime = false): string {
+  titleInfoDateRange(begDate: Date, endDate: Date): string {
     this.titleInfoSub = GLOBALS.period.dowActiveText;
     if (Utils.isSameDay(begDate, endDate)) {
       return this.fmtDate(begDate);
@@ -1795,8 +1796,8 @@ export abstract class BasePrint extends FormConfig {
   /// scale.
   drawGraphicGrid(glucMax: number, graphHeight: number, graphWidth: number, vertCvs: any[], horzCvs: any[],
                   horzStack: any[], vertStack: any[], params?:
-                    { glucScale?: number, graphBottom?: number, horzfs: number, vertfs: number }): GridData {
-    params ??= {glucScale: null, graphBottom: null, horzfs: null, vertfs: null};
+                    { glucScale?: number, graphBottom?: number, horzfs?: number, vertfs?: number }): GridData {
+    params ??= {};
     params.glucScale ??= 0.0;
     params.graphBottom ??= 0.0;
     params.horzfs ??= this.fs(8);
@@ -1808,7 +1809,7 @@ export abstract class BasePrint extends FormConfig {
     ret.glucScale = params.glucScale == 0.0
       ? GLOBALS.glucMGDL
         ? 50
-        : 18.02 * 1
+        : 18.02
       : params.glucScale;
     ret.gridLines = Math.ceil(glucMax / ret.glucScale);
 
@@ -2069,8 +2070,6 @@ export abstract class BasePrint extends FormConfig {
 
   getFormPages(repData: ReportData, currentSize: number): Observable<PageData[]> {
     this.repData = repData;
-    const m0 = [this.cm(0), this.cm(0), this.cm(0), this.cm(0)];
-    const joins = {};
     return this.ps.collectBase64Images(this.imgList).pipe(map(list => {
       for (const entry of list) {
         this.images[entry.id] = entry.url;
@@ -2173,20 +2172,20 @@ export abstract class BasePrint extends FormConfig {
           new PageData(this.isPortrait, [
             {
               margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
-              text: 'Fehler bei Erstellung von "${title}"',
+              text: `Fehler bei Erstellung von "${this.title}"`,
               fontSize: this.fs(20),
               alignment: 'center',
               color: 'red'
             },
             {
               margin: [this.cmx(1.0), this.cmy(0.0), this.cmx(1.0), this.cmy(0)],
-              text: '\n$ex',
+              text: `\n${ex}`,
               fontSize: this.fs(10),
               alignment: 'left'
             },
             {
               margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
-              text: '\n$s',
+              text: `\n${(ex as any)?.stack}`,
               fontSize: this.fs(10),
               alignment: 'left'
             }
@@ -2228,7 +2227,7 @@ export abstract class BasePrint extends FormConfig {
     */
 
   drawScaleIE(xo: number, yo: number, graphHeight: number, top: number, min: number, max: number, colWidth: number,
-              horzCvs: any, vertStack: any, steps: StepData[], display: (i: number, step: number, value?: number) => void) {
+              horzCvs: any, vertStack: any, steps: StepData[], display: (i: number, step: number, value?: number) => string) {
     let step = 0.1;
     for (const entry of steps) {
       if (max - min > entry.min) {
@@ -2332,7 +2331,7 @@ export abstract class BasePrint extends FormConfig {
       horzCvs,
       vertStack,
       [this.S(10, 2.0), this.S(7, 1.0), this.S(3, 0.5), this.S(1.5, 0.2), this.S(0, 0.1)],
-      (i, step, value) => {
+      (i, step, value): string => {
         return `${GLOBALS.fmtNumber(value ?? minIob + i * step, 1)} ${this.msgInsulinUnit}`
       });
     for (let i = 0; i < ptsIob.length; i++) {

@@ -8,11 +8,12 @@ import {ReportData} from '@/_model/report-data';
 import {FormConfig} from '@/forms/form-config';
 import {Utils} from '@/classes/utils';
 import {forkJoin, map, Observable, of} from 'rxjs';
+import {NightscoutService} from '@/_services/nightscout.service';
 
 export class PdfData {
   isPrinted = false;
 
-  constructor(pdf: any) {
+  constructor(public pdf: any) {
   }
 }
 
@@ -27,7 +28,8 @@ export class PdfService {
   images: any;
 
   constructor(public http: HttpClient,
-              public ps: ProgressService) {
+              public ps: ProgressService,
+              public ns: NightscoutService) {
   }
 
   get msgCreatingPDF(): string {
@@ -36,6 +38,18 @@ export class PdfService {
 
   get msgPreparingPDF(): string {
     return $localize`Lade die Basisdaten...`;
+  }
+
+  get msgLoadingDataError(): string {
+    return $localize`Fehler beim Laden der Daten`;
+  }
+
+  get msgShowPDF(): string {
+    return $localize`PDF anzeigen`;
+  }
+
+  msgLoadingData(error: string, stacktrace: string): string {
+    return $localize`Fehler beim Laden der Daten:\n${error}\n${stacktrace}`;
   }
 
   async loadPdfMaker() {
@@ -47,30 +61,31 @@ export class PdfService {
     }
   }
 
-  generatePdf(repData: ReportData, isForThumbs = false): void {
+  async generatePdf(isForThumbs = false) {
     // GLOBALS.save(skipReload: isForThumbs);
     this.pdfList = [];
     this.ps.progressMax = 1;
     this.ps.progressValue = 0;
     this.ps.progressText = this.msgPreparingPDF;
+    const repData = await this.ns.loadData(isForThumbs);
 //        loadData(isForThumbs).then((ReportData src) async {
     GLOBALS.isCreatingPDF = true;
     try {
       this.ps.progressMax = 1;
       this.ps.progressValue = 0;
       this.ps.progressText = this.msgCreatingPDF;
-      // if (src.error != null) {
-      //   if (GLOBALS.isDebug) {
-      //     Log.info.addError(this.msgLoadingData(src.error.toString(), src.error.stackTrace.toString()));
-      //   } else {
-      //     g.info.addError(msgLoadingDataError);
-      //   }
-      //   g.isCreatingPDF = false;
-      //   return;
-      // }
+      if (repData.error != null) {
+        if (Log.mayDebug) {
+          Log.error(this.msgLoadingData(repData.error.toString(), repData.error.stack.toString()));
+        } else {
+          Log.error(this.msgLoadingDataError);
+        }
+        GLOBALS.isCreatingPDF = false;
+        return;
+      }
       this.ps.progressValue = this.ps.progressMax + 1;
-      let docLen = 0;
-      let prevPage: PageData = null;
+      // let docLen = 0;
+      // let prevPage: PageData = null;
       let listConfig: FormConfig[] = [];
       if (isForThumbs) {
         for (let cfg of GLOBALS.listConfigOrg) {
@@ -99,11 +114,9 @@ export class PdfService {
       }
       const cfgList: Observable<any>[] = [];
       let idx = 0;
-      console.log(Utils.jsonize(repData));
       for (const cfg of listConfig) {
         cfgList.push(this.collectPages(cfg, idx++, isForThumbs, repData));
       }
-      console.log((repData));
       forkJoin(cfgList).subscribe((dataList: { idx: number, docList: any[] }[]) => {
         // pdfMake.Styles styles = pdfMake.Styles();
         // pdfMake.PDFContent pdf = pdfMake.PDFContent(content: [doc], styles: styles);
@@ -118,6 +131,7 @@ export class PdfService {
           Utils.pushAll(docList, data.docList);
         }
         if (docList.length > 1) {
+          console.log('länge', docList.length);
           const pdfData: any = docList[0];
           for (let i = 1; i < docList.length; i++) {
             pdfData.content.push([{
@@ -127,8 +141,7 @@ export class PdfService {
               pageOrientation: listConfig[i].form.isPortrait ? 'portrait' : 'landscape'
             }, docList[i].content]);
           }
-          this._generatePdf(pdfData);
-          Log.debug(pdfData);
+          this.makePdf(pdfData);
           return;
           // this.pdfList = [];
           // let pdfDoc: any = null;
@@ -154,8 +167,7 @@ export class PdfService {
         } else {
           this.pdfDoc = docList[0];
         }
-        console.log(this.pdfDoc);
-        this._generatePdf(this.pdfDoc);
+        this.makePdf(this.pdfDoc);
       });
       // if (!g.isDebug) {
       //   if (g.msg.text.isEmpty) {
@@ -195,8 +207,8 @@ export class PdfService {
     return forkJoin(listObservables);
   }
 
-  private checkCfg(cfg: FormConfig): boolean {
-    return cfg.checked && (!cfg.form.isDebugOnly || GLOBALS.isDebug) && (!cfg.form.isLocalOnly || GLOBALS.isLocal);
+  showPdf(data: any) {
+    this._generatePdf(data);
   }
 
   private collectPages(cfg: FormConfig, idx: number, isForThumbs: boolean, repData: ReportData): Observable<{ idx: number, docList: any[] }> {
@@ -205,7 +217,7 @@ export class PdfService {
 
     const form = cfg.form;
     let prevPage: PageData;
-    if (this.checkCfg(cfg) || isForThumbs) {
+    if (this.ns.checkCfg(cfg) || isForThumbs) {
       const docLen = JSON.stringify(doc ?? {}).length;
       const gmiSave = GLOBALS.glucMGDLIdx;
       if (isForThumbs) {
@@ -301,20 +313,29 @@ export class PdfService {
     //        prevForm = form;
   }
 
+  private makePdf(data: any) {
+    if (Log.mayDebug) {
+      Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
+      Log.displayLink('playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
+      return;
+    }
+    this._generatePdf(data);
+  }
+
   private async _generatePdf(data: any) {
     if (data == null) {
       Log.error('Es sind keine Seiten vorhanden');
       return;
     }
     await this.loadPdfMaker();
-    this.pdfMake.createPdf(data).open();
+    // pdfmake changes the
+    this.pdfMake.createPdf(JSON.parse(JSON.stringify(data))).open();
   }
 
   private collectBase64Image(id: string): Observable<{ id: string, url: string }> {
     const req = new HttpRequest('GET', `assets/img/${id}.png`,
       null,
       {responseType: 'arraybuffer'});
-    let data: any = null;
     return this.http.request(req)
       .pipe(map(data => {
         return {id: id, url: `data:image/png;base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
