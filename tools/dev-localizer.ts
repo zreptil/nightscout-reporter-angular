@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {MessageId, TargetMessage} from '@angular/localize/src/utils';
+// @ts-ignore
 import xliff from 'xliff';
 
 // const fileList = [];
@@ -55,7 +56,7 @@ function parseTranslationsForLocalize(xml: string): Promise<Record<MessageId, Ta
               console.error('Fehler bei', elem);
             }
             result[current] = elem.map?.((entry: string | { [key: string]: any }) => {
-              return typeof entry === 'string' ? entry : '{$' + entry.Standalone.id + '}';
+              return typeof entry === 'string' ? entry : '{$' + entry['Standalone'].id + '}';
 //              return typeof entry === 'string' ? entry : '{$' + entry.Standalone['equiv-text'] + '}';
             }).map((entry: string) => {
               return entry;
