@@ -11,7 +11,7 @@ div[header] {
   align-items: center;
 }
 
-footer {
+mat-dialog-actions {
   background-color: var(--legalHeaderBack);
   color: var(--legalHeaderFore);
 
@@ -20,7 +20,7 @@ footer {
   }
 }
 
-.root {
+mat-dialog-content {
   padding: 1em;
   font-size: 1.2em;
   color: var(--legalBodyFore);

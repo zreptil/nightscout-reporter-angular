@@ -68,14 +68,13 @@ export class PdfService {
     this.ps.progressValue = 0;
     this.ps.progressText = this.msgPreparingPDF;
     const repData = await this.ns.loadData(isForThumbs);
-//        loadData(isForThumbs).then((ReportData src) async {
     GLOBALS.isCreatingPDF = true;
     try {
       this.ps.progressMax = 1;
       this.ps.progressValue = 0;
       this.ps.progressText = this.msgCreatingPDF;
       if (repData.error != null) {
-        if (Log.mayDebug) {
+        if (GLOBALS.isDebug) {
           Log.error(this.msgLoadingData(repData.error.toString(), repData.error.stack.toString()));
         } else {
           Log.error(this.msgLoadingDataError);
@@ -314,7 +313,7 @@ export class PdfService {
   }
 
   private makePdf(data: any) {
-    if (Log.mayDebug) {
+    if (GLOBALS.isDebug) {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
       Log.displayLink('playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
       return;

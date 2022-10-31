@@ -10,4 +10,5 @@ rem call node_modules\\.bin\\ngc -p tsconfig.i18n.json
 rem call npx localize-extract --format=legacy-migrate --source=./dist/out-i18n/**/*.js --outputPath=./messages.json
 
 rem node_modules\\.bin\\localize-extract -l de-DE -s ./dist/out-i18n/**/*.js -f xlf -o src/locale/messages.de-DE.xlf
-ng extract-i18n
+call ng extract-i18n --output-path src/locale --out-file messages.de-DE.xlf
+pause

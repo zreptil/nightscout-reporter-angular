@@ -9,7 +9,7 @@
     </button>
   </ng-container>
 </div>
-<ng-container *ngFor="let type of ['error', 'info', 'debug']">
+<ng-container *ngFor="let type of ['error', 'info', 'debug', 'warn', 'todo']">
   <div *ngIf="showType(type)" [class]="type" content>
     <button (click)="onClickDelete($event, type)" mat-flat-button>
       <mat-icon>delete</mat-icon>

@@ -55,15 +55,14 @@ export class WatchElement {
   static fromJson(json: any): WatchElement {
     const ret = new WatchElement();
     try {
-      ret.type = json['t'] ?? 'nl';
-      ret.size = json['s'] ?? 1;
-      ret.bold = json['b'] ?? false;
-      ret.italic = json['i'] ?? false;
-      ret.selected = json['selected'] ?? false;
-      ret.vertical = json['v'] ?? 1;
+      ret.type = json.t ?? 'nl';
+      ret.size = json.s ?? 1;
+      ret.bold = json.b ?? false;
+      ret.italic = json.i ?? false;
+      ret.selected = json.selected ?? false;
+      ret.vertical = json.v ?? 1;
     } catch (ex) {
-      const msg = ex.toString();
-      Log.debug(`Fehler bei WatchElement.fromJson: ${msg}`);
+      Log.devError(ex, `Fehler bei WatchElement.fromJson`);
     }
     return ret;
   }

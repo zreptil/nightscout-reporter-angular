@@ -67,7 +67,7 @@ export class DatepickerPeriod {
   get dayCount(): number {
     let ret = 0;
     if (this.start != null && this.end != null) {
-      ret = Utils.differenceInSeconds(new Date(this.end.getFullYear(), this.end.getMonth(), this.end.getDay()),
+      ret = Utils.differenceInSeconds(new Date(this.end.getFullYear(), this.end.getMonth(), this.end.getDate()),
         new Date(this.start.getFullYear(), this.start.getMonth(), this.start.getDate())) + 1;
     }
     return ret;
@@ -98,7 +98,7 @@ export class DatepickerPeriod {
 
     let beg = this.start;
     while (beg != null && this.end != null && Utils.isOnOrBefore(beg, this.end)) {
-      if (this.isDowActive(beg.getDay())) {
+      if (this.isDowActive(Utils.getDow(beg))) {
         return false;
       }
       beg = Utils.addDateDays(beg, 1);
@@ -132,19 +132,19 @@ export class DatepickerPeriod {
   }
 
   static monthName(date: Date): string {
-    return date != null ? DatepickerPeriod.monthNames[date.getMonth() - 1] : '';
+    return date != null ? DatepickerPeriod.monthNames[date.getMonth()] : '';
   }
 
   static monthShortName(date: Date): string {
-    return date != null ? DatepickerPeriod.monthShortNames[date.getMonth() - 1] : '';
+    return date != null ? DatepickerPeriod.monthShortNames[date.getMonth()] : '';
   }
 
   static dowName(date: Date): string {
-    return date != null ? DatepickerPeriod.dowNames[date.getDay() - 1] : '';
+    return date != null ? DatepickerPeriod.dowNames[Utils.getDow(date)] : '';
   }
 
   static dowShortName(date: Date): string {
-    return date != null ? DatepickerPeriod.dowShortNames[date.getDay() - 1] : '';
+    return date != null ? DatepickerPeriod.dowShortNames[Utils.getDow(date)] : '';
   }
 
   _shiftBy(ret: Date, months: number): Date {

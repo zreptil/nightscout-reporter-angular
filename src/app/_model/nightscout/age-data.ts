@@ -16,11 +16,11 @@ export class AgeData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.display = JsonData.toText(json['display']);
-    ret.warn = JsonData.toNumber(json['warn']);
-    ret.urgent = JsonData.toNumber(json['urgent']);
-    ret.info = JsonData.toNumber(json['info']);
-    ret.enableAlerts = JsonData.toBool(json['enableAlerts']);
+    ret.display = JsonData.toText(json.display);
+    ret.warn = JsonData.toNumber(json.warn);
+    ret.urgent = JsonData.toNumber(json.urgent);
+    ret.info = JsonData.toNumber(json.info);
+    ret.enableAlerts = JsonData.toBool(json.enableAlerts);
     return ret;
   }
 }

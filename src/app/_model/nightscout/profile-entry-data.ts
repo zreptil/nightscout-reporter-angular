@@ -106,13 +106,13 @@ export class ProfileEntryData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret._time = JsonData.toTime(json['time']);
+    ret._time = JsonData.toTime(json.time);
     if (ret._time.getHours() < 24 - timeshift) {
       ret._time.setHours(ret._time.getHours() + timeshift);
     } else {
       ret._time.setHours(ret._time.getHours() + timeshift - 24);
     }
-    ret.value = JsonData.toNumber(json['value']);
+    ret.value = JsonData.toNumber(json.value);
     if (ret.value != null) {
       if (isReciprocal) {
         if (percentage > 0) {
@@ -124,7 +124,7 @@ export class ProfileEntryData extends JsonData {
         ret.value *= percentage;
       }
     }
-    ret.timeAsSeconds = JsonData.toNumber(json['timeAsSeconds']);
+    ret.timeAsSeconds = JsonData.toNumber(json.timeAsSeconds);
     return ret;
   }
 

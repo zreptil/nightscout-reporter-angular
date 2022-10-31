@@ -23,7 +23,7 @@ export class StorageService {
       }
       ret = localStorage.getItem(key);
       if (ret == 'null' || ret == null) {
-        ret = '';
+        ret = asJson ? '{}' : '';
       }
       if (asJson) {
         ret = JSON.parse(ret);
@@ -43,6 +43,26 @@ export class StorageService {
       localStorage.removeItem(key);
     } else {
       localStorage.setItem(key, value);
+    }
+  }
+
+  clearStorage(): void {
+    if (Settings.skipStorageClear) {
+      return;
+    }
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const key = window.localStorage.key(i);
+      let doKill = false;
+      doKill = key.startsWith(Settings.betaPrefix);
+      if (!GLOBALS.isBeta) {
+        doKill = !doKill;
+      }
+      if (key.endsWith(Settings.WebData) || key.endsWith(Settings.DebugFlag)) {
+        doKill = false;
+      }
+      if (doKill) {
+        window.localStorage.removeItem(key);
+      }
     }
   }
 }

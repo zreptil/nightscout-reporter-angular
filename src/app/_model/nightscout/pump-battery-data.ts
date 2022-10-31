@@ -19,8 +19,8 @@ export class PumpBatteryData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.status = JsonData.toText(json['status']);
-    ret.voltage = JsonData.toNumber(json['voltage']);
+    ret.status = JsonData.toText(json.status);
+    ret.voltage = JsonData.toNumber(json.voltage);
     return ret;
   }
 }

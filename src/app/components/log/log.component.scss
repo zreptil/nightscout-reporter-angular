@@ -88,6 +88,22 @@
   }
 }
 
+.todo {
+  font-style: italic;
+  color: var(--logTodoFore);
+  background-color: var(--logTodoBack);
+
+  button {
+    color: var(--logTodoFore);
+  }
+
+  [lines] {
+    div:not(:last-child) {
+      border-bottom-color: var(--logTodoBorder);
+    }
+  }
+}
+
 .debug {
   color: var(--logDebugFore);
   background: var(--logDebugBack);

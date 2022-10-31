@@ -6,9 +6,20 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div class="root" mat-dialog-content>
-  <h2><span i18n="version">Version</span><span i18n="v302">3.0.2 - 22.09.2022</span></h2>
-  <ul>
+<mat-dialog-content class="root">
+  <h2 (click)="click(40.0)">
+    <mat-icon>{{iconFor(40.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v400">4.0.0 - xx.xx.2022</span></h2>
+  <ul [class]="classFor(40.0)">
+    <li class="added" i18n="v400a1">
+      In Night-Watch kann man nun einen Nachtmodus aktivieren, in dem der Hintergrund schwarz
+      ist und die Farben des Textes den aktuellen Wert bezüglich des Zielbereichs darstellen.
+    </li>
+  </ul>
+  <h2 (click)="click(30.2)">
+    <mat-icon>{{iconFor(30.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v302">3.0.2 - 22.09.2022</span></h2>
+  <ul [class]="classFor(30.2)">
     <li class="added" i18n="v302a1">
       In Night-Watch gibt es nun die Möglichkeit, die Einstellungen aufzurufen, wenn man den
       Editor aktiviert hat.
@@ -18,8 +29,10 @@
       ist und die Farben des Textes den aktuellen Wert bezüglich des Zielbereichs darstellen.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v301">3.0.1 - 26.08.2022</span></h2>
-  <ul>
+  <h2 (click)="click(30.1)">
+    <mat-icon>{{iconFor(30.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v301">3.0.1 - 26.08.2022</span></h2>
+  <ul [class]="classFor(30.1)">
     <li class="changed" i18n="v301c1">
       Die Einstellung für die Anpassung von BG_TARGET_BOTTOM und BG_TARGET_TOP ist nun unabhängig
       von der Auswahl "Glucosewerte anpassen". Damit kann man die Option umschalten, ohne den
@@ -31,8 +44,10 @@
       aber nun kann Night-Watch auch damit umgehen.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v300">3.0.0 - 21.08.2022</span></h2>
-  <ul>
+  <h2 (click)="click(30.0)">
+    <mat-icon>{{iconFor(30.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v300">3.0.0 - 21.08.2022</span></h2>
+  <ul [class]="classFor(30.0)">
     <li class="added">
       <ng-container i18n="v300a1">
         Eine neue Ansicht namens <i>Night-Watch</i> wurde hinzugefügt. In dieser Ansicht sieht man, so
@@ -86,8 +101,10 @@
       für alle Benutzer die gewohnte Funktionalität bietet.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v222">2.2.2 - 10.08.2022</span></h2>
-  <ul>
+  <h2 (click)="click(22.2)">
+    <mat-icon>{{iconFor(22.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v222">2.2.2 - 10.08.2022</span></h2>
+  <ul [class]="classFor(22.2)">
     <li class="added" i18n="v222a1">
       Die Glukosewerte können nun mit einem Faktor korrigiert werden, der sich aus dem im Labor ermittelten
       und errechneten HbA1C Wert ergibt. Dieser Faktor betrifft alle Sensorwerte, die in Nightscout Reporter
@@ -98,28 +115,36 @@
       Das hat auf jedem PDF Auswirkungen auf dem Glukosewerte verarbeitet werden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v221">2.2.1 - 01.05.2022</span></h2>
-  <ul>
+  <h2 (click)="click(22.1)">
+    <mat-icon>{{iconFor(22.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v221">2.2.1 - 01.05.2022</span></h2>
+  <ul [class]="classFor(22.1)">
     <li class="fixed" i18n="v221f1">
       Der Wert für die mittlere Glukose bei gesunden Menschen im CGM wurde auf die korrekten 90 mg/dl korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v220">2.2.0 - 03.03.2022</span></h2>
-  <ul>
+  <h2 (click)="click(22.0)">
+    <mat-icon>{{iconFor(22.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v220">2.2.0 - 03.03.2022</span></h2>
+  <ul [class]="classFor(22.0)">
     <li class="added" i18n="v220a1">
       Wenn in Nightscout die Daten für die täglich erzielten Schritte vorhanden sind, dann werden
       diese in der Tagesgrafik angezeigt, wenn dort die Option "Bewegung anzeigen" aktiviert ist.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v210">2.1.0 - 09.12.2021</span></h2>
-  <ul>
+  <h2 (click)="click(21.0)">
+    <mat-icon>{{iconFor(21.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v210">2.1.0 - 09.12.2021</span></h2>
+  <ul [class]="classFor(21.0)">
     <li class="added" i18n="v210a1">
       In den Optionen zur Tagesgrafik gibt es jetzt die Möglichkeit, den oberen Wert für die Kohlenhydrate
       festzulegen. Das kann bei hohen COB-Werten die Skalierung verbessern.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v2012">2.0.12 - 07.12.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.12)">
+    <mat-icon>{{iconFor(20.12)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v2012">2.0.12 - 07.12.2021</span></h2>
+  <ul [class]="classFor(20.1)">
     <li class="added" i18n="v2012a1">
       In AAPS 3.0 wird ändert sich einiges an den Datenstrukturen und Datenmengen, die gespeichert werrden.
       Das verursacht in Nightscout Reporter an einigen Stellen Probleme, die sich nicht generell lösen lassen,
@@ -134,8 +159,10 @@
       und ermöglichen dadurch die Erstellung des PDFs. Diese Profil-Switches sind dann in den PDFs nicht mehr sichtbar.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v2011">2.0.11 - 26.11.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.11)">
+    <mat-icon>{{iconFor(20.11)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v2011">2.0.11 - 26.11.2021</span></h2>
+  <ul [class]="classFor(20.11)">
     <li class="added" i18n="v2011a1">
       Es ist in der Kachelansicht jetzt möglich, Formulare zu duplizieren, um verschiedene Ansichten des
       gleichen Formulars auf einmal zu erzeugen. Dazu gibt es rechts unten auf den Kacheln ein Kopier-Icon.
@@ -156,8 +183,10 @@
       wird ein Text ausgegeben, der erklärt, wo man das einstellen kann.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v2010">2.0.10 - 07.11.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.10)">
+    <mat-icon>{{iconFor(20.10)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v2010">2.0.10 - 07.11.2021</span></h2>
+  <ul [class]="classFor(20.10)">
     <li class="added" i18n="v2010a1">
       In der Tabelle im Glukose Perzentil Diagramm kann man nun zwei neue Spalten ausgeben lassen. Diese
       beinhalten die durchschnittlichen Kohlenhydrate und Insulineinheiten.
@@ -171,8 +200,10 @@
       verwendet werden heller dargestellt, um die Lesbarkeit zu erhöhen.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v209">2.0.9 - 11.08.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.9)">
+    <mat-icon>{{iconFor(20.9)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v209">2.0.9 - 11.08.2021</span></h2>
+  <ul [class]="classFor(20.9)">
     <li class="added" i18n="v209a1">
       In der Tagesgrafik kann man nun die temporären Overrides von iLoop auch anzeigen lassen.
       Es wird der Grund angezeigt. Für genauere Informationen kann das so wie bisher auch im
@@ -186,8 +217,10 @@
       zu den Zielbereichen im gesamten Programm identisch sein.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v208">2.0.8 - 09.06.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.8)">
+    <mat-icon>{{iconFor(20.8)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v208">2.0.8 - 09.06.2021</span></h2>
+  <ul [class]="classFor(20.8)">
     <li class="added" i18n="v208a1">
       Es gibt ein neues Formular namens "Verteilung der Glucosewerte". Das zeigt die prozentuale
       Verteilung der Glukosewerte für den ausgewählen Zeitraum an.
@@ -197,8 +230,10 @@
       zusätzlich angezeigt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v207">2.0.7 - 17.04.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.7)">
+    <mat-icon>{{iconFor(20.7)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v207">2.0.7 - 17.04.2021</span></h2>
+  <ul [class]="classFor(20.7)">
     <li class="added" i18n="v207a1">
       Bei der Festlegung des Zeitraums kann man jetzt angeben, bis zu welchem Tag der Zeitraum
       ermittelt werden soll. Voreingestellt ist so wie bisher auch der aktuelle Tag. Man kann
@@ -232,8 +267,10 @@
       Ausgabe verwendet hat.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v206">2.0.6 - 17.03.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.6)">
+    <mat-icon>{{iconFor(20.6)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v206">2.0.6 - 17.03.2021</span></h2>
+  <ul [class]="classFor(20.6)">
     <li class="added" i18n="v206a1">
       Nachdem ich immer wieder gefragt wurde, ob man mir eine Spende zukommen lassen kann, habe ich mich jetzt
       dann doch dazu entschlossen, so eine Möglichkeit zur Verfügung zu stellen. Nightscout Reporter ist aber
@@ -251,8 +288,10 @@
       Ein Fehler bei der Ausgabe der temporären Ziele in der Tagesgrafik wurde behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v205">2.0.5 - 07.03.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.5)">
+    <mat-icon>{{iconFor(20.5)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v205">2.0.5 - 07.03.2021</span></h2>
+  <ul [class]="classFor(20.5)">
     <li class="added" i18n="v205a1">
       In der Tagesstatistik können nun Spalten für TDD und Kohlenhydrate angezeigt werden.
     </li>
@@ -264,8 +303,10 @@
       falsch in den Optionen Formularauswahl dargestellt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v204">2.0.4 - 18.02.2021</span></h2>
-  <ul>
+  <h2 (click)="click(20.4)">
+    <mat-icon>{{iconFor(20.4)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v204">2.0.4 - 18.02.2021</span></h2>
+  <ul [class]="classFor(20.4)">
     <li class="added" i18n="v204a1">
       Es gibt eine neue Option in der Tagesgrafik mit der man den Zielwert ein- und ausblenden
       kann.
@@ -275,8 +316,10 @@
       kein PDF mehr erstellt werden konnte.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v203">2.0.3 - 18.10.2020</span></h2>
-  <ul>
+  <h2 (click)="click(20.3)">
+    <mat-icon>{{iconFor(20.3)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v203">2.0.3 - 18.10.2020</span></h2>
+  <ul [class]="classFor(20.3)">
     <li class="added" i18n="v203a1">
       In den Ausgabeparametern gibt es eine Checkbox, mit der man dafür sorgen kann, dass alle Optionen,
       die auf einen Loop hinweisen würden, für diese Ausgabe deaktiviert werden. Das sind die Optionen,
@@ -290,8 +333,10 @@
       Die Anzeige der Bilder auf Kacheln wird nun wie vorgesehen korrekt in den Einstellungen vorbelegt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v202">2.0.2 - 22.9.2020</span></h2>
-  <ul>
+  <h2 (click)="click(20.2)">
+    <mat-icon>{{iconFor(20.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v202">2.0.2 - 22.9.2020</span></h2>
+  <ul [class]="classFor(20.2)">
     <li class="added" i18n="v202a1">
       Es gibt jetzt kleine Hilfebuttons bei den Formularen. In der Listenansicht ersetzen sie die Icons zum Ziehen der
       Formulare, in der Kachelansicht werden sie links oben auf den Kacheln dargestellt. Die jeweilige Ansicht kann man im
@@ -314,8 +359,10 @@
       die Möglichkeit, die Anzahl der Datensätze, die aus der Profiltabelle geladen werden einzuschränken.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v201">2.0.1 - 8.9.2020</span></h2>
-  <ul>
+  <h2 (click)="click(20.1)">
+    <mat-icon>{{iconFor(20.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v201">2.0.1 - 8.9.2020</span></h2>
+  <ul [class]="classFor(20.1)">
     <li class="added" i18n="v201a1">
       Im Protokoll werden nun auch temporäre Overrides ausgegeben, die von iOSLoop in die Behandlungsdaten eingetragen werden.
     </li>
@@ -340,8 +387,10 @@
       Ein Fehler wurde behoben, der dafür sorgte, dass temporäre Ziele in der Tagesgrafik mit zeitlicher Verschiebung angezeigt wurden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v200">2.0.0 - 15.7.2020</span></h2>
-  <ul>
+  <h2 (click)="click(20.0)">
+    <mat-icon>{{iconFor(20.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v200">2.0.0 - 15.7.2020</span></h2>
+  <ul [class]="classFor(20.0)">
     <li class="added" i18n="v200a1">
       Auf der Seite Protokoll werden jetzt auch Insulinabgaben angezeigt, die z.B. über xdrip eingegeben wurden.
     </li>
@@ -387,8 +436,10 @@
       Im CGP wurden die Skalenbeschriftungen korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v149">1.4.9 - 16.6.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.9)">
+    <mat-icon>{{iconFor(14.9)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v149">1.4.9 - 16.6.2020</span></h2>
+  <ul [class]="classFor(14.9)">
     <li class="added" i18n="v149a1">
       Im Dialog der Ausgabe Parameter gibt es nun die Möglichkeit, das CGP immer mit dem Standard Zielbereich zu
       erzeugen. Diese Option ist anfangs eingeschaltet, da das CGP ein standardisiertes Formular ist, das gerne
@@ -399,8 +450,10 @@
       Bei der Profilermittlung wurde manchmal der letzte Profilwechsel ignoriert. Das ist nun behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v148">1.4.8 - 12.6.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.8)">
+    <mat-icon>{{iconFor(14.8)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v148">1.4.8 - 12.6.2020</span></h2>
+  <ul [class]="classFor(14.8)">
     <li class="added" i18n="v148a1">
       Im Dialog der Ausgabe Parameter wurde rechts oben der Schieberegler "zu Vergleichszwecken" hinzugefügt. Wenn dieser
       aktiviert ist, dann wird überall der Standard Zielbereich verwendet. Intern wird das auch noch für andere Anpassungen
@@ -408,8 +461,10 @@
       zum Beispiel zur Vorlage bei Ärzten und Diabetesberatern sinnvoll.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v147">1.4.7 - 5.6.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.7)">
+    <mat-icon>{{iconFor(14.7)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v147">1.4.7 - 5.6.2020</span></h2>
+  <ul [class]="classFor(14.7)">
     <li class="changed" i18n="v147c1">
       In den Ausgabe Parametern kann nun angegeben werden, ob immer der neueste Tag zuerst
       angezeigt wird. Das hat Auswirkungen auf die Tagesgrafik, die Tagesstatistik und die
@@ -424,8 +479,10 @@
       Die Überschrift über der Tabelle vom Glucose Perzentil Diagramm wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v146">1.4.6 - 26.5.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.6)">
+    <mat-icon>{{iconFor(14.6)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v146">1.4.6 - 26.5.2020</span></h2>
+  <ul [class]="classFor(14.6)">
     <li class="added" i18n="v146a1">
       Die Legende der Tagesgrafik wurde um den Eintrag für blutige Messungen erweitert.
     </li>
@@ -437,8 +494,10 @@
       Ein möglicher Absturz bei der Ausgabe des CGP bei der Tagesgrafik wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v145">1.4.5 - 20.4.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.5)">
+    <mat-icon>{{iconFor(14.5)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v145">1.4.5 - 20.4.2020</span></h2>
+  <ul [class]="classFor(14.5)">
     <li class="added" i18n="v145a1">
       In dem Dialog mit den Ausgabe Parametern wurde die Option hinzugefügt, die Genauigkeit der Ausgabe von
       Basalangaben festzulegen. Diese wird normalerweise aus den Angaben zur Basalrate in den Profilen
@@ -457,8 +516,10 @@
       Mittelwerten zeigten.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v144">1.4.4 - 6.4.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.4)">
+    <mat-icon>{{iconFor(14.4)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v144">1.4.4 - 6.4.2020</span></h2>
+  <ul [class]="classFor(14.4)">
     <li class="added" i18n="v144a1">
       Die Legende der Tagesgrafik wurde um den Eintrag für Bewegung erweitert.
     </li>
@@ -469,15 +530,19 @@
       Die Farbe für Bewegung in der Tagesgrafik wurde geändert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v143">1.4.3 - 26.3.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.3)">
+    <mat-icon>{{iconFor(14.3)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v143">1.4.3 - 26.3.2020</span></h2>
+  <ul [class]="classFor(14.3)">
     <li class="fixed" i18n="v143f1">
       Die Analysewerte wurden nicht ganz korrekt ermittelt. Das wurde korrigiert und nun sollten die
       statistischen Daten über den Zeitraum richtig ausgewertet werden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v142">1.4.2 - 16.3.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.2)">
+    <mat-icon>{{iconFor(14.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v142">1.4.2 - 16.3.2020</span></h2>
+  <ul [class]="classFor(14.2)">
     <li class="changed" i18n="v142c1">
       Beim Laden der Behandlungsdaten werden doppelte Datensätze herausgefiltert.
     </li>
@@ -486,8 +551,10 @@
       Der Fehler wurde behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v141">1.4.1 - 13.3.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.1)">
+    <mat-icon>{{iconFor(14.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v141">1.4.1 - 13.3.2020</span></h2>
+  <ul [class]="classFor(14.1)">
     <li class="added" i18n="v141a1">
       Beim Perzentil Diagramm gibt es eine neue Option, mit der man die Basalrate unter dem Diagramm
       anzeigen lassen kann. Da das Diagramm normalerweise einen grösseren Zeitraum umspannt, wird dort
@@ -498,8 +565,10 @@
       aufgerufen werden konnten.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v14">1.4 - 28.2.2020</span></h2>
-  <ul>
+  <h2 (click)="click(14.0)">
+    <mat-icon>{{iconFor(14.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v14">1.4 - 28.2.2020</span></h2>
+  <ul [class]="classFor(14.0)">
     <li class="added" i18n="v14a1">
       Es gibt ein neues PDF namens Tagestrend. Dieses zeigt die Werte eines Tages zusammen mit dem Trend zu jeder
       vollen Stunde, sowie der eingestellten Basalrate aus dem Profil. Das ist eine gute Übersicht für
@@ -552,8 +621,10 @@
       korrekt ausgegeben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v138">1.3.8 - 9.1.2020</span></h2>
-  <ul>
+  <h2 (click)="click(13.8)">
+    <mat-icon>{{iconFor(13.8)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v138">1.3.8 - 9.1.2020</span></h2>
+  <ul [class]="classFor(13.8)">
     <li class="added" i18n="v138a1">
       Die Bilder auf den Kacheln sind nun in der jeweiligen Sprache beschriftet.
     </li>
@@ -567,8 +638,10 @@
       Blutige Werte sollten jetzt auch bei mmol-Daten korrekt in der Tagesgrafik angezeigt werden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v137">1.3.7 - 7.1.2020</span></h2>
-  <ul>
+  <h2 (click)="click(13.7)">
+    <mat-icon>{{iconFor(13.7)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v137">1.3.7 - 7.1.2020</span></h2>
+  <ul [class]="classFor(13.7)">
     <li class="added" i18n="v137a1">
       Auf der Seite "Stündliche Statistik" gibt es eine neue Option, um auch Spalten mit 10% und 90% anzeigen zu
       lassen.
@@ -589,8 +662,10 @@
       Die meisten Spalten auf der Seite "Stündliche Statistik" werden bei nicht vorhandenen Daten leer gelassen.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v136">1.3.6 - 18.12.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.6)">
+    <mat-icon>{{iconFor(13.6)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v136">1.3.6 - 18.12.2019</span></h2>
+  <ul [class]="classFor(13.6)">
     <li class="added" i18n="v136a1">
       In der Tagesgrafik gibt es die Option, HTML-Notizen zu unterdrücken. Manche Uploader schreiben in die Notizen
       komplette HTML-Seiten rein, was im PDF extrem schlecht darstellbar ist. Deswegen kann man diese mit Setzen
@@ -660,8 +735,10 @@
       Das Problem, dass bestimmte Tage nicht erzeugt werden konnten, wurde behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v135">1.3.5 - 23.09.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.5)">
+    <mat-icon>{{iconFor(13.5)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v135">1.3.5 - 23.09.2019</span></h2>
+  <ul [class]="classFor(13.5)">
     <li class="fixed" i18n="v135f1">
       Ein Fehler in der Zahlenformatierung wurde behoben.
     </li>
@@ -670,8 +747,10 @@
       wurde. Das wurde behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v134">1.3.4 - 17.09.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.4)">
+    <mat-icon>{{iconFor(13.4)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v134">1.3.4 - 17.09.2019</span></h2>
+  <ul [class]="classFor(13.4)">
     <li class="added" i18n="v134a1">
       Im Protokoll können jetzt auch Batteriewechsel der Pumpe angezeigt werden.
     </li>
@@ -682,8 +761,10 @@
       Die Aufsummierung der Werte in der Analyse wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v133">1.3.3 - 12.09.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.3)">
+    <mat-icon>{{iconFor(13.3)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v133">1.3.3 - 12.09.2019</span></h2>
+  <ul [class]="classFor(13.3)">
     <li class="added" i18n="v133a1">
       In der Kachelansicht können die Parameter aller ausgewählten Seiten zusammen in einer Liste eingestellt
       werden. Dazu gibt es im Titelbereich der Parameterliste neben dem Schliessen-Button einen zusätzlichen
@@ -700,8 +781,10 @@
       die Auswahl von CGP bei Tagesgrafiken).
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v132">1.3.2 - 05.09.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.2)">
+    <mat-icon>{{iconFor(13.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v132">1.3.2 - 05.09.2019</span></h2>
+  <ul [class]="classFor(13.2)">
     <li class="added" i18n="v132a1">
       Beim CGP werden die aktuellen Werte jetzt in der Legende angezeigt.
     </li>
@@ -734,8 +817,10 @@
       korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v131">1.3.1 - 22.08.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.1)">
+    <mat-icon>{{iconFor(13.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v131">1.3.1 - 22.08.2019</span></h2>
+  <ul [class]="classFor(13.1)">
     <li class="changed" i18n="v131c1">
       Auf den Seiten Profil und Basalrate wird in der Titelzeile jetzt wieder das Datum angezeigt, ab dem das
       Profil gilt.
@@ -747,8 +832,10 @@
       Temporäre Profilwechsel werden jetzt erkannt und in der Tagesgrafik korrekt angezeigt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v130">1.3.0 - 19.08.2019</span></h2>
-  <ul>
+  <h2 (click)="click(13.0)">
+    <mat-icon>{{iconFor(13.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v130">1.3.0 - 19.08.2019</span></h2>
+  <ul [class]="classFor(13.0)">
     <li class="added" i18n="v130a1">
       Das "Comprehensive Glucose Pentagon" (Umfassendes Glukose Fünfeck) wurde als eigenes PDF und als Zusatzseite
       zur Tagesgrafik und Wochengrafik hinzugefügt. Es handelt sich hierbei um eine Darstellung von fünf
@@ -836,8 +923,10 @@
       Es werden jetzt auch blutige Werte erkannt, die von Loop auf dem IPhone eingetragen werden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v1211">1.2.11 - 17.05.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.11)">
+    <mat-icon>{{iconFor(12.11)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v1211">1.2.11 - 17.05.2019</span></h2>
+  <ul [class]="classFor(12.11)">
     <li class="added" i18n="v1211a1">
       Es gibt jetzt die Möglichkeit, PDFs vergangener Zeiträume zu erzeugen, ohne den Zeitraum anpassen zu müssen.
       Oberhalb des Buttons zur PDF-Erzeugung gibt es zwei Buttons, welche die PDFs für eine frühere Periode
@@ -853,8 +942,10 @@
       Die teilweise falsch zugewiesenen Grenzwerte für die Bereiche (niedrig, normal, hoch) wurden korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v1210">1.2.10 - 18.04.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.10)">
+    <mat-icon>{{iconFor(12.10)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v1210">1.2.10 - 18.04.2019</span></h2>
+  <ul [class]="classFor(12.10)">
     <li class="fixed" i18n="v1210f1">
       Auf der Profilseite wurde die Spalte für die Werte von ICR verbreitert.
     </li>
@@ -867,8 +958,10 @@
       wurde aus der Tagesgrafik entfernt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v129">1.2.9 - 15.04.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.9)">
+    <mat-icon>{{iconFor(12.9)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v129">1.2.9 - 15.04.2019</span></h2>
+  <ul [class]="classFor(12.9)">
     <li class="added" i18n="v129a1">
       Ein Link zur Facebookseite von Nightscout Reporter wurde im Menü hinzugefügt.
     </li>
@@ -876,8 +969,10 @@
       Die Mischung von zwei Seiten auf einer PDF-Seite, die manchmal vorkam, wurde behoben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v128">1.2.8 - 11.04.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.8)">
+    <mat-icon>{{iconFor(12.8)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v128">1.2.8 - 11.04.2019</span></h2>
+  <ul [class]="classFor(12.8)">
     <li class="added" i18n="v128a1">
       Es gibt in den Einstellungen eine neue Option, um den letzten in Nightscout gespeicherten Glukosewert
       in der Titelzeile anzeigen zu lassen. Wenn diese Option aktiviert ist, wird der aktuelle Wert, das
@@ -902,15 +997,19 @@
       Die Aufteilung auf mehrere PDF-Dateien funktioniert jetzt besser.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v127">1.2.7 - 28.03.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.7)">
+    <mat-icon>{{iconFor(12.7)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v127">1.2.7 - 28.03.2019</span></h2>
+  <ul [class]="classFor(12.7)">
     <li class="added" i18n="v127a1">
       Wenn der Zeitraum leer ist, wird der Button für die Auswahl deutlich markiert und in dem Dialog
       zur Auswahl wird in der Titelzeile ein Hinweis darauf angezeigt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v126">1.2.6 - 27.03.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.6)">
+    <mat-icon>{{iconFor(12.6)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v126">1.2.6 - 27.03.2019</span></h2>
+  <ul [class]="classFor(12.6)">
     <li class="added" i18n="v126a1">
       Es ist jetzt möglich, die Wochentage festzulegen, die im Zeitraum berücksichtigt werden sollen. Die
       entsprechenden Tage werden bei der Auswahl des Zeitraums mit den Buttons unterhalb des Monats festgelegt.
@@ -923,8 +1022,10 @@
       wöchentlichen Grafiken und das Glukose Percentil Diagramm.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v125">1.2.5 - 25.03.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.5)">
+    <mat-icon>{{iconFor(12.5)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v125">1.2.5 - 25.03.2019</span></h2>
+  <ul [class]="classFor(12.5)">
     <li class="added" i18n="v125a1">
       Wenn das erzeugte PDF zu gross wird, wird es nun auf mehrere PDF-Dateien aufgeteilt. In diesem Fall wird
       es nicht direkt geöffnet, sondern es wird eine Liste mit durchnummerierten Buttons angezeigt.
@@ -1005,8 +1106,10 @@
       Die fehlerhafte Zentrierung der Auswahlbuttons wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v124">1.2.4 - 12.02.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.4)">
+    <mat-icon>{{iconFor(12.4)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v124">1.2.4 - 12.02.2019</span></h2>
+  <ul [class]="classFor(12.4)">
     <li class="added" i18n="v124a1">
       Es gibt jetzt auch die Möglichkeit, Nightscout Reporter in europäischem Englisch darzustellen.
       Der Unterschied zum amerikanischen Englisch besteht derzeit lediglich im Datumsformat (gb: dd/MM/yyyy, us:
@@ -1043,8 +1146,10 @@
       Rundungsdifferenzen.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v123">1.2.3 - 04.02.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.3)">
+    <mat-icon>{{iconFor(12.3)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v123">1.2.3 - 04.02.2019</span></h2>
+  <ul [class]="classFor(12.3)">
     <li class="changed" i18n="v123c1">
       In der Tagesgraphic werden jetzt Insulinwerte und Kohlenhydratwerte zusammengefasst, wenn es mehrere
       innerhalb einer Stunde gibt. Die Balken werden nach wie vor für jeden Wert einzeln ausgegeben. Auf diese
@@ -1059,14 +1164,18 @@
       Die fehlerhafte Platzierug der blutigen Werte bei mmol/L in der Tagesgrafik wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v122">1.2.2 - 24.01.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.2)">
+    <mat-icon>{{iconFor(12.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v122">1.2.2 - 24.01.2019</span></h2>
+  <ul [class]="classFor(12.2)">
     <li class="fixed" i18n="v122f1">
       Im Profil werden jetzt die richtigen Einheiten verwendet (mg/dL oder mmol/l).
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v121">1.2.1 - 22.01.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.1)">
+    <mat-icon>{{iconFor(12.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v121">1.2.1 - 22.01.2019</span></h2>
+  <ul [class]="classFor(12.1)">
     <li class="added" i18n="v121a1">
       Neue Option im Profil, um fortlaufende Zeiten mit gleichen Werten zu einem Eintrag zusammen zu fassen.
     </li>
@@ -1075,8 +1184,10 @@
       nächste Seite hineingeschrieben. Jetzt wird an geeigneter Stelle eine neue Seite ausgegeben.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v120">1.2.0 - 21.01.2019</span></h2>
-  <ul>
+  <h2 (click)="click(12.0)">
+    <mat-icon>{{iconFor(12.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v120">1.2.0 - 21.01.2019</span></h2>
+  <ul [class]="classFor(12.0)">
     <li class="added" i18n="v120a1">
       In der Tagesstatistik und in den täglichen Grafiken werden jetzt zum Datum die Wochentage mit angezeigt.
     </li>
@@ -1095,8 +1206,10 @@
       Die Berechnung des täglichen Insulins berücksichtigt nun auch die SMB.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v112">1.1.2 - 08.01.2019</span></h2>
-  <ul>
+  <h2 (click)="click(11.2)">
+    <mat-icon>{{iconFor(11.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v112">1.1.2 - 08.01.2019</span></h2>
+  <ul [class]="classFor(11.2)">
     <li class="added" i18n="v112a1">
       In der Tagesgrafik werden jetzt auch Blutzuckermessungen angezeigt. Sie werden als rote Quadrate
       dargestellt und die zugehörigen Werte in der Tabelle unterhalb der Grafik werden ebenfalls mit roter
@@ -1172,8 +1285,10 @@
       entfernt werden.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v111">1.1.1 - 19.11.2018</span></h2>
-  <ul>
+  <h2 (click)="click(11.1)">
+    <mat-icon>{{iconFor(11.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v111">1.1.1 - 19.11.2018</span></h2>
+  <ul [class]="classFor(11.1)">
     <li class="added" i18n="v111a1">
       Tagesgrafikparameter zur Anzeige der Legende
     </li>
@@ -1202,8 +1317,10 @@
       Die Berechnung der Summenzeile auf der Seite Tagesstatistik wurde korrigiert.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v110">1.1.0 - 09.11.2018</span></h2>
-  <ul>
+  <h2 (click)="click(11.0)">
+    <mat-icon>{{iconFor(11.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v110">1.1.0 - 09.11.2018</span></h2>
+  <ul [class]="classFor(11.0)">
     <li class="added" i18n="v110a1">
       Zusätzliche Informationen zu den PDFs und im UI hinzugefügt
     </li>
@@ -1235,8 +1352,10 @@
       Absturz behoben, der auftrat, wenn kein passendes Profil für einen Zeitpunkt gefunden werden konnte
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v104">1.0.4 - 28.10.2018</span></h2>
-  <ul>
+  <h2 (click)="click(10.4)">
+    <mat-icon>{{iconFor(10.4)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v104">1.0.4 - 28.10.2018</span></h2>
+  <ul [class]="classFor(10.4)">
     <li class="added" i18n="v104a1">
       Benutzer können nun gelöscht werden
     </li>
@@ -1262,8 +1381,10 @@
       Temporäre Basalraten mit absoluten Werten werden korrekt dargestellt
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v103">1.0.3 - 26.10.2018</span></h2>
-  <ul>
+  <h2 (click)="click(10.3)">
+    <mat-icon>{{iconFor(10.3)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v103">1.0.3 - 26.10.2018</span></h2>
+  <ul [class]="classFor(10.3)">
     <li class="added" i18n="v103a1">
       Man kann jetzt mehrere Benutzer anlegen. Das ist nützlich, um mehrere
       Nightscout-Instanzen auszuwerten (z.B. für Ärzte, Betreuer oder den Entwickler dieser Software)
@@ -1305,8 +1426,10 @@
       aktuelle Benutzer oder dessen URL direkt angezeigt wird
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v102">1.0.2 - 23.10.2018</span></h2>
-  <ul>
+  <h2 (click)="click(10.2)">
+    <mat-icon>{{iconFor(10.2)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v102">1.0.2 - 23.10.2018</span></h2>
+  <ul [class]="classFor(10.2)">
     <li class="added" i18n="v102a1">
       Legende für Katheter- und Sensorwechsel zur Tagesgrafik hinzugefügt.
     </li>
@@ -1320,8 +1443,10 @@
       Hohe Basalraten werden jetzt besser dargestellt.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v101">1.0.1 - 23.10.2018</span></h2>
-  <ul>
+  <h2 (click)="click(10.1)">
+    <mat-icon>{{iconFor(10.1)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v101">1.0.1 - 23.10.2018</span></h2>
+  <ul [class]="classFor(10.1)">
     <li class="added" i18n="v101a1">
       Diese Seite hinzugefügt. Sie wird jedesmal beim Start von Nightscout Reporter angezeigt,
       wenn sie in der aktuellen Version noch nicht angezeigt wurde. Ausserdem kann sie im Hamburgermenü
@@ -1353,10 +1478,12 @@
       Das PDF für die Basalrate war nicht korrekt, wenn nicht für jede Stunde ein Wert vorlag.
     </li>
   </ul>
-  <h2><span i18n="version">Version</span><span i18n="v100">1.0.0 - 20.10.2018</span></h2>
-  <ul>
+  <h2 (click)="click(10.0)">
+    <mat-icon>{{iconFor(10.0)}}</mat-icon>
+    <span i18n="version">Version</span><span i18n="v100">1.0.0 - 20.10.2018</span></h2>
+  <ul [class]="classFor(10.0)">
     <li class="added" i18n="v100a1">
       Initiale Version, alles ist neu!
     </li>
   </ul>
-</div>
+</mat-dialog-content>

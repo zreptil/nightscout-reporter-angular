@@ -8,6 +8,7 @@ export class UrlData {
   token: string;
   startDate: Date;
   endDate: Date;
+  startDateEditString: string;
 
   constructor() {
   }
@@ -22,20 +23,28 @@ export class UrlData {
   }
 
   get startDateEdit(): string {
-    return this.startDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.startDate);
+    try {
+      return this.startDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.startDate);
+    } catch (ex) {
+      Log.devError(ex, 'startDateEdit');
+    }
+    return null;
   }
 
   set startDateEdit(v: string) {
-    Log.debug('Das setzen von UrlData.startDateEdit Könnte ein Problem sein');
     this.startDate = new Date(v);
   }
 
   get endDateEdit(): string {
-    return this.endDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.endDate);
+    try {
+      return this.endDate == null ? null : GLOBALS.fmtDateForDisplay.transform(this.endDate);
+    } catch (ex) {
+      Log.devError(ex, 'endDateEdit');
+    }
+    return null;
   }
 
   set endDateEdit(v: string) {
-    Log.debug('Das setzen von UrlData.endDateEdit Könnte ein Problem sein');
     this.endDate = new Date(v);
   }
 
@@ -51,14 +60,13 @@ export class UrlData {
   static fromJson(json: any): UrlData {
     const ret = new UrlData();
     try {
-      ret.url = JsonData.toText(json['u']);
-      ret.token = JsonData.toText(json['t']);
-      var sd = JsonData.toText(json['sd']);
+      ret.url = JsonData.toText(json.u);
+      ret.token = JsonData.toText(json.t);
+      var sd = JsonData.toText(json.sd);
       ret.startDate = sd == null ? new Date(1970, 1, 1) : JsonData.parseDate(sd);
-      ret.endDate = JsonData.parseDate(json['ed']);
+      ret.endDate = JsonData.parseDate(json.ed);
     } catch (ex) {
-      var msg = ex.toString();
-      Log.debug('Fehler bei UrlData.fromJson: ${msg}');
+      Log.devError(ex, `Fehler bei UrlData.fromJson`);
     }
     return ret;
   }

@@ -1,0 +1,83 @@
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--primaryBack);
+}
+
+div[header] {
+
+  > div {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+[mat-dialog-title] {
+  display: flex;
+  flex-direction: row;
+  color: var(--primaryFore);
+  justify-content: space-between;
+  align-items: center;
+
+  .langPanel {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
+[mat-dialog-title],
+mat-dialog-actions {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+mat-dialog-content {
+  padding: 1em;
+  font-size: 1.2em;
+  background-color: var(--secondaryBack);
+  color: var(--secondaryFore);
+
+  div {
+    text-align: justify;
+    padding-top: 1.0em;
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  button {
+    color: var(--primaryFore);
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+
+@media(max-width: 33em) {
+  div[header] {
+    flex-direction: column !important;
+  }
+}
+

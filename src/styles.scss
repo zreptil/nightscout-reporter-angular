@@ -2,15 +2,15 @@
 @import 'assets/themes/standard/index.css';
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 16px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 html, body {
@@ -25,6 +25,9 @@ body {
   --logWarnFore: #fff;
   --logErrorBack: #ff2020;
   --logErrorFore: #fff;
+  --logTodoBack: #4040ff;
+  --logTodoFore: #c0c0ff;
+  --logTodoBorder: rgba(255, 255, 255, 0.7);
   --logDebugColor: 255, 255, 0;
   --logDebugBack: repeating-linear-gradient(45deg, rgba(var(--logDebugColor), 0.6), rgba(var(--logDebugColor), 0.6) 10px, rgba(var(--logDebugColor), 0.8) 10px, rgba(var(--logDebugColor), 0.8) 20px);
   --logDebugFore: #000;
@@ -63,8 +66,22 @@ body {
       }
     }
 
-    [mat-dialog-content] {
+    mat-dialog-content {
       margin: 0;
+    }
+
+    mat-dialog-actions {
+      margin: 0;
+      padding: 0 1em;
+      justify-content: space-between;
+
+      .mat-button-wrapper {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+      }
     }
   }
 }
@@ -126,6 +143,16 @@ body {
   _animation: p1 3s linear normal infinite;
 }
 
+.mat-raised-button {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+.mat-flat-button, .mat-fab, .mat-mini-fab {
+  background-color: transparent;
+  color: var(--secondaryFore);
+}
+
 @keyframes p1 {
   0% {
     top: 29px;
@@ -179,4 +206,19 @@ body {
   100% {
     top: 65px;
   }
+}
+
+.imageButton {
+  img {
+    height: 16px;
+  }
+}
+
+.mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+  font-weight: normal;
+}
+
+.debug {
+  background: var(--logDebugBack);
+  color: var(--logDebugFore) !important;
 }

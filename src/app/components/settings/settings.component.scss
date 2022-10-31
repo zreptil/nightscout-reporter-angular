@@ -1,5 +1,150 @@
-.root {
+input[type=file] {
+  display: none;
+}
+
+mat-slider {
+  width: 100%;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.themeSelect {
+  ::ng-deep mat-list {
+    background: var(--settingsBodyBack);
+    padding: 0;
+
+    mat-select-item {
+      display: flex;
+      flex-flow: column;
+      line-height: initial;
+      align-items: flex-start;
+      padding: 0.2em 0.5em;
+      color: var(--settingsBodyFore);
+
+      div.itemSub {
+        font-size: 75%;
+      }
+
+      .selected-accent {
+        background-color: var(--settingsHeaderBack);
+      }
+    }
+
+    mat-select-item.selected {
+      background-color: var(--settingsHeaderBack);
+      color: var(--settingsHeaderFore);
+    }
+  }
+}
+
+.datepicker-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.datepicker-row label {
+  position: absolute;
+  top: -15px;
+  color: rgba(0, 0, 0, 0.541176);
+  font-size: 12px;
+}
+
+.userinfo {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    flex-shrink: 0;
+    flex-grow: 1;
+  }
+}
+
+.controls {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 7em;
+
+  .label {
+    padding-right: 2em;
+  }
+
+  mat-fab:not([disabled]) {
+    background-color: var(--settingsHeaderBack);
+    color: var(--primaryFore);
+  }
+}
+
+.urlPanel {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+  mat-input {
+    flex-shrink: 0;
+    flex-grow: 1;
+  }
+
+  button:not([disabled]) .urlIcon {
+    color: var(--settingsHeaderBack);
+  }
+}
+
+.mat-flat-button.mat-button-disabled,
+.mat-mini-fab.mat-button-disabled {
+  background-color: transparent !important;
+}
+
+:host {
+  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
+    background-color: var(--settingsHeaderBack);
+  }
+
+  ::ng-deep mat-dialog-actions {
+    background-color: var(--settingsHeaderBack);
+
+    .mat-button-wrapper {
+      color: var(--settingsHeaderFore);
+    }
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--settingsHeaderBack);
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--settingsHeaderFore) !important;
+    }
+  }
+
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: var(--settingsHeaderBack);
+  }
+}
+
+
+.longtext {
+  font-size: 75%;
+}
+
+.functions {
+  margin-left: 1em;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+[mat-dialog-title] {
+  background-color: var(--settingsHeaderBack);
+  color: var(--settingsHeaderFore);
+}
+
+mat-dialog-content {
   padding: 1em;
+  margin: 0;
   font-size: 1.2em;
   color: var(--settingsBodyFore);
   background-color: var(--settingsBodyBack);
@@ -34,12 +179,6 @@ div[header] {
   }
 }
 
-div[footer] {
-  display: flex;
-  align-items: center;
-  justify-content: space-between !important;
-}
-
 .error {
   color: var(--settingsError);
   padding-bottom: 1em;
@@ -55,7 +194,7 @@ div[footer] {
   flex-grow: 0 !important;
 }
 
-material-dialog[confirm] {
+mat-dialog[confirm] {
   background-color: var(--settingsBodyBack);
   color: var(--settingsBodyFore);
 
@@ -82,6 +221,24 @@ material-dialog[confirm] {
   text-align: justify;
 }
 
+.formfield {
+  display: flex;
+  flex-flow: column;
+
+  .mat-form-field ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+  }
+
+  mat-hint {
+    margin-top: 0.1em;
+    position: initial;
+  }
+}
+
 .pdfSlider {
   display: flex;
   flex-flow: row;
@@ -96,7 +253,7 @@ material-dialog[confirm] {
   }
 }
 
-material-input {
+mat-input {
   ::ng-deep .focused-underline {
     background: var(--settingsHeaderBack);
   }
@@ -106,7 +263,11 @@ material-input {
   }
 }
 
-material-fab.is-local, div.is-local, material-button.is-local {
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: var(--settingsHeaderBack);
+}
+
+mat-fab.is-local, div.is-local, mat-button.is-local {
   background: var(--localBack) !important;
   color: var(--localFore) !important;
 }
@@ -124,3 +285,4 @@ material-fab.is-local, div.is-local, material-button.is-local {
 #importData {
   display: none;
 }
+

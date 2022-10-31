@@ -56,11 +56,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
   msgTooMuchProfiles(maxCount: number, count: number, text: string): string {
     return this.msgTooMuchProfilesPrefix(maxCount) +
-      $localize`${Utils.plural(count, {
+      Utils.plural(count, {
         zero: '',
-        one: `Der Uploader "${text}" hat die Datensätze angelegt.`,
-        other: `Folgende Uploader haben die Datensätze angelegt: ${text}`
-      },)}`;
+        one: $localize`Der Uploader "${text}" hat die Datensätze angelegt.`,
+        other: $localize`Folgende Uploader haben die Datensätze angelegt: ${text}`
+      },);
   }
 
   msgLoadingDataFor(date: string): string {
@@ -422,9 +422,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
                 data.ns.remaining.push(e);
               }
             } catch (ex) {
-              if (Log.mayDebug) {
-                Log.devError(ex, `Fehler im Entry-Datensatz: ${entry.toString()}`);
-              }
+              Log.devError(ex, `Fehler im Entry-Datensatz: ${entry.toString()}`);
               break;
             }
           }

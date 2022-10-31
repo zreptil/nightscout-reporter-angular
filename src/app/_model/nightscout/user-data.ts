@@ -1,4 +1,4 @@
-import {GLOBALS, GlobalsData} from '@/_model/globals-data';
+import {GLOBALS} from '@/_model/globals-data';
 import {UrlData} from '@/_model/nightscout/url-data';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {EntryData} from '@/_model/nightscout/entry-data';
@@ -6,6 +6,7 @@ import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {Utils} from '@/classes/utils';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
+import {Settings} from '@/_model/settings';
 
 export class UserData {
   name = '';
@@ -23,25 +24,10 @@ export class UserData {
 
   // returns the adjustvalues to check them against the values that
   // were loaded. so the saving of the data can be managed depending
-  // the adjustCheck when the data was loaded
+  // on the adjustCheck when the data was loaded
   adjustLoaded: string = null;
   adjustTarget: boolean = false;
   adjustCalc = 5.0;
-  /*
-
-    // checks if the current url is valid
-    Future<String> get isValid async {
-      if (apiUrl(null, '') == null) return Intl.message('Die URL wurde noch nicht festgelegt');
-      String ret;
-      var check = apiUrl(null, 'status');
-      await g.request(check).then((String response) {
-        if (response != '<h1>STATUS OK</h1>') ret = g.msgUrlFailure(check);
-      }).catchError((err) {
-        ret = g.msgUrlFailure(check);
-      });
-      return ret;
-    }
-  */
   adjustLab = 5.0;
 
   constructor() {
@@ -95,9 +81,9 @@ export class UserData {
   set adjustGluc(value: boolean) {
     this._adjustGluc = value;
     if (this._adjustGluc) {
-      GlobalsData.adjustFactor = this.hba1cAdjustFactor;
+      Settings.adjustFactor = this.hba1cAdjustFactor;
     } else {
-      GlobalsData.adjustFactor = 1.0;
+      Settings.adjustFactor = 1.0;
     }
   }
 
@@ -109,30 +95,29 @@ export class UserData {
   static fromJson(json: any): UserData {
     const ret = new UserData();
     try {
-      ret.name = json['n'];
-      ret.birthDate = json['bd'];
-      ret.diaStartDate = json['dd'];
-      ret.insulin = json['i'];
+      ret.name = JsonData.toText(json.n);
+      ret.birthDate = JsonData.toText(json.bd);
+      ret.diaStartDate = JsonData.toText(json.dd);
+      ret.insulin = JsonData.toText(json.i);
       ret.listApiUrl = [];
-      for (const s of json['s']) {
+      for (const s of json.s ?? []) {
         ret.listApiUrl.push(UrlData.fromJson(s));
       }
       ret.listApiUrl.sort((a, b) => Utils.compareDate(a.endDate, b.endDate));
-      ret.customData = json['c'];
-      ret.isReachable = json['r'] ?? true;
-      ret.profileMaxIdx = JsonData.toNumber(json['pmi'], null);
-      ret.adjustGluc = JsonData.toBool(json['ag'] ?? false);
-      ret.adjustCalc = JsonData.toNumber(json['ac'], 5.0);
-      ret.adjustLab = JsonData.toNumber(json['al'], 5.0);
-      ret.adjustTarget = JsonData.toBool(json['at'] ?? false);
+      ret.customData = json.c;
+      ret.isReachable = JsonData.toBool(json.r);
+      ret.profileMaxIdx = JsonData.toNumber(json.pmi, null);
+      ret.adjustGluc = JsonData.toBool(json.ag ?? false);
+      ret.adjustCalc = JsonData.toNumber(json.ac, 5.0);
+      ret.adjustLab = JsonData.toNumber(json.al, 5.0);
+      ret.adjustTarget = JsonData.toBool(json.at ?? false);
       ret.adjustLoaded = ret.adjustCheck;
-      ret.formParams = json['f'];
+      ret.formParams = json.f;
       if (ret.formParams != null && typeof ret.formParams['analysis'] === 'boolean') {
         ret.formParams = {};
       }
     } catch (ex) {
-      const msg = ex.toString();
-      Log.debug(`Fehler bei UserData.fromJson: ${msg}`);
+      Log.devError(ex, `Fehler bei UserData.fromJson`);
     }
     return ret;
   }

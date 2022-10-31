@@ -19,7 +19,7 @@ export class LoopData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.iob = IOBData.fromJson(JsonData.ensureJson(json['iob']));
+    ret.iob = IOBData.fromJson(JsonData.ensureJson(json.iob));
     return ret;
   }
 }

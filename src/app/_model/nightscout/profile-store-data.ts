@@ -2,10 +2,10 @@ import {JsonData} from '@/_model/json-data';
 import {ProfileEntryData} from './profile-entry-data';
 import {ProfileTimezone} from './profile-timezone-data';
 import {Utils} from '@/classes/utils';
-import {GlobalsData} from '@/_model/globals-data';
 import {Log} from '@/_services/log.service';
 import {ProfileData} from '@/_model/nightscout/profile-data';
 import sha256 from 'fast-sha256';
+import {Settings} from '@/_model/settings';
 
 export class ProfileStoreData extends JsonData {
   dia: number;
@@ -23,7 +23,7 @@ export class ProfileStoreData extends JsonData {
 
   constructor(public name: String) {
     super();
-    this.timezone = new ProfileTimezone(GlobalsData.refTimezone);
+    this.timezone = new ProfileTimezone(Settings.refTimezone);
   }
 
   get ieBasalSum(): number {
@@ -94,42 +94,42 @@ export class ProfileStoreData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.dia = JsonData.toNumber(json['dia']);
-    ret.carbsHr = JsonData.toNumber(json['carbs_hr']);
-    ret.delay = JsonData.toNumber(json['delay']);
+    ret.dia = JsonData.toNumber(json.dia);
+    ret.carbsHr = JsonData.toNumber(json.carbs_hr);
+    ret.delay = JsonData.toNumber(json.delay);
     try {
-      ret.timezone = new ProfileTimezone(JsonData.toText(json['timezone']));
+      ret.timezone = new ProfileTimezone(JsonData.toText(json.timezone));
     } catch (ex) {
-      ret.timezone = new ProfileTimezone(GlobalsData.refTimezone);
+      ret.timezone = new ProfileTimezone(Settings.refTimezone);
       Log.error('fehler bei timezone');
     }
-    // print('${JsonData.toText(json['timezone'])} ${name} ${ret.timezone.name}');
+    // print('${JsonData.toText(json.timezone)} ${name} ${ret.timezone.name}');
     if (startDate.getFullYear() != 1970 || startDate.getDate() != 1 || startDate.getMonth() != 1) {
       ret.startDate = startDate;
     } else {
-      ret.startDate = JsonData.toDate(json['startDate']);
+      ret.startDate = JsonData.toDate(json.startDate);
     }
-    ret.units = JsonData.toText(json['units']);
-    for (const entry of json['carbratio'] ?? []) {
+    ret.units = JsonData.toText(json.units);
+    for (const entry of json.carbratio ?? []) {
       ret.listCarbratio.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage, true));
     }
     this._adjust(ret.listCarbratio);
-    for (const entry of json['sens'] ?? []) {
+    for (const entry of json.sens ?? []) {
       ret.listSens.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage, true));
     }
     this._adjust(ret.listSens);
     ret.maxPrecision = 0;
-    for (const entry of json['basal'] ?? []) {
+    for (const entry of json.basal ?? []) {
       ret.listBasal.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage));
       ret.maxPrecision = Math.max(ret.maxPrecision, Utils.decimalPlaces(ret.listBasal[ret.listBasal.length - 1].value));
     }
     this._adjust(ret.listBasal);
-    for (const entry of json['target_low'] ?? []) {
+    for (const entry of json.target_low ?? []) {
       const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift);
       ret.listTargetLow.push(value);
     }
     this._adjust(ret.listTargetLow);
-    for (const entry of json['target_high'] ?? []) {
+    for (const entry of json.target_high ?? []) {
       const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift);
       ret.listTargetHigh.push(value);
     }

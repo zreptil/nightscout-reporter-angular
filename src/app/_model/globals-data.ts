@@ -16,20 +16,6 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
-  /// ***********************************************
-  /// Zentraler Faktor für die Kalibrierung
-  /// der Werte anhand eines vom Laber ermittelten
-  /// HbA1C im Vergleich zu einem im gleichen
-  /// 3 Monatszeitraum berechneten HbA1C
-  /// ***********************************************
-  static adjustFactor: number = 1.0;
-  static refTimezone: string = null;
-  static stdLow = 70;
-  static stdHigh = 180;
-  static stdVeryLow = 54;
-  static stdVeryHigh = 250;
-  static PDFUNLIMITED = 4000000;
-  static PDFDIVIDER = 100000;
   userList: UserData[] = [];
   shortcutList: ShortcutData[] = [];
   glucMGDLIdx: number;
@@ -40,11 +26,11 @@ export class GlobalsData extends Settings {
   showInfo = false;
   tileShowImage = true;
   isDataSmoothing = true;
-  ppMaxInsulinEffectInMS = 3 * 60 * 60 * 1000;
+  ppMaxInsulinEffectInMS: number = 3 * 60 * 60 * 1000;
   ppCGPAlwaysStandardLimits = true;
   ppComparable = false;
   ppGlucMaxIdx = 0;
-  fmtDateForDisplay: DatePipe;
+  fmtDateForDisplay: DatePipe = new DatePipe('de-DE');
   listConfig: FormConfig[] = [];
   listConfigOrg: FormConfig[] = [];
   ppLatestFirst = false;
@@ -56,8 +42,7 @@ export class GlobalsData extends Settings {
   ppFixAAPS30 = false;
   isCreatingPDF = false;
   currPeriodShift: PeriodShift;
-  canDebug = false;
-  isDebug = false;
+  isDebug = localStorage.getItem('forceDebug') === 'true';
   isBeta = window.location.href.indexOf('/beta/') >= 0;
   basalPrecisionAuto = 1;
   ppBasalPrecisionIdx = 0;
@@ -152,11 +137,6 @@ export class GlobalsData extends Settings {
 
   get pdfOrder(): string {
     return this._pdfOrder;
-  }
-
-  set pdfOrder(value: string) {
-    this._pdfOrder = value;
-    this.sortConfigs();
   }
 
   _watchList: WatchElement[] = [];
@@ -291,7 +271,7 @@ export class GlobalsData extends Settings {
   }
 
   get msgAdjustFactor(): string {
-    return this.fmtNumber(GlobalsData.adjustFactor, 2);
+    return this.fmtNumber(Settings.adjustFactor, 2);
   }
 
   get glucMaxValues(): number[] {
@@ -329,24 +309,25 @@ export class GlobalsData extends Settings {
   }
 
   get pdfControlMaxSize(): number {
-    return this.pdfCreationMaxSize / GlobalsData.PDFDIVIDER;
+    return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
   }
 
   set pdfControlMaxSize(value: number) {
-    this.pdfCreationMaxSize = value * GlobalsData.PDFDIVIDER;
+    this.pdfCreationMaxSize = value * Settings.PDFDIVIDER;
   }
 
-  _pdfCreationMaxSize = GlobalsData.PDFUNLIMITED - GlobalsData.PDFDIVIDER;
+  _pdfCreationMaxSize = Settings.PDFUNLIMITED - Settings.PDFDIVIDER;
 
   get pdfCreationMaxSize(): number {
-    this._pdfCreationMaxSize = Math.max(this._pdfCreationMaxSize, GlobalsData.PDFDIVIDER);
-    this._pdfCreationMaxSize = Math.min(this._pdfCreationMaxSize, GlobalsData.PDFUNLIMITED);
+    Log.debug(`GlobalsData._pdfCreationMaxSize ${this._pdfCreationMaxSize}`);
+    this._pdfCreationMaxSize = Math.max(this._pdfCreationMaxSize, Settings.PDFDIVIDER);
+    this._pdfCreationMaxSize = Math.min(this._pdfCreationMaxSize, Settings.PDFUNLIMITED);
     return this._pdfCreationMaxSize;
   }
 
   set pdfCreationMaxSize(value: number) {
-    value = Math.max(value, GlobalsData.PDFDIVIDER);
-    value = Math.min(value, GlobalsData.PDFUNLIMITED);
+    value = Math.max(value, Settings.PDFDIVIDER);
+    value = Math.min(value, Settings.PDFUNLIMITED);
     this._pdfCreationMaxSize = value;
   }
 
@@ -356,6 +337,67 @@ export class GlobalsData extends Settings {
 
   get basalPrecisionValues(): number[] {
     return [null, 0, 1, 2, 3];
+  }
+
+  // retrieve the settings that can be shared as json-encoded-string
+  get asSharedString(): string {
+    let users = '';
+    for (let i = 0; i < this.userList.length; i++) {
+      users = `${users},${this.userList[i].asJsonString}`;
+    }
+    if (users.length > 1) {
+      users = users.substring(1);
+    }
+    let shortcuts = '';
+    for (let i = 0; i < this.shortcutList.length; i++) {
+      shortcuts = `${shortcuts},${this.shortcutList[i].asJsonString}`;
+    }
+    if (shortcuts.length > 1) {
+      shortcuts = shortcuts.substring(1);
+    }
+    let watchEntries = '';
+    for (let i = 0; i < this.watchList.length; i++) {
+      watchEntries = `${watchEntries},${this.watchList[i].asJsonString}`;
+    }
+    if (watchEntries.length > 1) {
+      watchEntries = watchEntries.substring(1);
+    }
+    const timestamp = GlobalsData.now.getTime();
+    return '{'
+      + `"s1":"${this.version}"`
+      + `,"s4":${this.userIdx}`
+      + `,"s5":${this.glucMGDLIdx}`
+      + `,"s6":"${this.language.code ?? 'de_DE'}"`
+      + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
+      + `,"s8":"${this.period?.toString()}"`
+      + `,"s9":"${this._pdfOrder}"`
+      + `,"s10":"${this._viewType}"`
+      + `,"s11":${timestamp}`
+      + `,"s12":${this.tileShowImage}`
+      + `,"s13":${this.showAllTileParams}`
+      + `,"s2":[${users}]`
+      + `,"s3":[${shortcuts}]`
+      + `,"s14":[${watchEntries}]`
+      + `}`;
+  }
+
+  get asDeviceString(): string {
+    return '{'
+      + `"d1":"${this.ppHideNightscoutInPDF ? 'true' : 'false'}"`
+      + `,"d2":"${this.ppShowUrlInPDF ? 'true' : 'false'}"`
+      + `,"d3":"${this.ppHideLoopData ? 'true' : 'false'}"`
+      + `,"d4":"${this.pdfCreationMaxSize}"`
+      + `,"d5":"${this._ppStandardLimits ? 'true' : 'false'}"`
+      + `,"d6":"${this.ppCGPAlwaysStandardLimits ? 'true' : 'false'}"`
+      + `,"d7":"${this.ppComparable ? 'true' : 'false'}"`
+      + `,"d8":"${this.ppLatestFirst ? 'true' : 'false'}"`
+      + `,"d9":"${this.ppGlucMaxIdx?.toString() ?? 0}"`
+      + `,"d10":"${this.ppBasalPrecisionIdx?.toString() ?? 0}"`
+      + `,"d11":"${this.ppFixAAPS30?.toString() ?? 0}"`
+      + `,"d12":"${this.ppPdfSameWindow ? 'true' : 'false'}"`
+      + `,"d13":"${this.ppPdfDownload ? 'true' : 'false'}"`
+      + `,"d14":"${this.isWatchColor ? 'true' : 'false'}"`
+      + '}';
   }
 
   static updatePeriod(period: DatepickerPeriod): void {
@@ -428,39 +470,6 @@ export class GlobalsData extends Settings {
     return b;
   }
 
-  sortConfigs() {
-    Log.debug('GlobalsData.sortConfigs ist noch nicht implementiert');
-    /*
-        if (_pdfOrder == '' || listConfig.isEmpty) return;
-        user.saveParamsToForms();
-        var srcList = listConfig.sublist(0);
-        listConfig.clear();
-        var idxList = <String>[];
-        if (_pdfOrder.length < 48) {
-          for (var i = 0; i < _pdfOrder.length; i += 2) {
-            idxList.add(_pdfOrder.substring(i, i + 2));
-          }
-        } else {
-          for (var i = 0; i < _pdfOrder.length; i += 3) {
-            idxList.add(_pdfOrder.substring(i, i + 3));
-          }
-        }
-    //    var idList = _pdfOrder.split(",");
-        for (var i = 0; i < idxList.length; i++) {
-          var cfg = srcList.firstWhere((cfg) => cfg.idx == idxList[i], orElse: () => null);
-          if (cfg != null) {
-            srcList.remove(cfg);
-            listConfig.add(cfg);
-          }
-        }
-        for (var cfg in srcList) {
-          listConfig.add(cfg);
-        }
-        user.loadParamsFromForms();
-        savePdfOrder();
-    */
-  }
-
   findUrlDataFor(begDate: Date, endDate: Date): UrlData[] {
     const ret: UrlData[] = [];
 
@@ -487,19 +496,13 @@ export class GlobalsData extends Settings {
     return `${this.msgUrlFailurePrefix}${this.msgUrlFailureHerokuapp}${this.msgUrlFailureSuffix}`;
   }
 
-  // loads the settings that are not synchronized to google
-  loadLocalOnlySettings(): void {
-    // this.canDebug = this.loadStorage(Settings.DebugFlag) == 'yes';
-    this.fmtDateForDisplay = new DatePipe(this.language.code);
-  }
-
   getGlucInfo(): any {
     const ret = {
       step: 1,
       unit: Settings.msgUnitMGDL,
       factor: this.glucFactor,
-      stdlow: this.glucFromData(GlobalsData.stdLow),
-      stdhigh: this.glucFromData(GlobalsData.stdHigh)
+      stdlow: this.glucFromData(Settings.stdLow),
+      stdhigh: this.glucFromData(Settings.stdHigh)
     };
     if (!this.glucMGDL) {
       ret.step = 0.1;
@@ -565,12 +568,10 @@ export class GlobalsData extends Settings {
       return nullText;
     }
 
-    // let fmt = '#,##0';
     if (decimals > 0) {
-      // fmt = `${fmt}.`.padEnd(decimals + 6, '0');
-      value = Math.round((value * (10 ^ decimals)) / (10 ^ decimals));
+      value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
     }
-    let ret = formatNumber(value, this.language.code);
+    let ret = formatNumber(value, this.language.code, `1.${decimals}-${decimals}`);
     if (stripTrailingZero) {
       while (ret.endsWith('0')) {
         ret = ret.substring(0, ret.length - 1);
@@ -624,7 +625,6 @@ export class GlobalsData extends Settings {
     if (dt == null) {
       return date;
     }
-
     let ret = GLOBALS.fmtDateForDisplay.transform(dt);
     if (params.withShortWeekday) {
       ret = `${DatepickerPeriod.dowShortName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, $ret`;
@@ -645,7 +645,7 @@ export class GlobalsData extends Settings {
 
     if (date instanceof Date) {
       let ret = `${date.getDate()}`.padStart(2, '0') + '.';
-      ret += `${date.getMonth()}`.padStart(2, '0') + '.';
+      ret += `${date.getMonth() + 1}`.padStart(2, '0') + '.';
       ret += `${date.getFullYear()}, `;
       ret += `${date.getHours()}`.padStart(2, '0') + ',';
       ret += `${date.getMinutes()}`.padStart(2, '0');
@@ -708,4 +708,5 @@ export class GlobalsData extends Settings {
     }
     return `${date}`;
   }
+
 }

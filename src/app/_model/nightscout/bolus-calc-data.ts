@@ -49,39 +49,39 @@ export class BoluscalcData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.profile = json['profile'];
-    ret.notes = json['notes'];
-    ret.eventTime = JsonData.toDate(json['eventTime']);
-    ret.targetBGLow = JsonData.toNumber(json['targetBGLow']);
-    ret.targetBGHigh = JsonData.toNumber(json['targetBGHigh']);
-    ret.isf = JsonData.toNumber(json['isf']);
-    ret.ic = JsonData.toNumber(json['ic']);
-    ret.iob = JsonData.toNumber(json['iob']);
-    ret.bolusIob = JsonData.toNumber(json['bolusIob']);
-    ret.basalIob = JsonData.toNumber(json['basalIob']);
-    ret.bolusIobUsed = JsonData.toBool(json['bolusIobUsed']);
-    ret.basalIobUsed = JsonData.toBool(json['basalIobUsed']);
-    ret.bg = JsonData.toNumber(json['bg']);
-    ret.insulinBg = JsonData.toNumber(json['insulinBg']);
-    ret.insulinBgUsed = JsonData.toBool(json['insulinBgUsed']);
-    ret.bgDiff = JsonData.toNumber(json['bgdiff']);
-    ret.insulinCarbs = JsonData.toNumber(json['insulincarbs']);
-    ret.carbs = JsonData.toNumber(json['carbs']);
-    ret.cob = JsonData.toNumber(json['cob']);
-    ret.cobUsed = JsonData.toBool(json['cobused']);
-    ret.insulinCob = JsonData.toNumber(json['insulincob']);
-    ret.otherCorrection = JsonData.toNumber(json['othercorrection']);
-    ret.insulinSuperBolus = JsonData.toNumber(json['insulinsuperbolus']);
-    ret.insulinTrend = JsonData.toNumber(json['insulintrend']);
-    ret.insulin = JsonData.toNumber(json['insulin']);
+    ret.profile = json.profile;
+    ret.notes = json.notes;
+    ret.eventTime = JsonData.toDate(json.eventTime);
+    ret.targetBGLow = JsonData.toNumber(json.targetBGLow);
+    ret.targetBGHigh = JsonData.toNumber(json.targetBGHigh);
+    ret.isf = JsonData.toNumber(json.isf);
+    ret.ic = JsonData.toNumber(json.ic);
+    ret.iob = JsonData.toNumber(json.iob);
+    ret.bolusIob = JsonData.toNumber(json.bolusIob);
+    ret.basalIob = JsonData.toNumber(json.basalIob);
+    ret.bolusIobUsed = JsonData.toBool(json.bolusIobUsed);
+    ret.basalIobUsed = JsonData.toBool(json.basalIobUsed);
+    ret.bg = JsonData.toNumber(json.bg);
+    ret.insulinBg = JsonData.toNumber(json.insulinBg);
+    ret.insulinBgUsed = JsonData.toBool(json.insulinBgUsed);
+    ret.bgDiff = JsonData.toNumber(json.bgdiff);
+    ret.insulinCarbs = JsonData.toNumber(json.insulincarbs);
+    ret.carbs = JsonData.toNumber(json.carbs);
+    ret.cob = JsonData.toNumber(json.cob);
+    ret.cobUsed = JsonData.toBool(json.cobused);
+    ret.insulinCob = JsonData.toNumber(json.insulincob);
+    ret.otherCorrection = JsonData.toNumber(json.othercorrection);
+    ret.insulinSuperBolus = JsonData.toNumber(json.insulinsuperbolus);
+    ret.insulinTrend = JsonData.toNumber(json.insulintrend);
+    ret.insulin = JsonData.toNumber(json.insulin);
     if (ret.insulin == 0.0) {
-      ret.insulin = JsonData.toNumber(json['enteredinsulin']);
+      ret.insulin = JsonData.toNumber(json.enteredinsulin);
     }
-    ret.superBolusUsed = JsonData.toBool(json['superbolusused']);
-    ret.trendUsed = JsonData.toBool(json['trendused']);
-    ret.trend = JsonData.toText(json['trend']);
-    ret.ttUsed = JsonData.toBool(json['ttused']);
-    ret.NSClientId = JsonData.toText(json['NSCLIENT_ID']);
+    ret.superBolusUsed = JsonData.toBool(json.superbolusused);
+    ret.trendUsed = JsonData.toBool(json.trendused);
+    ret.trend = JsonData.toText(json.trend);
+    ret.ttUsed = JsonData.toBool(json.ttused);
+    ret.NSClientId = JsonData.toText(json.NSCLIENT_ID);
     return ret;
   }
 

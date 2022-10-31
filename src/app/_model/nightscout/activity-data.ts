@@ -25,12 +25,12 @@ export class ActivityData extends JsonData {
       return ret;
     }
     ret.raw = json;
-    ret.id = JsonData.toText(json['_id']);
-    ret.createdAt = JsonData.toDate(json['created_at']);
-    ret.type = JsonData.toText(json['type']);
-    ret.steps = JsonData.toNumber(json['steps']);
-    ret.bpm = JsonData.toNumber(json['bpm']);
-    ret.accuracy = JsonData.toNumber(json['accuracy']);
+    ret.id = JsonData.toText(json._id);
+    ret.createdAt = JsonData.toDate(json.created_at);
+    ret.type = JsonData.toText(json.type);
+    ret.steps = JsonData.toNumber(json.steps);
+    ret.bpm = JsonData.toNumber(json.bpm);
+    ret.accuracy = JsonData.toNumber(json.accuracy);
     return ret;
   }
 

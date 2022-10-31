@@ -19,8 +19,8 @@ export class UploaderData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.batteryVoltage = JsonData.toNumber(json['batteryVoltage']);
-    ret.batteryPercentageRemaining = JsonData.toNumber(json['battery']);
+    ret.batteryVoltage = JsonData.toNumber(json.batteryVoltage);
+    ret.batteryPercentageRemaining = JsonData.toNumber(json.battery);
     return ret;
   }
 }

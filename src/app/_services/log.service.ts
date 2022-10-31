@@ -32,7 +32,8 @@ export class Log {
         info: [],
         warn: [],
         debug: [],
-        error: []
+        error: [],
+        todo: []
       };
       LogService.instance.links = [];
     } else if (type === 'links') {
@@ -43,24 +44,27 @@ export class Log {
     LogService.refreshUI();
   }
 
+  static addText(id: string, text: any): void {
+    if (LogService.instance.msg[id].indexOf(text) < 0) {
+      LogService.instance.msg[id]?.push(text);
+      LogService.refreshUI();
+    }
+  }
+
   static info(text: any): void {
-    LogService.instance.msg['info']?.push(text);
-    LogService.refreshUI();
+    Log.addText('info', text);
   }
 
   static warn(text: any): void {
-    LogService.instance.msg['warn']?.push(text);
-    LogService.refreshUI();
+    Log.addText('warn', text);
   }
 
   static debug(text: any): void {
-    LogService.instance.msg['debug']?.push(text);
-    LogService.refreshUI();
+    Log.addText('debug', text);
   }
 
   static error(text: any): void {
-    LogService.instance.msg['error']?.push(text);
-    LogService.refreshUI();
+    Log.addText('error', text);
   }
 
   static devError(ex: any, text: any) {
@@ -71,9 +75,7 @@ export class Log {
   }
 
   static todo(text: any) {
-    if (Log.showTodo) {
-      Log.debug(text);
-    }
+    Log.addText('todo', text);
   }
 
   static displayLink(title: string, url: string, params?: { clear?: boolean, type?: string, btnClass?: string, icon?: string, data?: any }): void {

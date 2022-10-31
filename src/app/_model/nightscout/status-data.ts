@@ -28,23 +28,23 @@ export class StatusData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.status = JsonData.toText(json['status']);
+    ret.status = JsonData.toText(json.status);
     if (ret.status == '401') {
       return ret;
     }
-    ret.name = JsonData.toText(json['name']);
-    ret.version = JsonData.toText(json['version']);
-    ret.serverTime = JsonData.toDate(json['serverTime']);
-    ret.serverTimeEpoch = JsonData.toNumber(json['serverTimeEpoch']);
+    ret.name = JsonData.toText(json.name);
+    ret.version = JsonData.toText(json.version);
+    ret.serverTime = JsonData.toDate(json.serverTime);
+    ret.serverTimeEpoch = JsonData.toNumber(json.serverTimeEpoch);
     ret.apiEnabled = JsonData.toBool('apiEnabled');
     ret.careportalEnabled = JsonData.toBool('careportalEnabled');
     ret.boluscalcEnabled = JsonData.toBool('boluscalcEnabled');
-    ret.head = JsonData.toText(json['head']);
-    if (json['settings'] != null) {
-      ret.settings = SettingsData.fromJson(json['settings']);
+    ret.head = JsonData.toText(json.head);
+    if (json.settings != null) {
+      ret.settings = SettingsData.fromJson(json.settings);
     }
-    if (json['extendedSettings'] != null) {
-      ret.extendedSettings = ExtendedSettingsData.fromJson(json['extendedSettings']);
+    if (json.extendedSettings != null) {
+      ret.extendedSettings = ExtendedSettingsData.fromJson(json.extendedSettings);
     }
     return ret;
   }

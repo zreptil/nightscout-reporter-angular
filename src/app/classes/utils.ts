@@ -1,3 +1,5 @@
+import {Log} from '@/_services/log.service';
+
 export class Utils {
   static pushAll<T>(dst: T[], src: T[]): void {
     for (const entry of src ?? []) {
@@ -27,6 +29,14 @@ export class Utils {
     const ret = new Date();
     ret.setTime(date.getTime());
     ret.setDate(ret.getDate() + days);
+    return ret;
+  }
+
+  static getDow(date: Date): number {
+    let ret = date.getDay();
+    if (ret < 0) {
+      ret += 7;
+    }
     return ret;
   }
 
@@ -232,6 +242,7 @@ export class Utils {
   }
 
   static plural(value: number, options: any): string {
+    Log.todo('Plural muss noch überprüft werden');
     return options[value] ?? options.other;
   }
 
@@ -241,5 +252,35 @@ export class Utils {
 
   static rnd(max: number): number {
     return Math.floor(Math.random() * max);
+  }
+
+  static encodeBase64(src: string, failRet: string = null): string {
+    let ret;
+    try {
+      const encoder = new TextEncoder();
+      const bytes = new Uint8Array(encoder.encode(src));
+      ret = btoa(bytes.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    } catch (ex) {
+      Log.devError(ex, 'Fehler in Utils.encodeBase64');
+      ret = failRet;
+    }
+    return ret;
+  }
+
+  static decodeBase64(src: string, failRet: string = null): string {
+    let ret;
+    try {
+      const decoder = new TextDecoder();
+      const buf = new ArrayBuffer(src.length);
+      const bufView = new Uint8Array(buf);
+      for (let i = 0; i < src.length; i++) {
+        bufView[i] = src.charCodeAt(i);
+      }
+      ret = decoder.decode(bufView);
+    } catch (ex) {
+      Log.devError(ex, 'Fehler in Utils.decodeBase64');
+      ret = failRet;
+    }
+    return ret;
   }
 }

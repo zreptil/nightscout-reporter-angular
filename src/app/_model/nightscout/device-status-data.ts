@@ -22,13 +22,13 @@ export class DeviceStatusData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.device = JsonData.toText(json['device']);
-    ret.createdAt = JsonData.toDate(json['created_at']);
-    ret.openAPS = LoopData.fromJson(JsonData.ensureJson(json['openaps']));
-    ret.loop = LoopData.fromJson(JsonData.ensureJson(json['loop']));
-    ret.pump = PumpData.fromJson(JsonData.ensureJson(json['pump']));
-    ret.uploader = UploaderData.fromJson(JsonData.ensureJson(json['uploader']));
-    ret.xdripjs = XDripJSData.fromJson(JsonData.ensureJson(json['xdripjs']));
+    ret.device = JsonData.toText(json.device);
+    ret.createdAt = JsonData.toDate(json.created_at);
+    ret.openAPS = LoopData.fromJson(JsonData.ensureJson(json.openaps));
+    ret.loop = LoopData.fromJson(JsonData.ensureJson(json.loop));
+    ret.pump = PumpData.fromJson(JsonData.ensureJson(json.pump));
+    ret.uploader = UploaderData.fromJson(JsonData.ensureJson(json.uploader));
+    ret.xdripjs = XDripJSData.fromJson(JsonData.ensureJson(json.xdripjs));
     return ret;
   }
 }

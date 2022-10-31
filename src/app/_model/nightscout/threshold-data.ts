@@ -15,10 +15,10 @@ export class ThresholdData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.bgHigh = JsonData.toNumber(json['bgHigh']);
-    ret.bgTargetTop = JsonData.toNumber(json['bgTargetTop']);
-    ret.bgTargetBottom = JsonData.toNumber(json['bgTargetBottom']);
-    ret.bgLow = JsonData.toNumber(json['bgLow']);
+    ret.bgHigh = JsonData.toNumber(json.bgHigh);
+    ret.bgTargetTop = JsonData.toNumber(json.bgTargetTop);
+    ret.bgTargetBottom = JsonData.toNumber(json.bgTargetBottom);
+    ret.bgLow = JsonData.toNumber(json.bgLow);
     return ret;
   }
 }

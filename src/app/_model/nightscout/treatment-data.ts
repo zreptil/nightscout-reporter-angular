@@ -115,7 +115,7 @@ export class TreatmentData extends JsonData {
   }
 
   get isSensorChange(): boolean {
-    return this._t === 'sensor change' || this._t === 'sensor start';
+    return this._t === 'sensor change' || this._t === 'sensor main';
   }
 
   get isPumpBatteryChange(): boolean {
@@ -197,42 +197,42 @@ export class TreatmentData extends JsonData {
       return ret;
     }
     ret.raw = json;
-    ret.id = JsonData.toText(json['_id']);
-    ret.eventType = JsonData.toText(json['eventType']);
-    ret.duration = JsonData.toNumber(json['duration']) * 60; // duration is saved in minutes
-    ret.timeshift = JsonData.toNumber(json['timeshift']);
-    ret._percent = JsonData.toNumber(json['percent'], null);
-    ret._absolute = JsonData.toNumber(json['absolute'], null);
-    ret._rate = JsonData.toNumber(json['rate']);
+    ret.id = JsonData.toText(json._id);
+    ret.eventType = JsonData.toText(json.eventType);
+    ret.duration = JsonData.toNumber(json.duration) * 60; // duration is saved in minutes
+    ret.timeshift = JsonData.toNumber(json.timeshift);
+    ret._percent = JsonData.toNumber(json.percent, null);
+    ret._absolute = JsonData.toNumber(json.absolute, null);
+    ret._rate = JsonData.toNumber(json.rate);
     // in aaps 3.0beta the rate is delivered as integer percentage, not
     // as fraction. So this has to be recalculated when this version is
     // detected. Currently it can be detected by having the attribute
     // isAbsolute in the data.
-    if (json['isAbsolute'] != null) {
+    if (json.isAbsolute != null) {
       ret._rate /= 100;
     }
-    ret.createdAt = JsonData.toDate(json['created_at']);
-    ret.enteredBy = JsonData.toText(json['enteredBy']);
-    ret.NSClientId = JsonData.toText(json['NSCLIENT_ID']);
-    ret._carbs = JsonData.toNumber(json['carbs']);
-    ret.insulin = JsonData.toNumber(json['insulin']);
+    ret.createdAt = JsonData.toDate(json.created_at);
+    ret.enteredBy = JsonData.toText(json.enteredBy);
+    ret.NSClientId = JsonData.toText(json.NSCLIENT_ID);
+    ret._carbs = JsonData.toNumber(json.carbs);
+    ret.insulin = JsonData.toNumber(json.insulin);
     if (ret.insulin == 0.0) {
-      ret.insulin = JsonData.toNumber(json['enteredinsulin']);
+      ret.insulin = JsonData.toNumber(json.enteredinsulin);
     }
-    ret.splitExt = JsonData.toNumber(json['splitExt']);
-    ret.splitNow = JsonData.toNumber(json['splitNow']);
-    ret.isSMB = JsonData.toBool(json['isSMB']);
-    ret.pumpId = JsonData.toText(json['pumpId']);
-    ret.glucoseType = JsonData.toText(json['glucoseType']);
-    if (json['boluscalc'] != null) {
-      ret.boluscalc = BoluscalcData.fromJson(json['boluscalc']);
+    ret.splitExt = JsonData.toNumber(json.splitExt);
+    ret.splitNow = JsonData.toNumber(json.splitNow);
+    ret.isSMB = JsonData.toBool(json.isSMB);
+    ret.pumpId = JsonData.toText(json.pumpId);
+    ret.glucoseType = JsonData.toText(json.glucoseType);
+    if (json.boluscalc != null) {
+      ret.boluscalc = BoluscalcData.fromJson(json.boluscalc);
     }
-    ret.notes = JsonData.toText(json['notes']);
-    ret.reason = JsonData.toText(json['reason']);
-    ret.targetTop = JsonData.toNumber(json['targetTop']);
-    ret.targetBottom = JsonData.toNumber(json['targetBottom']);
+    ret.notes = JsonData.toText(json.notes);
+    ret.reason = JsonData.toText(json.reason);
+    ret.targetTop = JsonData.toNumber(json.targetTop);
+    ret.targetBottom = JsonData.toNumber(json.targetBottom);
 
-    var temp = JsonData.toText(json['units']);
+    var temp = JsonData.toText(json.units);
     if (temp.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() && !GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop / 18.02;
       ret.targetBottom = ret.targetBottom / 18.02;
@@ -242,7 +242,7 @@ export class TreatmentData extends JsonData {
     }
 
     ret.microbolus = 0.0;
-    temp = JsonData.toText(json['insulinInjections']);
+    temp = JsonData.toText(json.insulinInjections);
     let list = [];
     try {
       list = JSON.parse(temp);
@@ -253,22 +253,22 @@ export class TreatmentData extends JsonData {
       ret.insulinInjections.push(InsulinInjectionData.fromJson(entry));
     }
 
-    ret.glucose = JsonData.toNumber(json['glucose']);
-    if (json['units'] != null) {
-      if (json['units'].toLowerCase() == Settings.msgUnitMGDL.toLowerCase() &&
+    ret.glucose = JsonData.toNumber(json.glucose);
+    if (json.units != null) {
+      if (json.units.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() &&
         GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMMOL) {
         ret.glucose = ret.glucose / 18.02;
-      } else if (json['units'].toLowerCase() == Settings.msgUnitMMOL.toLowerCase() &&
+      } else if (json.units.toLowerCase() == Settings.msgUnitMMOL.toLowerCase() &&
         GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMGDL) {
         ret.glucose = ret.glucose * 18.02;
       }
     }
 
     // Specialhandling for strange datamanagement of Uploader for Minimed 600-series
-    if (json['key600'] != null) {
-      Log.debug('Auswertung von key600 für MiniMed in TreatmentData muss noch korrekt implementiert werden!');
+    if (json.key600 != null) {
+      Log.todo('Auswertung von key600 für MiniMed in TreatmentData muss noch korrekt implementiert werden!');
       ret._from = Uploader.Minimed600;
-      ret._key600 = JsonData.toText(json['key600']);
+      ret._key600 = JsonData.toText(json.key600);
       // const reg = RegExp(/microbolus (.*)U/);
       // Der folgende Code muss noch aktiviert und korrekt implementiert werden
       // const m = reg.exec(ret.notes)?.[0];

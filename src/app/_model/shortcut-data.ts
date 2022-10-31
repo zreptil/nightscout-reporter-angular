@@ -69,20 +69,19 @@ export class ShortcutData {
   static fromJson(json: any): ShortcutData {
     const ret = new ShortcutData();
     try {
-      ret.name = json['n'];
+      ret.name = json.n;
       if (ret.name == 'null') {
         ret.name = null;
       }
-      ret.periodData = json['p'];
-      ret.forms = json['f'];
+      ret.periodData = json.p;
+      ret.forms = json.f;
       const period = new DatepickerPeriod(ret.periodData);
       GlobalsData.updatePeriod(period);
       ret.periodText = period.display;
-      ret.pdfOrder = json['o'];
-      ret.glucMGDLIdx = JsonData.toNumber(json['u'], GLOBALS.glucMGDLIdx);
+      ret.pdfOrder = json.o;
+      ret.glucMGDLIdx = JsonData.toNumber(json.u, GLOBALS.glucMGDLIdx);
     } catch (ex) {
-      const msg = ex.toString();
-      Log.debug(`Fehler bei ShortcutData.fromJson: ${msg}`);
+      Log.devError(ex, `Fehler bei ShortcutData.fromJson`);
     }
     return ret;
   }

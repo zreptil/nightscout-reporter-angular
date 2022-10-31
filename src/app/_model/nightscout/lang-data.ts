@@ -21,6 +21,6 @@ export class LangData {
   }
 
   get imgPath(): String {
-    return `packages/nightscout_reporter/assets/img/lang-${this.img}.png`;
+    return `assets/img/lang-${this.img}.png`;
   }
 }

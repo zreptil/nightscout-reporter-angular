@@ -4,13 +4,13 @@ import {UserData} from '@/_model/nightscout/user-data';
 import {Utils} from '@/classes/utils';
 import {ParamInfo} from '@/_model/param-info';
 import {PageData} from '@/_model/page-data';
-import {Log} from '@/_services/log.service';
 import {ReportData} from '@/_model/report-data';
 import {DayData} from '@/_model/nightscout/day-data';
 import {GridData} from '@/_model/grid-data';
 import {LegendData} from '@/_model/legend-data';
 import {PdfService} from '@/_services/pdf.service';
 import {map, Observable} from 'rxjs';
+import {Settings} from '@/_model/settings';
 
 export class StepData {
   constructor(public min: number, public step: number) {
@@ -280,7 +280,7 @@ export abstract class BasePrint extends FormConfig {
 
   get backimage(): string {
     this.extractParams();
-    return `packages/nightscout_reporter/assets/img/thumbs/${GLOBALS.language.img}/${this.baseId}${this.backsuffix == '' ? '' : `-${this.backsuffix}`}.png`;
+    return `assets/img/thumbs/${GLOBALS.language.img}/${this.baseId}${this.backsuffix == '' ? '' : `-${this.backsuffix}`}.png`;
   }
 
   get sortedParams(): ParamInfo[] {
@@ -547,10 +547,10 @@ export abstract class BasePrint extends FormConfig {
   };
 
   get msgAdjustGlucHint(): string {
-    if (GlobalsData.adjustFactor > 1) {
-      return this._msgRaiseGlucHint(GLOBALS.fmtNumber((GlobalsData.adjustFactor - 1) * 100, 2));
+    if (Settings.adjustFactor > 1) {
+      return this._msgRaiseGlucHint(GLOBALS.fmtNumber((Settings.adjustFactor - 1) * 100, 2));
     }
-    return this._msgLowerGlucHint(GLOBALS.fmtNumber((1 - GlobalsData.adjustFactor) * 100, 2));
+    return this._msgLowerGlucHint(GLOBALS.fmtNumber((1 - Settings.adjustFactor) * 100, 2));
   }
 
   get msgMealBolus(): string {
@@ -1027,23 +1027,22 @@ export abstract class BasePrint extends FormConfig {
   }
 
   _msgPageCountEst(count: number): string {
-    return $localize`:@@_msgPageCountEst:${Utils.plural(count, {
+    return Utils.plural(count, {
       0: '',
-      1: `1 Seite oder mehr`,
-      other: `${count} Seiten oder mehr`
-    })}`;
+      1: $localize`1 Seite oder mehr`,
+      other: $localize`${count} Seiten oder mehr`
+    });
   }
 
   _msgPageCount(count: number): string {
-    return $localize`:@@_msgPageCount:${Utils.plural(count, {
+    return Utils.plural(count, {
       0: '',
       1: $localize`1 Seite`,
       other: $localize`${count} Seiten`
-    })}`;
+    });
   }
 
   msgPageCount(count: number, isEstimated: boolean): any {
-    Log.debug('Plural muss noch überprüft werden');
     return isEstimated ? this._msgPageCountEst(count) : this._msgPageCount(count);
   }
 
@@ -1123,28 +1122,28 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgReadingsPerDay(howMany: number, fmt: string): string {
-    return $localize`${Utils.plural(howMany, {
-      0: `Keine Messwerte vorhanden`,
-      1: `1 Messung am Tag`,
-      other: `${fmt} Messungen am Tag`
-    })}`;
+    return Utils.plural(howMany, {
+      0: $localize`Keine Messwerte vorhanden`,
+      1: $localize`1 Messung am Tag`,
+      other: $localize`${fmt} Messungen am Tag`
+    });
   }
 
   msgReadingsPerHour(howMany: number, fmt: string): string {
-    return $localize`${Utils.plural(howMany,
+    return Utils.plural(howMany,
       {
-        0: `Keine Messwerte vorhanden`,
-        1: `1 Messung pro Stunde`,
-        other: `${fmt} Messungen pro Stunde`
-      })}`;
+        0: $localize`Keine Messwerte vorhanden`,
+        1: $localize`1 Messung pro Stunde`,
+        other: $localize`${fmt} Messungen pro Stunde`
+      });
   }
 
   msgReadingsInMinutes(howMany: number, fmt: string): string {
-    return $localize`${Utils.plural(howMany, {
-      0: `Keine Messwerte vorhanden`,
-      1: `1 Messung pro Minute`,
-      other: `Messung alle ${fmt} Minuten`
-    })}`;
+    return Utils.plural(howMany, {
+      0: $localize`Keine Messwerte vorhanden`,
+      1: $localize`1 Messung pro Minute`,
+      other: $localize`Messung alle ${fmt} Minuten`
+    });
   }
 
   msgValuesIn(low: string, high: string): string {
@@ -1184,27 +1183,27 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgReservoirDays(count: number, txt: string): string {
-    return $localize`${Utils.plural(count, {
+    return Utils.plural(count, {
       0: ``,
-      1: `(${txt} Tag pro Ampulle)`,
-      other: `(${txt} Tage pro Ampulle)`
-    })}`;
+      1: $localize`(${txt} Tag pro Ampulle)`,
+      other: $localize`(${txt} Tage pro Ampulle)`
+    });
   }
 
   msgCatheterDays(count: number, txt: string): string {
-    return $localize`${Utils.plural(count, {
+    return Utils.plural(count, {
       0: ``,
-      1: `(${txt} Tag pro Katheter)`,
-      other: `(${txt} Tage pro Katheter)`
-    })}`;
+      1: $localize`(${txt} Tag pro Katheter)`,
+      other: $localize`(${txt} Tage pro Katheter)`
+    });
   }
 
   msgSensorDays(count: number, txt: string): string {
-    return $localize`${Utils.plural(count, {
+    return Utils.plural(count, {
       0: ``,
-      1: `(${txt} Tag pro Sensor)`,
-      other: `(${txt} Tage pro Sensor)`
-    })}`;
+      1: $localize`(${txt} Tag pro Sensor)`,
+      other: $localize`(${txt} Tage pro Sensor)`
+    });
   }
 
   msgLow(value: string): string {
@@ -1213,11 +1212,11 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgCount(count: number): string {
-    return $localize`${Utils.plural(count, {
-      0: `Kein Wert`,
-      one: `1 Wert`,
-      other: `${count} Werte`
-    })}`;
+    return Utils.plural(count, {
+      0: $localize`Kein Wert`,
+      one: $localize`1 Wert`,
+      other: $localize`${count} Werte`
+    });
   }
 
   msgStdAbw(value: number): string {
@@ -1317,11 +1316,11 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgColumns(count: number): string {
-    return $localize`${Utils.plural(count, {
-      0: `Eine Spalte abwählen, um eine@nl@andere aktivieren zu können`,
-      1: `Noch eine Spalte verfügbar`,
-      other: `Noch ${count} Spalten verfügbar`
-    }).replace('@nl@', '<br>')}`;
+    return Utils.plural(count, {
+      0: $localize`Eine Spalte abwählen, um eine@nl@andere aktivieren zu können`,
+      1: $localize`Noch eine Spalte verfügbar`,
+      other: $localize`Noch ${count} Spalten verfügbar`
+    }).replace('@nl@', '<br>');
   }
 
   fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
@@ -1366,7 +1365,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   targets(repData: ReportData): any {
-    const ret = {low: GlobalsData.stdLow, high: GlobalsData.stdHigh};
+    const ret = {low: Settings.stdLow, high: Settings.stdHigh};
     if (!GLOBALS.ppStandardLimits) {
       ret.low = repData.status.settings.bgTargetBottom;
       ret.high = repData.status.settings.bgTargetTop;

@@ -39,7 +39,7 @@ export class LogComponent implements OnInit {
 
   showType(type: string) {
     let ret = this.msg[type].length > 0;
-    if (ret && type === 'debug' && !Log.mayDebug) {
+    if (ret && type === 'debug' && !GLOBALS.isDebug) {
       return false;
     }
     return ret;

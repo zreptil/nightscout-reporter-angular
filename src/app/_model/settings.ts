@@ -1,6 +1,5 @@
 import {GlobalsData} from '@/_model/globals-data';
 import {LangData} from '@/_model/nightscout/lang-data';
-import {Log} from '@/_services/log.service';
 import {Utils} from '@/classes/utils';
 
 export class Settings {
@@ -11,6 +10,21 @@ export class Settings {
   static skipStorageClear = false;
   static showDebugInConsole = false;
   static betaPrefix: string = '@';
+  /// ***********************************************
+  /// Zentraler Faktor für die Kalibrierung
+  /// der Werte anhand eines vom Laber ermittelten
+  /// HbA1C im Vergleich zu einem im gleichen
+  /// 3 Monatszeitraum berechneten HbA1C
+  /// ***********************************************
+  static adjustFactor: number = 1.0;
+  static refTimezone: string = null;
+  static stdLow: number = 70;
+  static stdHigh: number = 180;
+  static stdVeryLow: number = 54;
+  static stdVeryHigh: number = 250;
+  static PDFUNLIMITED: number = 4000000;
+  static PDFDIVIDER: number = 100000;
+
   version = '4.0.0';
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
@@ -25,16 +39,16 @@ export class Settings {
   // for the cache.
   subVersion = '1';
   languageList: LangData[] = [
-    new LangData('de_DE', $localize`Deutsch`, 'de'),
-    new LangData('en_US', $localize`English (USA)`, 'us'),
-    new LangData('en_GB', $localize`English (GB)`, 'gb'),
-    new LangData('es_ES', $localize`Español`, 'es'),
-    new LangData('pl_PL', $localize`Polski`, 'pl'),
-    new LangData('ja_JP', $localize`日本の`, 'jp'),
-    new LangData('sk_SK', $localize`Slovenský`, 'sk'),
-    new LangData('fr_FR', $localize`Français`, 'fr'),
-    new LangData('pt_PT', $localize`Português`, 'pt'),
-    new LangData('nl_NL', $localize`Dansk`, 'nl')
+    new LangData('de-DE', $localize`Deutsch`, 'de'),
+    new LangData('en-US', $localize`English (USA)`, 'us'),
+    new LangData('en-GB', $localize`English (GB)`, 'gb'),
+    new LangData('es-ES', $localize`Español`, 'es'),
+    new LangData('pl-PL', $localize`Polski`, 'pl'),
+    new LangData('ja-JP', $localize`日本の`, 'jp'),
+    new LangData('sk-SK', $localize`Slovenský`, 'sk'),
+    new LangData('fr-FR', $localize`Français`, 'fr'),
+    new LangData('pt-PT', $localize`Português`, 'pt'),
+    new LangData('nl-NL', $localize`Dansk`, 'nl')
   ];
 
   static get hastiod(): boolean {
@@ -67,12 +81,12 @@ export class Settings {
 
   // subversion is used nowhere. It is just there to trigger another signature
 
-  static get msgUnlimited(): string {
-    return $localize`Unbegrenzt`;
-  }
-
   static get lblGlucUnits(): string {
     return $localize`Einheit der Glukosemessung`;
+  }
+
+  get msgUnlimited(): string {
+    return $localize`Unbegrenzt`;
   }
 
   get appTitle(): string {
@@ -126,19 +140,7 @@ export class Settings {
     }
     let pos = Math.floor(src.length / 2);
     src = `${src.substring(pos + 1)}${src.substring(0, pos - 1)}`;
-    try {
-      const decoder = new TextDecoder();
-      const dst = atob(src);
-      const buf = new ArrayBuffer(dst.length);
-      const bufView = new Uint8Array(buf);
-      for (let i = 0; i < dst.length; i++) {
-        bufView[i] = dst.charCodeAt(i);
-      }
-      ret = decoder.decode(bufView);
-    } catch (ex) {
-      Log.devError(ex, `Fehler bei Settings.tiod(${src}) => ${ret}`);
-      ret = '';
-    }
+    ret = Utils.decodeBase64(src, '');
     return ret;
   }
 
@@ -146,14 +148,12 @@ export class Settings {
     if (!this.hastiod) {
       return src;
     }
-    const encoder = new TextEncoder();
-    const bytes = new Uint8Array(encoder.encode(src));
-    let ret = btoa(bytes.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    console.log('src', src);
+    let ret = Utils.encodeBase64(src, '');
+    console.log('ret', ret);
     const pos = Math.floor(ret.length / 2);
     String.fromCharCode(Utils.rnd(26) + 64);
     ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
-    // console.log(src);
-    // console.log(ret);
     return ret;
   }
 }

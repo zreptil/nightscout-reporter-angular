@@ -62,62 +62,62 @@ export class SettingsData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.units = JsonData.toText(json['units']);
-    ret.timeFormat = JsonData.toNumber(json['timeFormat']);
-    ret.nightMode = JsonData.toBool(json['nightMode']);
-    ret.editMode = JsonData.toBool(json['editMode']);
-    ret.showRawbg = JsonData.toText(json['showRawbg']);
-    ret.customTitle = JsonData.toText(json['customTitle']);
-    ret.theme = JsonData.toText(json['theme']);
-    ret.alarmUrgentHigh = JsonData.toBool(json['alarmUrgentHigh']);
-    for (const entry of json['alarmUrgentHighMins']) {
+    ret.units = JsonData.toText(json.units);
+    ret.timeFormat = JsonData.toNumber(json.timeFormat);
+    ret.nightMode = JsonData.toBool(json.nightMode);
+    ret.editMode = JsonData.toBool(json.editMode);
+    ret.showRawbg = JsonData.toText(json.showRawbg);
+    ret.customTitle = JsonData.toText(json.customTitle);
+    ret.theme = JsonData.toText(json.theme);
+    ret.alarmUrgentHigh = JsonData.toBool(json.alarmUrgentHigh);
+    for (const entry of json.alarmUrgentHighMins ?? []) {
       ret.alarmUrgentHighMins.push(JsonData.toNumber(entry));
     }
-    ret.alarmHigh = JsonData.toBool(json['alarmHigh']);
-    for (const entry of json['alarmHighMins']) {
+    ret.alarmHigh = JsonData.toBool(json.alarmHigh);
+    for (const entry of json.alarmHighMins ?? []) {
       ret.alarmHighMins.push(JsonData.toNumber(entry));
     }
-    ret.alarmLow = JsonData.toBool(json['alarmLow']);
-    for (const entry of json['alarmLowMins']) {
+    ret.alarmLow = JsonData.toBool(json.alarmLow);
+    for (const entry of json.alarmLowMins ?? []) {
       ret.alarmLowMins.push(JsonData.toNumber(entry));
     }
-    ret.alarmUrgentLow = JsonData.toBool(json['alarmUrgentLow']);
-    for (const entry of json['alarmUrgentLowMins']) {
+    ret.alarmUrgentLow = JsonData.toBool(json.alarmUrgentLow);
+    for (const entry of json.alarmUrgentLowMins ?? []) {
       ret.alarmUrgentLowMins.push(JsonData.toNumber(entry));
     }
-    for (const entry of json['alarmUrgentMins']) {
+    for (const entry of json.alarmUrgentMins ?? []) {
       ret.alarmUrgentMins.push(JsonData.toNumber(entry));
     }
-    for (const entry of json['alarmWarnMins']) {
+    for (const entry of json.alarmWarnMins ?? []) {
       ret.alarmWarnMins.push(JsonData.toNumber(entry));
     }
-    ret.alarmTimeagoWarn = JsonData.toBool(json['alarmTimeagoWarn']);
-    ret.alarmTimeagoWarnMins = JsonData.toNumber(json['alarmTimeagoWarnMins']);
-    ret.alarmTimeagoUrgent = JsonData.toBool(json['alarmTimeagoUrgent']);
-    ret.alarmTimeagoUrgent = JsonData.toBool(json['alarmTimeagoUrgent']);
-    ret.alarmTimeagoUrgentMins = JsonData.toNumber(json['alarmTimeagoUrgentMins']);
-    ret.language = json['language'];
-    ret.scaleY = json['scaleY'];
-    for (const entry in json['showPlugins'].toString().split(' ')) {
+    ret.alarmTimeagoWarn = JsonData.toBool(json.alarmTimeagoWarn);
+    ret.alarmTimeagoWarnMins = JsonData.toNumber(json.alarmTimeagoWarnMins);
+    ret.alarmTimeagoUrgent = JsonData.toBool(json.alarmTimeagoUrgent);
+    ret.alarmTimeagoUrgent = JsonData.toBool(json.alarmTimeagoUrgent);
+    ret.alarmTimeagoUrgentMins = JsonData.toNumber(json.alarmTimeagoUrgentMins);
+    ret.language = json.language;
+    ret.scaleY = json.scaleY;
+    for (const entry of JsonData.toText(json.showPlugins).split(' ')) {
       if (entry != '') {
         ret.showPlugins.push(entry);
       }
     }
-    ret.showForecast = json['showForecast'];
-    ret.focusHours = JsonData.toNumber(json['focusHours']);
-    ret.heartbeat = JsonData.toNumber(json['heartbeat']);
-    ret.baseURL = json['baseURL'];
-    ret.authDefaultRoles = json['authDefaultRoles'];
-    if (json['thresholds'] != null) {
-      ret.thresholds = ThresholdData.fromJson(json['thresholds']);
+    ret.showForecast = json.showForecast;
+    ret.focusHours = JsonData.toNumber(json.focusHours);
+    ret.heartbeat = JsonData.toNumber(json.heartbeat);
+    ret.baseURL = json.baseURL;
+    ret.authDefaultRoles = json.authDefaultRoles;
+    if (json.thresholds != null) {
+      ret.thresholds = ThresholdData.fromJson(json.thresholds);
     }
-    for (const entry of json['DEFAULT_FEATURES']) {
+    for (const entry of json.DEFAULT_FEATURES ?? []) {
       ret.defaultFeatures.push(entry);
     }
-    for (const entry of json['alarmTypes']) {
+    for (const entry of json.alarmTypes ?? []) {
       ret.alarmTypes.push(entry);
     }
-    for (const entry of json['enable']) {
+    for (const entry of json.enable ?? []) {
       ret.enable.push(entry);
     }
     return ret;

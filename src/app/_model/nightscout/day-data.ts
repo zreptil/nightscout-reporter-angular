@@ -10,6 +10,7 @@ import {CalcIOBData} from './calc-iob-data';
 import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {ReportData} from '@/_model/report-data';
 import {CalcCOBData} from '@/_model/nightscout/calc-cob-data';
+import {Settings} from '@/_model/settings';
 
 export class DayData {
   prevDay: DayData;
@@ -398,9 +399,9 @@ export class DayData {
           normCount++;
         }
 
-        if (JsonData.isLow(entry.gluc, GlobalsData.stdLow)) {
+        if (JsonData.isLow(entry.gluc, Settings.stdLow)) {
           stdLowCount++;
-        } else if (JsonData.isHigh(entry.gluc, GlobalsData.stdHigh)) {
+        } else if (JsonData.isHigh(entry.gluc, Settings.stdHigh)) {
           stdHighCount++;
         } else {
           stdNormCount++;
@@ -547,7 +548,7 @@ export class DayData {
     let lastCarbs: TreatmentData;
 
     let isDecaying = false;
-    let lastDecayedBy: Date;
+    let lastDecayedBy: Date = null;
 
     const check = time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds();
     let profile = data.profile(time);
@@ -573,22 +574,22 @@ export class DayData {
       }
 
       if (t.carbs != null && t.carbs > 0) {
-        const temp: any = {'totalCOB': totalCOB, 'isDecaying': isDecaying, 'lastDecayedBy': lastDecayedBy};
+        const temp: any = {totalCOB: totalCOB, isDecaying: isDecaying, lastDecayedBy: lastDecayedBy};
         t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob);
-        totalCOB = temp['totalCOB'];
-        isDecaying = temp['isDecaying'];
-        lastDecayedBy = temp['lastDecayedBy'];
+        totalCOB = temp.totalCOB;
+        isDecaying = temp.isDecaying;
+        lastDecayedBy = temp.lastDecayedBy;
         lastCarbs = t;
       }
     }
 
     const t = new TreatmentData();
     t.createdAt = time;
-    const temp = {'totalCOB': totalCOB, 'isDecaying': isDecaying, 'lastDecayedBy': lastDecayedBy};
+    const temp = {totalCOB: totalCOB, isDecaying: isDecaying, lastDecayedBy: lastDecayedBy};
     t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob);
-    totalCOB = temp['totalCOB'];
-    isDecaying = temp['isDecaying'];
-    lastDecayedBy = temp['lastDecayedBy'];
+    totalCOB = temp.totalCOB;
+    isDecaying = temp.isDecaying;
+    lastDecayedBy = temp.lastDecayedBy;
 
     const sens = Utils.findLast(profile.store.listSens, (e) => e.timeForCalc <= check)?.value ?? 0.0;
     const carbRatio = Utils.findLast(profile.store.listCarbratio, (e) => e.timeForCalc <= check)?.value ?? 0.0;

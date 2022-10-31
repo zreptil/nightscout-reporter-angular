@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "nightscout-reporter": {
+      "i18n": {
+        "sourceLocale": "de"
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -43,7 +46,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "file-saver",
-              "https://apis.google.com/js/api.js"
+              "https://apis.google.com/js/api.js",
+              "pdfmake"
             ],
             "assets": [
               "src/favicon.ico",

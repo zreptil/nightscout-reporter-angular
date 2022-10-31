@@ -19,12 +19,17 @@ div[header] {
 }
 
 h2 {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
   font-size: 1.3em;
   padding: 0 0.5em;
 
-  span:first-child {
+  span:nth-child(2) {
     padding-right: 0.5em;
   }
+
+  cursor: pointer;
 }
 
 ul {
@@ -79,4 +84,8 @@ a, a:visited, a:active {
   text-decoration: none;
   cursor: pointer;
   color: var(--whatsnewLink);
+}
+
+.hidden {
+  display: none;
 }

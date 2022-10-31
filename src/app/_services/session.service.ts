@@ -12,6 +12,10 @@ import {ImpressumComponent} from '@/components/impressum/impressum.component';
 import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
 import {SettingsComponent} from '@/components/settings/settings.component';
 import {HelpviewComponent} from '@/components/helpview/helpview.component';
+import {UserData} from '@/_model/nightscout/user-data';
+import {DataService} from '@/_services/data.service';
+import {GLOBALS} from '@/_model/globals-data';
+import {WelcomeComponent} from '@/components/welcome/welcome.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -30,6 +34,7 @@ export class SessionService {
   public data: GlobalData;
   private dlgRef: MatDialogRef<any>;
   private dlgList: { [key: string]: ComponentType<any> } = {
+    welcome: WelcomeComponent,
     whatsnew: WhatsNewComponent,
     impressum: ImpressumComponent,
     dsgvo: DsgvoComponent,
@@ -38,6 +43,7 @@ export class SessionService {
   }
 
   constructor(public ss: StorageService,
+              public ds: DataService,
               private dialog: MatDialog) {
   }
 
@@ -45,10 +51,19 @@ export class SessionService {
     return Log.mayDebug;
   }
 
+  showVideo(id: string): void {
+    const videos: { [key: string]: string } = {
+      intro: 'eYq9lJRAWao'
+    };
+    window.open(`https://www.youtube.com/watch?v=${videos[id]}`);
+  }
+
   showPopup(id: string): Observable<DialogResult> {
     if (this.dlgList[id] != null) {
-      const dlgRef = this.dialog.open(this.dlgList[id], {panelClass: 'dialog-box'});
+      const dlgRef = this.dialog.open(this.dlgList[id], {panelClass: 'dialog-box', disableClose: true});
       return dlgRef.afterClosed();
+    } else {
+      Log.todo(`Der Dialog mit der Id ${id} muss noch in SessionService implementiert werden.`);
     }
     return of(null);
   }
@@ -95,5 +110,22 @@ export class SessionService {
     }
 
     return this.dlgRef.afterClosed();
+  }
+
+  // checks if the url of the user is valid
+  async isUserValid(user: UserData) {
+    if (user.apiUrl(null, '') == null) {
+      return $localize`Die URL wurde noch nicht festgelegt`;
+    }
+    let ret: string = null;
+    const check = user.apiUrl(null, 'status');
+    await this.ds.request(check).then(response => {
+      if (response.body.status != 'ok') {
+        ret = GLOBALS.msgUrlFailure(check);
+      }
+    }).catch(_ => {
+      ret = GLOBALS.msgUrlFailure(check);
+    });
+    return ret;
   }
 }

@@ -23,10 +23,10 @@ export class PumpData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.clock = JsonData.toDate(json['clock']);
-    ret.pumpBattery = PumpBatteryData.fromJson(json['pumpbattery']);
-    ret.reservoir = JsonData.toNumber(json['reservoir']);
-    ret.pumpStatus = PumpStatusData.fromJson(json['pumpstatus']);
+    ret.clock = JsonData.toDate(json.clock);
+    ret.pumpBattery = PumpBatteryData.fromJson(json.pumpbattery);
+    ret.reservoir = JsonData.toNumber(json.reservoir);
+    ret.pumpStatus = PumpStatusData.fromJson(json.pumpstatus);
     return ret;
   }
 }

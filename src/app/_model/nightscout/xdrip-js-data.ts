@@ -42,31 +42,31 @@ export class XDripJSData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.state = JsonData.toNumber(json['state']);
-    ret.stateString = JsonData.toText(json['stateString']);
-    ret.stateStringShort = JsonData.toText(json['stateStringShort']);
-    ret.txId = JsonData.toText(json['txId']);
-    ret.txStatus = JsonData.toNumber(json['txStatus']);
-    ret.txStatusString = JsonData.toText(json['txStatusString']);
-    ret.txStatusStringShort = JsonData.toText(json['txStatusStringShort']);
-    ret.txActivation = JsonData.toDate(json['txActivation']);
-    ret.mode = JsonData.toText(json['mode']);
-    ret.timestamp = JsonData.toDate(json['timestamp']);
-    ret.rssi = JsonData.toNumber(json['rssi']);
-    ret.unfiltered = JsonData.toNumber(json['unfiltered']);
-    ret.filtered = JsonData.toNumber(json['filtered']);
-    ret.noise = JsonData.toNumber(json['noise']);
-    ret.noiseString = JsonData.toNumber(json['noiseString']);
-    ret.slope = JsonData.toNumber(json['slope']);
-    ret.intercept = JsonData.toNumber(json['intercept']);
-    ret.calType = JsonData.toText(json['calType']);
-    ret.lastCalibrationDate = JsonData.toDate(json['lastCalibrationDate']);
-    ret.sessionStart = JsonData.toDate(json['sessionStart']);
-    ret.batteryTimestamp = JsonData.toDate(json['batteryTimestamp']);
-    ret.voltageA = JsonData.toNumber(json['voltagea']);
-    ret.voltageB = JsonData.toNumber(json['voltageb']);
-    ret.temperature = JsonData.toNumber(json['temperature']);
-    ret.resistance = JsonData.toNumber(json['resistance']);
+    ret.state = JsonData.toNumber(json.state);
+    ret.stateString = JsonData.toText(json.stateString);
+    ret.stateStringShort = JsonData.toText(json.stateStringShort);
+    ret.txId = JsonData.toText(json.txId);
+    ret.txStatus = JsonData.toNumber(json.txStatus);
+    ret.txStatusString = JsonData.toText(json.txStatusString);
+    ret.txStatusStringShort = JsonData.toText(json.txStatusStringShort);
+    ret.txActivation = JsonData.toDate(json.txActivation);
+    ret.mode = JsonData.toText(json.mode);
+    ret.timestamp = JsonData.toDate(json.timestamp);
+    ret.rssi = JsonData.toNumber(json.rssi);
+    ret.unfiltered = JsonData.toNumber(json.unfiltered);
+    ret.filtered = JsonData.toNumber(json.filtered);
+    ret.noise = JsonData.toNumber(json.noise);
+    ret.noiseString = JsonData.toNumber(json.noiseString);
+    ret.slope = JsonData.toNumber(json.slope);
+    ret.intercept = JsonData.toNumber(json.intercept);
+    ret.calType = JsonData.toText(json.calType);
+    ret.lastCalibrationDate = JsonData.toDate(json.lastCalibrationDate);
+    ret.sessionStart = JsonData.toDate(json.sessionStart);
+    ret.batteryTimestamp = JsonData.toDate(json.batteryTimestamp);
+    ret.voltageA = JsonData.toNumber(json.voltagea);
+    ret.voltageB = JsonData.toNumber(json.voltageb);
+    ret.temperature = JsonData.toNumber(json.temperature);
+    ret.resistance = JsonData.toNumber(json.resistance);
     return ret;
   }
 }

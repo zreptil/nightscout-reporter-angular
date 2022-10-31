@@ -22,10 +22,10 @@ export class IOBData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.iob = JsonData.toNumber(json['iob']);
-    ret.basalIob = JsonData.toNumber(json['basaliob']);
-    ret.activity = JsonData.toNumber(json['activity']);
-    ret.time = JsonData.toDate(json['time']);
+    ret.iob = JsonData.toNumber(json.iob);
+    ret.basalIob = JsonData.toNumber(json.basaliob);
+    ret.activity = JsonData.toNumber(json.activity);
+    ret.time = JsonData.toDate(json.time);
     return ret;
   }
 }

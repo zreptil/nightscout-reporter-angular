@@ -12,8 +12,12 @@ export class ThemeService {
               public ms: MaterialColorService) {
   }
 
+  get isWatch(): boolean {
+    return window.location.href.indexOf('watch') > 0;
+  }
+
   async setTheme(name: string) {
-    const suffix = ''; // isWatch ? '-watch' : '';
+    const suffix = this.isWatch ? '-watch' : '';
     document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
     document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);
     const theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`);

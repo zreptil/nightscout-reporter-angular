@@ -1,5 +1,6 @@
 import {JsonData} from '../json-data';
 import {GlobalsData} from '@/_model/globals-data';
+import {Settings} from '@/_model/settings';
 
 export class EntryData extends JsonData {
   raw: any;
@@ -35,7 +36,7 @@ export class EntryData extends JsonData {
   }
 
   get gluc(): number {
-    return this.isGap ? -1 : GlobalsData.adjustFactor * (this.type == 'sgv' ? this.sgv : this.rawbg) ?? 0;
+    return this.isGap ? -1 : Settings.adjustFactor * (this.type == 'sgv' ? this.sgv : this.rawbg) ?? 0;
   }
 
   get bloodGluc(): number {
@@ -58,15 +59,15 @@ export class EntryData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.id = json['_id'];
-    ret.time = JsonData.toDate(json['date']);
-    ret.rssi = JsonData.toNumber(json['rssi']);
-    ret.device = json['device'];
-    ret.direction = json['direction'];
-    ret.rawbg = JsonData.toNumber(json['rawbg']);
-    ret.type = json['type'];
-    ret.sgv = JsonData.toNumber(json['sgv']);
-    ret.mbg = JsonData.toNumber(json['mbg']);
+    ret.id = json._id;
+    ret.time = JsonData.toDate(json.date);
+    ret.rssi = JsonData.toNumber(json.rssi);
+    ret.device = json.device;
+    ret.direction = json.direction;
+    ret.rawbg = JsonData.toNumber(json.rawbg);
+    ret.type = json.type;
+    ret.sgv = JsonData.toNumber(json.sgv);
+    ret.mbg = JsonData.toNumber(json.mbg);
     if (ret.type == null && ret.sgv > 0) {
       ret.type = 'sgv';
     }
@@ -81,9 +82,9 @@ export class EntryData extends JsonData {
       ret.sgv = 0;
       ret.isGap = true;
     }
-    ret.slope = JsonData.toNumber(json['slope']);
-    ret.intercept = JsonData.toNumber(json['intercept']);
-    ret.scale = JsonData.toNumber(json['scale']);
+    ret.slope = JsonData.toNumber(json.slope);
+    ret.intercept = JsonData.toNumber(json.intercept);
+    ret.scale = JsonData.toNumber(json.scale);
     return ret;
   }
 

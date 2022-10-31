@@ -17,13 +17,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from '@/material.module';
 import {AppRoutingModule} from '@/app-routing.module';
-import { MainComponent } from './components/main/main.component';
-import { WhatsNewComponent } from './components/whats-new/whats-new.component';
-import { StartComponent } from './components/start/start.component';
-import { ImpressumComponent } from './components/impressum/impressum.component';
-import { DsgvoComponent } from './components/dsgvo/dsgvo.component';
-import { HelpviewComponent } from './components/helpview/helpview.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import {WhatsNewComponent} from './components/whats-new/whats-new.component';
+import {MainComponent} from './components/main/main.component';
+import {ImpressumComponent} from './components/impressum/impressum.component';
+import {DsgvoComponent} from './components/dsgvo/dsgvo.component';
+import {HelpviewComponent} from './components/helpview/helpview.component';
+import {SettingsComponent} from './components/settings/settings.component';
+import {TestComponent} from './components/test/test.component';
+import {GlucAdjustComponent} from './controls/gluc-adjust/gluc-adjust.component';
+import {WelcomeComponent} from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -39,13 +41,15 @@ import { SettingsComponent } from './components/settings/settings.component';
     ColorPickerMixerComponent,
     ColorPickerBaseComponent,
     ColorPickerRGBComponent,
-    MainComponent,
     WhatsNewComponent,
-    StartComponent,
+    MainComponent,
     ImpressumComponent,
     DsgvoComponent,
     HelpviewComponent,
-    SettingsComponent
+    SettingsComponent,
+    TestComponent,
+    GlucAdjustComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -19,8 +19,8 @@ export class InsulinInjectionData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.insulin = JsonData.toText(json['insulin']);
-    ret.units = JsonData.toNumber(json['units']);
+    ret.insulin = JsonData.toText(json.insulin);
+    ret.units = JsonData.toNumber(json.units);
     return ret;
   }
 }

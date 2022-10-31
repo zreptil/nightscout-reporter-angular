@@ -18,18 +18,18 @@ export class ExtendedSettingsData extends JsonData {
     if (json == null) {
       return ret;
     }
-    if (json['pump'] != null) {
-      for (const entry of json['pump']['fields'].toString().split(' ')) {
+    if (json.pump != null) {
+      for (const entry of JsonData.toText(json.pump.fields).toString().split(' ')) {
         ret.pumpFields.push(entry);
       }
     }
-    if (json['upbat'] != null) {
-      ret.upbatEnableAlerts = JsonData.toBool(json['upbat']['enableAlerts']);
-      ret.upbatWarn = JsonData.toNumber(json['upbat']['warn']);
+    if (json.upbat != null) {
+      ret.upbatEnableAlerts = JsonData.toBool(json.upbat.enableAlerts);
+      ret.upbatWarn = JsonData.toNumber(json.upbat.warn);
     }
-    ret.cage = AgeData.fromJson(json['cage']);
-    ret.cage = AgeData.fromJson(json['sage']);
-    ret.advancedDeviceStatus = JsonData.toBool(json['advancedDeviceStatus']);
+    ret.cage = AgeData.fromJson(json.cage);
+    ret.cage = AgeData.fromJson(json.sage);
+    ret.advancedDeviceStatus = JsonData.toBool(json.advancedDeviceStatus);
     return ret;
   }
 }

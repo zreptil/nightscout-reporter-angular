@@ -5,10 +5,10 @@ import {ActivityData} from '@/_model/nightscout/activity-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {StatisticData} from './statistic-data';
 import {ReportData} from '@/_model/report-data';
-import {GlobalsData} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
 import {Utils} from '@/classes/utils';
 import {Log} from '@/_services/log.service';
+import {Settings} from '../settings';
 
 export class ListData {
   days: DayData[] = [];
@@ -98,13 +98,13 @@ export class ListData {
       low: new StatisticData(0, 0),
       norm: new StatisticData(0, 0),
       high: new StatisticData(0, 0),
-      stdLow: new StatisticData(1, GlobalsData.stdLow),
-      stdNorm: new StatisticData(GlobalsData.stdLow, GlobalsData.stdHigh),
-      stdHigh: new StatisticData(GlobalsData.stdHigh, 9999),
-      stdVeryHigh: new StatisticData(GlobalsData.stdVeryHigh, 9999),
-      stdNormHigh: new StatisticData(GlobalsData.stdHigh, GlobalsData.stdVeryHigh),
-      stdNormLow: new StatisticData(GlobalsData.stdVeryLow, GlobalsData.stdLow),
-      stdVeryLow: new StatisticData(0, GlobalsData.stdVeryLow),
+      stdLow: new StatisticData(1, Settings.stdLow),
+      stdNorm: new StatisticData(Settings.stdLow, Settings.stdHigh),
+      stdHigh: new StatisticData(Settings.stdHigh, 9999),
+      stdVeryHigh: new StatisticData(Settings.stdVeryHigh, 9999),
+      stdNormHigh: new StatisticData(Settings.stdHigh, Settings.stdVeryHigh),
+      stdNormLow: new StatisticData(Settings.stdVeryLow, Settings.stdLow),
+      stdVeryLow: new StatisticData(0, Settings.stdVeryLow),
     };
     this.min = 999999.0;
     this.max = -1.0;
@@ -298,7 +298,7 @@ export class ListData {
         this.sensorCount++;
       }
       if (type === 'note' && t.notes.toLowerCase().startsWith('ecarb')) {
-        Log.debug('ListData.extractData muss noch fertig implementiert werden');
+        Log.todo('ListData.extractData muss noch fertig implementiert werden');
         // const rex = RegExp(/[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*).*/);
         // Match match = rex.firstMatch(t.notes);
         // if (match != null && match.groupCount == 3) {

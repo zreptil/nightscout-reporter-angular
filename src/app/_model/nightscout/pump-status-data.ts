@@ -21,10 +21,10 @@ export class PumpStatusData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.status = JsonData.toText(json['status']);
-    ret.bolusing = JsonData.toBool(json['bolusing']);
-    ret.suspended = JsonData.toBool(json['suspended']);
-    ret.timestamp = JsonData.toDate(json['timestamp']);
+    ret.status = JsonData.toText(json.status);
+    ret.bolusing = JsonData.toBool(json.bolusing);
+    ret.suspended = JsonData.toBool(json.suspended);
+    ret.timestamp = JsonData.toDate(json.timestamp);
     return ret;
   }
 }

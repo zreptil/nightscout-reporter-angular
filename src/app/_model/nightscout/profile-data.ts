@@ -58,20 +58,20 @@ export class ProfileData extends JsonData {
     if (json == null) {
       return ret;
     }
-    ret.id = json['int'];
-    ret.enteredBy = JsonData.toText(json['enteredBy']);
-    ret.defaultProfile = json['defaultProfile'];
-    ret.startDate = JsonData.toDate(json['startDate']);
-    const timeshift = JsonData.toNumber(json['timeshift']);
-    ret.units = JsonData.toText(json['units']);
-    ret.createdAt = JsonData.toDate(json['created_at']);
-    ret.duration = JsonData.toNumber(json['duration']) * 60; // duration is saved as minutes
-    const src = json['store'];
+    ret.id = json.int;
+    ret.enteredBy = JsonData.toText(json.enteredBy);
+    ret.defaultProfile = json.defaultProfile;
+    ret.startDate = JsonData.toDate(json.startDate);
+    const timeshift = JsonData.toNumber(json.timeshift);
+    ret.units = JsonData.toText(json.units);
+    ret.createdAt = JsonData.toDate(json.created_at);
+    ret.duration = JsonData.toNumber(json.duration) * 60; // duration is saved as minutes
+    const src = json.store;
     ret.maxPrecision = 0;
     ret.keys(src).forEach(key => {
       const temp = src[key];
       if (temp != null) {
-        let percentage = JsonData.toNumber(json['percentage']);
+        let percentage = JsonData.toNumber(json.percentage);
         if (percentage == null || percentage == 0.0) {
           percentage = 1.0;
         } else {
@@ -156,7 +156,7 @@ export class ProfileData extends JsonData {
         return;
       }
         // if the inserted entry ends after the next entry starts
-      // change the start of the next entry
+      // change the main of the next entry
       else if (entry.timeForCalc + entry.duration > list[idx + 1].timeForCalc) {
         list[idx + 1].duration -= entry.timeForCalc + entry.duration - list[idx + 1].timeForCalc;
         list[idx + 1].timeForCalc = entry.timeForCalc + entry.duration;
@@ -188,7 +188,7 @@ export class ProfileData extends JsonData {
         return;
       }
         // if the inserted entry ends after the next entry starts
-      // change the start of the next entry
+      // change the main of the next entry
       else if (entry.timeForCalc + entry.duration > list[idx + 1].timeForCalc) {
         list[idx + 1].duration -= entry.timeForCalc + entry.duration - list[idx + 1].timeForCalc;
         list[idx + 1].timeForCalc = entry.timeForCalc + entry.duration;
