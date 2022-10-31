@@ -196,7 +196,6 @@ export class DataService {
       GLOBALS.lastVersion != null
       && !Utils.isEmpty(GLOBALS.lastVersion)
       && !Utils.isEmpty(GLOBALS.userList);
-    Log.debug(GLOBALS.isConfigured ? 'Aber HALLO!!!' : 'Nicht konfiguriert');
   }
 
   _loadFromGoogle(): void {
@@ -260,6 +259,18 @@ export class DataService {
     } catch (ex) {
       var msg = ex.toString();
       Log.debug(`Fehler bei DataService.fromStrings: ${msg}`);
+    }
+  }
+
+  // retrieves the device settings from a string
+  fromDeviceString(src: string): void {
+    try {
+      const json = JSON.parse(src);
+      this.fromDeviceJson(json);
+    } catch (ex) {
+      const msg = ex.toString();
+      Log.devError(ex, `Fehler bei DataService.fromDeviceString: ${msg}`);
+      console.error(src);
     }
   }
 
@@ -424,15 +435,15 @@ export class DataService {
     this.ss.clearStorage();
 
     if (Log.mayDebug) {
-      this.ss.write(Settings.DebugFlag, 'yes');
+      this.ss.write(Settings.DebugFlag, Settings.DebugActive, false);
     }
 
     this.syncWithGoogle = oldGoogle;
     GLOBALS._theme = oldWebTheme;
 
     this.saveWebData();
-    this.ss.write(Settings.SharedData, Settings.doit(GLOBALS.asSharedString));
-    this.ss.write(Settings.DeviceData, Settings.doit(GLOBALS.asDeviceString));
+    this.ss.writeCrypt(Settings.SharedData, GLOBALS.asSharedString);
+    this.ss.writeCrypt(Settings.DeviceData, GLOBALS.asDeviceString);
 
     const doReload = (GLOBALS.language.code !== oldLang && GLOBALS.language.code !== null) && !params.skipReload;
     if (this.syncWithGoogle && params.updateSync) {

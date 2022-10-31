@@ -26,6 +26,7 @@ import {SettingsComponent} from './components/settings/settings.component';
 import {TestComponent} from './components/test/test.component';
 import {GlucAdjustComponent} from './controls/gluc-adjust/gluc-adjust.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

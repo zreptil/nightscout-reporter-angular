@@ -318,7 +318,9 @@ export class PdfService {
       Log.displayLink('playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
       return;
     }
-    this._generatePdf(data);
+    this._generatePdf(data).then(_ => {
+      this.ps.clear();
+    });
   }
 
   private async _generatePdf(data: any) {

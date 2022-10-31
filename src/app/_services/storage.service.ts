@@ -10,7 +10,7 @@ import {Utils} from '@/classes/utils';
 export class StorageService {
 
   constructor() {
-    LogService.create(localStorage.getItem('debug') === 'true',
+    LogService.create(localStorage.getItem(Settings.DebugFlag) === Settings.DebugActive,
       localStorage.getItem('iamdev') === 'true',
       true);
   }
@@ -34,8 +34,11 @@ export class StorageService {
     return ret;
   }
 
-  write(key: string, data: any): void {
-    const value = JSON.stringify(data);
+  write(key: string, data: any, cvt = true): void {
+    let value = data;
+    if (cvt) {
+      value = JSON.stringify(data);
+    }
     if (GLOBALS.isBeta) {
       key = `${Settings.betaPrefix}${key}`;
     }
@@ -64,5 +67,10 @@ export class StorageService {
         window.localStorage.removeItem(key);
       }
     }
+  }
+
+  writeCrypt(key: string, src: string) {
+    const dst = Settings.doit(src);
+    this.write(key, dst, dst !== src);
   }
 }

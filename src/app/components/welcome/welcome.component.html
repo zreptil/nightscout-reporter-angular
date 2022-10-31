@@ -1,83 +1,87 @@
-<div mat-dialog-title>
-  <div>
-    <h1 i18n="welcome title">Willkommen bei Nightscout Reporter!</h1>
-  </div>
-  <div class="langPanel">
-    <ng-container *ngFor="let lang of g.languageList; let idx = index">
-      <button (click)="ds.changeLanguage(lang, {checkConfigured: true})"
-              *ngIf="lang.code!=g.language.code" mat-flat-button>
-        <img alt="language {{lang.code}}" src="{{lang.imgPath}}">
-      </button>
-    </ng-container>
-  </div>
-  <button (click)="clickDebug()"
-          *ngIf="mayDebug"
-          class="debug"
-          mat-flat-button
-          mat-mini-fab>
-    <mat-icon>bug_report</mat-icon>
-  </button>
-  <button *ngIf="g.isConfigured" mat-dialog-close="ok" mat-icon-button>
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
-<mat-dialog-content>
-  <div i18n="welcome section 1">
-    Diese Seite dient der Erzeugung von PDF-Dokumenten mit den bei Nightscout gespeicherten Daten. Dafür ist es
-    notwendig, auf diese Daten zugreifen zu können, weshalb zunächst ein paar Einstellungen gespeichert werden
-    müssen.
-    Solange diese nicht vorhanden und gültig sind, kann die Seite nichts für Dich tun.
-  </div>
-  <div i18n="welcome section 2">
-    Die Daten, die Du hier eingibst, werden normalerweise im localStorage des Browsers gespeichert. Dieser
-    beinhaltet webseitenbezogene Daten, die nur von dieser Webseite ausgelesen werden können. In diesem Fall werden
-    keine Cookies verwendet und es werden keine Daten auf Servern gespeichert. Es wird lediglich eine Verbindung zur
-    angegebenen Nightscout-Instanz aufgebaut und die dort vorhandenen Daten ausgelesen, um daraus ein PDF-Dokument
-    zu erzeugen. Dieses kann dann dem Diabetesberater oder sonstigen Interessenten vorgelegt werden.
-  </div>
-  <div *ngIf="g.isLocal" i18n="welcome section 3">
-    Wenn in den Einstellungen eine Verbindung zum Google-Konto hergestellt wird, werden die Cookies von Google
-    verwendet und die Daten zusätzlich im AppStorage auf Google Drive gespeichert. Auf diese Art kann man die
-    Daten zentralisiert verwalten und hat diese in jedem Browser zur Verfügung, der mit dem angegebenen Google
-    Konto verbunden ist.
-  </div>
-  <div i18n="welcome section 4">
-    Die Webseite verwendet Javascript zur Erledigung ihrer Aufgaben.
-  </div>
-</mat-dialog-content>
-<mat-dialog-actions *ngIf="!g.isConfigured" class="controls">
-  <div class="left">
-    <button (click)="ss.showPopup('settings')" class="iconButton" mat-dialog-close="ok" mat-flat-button>
-      <mat-icon>settings</mat-icon>
-      <div i18n="label for button to open settings on welcome screen">
-        Einstellungen für die Verwendung der Seite vornehmen
-      </div>
-    </button>
-    <!--
-      <signin [isVisible]="true"
-              [raised]="true" [(isAuthorized)]="g.syncGoogle"
-              [clientId]="g.googleClientId"
-              (onEvent)="signinEvent($event)"
-              (signinResult)="g.client=$event" i18n:msgDisconnected="synchronize with google drive"
-              msgDisconnected="Mit Google Drive synchronisieren"></signin>
--->
-  </div>
-  <div class="right">
-    <button (click)="ss.showVideo('intro')" class="imageButton" mat-flat-button>
-      <img alt="video intro" src="assets/img/youtube_social_icon_red.png"/>
-      <ng-container i18n="label for button to open settings on welcome screen">
-        Einstiegsvideo
+<!--suppress HtmlUnknownTarget -->
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.welcome">
+  <div mat-dialog-title>
+    <div>
+      <h1 i18n="welcome title">Willkommen bei Nightscout Reporter!</h1>
+    </div>
+    <div class="langPanel">
+      <ng-container *ngFor="let lang of g.languageList; let idx = index">
+        <button (click)="ds.changeLanguage(lang, {checkConfigured: true})"
+                *ngIf="lang.code!=g.language.code" mat-flat-button>
+          <img alt="language {{lang.code}}" src="{{lang.imgPath}}">
+        </button>
       </ng-container>
+    </div>
+    <button (click)="clickDebug()"
+            *ngIf="mayDebug"
+            class="debug"
+            mat-flat-button
+            mat-mini-fab>
+      <mat-icon>bug_report</mat-icon>
     </button>
-    <button (click)="ss.showPopup('impressum')"
-            class="legal"
-            i18n="label for inprint button" mat-flat-button>
-      Impressum
-    </button>
-    <button (click)="ss.showPopup('dsgvo')"
-            class="legal"
-            i18n="label for dataprotection button" mat-flat-button>
-      Datenschutzerklärung
+    <button *ngIf="g.isConfigured" mat-dialog-close="ok" mat-icon-button>
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-</mat-dialog-actions>
+  <mat-dialog-content>
+    <div i18n="welcome section 1">
+      Diese Seite dient der Erzeugung von PDF-Dokumenten mit den bei Nightscout gespeicherten Daten. Dafür ist es
+      notwendig, auf diese Daten zugreifen zu können, weshalb zunächst ein paar Einstellungen gespeichert werden
+      müssen.
+      Solange diese nicht vorhanden und gültig sind, kann die Seite nichts für Dich tun.
+    </div>
+    <div i18n="welcome section 2">
+      Die Daten, die Du hier eingibst, werden normalerweise im localStorage des Browsers gespeichert. Dieser
+      beinhaltet webseitenbezogene Daten, die nur von dieser Webseite ausgelesen werden können. In diesem Fall werden
+      keine Cookies verwendet und es werden keine Daten auf Servern gespeichert. Es wird lediglich eine Verbindung zur
+      angegebenen Nightscout-Instanz aufgebaut und die dort vorhandenen Daten ausgelesen, um daraus ein PDF-Dokument
+      zu erzeugen. Dieses kann dann dem Diabetesberater oder sonstigen Interessenten vorgelegt werden.
+    </div>
+    <div *ngIf="g.isLocal" i18n="welcome section 3">
+      Wenn in den Einstellungen eine Verbindung zum Google-Konto hergestellt wird, werden die Cookies von Google
+      verwendet und die Daten zusätzlich im AppStorage auf Google Drive gespeichert. Auf diese Art kann man die
+      Daten zentralisiert verwalten und hat diese in jedem Browser zur Verfügung, der mit dem angegebenen Google
+      Konto verbunden ist.
+    </div>
+    <div i18n="welcome section 4">
+      Die Webseite verwendet Javascript zur Erledigung ihrer Aufgaben.
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions *ngIf="!g.isConfigured" class="controls">
+    <div class="left">
+      <button (click)="ss.showSettings()" class="iconButton" mat-flat-button>
+        <mat-icon>settings</mat-icon>
+        <div i18n="label for button to open settings on welcome screen">
+          Einstellungen für die Verwendung der Seite vornehmen
+        </div>
+      </button>
+      <!--
+        <signin [isVisible]="true"
+                [raised]="true" [(isAuthorized)]="g.syncGoogle"
+                [clientId]="g.googleClientId"
+                (onEvent)="signinEvent($event)"
+                (signinResult)="g.client=$event" i18n:msgDisconnected="synchronize with google drive"
+                msgDisconnected="Mit Google Drive synchronisieren"></signin>
+  -->
+    </div>
+    <div class="right">
+      <button (click)="ss.showVideo('intro')" class="imageButton" mat-flat-button>
+        <img alt="video intro" src="assets/img/youtube_social_icon_red.png"/>
+        <ng-container i18n="label for button to open settings on welcome screen">
+          Einstiegsvideo
+        </ng-container>
+      </button>
+      <button (click)="ss.showPopup('impressum')"
+              class="legal"
+              i18n="label for inprint button" mat-flat-button>
+        Impressum
+      </button>
+      <button (click)="ss.showPopup('dsgvo')"
+              class="legal"
+              i18n="label for dataprotection button" mat-flat-button>
+        Datenschutzerklärung
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

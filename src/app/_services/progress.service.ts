@@ -11,4 +11,10 @@ export class ProgressService {
 
   constructor() {
   }
+
+  clear(): void {
+    this.progressValue = 0;
+    this.progressMax = 0;
+    this.progressText = null;
+  }
 }

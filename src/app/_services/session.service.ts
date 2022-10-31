@@ -16,6 +16,7 @@ import {UserData} from '@/_model/nightscout/user-data';
 import {DataService} from '@/_services/data.service';
 import {GLOBALS} from '@/_model/globals-data';
 import {WelcomeComponent} from '@/components/welcome/welcome.component';
+import {NightscoutService} from '@/_services/nightscout.service';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -44,7 +45,8 @@ export class SessionService {
 
   constructor(public ss: StorageService,
               public ds: DataService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              public ns: NightscoutService) {
   }
 
   get mayDebug(): boolean {
@@ -58,9 +60,26 @@ export class SessionService {
     window.open(`https://www.youtube.com/watch?v=${videos[id]}`);
   }
 
+  showSettings(): void {
+    const sharedOrg = GLOBALS.asSharedString;
+    const deviceOrg = GLOBALS.asDeviceString;
+    this.showPopup('settings').subscribe((result: DialogResult) => {
+      switch (result.btn) {
+        case DialogResultButton.ok:
+          this.ds.save({skipReload: true});
+          this.ns.reportData = null;
+          break;
+        default:
+          this.ds.fromSharedString(sharedOrg);
+          this.ds.fromDeviceString(deviceOrg);
+          break;
+      }
+    });
+  }
+
   showPopup(id: string): Observable<DialogResult> {
     if (this.dlgList[id] != null) {
-      const dlgRef = this.dialog.open(this.dlgList[id], {panelClass: 'dialog-box', disableClose: true});
+      const dlgRef = this.dialog.open(this.dlgList[id], {panelClass: ['dialog-box', id], disableClose: true});
       return dlgRef.afterClosed();
     } else {
       Log.todo(`Der Dialog mit der Id ${id} muss noch in SessionService implementiert werden.`);

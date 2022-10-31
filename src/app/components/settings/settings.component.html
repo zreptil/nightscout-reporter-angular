@@ -1,197 +1,199 @@
-<div mat-dialog-title>
-  <div>
-    <h1 i18n="title for settings dialog">Einstellungen</h1>
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.settings">
+  <div cdkDragHandle mat-dialog-title>
+    <div>
+      <h1 i18n="title for settings dialog">Einstellungen</h1>
+    </div>
+    <div>
+      <button *ngIf="isEmpty(ps.progressText)"
+              [mat-dialog-close]="{btn:2}"
+              mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
-  <div>
-    <button (click)="clickClose()"
-            *ngIf="isEmpty(ps.progressText)"
-            mat-dialog-close="ok"
-            mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-</div>
 
-<mat-dialog-content class="mat-typography">
-  <div class="subtitle">
-    <ng-container i18n="label for settings-area with user data">Benutzerdaten</ng-container>
-    <div class="navControls">
-      <button (click)="g.userIdx=g.userIdx-1" [disabled]="g.userIdx==0" mat-flat-button>
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      {{g.userIdx + 1}} / {{g.userList?.length ?? 1}}
-      <button (click)="g.userIdx=g.userIdx+1" [disabled]="g.userIdx>=(g.userList?.length ?? 0)-1" mat-flat-button>
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+  <mat-dialog-content>
+    <div class="subtitle">
+      <ng-container i18n="label for settings-area with user data">Benutzerdaten</ng-container>
+      <div class="navControls">
+        <button (click)="g.userIdx=g.userIdx-1" [disabled]="g.userIdx==0" mat-flat-button>
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        {{g.userIdx + 1}} / {{g.userList?.length ?? 1}}
+        <button (click)="g.userIdx=g.userIdx+1" [disabled]="g.userIdx>=(g.userList?.length ?? 0)-1" mat-flat-button>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
-  <div *ngIf="errUserInvalid!=null" [innerHTML]="errUserInvalid" class="error"></div>
-  <div class="userinfo">
-    <mat-form-field>
-      <mat-label>{{msgName}}</mat-label>
-      <input [(ngModel)]="g.user.name" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label i18n="label of editfield for birthday">Geburtstag</mat-label>
-      <input [(ngModel)]="g.user.birthDate" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label i18n="label of editfield for diabetes since">Diabetes seit</mat-label>
-      <input [(ngModel)]="g.user.diaStartDate" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{msgInsulin}}</mat-label>
-      <input [(ngModel)]="g.user.insulin" matInput>
-    </mat-form-field>
-    <div class="controls">
-      <button (click)="addUser()"
-              [disabled]="mayAddUser"
-              mat-mini-fab>
-        <mat-icon>add</mat-icon>
-      </button>
-      <button (click)="confirmIdx=1"
-              [disabled]="isEmpty(g.user.apiUrl(null, '', {noApi: true}))"
-              mat-mini-fab>
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div *ngFor="let item of g.user.listApiUrl; let idx = index" class="urlPanel">
-    <div class="formfield mat-form-field-infix">
+    <div *ngIf="errUserInvalid!=null" [innerHTML]="errUserInvalid" class="error"></div>
+    <div class="userinfo">
       <mat-form-field>
-        <mat-label *ngIf="idx==0">{{msgUrlNightscout}}</mat-label>
-        <input [(ngModel)]="item.url" matInput>
+        <mat-label>{{msgName}}</mat-label>
+        <input [(ngModel)]="g.user.name" matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n="label of editfield for birthday">Geburtstag</mat-label>
+        <input [(ngModel)]="g.user.birthDate" matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n="label of editfield for diabetes since">Diabetes seit</mat-label>
+        <input [(ngModel)]="g.user.diaStartDate" matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{msgInsulin}}</mat-label>
+        <input [(ngModel)]="g.user.insulin" matInput>
+      </mat-form-field>
+      <div class="controls">
+        <button (click)="addUser()"
+                [disabled]="mayAddUser"
+                mat-mini-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button (click)="deleteUser()"
+                [disabled]="isEmpty(g.user.apiUrl(null, '', {noApi: true}))"
+                mat-mini-fab>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngFor="let item of g.user.listApiUrl; let idx = index" class="urlPanel">
+      <div class="formfield mat-form-field-infix">
+        <mat-form-field>
+          <mat-label *ngIf="idx==0">{{msgUrlNightscout}}</mat-label>
+          <input [(ngModel)]="item.url" matInput>
+          <mat-hint *ngIf="idx==g.user.listApiUrl.length-1"></mat-hint>
+        </mat-form-field>
         <mat-hint *ngIf="idx==g.user.listApiUrl.length-1"></mat-hint>
-      </mat-form-field>
-      <mat-hint *ngIf="idx==g.user.listApiUrl.length-1"></mat-hint>
-    </div>
-    <button (click)="navigate(item.fullUrl('','', true))" [disabled]="isEmpty(item.url)" mat-flat-button>
-      <mat-icon class="urlIcon">open_in_new</mat-icon>
-    </button>
-    <div class="formfield mat-form-field-infix">
-      <mat-form-field>
-        <mat-label *ngIf="idx==0">{{msgAccessToken}}</mat-label>
-        <input [(ngModel)]="item.token" [type]="showPwd==idx?'password':'text'" matInput>
-      </mat-form-field>
-      <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-        {{msgAccessTokenHint(idx == g.user.listApiUrl.length - 1)}}
-      </mat-hint>
-    </div>
-    <button (click)="showPwd=(showPwd==idx?-1:idx)" [disabled]="isEmpty(item.token)" mat-flat-button>
-      <mat-icon class="urlIcon">{{showPwd == idx ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-    <div class="formfield mat-form-field-infix">
-      <mat-form-field>
-        <mat-label *ngIf="idx==0">{{msgStartDate}}</mat-label>
-        <input (dateChange)="dateChange(item, 'startDateEdit', $event)"
-               (dateInput)="item.startDateEditString" [matDatepicker]="dpStartDate" matInput>
-        <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #dpStartDate></mat-datepicker>
-      </mat-form-field>
-      <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-        {{msgStartDateHint(idx == g.user.listApiUrl.length - 1)}}
-      </mat-hint>
-    </div>
-    <button (click)="calculateFirstDay(item)" [disabled]="isEmpty(item.url)" mat-flat-button>
-      <mat-icon class="urlIcon">calculate</mat-icon>
-    </button>
-    <div class="formfield mat-form-field-infix">
-      <mat-form-field>
-        <mat-label *ngIf="idx==0">{{msgEndDate}}</mat-label>
-        <input (dateChange)="dateChange(item, 'endDateEdit', $event)"
-               (dateInput)="item.endDateEdit" [matDatepicker]="dpEndDate" matInput>
-        <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #dpEndDate></mat-datepicker>
-      </mat-form-field>
-      <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-        {{msgEndDateHint(idx == g.user.listApiUrl.length - 1)}}
-      </mat-hint>
-    </div>
-    <div class="controls">
-      <button (click)="addUrl()"
-              *ngIf="idx==g.user.listApiUrl.length-1"
-              [disabled]="isEmpty(g.user.apiUrl(null, '', {noApi: true}))"
-              mat-mini-fab>
-        <mat-icon>add</mat-icon>
+      </div>
+      <button (click)="navigate(item.fullUrl('','', true))" [disabled]="isEmpty(item.url)" mat-flat-button>
+        <mat-icon class="urlIcon">open_in_new</mat-icon>
       </button>
-      <button (click)="clickDelete(idx)" *ngIf="idx>0" mat-mini-fab>
-        <mat-icon>delete</mat-icon>
+      <div class="formfield mat-form-field-infix">
+        <mat-form-field>
+          <mat-label *ngIf="idx==0">{{msgAccessToken}}</mat-label>
+          <input [(ngModel)]="item.token" [type]="showPwd==idx?'password':'text'" matInput>
+        </mat-form-field>
+        <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgAccessTokenHint(idx == g.user.listApiUrl.length - 1)}}
+        </mat-hint>
+      </div>
+      <button (click)="showPwd=(showPwd==idx?-1:idx)" [disabled]="isEmpty(item.token)" mat-flat-button>
+        <mat-icon class="urlIcon">{{showPwd == idx ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <div class="formfield mat-form-field-infix">
+        <mat-form-field>
+          <mat-label *ngIf="idx==0">{{msgStartDate}}</mat-label>
+          <input (dateChange)="dateChange(item, 'startDateEdit', $event)"
+                 (dateInput)="item.startDateEditString" [matDatepicker]="dpStartDate" matInput>
+          <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #dpStartDate></mat-datepicker>
+        </mat-form-field>
+        <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgStartDateHint(idx == g.user.listApiUrl.length - 1)}}
+        </mat-hint>
+      </div>
+      <button (click)="calculateFirstDay(item)" [disabled]="isEmpty(item.url)" mat-flat-button>
+        <mat-icon class="urlIcon">calculate</mat-icon>
+      </button>
+      <div class="formfield mat-form-field-infix">
+        <mat-form-field>
+          <mat-label *ngIf="idx==0">{{msgEndDate}}</mat-label>
+          <input (dateChange)="dateChange(item, 'endDateEdit', $event)"
+                 (dateInput)="item.endDateEdit" [matDatepicker]="dpEndDate" matInput>
+          <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #dpEndDate></mat-datepicker>
+        </mat-form-field>
+        <mat-hint *ngIf="idx==g.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgEndDateHint(idx == g.user.listApiUrl.length - 1)}}
+        </mat-hint>
+      </div>
+      <div class="controls">
+        <button (click)="addUrl()"
+                *ngIf="idx==g.user.listApiUrl.length-1"
+                [disabled]="isEmpty(g.user.apiUrl(null, '', {noApi: true}))"
+                mat-mini-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button (click)="clickDelete(idx)" *ngIf="idx>0" mat-mini-fab>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="sub">
+      <div [innerHTML]="lblProfileMax" class="longtext"></div>
+      <mat-form-field>
+        <mat-select [(value)]="listProfileMaxCount[g.user.profileMaxIdx??0]">
+          <mat-option (onSelectionChange)="g.user.profileMaxIdx=idx"
+                      *ngFor="let item of listProfileMaxCount; let idx=index"
+                      [value]="item">
+            <div class="itemTitle">{{item}}</div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="sub">
+      <div class="subtitle" i18n="label of area for display setting">Anzeigeeinstellungen</div>
+      <div class="functions">
+        <mat-checkbox [(ngModel)]="g.tileShowImage" class="chk" i18n="label for checkbox to show images on tiles">
+          Auf Kacheln Bilder statt Namen anzeigen
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="subtitle" i18n="label of area for additional functions">Zusatzfunktionen</div>
+      <div class="functions">
+        <mat-checkbox [(ngModel)]="g.showCurrentGluc" class="chk" i18n="label for checkbox to show current glucoselevel">
+          Letzten Messwert in der Titelzeile anzeigen
+        </mat-checkbox>
+        <div class="pdfSliderHead" i18n="pdfFileSize">
+          Dieser Regler legt fest, wie gross eine Ausgabe maximal werden darf,
+          bevor sie auf mehrere PDF-Dateien aufgeteilt wird. Wenn bei Erstellung eines
+          PDFs ein leeres Fenster angezeigt wird, dann hilft es normalerweise, diesen
+          Regler weiter nach links zu bewegen.
+        </div>
+        <div class="pdfSlider">
+          <div i18n="small">Klein</div>
+          <mat-slider [(ngModel)]="g.pdfControlMaxSize"
+                      [max]="pdfSliderMax"
+                      [min]="1"
+                      [step]="1"
+                      class="nr-slider"></mat-slider>
+          <div *ngIf="g.pdfControlMaxSize < pdfSliderMax" i18n="big">Gross</div>
+          <div *ngIf="g.pdfControlMaxSize >= pdfSliderMax">{{g.msgUnlimited}}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="g.isBeta" class="sub">
+      <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
+        <mat-icon>file_copy</mat-icon>
+        <div i18n="buttonlabel for copy of settings to beta version">
+          Einstellungen von Release-Version übernehmen
+        </div>
       </button>
     </div>
-  </div>
-  <div class="sub">
-    <div [innerHTML]="lblProfileMax" class="longtext"></div>
-    <mat-form-field>
-      <mat-select [(value)]="listProfileMaxCount[g.user.profileMaxIdx??0]">
-        <mat-option (onSelectionChange)="g.user.profileMaxIdx=idx"
-                    *ngFor="let item of listProfileMaxCount; let idx=index"
-                    [value]="item">
-          <div class="itemTitle">{{item}}</div>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="sub">
-    <div class="subtitle" i18n="label of area for display setting">Anzeigeeinstellungen</div>
-    <div class="functions">
-      <mat-checkbox [(ngModel)]="g.tileShowImage" class="chk" i18n="label for checkbox to show images on tiles">
-        Auf Kacheln Bilder statt Namen anzeigen
-      </mat-checkbox>
-    </div>
-  </div>
-  <div class="sub">
-    <div class="subtitle" i18n="label of area for additional functions">Zusatzfunktionen</div>
-    <div class="functions">
-      <mat-checkbox [(ngModel)]="g.showCurrentGluc" class="chk" i18n="label for checkbox to show current glucoselevel">
-        Letzten Messwert in der Titelzeile anzeigen
-      </mat-checkbox>
-      <div class="pdfSliderHead" i18n="pdfFileSize">
-        Dieser Regler legt fest, wie gross eine Ausgabe maximal werden darf,
-        bevor sie auf mehrere PDF-Dateien aufgeteilt wird. Wenn bei Erstellung eines
-        PDFs ein leeres Fenster angezeigt wird, dann hilft es normalerweise, diesen
-        Regler weiter nach links zu bewegen.
-      </div>
-      <div class="pdfSlider">
-        <div i18n="small">Klein</div>
-        <mat-slider [(ngModel)]="g.pdfControlMaxSize"
-                    [max]="pdfSliderMax"
-                    [min]="1"
-                    [step]="1"
-                    class="nr-slider"></mat-slider>
-        <div *ngIf="g.pdfControlMaxSize < pdfSliderMax" i18n="big">Gross</div>
-        <div *ngIf="g.pdfControlMaxSize >= pdfSliderMax">{{g.msgUnlimited}}</div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="g.isBeta" class="sub">
-    <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
-      <mat-icon>file_copy</mat-icon>
-      <div i18n="buttonlabel for copy of settings to beta version">
-        Einstellungen von Release-Version übernehmen
-      </div>
-    </button>
-  </div>
-  <app-gluc-adjust></app-gluc-adjust>
-</mat-dialog-content>
+    <app-gluc-adjust></app-gluc-adjust>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-  <div>
-    <button (click)="clickExport()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
-      <mat-icon>cloud_download</mat-icon>
-      <div i18n="buttonlabel for exporting data">Exportieren</div>
+  <mat-dialog-actions>
+    <div>
+      <button (click)="clickExport()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
+        <mat-icon>cloud_download</mat-icon>
+        <div i18n="buttonlabel for exporting data">Exportieren</div>
+      </button>
+      <button (click)="clickImport()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
+        <mat-icon>cloud_upload</mat-icon>
+        <div i18n="buttonlabel for importing data">Importieren</div>
+      </button>
+    </div>
+    <button (click)="clickSave()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
+      <mat-icon>save</mat-icon>
+      <div i18n="buttonlabel for saving data">Speichern</div>
     </button>
-    <button (click)="clickImport()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
-      <mat-icon>cloud_upload</mat-icon>
-      <div i18n="buttonlabel for importing data">Importieren</div>
-    </button>
-  </div>
-  <button (click)="clickSave()" *ngIf="isEmpty(ps.progressText)" mat-flat-button>
-    <mat-icon>save</mat-icon>
-    <div i18n="buttonlabel for saving data">Speichern</div>
-  </button>
-  <!-- Import / Export Controls -->
-  <input #fileSelect (change)="fileSelected($event)" type="file">
-</mat-dialog-actions>
+    <!-- Import / Export Controls -->
+    <input #fileSelect (change)="fileSelected($event)" type="file">
+  </mat-dialog-actions>
+</div>
 <!--
     <material-dialog *ngIf="confirmIdx>0" confirm headered class="headered-dialog">
       <div *ngIf="confirmIdx!=3" header @i18n="title of confirmation dialog">Bestätigung</div>

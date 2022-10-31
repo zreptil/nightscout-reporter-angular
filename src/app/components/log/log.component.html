@@ -1,4 +1,4 @@
-<div *ngIf="links.length > 0" links>
+<div *ngIf="links.length > 0 && globals.isDebug" links>
   <button (click)="onClickDelete($event, 'links')" close mat-icon-button>
     <mat-icon>close</mat-icon>
   </button>

@@ -11,6 +11,8 @@ import {DateAdapter} from '@angular/material/core';
 import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
+import {MatDialogRef} from '@angular/material/dialog';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-settings',
@@ -29,7 +31,8 @@ export class SettingsComponent implements OnInit {
   @ViewChild('fileSelect')
   fileSelect: ElementRef<HTMLInputElement>;
 
-  constructor(private da: DateAdapter<any>,
+  constructor(private dlgRef: MatDialogRef<SettingsComponent>,
+              private da: DateAdapter<any>,
               public ds: DataService,
               public ps: ProgressService,
               public ss: SessionService,
@@ -311,6 +314,16 @@ export class SettingsComponent implements OnInit {
     return $localize`:@@msgCheckUser:Überprüfe Zugriff auf ${url}...`;
   }
 
+  deleteUser(): void {
+    this.ss.confirm('Echt jetzt?').subscribe(result => {
+      switch (result.btn) {
+        case DialogResultButton.yes:
+          GLOBALS.userList.splice(GLOBALS.userIdx, 1);
+          break;
+      }
+    });
+  }
+
   addUser(): void {
     this.checkUser().then((_) => {
       if (this.errUserInvalid != null) {
@@ -340,10 +353,10 @@ export class SettingsComponent implements OnInit {
       GLOBALS.isConfigured = true;
       this.ds.saveWebData();
       if (saveData) {
-        this.ds.save({skipReload: true});
-        this.ns.reportData = null;
-        this.clickClose();
+        this.dlgRef.close({btn: DialogResultButton.ok});
       }
+    } else if (saveData) {
+      Log.todo('Überlegen, ob es sinnvoll ist, einen User speichern zu dürfen, dessen URL nicht erreichbar ist.')
     }
 // if (ret == null && event != null) fire(event);
   }
@@ -354,9 +367,5 @@ export class SettingsComponent implements OnInit {
 
   clickSave() {
     this.checkUser(true);
-  }
-
-  clickClose() {
-    this.ss.showPopup(GLOBALS.isConfigured ? '' : 'welcome');
   }
 }

@@ -102,17 +102,17 @@ export class Utils {
       fmt = $localize`dd.MM.yyyy, hh:mm`;
     }
     let ret = fmt;
-    ret = ret.replace('dd', Utils.pad(date?.getDate() ?? '--'));
+    ret = ret.replace(/dd/g, Utils.pad(date?.getDate() ?? '--'));
     if (date == null) {
-      ret = ret.replace('MM', '--');
+      ret = ret.replace(/MM/g, '--');
     } else {
-      ret = ret.replace('MM', Utils.pad(date?.getMonth() + 1));
+      ret = ret.replace(/MM/g, Utils.pad(date?.getMonth() + 1));
     }
-    ret = ret.replace('yyyy', Utils.pad(date?.getFullYear() ?? '----', 4));
-    ret = ret.replace('hh', Utils.pad(date?.getHours() ?? '--'));
-    ret = ret.replace('mm', Utils.pad(date?.getMinutes() ?? '--'));
-    ret = ret.replace('ss', Utils.pad(date?.getSeconds() ?? '--'));
-    ret = ret.replace('sss', Utils.pad(date?.getMilliseconds() ?? '---'));
+    ret = ret.replace(/yyyy/g, Utils.pad(date?.getFullYear() ?? '----', 4));
+    ret = ret.replace(/hh/g, Utils.pad(date?.getHours() ?? '--'));
+    ret = ret.replace(/mm/g, Utils.pad(date?.getMinutes() ?? '--'));
+    ret = ret.replace(/ss/g, Utils.pad(date?.getSeconds() ?? '--'));
+    ret = ret.replace(/sss/g, Utils.pad(date?.getMilliseconds() ?? '---'));
     return ret;
   }
 

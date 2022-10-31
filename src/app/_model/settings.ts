@@ -7,6 +7,7 @@ export class Settings {
   static DeviceData = 'deviceData';
   static WebData = 'webData';
   static DebugFlag = 'debug';
+  static DebugActive = 'yes';
   static skipStorageClear = false;
   static showDebugInConsole = false;
   static betaPrefix: string = '@';
@@ -52,7 +53,7 @@ export class Settings {
   ];
 
   static get hastiod(): boolean {
-    return localStorage[Settings.DebugFlag] != 'yes';
+    return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;
   }
 
   static get msgThemeAuto(): string {

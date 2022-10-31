@@ -54,6 +54,7 @@ body {
     padding: 0;
 
     [mat-dialog-title] {
+      cursor: move;
       padding: 1em;
       display: flex;
       flex-flow: row;

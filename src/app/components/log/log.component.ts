@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LinkDef, Log} from '@/_services/log.service';
 import {SessionService} from '@/_services/session.service';
 import {PdfService} from '@/_services/pdf.service';
-import {GLOBALS} from '@/_model/globals-data';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
 @Component({
   selector: 'app-log',
@@ -10,8 +10,13 @@ import {GLOBALS} from '@/_model/globals-data';
   styleUrls: ['./log.component.scss']
 })
 export class LogComponent implements OnInit {
+
   constructor(public ss: SessionService,
               public ps: PdfService) {
+  }
+
+  get globals(): GlobalsData {
+    return GLOBALS;
   }
 
   get msg(): { [key: string]: any[] } {
@@ -39,7 +44,7 @@ export class LogComponent implements OnInit {
 
   showType(type: string) {
     let ret = this.msg[type].length > 0;
-    if (ret && type === 'debug' && !GLOBALS.isDebug) {
+    if (ret && ['debug', 'todo'].includes(type) && !GLOBALS.isDebug) {
       return false;
     }
     return ret;

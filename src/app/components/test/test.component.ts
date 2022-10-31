@@ -3,9 +3,6 @@ import {Settings} from '@/_model/settings';
 import {Log} from '@/_services/log.service';
 import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {FormConfig} from '@/forms/form-config';
-import {Utils} from '@/classes/utils';
-import {UrlData} from '@/_model/nightscout/url-data';
 import {UserData} from '@/_model/nightscout/user-data';
 import {ReportData} from '@/_model/report-data';
 import {ThemeService} from '@/_services/theme.service';
@@ -14,6 +11,7 @@ import {BasePrint} from '@/forms/base-print';
 import {DataService} from '@/_services/data.service';
 import {PdfService} from '@/_services/pdf.service';
 import {SessionService} from '@/_services/session.service';
+import {ProgressService} from '@/_services/progress.service';
 
 @Component({
   selector: 'app-test',
@@ -28,7 +26,8 @@ export class TestComponent implements OnInit {
   constructor(public ts: ThemeService,
               public ds: DataService,
               public pdf: PdfService,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public ps: ProgressService) {
   }
 
   get globals(): GlobalsData {
@@ -52,9 +51,7 @@ export class TestComponent implements OnInit {
   }
 
   testSettings(): void {
-    this.ss.showPopup('settings').subscribe(_ => {
-
-    });
+    this.ss.showSettings();
   }
 
   testPdf(): void {
@@ -63,27 +60,9 @@ export class TestComponent implements OnInit {
       this.srcList.push(new PrintAnalysis(this.pdf));
       this.srcList[this.srcList.length - 1].isPortrait = Math.random() < 0.7;
     }
-    GLOBALS.listConfig = [];
-    GLOBALS.listConfigOrg = [];
-    for (const form of this.srcList) {
-      GLOBALS.listConfigOrg.push(new FormConfig(form, true));
+    for (const cfg of GLOBALS.listConfig) {
+      cfg.checked = true;
     }
-    Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
-    GlobalsData.user.name = 'ICH';
-    GlobalsData.user.birthDate = '13.2.1965';
-    GlobalsData.user.diaStartDate = '1.1.1996';
-    GlobalsData.user.insulin = 'Novorapid';
-    GlobalsData.user.listApiUrl = [];
-    GlobalsData.user.listApiUrl.push(UrlData.fromJson({
-      u: 'https://diamant.ns.10be.de',
-      // 't': 'usertoken',
-      sd: null,
-      ed: null
-    }));
-    GlobalsData.user.customData = {};
-    GlobalsData.user.formParams = {};
-    GLOBALS.language.code = 'en-US';
-    this.ts.setTheme('standard');
     this.generatePdf();
 
     // Log.debug('1');
