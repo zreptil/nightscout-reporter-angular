@@ -33,6 +33,7 @@ import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import {CdkStepperModule, STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   exports: [
@@ -42,7 +43,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     // CdkTableModule,
     // CdkTreeModule,
     // DragDropModule,
-    // MatAutocompleteModule,
+    MatAutocompleteModule,
     // MatBadgeModule,
     // MatBottomSheetModule,
     MatButtonModule,

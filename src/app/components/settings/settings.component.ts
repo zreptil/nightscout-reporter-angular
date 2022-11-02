@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
     this.fillSelects();
   }
 
-  get g(): GlobalsData {
+  get globals(): GlobalsData {
     return GLOBALS;
   }
 
@@ -208,11 +208,6 @@ export class SettingsComponent implements OnInit {
     this.confirmIdx = 0;
   }
 
-  clickDelete(idx: number): void {
-    this.currApiUrlIdx = idx;
-    this.confirmIdx = 2;
-  }
-
   clickExport(): void {
     saveAs(new Blob([Settings.doit(GLOBALS.asSharedString)]), `nightscout-reporter-cfg.${Utils.fmtDate(new Date(), 'yyyyMMddhhmm')}.txt`);
     // this.exportData = convert.base64Encode(convert.utf8.encode(Settings.doit(g.asSharedString)));
@@ -237,7 +232,7 @@ export class SettingsComponent implements OnInit {
           content = content.substring(pos + 1);
         }
         content = atob(content);
-        // content = Utils.decodeBase64(content);
+        content = Utils.decodeBase64(content);
         this.ds.fromSharedString(Settings.tiod(content));
         this.ds._initAfterLoad();
         this.fileSelect.nativeElement.value = null;
@@ -299,10 +294,6 @@ export class SettingsComponent implements OnInit {
     errUserInvalid = null;
   }
   */
-  isEmpty(value: any): boolean {
-    return Utils.isEmpty(value);
-  }
-
   navigate(url: string): void {
     window.open(url, '_blank');
   }
@@ -315,7 +306,7 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUser(): void {
-    this.ss.confirm('Echt jetzt?').subscribe(result => {
+    this.ss.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, 'settings').subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);
@@ -325,15 +316,22 @@ export class SettingsComponent implements OnInit {
   }
 
   addUser(): void {
-    this.checkUser().then((_) => {
-      if (this.errUserInvalid != null) {
-        return;
-      }
-      if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
-        GLOBALS.userList.push(new UserData());
-        GLOBALS.userIdx = GLOBALS.userList.length - 1;
+    if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
+      GLOBALS.userList.push(new UserData());
+      GLOBALS.userIdx = GLOBALS.userList.length - 1;
+    }
+  }
+
+  deleteUrl(idx: number): void {
+    this.ss.confirm($localize`Soll die URL ${GLOBALS.user.listApiUrl[idx].url} vom Benutzer wirklich gelöscht werden?`, 'settings').subscribe(result => {
+      switch (result.btn) {
+        case DialogResultButton.yes:
+          GLOBALS.user.listApiUrl.splice(idx, 1);
+          break;
       }
     });
+    this.currApiUrlIdx = idx;
+    this.confirmIdx = 2;
   }
 
   addUrl() {

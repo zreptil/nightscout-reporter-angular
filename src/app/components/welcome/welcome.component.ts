@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {DataService} from '@/_services/data.service';
 import {SessionService} from '@/_services/session.service';
-import {Log} from '@/_services/log.service';
 
 @Component({
   selector: 'app-welcome',
@@ -15,12 +14,8 @@ export class WelcomeComponent implements OnInit {
               public ss: SessionService) {
   }
 
-  get g(): GlobalsData {
+  get globals(): GlobalsData {
     return GLOBALS;
-  }
-
-  get mayDebug(): boolean {
-    return Log.mayDebug;
   }
 
   ngOnInit(): void {
@@ -54,6 +49,6 @@ export class WelcomeComponent implements OnInit {
     }
   */
   clickDebug() {
-    this.g.isDebug = !this.g.isDebug;
+    this.globals.isDebug = !this.globals.isDebug;
   }
 }

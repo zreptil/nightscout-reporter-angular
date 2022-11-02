@@ -9,6 +9,8 @@ import {FormConfig} from '@/forms/form-config';
 import {Utils} from '@/classes/utils';
 import {forkJoin, map, Observable, of} from 'rxjs';
 import {NightscoutService} from '@/_services/nightscout.service';
+import {DataService} from './data.service';
+import {LangData} from '@/_model/nightscout/lang-data';
 
 export class PdfData {
   isPrinted = false;
@@ -26,10 +28,13 @@ export class PdfService {
   pdfList: PdfData[] = [];
   pdfDoc: any = null;
   images: any;
+  thumbLangIdx: number = -1;
+  thumbLangSave: LangData = null;
 
   constructor(public http: HttpClient,
               public ps: ProgressService,
-              public ns: NightscoutService) {
+              public ns: NightscoutService,
+              public ds: DataService) {
   }
 
   get msgCreatingPDF(): string {
@@ -46,6 +51,18 @@ export class PdfService {
 
   get msgShowPDF(): string {
     return $localize`PDF anzeigen`;
+  }
+
+  async createThumbs() {
+    if (this.thumbLangSave == null && GLOBALS.language.img !== 'de') {
+      this.thumbLangIdx = GLOBALS.languageList.length;
+      this.thumbLangSave = GLOBALS.language;
+    } else {
+      this.thumbLangSave ??= GLOBALS.language;
+      this.thumbLangIdx++;
+      await this.ds.setLanguage(GLOBALS.languageList[this.thumbLangIdx]);
+    }
+    this.generatePdf(true);
   }
 
   msgLoadingData(error: string, stacktrace: string): string {

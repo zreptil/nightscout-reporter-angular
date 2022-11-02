@@ -2,6 +2,7 @@ import {AfterViewChecked, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
 import {DialogData, DialogResultButton, DialogType, IDialogButton} from '@/_model/dialog-data';
+import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-dialog',
@@ -29,6 +30,15 @@ export class DialogComponent implements OnInit, AfterViewChecked {
         return 'help';
     }
     return null;
+  }
+
+  customStyle(key: string): string {
+    const ret = [];
+    if (this.data.theme != null) {
+      ret.push(`background-color:var(--${this.data.theme}${key}Back)`);
+      ret.push(`color:var(--${this.data.theme}${key}Fore)`);
+    }
+    return Utils.join(ret, ';');
   }
 
   update(data: string | string[]): void {

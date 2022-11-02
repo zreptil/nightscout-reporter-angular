@@ -89,4 +89,10 @@ export class TestComponent implements OnInit {
     repData.user = GLOBALS.userList[0];
     this.pdf.generatePdf(true);
   }
+
+  testDialog() {
+    this.ss.confirm('To be or not to be').subscribe(result => {
+      Log.info(`Da hast Du dann wohl ${result.btn} gedrückt`);
+    });
+  }
 }

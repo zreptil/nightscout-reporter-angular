@@ -10,7 +10,6 @@ import {UrlData} from '@/_model/nightscout/url-data';
 import {Settings} from '@/_model/settings';
 import {ShortcutData} from '@/_model/shortcut-data';
 import {WatchElement} from './watch-element';
-import {Log} from '@/_services/log.service';
 
 export let GLOBALS: GlobalsData;
 
@@ -223,6 +222,10 @@ export class GlobalsData extends Settings {
     return this._isLocal;
   }
 
+  set isLocal(value: boolean) {
+    this._isLocal = value;
+  }
+
   get msgUrlFailurePrefix(): string {
     return $localize`Die angegebene URL ist nicht erreichbar. Wenn die URL stimmt, dann kann es an den Nightscout-Einstellungen liegen. `;
   }
@@ -319,7 +322,6 @@ export class GlobalsData extends Settings {
   _pdfCreationMaxSize = Settings.PDFUNLIMITED - Settings.PDFDIVIDER;
 
   get pdfCreationMaxSize(): number {
-    Log.debug(`GlobalsData._pdfCreationMaxSize ${this._pdfCreationMaxSize}`);
     this._pdfCreationMaxSize = Math.max(this._pdfCreationMaxSize, Settings.PDFDIVIDER);
     this._pdfCreationMaxSize = Math.min(this._pdfCreationMaxSize, Settings.PDFUNLIMITED);
     return this._pdfCreationMaxSize;

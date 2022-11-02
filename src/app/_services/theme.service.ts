@@ -3,11 +3,14 @@ import {DataService} from '@/_services/data.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
 import {GLOBALS} from '@/_model/globals-data';
+import {Log} from '@/_services/log.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
+  currTheme: any = null;
+
   constructor(public ds: DataService,
               public ms: MaterialColorService) {
   }
@@ -24,6 +27,21 @@ export class ThemeService {
     if (theme == null) {
       return;
     }
+    Log.todo('In ThemeService.setTheme könnten die Farben animiert werden, wenn ich rausfinde, wie das durch Veränderung der CSS-Variablen funktioniert.');
+    // Versuch einer Farbanimation über Veränderung der Variablen - bisher leider erfolglos
+    // if (this.currTheme != null) {
+    //   const bodyTag = document.querySelector('body') as HTMLBodyElement;
+    //   for (const key of Object.keys(theme)) {
+    //     bodyTag.style.removeProperty(`--${key}`);
+    //   }
+    //   bodyTag.animate([
+    //     this.getThemeSytle(this.currTheme),
+    //     this.getThemeSytle(theme)
+    //   ], {duration: 1000, direction: 'normal', fill: 'forwards'});
+    //   console.log(this.getThemeSytle(this.currTheme));
+    //   console.log(this.getThemeSytle(theme));
+    //   // this.getThemeSytle(theme);
+    // } else {
     for (const key of Object.keys(theme)) {
       let value = theme[key];
       if (this.ms.colors[value] != null) {
@@ -31,8 +49,22 @@ export class ThemeService {
       }
       document.body.style.setProperty(`--${key}`, value);
     }
+//    }
+    this.currTheme = theme;
     GLOBALS.theme = name;
     this.ds.saveWebData();
+  }
+
+  getThemeSytle(theme: any): any {
+    const ret: any = {};
+    for (const key of Object.keys(theme)) {
+      let value = theme[key];
+      if (this.ms.colors[value] != null) {
+        value = this.ms.colors[value];
+      }
+      ret[`--${key}`] = value;
+    }
+    return ret;
   }
 
   // sets one value in the theme, but only if this value exists

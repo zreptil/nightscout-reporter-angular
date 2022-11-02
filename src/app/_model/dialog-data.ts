@@ -23,6 +23,7 @@ export class DialogResult {
 export interface IDialogButton {
   title: string;
   result: DialogResult;
+  icon?: string;
   focus?: boolean;
 }
 
@@ -49,7 +50,7 @@ export class DialogData {
       type: DialogType.error,
       title: $localize`Fehler`,
       buttons: [
-        {title: $localize`Ok`, result: {btn: DialogResultButton.ok}}
+        {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
       ]
     }
     ],
@@ -57,7 +58,7 @@ export class DialogData {
       type: DialogType.debug,
       title: $localize`Debug Meldung`,
       buttons: [
-        {title: $localize`Ok`, result: {btn: DialogResultButton.ok}}
+        {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
       ]
     }
     ],
@@ -65,8 +66,8 @@ export class DialogData {
       type: DialogType.confirm,
       title: $localize`Bestätigung`,
       buttons: [
-        {title: $localize`Nein`, result: {btn: DialogResultButton.no}},
-        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true}
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
       ]
     }
     ],
@@ -74,8 +75,8 @@ export class DialogData {
       type: DialogType.confirmNo,
       title: $localize`Bestätigung`,
       buttons: [
-        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, focus: true},
-        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}}
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, focus: true, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, icon: 'done'}
       ]
     }
     ]
@@ -83,7 +84,8 @@ export class DialogData {
 
   constructor(public type: DialogType | IDialogDef,
               public content: string | string[],
-              public ownButtons?: IDialogButton[]) {
+              public ownButtons?: IDialogButton[],
+              public theme: string = 'main') {
     if (typeof type === 'number') {
       this.buttons = this.defs.get(type).buttons;
       this.title = this.defs.get(type).title;

@@ -27,6 +27,8 @@ import {TestComponent} from './components/test/test.component';
 import {GlucAdjustComponent} from './controls/gluc-adjust/gluc-adjust.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ViewTileComponent} from './components/view-tile/view-tile.component';
+import {ViewListComponent} from './components/view-list/view-list.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     SettingsComponent,
     TestComponent,
     GlucAdjustComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ViewTileComponent,
+    ViewListComponent
   ],
   imports: [
     BrowserModule,

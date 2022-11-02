@@ -1,0 +1,30 @@
+<div class="tilelist">
+  <ng-container *ngFor="let cfg of globals.listConfig; let idx=index">
+    <div (click)="expansionPanelClicked($event,cfg)" *ngIf="isFormVisible(cfg.form)"
+         [class]="tileClass(cfg)"
+         id="tile-{{cfg.id}}">
+      <img *ngIf="globals.tileShowImage" [src]="cfg.form.backimage" alt="tile image {{cfg.form.id}}">
+      <div (click)="clickTileMenu($event,cfg)" *ngIf="cfg.form.sortedParams.length>0 && cfg.checked" params>
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      <div (click)="clickTileHelp($event,cfg)" *ngIf="cfg.form.help!=null" help>
+        <mat-icon>help_outline</mat-icon>
+      </div>
+      <div *ngIf="globals.tileShowImage && cfg.checked" numberimg>{{checkedIndex(cfg)}}</div>
+      <div *ngIf="!globals.tileShowImage && cfg.checked" number>{{checkedIndex(cfg)}}</div>
+      <div *ngIf="!globals.tileShowImage" title>{{cfg.form.display}}</div>
+      <div *ngIf="cfg.checked && (!globals.tileShowImage || !cfg.form.isPortraitParam)" pages>
+        {{cfg.form.pageCountDisplay(ns.reportData == null)}}
+      </div>
+      <div *ngIf="cfg.checked && globals.tileShowImage && cfg.form.isPortraitParam" pagesportrait>
+        {{cfg.form.pageCountDisplay(ns.reportData == null)}}
+      </div>
+      <div (click)="clickTileCopy($event,cfg, idx)" *ngIf="mayCopy(cfg)" copy>
+        <mat-icon>content_copy</mat-icon>
+      </div>
+      <div (click)="clickTileDelete($event,idx)" *ngIf="mayDelete(cfg)" copy>
+        <mat-icon>delete</mat-icon>
+      </div>
+    </div>
+  </ng-container>
+</div>

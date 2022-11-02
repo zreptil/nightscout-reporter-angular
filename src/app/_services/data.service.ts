@@ -146,7 +146,6 @@ export class DataService {
       w3: (this._syncWithGoogle ?? false) ? 'true' : 'false'
     };
     this.ss.write(Settings.WebData, data);
-    Log.debug(data);
     // `{"w0":"${GLOBALS.version}"`
     // + `,"w1":"${GLOBALS.language.code ?? 'de_DE'}"`
     // + `,"w2":"${GLOBALS.theme}"`
@@ -512,18 +511,16 @@ export class DataService {
     }
   }
 
-  /*
-    setLanguage(LangData value) async {
-    language = value;
-    saveWebData();
-    save();
-    Intl.systemLocale = Intl.canonicalizedLocale(language.code);
-    await tz.initializeTimeZone();
-    await initializeMessages(language.code);
-    Intl.defaultLocale = language.code;
-    await initializeDateFormatting(language.code, null);
+  async setLanguage(value: LangData) {
+    GLOBALS.language = value;
+    this.saveWebData();
+    this.save();
+    // Intl.systemLocale = Intl.canonicalizedLocale(language.code);
+    // await tz.initializeTimeZone();
+    // await initializeMessages(language.code);
+    // Intl.defaultLocale = language.code;
+    // await initializeDateFormatting(language.code, null);
   }
-  */
 
   copyFromOtherStorage(): void {
     GLOBALS.isBeta = !GLOBALS.isBeta;
@@ -534,4 +531,104 @@ export class DataService {
     });
   }
 
+  async getCurrentGluc(params?: { force?: boolean, timeout?: number }) {
+    params ??= {};
+    params.force ??= false;
+    params.timeout ??= 60;
+    let ret = '';
+    /*
+      if (glucTimer != null) {
+      glucTimer.cancel();
+      glucTimer = null;
+    }
+    // make sure the value uses the correct factor
+    user.adjustGluc = user.adjustGluc;
+
+    currentGlucCounter++;
+
+    if (glucRunning) return '';
+
+    if (!force && !showCurrentGluc) return '';
+    glucRunning = true;
+    var url = user.apiUrl(null, 'status.json');
+    if (!hasMGDL) {
+      dynamic content = await requestJson(url);
+      if (content != null) {
+        var status = StatusData.fromJson(content);
+        setGlucMGDL(status);
+        targetBottom = status.settings.bgTargetBottom;
+        targetTop = status.settings.bgTargetTop;
+      }
+    }
+    url = user.apiUrl(null, 'entries.json', params: 'count=2');
+    List<dynamic> src = await requestJson(url);
+    if (src != null) {
+      if (src.length != 2) {
+        currentGlucSrc = null;
+        lastGlucSrc = null;
+        currentGlucDiff = '';
+        glucDir = 360;
+      } else {
+        try {
+          var eNow = EntryData.fromJson(src[0]);
+          var ePrev = EntryData.fromJson(src[1]);
+          if (eNow.device != ePrev.device) {
+            url = user.apiUrl(null, 'entries.json', params: 'count=10');
+            src = await requestJson(url);
+            eNow = EntryData.fromJson(src[0]);
+            ePrev = null;
+            for (var i = 1; i < src.length && ePrev == null; i++) {
+              var check = EntryData.fromJson(src[i]);
+              if (check.device == eNow.device) {
+                ePrev = check;
+              }
+            }
+          }
+          var span = eNow.time.difference(ePrev.time).inMinutes;
+          glucDir = 360;
+          currentGlucDiff = '';
+          currentGlucTime = '';
+          if (span > 15) {
+            return currentGluc;
+          }
+          var time = DateTime.now().difference(eNow.time).inMinutes;
+          currentGlucTime = msgGlucTime(time);
+
+          currentGlucSrc = eNow;
+          lastGlucSrc = ePrev;
+          currentGlucDiff = '${eNow.gluc > ePrev.gluc ? '+' : ''}'
+          '${fmtNumber((eNow.gluc - ePrev.gluc) * 5 / span / glucFactor, glucPrecision)}';
+          var diff = eNow.gluc - ePrev.gluc;
+          var limit = 10 * span ~/ 5;
+          if (diff > limit) {
+            glucDir = -90;
+          } else if (diff < -limit) {
+            glucDir = 90;
+          } else {
+            glucDir = 90 - ((diff + limit) / limit * 90).toInt();
+          }
+        } catch (ex) {
+          currentGlucSrc = null;
+          lastGlucSrc = null;
+          currentGlucDiff = '';
+          glucDir = 360;
+        }
+      }
+    }
+
+    if (currentGlucVisible || force) {
+      var milliseconds = timeout * 1000;
+      //  calculate the milliseconds to the next full part of the minute for the timer
+      // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
+      // this is done for that the display of the time will match the current
+      // time when entering a new minute
+      var milliNow = DateTime.now().second * 1000 + DateTime.now().millisecond;
+      var part = milliNow ~/ milliseconds;
+      milliseconds = (part + 1) * milliseconds - milliNow;
+      glucTimer = Timer(Duration(milliseconds: milliseconds), () => getCurrentGluc(force: force, timeout: timeout));
+    }
+    glucRunning = false;
+    */
+    return ret;
+  }
 }

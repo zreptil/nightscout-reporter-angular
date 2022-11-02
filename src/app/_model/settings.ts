@@ -80,10 +80,14 @@ export class Settings {
     return $localize`Beide`;
   }
 
-  // subversion is used nowhere. It is just there to trigger another signature
-
   static get lblGlucUnits(): string {
     return $localize`Einheit der Glukosemessung`;
+  }
+
+  // subversion is used nowhere. It is just there to trigger another signature
+
+  get themeListKeys(): string[] {
+    return Object.keys(this.themeList);
   }
 
   get msgUnlimited(): string {

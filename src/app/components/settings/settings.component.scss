@@ -97,6 +97,16 @@ mat-slider {
   background-color: transparent !important;
 }
 
+[mat-dialog-title] {
+  background-color: var(--settingsHeaderBack);
+  color: var(--settingsHeaderFore);
+}
+
+mat-dialog-content {
+  color: var(--settingsBodyFore);
+  background-color: var(--settingsBodyBack);
+}
+
 :host {
   ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
   ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
@@ -135,19 +145,6 @@ mat-slider {
   display: flex;
   flex-flow: column;
   align-items: flex-start;
-}
-
-[mat-dialog-title] {
-  background-color: var(--settingsHeaderBack);
-  color: var(--settingsHeaderFore);
-}
-
-mat-dialog-content {
-  padding: 1em;
-  margin: 0;
-  font-size: 1.2em;
-  color: var(--settingsBodyFore);
-  background-color: var(--settingsBodyBack);
 }
 
 .languagePanel {

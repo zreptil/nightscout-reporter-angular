@@ -1,21 +1,26 @@
-<div class="type{{data?.type}}" mat-dialog-title>
-  <mat-icon *ngIf="type!=null">{{type}}</mat-icon>
-  <div>{{data.title}}</div>
+<!--suppress HtmlDeprecatedAttribute -->
+<div [style]="customStyle('Header')" class="type{{data?.type}}" mat-dialog-title>
+  <h1>
+    <mat-icon *ngIf="type!=null">{{type}}</mat-icon>
+    {{data.title}}
+  </h1>
   <div spacer></div>
   <button (click)="clickClose()" mat-icon-button>
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div mat-dialog-content>
+<mat-dialog-content [style]="customStyle('Body')">
   <div *ngFor="let text of data.display" [innerHTML]="text"></div>
-</div>
-<div class="type{{data?.type}}" mat-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions [style]="customStyle('Header')" align="end" class="type{{data?.type}}">
   <ng-container *ngFor="let btn of data.buttons; let idx = index">
     <button (click)="closeDialog(btn)" *ngIf="btn.focus" mat-button>
+      <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>
       {{btn.title}}
     </button>
     <button (click)="closeDialog(btn)" *ngIf="!btn.focus" mat-button>
+      <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>
       {{btn.title}}
     </button>
   </ng-container>
-</div>
+</mat-dialog-actions>

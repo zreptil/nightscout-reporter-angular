@@ -36,6 +36,10 @@ body {
   --helpBack: #fff;
   --helpFore: #000;
   --markBorder: 1px solid #000;
+  --mainHeaderBack: var(--primaryBack);
+  --mainHeaderFore: var(--primaryFore);
+  --mainBodyBack: var(--secondaryBack);
+  --mainBodyFore: var(--secondaryFore);
 }
 
 body {
@@ -49,13 +53,31 @@ body {
   justify-content: center;
 }
 
+mat-icon[small] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.is-local {
+  color: var(--localFore) !important;
+  background-color: var(--localBack) !important;
+}
+
 .dialog-box {
+  min-width: 30vw;
+
   mat-dialog-container {
     padding: 0;
 
     [mat-dialog-title] {
       cursor: move;
-      padding: 1em;
+      padding: 0.6em;
       display: flex;
       flex-flow: row;
       align-items: center;
@@ -63,17 +85,24 @@ body {
       margin: 0;
 
       h1 {
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
         margin: 0;
       }
     }
 
     mat-dialog-content {
+      padding: 1em;
       margin: 0;
+      font-size: 1.2em;
+      min-width: 50%;
     }
 
     mat-dialog-actions {
       margin: 0;
-      padding: 0 1em;
+      padding: 0;
+      min-height: 3em;
       justify-content: space-between;
 
       .mat-button-wrapper {
@@ -223,3 +252,4 @@ body {
   background: var(--logDebugBack);
   color: var(--logDebugFore) !important;
 }
+

@@ -224,9 +224,9 @@ export class DatepickerPeriod {
 
   toString(): string {
     const ret: string[] = [];
-    ret.push(`'${this.start == null ? '' : Utils.fmtDate(this.start, 'yyyyMMdd')}`);
-    ret.push(`'${this.end == null ? '' : Utils.fmtDate(this.end, 'yyyyMMdd')}`);
-    ret.push(`'${this.entryKey ?? ''}'`);
+    ret.push(this.start == null ? '' : Utils.fmtDate(this.start, 'yyyyMMdd'));
+    ret.push(this.end == null ? '' : Utils.fmtDate(this.end, 'yyyyMMdd'));
+    ret.push(this.entryKey ?? '');
     ret.push(`${this.firstDayOfWeek}`);
     let dow = '';
     for (const active of this._dowActive) {

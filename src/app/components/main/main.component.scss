@@ -1,4 +1,549 @@
 :host {
   display: flex;
   flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+
+  .mat-form-field-wrapper {
+    border: 10px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-form-field-wrapper,
+  ::ng-deep .mat-form-field-flex,
+  ::ng-deep .mat-form-field-infix {
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  ::ng-deep .mat-form-field-underline,
+  ::ng-deep .mat-form-field-subscript-wrapper {
+    display: none
+  }
+
+  button {
+    background-color: var(--mainHeaderBack);
+    color: var(--mainHeaderFore);
+  }
+}
+
+.selectItem:hover:not(.mat-option-disabled),
+.selectItem:focus:not(.mat-option-disabled) {
+  background-color: var(--mainHeaderBack);
+  color: var(--mainHeaderFore);
+  border-radius: 0.5em;
+}
+
+.selectItem.mat-selected:not(.mat-option-disabled,:hover) {
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.selectItem.mat-selected:not(.mat-option-disabled) {
+  border-radius: 0.5em;
+}
+
+mat-drawer-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
+
+  mat-drawer {
+    width: 256px;
+    height: calc(100% - 64px);
+    margin-top: 64px;
+    background-color: var(--mainHeaderBack);
+    color: var(--mainHeaderFore);
+
+    ::ng-deep .mat-drawer-inner-container {
+      display: flex;
+      flex-flow: column;
+
+      .menu-root {
+        display: flex;
+        flex: 1;
+        flex-flow: column;
+        justify-content: space-between;
+        background-color: var(--primaryBack);
+        color: var(--primaryFore);
+        overflow-y: auto;
+      }
+
+      .shortcut-root {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        flex-flow: column;
+        width: 100%;
+        background: var(--shortcutHeaderBack);
+        color: var(--shortcutHeaderFore);
+
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.5em;
+        }
+
+        .content {
+          display: flex;
+          flex-flow: column;
+          justify-content: flex-start;
+          padding: 0.5em;
+          overflow-y: auto;
+          overflow-x: hidden;
+
+          button.add {
+            border-radius: 10px;
+          }
+
+          .shortcut:not(:hover) {
+            border: 1px solid transparent;
+          }
+
+          .shortcut:hover {
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 20px;
+          }
+
+          .active > button {
+            background: var(--shortcutHeaderFore) !important;
+            color: var(--shortcutHeaderBack) !important;
+          }
+
+          .shortcut {
+            display: flex;
+            flex-flow: row;
+            width: 100%;
+            max-width: 100%;
+
+            button {
+              display: flex;
+              align-items: center;
+              min-width: initial;
+              margin: 0;
+              background: var(--shortcutBodyBack);
+              color: var(--shortcutBodyFore);
+              border-radius: 0;
+              padding: 0.5em 0.57em;
+            }
+
+            button:first-child {
+              flex: 1;
+              border-top-left-radius: 20px;
+              border-bottom-left-radius: 20px;
+
+              ::ng-deep .mat-button-wrapper {
+
+                [content] {
+                  display: flex;
+                  flex-flow: row;
+                  align-items: center;
+                  white-space: initial;
+                  line-height: 1.2em;
+
+                  [text] {
+                    padding: 0.5em 0;
+                  }
+                }
+              }
+            }
+
+            button:not(:first-child) {
+              border-top-right-radius: 20px;
+              border-bottom-right-radius: 20px;
+              display: flex;
+              align-items: center;
+              padding: 0 0.2em;
+            }
+
+            button.add {
+              border-radius: 20px;
+            }
+          }
+        }
+
+        mat-fab {
+          white-space: nowrap;
+        }
+
+        button {
+          text-transform: none;
+        }
+
+        button:first-child material-icon {
+          margin-right: 0.5em;
+        }
+      }
+    }
+
+    .menu-controls,
+    .menu-links {
+      button {
+        width: 100%;
+
+        ::ng-deep .mat-button-wrapper {
+          display: flex;
+          flex-flow: row;
+          gap: 1em;
+          align-items: center;
+          padding: 0.7em 0.57em;
+
+          img {
+            height: 2em;
+          }
+        }
+      }
+
+      .menu-language {
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+
+        .currLang {
+          background: var(--mainBodyBack);
+        }
+
+        button {
+          width: 2.5em;
+          padding: 0;
+          min-width: 0;
+
+          ::ng-deep .mat-button-wrapper {
+            justify-content: center;
+            padding: 0;
+
+            img {
+              padding: 0.3em;
+              width: 1.5em;
+              height: initial;
+            }
+          }
+        }
+      }
+
+      .menu-legal {
+        display: flex;
+        flex-flow: row;
+
+        button {
+          width: initial;
+          font-size: 0.8em;
+          padding: 0 1em;
+          flex: 1;
+
+          ::ng-deep .mat-button-wrapper {
+            justify-content: center;
+            padding: 0 1em;
+          }
+        }
+      }
+    }
+
+    .tabs {
+      display: flex;
+      flex-flow: row;
+
+      [mat-flat-button] {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      [mat-flat-button].menu {
+        background-color: var(--primaryBack);
+        color: var(--primaryFore);
+      }
+
+      [mat-flat-button].shortcuts {
+        background-color: var(--shortcutHeaderBack);
+        color: var(--shortcutHeaderFore);
+      }
+    }
+
+    .menu-button {
+      background-color: var(--primaryBack);
+      color: var(--primaryFore);
+    }
+
+    .shortcut-button {
+      background: var(--shortcutHeaderBack);
+      color: var(--shortcutHeaderFore);
+    }
+  }
+
+  mat-drawer-content {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    width: 100% !important;
+    height: 100%;
+
+    mat-toolbar {
+      background-color: var(--mainHeaderBack);
+      color: var(--mainHeaderFore);
+
+      mat-toolbar-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+
+        .basePanel {
+          justify-content: center;
+          position: fixed;
+          width: 100%;
+          height: 64px;
+          left: 0;
+          top: 0;
+
+          .userPanel {
+            display: flex;
+            flex-flow: row;
+          }
+
+        }
+
+        button.is-beta, div.is-beta {
+          background: var(--betaBack);
+        }
+
+        .betaTitle, .localTitle {
+          font-size: 50%;
+        }
+
+        > div {
+          display: flex;
+          flex-flow: row;
+          align-items: center;
+        }
+
+        .title {
+          display: flex;
+          align-items: flex-start;
+          flex-flow: column;
+
+          button {
+            line-height: initial;
+            padding: 0;
+            margin: 0;
+          }
+
+          > div {
+            flex-flow: row;
+            height: 1.2em;
+          }
+
+          .localTitle {
+            color: var(--localBack);
+          }
+
+          .versionText {
+            font-size: 50%;
+            color: white;
+            opacity: 0.5;
+            margin-top: 3px;
+            min-width: 0 !important;
+          }
+        }
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-flow: column;
+      flex: 1;
+      height: 100%;
+      padding: 0 0.5em;
+
+    }
+
+    .footer {
+      position: relative;
+      overflow: hidden;
+
+      .sendPanel:not(.is-tileview) {
+        display: flex;
+        flex-flow: column;
+        position: fixed;
+        right: 1em;
+        bottom: 1em;
+
+        material-fab {
+          margin-top: 0.5em;
+        }
+      }
+
+      .themePanel {
+        display: flex;
+        flex-flow: row;
+        position: absolute;
+        bottom: 0.75em;
+        left: 4em;
+        overflow: hidden;
+        align-items: center;
+        justify-content: flex-end;
+
+        .themelogo {
+          background-color: transparent;
+          box-shadow: none;
+
+          ::ng-deep .mat-button-wrapper {
+            padding: 0;
+
+            img {
+              height: 32px;
+            }
+          }
+        }
+
+        .donation {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffc439;
+          color: black;
+          height: 2em;
+          text-transform: none;
+          border-radius: 2em !important;
+        }
+      }
+
+      $theme-width: 15em;
+
+      @keyframes showthemes {
+        0% {
+          width: 0;
+        }
+        10% {
+          width: 0;
+        }
+        90% {
+          width: calc(#{$theme-width} + 1em);
+        }
+        100% {
+          width: $theme-width;
+        }
+      }
+
+      @keyframes hidethemes {
+        0% {
+          width: $theme-width;
+        }
+        10% {
+          width: calc(#{$theme-width} + 1em);
+        }
+        90% {
+          width: 0;
+        }
+        100% {
+          width: 0;
+        }
+      }
+
+      @keyframes showthemeslogo {
+        0% {
+          transform: rotate(0deg);
+        }
+        10% {
+          transform: rotate(-30deg);
+        }
+        90% {
+          transform: rotate(390deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes hidethemeslogo {
+        0% {
+          transform: rotate(360deg);
+        }
+        10% {
+          transform: rotate(390deg);
+        }
+        90% {
+          transform: rotate(-30deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      .owllogo {
+        background-color: transparent;
+        box-shadow: none;
+
+        ::ng-deep .mat-button-wrapper {
+          padding: 0;
+
+          img {
+            width: 32px;
+          }
+        }
+      }
+
+      .owllogo {
+        position: absolute !important;
+        bottom: 0.5em;
+        left: 1em;
+      }
+    }
+  }
+
+  .sendPanel.is-tileview {
+    flex-flow: row;
+    position: initial;
+    display: flex;
+    align-self: stretch;
+    justify-content: flex-end;
+    padding-top: 0.2em;
+    padding-bottom: 0.5em;
+
+    material-fab {
+      margin-top: 0;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+::ng-deep .mat-select-panel {
+  background-color: var(--mainBodyBack);
+  max-height: 95% !important;
+}
+
+.selectItem {
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
+
+  span {
+    display: flex;
+    flex-flow: column;
+    line-height: initial;
+    align-items: flex-start;
+    padding: 0.2em 0.5em;
+
+  }
+
+  .itemTitle {
+    line-height: 1em;
+  }
+
+  .itemSub {
+    font-size: 75%;
+    line-height: 1em;
+  }
+}
+
+.is-local {
+  color: var(--localFore) !important;
+  background-color: var(--localBack) !important;
 }

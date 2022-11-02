@@ -1,0 +1,155 @@
+:host {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  flex: 1;
+
+  .tilelist {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+
+    .tile.dragover {
+      background-image: url("../../../assets/img/arrow-left.png") !important;
+      background-repeat: no-repeat !important;
+      background-position: left center !important;
+      background-size: contain !important;
+    }
+
+    .is-local {
+      border-color: var(--localFore);
+      background: transparent;
+      color: var(--localFore);
+    }
+
+    .is-local.params {
+      [title] {
+        background: var(--localFore);
+      }
+    }
+
+    .is-debug.params {
+      material-icon, [title] {
+        color: var(--debugFirst);
+        background: var(--debugFore);
+      }
+    }
+
+    .tile {
+      position: relative;
+      text-align: center;
+
+      [name] {
+        position: absolute;
+        top: 0.5em;
+        left: 0.5em;
+        z-index: 100;
+      }
+
+      [number], [numberimg] {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.1;
+        align-items: center;
+        justify-content: center;
+        font-size: 5em;
+        display: flex;
+        z-index: 100;
+      }
+
+      [numberimg] {
+        opacity: 0.6;
+        color: black;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      [pages], [pagesportrait] {
+        position: absolute;
+        bottom: 0;
+        opacity: 0.5;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        font-size: 1em;
+        display: flex;
+        z-index: 100;
+      }
+
+      [pagesportrait] {
+      }
+
+      [help] {
+        position: absolute;
+        top: 0.5em;
+        left: 0.5em;
+      }
+
+      [params] {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+      }
+
+      [params].close {
+        top: 0.8em;
+        right: 0.8em;
+      }
+
+      [copy] {
+        position: absolute;
+        bottom: 0.5em;
+        right: 0.5em;
+      }
+
+      img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        max-height: 75%;
+        max-width: 90%;
+      }
+
+      [title] {
+        padding: 1em;
+        z-index: 100;
+      }
+
+      display: flex;
+      padding: 0.5em;
+      background: var(--mainBodyBack);
+      color: var(--mainBodyFore);
+      border-radius: 0.5em;
+      margin: 0.2em;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.12);
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-width: 20%;
+      max-height: 80%;
+    }
+
+    .tilechecked {
+      background: var(--mainHeaderBack) !important;
+      color: var(--mainHeaderFore) !important;
+      _border: 2px solid var(--mainHeaderBack) !important;
+    }
+
+    .tilechecked.is-debug {
+      border-color: var(--debugFore) !important;
+      background: var(--logDebugBack) !important;
+    }
+
+    .tilechecked.is-local {
+      background-color: var(--localFore) !important;
+      color: var(--localBack) !important;
+    }
+
+  }
+}
