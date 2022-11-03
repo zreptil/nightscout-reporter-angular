@@ -1,0 +1,121 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.outputparams">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n="title for printparameter dialog">Ausgabe Parameter</h1>
+    <div>
+      <button mat-dialog-close="ok" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <div class="subtitle">
+      <div i18n="label of area for section general in printparams">Allgemeines</div>
+      <div class="comparable">
+        <mat-slide-toggle [(ngModel)]="globals.ppComparable"
+                          i18n="label for comparative purposes"
+                          labelPosition="before">
+          zu Vergleichszwecken (z.B. Arzt)
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="functions">
+      <div>
+        <mat-form-field>
+          <mat-label i18n>{{globals.lblGlucUnits}}</mat-label>
+          <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton">
+            <mat-option (click)="changeGlucUnits(idx)"
+                        *ngFor="let item of globals.listGlucUnits; let idx=index"
+                        [value]="idx"
+                        class="selectItem">
+              <div class="itemTitle">{{item}}</div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-checkbox [(ngModel)]="globals.ppStandardLimits" [disabled]="globals.ppComparable" class="chk">
+        {{msgStandardLimits(globals.getGlucInfo()["stdlow"], globals.getGlucInfo()["stdhigh"], globals.getGlucInfo()["unit"])}}
+      </mat-checkbox>
+      <mat-checkbox *ngIf="!globals.ppComparable && !globals.ppStandardLimits" [(ngModel)]="globals.ppCGPAlwaysStandardLimits" class="chk indent">
+        {{msgStandardCGP}}
+      </mat-checkbox>
+      <div class="line">
+        <mat-form-field long>
+          <mat-label i18n="label for max glucvalue in printparams">Maximaler Glukosewert in Grafiken</mat-label>
+          <mat-select [(ngModel)]="glucMaxIdx" class="selectButton">
+            <mat-option (click)="glucMaxIdx=idx"
+                        *ngFor="let item of listGlucMaxValues; let idx=index"
+                        [value]="idx"
+                        class="selectItem">
+              <div class="itemTitle">{{item}}</div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field long>
+          <mat-label i18n="label for max basalprecision in printparams">Genauigkeit der Basalangaben:</mat-label>
+          <mat-select [(ngModel)]="basalPrecisionIdx" class="selectButton">
+            <mat-option (click)="basalPrecisionIdx=idx"
+                        *ngFor="let item of listBasalPrecision; let idx=index"
+                        [value]="idx"
+                        class="selectItem">
+              <div class="itemTitle">{{item}}</div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="globals.ppLatestFirst" class="chk">
+        {{msgLatestFirst}}
+      </mat-checkbox>
+    </div>
+    <div class="line">
+      <mat-checkbox [(ngModel)]="globals.ppPdfSameWindow" class="chk" i18n="label for checkbox to open PDF in same window">PDF im
+        selben Fenster öffnen
+      </mat-checkbox>
+      <mat-checkbox [(ngModel)]="globals.ppPdfDownload" class="chk" i18n="label for checkbox to download PDF">
+        PDF herunterladen (bei einigen Browsern benötigt)
+      </mat-checkbox>
+    </div>
+    <mat-checkbox [(ngModel)]="globals.ppHideNightscoutInPDF" class="chk" i18n="label for checkbox to hide nightscout in footer">
+      Hinweise auf Nightscout in der Kopf- und Fusszeile des PDFs ausblenden
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="globals.ppHideLoopData" class="chk loop" i18n="label for checkbox to hide loop data">
+      Loopdaten verbergen (die auf diese Art markierten Optionen ignorieren)
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="globals.ppShowUrlInPDF" class="chk" i18n="label for checkbox to show nightscout url in footer">
+      Nightscout Url in der Fusszeile des PDFs anzeigen
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="globals.ppFixAAPS30" class="chk" i18n="label for fix for AAPS 3.0">
+      Korrektur für Datenänderungen in AAPS 3.0
+    </mat-checkbox>
+    <div class="subtitle" i18n="label of area for timeshift">Historische Daten</div>
+    <div class="timeshift">
+      <div i18n="description of timeshift">
+        Hiermit wird festgelegt, um wieviel der Zeitraum des PDFs verschoben werden soll, um Vergleichswerte zu
+        erhalten.
+      </div>
+      <ng-container *ngFor="let item of listPeriodShift">
+        <button (click)="periodShift=item"
+                *ngIf="item===periodShift" mat-raised-button>
+          {{item.title}}
+        </button>
+        <button (click)="periodShift=item"
+                *ngIf="item!==periodShift" mat-flat-button>
+          {{item.title}}
+        </button>
+      </ng-container>
+    </div>
+    <app-gluc-adjust></app-gluc-adjust>
+    <!-- -->
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div></div>
+    <button (click)="click()" class="iconButton" mat-flat-button>
+      <mat-icon>picture_as_pdf</mat-icon>
+      <ng-container i18n="buttonlabel for saving data">PDF erzeugen</ng-container>
+    </button>
+  </mat-dialog-actions>
+</div>
+

@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormConfig} from '@/forms/form-config';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
+import {PdfService} from '@/_services/pdf.service';
 
 @Component({
   selector: 'app-helpview',
@@ -11,8 +13,8 @@ export class HelpviewComponent implements OnInit {
 
   tileHelp: FormConfig[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) cfg: FormConfig) {
-    this.tileHelp = [cfg];
+  constructor(pdf: PdfService, @Inject(MAT_DIALOG_DATA) cfg: FormConfig) {
+    this.tileHelp = [cfg ?? new PrintAnalysis(pdf)];
   }
 
   ngOnInit(): void {

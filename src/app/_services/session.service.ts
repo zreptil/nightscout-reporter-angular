@@ -25,6 +25,7 @@ import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {PdfService} from '@/_services/pdf.service';
 import {FormConfig} from '@/forms/form-config';
 import {LangData} from '@/_model/nightscout/lang-data';
+import {OutputParamsComponent} from '@/components/output-params/output-params.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -48,7 +49,8 @@ export class SessionService {
     impressum: ImpressumComponent,
     dsgvo: DsgvoComponent,
     settings: SettingsComponent,
-    helpview: HelpviewComponent
+    helpview: HelpviewComponent,
+    outputparams: OutputParamsComponent
   }
 
   constructor(public ss: StorageService,
@@ -154,6 +156,10 @@ export class SessionService {
     if (this.dlgList[id] != null) {
       const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', id], disableClose: true});
       return dlgRef.afterClosed();
+    } else if (id === 'all') {
+      for (const key of Object.keys(this.dlgList)) {
+        this.dialog.open(this.dlgList[key], {data: data, panelClass: ['dialog-box', key], disableClose: true});
+      }
     } else if (id != null) {
       Log.todo(`Der Dialog mit der Id ${id} muss noch in SessionService implementiert werden.`);
     }

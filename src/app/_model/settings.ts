@@ -80,7 +80,7 @@ export class Settings {
     return $localize`Beide`;
   }
 
-  static get lblGlucUnits(): string {
+  get lblGlucUnits(): string {
     return $localize`Einheit der Glukosemessung`;
   }
 

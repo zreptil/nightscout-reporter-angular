@@ -29,9 +29,10 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ViewTileComponent} from './components/view-tile/view-tile.component';
 import {ViewListComponent} from './components/view-list/view-list.component';
-import { OwlMenuComponent } from './components/owl-menu/owl-menu.component';
-import { WatchComponent } from './components/watch/watch.component';
-import { WatchEntryComponent } from './components/watch-entry/watch-entry.component';
+import {OwlMenuComponent} from './components/owl-menu/owl-menu.component';
+import {WatchComponent} from './components/watch/watch.component';
+import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
+import {OutputParamsComponent} from './components/output-params/output-params.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { WatchEntryComponent } from './components/watch-entry/watch-entry.compon
     ViewListComponent,
     OwlMenuComponent,
     WatchComponent,
-    WatchEntryComponent
+    WatchEntryComponent,
+    OutputParamsComponent
   ],
   imports: [
     BrowserModule,

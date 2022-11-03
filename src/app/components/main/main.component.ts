@@ -104,6 +104,9 @@ export class MainComponent implements OnInit {
               public ss: SessionService,
               public ps: ProgressService,
               public ns: NightscoutService) {
+    // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
+    //
+    // }), 1000);
   }
 
   get msgAddText(): string {
@@ -184,11 +187,10 @@ export class MainComponent implements OnInit {
     return ret;
   }
 
-  sendClick() {
-    // drawerVisible = false;
+  clickSend() {
     switch (this.sendIcon) {
       case 'send':
-        this.ss.showPopup('printparams').subscribe(_ => {
+        this.ss.showPopup('outputparams').subscribe(_ => {
 
         });
         break;

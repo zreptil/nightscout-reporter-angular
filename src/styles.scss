@@ -18,7 +18,16 @@ html, body {
 }
 
 body {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
   --logInfoBack: #606099;
   --logInfoFore: #fff;
   --logWarnBack: #ff8020;
@@ -40,17 +49,6 @@ body {
   --mainHeaderFore: var(--primaryFore);
   --mainBodyBack: var(--secondaryBack);
   --mainBodyFore: var(--secondaryFore);
-}
-
-body {
-  display: flex;
-  flex-flow: column;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-  justify-content: center;
 }
 
 mat-icon[small] {
@@ -89,6 +87,7 @@ mat-icon[small] {
         gap: 0.5em;
         align-items: center;
         margin: 0;
+        font-size: 1.4em;
       }
     }
 
@@ -252,4 +251,3 @@ mat-icon[small] {
   background: var(--logDebugBack);
   color: var(--logDebugFore) !important;
 }
-

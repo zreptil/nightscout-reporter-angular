@@ -46,8 +46,8 @@ export class OwlMenuComponent implements OnInit {
       this.logoStyle = `animation:showthemeslogo ${duration}s ease-in-out normal forwards;`;
       this.langStyle = `animation:showlanguages ${duration}s ease-in-out normal forwards;`;
       // The settings here have to be the same as the scss-variables in owl-menu.component.scss
-      ts = 'animation-iteration-count:0;width:15em;';
-      langs = 'animation-iteration-count:0;height:26em;';
+      ts = 'animation-iteration-count:0;width:13em;';
+      langs = 'animation-iteration-count:0;height:23em;';
       ls = 'animation-iteration-count:0;transform: rotate(360deg);';
     }
     setTimeout(() => {

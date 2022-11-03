@@ -397,11 +397,6 @@ mat-drawer-container {
   }
 }
 
-::ng-deep .mat-select-panel {
-  background-color: var(--mainBodyBack);
-  max-height: 95% !important;
-}
-
 .selectItem {
   background-color: var(--mainBodyBack);
   color: var(--mainBodyFore);
@@ -432,5 +427,10 @@ mat-drawer-container {
 
 ::ng-deep .currLang {
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+::ng-deep .mat-select-panel {
+  background-color: var(--mainBodyBack);
+  max-height: 95% !important;
 }
 

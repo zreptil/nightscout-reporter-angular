@@ -61,6 +61,7 @@ export class GlobalsData extends Settings {
   lastGlucSrc: EntryData;
   currentGlucDiff: string;
   currentGlucTime: string;
+  listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
 
   constructor() {
     super();

@@ -317,7 +317,7 @@
     </div>
     <div *ngIf="globals.viewType==='tile'" class="footer">
       <app-owl-menu></app-owl-menu>
-      <button (click)="sendClick()"
+      <button (click)="clickSend()"
               [class]="sendClass(0,sendIcon)"
               [disabled]="sendDisabled"
               mat-fab
@@ -330,7 +330,7 @@
         <app-owl-menu></app-owl-menu>
       </div>
       <div class="sendPanel">
-        <button (click)="sendClick()"
+        <button (click)="clickSend()"
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="sendDisabled"
                 mat-fab

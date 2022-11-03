@@ -1,0 +1,337 @@
+[mat-dialog-title] {
+  background-color: var(--outputparamsHeaderBack);
+  color: var(--outputparamsHeaderFore);
+}
+
+
+::ng-deep .mat-select-panel {
+  background-color: var(--outputparamsBodyBack);
+  max-height: initial !important;
+}
+
+:host {
+  font-size: 90%;
+
+  ::ng-deep .mat-form-field .mat-form-field-label {
+    color: var(--outputparamsBodyFore);
+  }
+
+  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
+    color: var(--outputparamsHeaderFore);
+  }
+
+  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
+    background-color: var(--outputparamsHeaderBack);
+  }
+
+  ::ng-deep mat-dialog-actions {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mat-button-wrapper {
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--outputparamsHeaderFore) !important;
+    }
+  }
+
+  ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+    white-space: normal;
+  }
+
+  ::ng-deep .mat-slide-toggle-content {
+    white-space: normal;
+  }
+
+  ::ng-deep .mat-checkbox-disabled:not(.mat-checkbox-checked) .mat-checkbox-frame {
+    border-color: rgba(0, 0, 0, 0.38);
+  }
+
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: var(--outputparamsHeaderBack);
+  }
+
+  ::ng-deep .mat-raised-button {
+    background-color: var(--outputparamsHeaderBack);
+    color: var(--outputparamsHeaderFore);
+  }
+
+  ::ng-deep .mat-form-field-underline,
+  ::ng-deep .mat-form-field-subscript-wrapper {
+    display: none
+  }
+
+  ::ng-deep .mat-select-value {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-slide-toggle.mat-checked {
+    .mat-slide-toggle-bar {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .mat-slide-toggle-thumb {
+      background-color: var(--outputparamsHeaderBack);
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+
+  ::ng-deep .mat-slide-toggle-thumb {
+    background-color: var(--outputparamsHeaderFore);
+    color: var(--outputparamsHeaderFore);
+  }
+
+  .loop {
+    ::ng-deep .mat-checkbox-inner-container {
+      border-radius: 50%;
+      outline: 5px solid var(--loopMarked);
+      background-color: var(--loopMarked);
+    }
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-top: 0.5em;
+    padding-bottom: 0;
+  }
+}
+
+.selectItem {
+  background-color: var(--outputparamsBodyBack);
+  color: var(--outputparamsBodyFore);
+
+  span {
+    display: flex;
+    flex-flow: column;
+    line-height: initial;
+    align-items: flex-start;
+    padding: 0.2em 0.5em;
+
+  }
+
+  .itemTitle {
+    line-height: 1em;
+  }
+
+  .itemSub {
+    font-size: 75%;
+    line-height: 1em;
+  }
+}
+
+.selectItem:hover:not(.mat-option-disabled),
+.selectItem:focus:not(.mat-option-disabled) {
+  background-color: var(--outputparamsHeaderBack);
+  color: var(--outputparamsHeaderFore);
+  border-radius: 0.5em;
+}
+
+.selectItem.mat-selected:not(.mat-option-disabled,:hover) {
+  background-color: var(--outputparamsBodyBack);
+  color: var(--outputparamsBodyFore);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.selectItem.mat-selected:not(.mat-option-disabled) {
+  border-radius: 0.5em;
+}
+
+mat-form-field[long] {
+  flex: 1;
+}
+
+div[header] {
+  display: flex;
+  flex-flow: row;
+  color: var(--outputparamsHeaderFore);
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-flow: column;
+  padding: 1em;
+  font-size: 1.2em;
+  background-color: var(--outputparamsBodyBack);
+  color: var(--outputparamsBodyFore);
+}
+
+mat-slider {
+  width: 100%;
+  margin-left: 0.5em;
+
+  .container {
+    height: initial !important;
+  }
+}
+
+.controls {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+
+  .label {
+    padding-right: 2em;
+  }
+
+  mat-fab:not([disabled]) {
+    background-color: var(--outputparamsHeaderBack);
+    color: var(--primaryFore);
+  }
+}
+
+div.line {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 1em;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.functions {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+
+  > div {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+
+    div:first-child {
+      margin-left: 10px;
+    }
+  }
+}
+
+.root {
+  padding: 1em;
+  font-size: 1.2em;
+  color: var(--outputparamsBodyFore);
+  background-color: var(--outputparamsBodyBack);
+}
+
+.languagePanel {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.subtitle {
+  display: flex;
+  flex-flow: row;
+  color: var(--outputparamsHeaderBack);
+  font-size: 1.5em;
+  padding: 0.5em 0;
+  align-items: center;
+  justify-content: space-between;
+
+  ::ng-deep div {
+    display: flex;
+  }
+
+  ::ng-deep .comparable {
+    flex: 1;
+    font-size: 0.7em;
+    justify-content: flex-end;
+  }
+}
+
+div[header] {
+  display: flex;
+  flex-flow: row;
+  color: var(--outputparamsHeaderFore);
+  justify-content: space-between;
+  align-items: center;
+
+  div:nth-child(2) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+div[footer] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+}
+
+.progress {
+  padding: 2em;
+  font-size: 1.2em;
+}
+
+material-input {
+  ::ng-deep .focused-underline {
+    background: var(--outputparamsHeaderBack);
+  }
+
+  ::ng-deep .focused.label-text {
+    color: var(--outputparamsHeaderBack);
+  }
+}
+
+.timeshift {
+  div {
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+  }
+}
+
+.indent {
+  margin-left: 2em;
+}
+
+.selectButton {
+  background: var(--outputparamsHeaderBack);
+  color: var(--outputparamsHeaderFore);
+  padding: 0.2em;
+  padding-left: 0.4em;
+  border-radius: 2px;
+}
+
+.selectSelect {
+  ::ng-deep material-list {
+    background-color: var(--outputparamsHeaderBack);
+    padding: 0;
+
+    material-select-item {
+      display: flex;
+      flex-flow: column;
+      line-height: initial;
+      align-items: flex-start;
+      padding: 0.2em 0.5em;
+      color: var(--outputparamsHeaderFore);
+
+      div.itemSub {
+        font-size: 75%;
+      }
+
+      .selected-accent {
+        background-color: var(--outputparamsBodyBack);
+        color: var(--outputparamsBodyFore);
+      }
+    }
+
+    material-select-item:hover {
+      background-color: var(--outputparamsBodyBack);
+    }
+  }
+}
+
+material-button[raised] {
+  background-color: var(--outputparamsHeaderBack);
+  color: var(--outputparamsHeaderFore);
+}
+
+material-dropdown-select {
+  margin-bottom: 0.2em;
+}
