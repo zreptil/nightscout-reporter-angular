@@ -12,7 +12,6 @@ import {ProgressService} from '@/_services/progress.service';
 import {UserData} from '@/_model/nightscout/user-data';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {ShortcutData} from '@/_model/shortcut-data';
-import {LangData} from '@/_model/nightscout/lang-data';
 
 @Component({
   selector: 'app-main',
@@ -368,14 +367,6 @@ export class MainComponent implements OnInit {
     }, 100);
   }
 
-  languageClass(item: LangData): string[] {
-    const ret = ['language'];
-    if (GLOBALS.language != null && item.code === GLOBALS.language.code) {
-      ret.push('currLang');
-    }
-    return ret;
-  }
-
   clickMenuButton(type: string) {
     switch (type) {
       case 'facebook':
@@ -391,7 +382,7 @@ export class MainComponent implements OnInit {
         this.ss.navigate('https://jsonformatter.org/json-parser');
         break;
       case 'nswatch':
-        this.ss.navigate('?watch');
+        this.ss.navigate('#watch');
         break;
       case 'nsreports':
         this.ss.navigate(GLOBALS.user.reportUrl);

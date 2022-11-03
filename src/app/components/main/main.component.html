@@ -32,11 +32,11 @@
         </button>
         <button (click)="clickMenuButton('menu')" class="iconButton" mat-flat-button>
           <ng-container *ngIf="globals.viewType==='tile'">
-            <mat-icon>dashboard</mat-icon>
+            <mat-icon>list</mat-icon>
             <div i18n="title of change to listview">Zur Listenansicht</div>
           </ng-container>
           <ng-container *ngIf="globals.viewType==='list'">
-            <mat-icon>list</mat-icon>
+            <mat-icon>dashboard</mat-icon>
             <div i18n="title of change to tileview">Zur Kachelansicht</div>
           </ng-container>
         </button>
@@ -72,14 +72,14 @@
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <button (click)="clickMenuButton('nswatch')" class="iconButton" mat-flat-button>
-          <img alt="nightscout white" src="assets/img/nightscout-white.png">
+          <img alt="nightscout white" src="assets/img/night-watch-white.png">
           <div i18n="title of nightscout reports">Night-Watch</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-language">
           <button (click)="ds.changeLanguage(item)"
                   *ngFor="let item of globals.languageList"
-                  [class]="languageClass(item)" mat-flat-button>
+                  [class]="ss.languageClass(item)" mat-flat-button>
             <img alt="language image" src="{{item.imgPath}}">
           </button>
         </div>

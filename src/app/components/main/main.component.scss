@@ -205,10 +205,6 @@ mat-drawer-container {
         flex-flow: row;
         flex-wrap: wrap;
 
-        .currLang {
-          background: var(--mainBodyBack);
-        }
-
         button {
           width: 2.5em;
           padding: 0;
@@ -367,16 +363,18 @@ mat-drawer-container {
       display: flex;
       position: relative;
       justify-content: space-between;
-      overflow: hidden;
       padding: 0.1em;
+    }
+
+    app-owl-menu {
+      overflow: hidden;
     }
 
     .owlPanel {
       flex-flow: row;
       position: absolute;
-      left: 0.1em;
-      bottom: 0.1em;
-      overflow: hidden;
+      left: 0.2em;
+      bottom: 0.8em;
       width: 90%;
     }
 
@@ -431,3 +429,8 @@ mat-drawer-container {
   color: var(--localFore) !important;
   background-color: var(--localBack) !important;
 }
+
+::ng-deep .currLang {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+

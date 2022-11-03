@@ -1,0 +1,88 @@
+<div (click)="clickBackground()" [class]="classForWatch">
+  <div class="watch">
+    <ng-container *ngFor="let entry of globals.watchList">
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='space'" [element]="entry" [isEditMode]="isEditMode">&nbsp;</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='nl'" [element]="entry" [isEditMode]="isEditMode"></app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='user'" [element]="entry" [isEditMode]="isEditMode">{{globals.user.name}}</app-watch-entry>
+      <ng-container *ngIf="entry.type=='factor'">
+        <app-watch-entry (click)="onClick(entry)" *ngIf="globals.user.adjustGluc" [element]="entry" [isEditMode]="isEditMode">*{{globals.msgAdjustFactor}}</app-watch-entry>
+      </ng-container>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='time'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtTime(now)}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='date'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtDate(now)}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='unit'" [element]="entry" [isEditMode]="isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='gluc'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGluc}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='glucorg'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucOrg}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='lasttime'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucTime}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='target'" [element]="entry" [isEditMode]="isEditMode" style="width:100%">
+        <div class="target">
+          <div [ngStyle]="styleTargetLow" class="low">{{globals.targetBottom}}</div>
+          <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
+          <div [ngStyle]="styleTargetHigh" class="high">{{globals.targetTop}}</div>
+          <div [ngStyle]="styleLastGluc" class="marker last"></div>
+          <div [ngStyle]="styleCurrentGluc" class="marker"></div>
+          <div [ngStyle]="styleArrowTrack" class="arrowtrack"></div>
+          <div [ngStyle]="styleArrowTip" class="arrowtip"></div>
+        </div>
+      </app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='arrow'" [element]="entry" [isEditMode]="isEditMode">
+        <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
+             xmlns="http://www.w3.org/2000/svg">
+          <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
+            <circle class="circle" cx="50" cy="50" r="37.391"/>
+          </g>
+          <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
+            <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
+          </g>
+        </svg>
+        <div class="centered" diff>{{globals.currentGlucDiff}}</div>
+      </app-watch-entry>
+    </ng-container>
+    <div *ngIf="isEditMode" class="controls">
+      <button (click)="clickLeft($event)" [disabled]="leftDisabled" mat-flat-button>
+        <mat-icon>arrow_left</mat-icon>
+      </button>
+      <button (click)="clickRight($event)" [disabled]="rightDisabled" mat-flat-button>
+        <mat-icon>arrow_right</mat-icon>
+      </button>
+      <button (click)="clickSmaller($event)" [disabled]="smallerDisabled" mat-flat-button>
+        <mat-icon>text_decrease</mat-icon>
+      </button>
+      <button (click)="clickBigger($event)" [disabled]="biggerDisabled" mat-flat-button>
+        <mat-icon>text_increase</mat-icon>
+      </button>
+      <button (click)="clickBold($event)" [class]="(selected?.bold??false)?'active':''" [disabled]="selected==null" mat-flat-button>
+        <mat-icon>format_bold</mat-icon>
+      </button>
+      <button (click)="clickItalic($event)" [class]="(selected?.italic??false)?'active':''" [disabled]="selected==null" mat-flat-button>
+        <mat-icon>format_italic</mat-icon>
+      </button>
+      <button (click)="clickVertical($event)" [disabled]="selected==null" mat-flat-button>
+        <mat-icon>{{verticalIcon}}</mat-icon>
+      </button>
+      <button (click)="clickDelete($event)" [disabled]="selected==null" mat-flat-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div typePanel>
+        <button (click)="clickTypeSub($event)" [disabled]="selected==null" mat-flat-button>
+          <mat-icon>arrow_left</mat-icon>
+        </button>
+        <button (click)="clickTypeAdd($event)" [disabled]="selected==null" mat-flat-button>
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+        <div typeName>{{types[selected?.type]}}</div>
+      </div>
+      <button (click)="clickAdd($event)" mat-flat-button>
+        <mat-icon>add</mat-icon>
+      </button>
+      <button (click)="clickColor($event)" [class]="(globals.isWatchColor??true)?'active':''" mat-flat-button>
+        <mat-icon>palette</mat-icon>
+      </button>
+      <button (click)="clickSettings($event)" mat-flat-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button (click)="clickSave($event)" mat-flat-button>
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

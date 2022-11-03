@@ -3,6 +3,7 @@ import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeEnGB from '@angular/common/locales/en-GB';
 import localeEnUS from '@angular/common/locales/en';
+import {GLOBALS} from '@/_model/globals-data';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEnGB);
@@ -15,5 +16,13 @@ registerLocaleData(localeEnUS);
 })
 export class AppComponent {
   constructor() {
+  }
+
+  get globals() {
+    return GLOBALS;
+  }
+
+  get isWatch(): boolean {
+    return window.location.hash === '#watch';
   }
 }

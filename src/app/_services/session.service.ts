@@ -24,6 +24,7 @@ import {BasePrint} from '@/forms/base-print';
 import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {PdfService} from '@/_services/pdf.service';
 import {FormConfig} from '@/forms/form-config';
+import {LangData} from '@/_model/nightscout/lang-data';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -247,6 +248,41 @@ export class SessionService {
     }).catch(_ => {
       ret = GLOBALS.msgUrlFailure(check);
     });
+    return ret;
+  }
+
+  reload(): void {
+    const pos = window.location.href.indexOf('?');
+    if (pos > 0) {
+      window.location.href = window.location.href.substring(0, pos - 1);
+    } else {
+      window.location.reload();
+    }
+  }
+
+  async changeLanguage(value: LangData, params?: { doReload?: boolean, checkConfigured?: boolean }) {
+    params ??= {};
+    params.doReload ??= true;
+    params.checkConfigured ??= false;
+    GLOBALS.language = value;
+    if (params.checkConfigured && !GLOBALS.isConfigured) {
+      this.ss.clearStorage();
+    }
+    if (params.doReload) {
+      if (GLOBALS.isConfigured) {
+        this.ds.save();
+      } else {
+        this.ds.saveWebData();
+        this.reload();
+      }
+    }
+  }
+
+  languageClass(item: LangData): string[] {
+    const ret = ['language'];
+    if (GLOBALS.language != null && item.code === GLOBALS.language.code) {
+      ret.push('currLang');
+    }
     return ret;
   }
 }

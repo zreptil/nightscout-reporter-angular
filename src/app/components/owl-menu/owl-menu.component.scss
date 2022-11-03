@@ -1,4 +1,38 @@
+:host {
+  overflow: hidden
+}
+
 .owllogo {
+}
+
+.langPanel {
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  bottom: 4em;
+  width: 3em;
+  left: 0.5em;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start;
+
+  button {
+    width: 2.5em;
+    padding: 0;
+    min-width: 0;
+    border-radius: 20%;
+
+    ::ng-deep .mat-button-wrapper {
+      justify-content: center;
+      padding: 0;
+
+      img {
+        padding: 0.3em;
+        width: 1.5em;
+        height: initial;
+      }
+    }
+  }
 }
 
 .themePanel {
@@ -37,6 +71,7 @@
 }
 
 $theme-width: 15em;
+$lang-height: 26em;
 
 @keyframes showthemes {
   0% {
@@ -65,6 +100,36 @@ $theme-width: 15em;
   }
   100% {
     width: 0;
+  }
+}
+
+@keyframes showlanguages {
+  0% {
+    height: 0;
+  }
+  10% {
+    height: 0;
+  }
+  90% {
+    height: calc(#{$lang-height} + 1em);
+  }
+  100% {
+    height: $lang-height;
+  }
+}
+
+@keyframes hidelanguages {
+  0% {
+    height: $lang-height;
+  }
+  10% {
+    height: calc(#{$lang-height} + 1em);
+  }
+  90% {
+    height: 0;
+  }
+  100% {
+    height: 0;
   }
 }
 

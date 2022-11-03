@@ -10,6 +10,8 @@ import {UrlData} from '@/_model/nightscout/url-data';
 import {Settings} from '@/_model/settings';
 import {ShortcutData} from '@/_model/shortcut-data';
 import {WatchElement} from './watch-element';
+import {EntryData} from './nightscout/entry-data';
+import Timer = NodeJS.Timer;
 
 export let GLOBALS: GlobalsData;
 
@@ -48,6 +50,17 @@ export class GlobalsData extends Settings {
   isWatchColor = true;
   timestamp = 0;
   userListLoaded = false;
+  glucDir = 360;
+  glucTimer: Timer;
+  glucRunning = false;
+  currentGlucVisible = true;
+  currentGlucCounter = 0;
+  targetBottom = Settings.stdLow;
+  targetTop = Settings.stdHigh;
+  currentGlucSrc: EntryData;
+  lastGlucSrc: EntryData;
+  currentGlucDiff: string;
+  currentGlucTime: string;
 
   constructor() {
     super();
@@ -402,6 +415,26 @@ export class GlobalsData extends Settings {
       + '}';
   }
 
+  get currentGlucDir(): string {
+    return this.glucDir < 360 ? `translate(0,2px)rotate(${this.glucDir}deg)` : null;
+  }
+
+  get currentGluc(): string {
+    return this.currentGlucSrc == null ? $localize`Keine Daten` : this.fmtNumber(this.currentGlucValue, this.glucPrecision);
+  }
+
+  get currentGlucOrg(): string {
+    return this.currentGlucSrc == null ? $localize`Keine Daten` : this.fmtNumber(this.currentGlucValue / Settings.adjustFactor, this.glucPrecision);
+  }
+
+  get currentGlucValue(): number {
+    return this.currentGlucSrc == null ? null : this.currentGlucSrc.gluc / this.glucFactor;
+  }
+
+  get lastGlucValue(): number {
+    return this.lastGlucSrc == null ? null : this.lastGlucSrc.gluc / this.glucFactor;
+  }
+
   static updatePeriod(period: DatepickerPeriod): void {
     if (period == null) {
       return;
@@ -470,6 +503,14 @@ export class GlobalsData extends Settings {
       }
     }
     return b;
+  }
+
+  msgGlucTime(time: number): string {
+    return Utils.plural(time, {
+      0: $localize`Gerade eben`,
+      1: $localize`vor ${time} Minute`,
+      other: $localize`vor ${time} Minuten`
+    })
   }
 
   findUrlDataFor(begDate: Date, endDate: Date): UrlData[] {
@@ -677,7 +718,7 @@ export class GlobalsData extends Settings {
       if (!this.language.is24HourFormat) {
         hour = hour > 12 ? hour - 12 : hour;
       }
-      let m = params.withMinutes ? `':${(date.getMinutes() < 10 ? '0' : '')}${date.getMinutes()}'` : '';
+      let m = params.withMinutes ? `:${(date.getMinutes() < 10 ? '0' : '')}${date.getMinutes()}` : '';
       if (params.withSeconds) {
         m = `${m}:${(date.getSeconds() < 10 ? '0' : '')}${date.getSeconds()}`;
       }
