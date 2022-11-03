@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormConfig} from '@/forms/form-config';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-helpview',
@@ -7,16 +9,20 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HelpviewComponent implements OnInit {
 
-  constructor() {
+  tileHelp: FormConfig[];
+
+  constructor(@Inject(MAT_DIALOG_DATA) cfg: FormConfig) {
+    this.tileHelp = [cfg];
   }
 
   ngOnInit(): void {
   }
 
-  /*
-    @Input()
-     tileHelp: FormConfig[];
+  onBackClick() {
+    this.tileHelp.splice(this.tileHelp.length - 1, 1);
+  }
 
+  /*
     @Output('buttonClicked')
     Stream<UIEvent> get trigger => _trigger.stream;
     final _trigger = StreamController<UIEvent>.broadcast(sync: true);
@@ -40,4 +46,7 @@ export class HelpviewComponent implements OnInit {
       _trigger.add(UIEvent(type, detail: detail));
     }
   */
+  onLinkClick(idx: number) {
+    this.tileHelp.push(this.tileHelp[this.tileHelp.length - 1].form.helpStrings[idx].cfg);
+  }
 }

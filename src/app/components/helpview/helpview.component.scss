@@ -1,12 +1,17 @@
+[mat-dialog-title] {
+  background-color: var(--helpHeaderBack);
+  color: var(--helpHeaderFore);
+}
+
 div[header] {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   color: var(--helpHeaderFore);
+  justify-content: space-between;
   align-items: center;
 }
 
-.root {
+mat-dialog-content {
   flex: 1;
   padding: 1em;
   font-size: 1.2em;

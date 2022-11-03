@@ -1,25 +1,22 @@
-<!--
-<div mat-dialog-title>
-  <div>
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.helpview">
+  <div cdkDragHandle mat-dialog-title>
     <h1>
-      <button *ngIf="tileHelp.length>1" mat-dialog-close mat-icon-button>
+      <button (click)="onBackClick()" *ngIf="tileHelp.length>1" mat-icon-button>
         <mat-icon>chevron_left</mat-icon>
       </button>
-      {{tileHelp.last.form.title}}
+      {{tileHelp[tileHelp.length - 1]?.form.title}}
     </h1>
+    <button mat-dialog-close="ok" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
-</div>
-<div class="root" mat-dialog-content>
-  <material-dialog headered class="headered-dialog" hideFooter>
-    <div header>
-      <button mat-dialog-close mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+  <mat-dialog-content>
     <div class="root">
-      <ng-container *ngFor="let item of tileHelp.last.form.helpStrings;let idx=index">
-        <span *ngIf="item.type=='text'" [innerHtml]="item.text"></span>
-        <span *ngIf="item.type=='btn'" class="btn" (click)="fire('btn',idx)">{{item.cfg.form.title}}</span>
+      <ng-container *ngFor="let item of tileHelp[tileHelp.length-1].form.helpStrings;let idx=index">
+        <span *ngIf="item.type==='text'" [innerHtml]="item.text"></span>
+        <span (click)="onLinkClick(idx)" *ngIf="item.type==='btn'" class="btn">{{item.cfg.form.title}}</span>
       </ng-container>
     </div>
--->
+  </mat-dialog-content>
+</div>

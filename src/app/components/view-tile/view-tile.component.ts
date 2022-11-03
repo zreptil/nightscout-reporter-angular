@@ -126,7 +126,7 @@ export class ViewTileComponent implements OnInit {
   }
 
   clickTileHelp(evt: MouseEvent, cfg: FormConfig) {
-    this.ss.showPopup('formHelp', cfg)
+    this.ss.showPopup('helpview', cfg)
     evt.stopPropagation();
   }
 }
