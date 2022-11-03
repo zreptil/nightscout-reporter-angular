@@ -315,8 +315,21 @@
         </material-content>
       -->
     </div>
-    <div class="footer">
-      <div [class]="classForView('sendPanel')">
+    <div *ngIf="globals.viewType==='tile'" class="footer">
+      <app-owl-menu></app-owl-menu>
+      <button (click)="sendClick()"
+              [class]="sendClass(0,sendIcon)"
+              [disabled]="sendDisabled"
+              mat-fab
+              mat-raised-button>
+        <mat-icon>{{createIcon}}</mat-icon>
+      </button>
+    </div>
+    <ng-container *ngIf="globals.viewType==='list'">
+      <div class="owlPanel">
+        <app-owl-menu></app-owl-menu>
+      </div>
+      <div class="sendPanel">
         <button (click)="sendClick()"
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="sendDisabled"
@@ -325,17 +338,7 @@
           <mat-icon>{{createIcon}}</mat-icon>
         </button>
       </div>
-      <div [style]="themeStyle" class="themePanel">
-        <button (click)="ss.donationClick()" class="donation" i18n="title of donate button" mat-flat-button>Spenden</button>
-        <button (click)="toggleThemePanel(key)" *ngFor="let key of globals.themeListKeys; let idx = index" class="themelogo" mat-mini-fab>
-          <img *ngIf="key==='null'" alt="wizard logo" class="logo" src="assets/themes/wizard.png">
-          <img *ngIf="key!=='null'" alt="owl logo" class="logo" src="assets/themes/{{key}}/owl.png">
-        </button>
-      </div>
-      <button (click)="toggleThemePanel('')" [style]="logoStyle" class="owllogo" mat-fab>
-        <img alt="owl logo" src="assets/themes/{{globals.theme}}/owl.png">
-      </button>
-    </div>
+    </ng-container>
     <app-log></app-log>
   </mat-drawer-content>
 </mat-drawer-container>

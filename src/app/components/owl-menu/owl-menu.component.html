@@ -1,0 +1,11 @@
+<!--suppress HtmlUnknownTarget -->
+<div [style]="themeStyle" class="themePanel">
+  <button (click)="ss.donationClick()" class="donation" i18n="title of donate button" mat-flat-button>Spenden</button>
+  <button (click)="toggleThemePanel(key)" *ngFor="let key of globals.themeListKeys; let idx = index" class="themelogo" mat-mini-fab>
+    <img *ngIf="key==='null'" alt="wizard logo" class="logo" src="assets/themes/wizard.png">
+    <img *ngIf="key!=='null'" alt="owl logo" class="logo" src="assets/themes/{{key}}/owl.png">
+  </button>
+</div>
+<button (click)="toggleThemePanel('')" [style]="logoStyle" class="owllogo" mat-fab>
+  <img alt="owl logo" src="assets/themes/{{globals.theme}}/owl.png">
+</button>

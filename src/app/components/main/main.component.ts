@@ -95,9 +95,6 @@ export class MainComponent implements OnInit {
         }
       */
   sendIcon = 'send';
-  themeStyle = 'width:0em;';
-  logoStyle = '';
-  themePanelShown = false;
   menuIdx = 0;
   currShortcutIdx = -1;
   currShortcut: ShortcutData;
@@ -204,7 +201,7 @@ export class MainComponent implements OnInit {
 
   classForView(def: string): string[] {
     const ret = [def];
-    if (def === 'sendPanel' && this.ps.progressText != null) {
+    if (def === 'footer' && this.ps.progressText != null) {
       return ret;
     }
     switch (GLOBALS.viewType) {
@@ -460,31 +457,5 @@ export class MainComponent implements OnInit {
     this.ns.reportData = null;
     GLOBALS.isDebug = !GLOBALS.isDebug;
     this.checkPrint();
-  }
-
-  toggleThemePanel(themeKey: string): void {
-    let ts = '';
-    let ls = '';
-    let duration = 1;
-    if (this.themePanelShown) {
-      this.themeStyle = `animation:hidethemes ${duration}s ease-in-out normal forwards;`;
-      this.logoStyle = `animation:hidethemeslogo ${duration}s ease-in-out normal forwards;`;
-      ts = 'animation-iteration-count:0;width:0em;';
-      ls = 'animation-iteration-count:0;transform: rotate(0deg);';
-    } else {
-      this.themeStyle = `animation:showthemes ${duration}s ease-in-out normal forwards;`;
-      this.logoStyle = `animation:showthemeslogo ${duration}s ease-in-out normal forwards;`;
-      ts = 'animation-iteration-count:0;width:15em;';
-      ls = 'animation-iteration-count:0;transform: rotate(360deg);';
-    }
-    setTimeout(() => {
-      this.themeStyle = ts;
-      this.logoStyle = ls;
-      if (themeKey != '') {
-        GLOBALS.theme = themeKey === 'null' ? null : themeKey;
-        this.ts.setTheme(GLOBALS.theme);
-      }
-    }, duration * 1100);
-    this.themePanelShown = !this.themePanelShown;
   }
 }

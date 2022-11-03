@@ -29,6 +29,7 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ViewTileComponent} from './components/view-tile/view-tile.component';
 import {ViewListComponent} from './components/view-list/view-list.component';
+import { OwlMenuComponent } from './components/owl-menu/owl-menu.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {ViewListComponent} from './components/view-list/view-list.component';
     GlucAdjustComponent,
     WelcomeComponent,
     ViewTileComponent,
-    ViewListComponent
+    ViewListComponent,
+    OwlMenuComponent
   ],
   imports: [
     BrowserModule,
