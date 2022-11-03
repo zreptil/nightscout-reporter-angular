@@ -11,7 +11,7 @@ import {Settings} from '@/_model/settings';
 import {ShortcutData} from '@/_model/shortcut-data';
 import {WatchElement} from './watch-element';
 import {EntryData} from './nightscout/entry-data';
-import Timer = NodeJS.Timer;
+import {StatusData} from '@/_model/nightscout/status-data';
 
 export let GLOBALS: GlobalsData;
 
@@ -51,7 +51,7 @@ export class GlobalsData extends Settings {
   timestamp = 0;
   userListLoaded = false;
   glucDir = 360;
-  glucTimer: Timer;
+  glucTimer: any;
   glucRunning = false;
   currentGlucVisible = true;
   currentGlucCounter = 0;
@@ -503,6 +503,15 @@ export class GlobalsData extends Settings {
       }
     }
     return b;
+  }
+
+  isMGDL(status: StatusData): boolean {
+    const check = status.settings.units?.trim()?.toLowerCase() ?? '';
+    return check.startsWith('mg') && check.endsWith('dl');
+  }
+
+  setGlucMGDL(status: StatusData): void {
+    this.glucMGDLFromStatus = this.isMGDL(status);
   }
 
   msgGlucTime(time: number): string {

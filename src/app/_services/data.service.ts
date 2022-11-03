@@ -13,6 +13,8 @@ import {ShortcutData} from '@/_model/shortcut-data';
 import {WatchElement} from '@/_model/watch-element';
 import {DatePipe} from '@angular/common';
 import {LangData} from '@/_model/nightscout/lang-data';
+import {StatusData} from '@/_model/nightscout/status-data';
+import {EntryData} from '@/_model/nightscout/entry-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -536,99 +538,104 @@ export class DataService {
     params.force ??= false;
     params.timeout ??= 60;
     let ret = '';
-    /*
-      if (glucTimer != null) {
-      glucTimer.cancel();
-      glucTimer = null;
+    if (GLOBALS.glucTimer != null) {
+      clearTimeout(GLOBALS.glucTimer);
+      GLOBALS.glucTimer = null;
     }
     // make sure the value uses the correct factor
-    user.adjustGluc = user.adjustGluc;
+    GLOBALS.user.adjustGluc = GLOBALS.user.adjustGluc;
 
-    currentGlucCounter++;
+    GLOBALS.currentGlucCounter++;
 
-    if (glucRunning) return '';
+    if (GLOBALS.glucRunning) {
+      return '';
+    }
 
-    if (!force && !showCurrentGluc) return '';
-    glucRunning = true;
-    var url = user.apiUrl(null, 'status.json');
-    if (!hasMGDL) {
-      dynamic content = await requestJson(url);
+    if (!params.force && !GLOBALS.showCurrentGluc) {
+      return '';
+    }
+    GLOBALS.glucRunning = true;
+    let url = GLOBALS.user.apiUrl(null, 'status.json');
+    if (!GLOBALS.hasMGDL) {
+      const content = await this.requestJson(url);
       if (content != null) {
-        var status = StatusData.fromJson(content);
-        setGlucMGDL(status);
-        targetBottom = status.settings.bgTargetBottom;
-        targetTop = status.settings.bgTargetTop;
+        const status = StatusData.fromJson(content);
+        GLOBALS.setGlucMGDL(status);
+        GLOBALS.targetBottom = status.settings.bgTargetBottom;
+        GLOBALS.targetTop = status.settings.bgTargetTop;
       }
     }
-    url = user.apiUrl(null, 'entries.json', params: 'count=2');
-    List<dynamic> src = await requestJson(url);
+    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=2'});
+    let src = await this.requestJson(url);
     if (src != null) {
       if (src.length != 2) {
-        currentGlucSrc = null;
-        lastGlucSrc = null;
-        currentGlucDiff = '';
-        glucDir = 360;
+        GLOBALS.currentGlucSrc = null;
+        GLOBALS.lastGlucSrc = null;
+        GLOBALS.currentGlucDiff = '';
+        GLOBALS.glucDir = 360;
       } else {
         try {
-          var eNow = EntryData.fromJson(src[0]);
-          var ePrev = EntryData.fromJson(src[1]);
+          let eNow = EntryData.fromJson(src[0]);
+          let ePrev = EntryData.fromJson(src[1]);
           if (eNow.device != ePrev.device) {
-            url = user.apiUrl(null, 'entries.json', params: 'count=10');
-            src = await requestJson(url);
+            url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=10'});
+            src = await this.requestJson(url);
             eNow = EntryData.fromJson(src[0]);
             ePrev = null;
             for (var i = 1; i < src.length && ePrev == null; i++) {
-              var check = EntryData.fromJson(src[i]);
+              const check = EntryData.fromJson(src[i]);
               if (check.device == eNow.device) {
                 ePrev = check;
               }
             }
           }
-          var span = eNow.time.difference(ePrev.time).inMinutes;
-          glucDir = 360;
-          currentGlucDiff = '';
-          currentGlucTime = '';
-          if (span > 15) {
-            return currentGluc;
+          if (ePrev == null) {
+            ePrev = eNow;
           }
-          var time = DateTime.now().difference(eNow.time).inMinutes;
-          currentGlucTime = msgGlucTime(time);
+          const span = Utils.differenceInMinutes(eNow.time, ePrev.time);
+          GLOBALS.glucDir = 360;
+          GLOBALS.currentGlucDiff = '';
+          GLOBALS.currentGlucTime = '';
+          if (span > 15) {
+            return GLOBALS.currentGluc;
+          }
+          var time = Utils.differenceInMinutes(GlobalsData.now, eNow.time);
+          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(time);
 
-          currentGlucSrc = eNow;
-          lastGlucSrc = ePrev;
-          currentGlucDiff = '${eNow.gluc > ePrev.gluc ? '+' : ''}'
-          '${fmtNumber((eNow.gluc - ePrev.gluc) * 5 / span / glucFactor, glucPrecision)}';
-          var diff = eNow.gluc - ePrev.gluc;
-          var limit = 10 * span ~/ 5;
+          GLOBALS.currentGlucSrc = eNow;
+          GLOBALS.lastGlucSrc = ePrev;
+          GLOBALS.currentGlucDiff = `${eNow.gluc > ePrev.gluc ? '+' : ''}`
+            + `${GLOBALS.fmtNumber((eNow.gluc - ePrev.gluc) * 5 / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
+          const diff = eNow.gluc - ePrev.gluc;
+          const limit = Math.floor(10 * span / 5);
           if (diff > limit) {
-            glucDir = -90;
+            GLOBALS.glucDir = -90;
           } else if (diff < -limit) {
-            glucDir = 90;
+            GLOBALS.glucDir = 90;
           } else {
-            glucDir = 90 - ((diff + limit) / limit * 90).toInt();
+            GLOBALS.glucDir = 90 - Math.floor((diff + limit) / limit * 90);
           }
         } catch (ex) {
-          currentGlucSrc = null;
-          lastGlucSrc = null;
-          currentGlucDiff = '';
-          glucDir = 360;
+          GLOBALS.currentGlucSrc = null;
+          GLOBALS.lastGlucSrc = null;
+          GLOBALS.currentGlucDiff = '';
+          GLOBALS.glucDir = 360;
         }
       }
     }
 
-    if (currentGlucVisible || force) {
-      var milliseconds = timeout * 1000;
+    if (GLOBALS.currentGlucVisible || params.force) {
+      var milliseconds = params.timeout * 1000;
       //  calculate the milliseconds to the next full part of the minute for the timer
       // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
       // this is done for that the display of the time will match the current
       // time when entering a new minute
-      var milliNow = DateTime.now().second * 1000 + DateTime.now().millisecond;
-      var part = milliNow ~/ milliseconds;
+      const milliNow = GlobalsData.now.getSeconds() * 1000 + GlobalsData.now.getMilliseconds();
+      const part = Math.floor(milliNow / milliseconds);
       milliseconds = (part + 1) * milliseconds - milliNow;
-      glucTimer = Timer(Duration(milliseconds: milliseconds), () => getCurrentGluc(force: force, timeout: timeout));
+      GLOBALS.glucTimer = setTimeout(() => this.getCurrentGluc(params), milliseconds);
     }
-    glucRunning = false;
-    */
+    GLOBALS.glucRunning = false;
     return ret;
   }
 }
