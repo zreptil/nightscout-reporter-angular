@@ -1,2 +1,3 @@
-<app-main *ngIf="!isWatch"></app-main>
-<app-watch *ngIf="isWatch"></app-watch>
+<app-main *ngIf="appType===''"></app-main>
+<app-watch *ngIf="appType==='watch'"></app-watch>
+<app-dart-importer *ngIf="appType==='dart'"></app-dart-importer>

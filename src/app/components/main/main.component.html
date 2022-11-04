@@ -73,7 +73,12 @@
         </button>
         <button (click)="clickMenuButton('nswatch')" class="iconButton" mat-flat-button>
           <img alt="nightscout white" src="assets/img/night-watch-white.png">
-          <div i18n="title of nightscout reports">Night-Watch</div>
+          <div i18n="title of night-watch">Night-Watch</div>
+          <mat-icon small>open_in_new</mat-icon>
+        </button>
+        <button (click)="clickMenuButton('dart')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
+          <img alt="nightscout white" src="assets/img/nightscout.png">
+          <div i18n="title of nightscout reports">Dart Localization Import</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-language">

@@ -175,7 +175,14 @@ export class Utils {
     return Utils.compare(a?.getTime(), b?.getTime());
   }
 
-  static join(dst: string[], separator: string) {
+  static join(dst: string[], separator: string, convert?: (text: string) => string) {
+    if (convert != null) {
+      const cvt = [];
+      for (const text of dst) {
+        cvt.push(convert(text));
+      }
+      dst = cvt;
+    }
     return dst.join(separator);
   }
 

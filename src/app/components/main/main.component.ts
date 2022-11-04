@@ -398,6 +398,9 @@ export class MainComponent implements OnInit {
       case 'menu':
         this.changeView();
         break;
+      case 'dart':
+        window.location.href = '#dart';
+        break;
     }
   }
 

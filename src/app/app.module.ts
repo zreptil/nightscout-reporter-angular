@@ -33,6 +33,7 @@ import {OwlMenuComponent} from './components/owl-menu/owl-menu.component';
 import {WatchComponent} from './components/watch/watch.component';
 import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
 import {OutputParamsComponent} from './components/output-params/output-params.component';
+import { DartImporterComponent } from './components/dart-importer/dart-importer.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {OutputParamsComponent} from './components/output-params/output-params.co
     OwlMenuComponent,
     WatchComponent,
     WatchEntryComponent,
-    OutputParamsComponent
+    OutputParamsComponent,
+    DartImporterComponent
   ],
   imports: [
     BrowserModule,

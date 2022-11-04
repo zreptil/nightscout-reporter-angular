@@ -1,0 +1,14 @@
+<div>
+  <button (click)="ss.navigate('https://www.freeformatter.com/xml-to-json-converter.html')" link mat-flat-button>
+    Die Datei /locale/messages.de-DE.xlf muss zur Verwendung mit diesem Tool in json konvertiert werden.
+    Das kann ein Online-Dienst erledigen, der hier aufgerufen werden kann. Dort die Datei hochladen
+    und das Ergebnis in /assets/messages.xls.json speichern.
+    <mat-icon>open_in_new</mat-icon>
+  </button>
+</div>
+<div lang>
+  <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-flat-button>
+    {{lang.code}}<br><img [src]="lang.imgPath" alt="language image">
+  </button>
+</div>
+<app-log></app-log>

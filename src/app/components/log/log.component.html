@@ -11,8 +11,9 @@
 </div>
 <ng-container *ngFor="let type of ['error', 'info', 'debug', 'warn', 'todo']">
   <div *ngIf="showType(type)" [class]="type" content>
-    <button (click)="onClickDelete($event, type)" mat-flat-button>
+    <button (click)="onClickDelete($event, type)" delete mat-flat-button>
       <mat-icon>delete</mat-icon>
+      {{msg[type].length}}
     </button>
     <div lines>
       <ng-container *ngFor="let line of msg[type]">

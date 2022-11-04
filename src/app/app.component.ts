@@ -22,7 +22,7 @@ export class AppComponent {
     return GLOBALS;
   }
 
-  get isWatch(): boolean {
-    return window.location.hash === '#watch';
+  get appType(): string {
+    return window.location.hash?.substring(1);
   }
 }

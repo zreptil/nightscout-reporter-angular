@@ -6,7 +6,7 @@ import xliff from 'xliff';
 
 // const fileList = [];
 // const lng = localStorage.getItem('language') || 'de-DE';
-const outFile = '../src/locale/messages.json';
+const outFile = '../src/assets/messages.json';
 
 // Erzeugt aus den Dateien messages.xxx.xlf die Datei messages.json
 //createJson(['de-DE', 'en-GB'], []);

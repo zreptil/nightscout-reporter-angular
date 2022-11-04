@@ -3,7 +3,7 @@
  */
 import '@angular/localize/init';
 import 'zone.js';
-import * as messages from 'src/locale/messages.json';
+import * as messages from 'src/assets/messages.json';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */

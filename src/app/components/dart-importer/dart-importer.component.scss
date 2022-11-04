@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100vh;
+
+  [lang] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  [link] {
+    max-width: 50%;
+
+    ::ng-deep .mat-button-wrapper {
+      white-space: normal;
+    }
+  }
+}
+
