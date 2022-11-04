@@ -24,7 +24,7 @@
       <div>
         <mat-form-field>
           <mat-label i18n>{{globals.lblGlucUnits}}</mat-label>
-          <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton">
+          <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="changeGlucUnits(idx)"
                         *ngFor="let item of globals.listGlucUnits; let idx=index"
                         [value]="idx"
@@ -43,7 +43,7 @@
       <div class="line">
         <mat-form-field long>
           <mat-label i18n="label for max glucvalue in printparams">Maximaler Glukosewert in Grafiken</mat-label>
-          <mat-select [(ngModel)]="glucMaxIdx" class="selectButton">
+          <mat-select [(ngModel)]="glucMaxIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="glucMaxIdx=idx"
                         *ngFor="let item of listGlucMaxValues; let idx=index"
                         [value]="idx"
@@ -54,7 +54,7 @@
         </mat-form-field>
         <mat-form-field long>
           <mat-label i18n="label for max basalprecision in printparams">Genauigkeit der Basalangaben:</mat-label>
-          <mat-select [(ngModel)]="basalPrecisionIdx" class="selectButton">
+          <mat-select [(ngModel)]="basalPrecisionIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="basalPrecisionIdx=idx"
                         *ngFor="let item of listBasalPrecision; let idx=index"
                         [value]="idx"
@@ -112,7 +112,7 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <div></div>
-    <button (click)="click()" class="iconButton" mat-flat-button>
+    <button (click)="clickExecute()" class="iconButton" mat-dialog-close="ok" mat-flat-button>
       <mat-icon>picture_as_pdf</mat-icon>
       <ng-container i18n="buttonlabel for saving data">PDF erzeugen</ng-container>
     </button>

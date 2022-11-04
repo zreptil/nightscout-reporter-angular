@@ -10,4 +10,8 @@
 <button (click)="ss.showPopup('welcome')" mat-flat-button>
   Willkommen
 </button>
+<button (click)="clickProgress()" mat-flat-button>
+  Fortschrittsbalken
+</button>
 <img [src]="imgsrc" alt="">
+<app-progress [cssStyle]="{'panelBack':'var(--primaryBack)','panelFore':'var(--primaryFore)','bufferColor':'var(--secondaryBack)'}"></app-progress>

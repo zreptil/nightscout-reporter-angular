@@ -6,6 +6,7 @@ import {NightscoutService} from '@/_services/nightscout.service';
 import {PeriodShift} from '@/_model/period-shift';
 import {Utils} from '@/classes/utils';
 import {StatusData} from '@/_model/nightscout/status-data';
+import {PdfService} from '@/_services/pdf.service';
 
 @Component({
   selector: 'app-output-params',
@@ -22,7 +23,8 @@ export class OutputParamsComponent implements OnInit {
 
   constructor(public ns: NightscoutService,
               public ds: DataService,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public pdf: PdfService) {
   }
 
   get globals(): GlobalsData {
@@ -111,7 +113,12 @@ export class OutputParamsComponent implements OnInit {
       _trigger.add(UIEvent(type, detail: detail));
     }
   */
-  click() {
-
+  clickExecute() {
+    // make sure the value uses the correct factor
+    GLOBALS.user.adjustGluc = GLOBALS.user.adjustGluc;
+    GLOBALS.currPeriodShift = this.periodShift;
+    GLOBALS.ppGlucMaxIdx = this.glucMaxIdx;
+    GLOBALS.ppBasalPrecisionIdx = this.basalPrecisionIdx;
+    this.pdf.generatePdf(true);
   }
 }

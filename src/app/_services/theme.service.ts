@@ -42,17 +42,25 @@ export class ThemeService {
     //   console.log(this.getThemeSytle(theme));
     //   // this.getThemeSytle(theme);
     // } else {
+    this.assignStyle(document.body.style, theme);
+//    }
+    this.currTheme = theme;
+    GLOBALS.theme = name;
+    this.ds.saveWebData();
+  }
+
+  assignStyle(style: CSSStyleDeclaration, theme: any): void {
+    if (style == null) {
+      return;
+    }
+    console.log(style);
     for (const key of Object.keys(theme)) {
       let value = theme[key];
       if (this.ms.colors[value] != null) {
         value = this.ms.colors[value];
       }
-      document.body.style.setProperty(`--${key}`, value);
+      style.setProperty(`--${key}`, value);
     }
-//    }
-    this.currTheme = theme;
-    GLOBALS.theme = name;
-    this.ds.saveWebData();
   }
 
   getThemeSytle(theme: any): any {

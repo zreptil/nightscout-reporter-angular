@@ -79,12 +79,13 @@ export class PdfService {
   }
 
   async generatePdf(isForThumbs = false) {
-    // GLOBALS.save(skipReload: isForThumbs);
+    this.ds.save({skipReload: isForThumbs});
     this.pdfList = [];
     this.ps.progressMax = 1;
     this.ps.progressValue = 0;
     this.ps.progressText = this.msgPreparingPDF;
     const repData = await this.ns.loadData(isForThumbs);
+    console.log('repData', repData);
     GLOBALS.isCreatingPDF = true;
     try {
       this.ps.progressMax = 1;

@@ -122,11 +122,11 @@
     </div>
     <div class="sub">
       <div [innerHTML]="lblProfileMax" class="longtext"></div>
-      <mat-form-field>
-        <mat-select [(value)]="listProfileMaxCount[globals.user.profileMaxIdx??0]">
+      <mat-form-field select>
+        <mat-select [(value)]="globals.user.profileMaxIdx" panelClass="settings">
           <mat-option (onSelectionChange)="globals.user.profileMaxIdx=idx"
                       *ngFor="let item of listProfileMaxCount; let idx=index"
-                      [value]="item">
+                      [value]="idx">
             <div class="itemTitle">{{item}}</div>
           </mat-option>
         </mat-select>

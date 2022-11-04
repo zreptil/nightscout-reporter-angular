@@ -1,3 +1,8 @@
+::ng-deep .mat-select-panel.settings {
+  background-color: var(--settingsBodyBack);
+  max-height: initial !important;
+}
+
 input[type=file] {
   display: none;
 }
@@ -107,6 +112,21 @@ mat-dialog-content {
 }
 
 :host {
+  ::ng-deep .mat-form-field .mat-form-field-label {
+    color: var(--settingsBodyFore);
+  }
+
+  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
+    color: var(--settingsBodyFore);
+  }
+
+  [select] {
+    ::ng-deep .mat-form-field-underline,
+    ::ng-deep .mat-form-field-subscript-wrapper {
+      display: none
+    }
+  }
+
   ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
   ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
   ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {

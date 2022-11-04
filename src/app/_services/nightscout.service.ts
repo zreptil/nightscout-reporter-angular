@@ -79,8 +79,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       beg = new Date(2019, 8, 26);
       end = new Date(2019, 9, 1);
 
-      beg = new Date(2022, 9, 26);
-      end = new Date(2022, 9, 26);
+      // beg = new Date(2022, 9, 26);
+      // end = new Date(2022, 9, 26);
+      end = new Date(2019, 10, 26);
       this.reportData = null;
     } else {
       beg = GLOBALS.period.shiftStartBy(GLOBALS.currPeriodShift.months);
@@ -398,7 +399,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         const profileBeg = Utils.addTimeHours(beg, -profile.store.timezone.localDiff);
         const profileEnd = Utils.addTimeHours(end, -profile.store.timezone.localDiff);
 
-        this.ps.progressText = this.msgLoadingDataFor(Utils.fmtDate(begDate));
+        this.ps.progressText = this.msgLoadingDataFor(Utils.fmtDate(begDate, $localize`dd.MM.yyyy`));
         const urlDate = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate());
         let url = GlobalsData.user.apiUrl(urlDate, 'entries.json',
           {

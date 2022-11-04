@@ -3,8 +3,7 @@
   color: var(--outputparamsHeaderFore);
 }
 
-
-::ng-deep .mat-select-panel {
+::ng-deep .mat-select-panel.output-params {
   background-color: var(--outputparamsBodyBack);
   max-height: initial !important;
 }

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -6,15 +7,37 @@ import {Injectable} from '@angular/core';
 export class ProgressService {
 
   progressMax: number;
-  progressValue: number;
-  progressText: string;
 
   constructor() {
   }
 
+  _progressValue: number;
+
+  get progressValue(): number {
+    return this._progressValue;
+  }
+
+  set progressValue(value: number) {
+    this._progressValue = value;
+  }
+
+  _progressText: string;
+
+  get progressText(): string {
+    return this._progressText;
+  }
+
+  set progressText(value: string) {
+    this._progressText = value;
+  }
+
+  get isActive(): boolean {
+    return !Utils.isEmpty(this.progressText);
+  }
+
   clear(): void {
-    this.progressValue = 0;
     this.progressMax = 0;
+    this._progressValue = 0;
     this.progressText = null;
   }
 }

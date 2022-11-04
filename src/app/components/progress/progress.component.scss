@@ -1,0 +1,50 @@
+[overlay] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  // border: 5px solid red;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+[panel] {
+  --panelBack: var(--primaryBack);
+  --panelFore: var(--primaryFore);
+  --bufferColor: var(--secondaryBack);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 5%;
+  gap: 1em;
+  border-radius: 1em;
+  background-color: var(--panelBack);
+  color: var(--panelFore);
+
+  mat-progress-bar {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+  }
+
+  ::ng-deep .mat-progress-bar-buffer {
+    background-color: var(--bufferColor);
+  }
+
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  [label] {
+    width: 90%;
+    text-align: center;
+  }
+}

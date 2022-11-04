@@ -279,13 +279,6 @@ export class MainComponent implements OnInit {
       for (const entry of GLOBALS.listConfig) {
         GLOBALS.user.formParams[entry.id] = entry.asString;
       }
-      Log.todo('In MainComponent prüfen, ob die weiterleitung an bestimmte Seiten noch notwendig ist');
-      // if (html.window.location.href.endsWith('?dsgvo')) currPage = 'dsgvo';
-      // if (html.window.location.href.endsWith('?impressum')) currPage = 'impressum';
-      // if (html.window.location.href.endsWith('?whatsnew')) currPage = 'whatsnew';
-      // if (html.window.location.href.endsWith('?welcome')) currPage = 'welcome';
-      // if (html.window.location.href.endsWith('?settings')) currPage = 'settings';
-
       /*
 
               try {

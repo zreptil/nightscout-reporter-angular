@@ -34,6 +34,7 @@ import {WatchComponent} from './components/watch/watch.component';
 import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
 import {OutputParamsComponent} from './components/output-params/output-params.component';
 import { DartImporterComponent } from './components/dart-importer/dart-importer.component';
+import { ProgressComponent } from './components/progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DartImporterComponent } from './components/dart-importer/dart-importer.
     WatchComponent,
     WatchEntryComponent,
     OutputParamsComponent,
-    DartImporterComponent
+    DartImporterComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,

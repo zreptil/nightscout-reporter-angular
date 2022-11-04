@@ -2,4 +2,8 @@
   display: flex;
   flex-flow: column;
   gap: 1em;
+
+  ::ng-deep .hurz {
+    background-color: var(--mainHeaderBack);
+  }
 }

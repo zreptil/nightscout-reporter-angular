@@ -35,6 +35,7 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ts.setTheme('standard');
   }
 
   testCrypt(): void {
@@ -94,5 +95,11 @@ export class TestComponent implements OnInit {
     this.ss.confirm('To be or not to be').subscribe(result => {
       Log.info(`Da hast Du dann wohl ${result.btn} gedrückt`);
     });
+  }
+
+  clickProgress() {
+    this.ps.progressText = 'Hier sieht man den Fortschritt...';
+    this.ps.progressMax = 400;
+    this.ps.progressValue = 270;
   }
 }
