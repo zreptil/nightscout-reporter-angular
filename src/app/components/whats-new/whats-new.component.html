@@ -8,14 +8,50 @@
       </button>
     </div>
   </div>
-  <mat-dialog-content class="root">
+  <mat-dialog-content>
     <h2 (click)="click(40.0)">
       <mat-icon>{{iconFor(40.0)}}</mat-icon>
       <span i18n="version">Version</span><span i18n="v400">4.0.0 - xx.xx.2022</span></h2>
     <ul [class]="classFor(40.0)">
       <li class="added" i18n="v400a1">
-        In Night-Watch kann man nun einen Nachtmodus aktivieren, in dem der Hintergrund schwarz
-        ist und die Farben des Textes den aktuellen Wert bezüglich des Zielbereichs darstellen.
+        <mat-icon>delete</mat-icon>
+        Es ist alles neu. Das sieht oberflächlich nicht ganz so auffällig aus, aber die Programmiersprache
+        von Nightscout Reporter wurde von Dart nach Angular geändert, was einen vollständigen Neuaufbau
+        des Programms erforderte. Die Funktionalität ist gleich geblieben, es ist nur in Zukunft wesentlich
+        leichter, mit der Entwicklung der Technik Schritt zu halten.
+      </li>
+      <li class="added" i18n="v400a2">
+        Sämtliche Dialoge können nun durch Festhalten der Titelzeile verschoben werden.
+      </li>
+      <li class="changed" i18n="v400c1">
+        Die Erzeugung der PDFs erfolgt nun vollständig im Browser des Benutzers. Es ist nun nicht mehr
+        notwendig, dass die erstellten Daten vom Server verarbeitet werden. Ich hoffe, damit sind dann
+        auch die bisherigen Probleme mit der Erstellung grosser PDF-Dateien erledigt.
+      </li>
+      <li class="changed" i18n="v400c2">
+        Die Eingabe des Zeitraums für die PDFs wurde aus der Titelzeile der Anwendung in den Dialog für
+        die Ausgabe Parameter verlagert.
+      </li>
+      <li class="changed" i18n="v400c3">
+        Die Umschaltung der Sprache wurde aus dem Aufklapp-Menü an der linken Seite in das Eulen-Menü in der
+        linken unteren Ecke verschoben. Wenn man das anklickt, dann kann man daneben wie gewohnt das Farbthema
+        wählen und darüber klappen die verfügbaren Sprachen in Form der jeweiligen Landesflagge aus.
+      </li>
+      <li class="changed" i18n="v400c4">
+        Das Menü auf der linken Seite klappt nun nicht bei jeder Aktion wieder zu. Das war beim alten Aufbau
+        der Anwendung nötig, aber in der neuen Welt gibt es andere Möglichkeiten. So kann man verschiedene
+        Optionen anklicken, ohne danach jedesmal das Menü neu aufmachen zu müssen.
+      </li>
+      <li class="changed is-local" i18n="v400c5">
+        Die Optionen für die einzelnen Formulare werden in der Kachelansicht nun direkt in der jeweiligen
+        Kachel angezeigt.
+      </li>
+      <li class="removed" i18n="v400r1">
+        Die Anzeige des aktuellen Wertes in der Titelzeile wurde ausgebaut, da es inzwischen Night-Watch
+        gibt, der das wesentlich besser darstellen kann.
+      </li>
+      <li class="fixed" i18n="v400r1">
+        Viele Probleme mit dem Aussehen bestimmter Bereiche der Anwendung wurden behoben.
       </li>
     </ul>
     <h2 (click)="click(30.2)">

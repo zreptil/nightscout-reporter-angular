@@ -98,8 +98,8 @@ export class Utils {
   }
 
   static fmtDate(date: Date, fmt: string = null): string {
-    if (fmt === null) {
-      fmt = $localize`dd.MM.yyyy, hh:mm`;
+    if (fmt == null) {
+      fmt = $localize`dd.MM.yyyy`;
     }
     let ret = fmt;
     ret = ret.replace(/dd/g, Utils.pad(date?.getDate() ?? '--'));

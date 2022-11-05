@@ -11,6 +11,7 @@ import {forkJoin, map, Observable, of} from 'rxjs';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {DataService} from './data.service';
 import {LangData} from '@/_model/nightscout/lang-data';
+import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 
 export class PdfData {
   isPrinted = false;
@@ -350,7 +351,16 @@ export class PdfService {
     }
     await this.loadPdfMaker();
     // pdfmake changes the
-    this.pdfMake.createPdf(JSON.parse(JSON.stringify(data))).open();
+    const pdf: TCreatedPdf = this.pdfMake.createPdf(JSON.parse(JSON.stringify(data)));
+    if (GLOBALS.ppPdfSameWindow) {
+      pdf.getDataUrl((base64URL) => {
+        document.write(`<iframe src="${base64URL}" style="border:0;top:0;left:0;bottom:0;right:0;width:100%;height:100%;" allowFullScreen></iframe>`);
+      });
+    } else if (GLOBALS.ppPdfDownload) {
+      pdf.download();
+    } else {
+      pdf.open();
+    }
   }
 
   private collectBase64Image(id: string): Observable<{ id: string, url: string }> {

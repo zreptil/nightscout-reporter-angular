@@ -415,7 +415,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         const profileBeg = Utils.addTimeHours(beg, -profile.store.timezone.localDiff);
         const profileEnd = Utils.addTimeHours(end, -profile.store.timezone.localDiff);
 
-        this.ps.text = this.msgLoadingDataFor(Utils.fmtDate(begDate, $localize`dd.MM.yyyy`));
+        this.ps.text = this.msgLoadingDataFor(Utils.fmtDate(begDate));
         const urlDate = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate());
         let url = GlobalsData.user.apiUrl(urlDate, 'entries.json',
           {

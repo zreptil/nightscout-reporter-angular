@@ -1,3 +1,7 @@
+::ng-deep .dialog-box.whatsnew {
+  min-width: 80vw;
+}
+
 [mat-dialog-title] {
   background-color: var(--whatsnewHeaderBack);
   color: var(--whatsnewHeaderFore);
@@ -11,7 +15,7 @@ div[header] {
   align-items: center;
 }
 
-.root {
+mat-dialog-content {
   padding: 1em;
   font-size: 1.2em;
   background-color: var(--whatsnewBodyBack);
@@ -43,7 +47,7 @@ li {
   list-style: none;
   margin-left: 0;
   padding-left: 2.0em;
-  text-indent: -0.6em;
+  position: relative;
 }
 
 li:not(first-child) {
@@ -52,8 +56,9 @@ li:not(first-child) {
 
 li:before {
   content: "-";
-  margin-right: 1.0em;
-  margin-left: -1.0em;
+  position: absolute;
+  margin-left: -1.1em;
+  font-weight: bold;
 }
 
 .added:before {
@@ -66,7 +71,6 @@ li:before {
 
 .removed:before {
   content: "-";
-  margin-right: 1.34em;
 }
 
 .fixed:before {

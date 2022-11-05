@@ -81,13 +81,6 @@
           <div i18n="title of nightscout reports">Dart Localization Import</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <div class="menu-language">
-          <button (click)="ds.changeLanguage(item)"
-                  *ngFor="let item of globals.languageList"
-                  [class]="ss.languageClass(item)" mat-flat-button>
-            <img alt="language image" src="{{item.imgPath}}">
-          </button>
-        </div>
         <div class="menu-legal">
           <button (click)="ss.showPopup('impressum')" class="legal" mat-flat-button>
             {{msgImpressum}}

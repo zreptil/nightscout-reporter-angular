@@ -60,7 +60,6 @@ export class ThemeService {
       this.currTheme[key] = value;
       style.setProperty(`--${key}`, value);
     }
-    console.log('currTheme', this.currTheme);
   }
 
   getThemeSytle(theme: any): any {
