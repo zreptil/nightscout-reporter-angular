@@ -324,7 +324,7 @@
       <app-owl-menu></app-owl-menu>
       <button (click)="clickSend()"
               [class]="sendClass(0,sendIcon)"
-              [disabled]="sendDisabled"
+              [disabled]="ss.sendDisabled"
               mat-fab
               mat-raised-button>
         <mat-icon>{{createIcon}}</mat-icon>
@@ -337,7 +337,7 @@
       <div class="sendPanel">
         <button (click)="clickSend()"
                 [class]="sendClass(0,sendIcon)"
-                [disabled]="sendDisabled"
+                [disabled]="ss.sendDisabled"
                 mat-fab
                 mat-raised-button>
           <mat-icon>{{createIcon}}</mat-icon>

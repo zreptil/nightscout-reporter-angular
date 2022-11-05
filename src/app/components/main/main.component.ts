@@ -7,7 +7,6 @@ import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {FormConfig} from '@/forms/form-config';
 import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
-import {Log} from '@/_services/log.service';
 import {ProgressService} from '@/_services/progress.service';
 import {UserData} from '@/_model/nightscout/user-data';
 import {NightscoutService} from '@/_services/nightscout.service';
@@ -20,7 +19,6 @@ import {ShortcutData} from '@/_model/shortcut-data';
 })
 export class MainComponent implements OnInit {
 
-  sendDisabled = true;
   /*
         bool dropElement(html.Element drag, html.Element drop) {
           var dragId = drag.getAttribute('id').substring(5);
@@ -154,7 +152,7 @@ export class MainComponent implements OnInit {
     if (shortcutIdx != null) {
       const data = GLOBALS.shortcutList[shortcutIdx];
       this.ss.fillFormsFromShortcut(data);
-      this.checkPrint();
+      this.ss.checkPrint();
       this.ds._initAfterLoad();
     }
   }
@@ -202,7 +200,7 @@ export class MainComponent implements OnInit {
 
   classForView(def: string): string[] {
     const ret = [def];
-    if (def === 'footer' && this.ps.progressText != null) {
+    if (def === 'footer' && this.ps.text != null) {
       return ret;
     }
     switch (GLOBALS.viewType) {
@@ -227,13 +225,13 @@ export class MainComponent implements OnInit {
     this.ns.reportData = null;
     this.ds.save();
     this.ds.getCurrentGluc();
-    this.checkPrint();
+    this.ss.checkPrint();
     this.ds._initAfterLoad();
   }
 
   clickLocalTitle() {
     GLOBALS.isLocal = !GLOBALS.isLocal;
-    this.checkPrint();
+    this.ss.checkPrint();
   }
 
   async ngOnInit() {
@@ -307,59 +305,7 @@ export class MainComponent implements OnInit {
     }
     GLOBALS.listConfigOrg = [];
     Utils.pushAll(GLOBALS.listConfigOrg, GLOBALS.listConfig);
-    this.checkPrint();
-  }
-
-  checkPrint(): void {
-    this.sendDisabled = true;
-    if (GLOBALS.period.isEmpty) {
-      return;
-    }
-    for (const cfg of GLOBALS.listConfig) {
-      if (cfg.checked) {
-        if (cfg.form.isDebugOnly) {
-          if (GLOBALS.isDebug) {
-            this.sendDisabled = false;
-          }
-        } else if (cfg.form.isLocalOnly) {
-          if (GLOBALS.isLocal) {
-            this.sendDisabled = false;
-          }
-        } else {
-          this.sendDisabled = false;
-        }
-      }
-    }
-
-    setTimeout(() => {
-      Log.todo('Die Dragmethode in StartComponent.checkPrint ist noch nicht vollständig implementiert');
-      /*
-            if (this._drag != null) {
-              this._drag.onDragEnd.listen(null);
-              this._drag.onDragStart.listen(null);
-              this._drag.destroy();
-            }
-
-            _drag = Draggable(html.querySelectorAll('.sortable'),
-              avatarHandler: g.viewType == 'tile' ? TileAvatarHandler() : AvatarHandler.clone(),
-              draggingClass: 'dragging',
-              handle: g.viewType == 'tile' ? null : '[name]>material-icon',
-              verticalOnly: g.viewType == 'list');
-            _drag.onDragStart.listen((DraggableEvent event) {});
-            _drag.onDragEnd.listen((DraggableEvent event) {
-              event.draggableElement.animate([
-                {'transform': 'rotate(180)'}
-              ], 500);
-            });
-            if (_drop != null) _drop.onDrop.listen(null);
-            _drop = Dropzone(html.querySelectorAll('.sortable'), overClass: 'dragover');
-            _drop.onDrop.listen((DropzoneEvent event) {
-              if (!dropElement(event.draggableElement, event.dropzoneElement)) {
-                event.dropzoneElement.attributes['dontclick'] = 'true';
-              }
-            });
-      */
-    }, 100);
+    this.ss.checkPrint();
   }
 
   clickMenuButton(type: string) {
@@ -407,7 +353,7 @@ export class MainComponent implements OnInit {
         break;
     }
     this.ds.save();
-    this.checkPrint();
+    this.ss.checkPrint();
   }
 
   getDrawerButtonClass(menu: number): string[] {
@@ -445,6 +391,6 @@ export class MainComponent implements OnInit {
   clickDebugTrigger() {
     this.ns.reportData = null;
     GLOBALS.isDebug = !GLOBALS.isDebug;
-    this.checkPrint();
+    this.ss.checkPrint();
   }
 }

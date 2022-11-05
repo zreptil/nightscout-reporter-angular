@@ -17,6 +17,7 @@ import {EntryData} from '@/_model/nightscout/entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {ActivityData} from '@/_model/nightscout/activity-data';
+import {ThemeService} from '@/_services/theme.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class NightscoutService {
   public reportData: ReportData;
 
   constructor(public ps: ProgressService,
-              public ds: DataService) {
+              public ds: DataService,
+              public ts: ThemeService) {
   }
 
   get msgProfileError(): string {
@@ -73,6 +75,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
   async loadData(isForThumbs: boolean) {
     Log.clear();
+    this.ps.init({
+      progressPanelBack: this.ts.currTheme.outputparamsHeaderBack,
+      progressPanelFore: this.ts.currTheme.outputparamsHeaderFore,
+      progressBarColor: this.ts.currTheme.outputparamsBodyBack
+    });
     let beg: Date;
     let end: Date;
     if (isForThumbs) {
@@ -81,7 +88,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
       // beg = new Date(2022, 9, 26);
       // end = new Date(2022, 9, 26);
-      end = new Date(2019, 10, 26);
+      end = new Date(2019, 9, 26);
       this.reportData = null;
     } else {
       beg = GLOBALS.period.shiftStartBy(GLOBALS.currPeriodShift.months);
@@ -91,11 +98,12 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     if (this.reportData != null
       && Utils.isSameDay(this.reportData.begDate, beg)
       && Utils.isSameDay(this.reportData.endDate, end)) {
-      this.ps.progressText = this.msgPreparingPDF;
-      this.ps.progressMax = 1;
-      this.ps.progressValue = 0;
+      this.ps.text = this.msgPreparingPDF;
+      this.ps.max = 1;
+      this.ps.value = 0;
       this.reportData.calc.calcStatistics(this.reportData);
       this.reportData.ns.calcStatistics(this.reportData);
+      this.reportData.isValid = true;
       return this.reportData;
     }
     const data = new ReportData(beg, end);
@@ -132,11 +140,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
 
     if (needed.needsStatus) {
-      this.ps.progressMax = GLOBALS.userList.length + 1;
-      this.ps.progressValue = 0;
+      this.ps.max = GLOBALS.userList.length + 1;
+      this.ps.value = 0;
       for (const user of GLOBALS.userList) {
         if (needed.status.anybody || user === GlobalsData.user) {
-          this.ps.progressText = this.msgLoadingDataFor(user.name);
+          this.ps.text = this.msgLoadingDataFor(user.name);
           try {
             const url = user.apiUrl(null, 'status.json');
             Log.displayLink('status', url, {type: 'debug'});
@@ -175,11 +183,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       return data;
     }
 
-    const bd = new Date(data.begDate.getFullYear(), data.begDate.getMonth(), data.begDate.getDate());
-    const ed = new Date(data.endDate.getFullYear(), data.endDate.getMonth(), data.endDate.getDate());
-
-    this.ps.progressValue = 0;
-    this.ps.progressMax = Utils.differenceInDays(ed, bd);
+    // const bd = new Date(data.begDate.getFullYear(), data.begDate.getMonth(), data.begDate.getDate());
+    // const ed = new Date(data.endDate.getFullYear(), data.endDate.getMonth(), data.endDate.getDate());
 
     let begDate = data.begDate;
     let endDate = data.endDate;
@@ -341,10 +346,15 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         }
       }
     }
+    this.ps.max = 5;
+    this.ps.value = 1;
+    this.ps.text = $localize`Sortiere Profile...`;
     data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
 
     // calculate the duration of the profiles
     let i = 1;
+    this.ps.value = 2;
+    this.ps.text = $localize`Berechne Profillängen...`;
     while (i < data.profiles.length) {
       const last = data.profiles[i - 1];
       const current = data.profiles[i];
@@ -379,17 +389,23 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.profiles[data.profiles.length - 1].duration =
       Utils.differenceInSeconds(GlobalsData.now, data.profiles[data.profiles.length - 1]?.startDate ?? GlobalsData.now);
 
+    this.ps.value = 3;
+    this.ps.text = $localize`Sortiere berechnete Profile...`;
     data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
     // String text = "";
     // for (ProfileData p in data.profiles)
     //   text = "${text}<div>${p.startDate}(${p.duration} min)=${p.current?.name}</div>";
     // message.dbgText = text;
     // remove all profiles with a length of 0
+    this.ps.value = 4;
+    this.ps.text = $localize`Entferne leere Profile...`;
     data.profiles = data.profiles.filter((p) => !(p.duration < 2 && p != data.profiles[data.profiles.length - 1] && p.store['NR Profil'] == null));
 
     // add the previous day of the period to have the daydata available in forms that need this information
     begDate = Utils.addDateDays(begDate, -1);
     data.dayCount = -1;
+    this.ps.value = 0;
+    this.ps.max = Utils.differenceInDays(endDate, begDate)
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
@@ -399,7 +415,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         const profileBeg = Utils.addTimeHours(beg, -profile.store.timezone.localDiff);
         const profileEnd = Utils.addTimeHours(end, -profile.store.timezone.localDiff);
 
-        this.ps.progressText = this.msgLoadingDataFor(Utils.fmtDate(begDate, $localize`dd.MM.yyyy`));
+        this.ps.text = this.msgLoadingDataFor(Utils.fmtDate(begDate, $localize`dd.MM.yyyy`));
         const urlDate = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate());
         let url = GlobalsData.user.apiUrl(urlDate, 'entries.json',
           {
@@ -532,20 +548,40 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       if (hasData) {
         data.dayCount++;
       }
-      this.ps.progressValue++;
+      if (!this.ps.next()) {
+        return data;
+      }
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
 //  if (sendIcon == 'stop') {
-    this.ps.progressText = this.msgPreparingData;
-    this.ps.progressValue = this.ps.progressMax + 1;
-
+    this.ps.value = 0;
+    this.ps.max = 6;
+    this.ps.text = this.msgPreparingData;
     data.ns.entries.sort((a, b) => Utils.compareDate(a.time, b.time));
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.bloody.sort((a, b) => Utils.compareDate(a.time, b.time));
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.remaining.sort((a, b) => Utils.compareDate(a.time, b.time));
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.devicestatusList.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.activityList.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
 
+    if (!this.ps.next()) {
+      return data;
+    }
     const diffTime = 5;
     // gaps between entries that span more than the given minutes
     // are not filled with entries
@@ -561,7 +597,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       let next = new EntryData();
       next.time = target;
       // distribute entries
+      this.ps.value = 0;
+      this.ps.max = data.ns?.entries?.length + 9
+      this.ps.text = $localize`Bereinige Daten...`;
       for (const entry of data.ns.entries) {
+        if (!this.ps.next()) {
+          return data;
+        }
         if (entry.isInvalid) {
           continue;
         }
@@ -608,10 +650,18 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.calc.devicestatusList = data.ns.devicestatusList;
     data.calc.activityList = data.ns.activityList;
 
+    if (!this.ps.next()) {
+      return data;
+    }
     data.calc.extractData(data);
+    if (!this.ps.next()) {
+      return data;
+    }
     data.ns.extractData(data);
-    //} else {} // if (sendIcon == 'stop')
-    this.reportData = data;
-    return this.reportData;
+    if (!this.ps.next()) {
+      return data;
+    }
+    data.isValid = true;
+    return data;
   }
 }

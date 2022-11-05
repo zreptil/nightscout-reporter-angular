@@ -1,6 +1,6 @@
 <div class="tilelist">
   <ng-container *ngFor="let cfg of globals.listConfig; let idx=index">
-    <div (click)="expansionPanelClicked($event,cfg)" *ngIf="isFormVisible(cfg.form)"
+    <div (click)="tileClicked($event,cfg)" *ngIf="isFormVisible(cfg.form)"
          [class]="tileClass(cfg)"
          id="tile-{{cfg.id}}">
       <img *ngIf="globals.tileShowImage" [src]="cfg.form.backimage" alt="tile image {{cfg.form.id}}">

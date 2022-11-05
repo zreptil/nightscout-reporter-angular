@@ -9,7 +9,7 @@ import {Log} from '@/_services/log.service';
   providedIn: 'root'
 })
 export class ThemeService {
-  currTheme: any = null;
+  readonly currTheme: any = {};
 
   constructor(public ds: DataService,
               public ms: MaterialColorService) {
@@ -44,7 +44,6 @@ export class ThemeService {
     // } else {
     this.assignStyle(document.body.style, theme);
 //    }
-    this.currTheme = theme;
     GLOBALS.theme = name;
     this.ds.saveWebData();
   }
@@ -53,14 +52,15 @@ export class ThemeService {
     if (style == null) {
       return;
     }
-    console.log(style);
     for (const key of Object.keys(theme)) {
       let value = theme[key];
       if (this.ms.colors[value] != null) {
         value = this.ms.colors[value];
       }
+      this.currTheme[key] = value;
       style.setProperty(`--${key}`, value);
     }
+    console.log('currTheme', this.currTheme);
   }
 
   getThemeSytle(theme: any): any {

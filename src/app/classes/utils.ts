@@ -221,8 +221,8 @@ export class Utils {
     return this.isAfter(date1, date2) || this.isSameDay(date1, date2);
   }
 
-  static differenceInDays(date1: Date, date2: Date): number {
-    const ret = date1?.getTime() - date2?.getTime();
+  static differenceInDays(later: Date, earlier: Date): number {
+    const ret = later?.getTime() - earlier?.getTime();
     return Math.floor(ret / 1000 / 60 / 60 / 24);
   }
 

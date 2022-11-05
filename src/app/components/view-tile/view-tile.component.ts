@@ -69,7 +69,7 @@ export class ViewTileComponent implements OnInit {
     evt.stopPropagation();
   }
 
-  expansionPanelClicked(evt: MouseEvent, cfg: FormConfig) {
+  tileClicked(evt: MouseEvent, cfg: FormConfig) {
     if (!cfg.opened) {
       Log.todo('Checken, ob der auskommentierte Code in ViewTileComponent.expansionPanelClicked noch benötigt wird.');
       Log.todo('Das hatte wohl was mit Drag-Drop zu tun.');
@@ -78,7 +78,7 @@ export class ViewTileComponent implements OnInit {
       //     return;
       //   }
       cfg.checked = !cfg.checked;
-      // checkPrint();
+      this.ss.checkPrint();
     }
   }
 

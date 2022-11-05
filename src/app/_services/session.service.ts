@@ -41,6 +41,7 @@ class GlobalData extends BaseData {
 })
 export class SessionService {
 
+  public sendDisabled = true;
   public data: GlobalData;
   private dlgRef: MatDialogRef<any>;
   private dlgList: { [key: string]: ComponentType<any> } = {
@@ -62,6 +63,60 @@ export class SessionService {
 
   get mayDebug(): boolean {
     return Log.mayDebug;
+  }
+
+  checkPrint(): void {
+    let maySend = false;
+    if (GLOBALS.period.isEmpty) {
+      this.sendDisabled = !maySend;
+      return;
+    }
+    for (const cfg of GLOBALS.listConfig) {
+      if (cfg.checked) {
+        if (cfg.form.isDebugOnly) {
+          if (GLOBALS.isDebug) {
+            maySend = true;
+          }
+        } else if (cfg.form.isLocalOnly) {
+          if (GLOBALS.isLocal) {
+            maySend = true;
+          }
+        } else {
+          maySend = true;
+        }
+      }
+    }
+
+    setTimeout(() => {
+      Log.todo('Die Dragmethode in SessionService.checkPrint ist noch nicht vollständig implementiert');
+      /*
+            if (this._drag != null) {
+              this._drag.onDragEnd.listen(null);
+              this._drag.onDragStart.listen(null);
+              this._drag.destroy();
+            }
+
+            _drag = Draggable(html.querySelectorAll('.sortable'),
+              avatarHandler: g.viewType == 'tile' ? TileAvatarHandler() : AvatarHandler.clone(),
+              draggingClass: 'dragging',
+              handle: g.viewType == 'tile' ? null : '[name]>material-icon',
+              verticalOnly: g.viewType == 'list');
+            _drag.onDragStart.listen((DraggableEvent event) {});
+            _drag.onDragEnd.listen((DraggableEvent event) {
+              event.draggableElement.animate([
+                {'transform': 'rotate(180)'}
+              ], 500);
+            });
+            if (_drop != null) _drop.onDrop.listen(null);
+            _drop = Dropzone(html.querySelectorAll('.sortable'), overClass: 'dragover');
+            _drop.onDrop.listen((DropzoneEvent event) {
+              if (!dropElement(event.draggableElement, event.dropzoneElement)) {
+                event.dropzoneElement.attributes['dontclick'] = 'true';
+              }
+            });
+      */
+    }, 100);
+    this.sendDisabled = !maySend;
   }
 
   getNextSuffix(cfg: FormConfig): number {
@@ -217,7 +272,7 @@ export class SessionService {
     }
     if (this.dlgRef?.componentInstance == null) {
       this.dlgRef = this.dialog.open(DialogComponent, {
-        panelClass: ['dialog-box'],
+        panelClass: ['dialog-box', 'dialog'],
         data: new DialogData(type, content, null, theme),
         disableClose
       });

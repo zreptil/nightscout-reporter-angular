@@ -2,6 +2,9 @@
   <div #overlay panel style="">
     <mat-progress-bar [value]="value"
                       mode="determinate"></mat-progress-bar>
-    <div label>{{ps.progressText}}</div>
+    <div label>{{ps.text}}</div>
+    <button (click)="ps.cancel()" *ngIf="ps.mayCancel" mat-icon-button>
+      <mat-icon>cancel</mat-icon>
+    </button>
   </div>
 </div>

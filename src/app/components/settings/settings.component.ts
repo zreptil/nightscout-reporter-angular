@@ -46,7 +46,11 @@ export class SettingsComponent implements OnInit {
   }
 
   get msgUrlNightscout(): string {
-    return $localize`Url zur Nightscout-API (z.B. https://xxx.herokuapp.com)`;
+    return $localize`Url zur Nightscout-API`;
+  }
+
+  get msgUrlHint(): string {
+    return $localize`Url zur Nightscout-API (z.B. https://xxx.ns.10be.de)`;
   }
 
   get msgName(): string {
@@ -340,9 +344,9 @@ export class SettingsComponent implements OnInit {
 
   async checkUser(saveData = true) {
     GLOBALS.user.listApiUrl.sort((a, b) => Utils.compareDate(a.endDate, b.endDate));
-    this.ps.progressText = this.msgCheckUser(GLOBALS.user.apiUrl(null, '', {noApi: true}));
+    this.ps.text = this.msgCheckUser(GLOBALS.user.apiUrl(null, '', {noApi: true}));
     const ret = await this.ss.isUserValid(GLOBALS.user);
-    this.ps.progressText = null;
+    this.ps.text = null;
     this.errUserInvalid = ret;
     // set isConfigured to true, if url is reachable
     // never set isConfigured to false, since this

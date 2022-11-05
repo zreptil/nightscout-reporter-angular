@@ -23,7 +23,7 @@
     <div class="functions">
       <div>
         <mat-form-field>
-          <mat-label i18n>{{globals.lblGlucUnits}}</mat-label>
+          <mat-label>{{globals.lblGlucUnits}}</mat-label>
           <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="changeGlucUnits(idx)"
                         *ngFor="let item of globals.listGlucUnits; let idx=index"

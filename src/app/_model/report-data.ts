@@ -18,6 +18,7 @@ export class ReportData {
   lastTempBasal: TreatmentData;
   status: StatusData;
   isForThumbs = false;
+  isValid = false;
 
   constructor(public begDate: Date, public endDate: Date) {
   }

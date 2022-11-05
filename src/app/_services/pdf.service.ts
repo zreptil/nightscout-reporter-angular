@@ -81,16 +81,18 @@ export class PdfService {
   async generatePdf(isForThumbs = false) {
     this.ds.save({skipReload: isForThumbs});
     this.pdfList = [];
-    this.ps.progressMax = 1;
-    this.ps.progressValue = 0;
-    this.ps.progressText = this.msgPreparingPDF;
+    this.ps.max = 1;
+    this.ps.value = 0;
+    this.ps.text = this.msgPreparingPDF;
     const repData = await this.ns.loadData(isForThumbs);
-    console.log('repData', repData);
+    if (!repData?.isValid) {
+      return;
+    }
     GLOBALS.isCreatingPDF = true;
     try {
-      this.ps.progressMax = 1;
-      this.ps.progressValue = 0;
-      this.ps.progressText = this.msgCreatingPDF;
+      this.ps.max = 1;
+      this.ps.value = 0;
+      this.ps.text = this.msgCreatingPDF;
       if (repData.error != null) {
         if (GLOBALS.isDebug) {
           Log.error(this.msgLoadingData(repData.error.toString(), repData.error.stack.toString()));
@@ -100,7 +102,7 @@ export class PdfService {
         GLOBALS.isCreatingPDF = false;
         return;
       }
-      this.ps.progressValue = this.ps.progressMax + 1;
+      this.ps.value = this.ps.max + 1;
       // let docLen = 0;
       // let prevPage: PageData = null;
       let listConfig: FormConfig[] = [];

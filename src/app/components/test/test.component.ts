@@ -97,9 +97,14 @@ export class TestComponent implements OnInit {
     });
   }
 
-  clickProgress() {
-    this.ps.progressText = 'Hier sieht man den Fortschritt...';
-    this.ps.progressMax = 400;
-    this.ps.progressValue = 270;
+  clickProgress(mayCancel: boolean) {
+    this.ps.text = 'Hier sieht man den Fortschritt...';
+    this.ps.max = 400;
+    this.ps.value = 270;
+    this.ps.init({
+      progressPanelBack: 'maroon',
+      progressPanelFore: 'rgba(255, 255, 255, 0.9)',
+      progressBarColor: '#d00'
+    }, mayCancel);
   }
 }
