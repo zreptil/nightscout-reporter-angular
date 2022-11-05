@@ -33,8 +33,11 @@ import {OwlMenuComponent} from './components/owl-menu/owl-menu.component';
 import {WatchComponent} from './components/watch/watch.component';
 import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
 import {OutputParamsComponent} from './components/output-params/output-params.component';
-import { DartImporterComponent } from './components/dart-importer/dart-importer.component';
-import { ProgressComponent } from './components/progress/progress.component';
+import {DartImporterComponent} from './components/dart-importer/dart-importer.component';
+import {ProgressComponent} from './components/progress/progress.component';
+import {DatepickerComponent} from './controls/datepicker/datepicker.component';
+import { DatepickerMonthComponent } from './controls/datepicker-month/datepicker-month.component';
+import { DatepickerDialogComponent } from './controls/datepicker-dialog/datepicker-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { ProgressComponent } from './components/progress/progress.component';
     WatchEntryComponent,
     OutputParamsComponent,
     DartImporterComponent,
-    ProgressComponent
+    ProgressComponent,
+    DatepickerComponent,
+    DatepickerMonthComponent,
+    DatepickerDialogComponent
   ],
   imports: [
     BrowserModule,

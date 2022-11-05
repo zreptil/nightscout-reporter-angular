@@ -1,0 +1,5 @@
+<div *ngIf="showLabel" class="floating">{{periodFloatingLabel}}</div>
+<button (click)="onClick()" [class]="classForButton" mat-flat-button>
+  <div main>{{periodLabelMain}}</div>
+  <div *ngIf="data.period.dowActiveText!=''" sub>{{periodLabelSub}}</div>
+</button>

@@ -329,7 +329,6 @@ export class DataService {
       GLOBALS.tileShowImage = JsonData.toBool(json.s12, true);
       GLOBALS.showAllTileParams = JsonData.toBool(json.s13);
       let watchEntries = json.s14;
-      GLOBALS.period.fmtDate = GLOBALS.language.dateformat;
       GLOBALS.userListLoaded = false;
       GLOBALS.userList = [];
       if (users != null) {

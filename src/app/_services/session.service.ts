@@ -26,6 +26,7 @@ import {PdfService} from '@/_services/pdf.service';
 import {FormConfig} from '@/forms/form-config';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {OutputParamsComponent} from '@/components/output-params/output-params.component';
+import {DatepickerDialogComponent} from '@/controls/datepicker-dialog/datepicker-dialog.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -51,7 +52,8 @@ export class SessionService {
     dsgvo: DsgvoComponent,
     settings: SettingsComponent,
     helpview: HelpviewComponent,
-    outputparams: OutputParamsComponent
+    outputparams: OutputParamsComponent,
+    datepickerdialog: DatepickerDialogComponent
   }
 
   constructor(public ss: StorageService,

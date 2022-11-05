@@ -1,0 +1,75 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.datepickerdialog">
+  <div [class]="classForTitle" cdkDragHandle mat-dialog-title>
+    <h1 *ngIf="!data.period.isEmpty" i18n="title for datepicker dialog">Zeitraum</h1>
+    <div *ngIf="data.period.isEmpty">
+      <h1 i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</h1>
+      <p i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</p>
+    </div>
+    <button (click)="revertData()" mat-dialog-close="ok" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content>
+    <div class="editcontrols">
+      <!--
+            <material-input (focus)="setMonth(data.period.start)" [(ngModel)]="startDate" [error]="isStartValid?'':msgStartIncorrect" floatingLabel
+                            i18n-label="datepicker label from"
+                            label="Von"></material-input>
+            <material-input (focus)="setMonth(data.period.end)" [(ngModel)]="endDate" [error]="isEndValid?'':msgEndIncorrect"
+                            floatingLabel i18n-label="datepicker label to"
+                            label="Bis"></material-input>
+      -->
+    </div>
+    <div class="month">
+      <button (click)="addMonths(-1)"
+              [disabled]="isMinMonth"
+              class="prev"
+              mat-flat-button>
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <app-datepicker-month [date]="data.month" [period]="data.period"></app-datepicker-month>
+      <button (click)="addMonths(1)"
+              [disabled]="isMaxMonth"
+              class="next"
+              mat-flat-button>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="shortcuts">
+      <ng-container *ngFor="let item of data.period.list">
+        <button
+          (click)="onShortcutClick(item)"
+          *ngIf="data.period.entryKey!==item.key"
+          [class]="item.key"
+          mat-flat-button>
+          <mat-icon *ngIf="item.key==='save'">save</mat-icon>
+          {{item.title}}
+        </button>
+        <button
+          (click)="onShortcutClick(item)"
+          *ngIf="data.period.entryKey===item.key"
+          [class]="item.key"
+          mat-raised-button>
+          <mat-icon *ngIf="item.key==='save'">save</mat-icon>
+          {{item.title}}
+        </button>
+        <span *ngIf="item.key==='today'">|</span>
+      </ng-container>
+    </div>
+    <div class="controls">
+      <button (click)="onShiftClick()"
+              *ngIf="showShift"
+              class="shift"
+              mat-flat-button>
+        {{shiftName}}
+      </button>
+      <button class="iconButton ok" mat-dialog-close="save" mat-flat-button>
+        <mat-icon>done</mat-icon>
+        <ng-container i18n="buttonlabel for ok in control datepicker">Ok</ng-container>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

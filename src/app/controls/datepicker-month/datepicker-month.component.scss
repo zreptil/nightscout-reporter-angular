@@ -1,0 +1,83 @@
+:host {
+  margin: 0.5em;
+}
+
+button:not([icon]) {
+  min-width: 42px;
+
+  > .content {
+    padding: 0;
+  }
+
+  margin: 0;
+}
+
+.title, .weektitle, .week {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  background-color: var(--datepickerMonthTitleBack);
+  color: var(--datepickerMonthTitleFore);
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  justify-content: center;
+  padding: 0.5em;
+}
+
+.weektitle, .weekmarks {
+  background-color: var(--datepickerMonthTitleBack);
+  color: var(--datepickerMonthTitleFore) !important;
+
+  button {
+    color: var(--datepickerMonthTitleFore) !important;
+    flex: 1;
+  }
+}
+
+.month {
+  background-color: var(--datepickerMonthBack);
+  color: var(--datepickerMonthFore);
+  display: flex;
+  flex-direction: column;
+}
+
+.week {
+  button {
+    flex: 1;
+
+    .raised:not(.key) {
+      background-color: var(--datepickerBtnRaisedBack);
+    }
+
+    .raised.key {
+      background-color: var(--datepickerBtnRaisedKeyBack);
+    }
+
+    .raised:not(.key):not([disabled]) {
+      color: var(--datepickerBtnRaisedFore);
+    }
+
+    .raised.key:not([disabled]) {
+      color: var(--datepickerBtnRaisedKeyFore);
+    }
+  }
+}
+
+.dow-active, .dow-inactive {
+  ::ng-deep .content {
+    padding-top: 0.05em !important;
+    padding-bottom: 0.05em !important;
+  }
+}
+
+.dow-active {
+  background-color: var(--datepickerDowActiveBack);
+  color: var(--datepickerDowActiveFore);
+}
+
+.dow-inactive {
+  background-color: var(--datepickerDowInactiveBack);
+  color: var(--datepickerDowInactiveFore);
+}

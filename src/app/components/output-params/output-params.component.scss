@@ -33,6 +33,10 @@
     }
   }
 
+  ::ng-deep button.dpBtn {
+    height: 100%;
+  }
+
   ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
     background-color: var(--outputparamsHeaderBack);
 

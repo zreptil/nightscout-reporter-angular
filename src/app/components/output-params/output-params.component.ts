@@ -7,6 +7,9 @@ import {PeriodShift} from '@/_model/period-shift';
 import {Utils} from '@/classes/utils';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {PdfService} from '@/_services/pdf.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {DatepickerEntry} from '@/_model/datepicker-entry';
+import {DatepickerPeriod} from '@/_model/datepicker-period';
 
 @Component({
   selector: 'app-output-params',
@@ -20,6 +23,10 @@ export class OutputParamsComponent implements OnInit {
   glucMaxIdx: number;
   basalPrecisionIdx: number;
   listPeriodShift: PeriodShift[] = [];
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   constructor(public ns: NightscoutService,
               public ds: DataService,
@@ -45,6 +52,14 @@ export class OutputParamsComponent implements OnInit {
 
   get msgStandardCGP(): string {
     return $localize`CGP immer mit Standard Zielbereich`;
+  }
+
+  get shiftName(): string {
+    return DatepickerPeriod.shiftNames[GLOBALS.period.shiftDate];
+  }
+
+  get now(): Date {
+    return GlobalsData.now;
   }
 
   async ngOnInit() {
@@ -124,5 +139,17 @@ export class OutputParamsComponent implements OnInit {
         this.ss.showPopup('outputparams');
       }
     });
+  }
+
+  onPeriodShortcutClick(_: DatepickerEntry) {
+
+  }
+
+  onPeriodShiftClick() {
+
+  }
+
+  onPeriodSaveClick() {
+
   }
 }

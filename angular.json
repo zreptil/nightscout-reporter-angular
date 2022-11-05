@@ -46,7 +46,8 @@
             "allowedCommonJsDependencies": [
               "file-saver",
               "https://apis.google.com/js/api.js",
-              "pdfmake"
+              "pdfmake",
+              "fast-sha256"
             ],
             "assets": [
               "src/favicon.ico",

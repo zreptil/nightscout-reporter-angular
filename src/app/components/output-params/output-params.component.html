@@ -22,6 +22,11 @@
     </div>
     <div class="functions">
       <div>
+        <app-datepicker [period]="globals.period" [showLabel]="false"></app-datepicker>
+        <!--
+(periodChange)="changePeriod($event)"
+                    [showInfo]="g.showInfo" [showLabel]="false"
+                            -->
         <mat-form-field>
           <mat-label>{{globals.lblGlucUnits}}</mat-label>
           <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">

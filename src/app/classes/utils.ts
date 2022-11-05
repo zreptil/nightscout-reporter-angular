@@ -33,7 +33,7 @@ export class Utils {
   }
 
   static getDow(date: Date): number {
-    let ret = date.getDay();
+    let ret = date.getDay() - 1;
     if (ret < 0) {
       ret += 7;
     }

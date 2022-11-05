@@ -10,11 +10,7 @@ export class DatepickerPeriod {
   static shiftNames = $localize`Bis heute|Bis gestern|Bis Wochenende`.split('|');
 
   emptyReason: string;
-  fmtDate = 'dd.MM.yyyy';
-  shiftDate = 0;
   firstDayOfWeek = 1;
-
-  // DateFormat get dateFormat => DateFormat(fmtDate);
   start: Date;
   end: Date;
   entryKey: string;
@@ -25,6 +21,22 @@ export class DatepickerPeriod {
 
   constructor(src: string = '') {
     this.reset(src);
+  }
+
+  _shiftDate = 0;
+
+  get shiftDate(): number {
+    return this._shiftDate;
+  }
+
+  set shiftDate(value: number) {
+    if (isNaN(value) || value < 0) {
+      value = 0;
+    }
+    if (value >= DatepickerPeriod.shiftNames.length) {
+      value = DatepickerPeriod.shiftNames.length - 1;
+    }
+    this._shiftDate = value;
   }
 
   get baseDate(): Date {

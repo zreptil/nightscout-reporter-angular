@@ -1,0 +1,151 @@
+:host {
+  ::ng-deep mat-dialog-actions {
+    background-color: var(--datepickerHeaderBack);
+    display: flex;
+    flex-flow: row;
+    flex-shrink: 0;
+    justify-content: flex-end;
+
+    .mat-button-wrapper {
+      color: var(--datepickerHeaderFore);
+    }
+  }
+
+  [cdkDrag] {
+    max-width: 41em;
+  }
+
+  .mat-button-disabled {
+    background-color: initial;
+  }
+}
+
+.shift {
+  padding: 1em 0;
+
+  ::ng-deep .mat-button-wrapper {
+    white-space: normal;
+    line-height: 1.5em;
+  }
+}
+
+[mat-dialog-title] {
+  background-color: var(--datepickerHeaderBack);
+  color: var(--datepickerHeaderFore);
+}
+
+[mat-dialog-title].empty {
+  background-color: var(--datepickerHeaderEmptyBack);
+  color: var(--datepickerHeaderEmptyFore);
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-flow: column;
+  padding: 1em;
+  font-size: 1.2em;
+  background-color: var(--datepickerBodyBack);
+  color: var(--datepickerBodyFore);
+}
+
+
+material-input {
+  //  @include input-label-color($primary_color);
+  //  @include material-input-focused-underline-color($primary_color);
+}
+
+div[header] {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-between;
+}
+
+div[footer] {
+  border-top: 1px solid var(--datepickerHeaderBack);
+}
+
+.root {
+  padding: 1em;
+  font-size: 1.2em;
+  color: black;
+  overflow: hidden;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--datepickerHeaderBack);
+}
+
+.floating {
+  padding-top: 1em;
+  padding-left: 1em;
+  font-size: 75%;
+  opacity: 0.5;
+}
+
+.editcontrols {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  material-input {
+    width: 8em;
+  }
+}
+
+.shortcuts {
+  line-height: 2.2em;
+
+  material-button {
+    font-size: 75%;
+
+    &[raised] {
+      background-color: var(--datepickerBtnRaisedKeyBack);
+      color: var(--datepickerBtnRaisedKeyFore);
+    }
+  }
+
+  .toggle {
+  }
+}
+
+.shift {
+  border-radius: 0.5em;
+  background-color: var(--datepickerBtnShiftKeyBack);
+  color: var(--datepickerBtnShiftKeyFore);
+}
+
+div.month {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+material-button.ok {
+  height: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-flow: column;
+
+  material-button {
+    margin-top: 0.2em;
+  }
+}
+
+material-button.prev,
+material-button.next,
+material-button.ok {
+  ::ng-deep .content {
+    height: 100%;
+    padding: 0 !important;
+  }
+}
