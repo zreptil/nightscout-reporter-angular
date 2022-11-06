@@ -6,15 +6,21 @@
 }
 
 .langPanel {
-  display: flex;
-  flex-flow: column;
   position: absolute;
-  bottom: 4em;
+  bottom: 3.5em;
   width: 3em;
   left: 0.5em;
   overflow: hidden;
-  align-items: center;
-  justify-content: flex-start;
+  background-color: var(--mainBodyBack);
+
+  [frame] {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0.5em;
+    border: 1px solid var(--mainHeaderBack);
+  }
 
   button {
     width: 2.5em;

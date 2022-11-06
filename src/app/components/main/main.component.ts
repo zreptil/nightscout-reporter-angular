@@ -3,7 +3,6 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ThemeService} from '@/_services/theme.service';
 import {DataService} from '@/_services/data.service';
 import {PdfService} from '@/_services/pdf.service';
-import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {FormConfig} from '@/forms/form-config';
 import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
@@ -236,27 +235,9 @@ export class MainComponent implements OnInit {
     this.ds.loadWebData();
     await this.ts.setTheme(GLOBALS.theme);
     this.ds.onAfterLoad = this.afterLoad.bind(this);
-    const formList = [
-      // new PrintTest(this.pdf),
-      new PrintAnalysis(this.pdf),
-      // new PrintProfile(this.pdf),
-      // new PrintPercentile(this.pdf),
-      // new PrintDailyStatistics(this.pdf),
-      // new PrintDailyGraphic(this.pdf),
-      // new PrintDailyAnalysis(this.pdf),
-      // new PrintDailyLog(this.pdf),
-      // new PrintWeeklyGraphic(this.pdf),
-      // new PrintBasalrate(this.pdf),
-      // new PrintCGP(this.pdf),
-      // new PrintDailyProfile(this.pdf),
-      // new PrintDailyGluc(this.pdf),
-      // new PrintDailyHours(this.pdf),
-      // new PrintUserData(this.pdf),
-      // new PrintGlucDistribution(this.pdf)
-    ];
     GLOBALS.listConfig = [];
     GLOBALS.listConfigOrg = [];
-    for (const form of formList) {
+    for (const form of this.ss.formList) {
       GLOBALS.listConfigOrg.push(new FormConfig(form, false));
     }
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);

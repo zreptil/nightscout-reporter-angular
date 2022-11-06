@@ -7,9 +7,11 @@
   </button>
 </div>
 <div [style]="langStyle" class="langPanel">
-  <button (click)="togglePanels(item)" *ngFor="let item of globals.languageList; let idx = index" class="themelogo" mat-flat-button>
-    <img [class]="ss.languageClass(item)" alt="language image" src="{{item.imgPath}}">
-  </button>
+  <div frame>
+    <button (click)="togglePanels(item)" *ngFor="let item of globals.languageList; let idx = index" class="themelogo" mat-flat-button>
+      <img [class]="ss.languageClass(item)" alt="language image" src="{{item.imgPath}}">
+    </button>
+  </div>
 </div>
 <button (click)="togglePanels('')" [style]="logoStyle" class="owllogo" mat-fab>
   <img alt="owl logo" src="assets/themes/{{globals.theme}}/owl.png">

@@ -41,5 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 *.dart
-/tools/dev-localizer.js
+/tools/**/*.js
+/tools/**/*.js.map
 /src/locale/messages.*.xlf
+

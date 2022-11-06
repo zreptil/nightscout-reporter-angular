@@ -28,6 +28,21 @@ import {LangData} from '@/_model/nightscout/lang-data';
 import {OutputParamsComponent} from '@/components/output-params/output-params.component';
 import {DatepickerDialogComponent} from '@/controls/datepicker/datepicker-dialog/datepicker-dialog.component';
 import {ShortcutEditComponent} from '@/components/shortcut-edit/shortcut-edit.component';
+import {PrintBasalrate} from '@/forms/nightscout/print-basalrate';
+import {PrintCGP} from '@/forms/nightscout/print-cgp';
+import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
+import {PrintDailyGluc} from '@/forms/nightscout/print-daily-gluc';
+import {PrintDailyGraphic} from '@/forms/nightscout/print-daily-graphic';
+import {PrintDailyStatistics} from '@/forms/nightscout/print-daily-statistics';
+import {PrintPercentile} from '@/forms/nightscout/print-percentile';
+import {PrintProfile} from '@/forms/nightscout/print-profile';
+import {PrintDailyLog} from '@/forms/nightscout/print-daily-log';
+import {PrintWeeklyGraphic} from '@/forms/nightscout/print-weekly-graphic';
+import {PrintDailyProfile} from '@/forms/nightscout/print-daily-profile';
+import {PrintDailyHours} from '@/forms/nightscout/print-daily-hours';
+import {PrintGlucDistribution} from '@/forms/nightscout/print-gluc-distribution';
+import {PrintUserData} from '@/forms/nightscout/print-user-data';
+import {PrintTest} from '@/forms/nightscout/print-test';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -45,6 +60,24 @@ export class SessionService {
 
   public sendDisabled = true;
   public data: GlobalData;
+  formList = [
+    new PrintTest(this.pdf),
+    new PrintAnalysis(this.pdf),
+    new PrintProfile(this.pdf),
+    new PrintPercentile(this.pdf),
+    new PrintDailyStatistics(this.pdf),
+    new PrintDailyGraphic(this.pdf),
+    new PrintDailyAnalysis(this.pdf),
+    new PrintDailyLog(this.pdf),
+    new PrintWeeklyGraphic(this.pdf),
+    new PrintBasalrate(this.pdf),
+    new PrintCGP(this.pdf),
+    new PrintDailyProfile(this.pdf),
+    new PrintDailyGluc(this.pdf),
+    new PrintDailyHours(this.pdf),
+    new PrintUserData(this.pdf),
+    new PrintGlucDistribution(this.pdf)
+  ];
   private dlgRef: MatDialogRef<any>;
   private dlgList: { [key: string]: ComponentType<any> } = {
     welcome: WelcomeComponent,
@@ -160,55 +193,38 @@ export class SessionService {
   }
 
   formFromId(id: string, suffix: string): BasePrint {
-    switch (id) {
-      // case '00':
-      // case 'test':
-      //   return PrintTest(suffix: suffix);
-      case '01':
-      case 'analysis':
-        return new PrintAnalysis(this.pdf, suffix);
-      // case '02':
-      // case 'profile':
-      //   return PrintProfile(suffix: suffix);
-      // case '03':
-      // case 'percentile':
-      //   return PrintPercentile(suffix: suffix);
-      // case '04':
-      // case 'daystats':
-      //   return PrintDailyStatistics(suffix: suffix);
-      // case '05':
-      // case 'daygraph':
-      //   return PrintDailyGraphic(suffix: suffix);
-      // case '06':
-      // case 'dayanalysis':
-      //   return PrintDailyAnalysis(suffix: suffix);
-      // case '07':
-      // case 'daylog':
-      //   return PrintDailyLog(suffix: suffix);
-      // case '08':
-      // case 'weekgraph':
-      //   return PrintWeeklyGraphic(suffix: suffix);
-      // case '09':
-      // case 'basal':
-      //   return PrintBasalrate(suffix: suffix);
-      // case '10':
-      // case 'cgp':
-      //   return PrintCGP(suffix: suffix);
-      // case '11':
-      // case 'dayprofile':
-      //   return PrintDailyProfile(suffix: suffix);
-      // case '12':
-      // case 'daygluc':
-      //   return PrintDailyGluc(suffix: suffix);
-      // case '13':
-      // case 'dayhours':
-      //   return PrintDailyHours(suffix: suffix);
-      // case '14':
-      // case 'userdata':
-      //   return PrintUserData(suffix: suffix);
-      // case '15':
-      // case 'glucdist':
-      //   return PrintGlucDistribution(suffix: suffix);
+    if (id === '00' || id === 'test') {
+      return new PrintTest(this.pdf, suffix);
+    } else if (id === '01' || id === 'analysis') {
+      return new PrintAnalysis(this.pdf, suffix);
+    } else if (id === '02' || id === 'profile') {
+      return new PrintProfile(this.pdf, suffix);
+    } else if (id === '03' || id === 'percentile') {
+      return new PrintPercentile(this.pdf, suffix);
+    } else if (id === '04' || id === 'daystats') {
+      return new PrintDailyStatistics(this.pdf, suffix);
+    } else if (id === '05' || id === 'daygraph') {
+      return new PrintDailyGraphic(this.pdf, suffix);
+    } else if (id === '06' || id === 'dayanalysis') {
+      return new PrintDailyAnalysis(this.pdf, suffix);
+    } else if (id === '07' || id === 'daylog') {
+      return new PrintDailyLog(this.pdf, suffix);
+    } else if (id === '08' || id === 'weekgraph') {
+      return new PrintWeeklyGraphic(this.pdf, suffix);
+    } else if (id === '09' || id === 'basal') {
+      return new PrintBasalrate(this.pdf, suffix);
+    } else if (id === '10' || id === 'cgp') {
+      return new PrintCGP(this.pdf, suffix);
+    } else if (id === '11' || id === 'dayprofile') {
+      return new PrintDailyProfile(this.pdf, suffix);
+    } else if (id === '12' || id === 'daygluc') {
+      return new PrintDailyGluc(this.pdf, suffix);
+    } else if (id === '13' || id === 'dayhours') {
+      return new PrintDailyHours(this.pdf, suffix);
+    } else if (id === '14' || id === 'userdata') {
+      return new PrintUserData(this.pdf, suffix);
+    } else if (id === '15' || id === 'glucdist') {
+      return new PrintGlucDistribution(this.pdf, suffix);
     }
     Log.todo('In StartComponent.formFromId fehlen noch Formulare');
     return null;

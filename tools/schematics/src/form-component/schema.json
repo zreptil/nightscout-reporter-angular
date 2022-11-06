@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "FormComponentSchematics",
+  "title": "Form Component Schema",
+  "type": "object",
+  "description": "Erstellt eine leere Formkomponente",
+  "properties": {
+    "className": {
+      "type": "string",
+      "description": "Der Name der Komponentenklasse (ohne Component)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    }
+  },
+  "required": [
+    "className"
+  ]
+}

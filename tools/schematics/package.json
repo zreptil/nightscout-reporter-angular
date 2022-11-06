@@ -1,0 +1,22 @@
+{
+  "name": "page-component",
+  "version": "0.0.0",
+  "description": "A blank schematics",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics"
+  ],
+  "author": "",
+  "license": "MIT",
+  "schematics": "./src/collection.json",
+  "dependencies": {
+    "@angular-devkit/core": "^14.2.8",
+    "@angular-devkit/schematics": "^14.2.8",
+    "typescript": "~4.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.1"
+  }
+}

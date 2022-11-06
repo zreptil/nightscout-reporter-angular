@@ -145,6 +145,7 @@ export class PdfService {
         // {
         // $("#output").text(outDoc);
         // });
+        console.log('dataList', dataList);
         dataList.sort((a, b) => Utils.compare(a.idx, b.idx));
         const docList: any[] = []
         for (const data of dataList) {
