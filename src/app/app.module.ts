@@ -36,8 +36,9 @@ import {OutputParamsComponent} from './components/output-params/output-params.co
 import {DartImporterComponent} from './components/dart-importer/dart-importer.component';
 import {ProgressComponent} from './components/progress/progress.component';
 import {DatepickerComponent} from './controls/datepicker/datepicker.component';
-import { DatepickerMonthComponent } from './controls/datepicker-month/datepicker-month.component';
-import { DatepickerDialogComponent } from './controls/datepicker-dialog/datepicker-dialog.component';
+import {DatepickerMonthComponent} from './controls/datepicker/datepicker-month/datepicker-month.component';
+import {DatepickerDialogComponent} from './controls/datepicker/datepicker-dialog/datepicker-dialog.component';
+import { ShortcutEditComponent } from './components/shortcut-edit/shortcut-edit.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { DatepickerDialogComponent } from './controls/datepicker-dialog/datepick
     ProgressComponent,
     DatepickerComponent,
     DatepickerMonthComponent,
-    DatepickerDialogComponent
+    DatepickerDialogComponent,
+    ShortcutEditComponent
   ],
   imports: [
     BrowserModule,

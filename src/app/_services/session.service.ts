@@ -26,7 +26,8 @@ import {PdfService} from '@/_services/pdf.service';
 import {FormConfig} from '@/forms/form-config';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {OutputParamsComponent} from '@/components/output-params/output-params.component';
-import {DatepickerDialogComponent} from '@/controls/datepicker-dialog/datepicker-dialog.component';
+import {DatepickerDialogComponent} from '@/controls/datepicker/datepicker-dialog/datepicker-dialog.component';
+import {ShortcutEditComponent} from '@/components/shortcut-edit/shortcut-edit.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -53,7 +54,8 @@ export class SessionService {
     settings: SettingsComponent,
     helpview: HelpviewComponent,
     outputparams: OutputParamsComponent,
-    datepickerdialog: DatepickerDialogComponent
+    datepickerdialog: DatepickerDialogComponent,
+    shortcutedit: ShortcutEditComponent
   }
 
   constructor(public ss: StorageService,
@@ -61,6 +63,9 @@ export class SessionService {
               private dialog: MatDialog,
               public ns: NightscoutService,
               public pdf: PdfService) {
+    GLOBALS.onPeriodChange.subscribe(_ => {
+      this.checkPrint();
+    });
   }
 
   get mayDebug(): boolean {
@@ -69,10 +74,10 @@ export class SessionService {
 
   checkPrint(): void {
     let maySend = false;
-    if (GLOBALS.period.isEmpty) {
-      this.sendDisabled = !maySend;
-      return;
-    }
+    // if (GLOBALS.period.isEmpty) {
+    //   this.sendDisabled = !maySend;
+    //   return;
+    // }
     for (const cfg of GLOBALS.listConfig) {
       if (cfg.checked) {
         if (cfg.form.isDebugOnly) {

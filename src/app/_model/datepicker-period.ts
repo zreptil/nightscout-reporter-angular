@@ -58,6 +58,9 @@ export class DatepickerPeriod {
   _dowActiveText: string;
 
   get dowActiveText(): string {
+    if (this.isEmpty) {
+      return '';
+    }
     if (this._dowActiveText == null) {
       const ret: string[] = [];
       let cnt = 0;
@@ -93,7 +96,7 @@ export class DatepickerPeriod {
     if (this.entryKey != null) {
       return this.entryTitle;
     }
-    if (this.start == null || this.end == null) {
+    if (this.isEmpty) {//this.start == null || this.end == null) {
       return this.msgPeriodEmpty;
     }
     if (Utils.isSameDay(this.start, this.end)) {
@@ -109,6 +112,9 @@ export class DatepickerPeriod {
     }
 
     let beg = this.start;
+    if (this.start.getFullYear() === 1970 && this.start.getMonth() === 0 && this.start.getDate() === 1) {
+      return true;
+    }
     while (beg != null && this.end != null && Utils.isOnOrBefore(beg, this.end)) {
       if (this.isDowActive(Utils.getDow(beg))) {
         return false;
@@ -216,8 +222,8 @@ export class DatepickerPeriod {
       this.entryKey = null;
       this.firstDayOfWeek = 1;
       if (parts.length >= 4) {
-        this.start = new Date(parseInt(parts[0]));
-        this.end = new Date(parseInt(parts[1]));
+        this.start = Utils.parseDate(parts[0]);
+        this.end = Utils.parseDate(parts[1]);
         this.entryKey = parts[2] === '' || parts[2] === 'null' ? null : parts[2];
         this.firstDayOfWeek = parseInt(parts[3]) ?? 0;
       }

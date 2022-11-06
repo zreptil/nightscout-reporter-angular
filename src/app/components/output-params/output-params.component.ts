@@ -134,7 +134,7 @@ export class OutputParamsComponent implements OnInit {
     GLOBALS.currPeriodShift = this.periodShift;
     GLOBALS.ppGlucMaxIdx = this.glucMaxIdx;
     GLOBALS.ppBasalPrecisionIdx = this.basalPrecisionIdx;
-    this.pdf.generatePdf(true).then(_ => {
+    this.pdf.generatePdf().then(_ => {
       if (!this.ns.reportData?.isValid) {
         this.ss.showPopup('outputparams');
       }

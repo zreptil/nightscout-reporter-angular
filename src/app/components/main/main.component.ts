@@ -93,8 +93,6 @@ export class MainComponent implements OnInit {
       */
   sendIcon = 'send';
   menuIdx = 0;
-  currShortcutIdx = -1;
-  currShortcut: ShortcutData;
 
   constructor(public ts: ThemeService,
               public ds: DataService,
@@ -166,11 +164,11 @@ export class MainComponent implements OnInit {
   }
 
   editShortcut(shortcutIdx: number): void {
-    this.currShortcutIdx = shortcutIdx;
+    GLOBALS.currShortcutIdx = shortcutIdx;
     if (shortcutIdx >= 0 && shortcutIdx < GLOBALS.shortcutList.length) {
-      this.currShortcut = GLOBALS.shortcutList[shortcutIdx].copy;
+      GLOBALS.currShortcut = GLOBALS.shortcutList[shortcutIdx].copy;
     } else {
-      this.currShortcut = new ShortcutData();
+      GLOBALS.currShortcut = new ShortcutData();
     }
     this.ss.showPopup('shortcutedit');
   }

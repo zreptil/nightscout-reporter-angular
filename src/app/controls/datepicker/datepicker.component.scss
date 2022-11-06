@@ -7,7 +7,12 @@ button.dpBtn.empty {
 }
 
 button.dpBtn {
-  ::ng-deep .content {
+  height: 4em;
+
+  ::ng-deep .mat-button-wrapper {
+    display: flex;
+    line-height: initial;
+    gap: 0.5em;
     flex-direction: column;
   }
 
@@ -15,7 +20,6 @@ button.dpBtn {
   }
 
   div[sub] {
-    padding-top: 0.7em;
     font-size: 75%;
   }
 }

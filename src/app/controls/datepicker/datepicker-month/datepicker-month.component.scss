@@ -44,24 +44,25 @@ button:not([icon]) {
 }
 
 .week {
+
   button {
     flex: 1;
+  }
 
-    .raised:not(.key) {
-      background-color: var(--datepickerBtnRaisedBack);
-    }
+  button.raised:not(.key) {
+    background-color: var(--datepickerBtnRaisedBack);
+  }
 
-    .raised.key {
-      background-color: var(--datepickerBtnRaisedKeyBack);
-    }
+  button.raised.key {
+    background-color: var(--datepickerBtnRaisedKeyBack);
+  }
 
-    .raised:not(.key):not([disabled]) {
-      color: var(--datepickerBtnRaisedFore);
-    }
+  button.raised:not(.key):not([disabled]) {
+    color: var(--datepickerBtnRaisedFore);
+  }
 
-    .raised.key:not([disabled]) {
-      color: var(--datepickerBtnRaisedKeyFore);
-    }
+  button.raised.key:not([disabled]) {
+    color: var(--datepickerBtnRaisedKeyFore);
   }
 }
 

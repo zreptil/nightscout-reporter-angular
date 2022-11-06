@@ -97,6 +97,18 @@ export class Utils {
     return Utils.fmtDate(new Date(0, 0, 0, hour, minute), 'hh:mm Uhr');
   }
 
+  static parseDate(value: string): Date {
+    let ret = null;
+    if (value.length === 8) {
+      const y = parseInt(value.substring(0, 4));
+      const m = parseInt(value.substring(4, 6)) - 1;
+      const d = parseInt(value.substring(6, 8));
+      ret = new Date(y, m, d);
+    }
+
+    return ret;
+  }
+
   static fmtDate(date: Date, fmt: string = null): string {
     if (fmt == null) {
       fmt = $localize`dd.MM.yyyy`;

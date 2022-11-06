@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="functions">
-      <div>
+      <div class="line">
         <app-datepicker [period]="globals.period" [showLabel]="false"></app-datepicker>
         <!--
 (periodChange)="changePeriod($event)"
@@ -117,7 +117,11 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <div></div>
-    <button (click)="clickExecute()" class="iconButton" mat-dialog-close="ok" mat-flat-button>
+    <button (click)="clickExecute()"
+            [disabled]="globals.period.isEmpty"
+            class="iconButton"
+            mat-dialog-close="ok"
+            mat-flat-button>
       <mat-icon>picture_as_pdf</mat-icon>
       <ng-container i18n="buttonlabel for saving data">PDF erzeugen</ng-container>
     </button>

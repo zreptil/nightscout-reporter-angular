@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import {MessageId, TargetMessage} from '@angular/localize/src/utils';
 // @ts-ignore
 import xliff from 'xliff';
+import {MessageId, TargetMessage} from '@angular/localize';
 
 // const fileList = [];
 // const lng = localStorage.getItem('language') || 'de-DE';

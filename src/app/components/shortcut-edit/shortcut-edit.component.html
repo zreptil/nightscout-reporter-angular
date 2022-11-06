@@ -1,0 +1,59 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.shortcutedit">
+  <div cdkDragHandle mat-dialog-title>
+    <h1>{{msgTitle}}</h1>
+    <div>
+      <button mat-dialog-close="cancel" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <div class="info" i18n="info text for shortcuts">
+      Ein Shortcut beinhaltet den Zeitraum und die ausgewählten Formulare mit den jeweils gesetzten Optionen. Wenn ein Shortcut
+      aktiviert wird, werden die darin gespeicherten Einstellungen geladen und aktiviert.
+    </div>
+    <div class="icondef">
+      <button mat-flat-button>
+        <mat-icon>{{globals.currShortcut?.icon}}</mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-label>{{msgName}}</mat-label>
+        <input [(ngModel)]="globals.currShortcut.name" matInput>
+      </mat-form-field>
+    </div>
+    <div>
+      <ng-container i18n="number of forms for shortcut">Anzahl:</ng-container>
+      <button (click)="clickForms()" class="data" mat-flat-button>
+        {{msgFormsText(formsCount)}}
+      </button>
+    </div>
+    <div>
+      <ng-container i18n="period for shortcuts">Zeitraum:</ng-container>
+      <button (click)="clickZeitraum()" class="data" mat-flat-button>
+        {{globals.currShortcut.periodText}}
+      </button>
+    </div>
+    <div>
+      {{globals.lblGlucUnits}}:
+      <button (click)="clickGlucUnits()" class="data" mat-flat-button>
+        {{globals.listGlucUnits[globals.currShortcut.glucMGDLIdx ?? globals.glucMGDLIdx]}}
+      </button>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div></div>
+    <div>
+      <button (click)="clickDelete()" *ngIf="globals.currShortcutIdx>=0" class="iconButton" mat-flat-button>
+        <mat-icon>delete</mat-icon>
+        <div i18n="buttonlabel for deleting data">Löschen</div>
+      </button>
+      <button (click)="clickSave()" class="iconButton" mat-flat-button>
+        <mat-icon>save</mat-icon>
+        <div i18n="buttonlabel for saving data">Speichern</div>
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

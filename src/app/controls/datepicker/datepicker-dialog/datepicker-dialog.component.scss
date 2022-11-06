@@ -1,4 +1,8 @@
 :host {
+  .mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+    font-size: 0.8em;
+  }
+
   ::ng-deep mat-dialog-actions {
     background-color: var(--datepickerHeaderBack);
     display: flex;
@@ -32,6 +36,10 @@
 [mat-dialog-title] {
   background-color: var(--datepickerHeaderBack);
   color: var(--datepickerHeaderFore);
+
+  p {
+    font-size: 80%;
+  }
 }
 
 [mat-dialog-title].empty {

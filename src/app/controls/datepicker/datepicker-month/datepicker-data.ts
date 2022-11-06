@@ -1,7 +1,17 @@
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
 
-export class _Day {
+export class DatepickerData {
+  loadedPeriod: string = null;
+  month: Date = null;
+  period: DatepickerPeriod = null;
+
+  constructor() {
+    this.period = new DatepickerPeriod()
+  }
+}
+
+export class DayData {
   date: Date;
 
   constructor(public _period: DatepickerPeriod, d: Date, public _forMonth: number) {
@@ -47,20 +57,20 @@ export class _Day {
   }
 }
 
-export class _Week {
-  days: _Day[] = [];
+export class WeekData {
+  days: DayData[] = [];
 
   constructor(public _period: DatepickerPeriod, public _date: Date, public _forMonth: number) {
     let d = new Date(_date.getFullYear(), _date.getMonth(), _date.getDate());
     for (let i = 0; i < 7; i++) {
-      this.days.push(new _Day(_period, d, _forMonth));
+      this.days.push(new DayData(_period, d, _forMonth));
       d = Utils.addDateDays(d, 1);
     }
   }
 }
 
-export class _Month {
-  weeks: _Week[] = [];
+export class MonthData {
+  weeks: WeekData[] = [];
 
   constructor(public _period: DatepickerPeriod, date: Date) {
     date = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -68,9 +78,9 @@ export class _Month {
     const diff = _period.firstDayOfWeek - Utils.getDow(d);
     d = Utils.addDateDays(d, diff <= 0 ? diff : diff - 7);
     do {
-      this.weeks.push(new _Week(_period, d, date.getMonth()));
+      this.weeks.push(new WeekData(_period, d, date.getMonth()));
       d = Utils.addDateDays(d, 7);
     }
-    while (d.getMonth() == date.getMonth());
+    while (d.getMonth() === date.getMonth() || this.weeks.length < 6);
   }
 }

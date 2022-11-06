@@ -12,6 +12,7 @@ import {ShortcutData} from '@/_model/shortcut-data';
 import {WatchElement} from './watch-element';
 import {EntryData} from './nightscout/entry-data';
 import {StatusData} from '@/_model/nightscout/status-data';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 export let GLOBALS: GlobalsData;
 
@@ -21,6 +22,8 @@ export class GlobalsData extends Settings {
   shortcutList: ShortcutData[] = [];
   glucMGDLIdx: number;
   glucMGDLFromStatus = true;
+  currShortcut: ShortcutData;
+  currShortcutIdx: number;
   hasMGDL = false;
   showAllTileParams = false;
   showCurrentGluc = false;
@@ -62,10 +65,14 @@ export class GlobalsData extends Settings {
   currentGlucDiff: string;
   currentGlucTime: string;
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
+  public onPeriodChange: Observable<DatepickerPeriod>;
+  private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
     super();
     GLOBALS = this;
+    this.onPeriodChangeSubject = new BehaviorSubject<DatepickerPeriod>(this._period);
+    this.onPeriodChange = this.onPeriodChangeSubject.asObservable();
     // tz.Location found;
     //
     // var dt = new Date();
@@ -257,6 +264,7 @@ export class GlobalsData extends Settings {
   set period(value: DatepickerPeriod) {
     this._period = value;
     GlobalsData.updatePeriod(this._period);
+    this.onPeriodChangeSubject?.next(this._period);
   }
 
   get msgUrlFailureHerokuapp(): string {

@@ -101,7 +101,10 @@ export class DialogData {
     if (Array.isArray(this.content)) {
       if (this.content.length > 0) {
         if (typeof this.content[0] === 'string') {
-          return this.content as string[];
+          return (this.content as string[]).map(text => {
+            text = text.replace(/@(.*)@/g, `<span class='mark'>$1</span>`);
+            return text;
+          });
         }
       }
       return [];

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {_Day, _Month} from '@/controls/datepicker-month/datepicker-data';
+import {DayData, MonthData} from '@/controls/datepicker/datepicker-month/datepicker-data';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
 
@@ -10,7 +10,7 @@ import {Utils} from '@/classes/utils';
 })
 export class DatepickerMonthComponent implements OnInit {
 
-  month: _Month = null;
+  month: MonthData = null;
   trigger = new EventEmitter<UIEvent>();
 
   constructor() {
@@ -26,7 +26,7 @@ export class DatepickerMonthComponent implements OnInit {
   set period(value: DatepickerPeriod) {
     this._period = value;
     if (this._period != null && this._date != null) {
-      this.month = new _Month(this._period, this._date);
+      this.month = new MonthData(this._period, this._date);
     }
   }
 
@@ -40,7 +40,7 @@ export class DatepickerMonthComponent implements OnInit {
   set date(value: Date) {
     this._date = value;
     if (this._period != null && this._date != null) {
-      this.month = new _Month(this._period, this._date);
+      this.month = new MonthData(this._period, this._date);
     }
   }
 
@@ -57,7 +57,7 @@ export class DatepickerMonthComponent implements OnInit {
     }
     this.period.firstDayOfWeek = value;
     if (this._period != null && this._date != null) {
-      this.month = new _Month(this._period, this._date);
+      this.month = new MonthData(this._period, this._date);
     }
   }
 
@@ -72,7 +72,7 @@ export class DatepickerMonthComponent implements OnInit {
     return this.period.isDowActive(idx) ? 'dow-active' : 'dow-inactive';
   }
 
-  dayclass(day: _Day): string[] {
+  dayclass(day: DayData): string[] {
     const ret = [];
     if (this.period.entryKey != null) {
       ret.push('key');
@@ -83,12 +83,12 @@ export class DatepickerMonthComponent implements OnInit {
     return ret;
   }
 
-  weekdayClicked(day: _Day) {
+  weekdayClicked(day: DayData) {
     this.firstDayOfWeek = Utils.getDow(day.date);
     this.period.refresh();
   }
 
-  dayClicked(day: _Day) {
+  dayClicked(day: DayData) {
     if (this.period.start != null && Utils.isBefore(day.date, this.period.start)) {
       this.period.start = day.date;
       this.period.entryKey = null;

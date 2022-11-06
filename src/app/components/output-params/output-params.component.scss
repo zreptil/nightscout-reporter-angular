@@ -28,13 +28,11 @@
   ::ng-deep mat-dialog-actions {
     background-color: var(--outputparamsHeaderBack);
 
-    .mat-button-wrapper {
-      color: var(--outputparamsHeaderFore);
+    button:not(.mat-button-disabled) {
+      .mat-button-wrapper {
+        color: var(--outputparamsHeaderFore);
+      }
     }
-  }
-
-  ::ng-deep button.dpBtn {
-    height: 100%;
   }
 
   ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {

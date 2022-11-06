@@ -1,0 +1,9 @@
+.dialog-text {
+  div {
+    margin: 0.5em 0;
+  }
+
+  ::ng-deep .mark {
+    font-weight: bold;
+  }
+}

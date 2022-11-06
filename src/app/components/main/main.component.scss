@@ -148,6 +148,8 @@ mat-drawer-container {
                   line-height: 1.2em;
 
                   [text] {
+                    display: flex;
+                    flex: 1;
                     padding: 0.5em 0;
                   }
                 }

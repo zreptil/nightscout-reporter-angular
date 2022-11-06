@@ -637,4 +637,18 @@ export class DataService {
     GLOBALS.glucRunning = false;
     return ret;
   }
+
+  saveShortcuts(): void {
+    if (GLOBALS.currShortcut != null) {
+      if (GLOBALS.currShortcutIdx == null || GLOBALS.currShortcutIdx < 0) {
+        GLOBALS.shortcutList.push(GLOBALS.currShortcut);
+      } else {
+        GLOBALS.shortcutList[GLOBALS.currShortcutIdx] = GLOBALS.currShortcut.copy;
+      }
+    }
+    GLOBALS.currShortcut = null;
+    GLOBALS.currShortcutIdx = -1;
+    this.save();
+  }
+
 }

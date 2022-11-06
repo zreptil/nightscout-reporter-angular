@@ -11,7 +11,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <mat-dialog-content [style]="customStyle('Body')">
+  <mat-dialog-content [style]="customStyle('Body')" class="dialog-text">
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
   </mat-dialog-content>
   <mat-dialog-actions [style]="customStyle('Header')" align="end" class="type{{data?.type}}">

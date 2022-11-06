@@ -16,7 +16,7 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
 
   constructor(public ps: ProgressService,
               public ts: ThemeService) {
-    this.ps.initializer.subscribe((data: any) => {
+    this.subPsInit = this.ps.initializer.subscribe((data: any) => {
       if (data == null) {
         data = this.ts.currTheme;
       }

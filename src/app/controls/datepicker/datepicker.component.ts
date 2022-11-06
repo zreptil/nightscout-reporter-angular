@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
-import {DatepickerData} from '@/controls/datepicker/datepicker-data';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {SessionService} from '@/_services/session.service';
+import {DatepickerData} from '@/controls/datepicker/datepicker-month/datepicker-data';
+import {Log} from '@/_services/log.service';
 
 @Component({
   selector: 'app-datepicker',
@@ -25,6 +26,7 @@ export class DatepickerComponent implements OnInit {
   data = new DatepickerData();
 
   constructor(public ss: SessionService) {
+    Log.todo('Beim Datepicker müssen noch die Eingabefelder für Start und Ende rein.');
   }
 
   get classForButton(): string[] {
@@ -74,10 +76,12 @@ export class DatepickerComponent implements OnInit {
 
   onClick() {
     this.data.period = GLOBALS.period;
-    this.data.loadedPeriod = GLOBALS.period.toString();
+    this.data.loadedPeriod = this.data.period.toString();
+    this.data.month = GlobalsData.now;
     this.ss.showPopup('datepickerdialog', this.data).subscribe(result => {
       switch (result.btn) {
         case 'save':
+          GLOBALS.period = this.data.period;
           this.periodChange.emit(this.data.period);
           break;
       }

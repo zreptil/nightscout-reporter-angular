@@ -3,8 +3,8 @@ import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
 import {DatepickerEntry} from '@/_model/datepicker-entry';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DatepickerData} from '@/controls/datepicker/datepicker-data';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
+import {DatepickerData} from '../datepicker-month/datepicker-data';
 
 @Component({
   selector: 'app-datepicker-dialog',
@@ -12,10 +12,6 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
   styleUrls: ['./datepicker-dialog.component.scss']
 })
 export class DatepickerDialogComponent implements OnInit {
-
-  loadedPeriod: string = null;
-  isStartValid = true;
-  isEndValid = true;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DatepickerData) {
   }
@@ -99,7 +95,7 @@ export class DatepickerDialogComponent implements OnInit {
   }
 
   revertData() {
-    this.data.period.reset(this.loadedPeriod);
+    this.data.period.reset(this.data.loadedPeriod);
   }
 
   setMonth(value: Date) {
