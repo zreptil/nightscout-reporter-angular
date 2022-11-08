@@ -66,6 +66,7 @@ export class GlobalsData extends Settings {
   currentGlucTime: string;
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
   public onPeriodChange: Observable<DatepickerPeriod>;
+  maxLogEntries = 20;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {

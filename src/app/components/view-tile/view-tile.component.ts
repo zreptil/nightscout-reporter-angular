@@ -6,6 +6,7 @@ import {Log} from '@/_services/log.service';
 import {SessionService} from '@/_services/session.service';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {DataService} from '@/_services/data.service';
+import {ReportData} from '@/_model/report-data';
 
 @Component({
   selector: 'app-view-tile',
@@ -63,16 +64,19 @@ export class ViewTileComponent implements OnInit {
   }
 
   clickTileMenu(evt: MouseEvent, _: FormConfig) {
-    Log.todo('Idee für TileParams: komplette view auf Params ändern, alle Params der ausgewählten Tiles anzeigen.');
-    Log.todo('Würde exakt so auch bei der Listenansicht zum Einsatz kommen.');
+    Log.todo('Idee für TileParams: komplette view auf Params ändern, alle Params der ausgewählten Tiles anzeigen.',
+      'Würde exakt so auch bei der Listenansicht zum Einsatz kommen.'
+    );
+    Log.todo({Hurz: 'Oleole', furz: 'Oha'}, new Date(), new ReportData(new Date(), new Date()));
+
     this.ss.showPopup('tileParams');
     evt.stopPropagation();
   }
 
   tileClicked(evt: MouseEvent, cfg: FormConfig) {
     if (!cfg.opened) {
-      Log.todo('Checken, ob der auskommentierte Code in ViewTileComponent.expansionPanelClicked noch benötigt wird.');
-      Log.todo('Das hatte wohl was mit Drag-Drop zu tun.');
+      Log.todo('Checken, ob der auskommentierte Code in ViewTileComponent.expansionPanelClicked noch benötigt wird.',
+        'Das hatte wohl was mit Drag-Drop zu tun.');
       //   if (evt.currentTarget.attributes['dontclick'] == 'true') {
       //     evt.currentTarget.removeAttribute('dontclick');
       //     return;

@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Injectable} from '@angular/core';
 import {GLOBALS} from '@/_model/globals-data';
-import {Utils} from '@/classes/utils';
 
 export class LinkDef {
   constructor(public url: string,
@@ -47,27 +46,43 @@ export class Log {
   }
 
   static addText(id: string, ...text: any[]): void {
-    if (text && text.length) {
-      for (const line of text) {
-        Log.addLine(id, Log.cvtLine(line));
-      }
+    if (text && text.length > 1) {
+      text.forEach((line, idx) => {
+        // entries that have the format {_: ...} are treated by log.component
+        // so that it will remove the line between the current entry and
+        // the next entry
+        Log.addLine(id, idx < text.length - 1 ? {_: line} : line);
+      });
     } else {
-      Log.addLine(id, Log.cvtLine(text));
+      Log.addLine(id, text[0]);
     }
   }
 
-  static cvtLine(src: any): string {
-    if (src instanceof Date) {
-      return Utils.fmtDate(src);
-    } else if (Object.keys(src) != null) {
-      return JSON.stringify(src);
+  static isInList(check: any, list: any[]): boolean {
+    check = JSON.stringify(check);
+    // if (check._ != null)
+    //   check = check._;
+    for (const line of list) {
+      if (check === JSON.stringify(line)) {
+        return true;
+      }
     }
-    return `${src}`;
+    return false;
   }
 
-  static addLine(id: string, line: string): void {
-    if (id === 'debug' || LogService.instance.msg[id].indexOf(line) < 0) {
-      LogService.instance.msg[id]?.push(line);
+  static addLine(id: string, line: any): void {
+    const list = LogService.instance.msg[id];
+    if (list != null && (id === 'debug' || !Log.isInList(line, list))) {
+      list.push(line);
+      // if not in debug mode, then limit the length of the log entries per list
+      // to GLOBALS.maxLogEntries so that the app will not suffer from running
+      // for a long time without cleaning the log (could be the case, when using
+      // NightWatch as a permanent display)
+      if (!GLOBALS.isDebug) {
+        while (list.length > GLOBALS.maxLogEntries) {
+          list.splice(0, 1);
+        }
+      }
       LogService.refreshUI();
     }
   }
@@ -126,7 +141,7 @@ export class Log {
 export class LogService {
   public static cr: ChangeDetectorRef;
   public static instance: LogService;
-  msg: { [key: string]: string[] };
+  msg: { [key: string]: any[] };
 
   links: LinkDef[] = [];
 

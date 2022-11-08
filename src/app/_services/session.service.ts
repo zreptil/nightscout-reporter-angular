@@ -58,7 +58,7 @@ class GlobalData extends BaseData {
 })
 export class SessionService {
 
-  public sendDisabled = true;
+  public activeCfgCount = 0;
   public data: GlobalData;
   formList = [
     new PrintTest(this.pdf),
@@ -107,6 +107,7 @@ export class SessionService {
 
   checkPrint(): void {
     let maySend = false;
+    let count = 0;
     // if (GLOBALS.period.isEmpty) {
     //   this.sendDisabled = !maySend;
     //   return;
@@ -116,13 +117,16 @@ export class SessionService {
         if (cfg.form.isDebugOnly) {
           if (GLOBALS.isDebug) {
             maySend = true;
+            count++;
           }
         } else if (cfg.form.isLocalOnly) {
           if (GLOBALS.isLocal) {
             maySend = true;
+            count++;
           }
         } else {
           maySend = true;
+          count++;
         }
       }
     }
@@ -156,7 +160,7 @@ export class SessionService {
             });
       */
     }, 100);
-    this.sendDisabled = !maySend;
+    this.activeCfgCount = count;
   }
 
   getNextSuffix(cfg: FormConfig): number {

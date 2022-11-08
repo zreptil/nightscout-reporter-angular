@@ -102,7 +102,7 @@ export class DartImporterComponent implements OnInit {
     let repList = ['x', 'y', 'color', 'colSpan', 'lineWidth', 'type', 'points', 'closePath',
       'relativePosition', 'columns', 'width', 'text', 'fontSize', 'alignment', 'stack', 'canvas',
       'x1', 'x2', 'y1', 'y2', 'lineColor', 'margin', 'w', 'h', 'lineHeight', 'bold', 'layout',
-      'table', 'widths', 'headerRows', 'body', 'style', 'fillOpacity'];
+      'table', 'widths', 'headerRows', 'body', 'style', 'fillOpacity', 'fillColor'];
     for (const entry of repList) {
       const re = new RegExp(`'${entry}':`, 'g');
       this.code = this.code.replace(re, `${entry}:`);

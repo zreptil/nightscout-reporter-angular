@@ -1460,20 +1460,22 @@ export abstract class BasePrint extends FormConfig {
         ]
       });
     }
-    stack.push({
-      relativePosition: {x: this.cm(this.xframe), y: this.cm(y)},
-      columns: [
-        {
-          width: this.cm(this.width - 4.4),
-          text: this.titleInfo,
-          fontSize: this.fs(10),
-          color: this.colInfo,
-          bold: true,
-          alignment: 'right'
-        }
-      ]
-    });
-    if (this.titleInfoSub != '') {
+    if (!Utils.isEmpty(this.titleInfo)) {
+      stack.push({
+        relativePosition: {x: this.cm(this.xframe), y: this.cm(y)},
+        columns: [
+          {
+            width: this.cm(this.width - 4.4),
+            text: this.titleInfo,
+            fontSize: this.fs(10),
+            color: this.colInfo,
+            bold: true,
+            alignment: 'right'
+          }
+        ]
+      });
+    }
+    if (!Utils.isEmpty(this.titleInfoSub)) {
       stack.push({
         relativePosition: {x: this.cm(this.xframe), y: this.cm(2.4)},
         columns: [

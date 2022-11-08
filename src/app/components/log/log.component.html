@@ -17,7 +17,7 @@
     </button>
     <div lines>
       <ng-container *ngFor="let line of msg[type]">
-        <div>{{line | log}}</div>
+        <div [class]="classForLine(line)">{{line | log}}</div>
       </ng-container>
     </div>
   </div>

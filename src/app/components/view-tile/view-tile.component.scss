@@ -144,6 +144,7 @@
     .tilechecked.is-debug {
       border-color: var(--debugFore) !important;
       background: var(--logDebugBack) !important;
+      color: var(--logDebugFore) !important;
     }
 
     .tilechecked.is-local {

@@ -390,10 +390,32 @@ mat-drawer-container {
       justify-content: flex-end;
       padding-top: 0.2em;
       padding-bottom: 0.5em;
+    }
 
-      material-fab {
-        margin-top: 0;
-        margin-right: 0.5em;
+    .send {
+      width: 7em;
+      border-radius: 2em;
+
+      ::ng-deep .mat-button-wrapper {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+
+        div {
+          font-weight: bold;
+          font-size: 200%;
+          color: white;
+          --sc: black;
+          --w: 2px;
+          --w-: -2px;
+          text-shadow: var(--w) var(--w) 0 var(--sc), var(--w) var(--w-) 0 var(--sc), var(--w-) var(--w) 0 var(--sc), var(--w-) var(--w-) 0 var(--sc), var(--w) 0 0 var(--sc), 0 var(--w) 0 var(--sc), var(--w-) 0 0 var(--sc), 0 var(--w-) 0 var(--sc);
+        }
+
+        mat-fab {
+          margin-top: 0;
+          margin-right: 0.5em;
+        }
       }
     }
   }
