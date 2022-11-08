@@ -19,7 +19,6 @@ analysieren kann. Man kann auch das @10@ für den Tag erzeugen lassen. Das wird 
 Dieses Formular ist eines der seitenintensivsten Formulare in Nightscout Reporter. Deshalb gibt es hier
 die Möglichkeit, mehrere Tagesgrafiken auf einer Seite ausgeben zu lassen. Darunter leidet natürlich die Lesbarkeit,
 aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
-
   override baseId = 'daygraph';
   override baseIdx = '05';
   isFormParam1: boolean;
@@ -34,6 +33,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyGraphic`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

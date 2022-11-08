@@ -16,7 +16,6 @@ Wenn die Basalrate aus dem Profil angezeigt wird, wird das Maximum für die Dars
 maximalen Wertes der Profilbasalrate ermittelt. Dadurch werden bei Werten über 100% des Maximalwerts der
 Profilbasalrate die Balken über die Spalte hinaus verlängert. Es gibt aber eine Option, um diese Balken abzuschneiden
 und als Pfeile darstellen zu lassen.`;
-
   override baseId = 'dayprofile';
   override baseIdx = '11';
   isFormParam1: boolean;
@@ -31,6 +30,10 @@ und als Pfeile darstellen zu lassen.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyProfile`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

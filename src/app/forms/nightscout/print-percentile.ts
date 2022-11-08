@@ -11,7 +11,6 @@ verteilen. Diese Verteilung kann graphisch und tabellarisch ausgegeben werden.
 In der Grafik sind die Bereiche für bestimmte Abweichungen farblich markiert. Die Linie zeigt den Medianwert
 an. In der Tabelle kann man diese Werte nachlesen. Wenn die Basalrate mit ausgegeben wird, dann ist das die
 Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
-
   override baseId = 'percentile';
   override baseIdx = '03';
   isFormParam1: boolean;
@@ -26,6 +25,10 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintPercentile`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

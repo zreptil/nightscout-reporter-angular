@@ -16,6 +16,7 @@ export class DartImporterComponent implements OnInit {
   translations: any;
   messages: any;
   xliff: any;
+  code: string;
 
   constructor(public ds: DataService,
               public ss: SessionService) {
@@ -78,6 +79,43 @@ export class DartImporterComponent implements OnInit {
       } else {
         Log.info(`${key} ${trans}`);
       }
+    }
+  }
+
+  replaceCode() {
+    this.code = this.code.replace(/([\s{(])g\./g, '$1GLOBALS.');
+    this.code = this.code.replace(/([\s{(])var(.*) in /g, '$1const$2 of ');
+    this.code = this.code.replace(/([\s{(])var(\s)/g, '$1const$2');
+    this.code = this.code.replace(/@override/g, 'override');
+    this.code = this.code.replace(/Intl\.message/g, '\$localize');
+    this.code = this.code.replace(/(\b)bool(\b)/g, '$1boolean$2');
+    this.code = this.code.replace(/(\b)String(\b)/g, '$1string$2');
+    this.code = this.code.replace(/(\b)double(\b)/g, '$1number$2');
+    this.code = this.code.replace(/(\b)int(\b)/g, '$1number$2');
+    this.code = this.code.replace(/(\b)num(\b)/g, '$1number$2');
+    this.code = this.code.replace(/(\b)dynamic(\b)/g, '$1any$2');
+    this.code = this.code.replace(/(\b)math(\b)/g, '$1Math$2');
+    this.code = this.code.replace(/(\b)Globals(\b)/g, '$1GlobalsData$2');
+    // this.code = this.code.replace(/(\b)cm(\b)/g, '$1this.cm$2');
+    // this.code = this.code.replace(/(\b)cmx(\b)/g, '$1this.cmx$2');
+    // this.code = this.code.replace(/(\b)cmy(\b)/g, '$1this.cmy$2');
+    let repList = ['x', 'y', 'color', 'colSpan', 'lineWidth', 'type', 'points', 'closePath',
+      'relativePosition', 'columns', 'width', 'text', 'fontSize', 'alignment', 'stack', 'canvas',
+      'x1', 'x2', 'y1', 'y2', 'lineColor', 'margin', 'w', 'h', 'lineHeight', 'bold', 'layout',
+      'table', 'widths', 'headerRows', 'body', 'style', 'fillOpacity'];
+    for (const entry of repList) {
+      const re = new RegExp(`'${entry}':`, 'g');
+      this.code = this.code.replace(re, `${entry}:`);
+    }
+    repList = ['cm', 'cmx', 'cmy', 'xorg', 'yorg', 'lcFrame', 'fs', 'lw', 'lc'];
+    for (const entry of repList) {
+      const re = new RegExp(`(\\b)${entry}(\\b)`, 'g');
+      this.code = this.code.replace(re, `$1this.${entry}$2`);
+    }
+    repList = ['ParamInfo'];
+    for (const entry of repList) {
+      const re = new RegExp(`(\\b)${entry}(\\b)`, 'g');
+      this.code = this.code.replace(re, `$1new ${entry}$2`);
     }
   }
 }

@@ -17,7 +17,6 @@ um den Diabetiker und seine Basalrate.\\nEs wird auch eine Spalte mit der
 Basalrate angezeigt, wenn die Option 'Alle Werte für einen Tag anzeigen'
 nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
 (und auch der Sinn), diese darzustellen.`;
-
   override baseId = 'daygluc';
   override baseIdx = '12';
   isFormParam1: boolean;
@@ -32,6 +31,10 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyGluc`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

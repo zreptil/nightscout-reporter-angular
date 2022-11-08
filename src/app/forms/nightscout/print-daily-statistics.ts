@@ -9,7 +9,6 @@ export class PrintDailyStatistics extends BasePrint {
 an. Für jeden Tag wird eine Zeile erzeugt. Die Spalten kann man teilweise konfigurieren. Auch hier wird der geschätzte
 HbA1c ausgegeben. Dieser hat wie auch im Formular @01@ nur sehr wenig Aussagekraft, weshalb er auch hier nur mit
 schwächerer Schrift angezeigt wird.`;
-
   override baseId = 'daystats';
   override baseIdx = '04';
   isFormParam1: boolean;
@@ -24,6 +23,10 @@ schwächerer Schrift angezeigt wird.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyStatistics`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

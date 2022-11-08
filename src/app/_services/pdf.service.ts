@@ -137,58 +137,62 @@ export class PdfService {
       for (const cfg of listConfig) {
         cfgList.push(this.collectPages(cfg, idx++, isForThumbs, repData));
       }
-      forkJoin(cfgList).subscribe((dataList: { idx: number, docList: any[] }[]) => {
-        // pdfMake.Styles styles = pdfMake.Styles();
-        // pdfMake.PDFContent pdf = pdfMake.PDFContent(content: [doc], styles: styles);
-        // pdfMake.create(pdf).open();
-        // .getDataUrl(function(outDoc)
-        // {
-        // $("#output").text(outDoc);
-        // });
-        console.log('dataList', dataList);
-        dataList.sort((a, b) => Utils.compare(a.idx, b.idx));
-        const docList: any[] = []
-        for (const data of dataList) {
-          Utils.pushAll(docList, data.docList);
-        }
-        if (docList.length > 1) {
-          console.log('länge', docList.length);
-          const pdfData: any = docList[0];
-          for (let i = 1; i < docList.length; i++) {
-            pdfData.content.push([{
-              text: '',
-              pageBreak: 'after',
-              pageSize: 'a4',
-              pageOrientation: listConfig[i].form.isPortrait ? 'portrait' : 'landscape'
-            }, docList[i].content]);
+      forkJoin(cfgList).subscribe({
+        next: (dataList: { idx: number, docList: any[] }[]) => {
+          // pdfMake.Styles styles = pdfMake.Styles();
+          // pdfMake.PDFContent pdf = pdfMake.PDFContent(content: [doc], styles: styles);
+          // pdfMake.create(pdf).open();
+          // .getDataUrl(function(outDoc)
+          // {
+          // $("#output").text(outDoc);
+          // });
+          dataList = dataList.filter(entry => entry != null);
+          dataList.sort((a, b) => Utils.compare(a.idx, b.idx));
+          const docList: any[] = []
+          for (const data of dataList) {
+            Utils.pushAll(docList, data.docList);
           }
-          this.makePdf(pdfData);
-          return;
-          // this.pdfList = [];
-          // let pdfDoc: any = null;
-          //
-          // // for (const doc of docList) {
-          // //   const dst = jsonEncode(doc);
-          // //   if (GLOBALS.isDebug) {
-          // //     // pdfUrl = 'http://pdf.zreptil.de/playground.php';
-          // //     dst = dst.replaceAll('],', '],\n');
-          // //     dst = dst.replaceAll(',\"', ',\n\"');
-          // //     dst = dst.replaceAll(':[', ':\n[');
-          // //   } else {
-          // //     // pdfUrl = 'https://nightscout-reporter.zreptil.de/pdfmake/pdfmake.php';
-          // //   }
-          // //   pdfList.add(PdfData(pdfString(dst)));
-          // // }
-          // for (const doc of docList) {
-          //   this.pdfList.push(new PdfData(doc));
-          // }
-          // this.ps.progressText = null;
-          // this._generatePdf(docList);
-          // return;
-        } else {
-          this.pdfDoc = docList[0];
+          if (docList.length > 1) {
+            console.log('länge', docList.length);
+            const pdfData: any = docList[0];
+            for (let i = 1; i < docList.length; i++) {
+              pdfData.content.push([{
+                text: '',
+                pageBreak: 'after',
+                pageSize: 'a4',
+                pageOrientation: listConfig[i].form.isPortrait ? 'portrait' : 'landscape'
+              }, docList[i].content]);
+            }
+            this.makePdf(pdfData);
+            return;
+            // this.pdfList = [];
+            // let pdfDoc: any = null;
+            //
+            // // for (const doc of docList) {
+            // //   const dst = jsonEncode(doc);
+            // //   if (GLOBALS.isDebug) {
+            // //     // pdfUrl = 'http://pdf.zreptil.de/playground.php';
+            // //     dst = dst.replaceAll('],', '],\n');
+            // //     dst = dst.replaceAll(',\"', ',\n\"');
+            // //     dst = dst.replaceAll(':[', ':\n[');
+            // //   } else {
+            // //     // pdfUrl = 'https://nightscout-reporter.zreptil.de/pdfmake/pdfmake.php';
+            // //   }
+            // //   pdfList.add(PdfData(pdfString(dst)));
+            // // }
+            // for (const doc of docList) {
+            //   this.pdfList.push(new PdfData(doc));
+            // }
+            // this.ps.progressText = null;
+            // this._generatePdf(docList);
+            // return;
+          } else {
+            this.pdfDoc = docList[0];
+          }
+          this.makePdf(this.pdfDoc);
+        }, error: (error) => {
+          Log.devError(error, 'Fehler im PdfService');
         }
-        this.makePdf(this.pdfDoc);
       });
       // if (!g.isDebug) {
       //   if (g.msg.text.isEmpty) {
@@ -206,6 +210,8 @@ export class PdfService {
       // }
       // sendIcon = 'send';
       // progressText = null;
+    } catch (ex) {
+      Log.devError(ex, 'Fehler im PdfService');
     } finally {
       GLOBALS.isCreatingPDF = false;
     }
@@ -338,6 +344,7 @@ export class PdfService {
     if (GLOBALS.isDebug) {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
       Log.displayLink('playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
+      this.ps.clear();
       return;
     }
     this._generatePdf(data).then(_ => {

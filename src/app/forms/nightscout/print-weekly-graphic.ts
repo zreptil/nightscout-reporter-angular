@@ -9,7 +9,6 @@ export class PrintWeeklyGraphic extends BasePrint {
 dazu in Wochenabschnitte aufgeteilt und jede Woche wird auf einer eigenen Seite ausgegeben. Die Wochen werden
 farblich markiert, so dass man sie gut unterscheiden kann. Zusätzlich kann noch das @10@ für die jeweilige
 Woche erzeugt werden.`;
-
   override baseId = 'weekgraph';
   override baseIdx = '08';
   isFormParam1: boolean;
@@ -24,6 +23,10 @@ Woche erzeugt werden.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintWeeklyGraphic`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

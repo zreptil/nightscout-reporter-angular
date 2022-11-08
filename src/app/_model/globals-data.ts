@@ -514,6 +514,15 @@ export class GlobalsData extends Settings {
     return b;
   }
 
+  static decimalPlaces(value: number): number {
+    let v = value.toString();
+    while (v.endsWith('0')) {
+      v = v.substring(0, v.length - 1);
+    }
+    const ret = Math.max(v.length - v.lastIndexOf('.') - 1, 0);
+    return Math.min(ret, 3);
+  }
+
   isMGDL(status: StatusData): boolean {
     const check = status.settings.units?.trim()?.toLowerCase() ?? '';
     return check.startsWith('mg') && check.endsWith('dl');
@@ -718,6 +727,17 @@ export class GlobalsData extends Settings {
     return date;
   }
 
+  fmtBasal(value: number, params?: { dontRound?: boolean }) {
+    params ??= {};
+    params.dontRound ??= false;
+    let precision = this.basalPrecision;
+    if (params.dontRound) {
+      precision = Math.max(GlobalsData.decimalPlaces(value), precision);
+    }
+    return this.fmtNumber(value, precision, 0, 'null', params.dontRound);
+  }
+
+
   fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
     params ??= {};
     params.withUnit ??= false;
@@ -770,4 +790,15 @@ export class GlobalsData extends Settings {
     return `${date}`;
   }
 
+  // calculate a value that is saved in a unit depending
+  // on the setting in the status
+  glucForSavedUnitValue(value: number) {
+    if (this.glucMGDL == this.glucMGDLFromStatus) {
+      return value;
+    }
+    if (this.glucMGDL) {
+      return value * 18.02;
+    }
+    return value / 18.02;
+  }
 }

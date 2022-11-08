@@ -11,7 +11,6 @@ Mittelwerte der innerhalb der entsprechenden Stunde gemessenen Werte. Sie
 werden anhand des ausgewählten Zielbereichs eingefärbt. In den Formularoptionen
 kann man die Startstunde festlegen. Die Datumsspalte befindet sich immer links
 von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
-
   override baseId = 'dayhours';
   override baseIdx = '13';
   isFormParam1: boolean;
@@ -26,6 +25,10 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyHours`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

@@ -8,7 +8,6 @@ export class PrintDailyAnalysis extends BasePrint {
   override help = $localize`:help for dailyanalysis@@help-daily-analysis:Dieses Formular zeigt eine Übersicht für einen Tag. Hier
   werden die Tagesgrafik, die Basalrate, die Basalratenanpassungen, Insulin On
   Board und Carbs On Board angezeigt.`;
-
   override baseId = 'dayanalysis';
   override baseIdx = '06';
   isFormParam1: boolean;
@@ -23,6 +22,10 @@ export class PrintDailyAnalysis extends BasePrint {
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyAnalysis`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

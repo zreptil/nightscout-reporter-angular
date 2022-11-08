@@ -29,7 +29,6 @@ import {OutputParamsComponent} from '@/components/output-params/output-params.co
 import {DatepickerDialogComponent} from '@/controls/datepicker/datepicker-dialog/datepicker-dialog.component';
 import {ShortcutEditComponent} from '@/components/shortcut-edit/shortcut-edit.component';
 import {PrintBasalrate} from '@/forms/nightscout/print-basalrate';
-import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
 import {PrintDailyGluc} from '@/forms/nightscout/print-daily-gluc';
 import {PrintDailyGraphic} from '@/forms/nightscout/print-daily-graphic';
@@ -43,6 +42,7 @@ import {PrintDailyHours} from '@/forms/nightscout/print-daily-hours';
 import {PrintGlucDistribution} from '@/forms/nightscout/print-gluc-distribution';
 import {PrintUserData} from '@/forms/nightscout/print-user-data';
 import {PrintTest} from '@/forms/nightscout/print-test';
+import {PrintCGP} from '@/forms/nightscout/print-cgp';
 
 class GlobalData extends BaseData {
   get asJson(): any {

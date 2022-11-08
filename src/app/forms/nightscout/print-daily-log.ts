@@ -9,7 +9,6 @@ export class PrintDailyLog extends BasePrint {
 ausgewählten Optionen sehr viele Seiten umfassen. Es ist vor allem dafür sinnvoll, um bestimmte Daten aufzufinden.
 Zum Beispiel kann man damit ermitteln, wann Katheterwechsel vorgenommen wurden, wieviele Datensätze als doppelt
 erkannt wurden oder wo Notizen erfasst wurden.`;
-
   override baseId = 'daylog';
   override baseIdx = '07';
   isFormParam1: boolean;
@@ -24,6 +23,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintDailyLog`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

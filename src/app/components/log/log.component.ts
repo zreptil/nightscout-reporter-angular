@@ -50,6 +50,20 @@ export class LogComponent implements OnInit {
     return ret;
   }
 
+  toBinary(text: string): string {
+    const codeUnits = Uint16Array.from(
+      {length: text.length},
+      (element, index) => text.charCodeAt(index)
+    );
+    const charCodes = new Uint8Array(codeUnits.buffer);
+
+    let result = '';
+    charCodes.forEach((char) => {
+      result += String.fromCharCode(char);
+    });
+    return result;
+  }
+
   openLink(link: LinkDef) {
     switch (link.url) {
       case 'showPdf':
@@ -63,10 +77,14 @@ export class LogComponent implements OnInit {
           doc = doc.replace(/,"/g, ',\n"');
           doc = doc.replace(/:\[/g, ':\n[');
         }
-        // doc = btoa(encodeURIComponent(doc).replace(/%([0-9A-F]{2})/g, function (match, p1) {
-        //   return String.fromCharCode(parseInt(p1, 16))
-        // }));
-        doc = btoa(doc);
+        doc = btoa(encodeURIComponent(doc).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+          return String.fromCharCode(parseInt(p1, 16))
+        }));
+        // try {
+        //   doc = btoa(doc);
+        // } catch (ex) {
+        //   console.error(ex, doc);
+        // }
         const params: any = {
           data: doc,
           filename: ''

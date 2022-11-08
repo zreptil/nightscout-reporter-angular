@@ -21,7 +21,7 @@ export class ProfileStoreData extends JsonData {
   startDate: Date;
   units: string;
 
-  constructor(public name: String) {
+  constructor(public name: string) {
     super();
     this.timezone = new ProfileTimezone(Settings.refTimezone);
   }

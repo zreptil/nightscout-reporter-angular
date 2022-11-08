@@ -1,6 +1,14 @@
 import {Log} from '@/_services/log.service';
 
 export class Utils {
+  static last<T>(list: T[]): T {
+    return list?.[list.length - 1] ?? null;
+  }
+
+  static first<T>(list: T[]): T {
+    return list?.[0] ?? null;
+  }
+
   static pushAll<T>(dst: T[], src: T[]): void {
     for (const entry of src ?? []) {
       dst.push(entry);
@@ -248,6 +256,11 @@ export class Utils {
     return Math.floor(ret / 1000 / 60);
   }
 
+  static differenceInHours(date1: Date, date2: Date): number {
+    const ret = date1?.getTime() - date2?.getTime();
+    return Math.floor(ret / 1000 / 60 / 60);
+  }
+
   static differenceInMilliseconds(date1: Date, date2: Date): number {
     return date1?.getTime() - date2?.getTime();
   }
@@ -301,5 +314,23 @@ export class Utils {
       ret = failRet;
     }
     return ret;
+  }
+
+  static parseNumber(value: string, def?: number) {
+    let ret = Number(value);
+    if (isNaN(ret)) {
+      ret = def ?? 0;
+    }
+    return ret;
+  }
+
+  static pushArgs(src: any, dst: any) {
+    if (src != null) {
+      for (const key of Object.keys(src)) {
+        if (src[key] != null) {
+          dst[key] = src[key];
+        }
+      }
+    }
   }
 }

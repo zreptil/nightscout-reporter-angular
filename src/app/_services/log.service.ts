@@ -1,4 +1,6 @@
 import {ChangeDetectorRef, Injectable} from '@angular/core';
+import {GLOBALS} from '@/_model/globals-data';
+import {Utils} from '@/classes/utils';
 
 export class LinkDef {
   constructor(public url: string,
@@ -44,41 +46,65 @@ export class Log {
     LogService.refreshUI();
   }
 
-  static addText(id: string, text: any): void {
-    if (LogService.instance.msg[id].indexOf(text) < 0) {
-      LogService.instance.msg[id]?.push(text);
+  static addText(id: string, ...text: any[]): void {
+    if (text && text.length) {
+      for (const line of text) {
+        Log.addLine(id, Log.cvtLine(line));
+      }
+    } else {
+      Log.addLine(id, Log.cvtLine(text));
+    }
+  }
+
+  static cvtLine(src: any): string {
+    if (src instanceof Date) {
+      return Utils.fmtDate(src);
+    } else if (Object.keys(src) != null) {
+      return JSON.stringify(src);
+    }
+    return `${src}`;
+  }
+
+  static addLine(id: string, line: string): void {
+    if (id === 'debug' || LogService.instance.msg[id].indexOf(line) < 0) {
+      LogService.instance.msg[id]?.push(line);
       LogService.refreshUI();
     }
   }
 
-  static info(text: any): void {
-    Log.addText('info', text);
+  static info(...text: any[]): void {
+    Log.addText('info', ...text);
   }
 
-  static warn(text: any): void {
-    Log.addText('warn', text);
+  static warn(...text: any[]): void {
+    Log.addText('warn', ...text);
   }
 
-  static debug(text: any): void {
-    Log.addText('debug', text);
+  static debug(...text: any[]): void {
+    if (GLOBALS.isDebug) {
+      Log.addText('debug', ...text);
+    }
   }
 
-  static error(text: any): void {
-    Log.addText('error', text);
+  static error(...text: any[]): void {
+    Log.addText('error', ...text);
   }
 
-  static devError(ex: any, text: any) {
+  static devError(ex: any, ...text: any[]) {
     if (Log.showTodo) {
-      Log.error(text);
+      Log.error(...text);
     }
     console.error(ex);
   }
 
-  static todo(text: any) {
-    Log.addText('todo', text);
+  static todo(...text: any[]) {
+    Log.addText('todo', ...text);
   }
 
   static displayLink(title: string, url: string, params?: { clear?: boolean, type?: string, btnClass?: string, icon?: string, data?: any }): void {
+    if (!GLOBALS.isDebug) {
+      return;
+    }
     params ??= {};
     params.clear ??= false;
     params.btnClass ??= '';

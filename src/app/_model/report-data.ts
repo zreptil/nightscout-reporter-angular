@@ -52,14 +52,14 @@ export class ReportData {
       }
     }
     if (profile != null) {
-      var date = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+      const date = new Date(time.getFullYear(), time.getMonth(), time.getDate());
       ret = new ProfileGlucData(profile);
       ret.basal = ret.find(date, time, ret.store.listBasal);
       ret.carbRatio = ret.find(date, time, ret.store.listCarbratio);
       ret.sens = ret.find(date, time, ret.store.listSens);
       ret.targetHigh = this.status.settings.bgTargetTop;
       ret.targetLow = this.status.settings.bgTargetBottom;
-      // for (var data in profile.values) {
+      // for (const data in profile.values) {
       //   data.adjustDurations();
       // }
     }
@@ -85,7 +85,7 @@ export class ReportData {
       idx++;
       // mix following profiles in
       while (idx < this.profiles.length && doMix) {
-        var d = this.profiles[idx].startDate;
+        const d = this.profiles[idx].startDate;
         // only profiles with same day as requested
         if (d.getFullYear() === time.getFullYear()
           && d.getMonth() === time.getMonth()

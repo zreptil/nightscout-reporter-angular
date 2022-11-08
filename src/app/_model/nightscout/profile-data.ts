@@ -24,9 +24,9 @@ export class ProfileData extends JsonData {
 
   get storeHash(): string {
     const ret: string[] = [];
-    this.keys(this.store).forEach(key => {
+    for (const key of Object.keys(this.store)) {
       ret.push(this.store[key].hash);
-    });
+    }
     return Utils.join(ret, '');
     // return this.store.keys.reduce((value, element) => value + store[element].hash);
   }
@@ -36,10 +36,9 @@ export class ProfileData extends JsonData {
     ret.fillFrom(this);
 
     ret.store = {};
-    this.keys(this.store).forEach(key => {
+    for (const key of Object.keys(this.store)) {
       ret.store[key] = this.store[key].copy;
-    });
-
+    }
     return ret;
   }
 
@@ -68,7 +67,7 @@ export class ProfileData extends JsonData {
     ret.duration = JsonData.toNumber(json.duration) * 60; // duration is saved as minutes
     const src = json.store;
     ret.maxPrecision = 0;
-    ret.keys(src).forEach(key => {
+    for (const key of Object.keys(src)) {
       const temp = src[key];
       if (temp != null) {
         let percentage = JsonData.toNumber(json.percentage);
@@ -80,20 +79,20 @@ export class ProfileData extends JsonData {
         ret.store[key] = ProfileStoreData.fromJson(key, temp.value, percentage, timeshift, ret.startDate);
         ret.maxPrecision = Math.max(ret.maxPrecision, ret.store[key].maxPrecision);
       }
-    });
+    }
     return ret;
   }
 
   includeTreatment(t: TreatmentData): void {
     if (t.isTempTarget && t.duration > 0) {
       const time = ((t.createdAt.getHours() + t.timeshift) * 60 + t.createdAt.getMinutes()) * 60;
-      this.keys(this.store).forEach(key => {
+      for (const key of Object.keys(this.store)) {
         const data = this.store[key];
         this._mixStore(data.listTargetHigh, data.timezone, time, t.duration, t.targetTop);
         this._mixStore(data.listTargetLow, data.timezone, time, t.duration, t.targetBottom);
         data.listTargetHigh.sort((a, b) => Utils.compare(a.timeForCalc, b.timeForCalc));
         data.listTargetLow.sort((a, b) => Utils.compare(a.timeForCalc, b.timeForCalc));
-      });
+      }
     }
   }
 
@@ -198,7 +197,7 @@ export class ProfileData extends JsonData {
 
   // include data from src in current profile
   mixWith(src: ProfileData): void {
-    this.keys(this.store).forEach(key => {
+    for (const key of Object.keys(this.store)) {
       // the store will be mixed with the same store from the source,
       // unless the key of the store is unknown. In this case the store
       // 'default' is used, if available.
@@ -216,6 +215,6 @@ export class ProfileData extends JsonData {
         this.store[key].addFrom(src, src.store[srcKey]);
         //        store[key].name = '${store[key].name} - ${src.store[srcKey].name}';
       }
-    });
+    }
   }
 }

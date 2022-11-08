@@ -6,7 +6,6 @@ import {GLOBALS} from '@/_model/globals-data';
 
 export class PrintUserData extends BasePrint {
   override help = $localize`:help for userdata@@help-userdata:`;
-
   override baseId = 'userdata';
   override baseIdx = '14';
   isFormParam1: boolean;
@@ -21,6 +20,10 @@ export class PrintUserData extends BasePrint {
 
   static get msgParam1(): string {
     return $localize`Parameter für PrintUserData`;
+  }
+
+  override get isLocalOnly(): boolean {
+    return true;
   }
 
   override get title(): string {

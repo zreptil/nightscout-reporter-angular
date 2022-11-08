@@ -223,9 +223,9 @@ export abstract class BasePrint extends FormConfig {
 
   get helpStrings(): HelpItem[] {
     const ret: HelpItem[] = [];
-    let text = this.help?.replace('\n', 'µ') ?? '';
-    text = text.replace('µµ', '<br><br>');
-    text = text.replace('µ', ' ');
+    let text = this.help?.replace(/\n/g, 'µ') ?? '';
+    text = text.replace(/µµ/g, '<br><br>');
+    text = text.replace(/µ/g, ' ');
     let pos = text.indexOf('@');
     while (pos >= 0) {
       if (pos > 0) {
@@ -766,7 +766,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get msgSource(): string {
-    return $localize`Quelle: Vigersky, R. A., Shin, J., Jiang, B., Siegmund, T., McMahon, C., & Thomas, A. (2018). The Comprehensive Glucose Pentagon: A Glucose-Centric Composite Metric for Assessing Glycemic Control in Persons With Diabetes. Journal of Diabetes Science and Technology, 12(1), 114–123. (https://doi.org/10.1177/1932296817718561)`;
+    return $localize`Quelle: Vigersky, R. A., Shin, J., Jiang, B., Siegmund, T., McMahon, C., & Thomas, A. (2018). The Comprehensive Glucose Pentagon: A Glucose-Centric Composite Metric for Assessing Glycemic Control in Persons With Diabetes. Journal of Diabetes Science and Technology, 12(1), 114-123. (https://doi.org/10.1177/1932296817718561)`;
   }
 
   get msgGlucHigh(): string {
@@ -1549,7 +1549,7 @@ export abstract class BasePrint extends FormConfig {
           }
         ]
       },
-      this.footerTextAboveLine.text == ''
+      this.footerTextAboveLine.text === ''
         ? null
         : {
           relativePosition: {
@@ -2195,35 +2195,6 @@ export abstract class BasePrint extends FormConfig {
       return ret;
     }));
   }
-
-  /*
-    Page getCGPPage(var dayList, bool showAreaLines) {
-      var cgpPage = PrintCGP();
-      cgpPage.repData = repData;
-      cgpPage.scale = scale;
-      title = cgpPage.title;
-      subtitle = cgpPage.subtitle;
-      var cgpSrc = cgpPage.calcCGP(dayList, 1.0, 0, 0.3, showAreaLines);
-      PentagonData cgp = cgpSrc['cgp'];
-      footerTextAboveLine = cgpPage.footerTextAboveLine;
-      footerTextAboveLine['y'] = 0.9;
-      var x = xorg + 2 * cgp.axisLength / cgp.scale + 1.2;
-      var y = yorg + 2.0;
-      var ret = [
-        headerFooter(),
-        {
-          'relativePosition': {'x': this.cm(xorg) + this.cm(cgp.axisLength / cgp.scale), 'y': this.cm(y)},
-          'canvas': cgp.outputCvs
-        },
-        {
-          'relativePosition': {'x': this.cm(xorg) + this.cm(cgp.axisLength / cgp.scale), 'y': this.cm(y)},
-          'stack': cgp.outputText
-        },
-        cgpPage.infoTable(cgpSrc, cgp.glucInfo['unit'], x, y, 2.5, width - x - xorg - 2.5)
-      ];
-      return Page(isPortrait, ret);
-    }
-    */
 
   drawScaleIE(xo: number, yo: number, graphHeight: number, top: number, min: number, max: number, colWidth: number,
               horzCvs: any, vertStack: any, steps: StepData[], display: (i: number, step: number, value?: number) => string) {
