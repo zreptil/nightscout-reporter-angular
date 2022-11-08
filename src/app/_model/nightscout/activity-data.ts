@@ -20,7 +20,7 @@ export class ActivityData extends JsonData {
   }
 
   static fromJson(json: any): ActivityData {
-    var ret = new ActivityData();
+    const ret = new ActivityData();
     if (json == null) {
       return ret;
     }

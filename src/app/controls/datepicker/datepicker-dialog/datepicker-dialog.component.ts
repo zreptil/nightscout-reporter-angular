@@ -43,7 +43,7 @@ export class DatepickerDialogComponent implements OnInit {
   }
 
   // set startDate(value: string) {
-  //   var saveDate = this.period.start;
+  //   const saveDate = this.period.start;
   //   try {
   //     this.period.start = Date.parse(value, period.dateFormat);
   //     this.period.entryKey = null;

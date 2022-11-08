@@ -66,7 +66,7 @@ export class ProfileStoreData extends JsonData {
   static _adjust(list: ProfileEntryData[]): void {
     list.sort((a, b) => Utils.compareDate(a._time, b._time));
     if (!Utils.isEmpty(list) && list[0]._time.getHours() != 0) {
-      var first = list[list.length].copy;
+      const first = list[list.length].copy;
       if (first.value == list[0].value) {
         list[0]._time.setHours(list[0]._time.getHours() - first._time.getHours());
       } else {
@@ -79,8 +79,8 @@ export class ProfileStoreData extends JsonData {
 
   static _adjustDuration(list: ProfileEntryData[]): void {
     // calculate the duration of the entries
-    for (var i = 0; i < list.length; i++) {
-      var end = 86400;
+    for (let i = 0; i < list.length; i++) {
+      let end = 86400;
       if (i < list.length - 1) {
         end = list[i + 1].timeForCalc;
       }
@@ -90,7 +90,7 @@ export class ProfileStoreData extends JsonData {
 
   static fromJson(name: string, json: any, percentage: number, timeshift: number,
                   startDate: Date): ProfileStoreData {
-    var ret = new ProfileStoreData(name);
+    const ret = new ProfileStoreData(name);
     if (json == null) {
       return ret;
     }
@@ -163,7 +163,7 @@ export class ProfileStoreData extends JsonData {
   }
 
   _importFromTime(time: Date, listSrc: ProfileEntryData[], listDst: ProfileEntryData[]): void {
-    var date = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+    const date = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     listSrc = listSrc.filter((p) => Utils.isAfter(p.endTime(date), time));
     if (Utils.isEmpty(listSrc)) {
       return;
@@ -224,13 +224,13 @@ export class ProfileStoreData extends JsonData {
   }
 
   _addFrom(list: ProfileEntryData[], srcProfile: ProfileData, srcList: ProfileEntryData[]): void {
-    var timeOfProfile =
+    const timeOfProfile =
       srcProfile.startDate.getHours() * 3600 + srcProfile.startDate.getMinutes() * 60 + srcProfile.startDate.getSeconds();
     for (let i = 0; i < srcList.length; i++) {
       const src = srcList[i].copy;
       const check = src.timeForCalc;
       if (srcProfile.duration == 0 || check < timeOfProfile + srcProfile.duration) {
-        var duration = 86400 - check;
+        let duration = 86400 - check;
         if (i < srcList.length - 1) {
           duration = srcList[i + 1].timeForCalc - check;
         }

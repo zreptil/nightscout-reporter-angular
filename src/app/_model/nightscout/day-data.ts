@@ -150,7 +150,7 @@ export class DayData {
             entry.transferCalcValues(last);
             // recalculate the value based on the value from the profile
             entry.value = entry.adjustedValue(entry.orgValue);
-            var currDuration = entry.duration;
+            let currDuration = entry.duration;
             if (i < this._profile.length - 1) {
               currDuration = Utils.differenceInSeconds(this._profile[i + 1].time(this.date), entry.time(this.date));
             }
@@ -465,7 +465,7 @@ export class DayData {
       if (time == check) {
         return treat;
       }
-      var diff = Math.abs(Utils.differenceInSeconds(time, check));
+      const diff = Math.abs(Utils.differenceInSeconds(time, check));
 
       if (diff < retDiff && diff <= maxMinuteDiff * 60) {
         ret = treat;
@@ -485,7 +485,7 @@ export class DayData {
       return new CalcIOBData(0, 0, null);
     } //time = DateTime(0);
 
-//    var check = time.millisecondsSinceEpoch;
+//    const check = time.millisecondsSinceEpoch;
     let check = time.getTime() - GLOBALS.ppMaxInsulinEffectInMS;
     let profile = data.profile(time);
 
@@ -495,9 +495,9 @@ export class DayData {
         list.push(t);
       }
       /*
-            var temp = yesterday.iob(
+            const temp = yesterday.iob(
                 data, DateTime(yesterday.date.year, yesterday.date.month, yesterday.date.day, 23, 59, 59), null);
-            var t = TreatmentData();
+            const t = TreatmentData();
             t.insulin = temp.iob;
             t.createdAt = DateTime(time.year, time.month, time.day, 0, 0, 0);
             list.add(t);

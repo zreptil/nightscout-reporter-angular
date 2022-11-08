@@ -20,14 +20,14 @@ export class MainComponent implements OnInit {
 
   /*
         bool dropElement(html.Element drag, html.Element drop) {
-          var dragId = drag.getAttribute('id').substring(5);
-          var dropId = drop.getAttribute('id').substring(5);
+          const dragId = drag.getAttribute('id').substring(5);
+          const dropId = drop.getAttribute('id').substring(5);
           if (dragId == dropId) return false;
 
           FormConfig dragCfg;
-          var dragIdx = -1;
-          var dropIdx = -1;
-          for (var i = 0; i < g.listConfig.length; i++) {
+          const dragIdx = -1;
+          const dropIdx = -1;
+          for (let i = 0; i < g.listConfig.length; i++) {
             if (g.listConfig[i].id == dragId) {
               dragCfg = g.listConfig[i];
               dragIdx = i;
@@ -48,7 +48,7 @@ export class MainComponent implements OnInit {
 
         ReportData reportData;
 
-        bool checkCfg(var cfg) => cfg.checked && (!cfg.form.isDebugOnly || g.isDebug) && (!cfg.form.isLocalOnly || g.isLocal);
+        bool checkCfg(const cfg) => cfg.checked && (!cfg.form.isDebugOnly || g.isDebug) && (!cfg.form.isLocalOnly || g.isLocal);
 
         void clickMenuButton(String type) {
           drawerVisible = false;

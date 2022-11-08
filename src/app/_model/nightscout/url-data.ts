@@ -62,7 +62,7 @@ export class UrlData {
     try {
       ret.url = JsonData.toText(json.u);
       ret.token = JsonData.toText(json.t);
-      var sd = JsonData.toText(json.sd);
+      const sd = JsonData.toText(json.sd);
       ret.startDate = sd == null ? new Date(1970, 1, 1) : JsonData.parseDate(sd);
       ret.endDate = JsonData.parseDate(json.ed);
     } catch (ex) {

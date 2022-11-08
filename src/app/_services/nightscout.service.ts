@@ -495,7 +495,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         }
         // the following code inserts an exercise in the data if there is none present
         // if (g.isLocal && !hasExercise) {
-        //   var t = TreatmentData();
+        //   const t = TreatmentData();
         //   t.createdAt =
         //       DateTime(begDate.year, begDate.month, begDate.day, 10, 0, 0);
         //   t.duration = 120 * 60;

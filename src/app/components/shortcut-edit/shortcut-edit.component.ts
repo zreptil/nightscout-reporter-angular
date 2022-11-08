@@ -36,7 +36,7 @@ export class ShortcutEditComponent implements OnInit {
 
   /*
       void fire(String type) {
-        var detail = 0;
+        const detail = 0;
         switch (type) {
           case 'ok':
             break;

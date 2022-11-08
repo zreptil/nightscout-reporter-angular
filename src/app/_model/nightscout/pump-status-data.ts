@@ -17,7 +17,7 @@ export class PumpStatusData extends JsonData {
   }
 
   static fromJson(json: any): PumpStatusData {
-    var ret = new PumpStatusData();
+    const ret = new PumpStatusData();
     if (json == null) {
       return ret;
     }

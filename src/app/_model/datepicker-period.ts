@@ -47,7 +47,7 @@ export class DatepickerPeriod {
       case 1:
         return Utils.addDateDays(GlobalsData.now, -1);
       case 2:
-        var diff = -(GlobalsData.now.getDay() - this.firstDayOfWeek + 1);
+        let diff = -(GlobalsData.now.getDay() - this.firstDayOfWeek + 1);
         while (diff > 0) {
           diff -= 7;
         }
@@ -65,7 +65,7 @@ export class DatepickerPeriod {
       const ret: string[] = [];
       let cnt = 0;
       for (let i = 0; i < DatepickerPeriod.dowShortNames.length; i++) {
-        var idx = i + this.firstDayOfWeek - 1;
+        let idx = i + this.firstDayOfWeek - 1;
         if (idx >= DatepickerPeriod.dowShortNames.length) {
           idx -= DatepickerPeriod.dowShortNames.length;
         }

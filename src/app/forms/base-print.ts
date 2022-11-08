@@ -2306,7 +2306,7 @@ export abstract class BasePrint extends FormConfig {
       });
     for (let i = 0; i < ptsIob.length; i++) {
       if (maxIob - minIob > 0) {
-        y = ptsIob[i].y;
+        const y = ptsIob[i].y;
         if (upperIob > 0) {
           ptsIob[i].y = this.cm(iobHeight / maxIob * (y + minIob));
         } else {
@@ -2344,7 +2344,7 @@ export abstract class BasePrint extends FormConfig {
     }
 
     if (lastX != null) {
-      var y = 0.0;
+      const y = 0.0;
       if (upperIob > 0) {
         ptsIob.push({x: this.cm(lastX), y: this.cm(iobHeight / maxIob * (y + minIob))});
       } else if (maxIob - minIob > 0) {
@@ -2368,14 +2368,14 @@ export abstract class BasePrint extends FormConfig {
   // String get helpHtml {
   //   if (help == null) return null;
   //
-  //   var ret = help.replaceAll('\n', 'µ');
+  //   let ret = help.replaceAll('\n', 'µ');
   //   ret = ret.replaceAll('µµ', '<br><br>');
   //   ret = ret.replaceAll('µ', ' ');
-  //   var list = RegExp('@([^@]*)@').allMatches(ret);
-  //   var links = <String>[];
-  //   for (var match in list) {
-  //     var part = match.group(1);
-  //     var cfg =
+  //   let list = RegExp('@([^@]*)@').allMatches(ret);
+  //   let links = <String>[];
+  //   for (const match of list) {
+  //     const part = match.group(1);
+  //     const cfg =
   //         GLOBALS.listConfig.firstWhere((cfg) => cfg.idx == part, orElse: () => null);
   //     if (cfg != null) {
   //       links.push(

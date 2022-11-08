@@ -78,7 +78,7 @@ export class TreatmentData extends JsonData {
 
   get from(): Uploader {
     if (this._from == Uploader.Unknown) {
-      var check = this.enteredBy.toLowerCase() ?? '';
+      const check = this.enteredBy.toLowerCase() ?? '';
       if (check == 'openaps') {
         this._from = Uploader.OpenAPS;
       } else if (check == 'tidepool') {
@@ -232,7 +232,7 @@ export class TreatmentData extends JsonData {
     ret.targetTop = JsonData.toNumber(json.targetTop);
     ret.targetBottom = JsonData.toNumber(json.targetBottom);
 
-    var temp = JsonData.toText(json.units);
+    let temp = JsonData.toText(json.units);
     if (temp.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() && !GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop / 18.02;
       ret.targetBottom = ret.targetBottom / 18.02;

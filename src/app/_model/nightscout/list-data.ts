@@ -305,8 +305,8 @@ export class ListData {
         //   eCarbs = double.tryParse(match.group(1)) ?? 0;
         //   delay = double.tryParse(match.group(3)) ?? 0;
         //   if (delay < 0) {
-        //     for (var j = i - 1; j >= 0 && eCarbs > 0.0; j--) {
-        //       var t1 = treatments[j];
+        //     for (let j = i - 1; j >= 0 && eCarbs > 0.0; j--) {
+        //       const t1 = treatments[j];
         //       if (t1.isMealBolus && t1.carbs < 10.0) {
         //         eCarbs -= t1.carbs;
         //         t1.isECarb = true;
@@ -355,8 +355,8 @@ export class ListData {
     }
 
     // injectionList = InsulinInjectionList();
-    // for (var day in days) {
-    //   for (var t in day.treatments) {
+    // for (const day of days) {
+    //   for (const t of day.treatments) {
     //     if (t.multipleInsulin != null) {
     //       injectionList = injectionList.add2List(t.multipleInsulin);
     //     }

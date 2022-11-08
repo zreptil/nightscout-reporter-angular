@@ -75,10 +75,10 @@ export class GlobalsData extends Settings {
     this.onPeriodChange = this.onPeriodChangeSubject.asObservable();
     // tz.Location found;
     //
-    // var dt = new Date();
-    // var offset = dt.getTimezoneOffset();
-    // var list = tz.timeZoneDatabase.locations.values;
-    // for (var l in list) {
+    // const dt = new Date();
+    // const offset = dt.getTimezoneOffset();
+    // const list = tz.timeZoneDatabase.locations.values;
+    // for (const l of list) {
     //   if (l.currentTimeZone.offset == offset) {
     //     found = l;
     //     break;

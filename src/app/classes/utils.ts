@@ -211,7 +211,7 @@ export class Utils {
     while (v.endsWith('0')) {
       v = v.substring(0, v.length - 1);
     }
-    var ret = Math.max(v.length - v.lastIndexOf('.') - 1, 0);
+    const ret = Math.max(v.length - v.lastIndexOf('.') - 1, 0);
     return Math.min(ret, 3);
   }
 

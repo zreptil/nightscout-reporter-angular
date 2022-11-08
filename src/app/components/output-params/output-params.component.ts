@@ -115,7 +115,7 @@ export class OutputParamsComponent implements OnInit {
     }
 
     void fire(String type) {
-      var detail = 0;
+      const detail = 0;
       // make sure the value uses the correct factor
       g.user.adjustGluc = g.user.adjustGluc;
       switch (type) {

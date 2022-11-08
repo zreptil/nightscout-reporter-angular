@@ -11,7 +11,7 @@ export class ThresholdData extends JsonData {
   }
 
   static fromJson(json: any): ThresholdData {
-    var ret = new ThresholdData();
+    const ret = new ThresholdData();
     if (json == null) {
       return ret;
     }

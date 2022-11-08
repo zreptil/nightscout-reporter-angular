@@ -118,7 +118,7 @@ export class ColorUtils {
   }
 
   static hex2hsl(hex: string[]): number[] {
-    var ret = ColorUtils.hex2rgb(hex);
+    const ret = ColorUtils.hex2rgb(hex);
     return ColorUtils.rgb2hsl(ret);
   }
 
@@ -189,7 +189,7 @@ export class ColorUtils {
   }
 
   static display_hex(ry: string[]): string | false {
-    var hex = `#${ry[0]}${ry[1]}${ry[2]}`;
+    const hex = `#${ry[0]}${ry[1]}${ry[2]}`;
     if (ColorUtils.validateHex(hex)) {
       return hex;
     } else {
@@ -198,7 +198,7 @@ export class ColorUtils {
   }
 
   static display_rgb(ry: number[]): string {
-    var rgb = `rgb(${Math.round(ry[0])},${Math.round(ry[1])},${Math.round(ry[2])})`;
+    const rgb = `rgb(${Math.round(ry[0])},${Math.round(ry[1])},${Math.round(ry[2])})`;
     if (ColorUtils.validateRgb(rgb)) {
       return rgb;
     } else {
@@ -207,7 +207,7 @@ export class ColorUtils {
   }
 
   static display_hsl(ry: number[]): string | false {
-    var hsl = `hsl(${Math.round(ry[0])},${Math.round(ry[1])}%,${Math.round(ry[2])}%)`;
+    const hsl = `hsl(${Math.round(ry[0])},${Math.round(ry[1])}%,${Math.round(ry[2])}%)`;
     if (ColorUtils.validateHsl(hsl)) {
       return hsl;
     } else {
@@ -224,9 +224,9 @@ export class ColorUtils {
   }
 
   static colorContrast(c1: number[], c2: number[]): number {
-    var l1 = ColorUtils.getRelativeLuminance(c1);
-    var l2 = ColorUtils.getRelativeLuminance(c2);
-    var ret = (l1 + .05) / (l2 + .05);
+    const l1 = ColorUtils.getRelativeLuminance(c1);
+    const l2 = ColorUtils.getRelativeLuminance(c2);
+    const ret = (l1 + .05) / (l2 + .05);
     // 0.05 for not dividing with 0
     return ret < 1 ? 1 / ret : ret;
   }

@@ -11,15 +11,15 @@
   width: 3em;
   left: 0.5em;
   overflow: hidden;
-  background-color: var(--mainBodyBack);
+  border-radius: 0.5em;
 
   [frame] {
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: flex-start;
-    border-radius: 0.5em;
     border: 1px solid var(--mainHeaderBack);
+    background-color: var(--mainBodyBack);
   }
 
   button {

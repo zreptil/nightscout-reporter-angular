@@ -69,7 +69,7 @@ export class DataService {
         idxList.push(GLOBALS._pdfOrder.substring(i, i + 3));
       }
     }
-    //    var idList = _pdfOrder.split(",");
+    //    const idList = _pdfOrder.split(",");
     for (let i = 0; i < idxList.length; i++) {
       const cfg = srcList.find((cfg) => cfg.idx === idxList[i]);
       if (cfg != null) {
@@ -204,7 +204,7 @@ export class DataService {
     /*
         if (_client == null || drive == null) return;
 
-        var query = 'name="${settingsFilename}" and not trashed';
+        const query = 'name="${settingsFilename}" and not trashed';
         _searchDocuments(1, query).then((gd.FileList list) {
           if (list?.files?.isNotEmpty ?? false) {
             settingsFile = list.files[0];
@@ -258,8 +258,7 @@ export class DataService {
       this.fromSharedJson(JSON.parse(shared));
       this.fromDeviceJson(JSON.parse(device));
     } catch (ex) {
-      var msg = ex.toString();
-      Log.debug(`Fehler bei DataService.fromStrings: ${msg}`);
+      Log.devError(ex, `Fehler bei DataService.fromStrings`);
     }
   }
 
@@ -469,10 +468,10 @@ export class DataService {
       ..mimeType = 'text/json'
       ..id = null;
 
-    var controller = StreamController<String>();
-    var content = asSharedString;
+    const controller = StreamController<String>();
+    const content = asSharedString;
     controller.add(content);
-    var media =
+    const media =
       commons.Media(controller.stream.transform(convert.Utf8Encoder()), content.length, contentType: 'text/json');
     if (settingsFile.id == null) {
       drive.files.generateIds(count: 1, space: driveParent).then((gd.GeneratedIds ids) {
@@ -480,13 +479,13 @@ export class DataService {
         drive.files.create(settingsFile, uploadMedia: media).then((_) {});
       });
     } else {
-      var file = gd.File();
+      const file = gd.File();
       file.trashed = false;
       drive.files.update(file, settingsFile.id, uploadMedia: media).then((gd.File file) {
         if (doReload) reload();
     //        showDebug("Datei ${file.name} gespeichert");
       })?.catchError((error) {
-        var msg = error.toString();
+        const msg = error.toString();
         showDebug('Fehler beim Upload zu Google (${settingsFile.name}): $msg');
       }, test: (error) => true);
     }
@@ -581,7 +580,7 @@ export class DataService {
             src = await this.requestJson(url);
             eNow = EntryData.fromJson(src[0]);
             ePrev = null;
-            for (var i = 1; i < src.length && ePrev == null; i++) {
+            for (let i = 1; i < src.length && ePrev == null; i++) {
               const check = EntryData.fromJson(src[i]);
               if (check.device == eNow.device) {
                 ePrev = check;
@@ -598,7 +597,7 @@ export class DataService {
           if (span > 15) {
             return GLOBALS.currentGluc;
           }
-          var time = Utils.differenceInMinutes(GlobalsData.now, eNow.time);
+          const time = Utils.differenceInMinutes(GlobalsData.now, eNow.time);
           GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(time);
 
           GLOBALS.currentGlucSrc = eNow;
@@ -624,7 +623,7 @@ export class DataService {
     }
 
     if (GLOBALS.currentGlucVisible || params.force) {
-      var milliseconds = params.timeout * 1000;
+      let milliseconds = params.timeout * 1000;
       //  calculate the milliseconds to the next full part of the minute for the timer
       // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
       // this is done for that the display of the time will match the current

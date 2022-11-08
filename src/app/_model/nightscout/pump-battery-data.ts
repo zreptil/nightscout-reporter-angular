@@ -15,7 +15,7 @@ export class PumpBatteryData extends JsonData {
   }
 
   static fromJson(json: any): PumpBatteryData {
-    var ret = new PumpBatteryData();
+    const ret = new PumpBatteryData();
     if (json == null) {
       return ret;
     }
