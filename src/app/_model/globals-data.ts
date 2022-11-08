@@ -698,10 +698,10 @@ export class GlobalsData extends Settings {
     }
     let ret = GLOBALS.fmtDateForDisplay.transform(dt);
     if (params.withShortWeekday) {
-      ret = `${DatepickerPeriod.dowShortName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, $ret`;
+      ret = `${DatepickerPeriod.dowShortName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, ${ret}`;
     }
     if (params.withLongWeekday) {
-      ret = `${DatepickerPeriod.dowName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, $ret`;
+      ret = `${DatepickerPeriod.dowName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, ${ret}`;
     }
     return ret;
   }

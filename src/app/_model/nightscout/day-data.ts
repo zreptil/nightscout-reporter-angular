@@ -435,7 +435,7 @@ export class DayData {
   }
 
   findNearest(eList: EntryData[], tList: TreatmentData[], check: Date,
-              glucoseType: string, maxMinuteDiff = 30): any {
+              glucoseType?: string, maxMinuteDiff = 30): any {
     eList ??= [];
     tList ??= [];
     if (Utils.isEmpty(eList) && Utils.isEmpty(tList)) {

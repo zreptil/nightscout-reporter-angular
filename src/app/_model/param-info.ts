@@ -17,10 +17,15 @@ export class ParamInfo {
   isDisabled = false;
   isVisible = true;
   subtitle: string;
+  min: number;
+  max: number;
+  list: string[];
+  subParams: ParamInfo[];
+  thumbValue: any;
 
   constructor(public sort: number,
               public title: string,
-              public options: {
+              args: {
                 boolValue?: boolean,
                 stringValue?: string,
                 intValue?: number,
@@ -33,102 +38,107 @@ export class ParamInfo {
                 isLoopValue?: boolean,
                 thumbValue?: any
               }) {
-    if (options.isDeprecated == null) {
-      options.isDeprecated = false;
-    }
-    if (options.isLoopValue == null) {
-      options.isLoopValue = false;
-    }
+    Utils.pushArgs(args, this);
+    this.isDeprecated ??= false;
+    this.isLoopValue ??= false;
 //  _boolValue = boolValue;
 //  _intValue = intValue;
 //  _stringValue = stringValue;
 //  _literalFormat = literalFormat;
-    if (options?.boolValue != null) {
+    if (this.boolValue != null) {
       this.type = ParamType.bool;
-      this.options.thumbValue ??= this.options.boolValue;
+      this.thumbValue ??= this.boolValue;
     }
-    if (options?.stringValue != null) {
+    if (this.stringValue != null) {
       this.type = ParamType.string;
-      this.options.thumbValue ??= this.options.stringValue;
+      this.thumbValue ??= this.stringValue;
     }
-    if (options?.intValue != null) {
+    if (this.intValue != null) {
       this.type = ParamType.int;
-      this.options.thumbValue ??= this.options.intValue;
+      this.thumbValue ??= this.intValue;
     }
-    if (options.list != null) {
+    if (this.list != null) {
       this.type = ParamType.list;
-      this.options.thumbValue ??= 0;
+      this.thumbValue ??= 0;
     }
-    if (options?.literalFormat != null) {
+    if (this.literalFormat != null) {
       this.type = ParamType.literal;
-      this.options.thumbValue ??= 0;
+      this.thumbValue ??= 0;
     }
   }
 
+  _boolValue: boolean;
+
   get boolValue(): boolean {
-    return this.isForThumbs ? this.options.thumbValue : (this.isLoopValue && GLOBALS.hideLoopData ? false : this.options.boolValue);
+    return this.isForThumbs ? this.thumbValue : (this.isLoopValue && GLOBALS.hideLoopData ? false : this._boolValue);
   }
 
   set boolValue(value) {
-    this.options.boolValue = value;
+    this._boolValue = value;
     this.handleValueChange(value);
   }
 
+  _stringValue: string;
+
   get stringValue(): string {
-    return this.isForThumbs ? this.options.thumbValue : this.options.stringValue;
+    return this.isForThumbs ? this.thumbValue : this._stringValue;
   }
 
   set stringValue(value) {
-    this.options.stringValue = value;
+    this._stringValue = value;
     this.handleValueChange(value);
   }
 
+  _intValue: number;
+
   get intValue(): number {
-    return this.isForThumbs ? this.options.thumbValue : this.options.intValue;
+    return this.isForThumbs ? this.thumbValue : this._intValue;
   }
 
   set intValue(value) {
-    this.options.intValue = value;
+    this._intValue = value;
     this.handleValueChange(value);
   }
 
+  _literalFormat: LiteralFormat;
+
   get literalFormat(): LiteralFormat {
-    return this.isForThumbs ? this.options.thumbValue : this.options.literalFormat;
+    return this.isForThumbs ? this.thumbValue : this._literalFormat;
   }
 
   set literalFormat(value) {
-    this.options.literalFormat = value;
+    this._literalFormat = value;
   }
 
   get sliderValue(): number {
-    return this.intValue >= this.options.min && this.intValue <= this.options.max ? this.intValue : this.options.min;
+    return this.intValue >= this.min && this.intValue <= this.max ? this.intValue : this.min;
   }
 
   set sliderValue(value) {
-    this.options.intValue = value;
+    this.intValue = value;
     this.handleValueChange(value);
   }
 
   get listValue(): string {
-    if (Utils.isEmpty(this.options.list)) {
+    if (Utils.isEmpty(this.list)) {
       return '';
     }
-    if (this.options.intValue == null || this.options.intValue < 0 || this.options.intValue >= this.options.list.length) {
-      return this.options.list[0];
+    if (this.intValue == null || this.intValue < 0 || this.intValue >= this.list.length) {
+      return this.list[0];
     }
-    return this.options.list[this.options.intValue];
+    return this.list[this.intValue];
   }
 
   get asJson(): any {
     const sp = [];
-    if (this.options.subParams != null) {
-      for (const p of this.options.subParams) {
+    if (this.subParams != null) {
+      for (const p of this.subParams) {
         if (p.type != ParamType.literal) {
           sp.push(p.asJson);
         }
       }
     }
-    return {b: this.options.boolValue, s: this.options.stringValue, i: this.options.intValue, sp: sp};
+    return {b: this.boolValue, s: this.stringValue, i: this.intValue, sp: sp};
   }
 
   handleValueChange(value: any): void {
@@ -141,10 +151,10 @@ export class ParamInfo {
     if (src.type != ParamType.literal) {
       return;
     }
-    this.options.boolValue = src.boolValue;
-    this.options.stringValue = src.stringValue;
-    this.options.intValue = src.intValue;
-    this.options.subParams = src.options.subParams;
+    this.boolValue = src.boolValue;
+    this.stringValue = src.stringValue;
+    this.intValue = src.intValue;
+    this.subParams = src.subParams;
     if (checkValue != null) {
       checkValue(this, null);
     }
@@ -155,31 +165,31 @@ export class ParamInfo {
     try {
       switch (this.type) {
         case ParamType.bool:
-          this.options.boolValue = value['b'] ?? false;
+          this.boolValue = value['b'] ?? false;
           if (checkValue != null) {
-            checkValue(this, this.options.boolValue);
+            checkValue(this, this.boolValue);
           }
           break;
         case ParamType.string:
-          this.options.stringValue = value['s'] ?? '';
+          this.stringValue = value['s'] ?? '';
           if (checkValue != null) {
-            checkValue(this, this.options.stringValue);
+            checkValue(this, this.stringValue);
           }
           break;
         case ParamType.int:
         case ParamType.list:
-          this.options.intValue = value['i'] ?? 0;
+          this.intValue = value['i'] ?? 0;
           if (checkValue != null) {
-            checkValue(this, this.options.intValue);
+            checkValue(this, this.intValue);
           }
           break;
         default:
           break;
       }
-      if (this.options.subParams != null) {
-        for (let i = 0; i < this.options.subParams.length; i++) {
+      if (this.subParams != null) {
+        for (let i = 0; i < this.subParams.length; i++) {
           if (i < value['sp'].length) {
-            this.options.subParams[i].fillFromJson(value['sp'][i], checkValue);
+            this.subParams[i].fillFromJson(value['sp'][i], checkValue);
           }
         }
       }

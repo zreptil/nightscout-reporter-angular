@@ -113,18 +113,18 @@ export class PdfService {
           switch (cfg.id) {
             case 'cgp':
 //                              cfg = new FormConfig(PrintCGP(), false);
-              cfg.form.params[0].options.thumbValue = 1;
+              cfg.form.params[0].thumbValue = 1;
               listConfig.push(cfg);
               break;
             case 'dayanalysis':
 //                              cfg = new FormConfig(PrintDailyAnalysis(), false);
-              cfg.form.params[2].options.thumbValue = 1;
+              cfg.form.params[2].thumbValue = 1;
               listConfig.push(cfg);
               break;
             case 'percentile':
 //                              cfg = new FormConfig(PrintPercentile(), false);
-              cfg.form.params[0].options.thumbValue = 0;
-              cfg.form.params[2].options.thumbValue = true;
+              cfg.form.params[0].thumbValue = 0;
+              cfg.form.params[2].thumbValue = true;
               listConfig.push(cfg);
               break;
           }
