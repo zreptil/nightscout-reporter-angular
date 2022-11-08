@@ -49,6 +49,8 @@ body {
   --mainHeaderFore: var(--primaryFore);
   --mainBodyBack: var(--secondaryBack);
   --mainBodyFore: var(--secondaryFore);
+  --sendCountFore: black;
+  --sendCountFrame: white;
 }
 
 mat-icon[small] {
