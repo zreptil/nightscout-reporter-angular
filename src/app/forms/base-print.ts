@@ -280,7 +280,7 @@ export abstract class BasePrint extends FormConfig {
 
   get backimage(): string {
     this.extractParams();
-    return `assets/img/thumbs/${GLOBALS.language.img}/${this.baseId}${this.backsuffix == '' ? '' : `-${this.backsuffix}`}.png`;
+    return `assets/img/thumbs/${GLOBALS.language.img}/${this.baseId}${this.backsuffix === '' ? '' : `-${this.backsuffix}`}.png`;
   }
 
   get sortedParams(): ParamInfo[] {
@@ -1443,7 +1443,7 @@ export abstract class BasePrint extends FormConfig {
         color: this.colSubTitle,
       });
     }
-    const y = this.titleInfoSub == '' ? 2.4 : 2.0;
+    const y = this.titleInfoSub === '' ? 2.4 : 2.0;
 
     if (GLOBALS.currPeriodShift.months != 0) {
       stack.push({
@@ -1804,17 +1804,17 @@ export abstract class BasePrint extends FormConfig {
     params.horzfs ??= this.fs(8);
     params.vertfs ??= this.fs(8);
     const ret = new GridData();
-    if (params.graphBottom == 0.0) {
+    if (params.graphBottom === 0.0) {
       params.graphBottom = graphHeight;
     }
-    ret.glucScale = params.glucScale == 0.0
+    ret.glucScale = params.glucScale === 0.0
       ? GLOBALS.glucMGDL
         ? 50
         : 18.02
       : params.glucScale;
     ret.gridLines = Math.ceil(glucMax / ret.glucScale);
 
-    ret.lineHeight = ret.gridLines == 0 ? 0 : graphHeight / ret.gridLines;
+    ret.lineHeight = ret.gridLines === 0 ? 0 : graphHeight / ret.gridLines;
     ret.colWidth = graphWidth / 24;
 
     // draw vertical lines with times below graphic
@@ -1837,7 +1837,7 @@ export abstract class BasePrint extends FormConfig {
       }
     }
 
-    if (ret.lineHeight == 0) {
+    if (ret.lineHeight === 0) {
       return ret;
     }
 
@@ -1909,30 +1909,19 @@ export abstract class BasePrint extends FormConfig {
     return new StepData(min, step);
   }
 
-  addLegendEntry(legend: LegendData, color: string, text: string, params: {
-    isArea: boolean,
-    image: string,
-    imgWidth: number,
-    imgOffsetY: number,
-    lineWidth: number,
-    graphText: string,
-    newColumn: false,
-    points: { x: number, y: number }[],
-    colGraphText: string,
-    colLegendText: string
+  addLegendEntry(legend: LegendData, color: string, text: string, params?: {
+    isArea?: boolean,
+    image?: string,
+    imgWidth?: number,
+    imgOffsetY?: number,
+    lineWidth?: number,
+    graphText?: string,
+    newColumn?: false,
+    points?: { x: number, y: number }[],
+    colGraphText?: string,
+    colLegendText?: string
   }) {
-    params ??= {
-      isArea: null,
-      image: null,
-      imgWidth: null,
-      imgOffsetY: null,
-      lineWidth: null,
-      graphText: null,
-      newColumn: null,
-      points: null,
-      colGraphText: null,
-      colLegendText: null
-    };
+    params ??= {};
     params.isArea ??= true;
     params.imgWidth ??= 0.6;
     params.imgOffsetY ??= 0.0;
@@ -2208,7 +2197,7 @@ export abstract class BasePrint extends FormConfig {
       }
     }
     const gridLines = Math.floor(((max - min) / step) + 1);
-    const lineHeight = gridLines == 0 ? 0 : graphHeight / gridLines;
+    const lineHeight = gridLines === 0 ? 0 : graphHeight / gridLines;
 
 //    top += 0.1 * (lineHeight / step);
     for (let i = 1; i < gridLines; i++) {
@@ -2286,7 +2275,7 @@ export abstract class BasePrint extends FormConfig {
       }
       i += diff;
     }
-    if (upperIob == 0) {
+    if (upperIob === 0) {
       minIob = minIob * 1.1;
       maxIob = maxIob * 1.1;
     } else {
@@ -2332,7 +2321,7 @@ export abstract class BasePrint extends FormConfig {
       [this.S(100, 20), this.S(50, 10), this.S(20, 5), this.S(0, 1)],
       (i, step, value) => `${GLOBALS.fmtNumber(value ?? i * step, 0)} g`);
 
-    if (upperCob == 0) {
+    if (upperCob === 0) {
       maxCob = maxCob * 1.1;
     } else {
       maxCob = upperCob;
@@ -2378,7 +2367,7 @@ export abstract class BasePrint extends FormConfig {
   //   for (const match of list) {
   //     const part = match.group(1);
   //     const cfg =
-  //         GLOBALS.listConfig.firstWhere((cfg) => cfg.idx == part, orElse: () => null);
+  //         GLOBALS.listConfig.firstWhere((cfg) => cfg.idx === part, orElse: () => null);
   //     if (cfg != null) {
   //       links.push(
   //           '</span><material-button (trigger)="GLOBALS.show(\'Oleole\')">${cfg.form.title}</material-button><span>');

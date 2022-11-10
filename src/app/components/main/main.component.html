@@ -139,12 +139,12 @@
         <div [class]="classForView('basePanel')">
           <div *ngIf="globals.userListLoaded && globals.userList.length == 1"
                class="userName">
-            {{ss.isEmpty(globals.user.display) ? 'SCHISS' : globals.user.display}}
+            {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
           </div>
           <div *ngIf="globals.userList.length > 1"
                [class]="classForView('userPanel')">
             <mat-form-field appearance="standard">
-              <mat-select [(value)]="globals.userIdx">
+              <mat-select [(value)]="userIdx">
                 <mat-select-trigger>
                   {{ss.isEmpty(globals.user.display) ? 'SCHISS' : globals.user.display}}
                 </mat-select-trigger>

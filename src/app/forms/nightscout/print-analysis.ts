@@ -157,7 +157,7 @@ export class PrintAnalysis extends BasePrint {
 
     for (const line of lines) {
       if (line[0]['@'] != null) {
-        if (line[0]['@'] == false) {
+        if (line[0]['@'] === false) {
           continue;
         } else {
           line.removeAt(0);

@@ -36,6 +36,13 @@ export class TestComponent implements OnInit {
 
   ngOnInit(): void {
     this.ts.setTheme('standard');
+    const notes = 'Oleole, supernotitz -2738 und 09123 und 972131';
+    //const notes = 'The quick brown fox jumps over the lazy dog. It barked.';
+    //const rex = /(?<wurscht>fox|cat) jumps over/;
+    const rex = /[^0-9\-]*(?<eCarbs>-*\d*)[^0-9\-]*(?<egal>-*\d*)[^0-9\-]*(?<delay>-*\d*).*/;
+    const matches = notes.match(rex);
+    Log.info('match', notes, matches, matches.groups);
+    console.log(notes, matches);
   }
 
   testCrypt(): void {

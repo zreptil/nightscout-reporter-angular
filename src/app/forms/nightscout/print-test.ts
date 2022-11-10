@@ -138,7 +138,7 @@ export class PrintTest extends BasePrint {
           {text: GLOBALS.fmtNumber(entry.sgv)},
           {text: GLOBALS.fmtNumber(entry.gluc)},
         ];
-        //      if(entry.direction != null && entry.direction.toLowerCase() == 'none')
+        //      if(entry.direction != null && entry.direction.toLowerCase() === 'none')
         //       {
         //         for(any c in row)
         //           c['color'] = '#f00';

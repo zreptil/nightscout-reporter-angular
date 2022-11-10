@@ -29,7 +29,7 @@ export class StatusData extends JsonData {
       return ret;
     }
     ret.status = JsonData.toText(json.status);
-    if (ret.status == '401') {
+    if (ret.status === '401') {
       return ret;
     }
     ret.name = JsonData.toText(json.name);

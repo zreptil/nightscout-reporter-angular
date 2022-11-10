@@ -77,7 +77,7 @@ export class ViewTileComponent implements OnInit {
     if (!cfg.opened) {
       Log.todo('Checken, ob der auskommentierte Code in ViewTileComponent.expansionPanelClicked noch benötigt wird.',
         'Das hatte wohl was mit Drag-Drop zu tun.');
-      //   if (evt.currentTarget.attributes['dontclick'] == 'true') {
+      //   if (evt.currentTarget.attributes['dontclick'] === 'true') {
       //     evt.currentTarget.removeAttribute('dontclick');
       //     return;
       //   }
@@ -104,7 +104,7 @@ export class ViewTileComponent implements OnInit {
   mayCopy(cfg: FormConfig): boolean {
     return cfg.form.sortedParams.length > 0 &&
       cfg.checked &&
-      cfg.form.suffix == '-' &&
+      cfg.form.suffix === '-' &&
       GLOBALS.listConfig.filter((c) => c.form.baseId === cfg.form.baseId).length < 3 &&
       GLOBALS.listConfig.filter((c) => c.form.suffix !== '-').length < 9;
   }

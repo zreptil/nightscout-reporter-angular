@@ -61,7 +61,7 @@ export class DatepickerComponent implements OnInit {
     this.data.period = temp ?? this.data.period;
     if (this.data.period.entryKey != null && this.data.period.list.length > 0) {
       const entry =
-        this.data.period.list.find((e) => e.key == this.data.period.entryKey);
+        this.data.period.list.find((e) => e.key === this.data.period.entryKey);
       entry?.fill(this.data.period);
     }
     this.data.month = GlobalsData.now;

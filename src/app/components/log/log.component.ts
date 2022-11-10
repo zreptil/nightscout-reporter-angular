@@ -73,9 +73,9 @@ export class LogComponent implements OnInit {
         // 'http://pdf.zreptil.de/playground.php'
         let doc = JSON.stringify(link.data);
         if (doc != null) {
-          // doc = doc.replace(/],/g, '],\n');
+          doc = doc.replace(/],/g, '],\n');
           doc = doc.replace(/,"/g, ',\n"');
-          // doc = doc.replace(/:\[/g, ':\n[');
+          doc = doc.replace(/:\[/g, ':\n[');
         }
         doc = btoa(encodeURIComponent(doc).replace(/%([0-9A-F]{2})/g, function (match, p1) {
           return String.fromCharCode(parseInt(p1, 16))
@@ -110,7 +110,7 @@ export class LogComponent implements OnInit {
 
   classForLine(line: any): string[] {
     const ret: string[] = [];
-    if (line._ != null) {
+    if (line?._ != null) {
       ret.push('nobottomline');
     }
     return ret;

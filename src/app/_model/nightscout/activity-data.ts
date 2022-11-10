@@ -35,10 +35,10 @@ export class ActivityData extends JsonData {
   }
 
   equals(a: ActivityData): boolean {
-    return this.createdAt.getTime() == a.createdAt.getTime() &&
-      this.type == a.type &&
-      this.steps == a.steps &&
-      this.bpm == a.bpm &&
-      this.accuracy == a.accuracy;
+    return this.createdAt.getTime() === a.createdAt.getTime() &&
+      this.type === a.type &&
+      this.steps === a.steps &&
+      this.bpm === a.bpm &&
+      this.accuracy === a.accuracy;
   }
 }

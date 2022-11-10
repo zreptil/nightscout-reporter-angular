@@ -34,7 +34,7 @@ export class ProfileEntryData extends JsonData {
   }
 
   get tempAdjusted(): number {
-    return this._absoluteRate != null ? 0 : (this.orgValue === null || this.orgValue === 0 ? 0 : (this.value - this.orgValue) / this.orgValue);
+    return this._absoluteRate != null ? 0 : (this.orgValue == null || this.orgValue === 0 ? 0 : (this.value - this.orgValue) / this.orgValue);
   }
 
   get localDiff(): number {
@@ -88,10 +88,10 @@ export class ProfileEntryData extends JsonData {
     }
 
     ret.from = src.from;
-    if ((src.from == Uploader.Minimed600 ||
-        src.from == Uploader.Tidepool ||
-        src.from == Uploader.Spike ||
-        src.from == Uploader.Unknown) &&
+    if ((src.from === Uploader.Minimed600 ||
+        src.from === Uploader.Tidepool ||
+        src.from === Uploader.Spike ||
+        src.from === Uploader.Unknown) &&
       src._absolute != null) {
       ret.absoluteRate = src._absolute;
     }
@@ -112,7 +112,7 @@ export class ProfileEntryData extends JsonData {
     } else {
       ret._time.setHours(ret._time.getHours() + timeshift - 24);
     }
-    ret.value = JsonData.toNumber(json.value);
+    ret.value = JsonData.toNumber(json.value, null);
     if (ret.value != null) {
       if (isReciprocal) {
         if (percentage > 0) {
@@ -168,11 +168,9 @@ export class ProfileEntryData extends JsonData {
     if (this._absoluteRate != null) {
       // spike needs a special handling, since the value seems to be the amount
       // given over the duration, not the amount given in one hour.
-//      if (from == Uploader.Spike) return _absoluteRate / (duration / 3600);
+//      if (from === Uploader.Spike) return _absoluteRate / (duration / 3600);
       return this._absoluteRate;
     }
     return v;
   }
 }
-
-// */

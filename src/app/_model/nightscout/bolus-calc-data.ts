@@ -74,7 +74,7 @@ export class BoluscalcData extends JsonData {
     ret.insulinSuperBolus = JsonData.toNumber(json.insulinsuperbolus);
     ret.insulinTrend = JsonData.toNumber(json.insulintrend);
     ret.insulin = JsonData.toNumber(json.insulin);
-    if (ret.insulin == 0.0) {
+    if (ret.insulin === 0.0) {
       ret.insulin = JsonData.toNumber(json.enteredinsulin);
     }
     ret.superBolusUsed = JsonData.toBool(json.superbolusused);

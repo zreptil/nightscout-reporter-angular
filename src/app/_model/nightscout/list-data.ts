@@ -54,7 +54,7 @@ export class ListData {
         list.push(entry.gluc);
       }
     }
-    if (list.length % 2 == 0) {
+    if (list.length % 2 === 0) {
       return (list[Math.floor(list.length / 2)] + list[Math.floor(list.length / 2 + 1)]) / 2;
     } else {
       return list[Math.floor((list.length + 1) / 2)];
@@ -176,12 +176,12 @@ export class ListData {
       }
     }
 
-    const gviDelta = lastGluc - firstGluc;
-    const gviIdeal = Math.sqrt(Math.pow(usedRecords * 5, 2) + Math.pow(gviDelta, 2));
-    const gvi = gviIdeal != 0 ? this.gviTotal / gviIdeal : 0.0;
+    let gviDelta = lastGluc - firstGluc;
+    this.gviIdeal = Math.sqrt(Math.pow(usedRecords * 5, 2) + Math.pow(gviDelta, 2));
+    this.gvi = this.gviIdeal != 0 ? this.gviTotal / this.gviIdeal : 0.0;
     this.rms = Math.sqrt(rmsTotal / usedRecords);
-    const tirMultiplier = this.validCount == 0 ? 0.0 : this.stat['stdNorm'].values.length / this.validCount;
-    this.pgs = gvi * (glucTotal / usedRecords) * (1.0 - tirMultiplier);
+    let tirMultiplier = this.validCount === 0 ? 0.0 : this.stat['stdNorm'].values.length / this.validCount;
+    this.pgs = this.gvi * (glucTotal / usedRecords) * (1.0 - tirMultiplier);
 
     for (const key of Object.keys(this.stat)) {
       this.stat[key].varianz = 0.0;
@@ -223,10 +223,10 @@ export class ListData {
         this.days.push(new DayData(entry.time, glucData));
         lastDay = entry.time;
       }
-      if (entry.type == 'mbg') {
-        this.days[this.days.length - 1].bloody.push(entry);
+      if (entry.type === 'mbg') {
+        Utils.last(this.days).bloody.push(entry);
       } else {
-        this.days[this.days.length - 1].entries.push(entry);
+        Utils.last(this.days).entries.push(entry);
       }
     }
 
@@ -241,6 +241,7 @@ export class ListData {
     this.ampulleCount = 0;
     this.sensorCount = 0;
     let eCarbs = 0.0;
+    let delay = 0;
     this.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
 
     if (Utils.isEmpty(this.addList)) {
@@ -250,7 +251,7 @@ export class ListData {
         if (!t1.isTempBasal) {
           continue;
         }
-        const t = lastIdx == -1 ? data.lastTempBasal : this.treatments[lastIdx];
+        const t = lastIdx === -1 ? data.lastTempBasal : this.treatments[lastIdx];
         if (t == null) {
           continue;
         }
@@ -268,7 +269,7 @@ export class ListData {
         // end is at end of the day and insert a new treatment with the duration
         // up to the next treatment
         const date = Utils.addDateDays(t.createdAt, 1);
-        if (date.getDate() === t1.createdAt.getDate() && date.getMonth() === t1.createdAt.getMonth() && date.getFullYear() == t1.createdAt.getFullYear()) {
+        if (date.getDate() === t1.createdAt.getDate() && date.getMonth() === t1.createdAt.getMonth() && date.getFullYear() === t1.createdAt.getFullYear()) {
           const newTreat = t.copy;
           newTreat.createdAt = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0);
           const duration = 86399 - t.timeForCalc;
@@ -298,22 +299,23 @@ export class ListData {
         this.sensorCount++;
       }
       if (type === 'note' && t.notes.toLowerCase().startsWith('ecarb')) {
-        Log.todo('ListData.extractData muss noch fertig implementiert werden');
-        // const rex = RegExp(/[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*).*/);
-        // Match match = rex.firstMatch(t.notes);
-        // if (match != null && match.groupCount == 3) {
-        //   eCarbs = double.tryParse(match.group(1)) ?? 0;
-        //   delay = double.tryParse(match.group(3)) ?? 0;
-        //   if (delay < 0) {
-        //     for (let j = i - 1; j >= 0 && eCarbs > 0.0; j--) {
-        //       const t1 = treatments[j];
-        //       if (t1.isMealBolus && t1.carbs < 10.0) {
-        //         eCarbs -= t1.carbs;
-        //         t1.isECarb = true;
-        //       }
-        //     }
-        //   }
-        // }
+        Log.todo('ListData.extractData muss noch überprüft werden', 'Ausgewerteter Wert:', t.notes);
+        // const rex = /[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*).*/g;
+        const rex = /[^0-9\-]*(?<eCarbs>-*\d*)[^0-9\-]*(?<egal>-*\d*)[^0-9\-]*(?<delay>-*\d*).*/;
+        const matches = t.notes.match(rex);
+        if (matches?.groups != null) {
+          eCarbs = Utils.parseNumber(matches.groups['eCarbs']) ?? 0;
+          delay = Utils.parseNumber(matches.groups['delay']) ?? 0;
+          if (delay < 0) {
+            for (let j = i - 1; j >= 0 && eCarbs > 0.0; j--) {
+              const t1 = this.treatments[j];
+              if (t1.isMealBolus && t1.carbs < 10.0) {
+                eCarbs -= t1.carbs;
+                t1.isECarb = true;
+              }
+            }
+          }
+        }
       }
 
       if (t.isMealBolus && eCarbs != null && eCarbs > 0.0 && t.carbs < 10.0) {

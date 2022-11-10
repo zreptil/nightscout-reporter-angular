@@ -141,10 +141,10 @@ export class SessionService {
             }
 
             _drag = Draggable(html.querySelectorAll('.sortable'),
-              avatarHandler: g.viewType == 'tile' ? TileAvatarHandler() : AvatarHandler.clone(),
+              avatarHandler: g.viewType === 'tile' ? TileAvatarHandler() : AvatarHandler.clone(),
               draggingClass: 'dragging',
-              handle: g.viewType == 'tile' ? null : '[name]>material-icon',
-              verticalOnly: g.viewType == 'list');
+              handle: g.viewType === 'tile' ? null : '[name]>material-icon',
+              verticalOnly: g.viewType === 'list');
             _drag.onDragStart.listen((DraggableEvent event) {});
             _drag.onDragEnd.listen((DraggableEvent event) {
               event.draggableElement.animate([

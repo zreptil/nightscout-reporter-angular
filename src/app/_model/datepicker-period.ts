@@ -82,7 +82,7 @@ export class DatepickerPeriod {
   get dayCount(): number {
     let ret = 0;
     if (this.start != null && this.end != null) {
-      ret = Utils.differenceInSeconds(new Date(this.end.getFullYear(), this.end.getMonth(), this.end.getDate()),
+      ret = Utils.differenceInDays(new Date(this.end.getFullYear(), this.end.getMonth(), this.end.getDate()),
         new Date(this.start.getFullYear(), this.start.getMonth(), this.start.getDate())) + 1;
     }
     return ret;
@@ -197,7 +197,7 @@ export class DatepickerPeriod {
 
   parse(date: string): Date {
     let ret: Date = null;
-    if (date != null && date.length == 8) {
+    if (date != null && date.length === 8) {
       const y = +(date.substring(0, 4) ?? '0');
       const m = +(date.substring(4, 6) ?? '1');
       const d = +(date.substring(6, 8) ?? '1');

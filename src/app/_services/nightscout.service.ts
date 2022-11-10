@@ -213,7 +213,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       // https://xxx/api/v1/profiles.json?find[startDate][$gt]=2018-01-01T11:30:17.694Z
       url = urlData.fullUrl('profile.json', `count=${maxCount}`);
       content = await this.ds.requestJson(url);
-      Log.displayLink(`profiles (${content?.length})`, url, {type: 'debug'});
+      Log.displayLink(`profiles (${content?.length})`, url, {count: content?.length, type: 'debug'});
 
       try {
         GLOBALS.basalPrecisionAuto = 0;
@@ -229,12 +229,12 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             }
           } catch (ex) {
           }
-          GLOBALS.basalPrecisionAuto = Math.max(GLOBALS.basalPrecision, data.profiles[data.profiles.length - 1].maxPrecision);
+          GLOBALS.basalPrecisionAuto = Math.max(GLOBALS.basalPrecision, Utils.last(data.profiles).maxPrecision);
         }
         data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
 
         const check = Utils.addDateDays(new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999), -1);
-        if (src.length === maxCount && Utils.isAfter(data.profiles[data.profiles.length - 1].startDate, check)) {
+        if (src.length === maxCount && Utils.isAfter(Utils.last(data.profiles).startDate, check)) {
           Log.warn(this.msgTooMuchProfiles(maxCount, uploaders.length, uploaders.join(', ')));
         }
 
@@ -243,16 +243,16 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       } catch (ex) {
         Log.devError(ex, this.msgProfileError);
       }
-      let params = `find[created_at][\$gte]=${begDate.getFullYear() - 1}-01-01T00:00:00.000Z&find[eventType]=Profile Switch`;
+      let params = `find[created_at][$gte]=${begDate.getFullYear() - 1}-01-01T00:00:00.000Z&find[eventType]=Profile Switch`;
       if (GLOBALS.ppFixAAPS30) {
         params +=
-          `&find[profilePlugin][\$ne]=info.nightscout.androidaps.plugins.profile.local.LocalProfilePlugin&count=10000`;
+          `&find[profilePlugin][$ne]=info.nightscout.androidaps.plugins.profile.local.LocalProfilePlugin&count=10000`;
       }
 
       // find profileswitches in treatments, create profiledata and mix it in the profiles
       url = urlData.fullUrl('treatments.json', params);
       content = await this.ds.requestJson(url);
-      Log.displayLink(`profileswitch (${content?.length})`, url, {type: 'debug'});
+      Log.displayLink(`profileswitch (${content?.length})`, url, {count: content?.length, type: 'debug'});
       if (content != null) {
         try {
           // const src = content;
@@ -338,7 +338,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
             data.profiles.push(ProfileData.fromJson(JSON.parse(parts.join(','))));
             if (store != null) {
-              data.profiles[data.profiles.length - 1].store[entry.profile] = store;
+              Utils.last(data.profiles).store[entry.profile] = store;
             }
           }
         } catch (ex) {
@@ -374,10 +374,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       i++;
     }
-    if (baseProfile != null && data.profiles[data.profiles.length - 1].duration > 0) {
+    if (baseProfile != null && Utils.last(data.profiles).duration > 0) {
       //    if (last.duration > 0 && data.profiles.length > 1) {
       const temp = baseProfile.copy;
-      temp.startDate = Utils.addTimeSeconds(data.profiles[data.profiles.length - 1].startDate, data.profiles[data.profiles.length - 1].duration);
+      temp.startDate = Utils.addTimeSeconds(Utils.last(data.profiles).startDate, Utils.last(data.profiles).duration);
       temp.createdAt = temp.startDate;
       data.profiles.push(temp);
     }
@@ -386,8 +386,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       data.profiles.push(new ProfileData());
     }
 
-    data.profiles[data.profiles.length - 1].duration =
-      Utils.differenceInSeconds(GlobalsData.now, data.profiles[data.profiles.length - 1]?.startDate ?? GlobalsData.now);
+    Utils.last(data.profiles).duration =
+      Utils.differenceInSeconds(GlobalsData.now, Utils.last(data.profiles)?.startDate ?? GlobalsData.now);
 
     this.ps.value = 3;
     this.ps.text = $localize`Sortiere berechnete Profile...`;
@@ -399,7 +399,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     // remove all profiles with a length of 0
     this.ps.value = 4;
     this.ps.text = $localize`Entferne leere Profile...`;
-    data.profiles = data.profiles.filter((p) => !(p.duration < 2 && p != data.profiles[data.profiles.length - 1] && p.store['NR Profil'] == null));
+    data.profiles = data.profiles.filter((p) => !(p.duration < 2 && p != Utils.last(data.profiles) && p.store['NR Profil'] == null));
 
     // add the previous day of the period to have the daydata available in forms that need this information
     begDate = Utils.addDateDays(begDate, -1);
@@ -419,11 +419,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         const urlDate = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate());
         let url = GlobalsData.user.apiUrl(urlDate, 'entries.json',
           {
-            params: `find[date][\$gte]=${beg.getTime()}&find[date][\$lte]=${end.getTime()}&count=100000`
+            params: `find[date][$gte]=${beg.getTime()}&find[date][$lte]=${end.getTime()}&count=100000`
           });
         let src = await this.ds.requestJson(url);
         if (src != null) {
-          Log.displayLink(`e${Utils.fmtDate(begDate)} (${src.length})`, url, {type: 'debug'});
+          Log.displayLink(`e${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const entry of src) {
             try {
               const e = EntryData.fromJson(entry);
@@ -448,7 +448,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           // find last temp basal of treatments of day before current day.
           url = data.user.apiUrl(urlDate, 'treatments.json',
             {
-              params: `find[created_at][\$lt]=${profileBeg.toISOString()}&find[created_at][\$gt]=${Utils.addDateDays(profileBeg, -1).toISOString()}&count=100&find[eventType][\$eq]=Temp%20Basal'`
+              params: `find[created_at][$lt]=${profileBeg.toISOString()}&find[created_at][$gt]=${Utils.addDateDays(profileBeg, -1).toISOString()}&count=100&find[eventType][$eq]=Temp%20Basal'`
             });
           src = await this.ds.requestJson(url);
           if (src != null) {
@@ -463,16 +463,16 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           }
         }
         url = data.user.apiUrl(urlDate, 'treatments.json',
-          {params: `find[created_at][\$gte]=${profileBeg.toISOString()}&find[created_at][\$lte]=${profileEnd.toISOString()}&count=100000`});
+          {params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`});
         src = await this.ds.requestJson(url);
         let hasExercise = false;
         if (src != null) {
-          Log.displayLink(`t${Utils.fmtDate(begDate)} (${src.length})`, url, {type: 'debug'});
+          Log.displayLink(`t${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const treatment of src) {
             hasData = true;
             const t = TreatmentData.fromJson(treatment);
             // Treatments entered by sync are ignored
-            if (t.enteredBy == 'sync') {
+            if (t.enteredBy === 'sync') {
             } else if (!Utils.isEmpty(data.ns.treatments) && t.equals(data.ns.treatments[data.ns.treatments.length - 1])) {
               // duplicate Treatments are removed
               data.ns.treatments[data.ns.treatments.length - 1].duplicates++;
@@ -510,11 +510,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         // }
         url = data.user.apiUrl(urlDate, 'devicestatus.json',
           {
-            params: `find[created_at][\$gte]=${profileBeg.toISOString()}&find[created_at][\$lte]=${profileEnd.toISOString()}&count=100000`
+            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`
           });
         src = await this.ds.requestJson(url);
         if (src != null) {
-          Log.displayLink(`ds${Utils.fmtDate(begDate)} (${src.length})`, url, {type: 'debug'});
+          Log.displayLink(`ds${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const devicestatus of src) {
             hasData = true;
             data.ns.devicestatusList.push(DeviceStatusData.fromJson(devicestatus));
@@ -522,11 +522,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         }
         url = data.user.apiUrl(urlDate, 'activity.json',
           {
-            params: `find[created_at][\$gte]=${profileBeg.toISOString()}&find[created_at][\$lte]=${profileEnd.toISOString()}&count=100000`
+            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`
           });
         src = await this.ds.requestJson(url);
         if (src != null) {
-          Log.displayLink(`ac${Utils.fmtDate(begDate)} (${src.length})`, url, {type: 'debug'});
+          Log.displayLink(`ac${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const activity of src) {
             const value = ActivityData.fromJson(activity);
             let exists = false;
@@ -537,7 +537,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             }
             if (!exists) {
               data.ns.activityList.push(value);
-              // if(value.type == 'steps-total') {
+              // if(value.type === 'steps-total') {
               //   print('${begDate} ${value.createdAt.hour}:${value.createdAt.minute} - ${value.steps}');
               // }
             }
@@ -553,7 +553,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
-//  if (sendIcon == 'stop') {
+//  if (sendIcon === 'stop') {
     this.ps.value = 0;
     this.ps.max = 6;
     this.ps.text = this.msgPreparingData;
@@ -620,7 +620,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           next = entry.copy;
           const max = Utils.differenceInMinutes(current, prev.time);
           while (Utils.isAfter(current, target) || Utils.isSameMoment(current, target)) {
-            const factor = max == 0 ? 0 : Utils.differenceInMinutes(target, prev.time) / max;
+            const factor = max === 0 ? 0 : Utils.differenceInMinutes(target, prev.time) / max;
             next = next.copy;
             if (max >= minGapKeep) {
               next.isGap = true;

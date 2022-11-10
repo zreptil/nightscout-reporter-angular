@@ -356,14 +356,14 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       let row: any[] = [];
 
       let wasAdded = false;
-      if (this.groupMinutes == 0 || Utils.isBefore(t.createdAt, nextTime)) {
+      if (this.groupMinutes === 0 || Utils.isBefore(t.createdAt, nextTime)) {
         wasAdded = true;
-        this.fillList(this.groupMinutes != 0, this.repData, day, t, list, flags);
+        this.fillList(this.groupMinutes !== 0, this.repData, day, t, list, flags);
       }
 
-      if (this.groupMinutes == 0 || !Utils.isBefore(t.createdAt, nextTime)) {
+      if (this.groupMinutes === 0 || !Utils.isBefore(t.createdAt, nextTime)) {
         let time = t.createdAt;
-        if (this.groupMinutes != 0) {
+        if (this.groupMinutes !== 0) {
           time = Utils.addTimeMinutes(nextTime, -this.groupMinutes);
         }
         while (!Utils.isEmpty(list)) {
@@ -680,12 +680,12 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
 
     if (this.showTempTargets && t.isTempTarget) {
       let target: string;
-      if (t.targetBottom == t.targetTop) {
+      if (t.targetBottom === t.targetTop) {
         target = `${GLOBALS.glucFromStatusMGDL(t.targetBottom)} ${GLOBALS.getGlucInfo().unit}`;
       } else {
         target = `${GLOBALS.glucFromStatusMGDL(t.targetBottom)} - ${GLOBALS.glucFromStatusMGDL(t.targetTop)} ${GLOBALS.getGlucInfo().unit}`;
       }
-      if (t.duration == 0 && t.targetBottom == 0) {
+      if (t.duration === 0 && t.targetBottom === 0) {
         list.push(this.msgLogTempTargetReset);
       } else {
         list.push(this.msgLogTempTarget(target, t.duration / 60, t.reason));

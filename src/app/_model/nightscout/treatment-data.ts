@@ -77,17 +77,17 @@ export class TreatmentData extends JsonData {
   _from: Uploader = Uploader.Unknown;
 
   get from(): Uploader {
-    if (this._from == Uploader.Unknown) {
+    if (this._from === Uploader.Unknown) {
       const check = this.enteredBy.toLowerCase() ?? '';
-      if (check == 'openaps') {
+      if (check === 'openaps') {
         this._from = Uploader.OpenAPS;
-      } else if (check == 'tidepool') {
+      } else if (check === 'tidepool') {
         this._from = Uploader.Tidepool;
       } else if (check.indexOf('androidaps') >= 0) {
         this._from = Uploader.AndroidAPS;
       } else if (check.startsWith('xdrip')) {
         this._from = Uploader.XDrip;
-      } else if (check == 'spike') {
+      } else if (check === 'spike') {
         this._from = Uploader.Spike;
       }
     }
@@ -111,7 +111,7 @@ export class TreatmentData extends JsonData {
   }
 
   get isInsulinChange(): boolean {
-    return this._t == 'insulin change';
+    return this._t === 'insulin change';
   }
 
   get isSensorChange(): boolean {
@@ -216,7 +216,7 @@ export class TreatmentData extends JsonData {
     ret.NSClientId = JsonData.toText(json.NSCLIENT_ID);
     ret._carbs = JsonData.toNumber(json.carbs);
     ret.insulin = JsonData.toNumber(json.insulin);
-    if (ret.insulin == 0.0) {
+    if (ret.insulin === 0.0) {
       ret.insulin = JsonData.toNumber(json.enteredinsulin);
     }
     ret.splitExt = JsonData.toNumber(json.splitExt);
@@ -233,10 +233,10 @@ export class TreatmentData extends JsonData {
     ret.targetBottom = JsonData.toNumber(json.targetBottom);
 
     let temp = JsonData.toText(json.units);
-    if (temp.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() && !GLOBALS.glucMGDLFromStatus) {
+    if (temp.toLowerCase() === Settings.msgUnitMGDL.toLowerCase() && !GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop / 18.02;
       ret.targetBottom = ret.targetBottom / 18.02;
-    } else if (temp.toLowerCase() == Settings.msgUnitMMOL.toLowerCase() && GLOBALS.glucMGDLFromStatus) {
+    } else if (temp.toLowerCase() === Settings.msgUnitMMOL.toLowerCase() && GLOBALS.glucMGDLFromStatus) {
       ret.targetTop = ret.targetTop * 18.02;
       ret.targetBottom = ret.targetBottom * 18.02;
     }
@@ -255,11 +255,11 @@ export class TreatmentData extends JsonData {
 
     ret.glucose = JsonData.toNumber(json.glucose);
     if (json.units != null) {
-      if (json.units.toLowerCase() == Settings.msgUnitMGDL.toLowerCase() &&
-        GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMMOL) {
+      if (json.units.toLowerCase() === Settings.msgUnitMGDL.toLowerCase() &&
+        GLOBALS.getGlucInfo()['unit'] === Settings.msgUnitMMOL) {
         ret.glucose = ret.glucose / 18.02;
-      } else if (json.units.toLowerCase() == Settings.msgUnitMMOL.toLowerCase() &&
-        GLOBALS.getGlucInfo()['unit'] == Settings.msgUnitMGDL) {
+      } else if (json.units.toLowerCase() === Settings.msgUnitMMOL.toLowerCase() &&
+        GLOBALS.getGlucInfo()['unit'] === Settings.msgUnitMGDL) {
         ret.glucose = ret.glucose * 18.02;
       }
     }
@@ -272,7 +272,7 @@ export class TreatmentData extends JsonData {
       // const reg = RegExp(/microbolus (.*)U/);
       // Der folgende Code muss noch aktiviert und korrekt implementiert werden
       // const m = reg.exec(ret.notes)?.[0];
-      // if (m != null && m.groupCount == 1) {
+      // if (m != null && m.groupCount === 1) {
       //   if ((ret._absolute ?? 0) > 0) {
       //     ret.microbolus = ret._absolute / 3600 * ret.duration;
       //   } else {
@@ -356,7 +356,7 @@ export class TreatmentData extends JsonData {
       const carbTime = this.createdAt;
 
       let carbs_hr = profile.store.carbRatioPerHour;
-      if (carbs_hr == 0) {
+      if (carbs_hr === 0) {
         carbs_hr = 12;
       }
       const carbs_min = carbs_hr / 60;
@@ -397,10 +397,10 @@ export class TreatmentData extends JsonData {
         const actEnd = iob(data, cCalc['decayedBy'], yesterday).activity;
         const avgActivity = (actStart + actEnd) / 2;
         // units:  g = BG * scalar / BG / U * g / U
-        if (sens == 0.0) {
+        if (sens === 0.0) {
           sens = 1.0;
         }
-        if (carbRatio == 0.0) {
+        if (carbRatio === 0.0) {
           carbRatio = 1.0;
         }
         const delayedCarbs = (avgActivity * liverSensRatio / sens) * carbRatio;

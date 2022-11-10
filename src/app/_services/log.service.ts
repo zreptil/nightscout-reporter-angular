@@ -116,11 +116,12 @@ export class Log {
     Log.addText('todo', ...text);
   }
 
-  static displayLink(title: string, url: string, params?: { clear?: boolean, type?: string, btnClass?: string, icon?: string, data?: any }): void {
+  static displayLink(title: string, url: string, params?: { count?: number, clear?: boolean, type?: string, btnClass?: string, icon?: string, data?: any }): void {
     if (!GLOBALS.isDebug) {
       return;
     }
     params ??= {};
+    params.count ??= -1;
     params.clear ??= false;
     params.btnClass ??= '';
     if (!this.mayDebug && params.type === 'debug') {
@@ -130,6 +131,11 @@ export class Log {
     if (params.clear) {
       LogService.instance.links = [];
     }
+
+    if (params.count === 0) {
+      params.btnClass += ' count0';
+    }
+
     Log.links.push(new LinkDef(url, title, params.btnClass, params.icon == null ? 'code' : params.icon, params.data));
     // if (params.type != null) this.msg.type = type;
   }

@@ -247,7 +247,7 @@ im ausgewählten Zeitraum an.`;
           x2: this.cm(this.graphWidth + 0.2),
           y2: this.cm(y),
           lineWidth: this.cm(this.lw),
-          lineColor: i == 0.0 ? this.lcFrame : this.lc
+          lineColor: i === 0.0 ? this.lcFrame : this.lc
         });
         vertStack.push({
           relativePosition: {x: this.cm(this.xorg - 1.3), y: this.cm(this.yorg + y - 0.15)},

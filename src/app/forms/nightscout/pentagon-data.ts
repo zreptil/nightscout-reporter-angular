@@ -321,7 +321,7 @@ export class PentagonData {
         if (colLine != null) {
           Utils.last(this.outputCvs).lineColor = colLine;
         }
-        let precision = this.axis[i].legendFactor == 1 ? 0 : 1;
+        let precision = this.axis[i].legendFactor === 1 ? 0 : 1;
         let nr = GLOBALS.fmtNumber(value / this.axis[i].legendFactor, precision);
         while (nr === lastNr) {
           nr = GLOBALS.fmtNumber(value / this.axis[i].legendFactor, ++precision);

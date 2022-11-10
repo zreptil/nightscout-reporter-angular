@@ -25,7 +25,7 @@ export class DatepickerDialogComponent implements OnInit {
       this.data.period.maxDate != null &&
       this.data.month != null &&
       (this.data.month.getFullYear() > this.data.period.maxDate.getFullYear() ||
-        (this.data.month.getFullYear() == this.data.period.maxDate.getFullYear() &&
+        (this.data.month.getFullYear() === this.data.period.maxDate.getFullYear() &&
           this.data.month.getMonth() >= this.data.period.maxDate.getMonth()));
   }
 
@@ -34,7 +34,7 @@ export class DatepickerDialogComponent implements OnInit {
       this.data.period.minDate != null &&
       this.data.month != null &&
       (this.data.month.getFullYear() < this.data.period.minDate.getFullYear() ||
-        (this.data.month.getFullYear() == this.data.period.minDate.getFullYear() &&
+        (this.data.month.getFullYear() === this.data.period.minDate.getFullYear() &&
           this.data.month.getMonth() <= this.data.period.minDate.getMonth()));
   }
 

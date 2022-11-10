@@ -240,7 +240,7 @@ export abstract class BaseProfile extends BasePrint {
 
         let oldLow: number;
         let oldHigh: number;
-        let idx = before.store.listTargetLow.findIndex((entry) => entry.time(day.date) == lowTime);
+        let idx = before.store.listTargetLow.findIndex((entry) => entry.time(day.date) === lowTime);
         if (idx < 0) {
           lowChanged = true;
         } else {
@@ -249,7 +249,7 @@ export abstract class BaseProfile extends BasePrint {
         if (lowChanged && idx >= 0) {
           oldLow = before.store.listTargetLow[idx].value;
         }
-        idx = before.store.listTargetHigh.findIndex((entry) => entry.time(day.date) == highTime);
+        idx = before.store.listTargetHigh.findIndex((entry) => entry.time(day.date) === highTime);
         if (idx < 0) {
           highChanged = true;
         } else {
@@ -275,7 +275,7 @@ export abstract class BaseProfile extends BasePrint {
       this.getProfileEntriesChanged(ret, day, this.msgICRTitle, current.store.listCarbratio, before.store.listCarbratio);
     }
 
-    if (ret.length == 1) {
+    if (ret.length === 1) {
       ret.push(this.msgNoChange);
     }
 

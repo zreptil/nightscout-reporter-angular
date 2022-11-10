@@ -24,11 +24,11 @@ export class EntryData extends JsonData {
   }
 
   get isInvalid(): boolean {
-    return false; //type != 'mbg' && direction != null && direction.toLowerCase() == 'none';
+    return false; //type != 'mbg' && direction != null && direction.toLowerCase() === 'none';
   }
 
   get isInvalidOrGluc0(): boolean {
-    return this.isInvalid || this.gluc == null || this.gluc == 0;
+    return this.isInvalid || this.gluc == null || this.gluc === 0;
   }
 
   get isGlucInvalid(): boolean {
@@ -36,15 +36,15 @@ export class EntryData extends JsonData {
   }
 
   get gluc(): number {
-    return this.isGap ? -1 : Settings.adjustFactor * (this.type == 'sgv' ? this.sgv : this.rawbg) ?? 0;
+    return this.isGap ? -1 : Settings.adjustFactor * (this.type === 'sgv' ? this.sgv : this.rawbg) ?? 0;
   }
 
   get bloodGluc(): number {
-    return (this.type == 'mbg' ? this.mbg : 0) ?? 0;
+    return (this.type === 'mbg' ? this.mbg : 0) ?? 0;
   }
 
   get fullGluc(): number {
-    return this.isGap ? -1 : (this.type == 'mbg' ? this.mbg : this.gluc) ?? 0;
+    return this.isGap ? -1 : (this.type === 'mbg' ? this.mbg : this.gluc) ?? 0;
   }
 
   get copy(): EntryData {

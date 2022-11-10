@@ -22,7 +22,7 @@ export class StorageService {
         key = `${Settings.betaPrefix}${key}`;
       }
       ret = localStorage.getItem(key);
-      if (ret == 'null' || ret == null) {
+      if (ret === 'null' || ret == null) {
         ret = asJson ? '{}' : '';
       }
       if (asJson) {

@@ -4,6 +4,7 @@ import {Utils} from '@/classes/utils';
 import {ProfileTimezone} from '@/_model/nightscout/profile-timezone-data';
 import {ProfileEntryData} from '@/_model/nightscout/profile-entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
+import {Log} from '@/_services/log.service';
 
 export class ProfileData extends JsonData {
   raw: any;
@@ -66,12 +67,13 @@ export class ProfileData extends JsonData {
     ret.createdAt = JsonData.toDate(json.created_at);
     ret.duration = JsonData.toNumber(json.duration) * 60; // duration is saved as minutes
     const src = json.store;
+    Log.info('ProfileData', Object.keys(src), JsonData.toNumber(json.percentage));
     ret.maxPrecision = 0;
     for (const key of Object.keys(src)) {
       const temp = src[key];
       if (temp != null) {
         let percentage = JsonData.toNumber(json.percentage);
-        if (percentage == null || percentage == 0.0) {
+        if (percentage == null || percentage === 0.0) {
           percentage = 1.0;
         } else {
           percentage /= 100.0;
@@ -128,8 +130,8 @@ export class ProfileData extends JsonData {
     if (idx < 0) {
       idx = list.findIndex((e) => e.timeForCalc + e.duration >= time);
       if (idx < 0) {
-        list[list.length - 1].duration = time - list[list.length - 1].timeForCalc;
-        if (list[list.length - 1].duration < 0) {
+        Utils.last(list).duration = time - Utils.last(list).timeForCalc;
+        if (Utils.last(list).duration < 0) {
           list.splice(list.length - 1, 1);
         }
         entry.duration = 86400 - entry.timeForCalc;

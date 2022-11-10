@@ -98,7 +98,7 @@ export class ReportData {
         for (const t of treatments) {
           if (t.createdAt.getFullYear() === time.getFullYear()
             && t.createdAt.getMonth() === time.getMonth()
-            && t.createdAt.getDate() == time.getDate()) {
+            && t.createdAt.getDate() === time.getDate()) {
             profile.includeTreatment(t);
           }
         }

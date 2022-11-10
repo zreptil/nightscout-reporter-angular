@@ -22,17 +22,17 @@ export class MainComponent implements OnInit {
         bool dropElement(html.Element drag, html.Element drop) {
           const dragId = drag.getAttribute('id').substring(5);
           const dropId = drop.getAttribute('id').substring(5);
-          if (dragId == dropId) return false;
+          if (dragId === dropId) return false;
 
           FormConfig dragCfg;
           const dragIdx = -1;
           const dropIdx = -1;
           for (let i = 0; i < g.listConfig.length; i++) {
-            if (g.listConfig[i].id == dragId) {
+            if (g.listConfig[i].id === dragId) {
               dragCfg = g.listConfig[i];
               dragIdx = i;
             }
-            if (g.listConfig[i].id == dropId) dropIdx = i;
+            if (g.listConfig[i].id === dropId) dropIdx = i;
           }
           if (dragCfg != null && dropIdx >= 0) {
             g.listConfig.removeAt(dragIdx);
@@ -102,6 +102,18 @@ export class MainComponent implements OnInit {
     // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
     //
     // }), 1000);
+  }
+
+  get userIdx(): number {
+    return GLOBALS.userIdx;
+  }
+
+  set userIdx(value: number) {
+    if (value !== GLOBALS.userIdx) {
+      this.ns.reportData = null;
+    }
+    GLOBALS.userIdx = value;
+
   }
 
   get msgAddText(): string {
@@ -175,8 +187,8 @@ export class MainComponent implements OnInit {
   sendClass(shift: number, ret: string): string {
     if (ret !== 'stop' &&
       this.ns.reportData != null &&
-      GLOBALS.period.shiftStartBy(shift) == this.ns.reportData.begDate &&
-      GLOBALS.period.shiftEndBy(shift) == this.ns.reportData.endDate) {
+      GLOBALS.period.shiftStartBy(shift) === this.ns.reportData.begDate &&
+      GLOBALS.period.shiftEndBy(shift) === this.ns.reportData.endDate) {
       ret = `${ret} sendMarked`;
     }
     return ret;
@@ -243,7 +255,7 @@ export class MainComponent implements OnInit {
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
 
     this.ds.loadSettingsJson().then((_) => {
-      let dlgId = GLOBALS.version == GLOBALS.lastVersion ? null : 'whatsnew';
+      let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
       dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
       this.ss.showPopup(dlgId).subscribe(_ => {
 
@@ -264,7 +276,7 @@ export class MainComponent implements OnInit {
                 GLOBALS.period.minDate = null;
               }
               GLOBALS.getCurrentGluc();
-              if (_currPage == 'whatsnew') GLOBALS.saveWebData();
+              if (_currPage === 'whatsnew') GLOBALS.saveWebData();
               checkPrint();
           //*/
     });
@@ -273,7 +285,7 @@ export class MainComponent implements OnInit {
   afterLoad(): void {
     for (let i = 0; i < GLOBALS.pdfOrder.length; i += 3) {
       const idx = GLOBALS.pdfOrder.substring(i, i + 3);
-      const cfg = GLOBALS.listConfig.find((e) => e.idx == idx);
+      const cfg = GLOBALS.listConfig.find((e) => e.idx === idx);
       if (cfg == null) {
         const form = this.ss.formFromId(idx.substring(0, 2), idx.substring(2));
         if (form != null) {

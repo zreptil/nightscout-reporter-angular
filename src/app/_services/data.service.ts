@@ -582,7 +582,7 @@ export class DataService {
             ePrev = null;
             for (let i = 1; i < src.length && ePrev == null; i++) {
               const check = EntryData.fromJson(src[i]);
-              if (check.device == eNow.device) {
+              if (check.device === eNow.device) {
                 ePrev = check;
               }
             }

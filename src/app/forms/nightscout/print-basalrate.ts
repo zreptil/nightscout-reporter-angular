@@ -31,10 +31,6 @@ Es gibt aber eine Option, welche nur die letzte Basalrate des Zeitraums ausgibt.
     return $localize`Nur letzte Basalrate ausgeben`;
   }
 
-  override get isLocalOnly(): boolean {
-    return true;
-  }
-
   override get title(): string {
     return this.msgBasalrate;
   }
@@ -296,9 +292,9 @@ Es gibt aber eine Option, welche nur die letzte Basalrate des Zeitraums ausgibt.
     //    let legendAdjust = (brLegend.stack as any[])[2].columns as any[];
 
     let ieSum = 0.0;
-    const m = [this.cm(0.1), this.cm(0.17), this.cm(0), this.cm(0)];
+    // const m = [this.cm(0.1), this.cm(0.17), this.cm(0), this.cm(0)];
     for (let i = 0; i < 25; i++) {
-      m[0] = this.cm(0.5);
+      // m[0] = this.cm(0.5);
       brTableCvs.push({
         type: 'line',
         x1: this.cm(1 + i * colWidth),
@@ -320,14 +316,14 @@ Es gibt aber eine Option, welche nur die letzte Basalrate des Zeitraums ausgibt.
     }
 
     const m1 = [this.cm(0), this.cm(0), this.cm(0), this.cm(0)];
-    const m2 = [this.cm(0), this.cm(0.15), this.cm(0), this.cm(0)];
+    // const m2 = [this.cm(0), this.cm(0.15), this.cm(0), this.cm(0)];
 
     let lastHour = 0;
     for (let i = 0; i < brtimes.length; i++) {
       let hour = brtimes[i].time(date).getHours();
       let w = 0;
       m1[0] = hour - lastHour;
-      m2[0] = m1[0];
+      // m2[0] = m1[0];
       lastHour = hour;
       if (i < brtimes.length - 1) {
         w = brtimes[i + 1].time(date).getHours() - brtimes[i].time(date).getHours();

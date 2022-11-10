@@ -41,10 +41,6 @@ die gleichen Werte beinhalten.`;
     return $localize`Nur letztes Profil ausgeben`;
   }
 
-  override get isLocalOnly(): boolean {
-    return true;
-  }
-
   override get title(): string {
     return $localize`Profil`;
   }
@@ -97,10 +93,10 @@ die gleichen Werte beinhalten.`;
 
         if (this.compressSameValues) {
           if (entry.forceText != null) {
-            if (entry.forceText == list[i + 1].forceText) {
+            if (entry.forceText === list[i + 1].forceText) {
               continue;
             }
-          } else if (entry.value == list[i + 1].value) {
+          } else if (entry.value === list[i + 1].value) {
             continue;
           }
         }
@@ -109,7 +105,7 @@ die gleichen Werte beinhalten.`;
       //      if (isSingleDay)
       //        showValue = isSingleDayRange(startTime, endTime);
 
-      if (showValue && currPage == page) {
+      if (showValue && currPage === page) {
         ret.push([
           {
             text: msg(this.fmtTime(startTime, {withUnit: true}), this.fmtTime(endTime, {withUnit: true})),
@@ -132,7 +128,7 @@ die gleichen Werte beinhalten.`;
       startTime = null;
     }
 
-    if (ret.length == 0) {
+    if (ret.length === 0) {
       ret.push([]);
     }
 

@@ -141,7 +141,7 @@ export class SettingsComponent implements OnInit {
     this.msgCalcDayTitle = this.msgCalcDayFirstTitle;
     while (this.confirmIdx === 3 && !done) {
       const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 0, 0, 0, 0);
-      const url = urlData.fullUrl('entries.json', `find[date][\$lte]=${check.getTime()}&count=2`);
+      const url = urlData.fullUrl('entries.json', `find[date][$lte]=${check.getTime()}&count=2`);
       const json = await this.ds.request(url, {asJson: true});
       try {
         if (diff < -1) {
@@ -173,7 +173,7 @@ export class SettingsComponent implements OnInit {
     this.msgCalcDayTitle = this.msgCalcDayLastTitle;
     while (this.confirmIdx === 3 && !done) {
       const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 23, 59, 59, 999);
-      const url = urlData.fullUrl('entries.json', `find[date][\$gte]=${check.getTime()}&count=2`);
+      const url = urlData.fullUrl('entries.json', `find[date][$gte]=${check.getTime()}&count=2`);
       const json = await this.ds.request(url, {asJson: true});
       try {
         if (diff > 1) {

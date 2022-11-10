@@ -10,7 +10,7 @@ export class JsonData {
 
   static parseDate(value: string): Date {
     let ret = null;
-    if (value != null && value.length == 8) {
+    if (value != null && value.length === 8) {
       ret = new Date(+value.substring(0, 4), +value.substring(4, 6), +value.substring(6, 8));
     }
     return ret;
@@ -117,7 +117,7 @@ export class JsonData {
       return value;
     }
     if (typeof value === 'string') {
-      return +value ?? def;
+      return +value;
     }
     if (typeof value === 'boolean') {
       return value ? def : 1 - def;

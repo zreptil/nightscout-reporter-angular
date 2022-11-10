@@ -268,7 +268,7 @@ export class Utils {
   static findLast<T>(list: T[], method: (e: T) => boolean) {
     const temp = list.filter(method);
     if (temp != null && temp.length > 0) {
-      return temp[temp.length - 1];
+      return Utils.last(temp);
     }
     return null;
   }

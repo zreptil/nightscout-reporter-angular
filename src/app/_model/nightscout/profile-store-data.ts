@@ -65,16 +65,16 @@ export class ProfileStoreData extends JsonData {
 
   static _adjust(list: ProfileEntryData[]): void {
     list.sort((a, b) => Utils.compareDate(a._time, b._time));
-    if (!Utils.isEmpty(list) && list[0]._time.getHours() != 0) {
-      const first = list[list.length].copy;
-      if (first.value == list[0].value) {
-        list[0]._time.setHours(list[0]._time.getHours() - first._time.getHours());
+    if (!Utils.isEmpty(list) && Utils.first(list)._time.getHours() != 0) {
+      const first = Utils.last(list).copy;
+      if (first.value === Utils.first(list).value) {
+        Utils.first(list)._time = Utils.addTimeHours(Utils.first(list)._time, -first._time.getHours());
       } else {
-        first._time.setHours(first._time.getHours() - first._time.getHours());
+        first._time = Utils.addTimeHours(first._time, -first._time.getHours());
         list.splice(0, 0, first);
       }
     }
-    this._adjustDuration(list);
+    ProfileStoreData._adjustDuration(list);
   }
 
   static _adjustDuration(list: ProfileEntryData[]): void {
@@ -121,7 +121,7 @@ export class ProfileStoreData extends JsonData {
     ret.maxPrecision = 0;
     for (const entry of json.basal ?? []) {
       ret.listBasal.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage));
-      ret.maxPrecision = Math.max(ret.maxPrecision, Utils.decimalPlaces(ret.listBasal[ret.listBasal.length - 1].value));
+      ret.maxPrecision = Math.max(ret.maxPrecision, Utils.decimalPlaces(Utils.last(ret.listBasal).value));
     }
     this._adjust(ret.listBasal);
     for (const entry of json.target_low ?? []) {
@@ -134,7 +134,7 @@ export class ProfileStoreData extends JsonData {
       ret.listTargetHigh.push(value);
     }
     this._adjust(ret.listTargetHigh);
-
+    Log.info('ProfileStore', ret);
     return ret;
   }
 
@@ -170,14 +170,12 @@ export class ProfileStoreData extends JsonData {
     }
     listDst = listDst.filter((p) => Utils.isBefore(p.time(date), time));
     if (Utils.isEmpty(listDst)) {
-      listDst.push(listSrc[listSrc.length - 1].copy);
+      listDst.push(Utils.last(listSrc).copy);
     }
-    listDst[length - 1].duration = Utils.differenceInSeconds(time, listDst[listDst.length - 1].time(date));
-    listSrc[0].duration = Utils.differenceInSeconds(time, listSrc[0]._time);
-    listSrc[0]._time = time;
-    for (const entry of listSrc) {
-      listDst.push(entry);
-    }
+    Utils.last(listDst).duration = Utils.differenceInSeconds(time, Utils.last(listDst).time(date));
+    Utils.first(listSrc).duration = Utils.differenceInSeconds(time, listSrc[0]._time);
+    Utils.first(listSrc)._time = time;
+    Utils.pushAll(listDst, listSrc);
   }
 
   importFromTime(time: Date, src: ProfileStoreData): void {
@@ -191,19 +189,20 @@ export class ProfileStoreData extends JsonData {
   // remove all settings from given time up to duration.
   // if duration is 0 then remove all after given time.
   removeFrom(hour: number, minute: number, second: number, duration: number): void {
-    this._removeFrom(this.listCarbratio, hour * 3600 + minute * 60 + second, duration);
-    this._removeFrom(this.listSens, hour * 3600 + minute * 60 + second, duration);
-    this._removeFrom(this.listBasal, hour * 3600 + minute * 60 + second, duration);
-    this._removeFrom(this.listTargetLow, hour * 3600 + minute * 60 + second, duration);
-    this._removeFrom(this.listTargetHigh, hour * 3600 + minute * 60 + second, duration);
+    const time = hour * 3600 + minute * 60 + second;
+    this._removeFrom(this.listCarbratio, time, duration);
+    this._removeFrom(this.listSens, time, duration);
+    this._removeFrom(this.listBasal, time, duration);
+    this._removeFrom(this.listTargetLow, time, duration);
+    this._removeFrom(this.listTargetHigh, time, duration);
   }
 
   _removeFrom(list: ProfileEntryData[], time: number, duration: number): void {
     for (let i = 0; i < list.length; i++) {
       const check = list[i].timeForCalc;
-      if (check >= time && (duration == 0 || check < time + duration)) {
+      if (check >= time && (duration === 0 || check < time + duration)) {
         if (i > 0) {
-          list[i - 1].duration = duration == 0
+          list[i - 1].duration = duration === 0
             ? 24 * 60 * 60 - list[i - 1].timeForCalc
             : duration + list[i].timeForCalc - list[i - 1].timeForCalc;
         }
@@ -229,14 +228,14 @@ export class ProfileStoreData extends JsonData {
     for (let i = 0; i < srcList.length; i++) {
       const src = srcList[i].copy;
       const check = src.timeForCalc;
-      if (srcProfile.duration == 0 || check < timeOfProfile + srcProfile.duration) {
+      if (srcProfile.duration === 0 || check < timeOfProfile + srcProfile.duration) {
         let duration = 86400 - check;
         if (i < srcList.length - 1) {
           duration = srcList[i + 1].timeForCalc - check;
         }
         if (check >= timeOfProfile) {
           if (!Utils.isEmpty(list)) {
-            list[list.length - 1].duration = src.timeForCalc - list[list.length - 1].timeForCalc;
+            Utils.last(list).duration = src.timeForCalc - Utils.last(list).timeForCalc;
           }
           src.duration = 86400 - src.timeForCalc;
           list.push(src);

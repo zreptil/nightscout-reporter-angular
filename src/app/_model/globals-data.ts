@@ -80,7 +80,7 @@ export class GlobalsData extends Settings {
     // const offset = dt.getTimezoneOffset();
     // const list = tz.timeZoneDatabase.locations.values;
     // for (const l of list) {
-    //   if (l.currentTimeZone.offset == offset) {
+    //   if (l.currentTimeZone.offset === offset) {
     //     found = l;
     //     break;
     //   }
@@ -300,6 +300,10 @@ export class GlobalsData extends Settings {
     return this.fmtNumber(Settings.adjustFactor, 2);
   }
 
+  get glucMaxValue(): number {
+    return this.glucValueFromData(this.glucMaxValues[this.ppGlucMaxIdx ?? 0]);
+  }
+
   get glucMaxValues(): number[] {
     return [null, 150, 200, 250, 300, 350, 400, 450];
   }
@@ -313,7 +317,7 @@ export class GlobalsData extends Settings {
   }
 
   get showBothUnits(): boolean {
-    return this.glucMGDLIdx == 2;
+    return this.glucMGDLIdx === 2;
   }
 
   get glucFactor(): number {
@@ -524,6 +528,32 @@ export class GlobalsData extends Settings {
     return Math.min(ret, 3);
   }
 
+  static percentile(entries: EntryData[], value: number): number {
+    const v = value / 100;
+    const temp = [];
+    // the entries must not be rearranged,
+    // so we need a copy of this list
+    for (const entry of entries) {
+      temp.push(entry);
+    }
+    temp.sort((a, b) => Utils.compare(a.gluc, b.gluc));
+    const N = temp.length;
+    const n = (N - 1) * v + 1;
+    if (n === 1) {
+      return temp[0].gluc;
+    } else if (n === N) {
+      return temp[N - 1].gluc;
+    } else {
+      const k = Math.floor(n);
+      const d = n - k;
+      if (k > 0 && k < temp.length) {
+        return temp[k - 1].gluc + d * (temp[k].gluc - temp[k - 1].gluc);
+      } else {
+        return 0.0;
+      }
+    }
+  }
+
   isMGDL(status: StatusData): boolean {
     const check = status.settings.units?.trim()?.toLowerCase() ?? '';
     return check.startsWith('mg') && check.endsWith('dl');
@@ -586,7 +616,7 @@ export class GlobalsData extends Settings {
     if (typeof gluc === 'string') {
       gluc = +gluc ?? 0;
     }
-    if (!isNaN(gluc) || gluc == 0) {
+    if (!isNaN(gluc) || gluc === 0) {
       return null;
     }
 
@@ -738,6 +768,7 @@ export class GlobalsData extends Settings {
     return this.fmtNumber(value, precision, 0, 'null', params.dontRound);
   }
 
+  // calculate a value that is saved in a unit depending
 
   fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
     params ??= {};
@@ -782,7 +813,7 @@ export class GlobalsData extends Settings {
 
       if (date < 12) {
         return `${this.fmtNumber(date, 0)}${m}am`;
-      } else if (date == 12) {
+      } else if (date === 12) {
         return `${this.fmtNumber(date, 0)}${m}pm`;
       } else {
         return `${this.fmtNumber(date - 12, 0)}${m}pm`;
@@ -791,10 +822,9 @@ export class GlobalsData extends Settings {
     return `${date}`;
   }
 
-  // calculate a value that is saved in a unit depending
   // on the setting in the status
   glucForSavedUnitValue(value: number) {
-    if (this.glucMGDL == this.glucMGDLFromStatus) {
+    if (this.glucMGDL === this.glucMGDLFromStatus) {
       return value;
     }
     if (this.glucMGDL) {

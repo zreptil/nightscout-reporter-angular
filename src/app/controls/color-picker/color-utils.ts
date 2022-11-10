@@ -10,7 +10,7 @@ export class ColorUtils {
     const l = (max + min) / 2;
     let h, s;
 
-    if (max == min) {
+    if (max === min) {
       h = 0;
       s = 0; // achromatic
     } else {

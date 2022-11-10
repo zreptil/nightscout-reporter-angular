@@ -70,7 +70,7 @@ export class ShortcutData {
     const ret = new ShortcutData();
     try {
       ret.name = json.n;
-      if (ret.name == 'null') {
+      if (ret.name === 'null') {
         ret.name = null;
       }
       ret.periodData = json.p;
@@ -92,11 +92,11 @@ export class ShortcutData {
     if (sa.length < 5 || sb.length < 5 || sa[4] != sb[4]) {
       return false;
     }
-    if (sa[2] == sb[2] && sa[2] != '') {
+    if (sa[2] === sb[2] && sa[2] != '') {
       return true;
     }
     // noinspection RedundantIfStatementJS
-    if (sa[0] == sb[0] && sa[1] == sb[1]) {
+    if (sa[0] === sb[0] && sa[1] === sb[1]) {
       return true;
     }
     return false;

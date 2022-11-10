@@ -11,6 +11,7 @@ import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {ReportData} from '@/_model/report-data';
 import {CalcCOBData} from '@/_model/nightscout/calc-cob-data';
 import {Settings} from '@/_model/settings';
+import {Log} from '@/_services/log.service';
 
 export class DayData {
   prevDay: DayData;
@@ -60,6 +61,7 @@ export class DayData {
       return this._profile;
     }
     this._profile = [];
+    Log.info('mal gucken', this.basalData.store);
     if (Utils.isEmpty(this.basalData.store.listBasal)) {
       return this._profile;
     }
@@ -128,7 +130,7 @@ export class DayData {
             temp.orgValue = last.orgValue;
             this._profile.splice(i + 1, 0, temp);
           }
-        } else if (i == this._profile.length - 1 &&
+        } else if (i === this._profile.length - 1 &&
           Utils.isBefore(endTime, new Date(lastTime.getFullYear(), lastTime.getMonth(), lastTime.getDate(), 23, 59, 59))) {
           const temp = new ProfileEntryData(this.basalData.store.timezone, endTime);
           temp.transferCalcValues(last);
@@ -172,7 +174,7 @@ export class DayData {
       this._profile[i - 1].duration = Utils.differenceInSeconds(this._profile[i]
         .time(this.date), this._profile[i - 1].time(this.date));
     }
-    this._profile[this._profile.length - 1].duration = 86399 - this._profile[this._profile.length - 1].timeForCalc;
+    Utils.last(this._profile).duration = 86399 - Utils.last(this._profile).timeForCalc;
     this._profile = this._profile.filter((p) => p.duration !== 0);
 
     // join all entries that have the same value to one entry
@@ -180,25 +182,25 @@ export class DayData {
     for (let i = 1; i < this._profile.length; i++) {
       const prev = this._profile[i - 1];
       const curr = this._profile[i];
-      if (prev.value == curr.value) {
+      if (prev.value === curr.value) {
         curr.duration += prev.duration;
         curr._time = prev._time;
       } else {
         ret.push(prev);
       }
     }
-    ret.push(this._profile[this._profile.length - 1]);
+    ret.push(Utils.last(this._profile));
     this._profile = ret;
 
     return this._profile;
   }
 
   get minText(): string {
-    return this.min == 10000 ? '' : '$min';
+    return this.min === 10000 ? '' : '$min';
   }
 
   get maxText(): string {
-    return this.max == -10000 ? '' : '$max';
+    return this.max === -10000 ? '' : '$max';
   }
 
   get avgGluc(): number {
@@ -312,11 +314,23 @@ export class DayData {
   get basalZeroDuration(): number {
     let ret = 0;
     for (const entry of this.profile) {
-      if (entry.value == 0 && entry.duration != null) {
+      if (entry.value === 0 && entry.duration != null) {
         ret += entry.duration;
       }
     }
     return ret;
+  }
+
+  get lowPrz(): number {
+    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdLowCount : this.lowCount) / this.entryCountValid * 100;
+  }
+
+  get normPrz(): number {
+    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdNormCount : this.normCount) / this.entryCountValid * 100;
+  }
+
+  get highPrz(): number {
+    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdHighCount : this.highCount) / this.entryCountValid * 100;
   }
 
   stdAbw(isMGDL: boolean): number {
@@ -327,18 +341,6 @@ export class DayData {
     return ret;
   }
 
-  lowPrz(g: GlobalsData): number {
-    return this.entryCountValid == 0 ? 0 : (g.ppStandardLimits ? this.stdLowCount : this.lowCount) / this.entryCountValid * 100;
-  }
-
-  normPrz(g: GlobalsData) {
-    return this.entryCountValid == 0 ? 0 : (g.ppStandardLimits ? this.stdNormCount : this.normCount) / this.entryCountValid * 100;
-  }
-
-  highPrz(g: GlobalsData) {
-    return this.entryCountValid == 0 ? 0 : (g.ppStandardLimits ? this.stdHighCount : this.highCount) / this.entryCountValid * 100;
-  }
-
   isSameDay(time: Date): boolean {
     if (this.date.getFullYear() != time.getFullYear()) {
       return false;
@@ -346,11 +348,11 @@ export class DayData {
     if (this.date.getMonth() != time.getMonth()) {
       return false;
     }
-    return this.date.getDate() == time.getDate();
+    return this.date.getDate() === time.getDate();
   }
 
   isSameDay_(d1: Date, d2: Date): boolean {
-    return d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate();
+    return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   }
 
   getBolusSum(isCarbBolus: boolean): number {
@@ -375,58 +377,58 @@ export class DayData {
   }
 
   init(nextDay: DayData = null, keepProfile = false): void {
-    let min = 10000.0;
-    let max = -10000.0;
-    let mid = 0.0;
-    let entryCountValid = 0;
-    let entryCountInvalid = 0;
-    let normCount = 0;
-    let highCount = 0;
-    let lowCount = 0;
-    let stdNormCount = 0;
-    let stdHighCount = 0;
-    let stdLowCount = 0;
-    let carbCount = 0;
-    let carbs = 0;
+    this.min = 10000.0;
+    this.max = -10000.0;
+    this.mid = 0.0;
+    this.entryCountValid = 0;
+    this.entryCountInvalid = 0;
+    this.normCount = 0;
+    this.highCount = 0;
+    this.lowCount = 0;
+    this.stdNormCount = 0;
+    this.stdHighCount = 0;
+    this.stdLowCount = 0;
+    this.carbCount = 0;
+    this.carbs = 0;
     for (const entry of this.entries) {
       if (!entry.isGlucInvalid) {
-        entryCountValid++;
+        this.entryCountValid++;
         if (JsonData.isLow(entry.gluc, this.basalData.targetLow)) {
-          lowCount++;
+          this.lowCount++;
         } else if (JsonData.isHigh(entry.gluc, this.basalData.targetHigh)) {
-          highCount++;
+          this.highCount++;
         } else {
-          normCount++;
+          this.normCount++;
         }
 
         if (JsonData.isLow(entry.gluc, Settings.stdLow)) {
-          stdLowCount++;
+          this.stdLowCount++;
         } else if (JsonData.isHigh(entry.gluc, Settings.stdHigh)) {
-          stdHighCount++;
+          this.stdHighCount++;
         } else {
-          stdNormCount++;
+          this.stdNormCount++;
         }
-        mid += entry.gluc;
-        min = Math.min(min, entry.gluc);
-        max = Math.max(max, entry.gluc);
+        this.mid += entry.gluc;
+        this.min = Math.min(this.min, entry.gluc);
+        this.max = Math.max(this.max, entry.gluc);
       } else {
-        entryCountInvalid++;
+        this.entryCountInvalid++;
       }
     }
 
-    mid = entryCountValid == 0 ? 0 : mid / entryCountValid;
+    this.mid = this.entryCountValid === 0 ? 0 : this.mid / this.entryCountValid;
     this.varianz = 0.0;
     for (const entry of this.entries) {
       if (!entry.isGlucInvalid) {
-        this.varianz += Math.pow(entry.gluc - mid, 2);
+        this.varianz += Math.pow(entry.gluc - this.mid, 2);
       }
     }
-    this.varianz /= entryCountValid;
+    this.varianz /= this.entryCountValid;
 
     for (const t of this.treatments) {
       if (t.carbs > 0) {
-        carbCount++;
-        carbs += t.carbs;
+        this.carbCount++;
+        this.carbs += t.carbs;
       }
     }
     if (!keepProfile) {
@@ -462,7 +464,7 @@ export class DayData {
     const list = tList.filter((t) => t.isBloody);
     for (const treat of list) {
       const time = new Date(check.getFullYear(), check.getMonth(), check.getDate(), treat.createdAt.getHours(), treat.createdAt.getMinutes());
-      if (time == check) {
+      if (time === check) {
         return treat;
       }
       const diff = Math.abs(Utils.differenceInSeconds(time, check));
@@ -530,7 +532,7 @@ export class DayData {
       }
     }
 
-    if (totalIOB == totalSave) {
+    if (totalIOB === totalSave) {
 //        totalIOB = 20;
     }
 

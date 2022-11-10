@@ -144,8 +144,14 @@ material-button.ok {
   display: flex;
   flex-flow: column;
 
-  material-button {
+  button {
     margin-top: 0.2em;
+  }
+
+  .shift {
+    ::ng-deep .mat-button-wrapper {
+      color: var(--datepickerBtnShiftKeyFore);
+    }
   }
 }
 

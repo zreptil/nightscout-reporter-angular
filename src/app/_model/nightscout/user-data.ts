@@ -152,7 +152,7 @@ export class UserData {
         }
       }
     }
-    ret ??= this.listApiUrl[this.listApiUrl.length - 1];
+    ret ??= Utils.last(this.listApiUrl);
     return ret;
   }
 

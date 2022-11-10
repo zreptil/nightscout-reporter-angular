@@ -143,7 +143,7 @@ export class WatchComponent implements OnInit {
   }
 
   get styleArrowTip(): any {
-    if ((GLOBALS.currentGlucValue ?? 0) == (GLOBALS.lastGlucValue ?? 0)) {
+    if ((GLOBALS.currentGlucValue ?? 0) === (GLOBALS.lastGlucValue ?? 0)) {
       return {display: 'none'};
     }
     const x = (GLOBALS.currentGlucValue ?? 0) / this.maxGluc;
@@ -194,7 +194,7 @@ export class WatchComponent implements OnInit {
   get leftDisabled(): boolean {
     let ret = this.selected == null;
     if (this.selected != null) {
-      ret ||= this.selectedIndex == 0;
+      ret ||= this.selectedIndex === 0;
     }
     return ret;
   }
@@ -332,7 +332,7 @@ export class WatchComponent implements OnInit {
         if (useKey) {
           this.selected.type = key;
           useKey = false;
-        } else if (key == this.selected.type) {
+        } else if (key === this.selected.type) {
           useKey = true;
         }
       }
