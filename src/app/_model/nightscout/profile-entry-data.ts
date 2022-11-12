@@ -139,14 +139,7 @@ export class ProfileEntryData extends JsonData {
     if (adjustLocalForTime) {
       hour += this._timezone.localDiff;
     }
-
-    while (hour < 0) {
-      hour += 24;
-    }
-    while (hour >= 24) {
-      hour -= 24;
-    }
-
+    hour = hour % 24;
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, this._time.getMinutes(), this._time.getSeconds());
   }
 

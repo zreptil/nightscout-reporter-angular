@@ -4,7 +4,6 @@ import {Utils} from '@/classes/utils';
 import {ProfileTimezone} from '@/_model/nightscout/profile-timezone-data';
 import {ProfileEntryData} from '@/_model/nightscout/profile-entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
-import {Log} from '@/_services/log.service';
 
 export class ProfileData extends JsonData {
   raw: any;
@@ -67,7 +66,6 @@ export class ProfileData extends JsonData {
     ret.createdAt = JsonData.toDate(json.created_at);
     ret.duration = JsonData.toNumber(json.duration) * 60; // duration is saved as minutes
     const src = json.store;
-    Log.info('ProfileData', Object.keys(src), JsonData.toNumber(json.percentage));
     ret.maxPrecision = 0;
     for (const key of Object.keys(src)) {
       const temp = src[key];
@@ -78,7 +76,8 @@ export class ProfileData extends JsonData {
         } else {
           percentage /= 100.0;
         }
-        ret.store[key] = ProfileStoreData.fromJson(key, temp.value, percentage, timeshift, ret.startDate);
+//        ret.store[key] = ProfileStoreData.fromJson(key, temp.value, percentage, timeshift, ret.startDate);
+        ret.store[key] = ProfileStoreData.fromJson(key, temp, percentage, timeshift, ret.startDate);
         ret.maxPrecision = Math.max(ret.maxPrecision, ret.store[key].maxPrecision);
       }
     }

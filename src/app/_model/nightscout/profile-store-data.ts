@@ -134,7 +134,6 @@ export class ProfileStoreData extends JsonData {
       ret.listTargetHigh.push(value);
     }
     this._adjust(ret.listTargetHigh);
-    Log.info('ProfileStore', ret);
     return ret;
   }
 

@@ -83,7 +83,7 @@ export class DartImporterComponent implements OnInit {
   }
 
   replaceCode() {
-    this.code = this.code.replace(/([\s{(])g\./g, '$1GLOBALS.');
+    this.code = this.code.replace(/([\s{(\[])g\./g, '$1GLOBALS.');
     this.code = this.code.replace(/([\s{(])var(.*) in /g, '$1const$2 of ');
     this.code = this.code.replace(/([\s{(])var(\s)/g, '$1const$2');
     this.code = this.code.replace(/@override/g, 'override');

@@ -1,6 +1,6 @@
 import {BasePrint} from '@/forms/base-print';
 
-abstract class BaseDaily extends BasePrint {
+export abstract class BaseDaily extends BasePrint {
   showSMB: boolean;
   showSMBAtGluc: boolean;
 
@@ -18,9 +18,9 @@ abstract class BaseDaily extends BasePrint {
     return this.graphHeight / 50 * value;
   }
 
-  paintSMB(insulin: number, x: number, y: number, cvs: any): void {
+  paintSMB(insulin: number, x: number, y: number, cvs: any[]): void {
     const h = this.smbY(insulin) * 2;
-    cvs.add({
+    cvs.push({
       type: 'polyline',
       closePath: true,
       _lineColor: '#000000',

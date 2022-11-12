@@ -261,6 +261,26 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   override async fillPages(pages: PageData[]) {
+    //* ---------------------------
+    this.showNotes = true;
+    this.showCarbs = true;
+    this.showIE = true;
+    this.showSMB = true;
+    this.showTempBasal = true;
+    this.showProfileSwitch = true;
+    this.showIESource = true;
+    this.showTempTargets = true;
+    this.showGluc = true;
+    this.showChanges = true;
+    this.showChangesColumn = true;
+    this.showCalibration = true;
+    this.showProfileSwitchDetails = true;
+    this.showTempDigit = true;
+    this.showDupes = false;
+    this.showOnlyDupes = false;
+    this.showTempOverrides = true;
+    this.groupMinutes = 5;
+    // --------------------------- */
     this.fillPagesInternal(pages);
     if (GLOBALS.showBothUnits) {
       GLOBALS.glucMGDLIdx = 1;

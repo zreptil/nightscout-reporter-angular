@@ -57,7 +57,7 @@ export class JsonData {
     let minute = 0;
     let second = 0;
     let parts = value.split(':');
-    if (Utils.isEmpty(parts)) {
+    if (!Utils.isEmpty(parts)) {
       hour = +parts[0] ?? 0;
     }
     if (parts.length >= 2) {
@@ -70,13 +70,16 @@ export class JsonData {
   }
 
   static toDate(value: any): Date {
+    const ret = new Date();
     if (value == null) {
       return new Date(0, 1, 1);
     }
     if (typeof value === 'number') {
-      return new Date(value);
+      ret.setTime(value);
+      return ret;
     }
-    return JsonData.toLocal(new Date(Date.parse(value))) ?? new Date(0, 1, 1);
+    ret.setTime(Date.parse(value));
+    return JsonData.toLocal(ret) ?? new Date(0, 1, 1);
   }
 
   static toLocal(ret: Date): Date {
@@ -110,14 +113,14 @@ export class JsonData {
   }
 
   static toNumber(value: any, def = 0): number {
-    if (value == null || value === 'NaN') {
+    if (value == null || isNaN(value)) {
       return def;
     }
     if (typeof value === 'number') {
       return value;
     }
     if (typeof value === 'string') {
-      return +value;
+      return Utils.parseNumber(value) ?? def;
     }
     if (typeof value === 'boolean') {
       return value ? def : 1 - def;

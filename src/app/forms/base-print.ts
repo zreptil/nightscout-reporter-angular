@@ -1916,7 +1916,7 @@ export abstract class BasePrint extends FormConfig {
     imgOffsetY?: number,
     lineWidth?: number,
     graphText?: string,
-    newColumn?: false,
+    newColumn?: boolean,
     points?: { x: number, y: number }[],
     colGraphText?: string,
     colLegendText?: string
@@ -2188,7 +2188,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   drawScaleIE(xo: number, yo: number, graphHeight: number, top: number, min: number, max: number, colWidth: number,
-              horzCvs: any, vertStack: any, steps: StepData[], display: (i: number, step: number, value?: number) => string) {
+              horzCvs: any[], vertStack: any[], steps: StepData[], display: (i: number, step: number, value?: number) => string) {
     let step = 0.1;
     for (const entry of steps) {
       if (max - min > entry.min) {
@@ -2231,7 +2231,7 @@ export abstract class BasePrint extends FormConfig {
     return (gridLines - 1) * lineHeight;
   }
 
-  getIobCob(xo: number, yo: number, graphWidth: number, graphHeight: number, horzCvs: number, vertStack: number,
+  getIobCob(xo: number, yo: number, graphWidth: number, graphHeight: number, horzCvs: any[], vertStack: any[],
             day: DayData, upperIob = 0, upperCob = 0): any {
     const colWidth = graphWidth / 24;
     // graphic for iob and cob

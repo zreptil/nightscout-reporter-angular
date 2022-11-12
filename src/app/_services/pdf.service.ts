@@ -343,7 +343,7 @@ export class PdfService {
   private makePdf(data: any) {
     if (GLOBALS.isDebug) {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
-      Log.displayLink('playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
+      Log.displayLink('Playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
       this.ps.clear();
       return;
     }

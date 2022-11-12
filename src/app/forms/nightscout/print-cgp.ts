@@ -3,13 +3,13 @@ import {PageData} from '@/_model/page-data';
 import {ParamInfo} from '@/_model/param-info';
 import {PdfService} from '@/_services/pdf.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {PentagonData} from '@/forms/nightscout/pentagon-data';
 import {Utils} from '@/classes/utils';
 import {DayData} from '@/_model/nightscout/day-data';
 import {ProfileStoreData} from '@/_model/nightscout/profile-store-data';
 import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {EntryData} from '@/_model/nightscout/entry-data';
 import {Log} from '@/_services/log.service';
+import {PentagonData} from '@/_model/nightscout/pentagon-data';
 
 class CGPResult {
   cgp: PentagonData;
