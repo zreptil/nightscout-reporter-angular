@@ -9,7 +9,6 @@ import {StatusData} from '@/_model/nightscout/status-data';
 import {PdfService} from '@/_services/pdf.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DatepickerEntry} from '@/_model/datepicker-entry';
-import {DatepickerPeriod} from '@/_model/datepicker-period';
 
 @Component({
   selector: 'app-output-params',
@@ -52,14 +51,6 @@ export class OutputParamsComponent implements OnInit {
 
   get msgStandardCGP(): string {
     return $localize`CGP immer mit Standard Zielbereich`;
-  }
-
-  get shiftName(): string {
-    return DatepickerPeriod.shiftNames[GLOBALS.period.shiftDate];
-  }
-
-  get now(): Date {
-    return GlobalsData.now;
   }
 
   async ngOnInit() {

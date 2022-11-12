@@ -180,7 +180,7 @@ export class PentagonData {
     if (value !== '') {
       value = `${value} `;
     }
-    return $localize`:@@msgTor:ToR [${value}min/d]`;
+    return $localize`:@@msgTOR:ToR [${value}min/d]`;
   }
 
   static msgCV(value = ''): string {

@@ -13,16 +13,16 @@ import {SessionService} from '@/_services/session.service';
 })
 export class DartImporterComponent implements OnInit {
 
-  translations: any;
+  intlARB: any;
   messages: any;
-  xliff: any;
+  xlfJSON: any;
   code: string;
 
   constructor(public ds: DataService,
               public ss: SessionService) {
   }
 
-  get sourceData(): any {
+  get messagesJSON(): any {
     return this.messages?.[0].data;
   }
 
@@ -34,47 +34,53 @@ export class DartImporterComponent implements OnInit {
     let url = `assets/messages.json`;
     this.messages = await this.ds.request(url, {asJson: true});
     url = `assets/messages.xlf.json`;
-    this.xliff = await this.ds.request(url, {asJson: true});
+    this.xlfJSON = await this.ds.request(url, {asJson: true});
   }
 
   async clickLanguage(lang: LangData) {
     const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
     const url = `assets/old-dart/${filename}`;
-    this.translations = await this.ds.request(url, {asJson: true});
-    console.log(lang.code, this.translations);
+    console.log(url);
+    this.intlARB = await this.ds.request(url, {asJson: true});
+    console.log(lang.code, this.intlARB);
     Log.clear();
     GLOBALS.isDebug = true;
-    for (const key of Object.keys(this.sourceData)) {
-      const parts = this.sourceData[key].trim().split('\n');
-      const cvtKey = Utils.join(parts, ' ', text => {
+    for (const key of Object.keys(this.messagesJSON)) {
+      const parts = this.messagesJSON[key].trim().split('\n');
+      if (this.intlARB[key] != null) {
+        const trans = this.intlARB[key];
+        Log.info(`${key} ${trans}`);
+        continue;
+      }
+      const cvtKey = Utils.join(parts, '\\n', text => {
         return text?.trim().replace(/<br>/g, '\n');
       });
-      const trans = this.translations[cvtKey];
+      const trans = this.intlARB[cvtKey];
+      if (key === 'help-cgp') {
+        console.log(key, cvtKey, trans);
+      }
       if (trans == null) {
-        if (key === '4562561451144140468') {
-          console.log(key, cvtKey);
-        }
-        const src = this.xliff.file.body['trans-unit'] ?? [];
+        const src = this.xlfJSON.file.body['trans-unit'] ?? [];
         const entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
         let showError = true;
         if (entry != null) {
-          const keyList = Object.keys(this.translations);
+          const keyList = Object.keys(this.intlARB);
           let found: string = null;
           for (let i = 0; i < keyList.length && found == null; i++) {
-            if (this.translations[keyList[i]].description === entry.note?.['#text']) {
+            if (this.intlARB[keyList[i]].description === entry.note?.['#text']) {
               found = keyList[i];
             }
           }
           if (found != null) {
             const id = found.substring(1);
-            if (this.translations[id] != null) {
-              Log.warn(`${key} ${this.translations[id]}`);
+            if (this.intlARB[id] != null) {
+              Log.warn(`${key} ${this.intlARB[id]}`);
               showError = false;
             }
           }
         }
         if (showError) {
-          Log.error(`${key} ${this.sourceData[key]}`);
+          Log.error(`${key} ${this.messagesJSON[key]}`);
         }
       } else {
         Log.info(`${key} ${trans}`);

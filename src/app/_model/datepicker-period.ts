@@ -131,6 +131,9 @@ export class DatepickerPeriod {
     if (this.list != null) {
       for (const entry of this.list) {
         if (entry.key === this.entryKey) {
+          if (this.entryKey !== 'today' && this.shiftDate > 0) {
+            return `${entry.title} (${DatepickerPeriod.shiftNames[this.shiftDate]})`;
+          }
           return entry.title;
         }
       }

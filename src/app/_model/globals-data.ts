@@ -630,7 +630,7 @@ export class GlobalsData extends Settings {
     if (typeof gluc === 'string') {
       gluc = +(gluc ?? 0);
     }
-    if (isNaN(gluc) || gluc === 0) {
+    if (Utils.isEmpty(gluc)) {
       return '';
     }
 
