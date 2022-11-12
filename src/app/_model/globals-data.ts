@@ -832,4 +832,8 @@ export class GlobalsData extends Settings {
     }
     return value / 18.02;
   }
+
+  timeForCalc(time: Date): number {
+    return time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds();
+  }
 }

@@ -149,10 +149,6 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     return this.width - 7.0;
   }
 
-  override get isLocalOnly(): boolean {
-    return true;
-  }
-
   _title: string = null;
 
   override get title(): string {

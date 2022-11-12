@@ -256,12 +256,12 @@ export class PdfService {
         for (const page of formPages) {
           const entry = page.content[page.content.length - 1];
           if (entry.pageBreak === 'newFile' && !Utils.isEmpty(fileList[fileList.length - 1])) {
-            entry.remove('pageBreak');
+            delete (entry.pageBreak);
             fileList[fileList.length - 1].push(page);
             fileList.push([]);
           } else {
             if (entry.pageBreak === 'newFile') {
-              entry.remove('pageBreak');
+              delete (entry.pageBreak);
             } //entry["pageBreak"] = "after";
             fileList[fileList.length - 1].push(page);
           }

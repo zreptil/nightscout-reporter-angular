@@ -1117,7 +1117,7 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Gesamtinsulin (${value})`;
   }
 
-  msgKH(value: string): string {
+  msgKH(value: any): string {
     return $localize`${value}g`;
   }
 

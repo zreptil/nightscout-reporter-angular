@@ -61,10 +61,6 @@ und als Pfeile darstellen zu lassen.`;
     return $localize`Werte über dem Maximum als Pfeile darstellen`;
   }
 
-  override get isLocalOnly(): boolean {
-    return true;
-  }
-
   override get title(): string {
     return $localize`Tagesprofil`;
   }

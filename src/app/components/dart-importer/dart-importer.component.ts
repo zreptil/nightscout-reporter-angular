@@ -106,7 +106,7 @@ export class DartImporterComponent implements OnInit {
     // this.code = this.code.replace(/(\b)cmx(\b)/g, '$1this.cmx$2');
     // this.code = this.code.replace(/(\b)cmy(\b)/g, '$1this.cmy$2');
     let repList = ['x', 'y', 'color', 'colSpan', 'lineWidth', 'type', 'points', 'closePath',
-      'relativePosition', 'columns', 'width', 'text', 'fontSize', 'alignment', 'stack', 'canvas',
+      'relativePosition', 'absolutePosition', 'columns', 'width', 'text', 'fontSize', 'alignment', 'stack', 'canvas',
       'x1', 'x2', 'y1', 'y2', 'lineColor', 'margin', 'w', 'h', 'lineHeight', 'bold', 'layout',
       'table', 'widths', 'headerRows', 'body', 'style', 'fillOpacity', 'fillColor'];
     for (const entry of repList) {
