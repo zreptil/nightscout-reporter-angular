@@ -75,7 +75,7 @@ export class SessionService {
     new PrintDailyProfile(this.pdf),
     new PrintDailyGluc(this.pdf),
     new PrintDailyHours(this.pdf),
-    new PrintUserData(this.pdf),
+    new PrintUserData(this.pdf, this.ds),
     new PrintGlucDistribution(this.pdf)
   ];
   private dlgRef: MatDialogRef<any>;
@@ -226,7 +226,7 @@ export class SessionService {
     } else if (id === '13' || id === 'dayhours') {
       return new PrintDailyHours(this.pdf, suffix);
     } else if (id === '14' || id === 'userdata') {
-      return new PrintUserData(this.pdf, suffix);
+      return new PrintUserData(this.pdf, this.ds, suffix);
     } else if (id === '15' || id === 'glucdist') {
       return new PrintGlucDistribution(this.pdf, suffix);
     }
