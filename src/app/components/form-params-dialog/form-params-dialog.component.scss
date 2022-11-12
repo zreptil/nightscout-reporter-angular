@@ -1,0 +1,93 @@
+:host {
+  ::ng-deep mat-dialog-actions {
+    background-color: var(--settingsHeaderBack);
+
+    .mat-button-wrapper {
+      color: var(--settingsHeaderFore);
+    }
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--settingsHeaderBack);
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--settingsHeaderFore) !important;
+    }
+  }
+}
+
+[mat-dialog-title] {
+  background-color: var(--settingsHeaderBack);
+  color: var(--settingsHeaderFore);
+}
+
+mat-dialog-content {
+  color: var(--settingsBodyFore);
+  background-color: var(--settingsBodyBack);
+}
+
+.formparams {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  border-radius: 0.5em;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  flex: 1;
+  padding: 0.5em;
+  align-self: center;
+  margin: 1em 0;
+
+  [title] {
+    background-color: var(--settingsHeaderBack);
+    color: var(--settingsHeaderFore);
+    padding: 0 0 0 1em;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    align-self: stretch;
+    border-radius: 0.5em;
+    margin-bottom: 0.5em;
+
+    button {
+      min-width: 32px;
+    }
+
+    ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+      background-color: var(--settingsHeaderBack);
+
+      .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+        stroke: var(--settingsHeaderFore) !important;
+      }
+    }
+
+    ::ng-deep .mat-checkbox-background {
+      background-color: var(--settingsHeaderFore);
+
+      .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+        stroke: var(--settingsHeaderFore) !important;
+      }
+    }
+
+    mat-icon {
+      color: var(--settingsHeaderFore);
+    }
+  }
+
+  [paramtitle] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    margin: 0.5em 0;
+  }
+
+  formparams {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    padding-right: 0.5em;
+  }
+}
+

@@ -10,6 +10,7 @@ import {ReportData} from '@/_model/report-data';
 import {LegendData} from '@/_model/legend-data';
 import {EntryData} from '@/_model/nightscout/entry-data';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
+import {PrintDailyGraphic} from '@/forms/nightscout/print-daily-graphic';
 
 export class PrintWeeklyGraphic extends BasePrint {
   override help = $localize`:help for weekgraph@@help-weekgraph:Dieses Formular zeigt den Verlauf der Glukosekurve über eine Woche hinweg an. Der Zeitraum wird
@@ -30,8 +31,8 @@ Woche erzeugt werden.`;
       ]
     }),
     new ParamInfo(1, '', {boolValue: true, isDeprecated: true}),
-    new ParamInfo(2, PrintWeeklyGraphic.msgParam3, {boolValue: true}),
-    new ParamInfo(3, '', //PrintDailyGraphic.msgParam19,
+    new ParamInfo(2, this.msgParam3, {boolValue: true}),
+    new ParamInfo(3, PrintDailyGraphic.msgParam19,
       {
         boolValue: false,
         subParams: [
@@ -58,11 +59,7 @@ Woche erzeugt werden.`;
     this.init(suffix);
   }
 
-  static get msgParam1(): string {
-    return $localize`Parameter für PrintWeeklyGraphic`;
-  }
-
-  static get msgParam3(): string {
+  get msgParam3(): string {
     return $localize`Tagesnamen in Grafik anzeigen`;
   }
 

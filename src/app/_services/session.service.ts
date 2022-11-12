@@ -43,6 +43,7 @@ import {PrintGlucDistribution} from '@/forms/nightscout/print-gluc-distribution'
 import {PrintUserData} from '@/forms/nightscout/print-user-data';
 import {PrintTest} from '@/forms/nightscout/print-test';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
+import {FormParamsDialogComponent} from '@/components/form-params-dialog/form-params-dialog.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -88,7 +89,8 @@ export class SessionService {
     helpview: HelpviewComponent,
     outputparams: OutputParamsComponent,
     datepickerdialog: DatepickerDialogComponent,
-    shortcutedit: ShortcutEditComponent
+    shortcutedit: ShortcutEditComponent,
+    formparamsdialog: FormParamsDialogComponent
   }
 
   constructor(public ss: StorageService,

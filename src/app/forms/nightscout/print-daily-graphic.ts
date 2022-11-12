@@ -103,7 +103,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     new ParamInfo(15, this.msgParam16, {boolValue: false}),
     new ParamInfo(16, this.msgParam17, {boolValue: false}),
     new ParamInfo(5, this.msgParam18, {boolValue: false}),
-    new ParamInfo(18, this.msgParam19, {boolValue: false, subParams: [new ParamInfo(0, PrintCGP.msgParamAreaLines, {boolValue: true})]}),
+    new ParamInfo(18, PrintDailyGraphic.msgParam19, {boolValue: false, subParams: [new ParamInfo(0, PrintCGP.msgParamAreaLines, {boolValue: true})]}),
     new ParamInfo(19, this.msgParam22, {boolValue: false}),
     new ParamInfo(2, this.msgParam23, {boolValue: true}),
     new ParamInfo(20, this.msgParam24, {boolValue: false}),
@@ -162,6 +162,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     this.init(suffix);
   }
 
+  static get msgParam19(): string {
+    return $localize`Glukose Pentagon erzeugen`;
+  }
+
   get basalWidth(): number {
     return this.graphWidth;
   }
@@ -215,13 +219,13 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     return $localize`Notiz-Linien bis zur Kurve zeichnen`;
   }
 
-  get msgParam14(): string {
-    return $localize`Nahe zusammen liegende Werte aufsummieren`;
-  }
-
 //  override
 //  number get scale
 //  => isSmall ?? false ? (GLOBALS.isLocal ? 0.25 : 0.5) : 1.0;
+
+  get msgParam14(): string {
+    return $localize`Nahe zusammen liegende Werte aufsummieren`;
+  }
 
   get msgParam16(): string {
     return $localize`Bolusarten anzeigen`;
@@ -233,10 +237,6 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
   get msgParam18(): string {
     return $localize`Berechnete IE für Kohlenhydrate anzeigen`;
-  }
-
-  get msgParam19(): string {
-    return $localize`Glukose Pentagon erzeugen`;
   }
 
   get msgParam20(): string {

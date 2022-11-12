@@ -48,7 +48,7 @@
       <div class="line">
         <mat-form-field long>
           <mat-label i18n="label for max glucvalue in printparams">Maximaler Glukosewert in Grafiken</mat-label>
-          <mat-select [(ngModel)]="glucMaxIdx" class="selectButton" panelClass="output-params">
+          <mat-select [(value)]="glucMaxIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="glucMaxIdx=idx"
                         *ngFor="let item of listGlucMaxValues; let idx=index"
                         [value]="idx"
@@ -59,7 +59,7 @@
         </mat-form-field>
         <mat-form-field long>
           <mat-label i18n="label for max basalprecision in printparams">Genauigkeit der Basalangaben:</mat-label>
-          <mat-select [(ngModel)]="basalPrecisionIdx" class="selectButton" panelClass="output-params">
+          <mat-select [(value)]="basalPrecisionIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="basalPrecisionIdx=idx"
                         *ngFor="let item of listBasalPrecision; let idx=index"
                         [value]="idx"

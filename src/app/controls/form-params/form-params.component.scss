@@ -1,0 +1,134 @@
+::ng-deep .mat-select-panel.selectparams {
+  background-color: var(--settingsBodyBack);
+  max-height: initial !important;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+
+  .select {
+    ::ng-deep mat-list {
+      background: var(--settingsBodyBack);
+      padding: 0;
+
+      mat-select-item {
+        display: flex;
+        flex-flow: column;
+        line-height: initial;
+        align-items: flex-start;
+        padding: 0.2em 0.5em;
+        color: var(--settingsBodyFore);
+
+        div.itemSub {
+          font-size: 75%;
+        }
+
+        .selected-accent {
+          background-color: var(--settingsHeaderBack);
+        }
+      }
+
+      mat-select-item.selected {
+        background-color: var(--settingsHeaderBack);
+        color: var(--settingsHeaderFore);
+      }
+    }
+  }
+
+  ::ng-deep .mat-form-field .mat-form-field-label {
+    color: var(--settingsBodyFore);
+  }
+
+  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
+    color: var(--settingsBodyFore);
+  }
+
+  [select] {
+    ::ng-deep .mat-form-field-underline,
+    ::ng-deep .mat-form-field-subscript-wrapper {
+      display: none
+    }
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--settingsHeaderBack);
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--settingsHeaderFore) !important;
+    }
+  }
+
+  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
+    background-color: var(--settingsHeaderBack);
+  }
+}
+
+.paramLiteral {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 80%;
+  margin: 1em 0;
+
+  .divider {
+    margin-top: 0.5em;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+  }
+}
+
+.paramList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  material-dropdown-select {
+    margin-left: 1em;
+    background: var(--primaryBack);
+    color: var(--primaryFore);
+
+    ::ng-deep .button {
+      padding: 0.5em;
+    }
+  }
+}
+
+.paramSelect {
+  ::ng-deep mat-list {
+    background: var(--secondaryBack);
+  }
+}
+
+.paramSlider {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  mat-slider {
+    margin-left: 1em;
+    width: 80%;
+  }
+}
+
+mat-checkbox {
+  margin: 0;
+  align-items: flex-start;
+}
+
+.subParams {
+  margin-left: 1.5em;
+}
+
+.loop {
+  ::ng-deep .icon {
+    border-radius: 50%;
+    border: 2px solid var(--loopMarked);
+    background-color: var(--loopMarked);
+  }
+}
+

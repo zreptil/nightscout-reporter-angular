@@ -1,0 +1,45 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.formparamsdialog">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n="title for form-params dialog">
+      <mat-icon>tune</mat-icon>
+      Formularparameter
+    </h1>
+    <div>
+      <button [mat-dialog-close]="{btn:2}"
+              mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <div *ngIf="!globals.showAllTileParams" class="formparams">
+      <div title>
+        <mat-checkbox [(ngModel)]="allParams"></mat-checkbox>
+        {{form.display}}
+        <div>
+          <button (click)="clickListToggle()" mat-flat-button>
+            <mat-icon>list</mat-icon>
+          </button>
+        </div>
+      </div>
+      <app-form-params [paramList]="form.sortedParams"></app-form-params>
+    </div>
+    <div *ngIf="globals.showAllTileParams" class="formparams">
+      <div title>
+        <div i18n="title for parameters">Optionen</div>
+        <div>
+          <button (click)="clickListToggle()" mat-flat-button>
+            <mat-icon>description</mat-icon>
+          </button>
+        </div>
+      </div>
+      <ng-container *ngFor="let cfg of globals.listConfig">
+        <div *ngIf="isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0">
+          <div paramtitle>{{cfg.form.display}}</div>
+          <app-form-params [paramList]="cfg.form.sortedParams"></app-form-params>
+        </div>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+</div>
