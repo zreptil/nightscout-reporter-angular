@@ -1,13 +1,11 @@
 # Nightscout Reporter
 
-A web app based on AngularDart to create PDF documents from nightscout data.
+A web app based on Angular to create PDF documents from nightscout data.
 
 It uses the api from cgm-remote-monitor to access the nightscout data and
 creates some PDFs for handing out to diabetes doctors or coaches.
 
-This is the transfer from Dart to Angular which is neccessary, since Dart is no longer maintained by the creators and the community-version of dart is not good enough handling the dependencies of the
-framework.
-Hopefully Angular support will last longer than that of Dart.
+This is the transfer from Dart to Angular which is neccessary, since Dart is no longer maintained by the creators and the community-version of dart is not good enough handling the dependencies of the framework. Hopefully Angular support will last longer than that of Dart.
 
 Online version available at: https://nightscout-reporter.zreptil.de/  
 Compiled project avaialbe at: https://nightscout-reporter.zreptil.de/nightscout-reporter_local.zip
@@ -19,7 +17,8 @@ Initial steps to compile, deploy, and run nightscout reporter on your own infras
 ### Preparation
 
 * Download or git clone the repository
-* Download an install dart sdk in the stated version (see above) to "C:\tools\dart-sdk"
+* Download and install node.js from https://nodejs.org
+* Install Angular using "npm install -g @angular/cli"
 * Download the [compiled version](https://nightscout-reporter.zreptil.de/nightscout-reporter_local.zip) and extract it
 
 ### Build
