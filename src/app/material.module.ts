@@ -34,6 +34,7 @@ import {CdkStepperModule, STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   exports: [
@@ -56,7 +57,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatDatepickerModule,
     MatDividerModule,
     MatExpansionModule,
-    // MatGridListModule,
+    MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatListModule,

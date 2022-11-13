@@ -6,6 +6,7 @@ import {Log} from '@/_services/log.service';
 import {SessionService} from '@/_services/session.service';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {DataService} from '@/_services/data.service';
+import {CdkDragDrop, CdkDragStart} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-view-tile',
@@ -13,6 +14,8 @@ import {DataService} from '@/_services/data.service';
   styleUrls: ['./view-tile.component.scss']
 })
 export class ViewTileComponent implements OnInit {
+
+  dragIdx: number;
 
   constructor(public ss: SessionService,
               public ds: DataService,
@@ -130,5 +133,32 @@ export class ViewTileComponent implements OnInit {
   clickTileHelp(evt: MouseEvent, cfg: FormConfig) {
     this.ss.showPopup('helpview', cfg)
     evt.stopPropagation();
+  }
+
+  drop(evt: CdkDragDrop<FormConfig[]>) {
+    let parent = document.elementFromPoint(evt.dropPoint.x, evt.dropPoint.y);
+    while (parent != null && !parent.id?.startsWith('tile-')) {
+      parent = parent.parentElement;
+    }
+    const dstIdx = +parent?.id.substring(5);
+    const srcIdx = evt.item.data;
+    const cfg = GLOBALS.listConfig[srcIdx];
+    GLOBALS.listConfig.splice(srcIdx, 1);
+    GLOBALS.listConfig.splice(srcIdx < dstIdx ? dstIdx - 1 : dstIdx, 0, cfg);
+    this.dragIdx = null;
+  }
+
+  mouseover(evt: MouseEvent) {
+    if (this.dragIdx != null) {
+      (evt.currentTarget as HTMLDivElement)?.classList?.add('dragover');
+    }
+  }
+
+  mouseout(evt: MouseEvent) {
+    (evt.currentTarget as HTMLDivElement)?.classList?.remove('dragover');
+  }
+
+  dragstart(evt: CdkDragStart) {
+    this.dragIdx = evt.source.data;
   }
 }

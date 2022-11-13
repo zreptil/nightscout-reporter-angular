@@ -13,8 +13,8 @@
     </div>
   </div>
   <mat-dialog-content>
-    <div *ngIf="!globals.showAllTileParams" class="formparams">
-      <div title>
+    <div *ngIf="!globals.showAllTileParams" [class]="classForList(form, 'formparams')">
+      <div paramtitle title>
         <mat-checkbox [(ngModel)]="allParams"></mat-checkbox>
         {{form.display}}
         <div>
@@ -35,8 +35,8 @@
         </div>
       </div>
       <ng-container *ngFor="let cfg of globals.listConfig">
-        <div *ngIf="isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0">
-          <div paramtitle>{{cfg.form.display}}</div>
+        <div *ngIf="isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0" [class]="classForList(cfg.form, 'card')">
+          <div paramtitle title>{{cfg.form.display}}</div>
           <app-form-params [paramList]="cfg.form.sortedParams"></app-form-params>
         </div>
       </ng-container>

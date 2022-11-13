@@ -1,9 +1,19 @@
-<div class="tilelist">
+<div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListSortingDisabled class="tilelist">
+  <!-- (cdkDropListDropped)="drop($event)" -->
   <ng-container *ngFor="let cfg of globals.listConfig; let idx=index">
-    <div (click)="tileClicked($event,cfg)" *ngIf="isFormVisible(cfg.form)"
+    <div (cdkDragStarted)="dragstart($event)"
+         (click)="tileClicked($event,cfg)"
+         (mouseout)="mouseout($event)"
+         (mouseover)="mouseover($event)"
+         *ngIf="isFormVisible(cfg.form)"
+         [cdkDragData]="idx"
          [class]="tileClass(cfg)"
-         id="tile-{{cfg.id}}">
-      <img *ngIf="globals.tileShowImage" [src]="cfg.form.backimage" alt="tile image {{cfg.form.id}}">
+         cdkDrag
+         cdkDragBoundary=".tilelist"
+         id="tile-{{idx}}">
+      <img *ngIf="globals.tileShowImage"
+           [src]="cfg.form.backimage"
+           alt="tile image {{cfg.form.id}}">
       <div (click)="clickTileMenu($event,cfg.form)" *ngIf="cfg.form.sortedParams.length>0 && cfg.checked" params>
         <mat-icon>more_vert</mat-icon>
       </div>
@@ -25,6 +35,7 @@
       <div (click)="clickTileDelete($event,idx)" *ngIf="mayDelete(cfg)" copy>
         <mat-icon>delete</mat-icon>
       </div>
+      <i class="icono-arrow2-right"></i>
     </div>
   </ng-container>
 </div>

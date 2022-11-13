@@ -65,4 +65,15 @@ export class FormParamsDialogComponent implements OnInit {
 
     return true;
   }
+
+  classForList(form: BasePrint, def?: string): string[] {
+    const ret: string[] = def == null ? [] : [def];
+    if (form.isDebugOnly) {
+      ret.push('is-debug');
+    }
+    if (form.isLocalOnly) {
+      ret.push('is-local');
+    }
+    return ret;
+  }
 }

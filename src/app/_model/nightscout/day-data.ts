@@ -11,7 +11,6 @@ import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {ReportData} from '@/_model/report-data';
 import {CalcCOBData} from '@/_model/nightscout/calc-cob-data';
 import {Settings} from '@/_model/settings';
-import {Log} from '@/_services/log.service';
 
 export class DayData {
   prevDay: DayData;
@@ -61,7 +60,6 @@ export class DayData {
       return this._profile;
     }
     this._profile = [];
-    Log.info('mal gucken', this.basalData.store);
     if (Utils.isEmpty(this.basalData.store.listBasal)) {
       return this._profile;
     }

@@ -36,17 +36,17 @@ mat-dialog-content {
   padding: 0.5em;
   align-self: center;
   margin: 1em 0;
+  gap: 0.5em;
 
   [title] {
     background-color: var(--settingsHeaderBack);
     color: var(--settingsHeaderFore);
     padding: 0 0 0 1em;
-    justify-content: space-between;
+    justify-content: space-between !important;
     align-items: center;
     display: flex;
     align-self: stretch;
     border-radius: 0.5em;
-    margin-bottom: 0.5em;
 
     button {
       min-width: 32px;
@@ -89,5 +89,66 @@ mat-dialog-content {
     align-items: flex-start;
     padding-right: 0.5em;
   }
+
+  .card {
+    padding: 0.3em;
+    border-radius: 0.5em;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .is-debug {
+    background: var(--logDebugBack);
+    color: var(--logDebugFore);
+  }
+
+  .is-local {
+    background: var(--logcalFore);
+    color: var(--logcalBack);
+  }
 }
 
+.is-local {
+  [paramtitle] {
+    background: var(--localFore);
+    color: var(--localBack);
+
+    mat-icon {
+      color: var(--localBack);
+    }
+
+    ::ng-deep .mat-checkbox-background {
+      background-color: var(--localBack) !important;
+    }
+
+    ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+      background-color: var(--localBack) !important;
+
+      .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+        stroke: var(--localFore) !important;
+      }
+    }
+  }
+}
+
+.is-debug {
+  [paramtitle] {
+    color: var(--debugFirst);
+    background: var(--debugFore);
+
+    mat-icon {
+      color: var(--debugFirst);
+    }
+  }
+
+  ::ng-deep .mat-checkbox-background {
+    background-color: var(--debugFirst) !important;
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--debugFirst) !important;
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--debugFore) !important;
+    }
+  }
+}
