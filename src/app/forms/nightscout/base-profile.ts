@@ -133,7 +133,6 @@ export abstract class BaseProfile extends BasePrint {
       } else {
         this.profEndTime = null;
       }
-      Log.info(`Profil ${this.fmtDate(this.profStartTime)} - ${this.fmtDate(this.profEndTime)}`);
 
       // if profileendtime is before reportstartdate then skip profile
       if (this.profEndTime != null && Utils.isBefore(this.profEndTime, startDate)) {
@@ -169,7 +168,6 @@ export abstract class BaseProfile extends BasePrint {
       lastIdx = pageList.length;
       for (let p = 0; !done; p++) {
         const data = this.repData.profile(profiles[i].startDate, null, false);
-        Log.info('Jetzt gehts Lohoooos!!', i, data, profiles[i]);
         const page = this.getPage(p, data, calc);
         done = page == null;
         if (!done) {

@@ -5,6 +5,7 @@ import {LangData} from '@/_model/nightscout/lang-data';
 import {Log} from '@/_services/log.service';
 import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
+import {MaterialColorService} from '@/_services/material-color.service';
 
 @Component({
   selector: 'app-dart-importer',
@@ -17,9 +18,12 @@ export class DartImporterComponent implements OnInit {
   messages: any;
   xlfJSON: any;
   code: string;
+  colorstyle: string;
 
   constructor(public ds: DataService,
+              public ms: MaterialColorService,
               public ss: SessionService) {
+    this.extractColorJson();
   }
 
   get messagesJSON(): any {
@@ -123,5 +127,18 @@ export class DartImporterComponent implements OnInit {
       const re = new RegExp(`(\\b)${entry}(\\b)`, 'g');
       this.code = this.code.replace(re, `$1new ${entry}$2`);
     }
+  }
+
+  async extractColorJson() {
+    const json = await this.ds.requestJson(`/assets/themes/standard/colors.json`);
+    const ret: string[] = [];
+    for (const key of Object.keys(json)) {
+      let value = json[key];
+      if (this.ms.colors[value] != null) {
+        value = this.ms.colors[value];
+      }
+      ret.push(`--${key}: ${value};`);
+    }
+    this.colorstyle = Utils.join(ret, '\n');
   }
 }

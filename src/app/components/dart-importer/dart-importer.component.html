@@ -27,4 +27,13 @@
       </button>
     </mat-form-field>
   </mat-tab>
+  <mat-tab label="Color Converter">
+    <mat-form-field appearance="fill" class="dartcode">
+      <mat-label>In style.scss einzufügender Code</mat-label>
+      <textarea [(ngModel)]="colorstyle" appTextareaAutoresize matInput type="text"></textarea>
+      <button (click)="extractColorJson()" mat-icon-button matSuffix>
+        <mat-icon>import_export</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-tab>
 </mat-tab-group>

@@ -575,7 +575,7 @@ export class DataService {
         try {
           let eNow = EntryData.fromJson(src[0]);
           let ePrev = EntryData.fromJson(src[1]);
-          if (eNow.device != ePrev.device) {
+          if (eNow.device !== ePrev.device) {
             url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=10'});
             src = await this.requestJson(url);
             eNow = EntryData.fromJson(src[0]);
@@ -590,7 +590,7 @@ export class DataService {
           if (ePrev == null) {
             ePrev = eNow;
           }
-          const span = Utils.differenceInMinutes(eNow.time, ePrev.time);
+          const span = Math.max(Utils.differenceInMinutes(eNow.time, ePrev.time), 1);
           GLOBALS.glucDir = 360;
           GLOBALS.currentGlucDiff = '';
           GLOBALS.currentGlucTime = '';
@@ -602,10 +602,9 @@ export class DataService {
 
           GLOBALS.currentGlucSrc = eNow;
           GLOBALS.lastGlucSrc = ePrev;
-          GLOBALS.currentGlucDiff = `${eNow.gluc > ePrev.gluc ? '+' : ''}`
-            + `${GLOBALS.fmtNumber((eNow.gluc - ePrev.gluc) * 5 / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
           const diff = eNow.gluc - ePrev.gluc;
-          const limit = Math.floor(10 * span / 5);
+          GLOBALS.currentGlucDiff = `${eNow.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
+          const limit = Math.floor(10 * span);
           if (diff > limit) {
             GLOBALS.glucDir = -90;
           } else if (diff < -limit) {

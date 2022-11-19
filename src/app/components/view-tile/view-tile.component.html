@@ -1,6 +1,9 @@
 <div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListSortingDisabled class="tilelist">
   <!-- (cdkDropListDropped)="drop($event)" -->
   <ng-container *ngFor="let cfg of globals.listConfig; let idx=index">
+    <!--
+    <div *ngIf="idx===3" class="fake-animation tile"></div>
+    -->
     <div (cdkDragStarted)="dragstart($event)"
          (click)="tileClicked($event,cfg)"
          (mouseout)="mouseout($event)"
