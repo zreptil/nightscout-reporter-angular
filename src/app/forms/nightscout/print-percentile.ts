@@ -681,7 +681,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: '${GLOBALS.glucFromData(perc.percentile(10), 1)}',
+        text: `${GLOBALS.glucFromData(perc.percentile(10), 1)}`,
         style: style,
         alignment: 'right',
         fontSize: f

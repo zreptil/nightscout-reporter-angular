@@ -144,7 +144,7 @@ export class DataService {
     const data = {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
-      w2: GLOBALS.theme,
+      w2: GLOBALS._theme,
       w3: (this._syncWithGoogle ?? false) ? 'true' : 'false'
     };
     this.ss.write(Settings.WebData, data);
@@ -160,7 +160,7 @@ export class DataService {
       const json = this.ss.read(Settings.WebData);
       const code = JsonData.toText(json.w1);
       GLOBALS.language = GLOBALS.languageList.find((lang) => lang.code === code);
-      GLOBALS.theme = JsonData.toText(json.w2);
+      GLOBALS.theme = JsonData.toText(json.w2, null);
       this._syncWithGoogle = JsonData.toBool(json.w3);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);

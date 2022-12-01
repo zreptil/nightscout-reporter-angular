@@ -111,8 +111,8 @@ export class Settings {
   _theme: string;
 
   get theme(): string {
-    if (this._theme == null) {
-      if (GlobalsData.now.getMonth() === 12) {
+    if (Utils.isEmpty(this._theme)) {
+      if (GlobalsData.now.getMonth() === 11) {
         return 'xmas';
       } else {
         return 'standard';

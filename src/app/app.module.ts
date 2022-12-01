@@ -40,7 +40,7 @@ import {DatepickerMonthComponent} from './controls/datepicker/datepicker-month/d
 import {DatepickerDialogComponent} from './controls/datepicker/datepicker-dialog/datepicker-dialog.component';
 import {ShortcutEditComponent} from './components/shortcut-edit/shortcut-edit.component';
 import {FormParamsDialogComponent} from './components/form-params-dialog/form-params-dialog.component';
-import { FormParamsComponent } from './controls/form-params/form-params.component';
+import {FormParamsComponent} from './controls/form-params/form-params.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +89,9 @@ import { FormParamsComponent } from './controls/form-params/form-params.componen
     AppRoutingModule,
     DragDropModule
   ],
-  providers: [],
+  providers: [
+    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

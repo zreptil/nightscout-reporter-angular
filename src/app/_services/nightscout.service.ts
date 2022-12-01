@@ -97,7 +97,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
     if (this.reportData != null
       && Utils.isSameDay(this.reportData.begDate, beg)
-      && Utils.isSameDay(this.reportData.endDate, end)) {
+      && Utils.isSameDay(this.reportData.endDate, end)
+      && this.reportData.isValid) {
       this.ps.text = this.msgPreparingPDF;
       this.ps.max = 1;
       this.ps.value = 0;
@@ -406,6 +407,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.dayCount = -1;
     this.ps.value = 0;
     this.ps.max = Utils.differenceInDays(endDate, begDate)
+    this.ps.info = GLOBALS.period.display;
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
@@ -554,7 +556,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
 //  if (sendIcon === 'stop') {
-    this.ps.value = 0;
+    this.ps.value = 1;
     this.ps.max = 6;
     this.ps.text = this.msgPreparingData;
     data.ns.entries.sort((a, b) => Utils.compareDate(a.time, b.time));

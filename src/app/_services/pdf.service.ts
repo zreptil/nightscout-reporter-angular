@@ -160,7 +160,7 @@ export class PdfService {
                 text: '',
                 pageBreak: 'after',
                 pageSize: 'a4',
-                pageOrientation: listConfig[i].form.isPortrait ? 'portrait' : 'landscape'
+                pageOrientation: listConfig[i]?.form.isPortrait ? 'portrait' : 'landscape'
               }, docList[i].content]);
             }
             this.makePdf(pdfData);

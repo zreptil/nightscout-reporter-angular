@@ -9,6 +9,7 @@ export class ProgressService {
 
   max: number;
   isStopped = false;
+  info: string;
   mayCancel = true;
   public initializer: Observable<any>;
   private initializerSubject: BehaviorSubject<any>;
@@ -29,7 +30,6 @@ export class ProgressService {
   }
 
   _text: string;
-
   get text(): string {
     return this._text;
   }
@@ -46,6 +46,7 @@ export class ProgressService {
   cancel(): void {
     this.isStopped = true;
     this.text = null;
+    this.info = null;
   }
 
   next(): boolean {
@@ -54,6 +55,7 @@ export class ProgressService {
   }
 
   init(data?: any, mayCancel = true): void {
+    this.info = null;
     this.mayCancel = mayCancel;
     this.isStopped = false;
     this.initializerSubject.next(data);
@@ -63,6 +65,7 @@ export class ProgressService {
     this.max = 0;
     this._value = 0;
     this.text = null;
+    this.info = null;
     this.isStopped = true;
   }
 }

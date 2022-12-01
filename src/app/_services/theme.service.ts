@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {DataService} from '@/_services/data.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
-import {GLOBALS} from '@/_model/globals-data';
 import {Log} from '@/_services/log.service';
+import {GLOBALS} from '@/_model/globals-data';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class ThemeService {
     // } else {
     this.assignStyle(document.body.style, theme);
 //    }
-    GLOBALS.theme = name;
+    GLOBALS.theme = theme;
     this.ds.saveWebData();
   }
 
