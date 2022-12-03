@@ -15,6 +15,8 @@ import {DatePipe} from '@angular/common';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {EntryData} from '@/_model/nightscout/entry-data';
+import {TreatmentData} from '@/_model/nightscout/treatment-data';
+import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -621,6 +623,30 @@ export class DataService {
       }
     }
 
+    const changes: any = {};
+    url = GLOBALS.user.apiUrl(null, 'treatments.json', {params: 'find[eventType][$regex]=Change'});
+    src = await this.requestJson(url);
+    if (src != null) {
+      const list = [];
+      for (const entry of src) {
+        list.push(TreatmentData.fromJson(entry));
+      }
+      list.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+      for (const change of list) {
+        const time = Utils.durationText(change.createdAt, GlobalsData.now);
+        if (change.isInsulinChange) {
+          changes['ampulle'] = new WatchChangeData('ampulle', time);
+        } else if (change.isSiteChange) {
+          changes['katheter'] = new WatchChangeData('katheter', time);
+        } else if (change.isPumpBatteryChange) {
+          changes['battery'] = new WatchChangeData('battery', time);
+        } else if (change.isSensorChange) {
+          changes['sensor'] = new WatchChangeData('sensor', time);
+        }
+      }
+    }
+    GLOBALS.currentChanges = changes;
+
     if (GLOBALS.currentGlucVisible || params.force) {
       let milliseconds = params.timeout * 1000;
       //  calculate the milliseconds to the next full part of the minute for the timer
@@ -648,5 +674,4 @@ export class DataService {
     GLOBALS.currShortcutIdx = -1;
     this.save();
   }
-
 }

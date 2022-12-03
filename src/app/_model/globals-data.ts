@@ -13,6 +13,7 @@ import {WatchElement} from './watch-element';
 import {EntryData} from './nightscout/entry-data';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 
 export let GLOBALS: GlobalsData;
 
@@ -61,6 +62,7 @@ export class GlobalsData extends Settings {
   targetBottom = Settings.stdLow;
   targetTop = Settings.stdHigh;
   currentGlucSrc: EntryData;
+  currentChanges: { [key: string]: WatchChangeData };
   lastGlucSrc: EntryData;
   currentGlucDiff: string;
   currentGlucTime: string;

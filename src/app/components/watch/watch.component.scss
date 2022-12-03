@@ -13,6 +13,7 @@
   flex-flow: wrap;
   align-items: center;
   justify-content: center;
+  column-gap: 1em;
 }
 
 .low {
@@ -58,6 +59,12 @@
     .centered {
       color: #000;
     }
+  }
+}
+
+app-watch-entry {
+  img {
+    margin-right: 0.5em;
   }
 }
 
@@ -180,6 +187,42 @@ app-watch-entry[type=nl] {
 
 .vertical2 {
   align-self: flex-end;
+}
+
+app-watch-entry[type^=change].size1 {
+  img {
+    width: 24px;
+  }
+}
+
+app-watch-entry[type^=change].size2 {
+  img {
+    width: 30px;
+  }
+}
+
+app-watch-entry[type^=change].size3 {
+  img {
+    width: 36px;
+  }
+}
+
+app-watch-entry[type^=change].size4 {
+  img {
+    width: 42px;
+  }
+}
+
+app-watch-entry[type^=change].size5 {
+  img {
+    width: 48px;
+  }
+}
+
+app-watch-entry[type^=change].size6 {
+  img {
+    width: 64px;
+  }
 }
 
 app-watch-entry[type=arrow].size1 {

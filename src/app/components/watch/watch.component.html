@@ -1,19 +1,22 @@
 <div (click)="clickBackground()" [class]="classForWatch">
   <div class="watch">
     <ng-container *ngFor="let entry of globals.watchList">
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='space'" [element]="entry" [isEditMode]="isEditMode">&nbsp;</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='nl'" [element]="entry" [isEditMode]="isEditMode"></app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='user'" [element]="entry" [isEditMode]="isEditMode">{{globals.user.name}}</app-watch-entry>
-      <ng-container *ngIf="entry.type=='factor'">
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='space'" [element]="entry" [isEditMode]="isEditMode">&nbsp;</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='nl'" [element]="entry" [isEditMode]="isEditMode"></app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='user'" [element]="entry" [isEditMode]="isEditMode">{{globals.user.name}}</app-watch-entry>
+      <ng-container *ngIf="entry.type==='factor'">
         <app-watch-entry (click)="onClick(entry)" *ngIf="globals.user.adjustGluc" [element]="entry" [isEditMode]="isEditMode">*{{globals.msgAdjustFactor}}</app-watch-entry>
       </ng-container>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='time'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtTime(now)}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='date'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtDate(now)}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='unit'" [element]="entry" [isEditMode]="isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='gluc'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGluc}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='glucorg'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucOrg}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='lasttime'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucTime}}</app-watch-entry>
-      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type=='target'" [element]="entry" [isEditMode]="isEditMode" style="width:100%">
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='time'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtTime(now)}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='date'" [element]="entry" [isEditMode]="isEditMode">{{globals.fmtDate(now)}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='unit'" [element]="entry" [isEditMode]="isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='gluc'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGluc}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='glucorg'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucOrg}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='lasttime'" [element]="entry" [isEditMode]="isEditMode">{{globals.currentGlucTime}}</app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type.startsWith('change')" [element]="entry" [isEditMode]="isEditMode">
+        <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{changeInfo(entry)}}
+      </app-watch-entry>
+      <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='target'" [element]="entry" [isEditMode]="isEditMode" style="width:100%">
         <div class="target">
           <div [ngStyle]="styleTargetLow" class="low">{{globals.targetBottom}}</div>
           <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>

@@ -72,6 +72,22 @@ export class WatchComponent implements OnInit {
     return $localize`Skala`;
   }
 
+  get msgChangeSensor(): string {
+    return $localize`Sensor-Wechsel`;
+  }
+
+  get msgChangeKatheter(): string {
+    return $localize`Katheter-Wechsel`;
+  }
+
+  get msgChangeAmpulle(): string {
+    return $localize`Ampullen-Wechsel`;
+  }
+
+  get msgChangeBattery(): string {
+    return $localize`Batterie-Wechsel`;
+  }
+
   get types(): any {
     return {
       nl: this.msgNL,
@@ -85,7 +101,11 @@ export class WatchComponent implements OnInit {
       target: this.msgTARGET,
       factor: this.msgFACTOR,
       glucorg: this.msgGLUCORG,
-      space: this.msgSPACE
+      space: this.msgSPACE,
+      change_sensor: this.msgChangeSensor,
+      change_katheter: this.msgChangeKatheter,
+      change_ampulle: this.msgChangeAmpulle,
+      change_battery: this.msgChangeBattery
     };
   }
 
@@ -428,4 +448,13 @@ export class WatchComponent implements OnInit {
   //       break;
   //   }
   // }
+  changeImage(entry: WatchElement): string {
+    const id = entry.type.substring(7);
+    return `assets/img/${GLOBALS.currentChanges?.[id]?.type}.print.png`;
+  }
+
+  changeInfo(entry: WatchElement): string {
+    const id = entry.type.substring(7);
+    return GLOBALS.currentChanges?.[id]?.lasttime;
+  }
 }

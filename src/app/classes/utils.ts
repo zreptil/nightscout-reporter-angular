@@ -333,4 +333,35 @@ export class Utils {
       }
     }
   }
+
+  static durationText(from: Date, to: Date): string {
+    const duration = (to.getTime() - from.getTime()) / 1000;
+    if (duration < 60) {
+      return $localize`Gerade eben`;
+    }
+    const minutes = duration / 60;
+    if (minutes < 60) {
+      return Utils.plural(Math.floor(minutes), {
+        1: $localize`${Math.floor(minutes)} Minute`,
+        other: $localize`${Math.floor(minutes)} Minuten`
+      });
+    }
+    let hours = minutes / 60;
+    if (hours < 24) {
+      return Utils.plural(Math.floor(hours), {
+        1: $localize`${Math.floor(hours)} Stunde`,
+        other: $localize`${Math.floor(hours)} Stunden`
+      });
+    }
+    const days = hours / 24;
+    hours = hours % 24;
+    return Utils.join(
+      [Utils.plural(Math.floor(days), {
+        1: $localize`${Math.floor(days)} Tag`,
+        other: $localize`${Math.floor(days)} Tage`
+      }), Utils.plural(Math.floor(hours), {
+        1: $localize` ${Math.floor(hours)} Stunde`,
+        other: $localize` ${Math.floor(hours)} Stunden`
+      })], ' ');
+  }
 }
