@@ -139,8 +139,8 @@ export abstract class BasePrint extends FormConfig {
   tableHeadLine: any[] = [];
   tableWidths: any[] = [];
   m0: any[] = [];
-  images: { [key: string]: string } = {};
   repData: ReportData;
+  images: { [key: string]: string } = {};
 
   protected constructor(public ps: PdfService) {
     super(null, false);
@@ -1740,10 +1740,6 @@ export abstract class BasePrint extends FormConfig {
     // print(page.content);
     const text = JSON.stringify(page.content);
     this._fileSize += text.length;
-    if (GLOBALS.pdfCreationMaxSize != GlobalsData.PDFUNLIMITED && this._fileSize > GLOBALS.pdfCreationMaxSize) {
-      page.content[page.content.length - 1].pageBreak = 'newFile';
-      this._fileSize = 0;
-    }
   }
 
   abstract fillPages(pages: PageData[]): void;

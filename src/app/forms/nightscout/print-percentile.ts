@@ -270,8 +270,8 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       if (entry.gluc < 0) {
         continue;
       }
-      const time = new Date(0, 1, 1, entry.time.getHours(), entry.time.getMinutes());
-      let src = percList.find((e) => e.time === time);
+      const time = new Date(0, 0, 1, entry.time.getHours(), entry.time.getMinutes());
+      let src = percList.find((e) => e.time.getTime() === time.getTime());
       if (src == null) {
         percList.push(new PercentileData(time));
         src = Utils.last(percList);
@@ -381,7 +381,6 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       this.addLegendEntry(percLegend, '#8888ff', this.msgPercentile2575);
     }
     this.addPercentileGraph(percGraph, percList, 50, 50, '#000000');
-
     this.addLegendEntry(percLegend, '#000000', this.msgMedian, {isArea: false});
     this.addLegendEntry(percLegend, '#00ff00',
       this.msgTargetArea(

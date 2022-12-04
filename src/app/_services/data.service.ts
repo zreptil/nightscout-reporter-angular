@@ -282,7 +282,7 @@ export class DataService {
       GLOBALS.ppHideNightscoutInPDF = JsonData.toBool(json.d1);
       GLOBALS.ppShowUrlInPDF = JsonData.toBool(json.d2);
       GLOBALS.ppHideLoopData = JsonData.toBool(json.d3);
-      GLOBALS.pdfCreationMaxSize = JsonData.toNumber(json.d4);
+      // GLOBALS.pdfCreationMaxSize = JsonData.toNumber(json.d4);
       GLOBALS.ppStandardLimits = JsonData.toBool(json.d5);
       GLOBALS.ppCGPAlwaysStandardLimits = JsonData.toBool(json.d6);
       GLOBALS.ppComparable = JsonData.toBool(json.d7);

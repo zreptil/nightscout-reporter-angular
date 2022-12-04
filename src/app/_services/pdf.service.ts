@@ -148,20 +148,33 @@ export class PdfService {
           // });
           dataList = dataList.filter(entry => entry != null);
           dataList.sort((a, b) => Utils.compare(a.idx, b.idx));
+          console.log(dataList);
           const docList: any[] = []
           for (const data of dataList) {
             Utils.pushAll(docList, data.docList);
           }
           if (docList.length > 1) {
-            console.log('länge', docList.length);
             const pdfData: any = docList[0];
             for (let i = 1; i < docList.length; i++) {
-              pdfData.content.push([{
+              /*
+                            const content = [{
+                              text: '',
+                              pageBreak: 'after',
+                              pageSize: 'a4',
+                              pageOrientation: listConfig[i]?.form.isPortrait ? 'portrait' : 'landscape',
+                              images: docList[i].images
+                            }, docList[i].content];
+              */
+              docList[i].content.splice(0, 0, {
                 text: '',
                 pageBreak: 'after',
-                pageSize: 'a4',
-                pageOrientation: listConfig[i]?.form.isPortrait ? 'portrait' : 'landscape'
-              }, docList[i].content]);
+                pageSize: docList[i].pageSize,
+                pageOrientation: docList[i].pageOrientation,
+              });
+              for (const key of Object.keys(docList[i].images)) {
+                pdfData.images[key] = docList[i].images[key];
+              }
+              pdfData.content.push(docList[i].content);
             }
             this.makePdf(pdfData);
             return;

@@ -340,27 +340,27 @@ export class GlobalsData extends Settings {
     ];
   }
 
-  get pdfControlMaxSize(): number {
-    return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
-  }
-
-  set pdfControlMaxSize(value: number) {
-    this.pdfCreationMaxSize = value * Settings.PDFDIVIDER;
-  }
-
-  _pdfCreationMaxSize = Settings.PDFUNLIMITED - Settings.PDFDIVIDER;
-
-  get pdfCreationMaxSize(): number {
-    this._pdfCreationMaxSize = Math.max(this._pdfCreationMaxSize, Settings.PDFDIVIDER);
-    this._pdfCreationMaxSize = Math.min(this._pdfCreationMaxSize, Settings.PDFUNLIMITED);
-    return this._pdfCreationMaxSize;
-  }
-
-  set pdfCreationMaxSize(value: number) {
-    value = Math.max(value, Settings.PDFDIVIDER);
-    value = Math.min(value, Settings.PDFUNLIMITED);
-    this._pdfCreationMaxSize = value;
-  }
+  // get pdfControlMaxSize(): number {
+  //   return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
+  // }
+  //
+  // set pdfControlMaxSize(value: number) {
+  //   this.pdfCreationMaxSize = value * Settings.PDFDIVIDER;
+  // }
+  //
+  // _pdfCreationMaxSize = Settings.PDFUNLIMITED - Settings.PDFDIVIDER;
+  //
+  // get pdfCreationMaxSize(): number {
+  //   this._pdfCreationMaxSize = Math.max(this._pdfCreationMaxSize, Settings.PDFDIVIDER);
+  //   this._pdfCreationMaxSize = Math.min(this._pdfCreationMaxSize, Settings.PDFUNLIMITED);
+  //   return this._pdfCreationMaxSize;
+  // }
+  //
+  // set pdfCreationMaxSize(value: number) {
+  //   value = Math.max(value, Settings.PDFDIVIDER);
+  //   value = Math.min(value, Settings.PDFUNLIMITED);
+  //   this._pdfCreationMaxSize = value;
+  // }
 
   get basalPrecision(): number {
     return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
@@ -417,7 +417,7 @@ export class GlobalsData extends Settings {
       + `"d1":"${this.ppHideNightscoutInPDF ? 'true' : 'false'}"`
       + `,"d2":"${this.ppShowUrlInPDF ? 'true' : 'false'}"`
       + `,"d3":"${this.ppHideLoopData ? 'true' : 'false'}"`
-      + `,"d4":"${this.pdfCreationMaxSize}"`
+      + `,"d4":""` // was pdfCreationMaxSize
       + `,"d5":"${this._ppStandardLimits ? 'true' : 'false'}"`
       + `,"d6":"${this.ppCGPAlwaysStandardLimits ? 'true' : 'false'}"`
       + `,"d7":"${this.ppComparable ? 'true' : 'false'}"`

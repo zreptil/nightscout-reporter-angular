@@ -148,22 +148,6 @@
         <mat-checkbox [(ngModel)]="globals.showCurrentGluc" class="chk" i18n="label for checkbox to show current glucoselevel">
           Letzten Messwert in der Titelzeile anzeigen
         </mat-checkbox>
-        <div class="pdfSliderHead" i18n="pdfFileSize">
-          Dieser Regler legt fest, wie gross eine Ausgabe maximal werden darf,
-          bevor sie auf mehrere PDF-Dateien aufgeteilt wird. Wenn bei Erstellung eines
-          PDFs ein leeres Fenster angezeigt wird, dann hilft es normalerweise, diesen
-          Regler weiter nach links zu bewegen.
-        </div>
-        <div class="pdfSlider">
-          <div i18n="small">Klein</div>
-          <mat-slider [(ngModel)]="globals.pdfControlMaxSize"
-                      [max]="pdfSliderMax"
-                      [min]="1"
-                      [step]="1"
-                      class="nr-slider"></mat-slider>
-          <div *ngIf="globals.pdfControlMaxSize < pdfSliderMax" i18n="big">Gross</div>
-          <div *ngIf="globals.pdfControlMaxSize >= pdfSliderMax">{{globals.msgUnlimited}}</div>
-        </div>
       </div>
     </div>
     <div *ngIf="globals.isBeta" class="sub">

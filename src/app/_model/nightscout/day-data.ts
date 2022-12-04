@@ -449,7 +449,7 @@ export class DayData {
         continue;
       }
       const time = new Date(check.getFullYear(), check.getMonth(), check.getDate(), entry.time.getHours(), entry.time.getMinutes());
-      if (time === check) {
+      if (time.getTime() === check.getTime()) {
         return entry;
       }
       const diff = Math.abs(Utils.differenceInSeconds(time, check));
@@ -462,7 +462,7 @@ export class DayData {
     const list = tList.filter((t) => t.isBloody);
     for (const treat of list) {
       const time = new Date(check.getFullYear(), check.getMonth(), check.getDate(), treat.createdAt.getHours(), treat.createdAt.getMinutes());
-      if (time === check) {
+      if (time.getTime() === check.getTime()) {
         return treat;
       }
       const diff = Math.abs(Utils.differenceInSeconds(time, check));

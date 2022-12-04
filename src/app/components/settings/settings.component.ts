@@ -97,10 +97,6 @@ export class SettingsComponent implements OnInit {
   iOS Loop oder andere Uploader diese Tabelle falsch befüllen.<br><br>Maximale Anzahl an Profildatensätzen:`;
   }
 
-  get pdfSliderMax(): number {
-    return Math.floor(Settings.PDFUNLIMITED / Settings.PDFDIVIDER);
-  }
-
   fillSelects(): void {
     this.listProfileMaxCount = [GLOBALS.msgUnlimited];
     for (let i = 1; i < GLOBALS.profileMaxCounts.length; i++) {
