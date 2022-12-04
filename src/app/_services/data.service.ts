@@ -623,8 +623,19 @@ export class DataService {
       }
     }
 
-    const changes: any = {};
-    url = GLOBALS.user.apiUrl(null, 'treatments.json', {params: 'find[eventType][$regex]=Change'});
+    const changes: any = {
+      ampulle: new WatchChangeData('ampulle', '?'),
+      katheter: new WatchChangeData('katheter', '?'),
+      battery: new WatchChangeData('battery', '?'),
+      sensor: new WatchChangeData('sensor', '?')
+    };
+    const end = new Date();
+    const beg = Utils.addDateMonths(end, -1);
+    url = GLOBALS.user.apiUrl(null, 'treatments.json', {
+      params: `find[created_at][$lte]=${end.toISOString()}`
+        + `&find[created_at][$gte]=${beg.toISOString()}`
+        + `&find[eventType][$regex]=Change`
+    });
     src = await this.requestJson(url);
     if (src != null) {
       const list = [];
@@ -635,13 +646,13 @@ export class DataService {
       for (const change of list) {
         const time = Utils.durationText(change.createdAt, GlobalsData.now);
         if (change.isInsulinChange) {
-          changes['ampulle'] = new WatchChangeData('ampulle', time);
+          changes['ampulle'].lasttime = time
         } else if (change.isSiteChange) {
-          changes['katheter'] = new WatchChangeData('katheter', time);
+          changes['katheter'].lasttime = time
         } else if (change.isPumpBatteryChange) {
-          changes['battery'] = new WatchChangeData('battery', time);
+          changes['battery'].lasttime = time
         } else if (change.isSensorChange) {
-          changes['sensor'] = new WatchChangeData('sensor', time);
+          changes['sensor'].lasttime = time
         }
       }
     }

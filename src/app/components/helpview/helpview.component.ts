@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormConfig} from '@/forms/form-config';
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {PdfService} from '@/_services/pdf.service';
 

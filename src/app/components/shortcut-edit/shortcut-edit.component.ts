@@ -4,7 +4,7 @@ import {Utils} from '@/classes/utils';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
-import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shortcut-edit',

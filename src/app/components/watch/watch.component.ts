@@ -449,8 +449,8 @@ export class WatchComponent implements OnInit {
   //   }
   // }
   changeImage(entry: WatchElement): string {
-    const id = entry.type.substring(7);
-    return `assets/img/${GLOBALS.currentChanges?.[id]?.type}.print.png`;
+    const id = entry.type?.substring(7);
+    return `assets/img/${GLOBALS.currentChanges?.[id]?.type ?? 'empty'}.print.png`;
   }
 
   changeInfo(entry: WatchElement): string {

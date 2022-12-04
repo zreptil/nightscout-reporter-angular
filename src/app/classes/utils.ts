@@ -360,6 +360,7 @@ export class Utils {
         1: $localize`${Math.floor(days)} Tag`,
         other: $localize`${Math.floor(days)} Tage`
       }), Utils.plural(Math.floor(hours), {
+        0: '',
         1: $localize` ${Math.floor(hours)} Stunde`,
         other: $localize` ${Math.floor(hours)} Stunden`
       })], ' ');
