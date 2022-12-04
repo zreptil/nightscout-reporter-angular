@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ColorData} from '@/_model/color-data';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog';
 import {ColorMix} from '@/_model/color-mix-data';
 

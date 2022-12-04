@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {StorageService} from './storage.service';
 import {Observable, of} from 'rxjs';
 import {DialogData, DialogResult, DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {Log} from '@/_services/log.service';
 import {BaseData} from '@/_model/base-data';

@@ -11,7 +11,7 @@ import {DateAdapter} from '@angular/material/core';
 import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({

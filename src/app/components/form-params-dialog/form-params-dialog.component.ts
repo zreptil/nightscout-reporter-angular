@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {SessionService} from '@/_services/session.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA} from '@angular/material/legacy-dialog';
 import {BasePrint} from '@/forms/base-print';
 
 @Component({

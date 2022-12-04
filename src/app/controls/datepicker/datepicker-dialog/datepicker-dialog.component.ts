@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
 import {DatepickerEntry} from '@/_model/datepicker-entry';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA} from '@angular/material/legacy-dialog';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {DatepickerData} from '../datepicker-month/datepicker-data';
 
