@@ -35,21 +35,22 @@ export class OwlMenuComponent implements OnInit {
     let ls = '';
     let duration = 1;
     if (this.themePanelShown) {
-      this.themeStyle = `animation:hidethemes ${duration}s ease-in-out normal forwards;`;
-      this.logoStyle = `animation:hidethemeslogo ${duration}s ease-in-out normal forwards;`;
-      this.langStyle = `animation:hidelanguages ${duration}s ease-in-out normal forwards;`;
+      this.themeStyle = `animation:owl_hidethemes ${duration}s ease-in-out normal forwards;`;
+      this.logoStyle = `animation:owl_hidethemeslogo ${duration}s ease-in-out normal forwards;`;
+      this.langStyle = `animation:owl_hidelanguages ${duration}s ease-in-out normal forwards;`;
       ts = 'animation-iteration-count:0;width:0;';
       langs = 'animation-iteration-count:0;height:0;';
       ls = 'animation-iteration-count:0;transform: rotate(0deg);';
     } else {
-      this.themeStyle = `animation:showthemes ${duration}s ease-in-out normal forwards;`;
-      this.logoStyle = `animation:showthemeslogo ${duration}s ease-in-out normal forwards;`;
-      this.langStyle = `animation:showlanguages ${duration}s ease-in-out normal forwards;`;
+      this.themeStyle = `animation:owl_showthemes ${duration}s ease-in-out normal forwards;`;
+      this.logoStyle = `animation:owl_showthemeslogo ${duration}s ease-in-out normal forwards;`;
+      this.langStyle = `animation:owl_showlanguages ${duration}s ease-in-out normal forwards;`;
       // The settings here have to be the same as the scss-variables in owl-menu.component.scss
       ts = 'animation-iteration-count:0;width:13em;';
       langs = 'animation-iteration-count:0;height:23em;';
       ls = 'animation-iteration-count:0;transform: rotate(360deg);';
     }
+    console.log('oha', GlobalsData.now, this.themeStyle, ts);
     setTimeout(() => {
       this.themeStyle = ts;
       this.langStyle = langs;

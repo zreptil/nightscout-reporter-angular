@@ -338,3 +338,95 @@ mat-icon[small] {
   background: var(--logDebugBack);
   color: var(--logDebugFore) !important;
 }
+
+$theme-width: 13em;
+$lang-height: 23em;
+@keyframes owl_showthemes {
+  0% {
+    width: 0;
+  }
+  10% {
+    width: 0;
+  }
+  90% {
+    width: calc(#{$theme-width} + 1em);
+  }
+  100% {
+    width: $theme-width;
+  }
+}
+
+@keyframes owl_hidethemes {
+  0% {
+    width: $theme-width;
+  }
+  10% {
+    width: calc(#{$theme-width} + 1em);
+  }
+  90% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes owl_showlanguages {
+  0% {
+    height: 0;
+  }
+  10% {
+    height: 0;
+  }
+  90% {
+    height: calc(#{$lang-height} + 1em);
+  }
+  100% {
+    height: $lang-height;
+  }
+}
+
+@keyframes owl_hidelanguages {
+  0% {
+    height: $lang-height;
+  }
+  10% {
+    height: calc(#{$lang-height} + 1em);
+  }
+  90% {
+    height: 0;
+  }
+  100% {
+    height: 0;
+  }
+}
+
+@keyframes owl_showthemeslogo {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-30deg);
+  }
+  90% {
+    transform: rotate(390deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes owl_hidethemeslogo {
+  0% {
+    transform: rotate(360deg);
+  }
+  10% {
+    transform: rotate(390deg);
+  }
+  90% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
