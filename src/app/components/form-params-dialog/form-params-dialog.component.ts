@@ -3,6 +3,7 @@ import {SessionService} from '@/_services/session.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BasePrint} from '@/forms/base-print';
+import {ParamInfo} from '@/_model/param-info';
 
 @Component({
   selector: 'app-form-params-dialog',
@@ -13,21 +14,6 @@ export class FormParamsDialogComponent implements OnInit {
 
   constructor(public ss: SessionService,
               @Inject(MAT_DIALOG_DATA) public form: BasePrint) {
-  }
-
-  _allParams = false;
-
-  get allParams(): boolean {
-    return this._allParams;
-  }
-
-  set allParams(value: boolean) {
-    this._allParams = value;
-    for (const param of this.form.params ?? []) {
-      if (param.boolValue != null) {
-        param.boolValue = value;
-      }
-    }
   }
 
   get globals(): GlobalsData {
@@ -75,5 +61,16 @@ export class FormParamsDialogComponent implements OnInit {
       ret.push('is-local');
     }
     return ret;
+  }
+
+  setAllParamsFor(value: boolean, params: ParamInfo[]): void {
+    for (const param of params ?? []) {
+      if (param.boolValue != null) {
+        param.boolValue = value;
+      }
+      if (param.subParams != null) {
+        this.setAllParamsFor(value, param.subParams);
+      }
+    }
   }
 }

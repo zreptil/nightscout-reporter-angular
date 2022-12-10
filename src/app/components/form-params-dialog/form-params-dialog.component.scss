@@ -61,7 +61,7 @@ mat-dialog-content {
     }
 
     ::ng-deep .mat-checkbox-background {
-      background-color: var(--settingsHeaderFore);
+      background-color: var(--settingsBodyBack);
 
       .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
         stroke: var(--settingsHeaderFore) !important;
