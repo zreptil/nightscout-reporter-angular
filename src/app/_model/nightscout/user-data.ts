@@ -17,7 +17,7 @@ export class UserData {
   diaStartDate = '';
   insulin = '';
   status: StatusData;
-  profileMaxIdx: number;
+  profileMaxIdx: number = 0;
   isReachable = true;
   lastEntry: EntryData = null;
   lastTreatment: TreatmentData = null;

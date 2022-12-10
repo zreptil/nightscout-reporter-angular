@@ -50,7 +50,6 @@ export class OwlMenuComponent implements OnInit {
       langs = 'animation-iteration-count:0;height:23em;';
       ls = 'animation-iteration-count:0;transform: rotate(360deg);';
     }
-    console.log('oha', GlobalsData.now, this.themeStyle, ts);
     setTimeout(() => {
       this.themeStyle = ts;
       this.langStyle = langs;

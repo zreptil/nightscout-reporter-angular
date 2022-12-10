@@ -28,7 +28,6 @@
     "fast-sha256": "^1.3.0",
     "file-saver": "^2.0.5",
     "google-one-tap": "^1.0.6",
-    "moment": "^2.29.4",
     "pdfmake": "^0.2.5",
     "rxjs": "~7.5.0",
     "sha1": "^1.1.1",

@@ -181,7 +181,7 @@ export class SessionService {
     window.open(`https://www.youtube.com/watch?v=${videos[id]}`);
   }
 
-  showSettings(): void {
+  showSettings(afterPopup?: () => void): void {
     const sharedOrg = GLOBALS.asSharedString;
     const deviceOrg = GLOBALS.asDeviceString;
     this.showPopup('settings').subscribe((result: DialogResult) => {
@@ -195,6 +195,7 @@ export class SessionService {
           this.ds.fromDeviceString(deviceOrg);
           break;
       }
+      afterPopup?.();
     });
   }
 

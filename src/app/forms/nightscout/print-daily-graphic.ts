@@ -1277,7 +1277,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           legend,
           this.colTargetValue,
           this.msgTargetValue(
-            `'${GLOBALS.glucFromData((profile.targetHigh + profile.targetLow) / 2)} ${GLOBALS.getGlucInfo().unit}'`),
+            `${GLOBALS.glucFromData((profile.targetHigh + profile.targetLow) / 2)} ${GLOBALS.getGlucInfo().unit}`),
           {isArea: false});
       }
       if (hasCollectedValues) {

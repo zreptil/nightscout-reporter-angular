@@ -86,8 +86,7 @@
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
           <mat-label *ngIf="idx==0">{{msgStartDate}}</mat-label>
-          <input (dateChange)="dateChange(item, 'startDateEdit', $event)"
-                 (dateInput)="item.startDateEditString" [matDatepicker]="dpStartDate" matInput>
+          <input [(ngModel)]="item.startDate" [matDatepicker]="dpStartDate" matInput>
           <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpStartDate></mat-datepicker>
         </mat-form-field>
@@ -101,8 +100,7 @@
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
           <mat-label *ngIf="idx==0">{{msgEndDate}}</mat-label>
-          <input (dateChange)="dateChange(item, 'endDateEdit', $event)"
-                 (dateInput)="item.endDateEdit" [matDatepicker]="dpEndDate" matInput>
+          <input [(ngModel)]="item.endDate" [matDatepicker]="dpEndDate" matInput>
           <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpEndDate></mat-datepicker>
         </mat-form-field>
@@ -145,20 +143,17 @@
     <div class="sub">
       <div class="subtitle" i18n="label of area for additional functions">Zusatzfunktionen</div>
       <div class="functions">
-        <mat-checkbox [(ngModel)]="globals.showCurrentGluc" class="chk" i18n="label for checkbox to show current glucoselevel">
-          Letzten Messwert in der Titelzeile anzeigen
-        </mat-checkbox>
+      <div *ngIf="globals.isBeta" class="sub">
+        <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
+          <mat-icon>file_copy</mat-icon>
+          <div i18n="buttonlabel for copy of settings to beta version">
+            Einstellungen von Release-Version übernehmen
+          </div>
+        </button>
+      </div>
+      <app-gluc-adjust></app-gluc-adjust>
       </div>
     </div>
-    <div *ngIf="globals.isBeta" class="sub">
-      <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
-        <mat-icon>file_copy</mat-icon>
-        <div i18n="buttonlabel for copy of settings to beta version">
-          Einstellungen von Release-Version übernehmen
-        </div>
-      </button>
-    </div>
-    <app-gluc-adjust></app-gluc-adjust>
   </mat-dialog-content>
 
   <mat-dialog-actions>

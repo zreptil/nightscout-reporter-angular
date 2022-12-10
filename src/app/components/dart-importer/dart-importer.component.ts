@@ -65,8 +65,32 @@ export class DartImporterComponent implements OnInit {
       }
       if (trans == null) {
         const src = this.xlfJSON.file.body['trans-unit'] ?? [];
-        const entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
+        let entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
         let showError = true;
+        if (entry == null) {
+          let check = this.messagesJSON[key];
+//            .replace(/</g, '&lt;');
+//          check = check.replace(/>/g, '&gt;');
+          entry = src.find((e: any) => e['source'] === check);
+          if (entry != null) {
+            const keyList = Object.keys(this.intlARB);
+            let found: string = null;
+            for (let i = 0; i < keyList.length && found == null; i++) {
+              if (keyList[i] === entry.source) {
+                found = keyList[i];
+              }
+            }
+            if (found != null) {
+              const id = found;
+              console.log('nix', check, id, entry);
+              if (this.intlARB[id] != null) {
+                Log.warn(`${id} => ${this.intlARB[id]}`);
+                showError = false;
+              }
+            }
+          }
+          entry = null;
+        }
         if (entry != null) {
           const keyList = Object.keys(this.intlARB);
           let found: string = null;
@@ -78,7 +102,7 @@ export class DartImporterComponent implements OnInit {
           if (found != null) {
             const id = found.substring(1);
             if (this.intlARB[id] != null) {
-              Log.warn(`${key} ${this.intlARB[id]}`);
+              Log.warn(`${key} => ${this.intlARB[id]}`);
               showError = false;
             }
           }

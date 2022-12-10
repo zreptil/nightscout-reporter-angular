@@ -11,7 +11,7 @@ export class JsonData {
   static parseDate(value: string): Date {
     let ret = null;
     if (value != null && value.length === 8) {
-      ret = new Date(+value.substring(0, 4), +value.substring(4, 6), +value.substring(6, 8));
+      ret = new Date(+value.substring(0, 4), +value.substring(4, 6) - 1, +value.substring(6, 8));
     }
     return ret;
   }
@@ -82,8 +82,9 @@ export class JsonData {
     return JsonData.toLocal(ret) ?? new Date(0, 1, 1);
   }
 
-  static toLocal(ret: Date): Date {
-    return Utils.addTimeHours(ret, JsonData.hourDiff);
+  static toLocal(value: Date): Date {
+    // const ret = Utils.addTimeHours(value, JsonData.hourDiff);
+    return Utils.addTimeMinutes(value, value.getTimezoneOffset());
   }
 
   static toText(value: any, def = ''): string {

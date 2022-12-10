@@ -288,6 +288,8 @@ export class Utils {
 
   static encodeBase64(src: string, failRet: string = null): string {
     let ret;
+    // btoa reicht an dieser Stelle nicht, weil dadurch Umlaute nicht korrekt
+    // konvertiert werden.
     try {
       const encoder = new TextEncoder();
       const bytes = new Uint8Array(encoder.encode(src));
@@ -301,6 +303,8 @@ export class Utils {
 
   static decodeBase64(src: string, failRet: string = null): string {
     let ret;
+    // atob reicht an dieser Stelle nicht, weil dadurch Umlaute nicht korrekt
+    // konvertiert werden.
     try {
       const decoder = new TextDecoder();
       const buf = new ArrayBuffer(src.length);

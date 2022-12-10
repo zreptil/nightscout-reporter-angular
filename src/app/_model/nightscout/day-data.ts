@@ -194,11 +194,11 @@ export class DayData {
   }
 
   get minText(): string {
-    return this.min === 10000 ? '' : '$min';
+    return this.min === 10000 ? '' : `${this.min}`;
   }
 
   get maxText(): string {
-    return this.max === -10000 ? '' : '$max';
+    return this.max === -10000 ? '' : `${this.max}`;
   }
 
   get avgGluc(): number {
@@ -224,11 +224,11 @@ export class DayData {
       if (Utils.isAfter(entry.createdAt, lastTime)) {
         dayCount++;
         dbgDay = {};
-        dbg['${entry.createdAt.year}-${entry.createdAt.month}-${entry.createdAt.day}'] = dbgDay;
+        dbg[`${entry.createdAt.getFullYear()}-${entry.createdAt.getMonth() + 1}-${entry.createdAt.getDate()}`] = dbgDay;
       }
       lastTime = new Date(entry.createdAt.getFullYear(), entry.createdAt.getMonth(), entry.createdAt.getDate(), 23, 59, 59);
       if (entry.insulin > 0) {
-        dbgDay['${entry.createdAt.hour}:${entry.createdAt.minute}:${entry.createdAt.second}'] = {
+        dbgDay[`${entry.createdAt.getHours()}:${entry.createdAt.getMinutes()}:${entry.createdAt.getSeconds()}`] = {
           'insulin': entry.insulin
         };
         ret += entry.insulin;
@@ -249,11 +249,11 @@ export class DayData {
       if (Utils.isAfter(entry.createdAt, lastTime)) {
         dayCount++;
         dbgDay = {};
-        dbg['${entry.createdAt.year}-${entry.createdAt.month}-${entry.createdAt.day}'] = dbgDay;
+        dbg[`${entry.createdAt.getFullYear()}-${entry.createdAt.getMonth() + 1}-${entry.createdAt.getDate()}`] = dbgDay;
       }
       lastTime = new Date(entry.createdAt.getFullYear(), entry.createdAt.getMonth(), entry.createdAt.getDate(), 23, 59, 59);
       if (entry.carbs > 0) {
-        dbgDay['${entry.createdAt.hour}:${entry.createdAt.minute}:${entry.createdAt.second}'] = {'carbs': entry.carbs};
+        dbgDay[`${entry.createdAt.getHours()}:${entry.createdAt.getMinutes()}:${entry.createdAt.getSeconds()}`] = {'carbs': entry.carbs};
         ret += entry.carbs;
         count++;
       }
@@ -413,7 +413,6 @@ export class DayData {
         this.entryCountInvalid++;
       }
     }
-
     this.mid = this.entryCountValid === 0 ? 0 : this.mid / this.entryCountValid;
     this.varianz = 0.0;
     for (const entry of this.entries) {

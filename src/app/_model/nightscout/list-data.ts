@@ -203,7 +203,6 @@ export class ListData {
     this.ieMicroBolusSum = 0.0;
     const allEntries: EntryData[] = [];
     Utils.pushAll(allEntries, this.entries);
-    Utils.pushAll(allEntries, this.entries);
     Utils.pushAll(allEntries, this.bloody);
     Utils.pushAll(allEntries, this.remaining);
     allEntries.sort((a, b) => Utils.compareDate(a.time, b.time));

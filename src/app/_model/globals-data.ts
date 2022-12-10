@@ -396,8 +396,8 @@ export class GlobalsData extends Settings {
     const timestamp = GlobalsData.now.getTime();
     return '{'
       + `"s1":"${this.version}"`
-      + `,"s4":${this.userIdx}`
-      + `,"s5":${this.glucMGDLIdx}`
+      + `,"s4":${this.userIdx ?? 0}`
+      + `,"s5":${this.glucMGDLIdx ?? 0}`
       + `,"s6":"${this.language.code ?? 'de_DE'}"`
       + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
       + `,"s8":"${this.period?.toString()}"`

@@ -135,6 +135,8 @@ export class SettingsComponent implements OnInit {
     this.calcDate = GlobalsData.now;
     let diff = -256;
     this.msgCalcDayTitle = this.msgCalcDayFirstTitle;
+    this.ps.max = 3;
+    this.ps.value = 1;
     while (this.confirmIdx === 3 && !done) {
       const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 0, 0, 0, 0);
       const url = urlData.fullUrl('entries.json', `find[date][$lte]=${check.getTime()}&count=2`);
@@ -154,6 +156,7 @@ export class SettingsComponent implements OnInit {
             this.calcDate = Utils.addDateDays(this.calcDate, diff);
           }
         }
+        this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
       } catch (ex) {
         done = true;
         Log.devError(ex, 'Fehler in SettingsComponent.calculateFirstDay startDatumsErmittlung');
@@ -163,6 +166,7 @@ export class SettingsComponent implements OnInit {
         this.calcDate = Utils.addDateDays(this.calcDate, diff);
       }
     }
+    this.ps.next();
     diff = 256;
     urlData.startDate = this.calcDate;
     done = false;
@@ -188,6 +192,7 @@ export class SettingsComponent implements OnInit {
             this.calcDate = Utils.addDateDays(this.calcDate, -diff);
           }
         }
+        this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
       } catch (ex) {
         done = true;
       }
@@ -202,8 +207,9 @@ export class SettingsComponent implements OnInit {
     } else {
       urlData.endDate = this.calcDate;
     }
-    urlData.startDateEditString = urlData.startDateEdit;
-    Log.info(`${Utils.fmtDate(urlData.startDate)} - ${Utils.fmtDate(urlData.endDate)} ${urlData.startDateEditString}`);
+    this.ps.clear();
+    // urlData.startDateEditString = urlData.startDateEdit;
+    // Log.info(`${Utils.fmtDate(urlData.startDate)} - ${Utils.fmtDate(urlData.endDate)} ${urlData.startDateEditString}`);
     console.log(GLOBALS.user.listApiUrl);
     this.confirmIdx = 0;
   }

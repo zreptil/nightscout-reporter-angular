@@ -174,7 +174,7 @@ schwächerer Schrift angezeigt wird.`;
       this.getContent(firstCol, 'total', 'center'));
     let text = this.msgDistribution;
     if (this.showTDD) {
-      text = `'${text}\n${this.msgTDD}`;
+      text = `${text}\n${this.msgTDD}`;
     }
     const tdd = day.ieBasalSum(!this.useDailyBasalrate) + day.ieBolusSum;
     this.addTableRow(true, this.cm(f * 100), row, {

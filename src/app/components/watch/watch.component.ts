@@ -253,12 +253,7 @@ export class WatchComponent implements OnInit {
   }
 
   async showSettings() {
-    this.ss.showPopup('settings').subscribe(_ => {
-      // noinspection BadExpressionStatementJS
-      if (!GLOBALS.isConfigured) {
-        this.showSettings();
-      }
-    });
+    this.ss.showSettings(this.showSettings);
   }
 
   colForGluc(gluc: number): string {

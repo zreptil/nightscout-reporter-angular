@@ -380,7 +380,12 @@ export class PdfService {
     } else if (GLOBALS.ppPdfDownload) {
       pdf.download();
     } else {
-      pdf.open();
+      try {
+        pdf.open();
+      } catch (ex) {
+        Log.error($localize`Das PDF konnte nicht angezeigt werden. Ist ein Popup-Blocker aktiv?`);
+        pdf.download();
+      }
     }
   }
 

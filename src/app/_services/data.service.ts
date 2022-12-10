@@ -36,6 +36,14 @@ export class DataService {
   constructor(public http: HttpClient,
               public ss: StorageService
   ) {
+    // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
+    //   next: data => {
+    //     this.hasAdBlock = false;
+    //     console.log('Kein Adblock da');
+    //   }, error: error => {
+    //     console.log('Aber sowas von Adblock!');
+    //   }
+    // });
   }
 
   _syncWithGoogle = false;

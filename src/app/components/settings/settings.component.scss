@@ -112,7 +112,7 @@ mat-dialog-content {
 }
 
 :host {
-  ::ng-deep .mat-form-field .mat-form-field-label {
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
     color: var(--settingsBodyFore);
   }
 

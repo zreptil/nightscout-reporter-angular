@@ -153,9 +153,7 @@ export class Settings {
     if (!this.hastiod) {
       return src;
     }
-    console.log('src', src);
     let ret = Utils.encodeBase64(src, '');
-    console.log('ret', ret);
     const pos = Math.floor(ret.length / 2);
     String.fromCharCode(Utils.rnd(26) + 64);
     ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
