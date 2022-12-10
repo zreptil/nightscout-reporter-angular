@@ -490,9 +490,7 @@ export class DayData {
 
     let list: TreatmentData[] = [];
     if (yesterday != null) {
-      for (const t of yesterday.treatments) {
-        list.push(t);
-      }
+      Utils.pushAll(list, yesterday.treatments);
       /*
             const temp = yesterday.iob(
                 data, DateTime(yesterday.date.year, yesterday.date.month, yesterday.date.day, 23, 59, 59), null);
@@ -502,9 +500,7 @@ export class DayData {
             list.add(t);
       */
     }
-    for (const t of this.treatments) {
-      list.push(t);
-    }
+    Utils.pushAll(list, this.treatments);
 
     const totalSave = totalIOB;
     for (const t of list) {
@@ -563,9 +559,7 @@ export class DayData {
       t.createdAt = new Date(time.getFullYear(), time.getMonth(), time.getDate(), 0, 0, 0);
       list.push(t);
     }
-    for (const t of this.treatments) {
-      list.push(t);
-    }
+    Utils.pushAll(list, this.treatments);
 
     for (const t of list) {
       if (!this.isSameDay_(t.createdAt, time) || t.timeForCalc > check) {
@@ -574,7 +568,7 @@ export class DayData {
 
       if (t.carbs != null && t.carbs > 0) {
         const temp: any = {totalCOB: totalCOB, isDecaying: isDecaying, lastDecayedBy: lastDecayedBy};
-        t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob);
+        t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob.bind(this));
         totalCOB = temp.totalCOB;
         isDecaying = temp.isDecaying;
         lastDecayedBy = temp.lastDecayedBy;
@@ -585,7 +579,7 @@ export class DayData {
     const t = new TreatmentData();
     t.createdAt = time;
     const temp = {totalCOB: totalCOB, isDecaying: isDecaying, lastDecayedBy: lastDecayedBy};
-    t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob);
+    t.calcTotalCOB(data, yesterday, temp, profile, time, this.iob.bind(this));
     totalCOB = temp.totalCOB;
     isDecaying = temp.isDecaying;
     lastDecayedBy = temp.lastDecayedBy;

@@ -256,10 +256,10 @@ export class TreatmentData extends JsonData {
     ret.glucose = JsonData.toNumber(json.glucose);
     if (json.units != null) {
       if (json.units.toLowerCase() === Settings.msgUnitMGDL.toLowerCase() &&
-        GLOBALS.getGlucInfo()['unit'] === Settings.msgUnitMMOL) {
+        GLOBALS.getGlucInfo().unit === Settings.msgUnitMMOL) {
         ret.glucose = ret.glucose / 18.02;
       } else if (json.units.toLowerCase() === Settings.msgUnitMMOL.toLowerCase() &&
-        GLOBALS.getGlucInfo()['unit'] === Settings.msgUnitMGDL) {
+        GLOBALS.getGlucInfo().unit === Settings.msgUnitMGDL) {
         ret.glucose = ret.glucose * 18.02;
       }
     }
@@ -378,23 +378,29 @@ export class TreatmentData extends JsonData {
         isDecaying = false;
       }
 
-      return {'initialCarbs': initialCarbs, 'decayedBy': decayedBy, 'isDecaying': isDecaying, 'carbTime': carbTime};
+      return {initialCarbs: initialCarbs, decayedBy: decayedBy, isDecaying: isDecaying, carbTime: carbTime};
     }
     return null;
   }
 
-  calcTotalCOB(data: ReportData, yesterday: DayData, ret: any, profile: ProfileGlucData, time: Date, iob: any): void {
+  calcTotalCOB(data: ReportData,
+               yesterday: DayData,
+               ret: {totalCOB: number, isDecaying: boolean, lastDecayedBy: Date},
+               profile: ProfileGlucData,
+               time: Date,
+               iob: (data: ReportData, time: Date, yesterday: DayData) => CalcIOBData): void {
     // TODO: figure out the liverSensRatio that gives the most accurate purple line predictions
     let liverSensRatio = 8.0;
     let sens = Utils.findLast(profile.store.listSens, (e) => e.timeForCalc <= this.timeForCalc)?.value ?? 0.0;
     let carbRatio = Utils.findLast(profile.store.listCarbratio, (e) => e.timeForCalc <= this.timeForCalc)?.value ?? 0.0;
-    const cCalc = this.calcCOB(profile, time, ret['lastDecayedBy']?.millisecondsSinceEpoch ?? 0);
+    const cCalc = this.calcCOB(profile, time, ret.lastDecayedBy?.getTime() ?? 0);
     if (cCalc != null) {
-      let decaysin_hr = (cCalc['decayedBy'].millisecondsSinceEpoch - time.getTime()) / 1000 / 60 / 60;
+      let decaysin_hr = (cCalc.decayedBy.getTime() - time.getTime()) / 1000 / 60 / 60;
       if (decaysin_hr > -10) {
         // units: BG
-        const actStart = iob(data, ret['lastDecayedBy'], yesterday).activity;
-        const actEnd = iob(data, cCalc['decayedBy'], yesterday).activity;
+        const actStart = iob(data, ret.lastDecayedBy, yesterday).activity;
+        // noinspection UnnecessaryLocalVariableJS
+        const actEnd = iob(data, cCalc.decayedBy, yesterday).activity;
         const avgActivity = (actStart + actEnd) / 2;
         // units:  g = BG * scalar / BG / U * g / U
         if (sens === 0.0) {
@@ -406,23 +412,23 @@ export class TreatmentData extends JsonData {
         const delayedCarbs = (avgActivity * liverSensRatio / sens) * carbRatio;
         const delayMinutes = Math.floor(delayedCarbs / profile.store.carbRatioPerHour * 60);
         if (delayMinutes > 0) {
-          cCalc['decayedBy'] = Utils.addTimeMinutes(cCalc['decayedBy'], delayMinutes);
-          decaysin_hr = (cCalc['decayedBy'].getTime() - time.getTime()) / 1000 / 60 / 60;
+          cCalc.decayedBy = Utils.addTimeMinutes(cCalc.decayedBy, delayMinutes);
+          decaysin_hr = (cCalc.decayedBy.getTime() - time.getTime()) / 1000 / 60 / 60;
         }
       }
 
-      ret['lastDecayedBy'] = cCalc['decayedBy'];
+      ret.lastDecayedBy = cCalc.decayedBy;
       if (decaysin_hr > 0) {
         //console.info('Adding ' + delayMinutes + ' minutes to decay of ' + treatment.carbs +
         // 'g bolus at ' + treatment.mills);
-        ret['totalCOB'] += Math.min(this.carbs, decaysin_hr * profile.store.carbRatioPerHour);
+        ret.totalCOB += Math.min(this.carbs, decaysin_hr * profile.store.carbRatioPerHour);
         //console.log('cob:', Math.min(cCalc.initialCarbs,
         // decaysin_hr * profile.getCarbAbsorptionRate(treatment.mills)),
         // cCalc.initialCarbs,decaysin_hr,profile.getCarbAbsorptionRate(treatment.mills));
-        ret['isDecaying'] = cCalc['isDecaying'];
+        ret.isDecaying = cCalc.isDecaying;
       }
     } else {
-      ret['totalCOB'] = 0;
+      ret.totalCOB = 0;
     }
   }
 }

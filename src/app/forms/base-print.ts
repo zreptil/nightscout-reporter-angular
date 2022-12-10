@@ -2232,10 +2232,10 @@ export abstract class BasePrint extends FormConfig {
     const colWidth = graphWidth / 24;
     // graphic for iob and cob
     const ptsIob = [
-      {x: this.cm(this.calcX(graphWidth, new Date(0, 1, 1, 0, 0))), y: this.cm(0)}
+      {x: this.cm(this.calcX(graphWidth, new Date(0, 0, 1, 0, 0))), y: this.cm(0)}
     ];
     const ptsCob = [
-      {x: this.cm(this.calcX(graphWidth, new Date(0, 1, 1, 0, 0))), y: this.cm(0)}
+      {x: this.cm(this.calcX(graphWidth, new Date(0, 0, 1, 0, 0))), y: this.cm(0)}
     ];
     let time = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
     let diff = 5;
@@ -2265,7 +2265,7 @@ export abstract class BasePrint extends FormConfig {
         ptsIob.push({x: this.cm(x), y: y});
         y = day.cob(this.repData, time, day.prevDay).cob;
         maxCob = Math.max(maxCob, y);
-        ptsCob.push({'x': this.cm(x), 'y': y});
+        ptsCob.push({x: this.cm(x), y: y});
         lastX = x;
         time = Utils.addTimeMinutes(time, diff);
       }
@@ -2324,9 +2324,9 @@ export abstract class BasePrint extends FormConfig {
     }
     for (let i = 0; i < ptsCob.length; i++) {
       if (maxCob > 0) {
-        ptsCob[i]['y'] = this.cm(cobHeight / maxCob * (maxCob - ptsCob[i]['y']));
+        ptsCob[i].y = this.cm(cobHeight / maxCob * (maxCob - ptsCob[i]['y']));
       } else {
-        ptsCob[i]['y'] = this.cm(cobHeight);
+        ptsCob[i].y = this.cm(cobHeight);
       }
     }
 

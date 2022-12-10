@@ -942,7 +942,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
             color: this.colExerciseText
           });
         }
-      } else if (!Utils.isEmpty(this.showNotes && (t.notes ?? '')) && !t.isECarb) {
+      } else if (this.showNotes && !Utils.isEmpty(t.notes ?? '') && !t.isECarb) {
         let notes = t.notes;
         if (!this.showHTMLNotes) {
           notes = t.notes.replace(/<.*>/, '');
@@ -1430,7 +1430,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           canvas: []
         };
         const graphIobCvs = graphIob.canvas;
-        graphIobCvs.push(this.graphArea(pts['iob'], this.colIOBDaily, this.colIOBDaily));
+        graphIobCvs.push(this.graphArea(pts.iob, this.colIOBDaily, this.colIOBDaily));
       }
       if (this.showCOB) {
         graphCob = {
@@ -1611,7 +1611,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       lineWidth: this.cm(this.lw),
       closePath: true,
       color: colFill,
-      lineColor: this.colLine,
+      lineColor: colLine,
       points: points
     };
   }

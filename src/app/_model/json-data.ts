@@ -84,7 +84,7 @@ export class JsonData {
 
   static toLocal(value: Date): Date {
     // const ret = Utils.addTimeHours(value, JsonData.hourDiff);
-    return Utils.addTimeMinutes(value, value.getTimezoneOffset());
+    return value; // Utils.addTimeMinutes(value, value.getTimezoneOffset());
   }
 
   static toText(value: any, def = ''): string {
