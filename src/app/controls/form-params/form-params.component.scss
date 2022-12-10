@@ -10,6 +10,7 @@
   width: 100%;
 
   .select {
+    margin-top: 1em;
     ::ng-deep mat-list {
       background: var(--settingsBodyBack);
       padding: 0;
@@ -125,9 +126,9 @@ mat-checkbox {
 }
 
 .loop {
-  ::ng-deep .icon {
+  ::ng-deep .mat-checkbox-inner-container {
     border-radius: 50%;
-    border: 2px solid var(--loopMarked);
+    outline: 5px solid var(--loopMarked);
     background-color: var(--loopMarked);
   }
 }
