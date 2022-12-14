@@ -8,7 +8,7 @@
          (click)="tileClicked($event,cfg)"
          (mouseout)="mouseout($event)"
          (mouseover)="mouseover($event)"
-         *ngIf="isFormVisible(cfg.form)"
+         *ngIf="cfg.form.isVisible"
          [cdkDragData]="idx"
          [class]="tileClass(cfg)"
          cdkDrag

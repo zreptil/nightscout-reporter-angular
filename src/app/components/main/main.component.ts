@@ -10,6 +10,7 @@ import {ProgressService} from '@/_services/progress.service';
 import {UserData} from '@/_model/nightscout/user-data';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {ShortcutData} from '@/_model/shortcut-data';
+import {GoogleService} from '@/_services/google.service';
 
 @Component({
   selector: 'app-main',
@@ -98,7 +99,8 @@ export class MainComponent implements OnInit {
               public pdf: PdfService,
               public ss: SessionService,
               public ps: ProgressService,
-              public ns: NightscoutService) {
+              public ns: NightscoutService,
+              public gs: GoogleService) {
     // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
     //
     // }), 1000);
@@ -383,5 +385,13 @@ export class MainComponent implements OnInit {
     this.ns.reportData = null;
     GLOBALS.isDebug = !GLOBALS.isDebug;
     this.ss.checkPrint();
+  }
+
+  syncWithGoogle() {
+    this.ds.syncWithGoogle = !this.ds.syncWithGoogle;
+  }
+
+  clickUserImage() {
+    
   }
 }

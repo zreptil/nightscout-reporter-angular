@@ -3,4 +3,61 @@
   flex-flow: row;
   flex-wrap: wrap;
   flex: 1;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+mat-expansion-panel {
+  display: flex;
+  flex-flow: column;
+  min-width: 20em;
+  max-width: 20em;
+  border: 2px solid transparent;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  background-color: var(--primaryBack);
+  border-radius: 0.5em;
+
+  mat-panel-title {
+    color: var(--primaryFore);
+    gap: 0.5em;
+  }
+
+  ::ng-deep div[buttondecorator] {
+    cursor: pointer !important;
+  }
+
+  ::ng-deep .header {
+    border: 2px solid transparent;
+    padding-left: 0;
+  }
+
+  ::ng-deep main:not(.hidden) {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.5em;
+    padding-top: 0.5em;
+  }
+
+  ::ng-deep div[aria-expanded="true"] {
+    border: 2px solid var(--primaryBack) !important;
+
+    ::ng-deep .header {
+      border: 0;
+      background-color: transparent;
+    }
+  }
+
+  [name] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-items: center;
+
+    > material-icon {
+      padding-left: 0.2em;
+      padding-right: 0.3em;
+      color: rgba(0, 0, 0, 0.2);
+    }
+  }
 }

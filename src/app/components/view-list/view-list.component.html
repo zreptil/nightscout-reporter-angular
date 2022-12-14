@@ -1,3 +1,28 @@
-<div *ngFor="let cfg of globals.listConfig">
-  {{cfg.form.title}}
+<div class="formlist">
+  <ng-template ngFor let-cfg [ngForOf]="globals.listConfig">
+    <div *ngIf="cfg.form.isVisible">
+      <div class="sortable" id="list-{{cfg.id}}">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon *ngIf="cfg.form.help!=null" (click)="clickTileHelp($event,cfg)">help_outline</mat-icon>
+              <mat-icon *ngIf="cfg.form.help==null">drag_handle</mat-icon>
+              <div>{{cfg.form.display}}</div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+<!--
+          <formparams [paramList]="cfg.form.sortedParams"></formparams>
+          (click)="expansionPanelClicked($event,cfg)"
+          (open)="expansionPanelOpen($event,cfg)"
+          (close)="expansionPanelClose($event,cfg)"
+          [class]="expansionClass(cfg)" flat
+          name=""
+          [disableHeaderExpansion]="true"
+          secondaryText="" [showSaveCancel]="false" [hideExpandedHeader]="false"
+          [alwaysHideExpandIcon]="cfg.form.sortedParams.isEmpty || !cfg.checked">
+-->
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </ng-template>
 </div>

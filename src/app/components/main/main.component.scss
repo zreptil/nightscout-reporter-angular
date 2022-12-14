@@ -72,6 +72,10 @@ mat-drawer-container {
         background-color: var(--primaryBack);
         color: var(--primaryFore);
         overflow-y: auto;
+
+        mat-icon {
+          min-width: 24px;
+        }
       }
 
       .shortcut-root {
@@ -351,6 +355,11 @@ mat-drawer-container {
             min-width: 0 !important;
           }
         }
+
+        .userimage {
+          width: 100%;
+          border-radius: 50%;
+        }
       }
     }
 
@@ -359,6 +368,7 @@ mat-drawer-container {
       flex-flow: column;
       flex: 1;
       padding: 0 0.5em;
+      overflow-x: hidden;
     }
 
     .footer {

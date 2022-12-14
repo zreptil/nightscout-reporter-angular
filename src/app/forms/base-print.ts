@@ -147,6 +147,21 @@ export abstract class BasePrint extends FormConfig {
     this.form = this;
   }
 
+  get isVisible(): boolean {
+    if (this.isDebugOnly && !GLOBALS.isDebug) {
+      return false;
+    }
+    if (this.isLocalOnly && !GLOBALS.isLocal) {
+      return false;
+    }
+    // noinspection RedundantIfStatementJS
+    if (this.isBetaOrLocal && !(GLOBALS.isBeta || GLOBALS.isLocal)) {
+      return false;
+    }
+
+    return true;
+  }
+
   static get msgOutput(): string {
     return $localize`Ausgabe`;
   };

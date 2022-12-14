@@ -85,6 +85,10 @@ mat-slider {
 .urlPanel {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
+  border-radius: 1em;
+  padding: 0.5em;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 
   mat-input {
     flex-shrink: 0;
@@ -112,6 +116,10 @@ mat-dialog-content {
 }
 
 :host {
+  ::ng-deep .mat-checkbox-label {
+    white-space: normal;
+  }
+  
   ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
     color: var(--settingsBodyFore);
   }

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // client id for cloud_data, works also on port 4200
-  GAPI_CLIENT_ID: '64295298707-r0gl8n8skteopiulflqo04fbi0qbd00h.apps.googleusercontent.com',
+  // client id for nightscout_reporter, works also on port 4200
+  GAPI_CLIENT_ID: '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh.apps.googleusercontent.com',
 };
 
 /*

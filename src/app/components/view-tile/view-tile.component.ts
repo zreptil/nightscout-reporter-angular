@@ -87,21 +87,6 @@ export class ViewTileComponent implements OnInit {
     }
   }
 
-  isFormVisible(form: BasePrint): boolean {
-    if (form.isDebugOnly && !GLOBALS.isDebug) {
-      return false;
-    }
-    if (form.isLocalOnly && !GLOBALS.isLocal) {
-      return false;
-    }
-    // noinspection RedundantIfStatementJS
-    if (form.isBetaOrLocal && !(GLOBALS.isBeta || GLOBALS.isLocal)) {
-      return false;
-    }
-
-    return true;
-  }
-
   mayCopy(cfg: FormConfig): boolean {
     return cfg.form.sortedParams.length > 0 &&
       cfg.checked &&
