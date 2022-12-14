@@ -815,7 +815,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "340"
+                  "#text": "344"
                 }
               ]
             }
@@ -1832,7 +1832,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "135"
+                "#text": "143"
               }
             ]
           }
@@ -2260,6 +2260,24 @@
           }
         },
         {
+          "@id": "1008046558562314154",
+          "@datatype": "html",
+          "source": "Das PDF konnte nicht angezeigt werden. Ist ein Popup-Blocker aktiv?",
+          "context-group": {
+            "@purpose": "location",
+            "context": [
+              {
+                "@context-type": "sourcefile",
+                "#text": "src/app/_services/pdf.service.ts"
+              },
+              {
+                "@context-type": "linenumber",
+                "#text": "386"
+              }
+            ]
+          }
+        },
+        {
           "@id": "5863317744980308324",
           "@datatype": "html",
           "source": "Die URL wurde noch nicht festgelegt",
@@ -2272,7 +2290,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "330"
+                "#text": "331"
               }
             ]
           }
@@ -2418,7 +2436,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "345"
+                "#text": "349"
               }
             ]
           }
@@ -2442,7 +2460,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "346"
+                "#text": "350"
               }
             ]
           }
@@ -2466,7 +2484,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "352"
+                "#text": "356"
               }
             ]
           }
@@ -2490,7 +2508,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "353"
+                "#text": "357"
               }
             ]
           }
@@ -2514,7 +2532,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "360"
+                "#text": "364"
               }
             ]
           }
@@ -2539,7 +2557,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "361"
+                  "#text": "365"
                 }
               ]
             },
@@ -2577,7 +2595,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "364"
+                "#text": "368"
               }
             ]
           }
@@ -2601,7 +2619,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "365"
+                "#text": "369"
               }
             ]
           }
@@ -3795,7 +3813,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "138"
+                "#text": "136"
               }
             ]
           },
@@ -3818,7 +3836,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "141,142"
+                "#text": "139,140"
               }
             ]
           },
@@ -3841,7 +3859,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "146"
+                "#text": "144"
               }
             ]
           },
@@ -3849,29 +3867,6 @@
             "@priority": "1",
             "@from": "description",
             "#text": "label of area for additional functions"
-          }
-        },
-        {
-          "@id": "4624774365035265039",
-          "@datatype": "html",
-          "source": "Letzten Messwert in der Titelzeile anzeigen",
-          "context-group": {
-            "@purpose": "location",
-            "context": [
-              {
-                "@context-type": "sourcefile",
-                "#text": "src/app/components/settings/settings.component.html"
-              },
-              {
-                "@context-type": "linenumber",
-                "#text": "149,150"
-              }
-            ]
-          },
-          "note": {
-            "@priority": "1",
-            "@from": "description",
-            "#text": "label for checkbox to show current glucoselevel"
           }
         },
         {
@@ -3887,7 +3882,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "157,158"
+                "#text": "150,151"
               }
             ]
           },
@@ -3910,7 +3905,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "168"
+                "#text": "163"
               }
             ]
           },
@@ -3933,7 +3928,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "172"
+                "#text": "167"
               }
             ]
           },
@@ -3957,7 +3952,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "177"
+                  "#text": "172"
                 }
               ]
             },
@@ -4299,6 +4294,48 @@
           }
         },
         {
+          "@id": "4523326423447298135",
+          "@datatype": "html",
+          "source": {
+            "#text": [
+              "Prüfe",
+              "..."
+            ],
+            "x": {
+              "@id": "PH",
+              "@equiv-text": "Utils.fmtDate(this.calcDate)"
+            }
+          },
+          "context-group": [
+            {
+              "@purpose": "location",
+              "context": [
+                {
+                  "@context-type": "sourcefile",
+                  "#text": "src/app/components/settings/settings.component.ts"
+                },
+                {
+                  "@context-type": "linenumber",
+                  "#text": "159"
+                }
+              ]
+            },
+            {
+              "@purpose": "location",
+              "context": [
+                {
+                  "@context-type": "sourcefile",
+                  "#text": "src/app/components/settings/settings.component.ts"
+                },
+                {
+                  "@context-type": "linenumber",
+                  "#text": "195"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "@id": "msgCheckUser",
           "@datatype": "html",
           "source": {
@@ -4320,7 +4357,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "305"
+                "#text": "311"
               }
             ]
           }
@@ -4347,7 +4384,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "309"
+                "#text": "315"
               }
             ]
           }
@@ -4374,7 +4411,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "326"
+                "#text": "332"
               }
             ]
           }

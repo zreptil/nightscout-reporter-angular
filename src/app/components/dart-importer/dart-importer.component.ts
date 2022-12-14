@@ -6,6 +6,7 @@ import {Log} from '@/_services/log.service';
 import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
 import {MaterialColorService} from '@/_services/material-color.service';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-dart-importer',
@@ -15,6 +16,7 @@ import {MaterialColorService} from '@/_services/material-color.service';
 export class DartImporterComponent implements OnInit {
 
   intlARB: any;
+  intlJSON: any;
   messages: any;
   xlfJSON: any;
   code: string;
@@ -37,11 +39,176 @@ export class DartImporterComponent implements OnInit {
   async ngOnInit() {
     let url = `assets/messages.json`;
     this.messages = await this.ds.request(url, {asJson: true});
-    url = `assets/messages.xlf.json`;
+    url = `assets/old-dart/json/de_DE.json`;
     this.xlfJSON = await this.ds.request(url, {asJson: true});
   }
 
   async clickLanguage(lang: LangData) {
+    const filename = `${lang.code.replace(/-/g, '_')}.json`;
+    const url = `assets/old-dart/json/${filename}`;
+    this.intlJSON = await this.ds.request(url, {asJson: true});
+    Log.clear();
+    GLOBALS.isDebug = true;
+    const output = [
+      '<?xml version="1.0" encoding="UTF-8" ?>',
+      '<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">',
+      `<file source-language="${this.intlJSON.file['@source-language']}"`,
+      ` target-language="${this.intlJSON.file['@target-language']}"`,
+      ` datatype="plaintext" original="ng2.template">`,
+      '<body>'];
+    for (const key of Object.keys(this.messagesJSON)) {
+      const parts = this.messagesJSON[key].trim().split('\n');
+      const list = this.intlJSON.file.body['trans-unit'];
+      let check: any = null;
+      let unit = list.find((e: any) => e['@id'] === key);
+      if (unit == null) {
+        check = this.cvtKnownKeys(key);
+        if (check != null) {
+          unit = list.find((e: any) => e['@id'] === check.id);
+        }
+        if (unit == null) {
+          let cvtKey = Utils.join(parts, '\\n', text => {
+            return text?.trim().replace(/<br>/g, '\n');
+          });
+          if (unit == null) {
+            unit = list.find((e: any) => e['source'].replace(/–/g, '-') === cvtKey);
+          }
+          if (unit == null) {
+            unit = list.find((e: any) => e['@resname'].replace(/–/g, '-') === cvtKey);
+          }
+          if (unit == null) {
+            Log.warn(`${key} [${cvtKey}]`);
+          }
+        }
+      }
+      let showError = false;
+      if (unit != null) {
+        let trans = unit.target?.['#text'];
+        if (trans != null) {
+          if (check != null) {
+            if (check.regex != null) {
+              if (check.regex !== 'full') {
+                trans = trans.match(check.regex).groups?.['trans'] ?? trans;
+              }
+              if (check.replaceAfter != null) {
+                trans = Utils.replace(trans, check.replaceAfter.src, check.replaceAfter.dst);
+              }
+            } else if (check.pattern != null) {
+              trans = check.pattern.replace('@trans@', trans);
+            }
+          }
+          // Log.info(`${key} ${trans}`);
+          output.push(`<trans-unit id="${key}" datatype="html">`);
+          output.push(`<source>${this.cvt4XML(this.messagesJSON[key])}</source>`);
+          output.push(`<target state="final">${this.cvt4XML(trans)}</target>`);
+          output.push(`</trans-unit>`);
+        }
+        showError = trans == null;
+      }
+      if (showError) {
+        Log.error(`${key} ${this.messagesJSON[key]}`);
+      }
+    }
+    output.push('</body>');
+    output.push('</file>');
+    output.push('</xliff>');
+    saveAs(new Blob([Utils.join(output, '\n')]), `messages.${this.intlJSON.file['@target-language']}.xliff`);
+  }
+
+  cvtKnownKeys(key: string): any {
+    return {
+      '2312689462569807321': {id: '7049'},
+      '4657328650853061238': {id: '13000', regex: /(.*)=0{(?<trans>.*)}=1(.*)/},
+      '8653385405278371687': {id: '13000', regex: /(.*)=1{(?<trans>.*)}other(.*)/, replaceAfter: {src: '{time}', dst: '{$PH}'}},
+      '2487173854002315363': {id: '13000', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{time}', dst: '{$PH}'}},
+      'msgTOR': {id: '6504', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'msgCV': {id: '6506', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'msgHYPO': {id: '4956', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      'msgHYPER': {id: '4958', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      'msgMEAN': {id: '4960', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      'msgTORInfo': {id: '4968', regex: 'full', replaceAfter: {src: ['{min}', '{max}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgHYPOInfo': {id: '4972', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      'msgHYPERInfo': {id: '4974', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      '7716816989054584047': {id: '7884'},
+      '8912953969714276103': {id: '7886', regex: 'full', replaceAfter: {src: '{maxCount}', dst: '{$PH}'}},
+      '3802873172037186880': {id: '7888', regex: /(.*)=1{(?<trans>.*)}other(.*)/, replaceAfter: {src: '{text}', dst: '{$PH}'}},
+      '7979899145647988883': {id: '7888', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{text}', dst: '{$PH}'}},
+      '3927439908064576549': {id: '734', regex: 'full', replaceAfter: {src: '{date}', dst: '{$PH}'}},
+      '6530668891861059555': {id: '730', regex: 'full', replaceAfter: {src: ['{error}', '{stacktrace}'], dst: ['{$PH}', '${PH_1}']}},
+      '3976173699076358131': {id: '7200', regex: 'full', replaceAfter: {src: ':', dst: ''}},
+      '1278432863271212107': {id: '7122', regex: 'full', replaceAfter: {src: ['{low}', '{unit}', '{high}', '{unit}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}', '{$PH_3}']}},
+      '4662145775420138869': {id: '698', pattern: `{$START_TAG_MAT_ICON}settings{$CLOSE_TAG_MAT_ICON} @trans@`},
+      '2522417553765949487': {id: '950', regex: 'full', replaceAfter: {src: 'herokuapp.com', dst: 'ns.10be.de'}},
+      '4562561451144140468': {id: '7896'},
+      'msgCheckUser': {id: '956', regex: 'full', replaceAfter: {src: '{url}', dst: '${PH}'}},
+      '2014733470790569227': {id: '7444', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
+      '6184761557716292861': {id: '7444', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      '7906820745486253849': {id: '828'},
+      '6302070337805031317': {id: '826'},
+      '4195240722921774740': {id: '1972'},
+      '3674308659547457904': {id: '6650'},
+      '2360508661070570624': {id: '1772'},
+      '4027913842661346247': {
+        id: '13180', regex: 'full', replaceAfter: {
+          src: ['{startTag0}', '{endTag0}', '{startTag1}', '{endTag1}', '{startTag2}', '{endTag2}'],
+          dst: ['{$START_ITALIC_TEXT}', '{$CLOSE_ITALIC_TEXT}', '{$START_LINK}', '{$CLOSE_LINK}', '{$START_ITALIC_TEXT}', '{$CLOSE_ITALIC_TEXT}']
+        }
+      },
+      '5947493486939609850': {
+        id: '13180', regex: 'full', replaceAfter: {src: ['{startTag0}', '{endTag0}'], dst: ['{$START_ITALIC_TEXT}', '{$CLOSE_ITALIC_TEXT}']}
+      },
+      '5719790065377190370': {id: '13184', regex: 'full', replaceAfter: {src: ['{startTag0}', '{endTag0}'], dst: ['{$START_BOLD_TEXT}', '{$CLOSE_BOLD_TEXT}']}},
+      '_msgAdjustTarget': {id: '13072', regex: 'full', replaceAfter: {src: '{factor}', dst: '{$PH}'}},
+      '_msgAdjustCalc': {id: '12990', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '_msgAdjustLab': {id: '12992', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'msgMealBolus': {id: '6857'},
+      'msgBolusWizard': {id: '6859'},
+      '4370541832116997140': {id: '864'},
+      '5716956580689550728': {id: '648'},
+      '7814380740217085349': {id: '652'},
+      '4091766776237352490': {id: '878'},
+      '6054305971182360492': {id: '896'},
+      '954997609648411319': {id: '898'},
+      '7612401945163585274': {id: '676'},
+      '3085022192590638473': {id: '900'},
+      '2633729073167909034': {id: '2112', regex: 'full', replaceAfter: {src: '{time}', dst: '{$PH}'}},
+      '194157074469443413': {id: '2114', regex: 'full', replaceAfter: {src: '{time}', dst: '{$PH}'}},
+      '7975293901451211912': {id: '2116', regex: 'full', replaceAfter: {src: '{time}', dst: '{$PH}'}},
+      '658509511596516220': {id: '6861', regex: 'full', replaceAfter: {src: ['{scale}', '{intercept}', '{slope}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
+      '6901562133099764608': {id: '6388', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
+      '1149582344080641990': {id: '6388', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      '6506885859968423722': {id: '6390', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
+      '1857951656960027099': {id: '6390', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      'msgKW': {id: '12970', regex: 'full', replaceAfter: {src: '{date}', dst: '{$PH}'}},
+      'msgValidRange': {id: '642', regex: 'full', replaceAfter: {src: ['{begDate}', '{endDate}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgValidFrom': {id: '644', regex: 'full', replaceAfter: {src: '{begDate}', dst: '{$PH}'}},
+      'msgValidTo': {id: '810', regex: 'full', replaceAfter: {src: '{endDate}', dst: '{$PH}'}},
+      'msgDuration': {id: '6776', regex: 'full', replaceAfter: {src: ['{hours}', '{minutes}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgTargetArea': {id: '812', regex: 'full', replaceAfter: {src: ['{min}', '{max}', '{units}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
+      '_msgLowerGlucHint': {id: '13074', regex: 'full', replaceAfter: {src: '{factor}', dst: '{$PH}'}},
+      '_msgRaiseGlucHint': {id: '13076', regex: 'full', replaceAfter: {src: '{factor}', dst: '{$PH}'}},
+      'msgCarbs': {id: '1970', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'msgBolusInsulin': {id: '818', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'msgCorrectBolusInsulin': {id: '4674', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      'help-dayprofile': {id: '7806'},
+      'help-daystats': {id: '7810'},
+      'help-glucdist': {id: '10190'},
+      'help-percentile': {id: '7812'},
+      'help-profile': {id: '7814'},
+      'help-weekgraph': {id: '7816'},
+      'help-daylog': {id: '7804'},
+      'help-dayhours': {id: '9324'},
+      'help-daygraph': {id: '7800'},
+      'help-daygluc': {id: '12833'},
+      'help-daily-analysis': {id: '9286'},
+      'help-cgp': {id: '7796'},
+      'help-basal': {id: '7824'},
+      'help-analysis': {id: '10186'},
+      '2206933345783710470': {id: '12889', regex: 'full', replaceAfter: {src: ['{name}', '{name}'], dst: ['{$PH}', '{$PH_1}']}},
+    }[key];
+  }
+
+  async clickLanguage_old(lang: LangData) {
     const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
     const url = `assets/old-dart/${filename}`;
     console.log(url);
@@ -114,6 +281,13 @@ export class DartImporterComponent implements OnInit {
         Log.info(`${key} ${trans}`);
       }
     }
+  }
+
+  cvt4XML(src: string): string {
+    src = src.replace(/&/g, '&amp;');
+    src = src.replace(/</g, '&lt;');
+    src = src.replace(/>/g, '&gt;');
+    return src;
   }
 
   replaceCode() {

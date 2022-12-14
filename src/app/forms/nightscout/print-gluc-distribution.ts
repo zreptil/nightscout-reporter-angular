@@ -15,7 +15,7 @@ class GlucDist {
 }
 
 export class PrintGlucDistribution extends BasePrint {
-  override help = $localize`:help for glucdist@@help-glucdist:Dieses Formular zeig die Verteilung der Glukosewerte
+  override help = $localize`:help for glucdist@@help-glucdist:Dieses Formular zeigt die Verteilung der Glukosewerte
 im ausgewählten Zeitraum an.`;
 
   override baseId = 'glucdist';

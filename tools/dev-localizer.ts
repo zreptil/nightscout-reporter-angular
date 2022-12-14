@@ -11,13 +11,20 @@ const outFile = '../src/assets/messages.json';
 // Erzeugt aus den Dateien messages.xxx.xlf die Datei messages.json
 //createJson(['de-DE', 'en-GB'], []);
 
-createJson(['de-DE'], []);
+createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES'], []);
 
 function createJson(codes: any, list: any): void {
-  const file = `../src/locale/messages.${codes[0]}.xlf`;
+  let file;
+  let id = codes[0];
+  if (id.startsWith('@')) {
+    id = id.substring(1);
+    file = `../src/locale/messages.${id.substring(1)}.xlf`;
+  } else {
+    file = `../temp/${id}/messages.${id}.xlf`;
+  }
   const content = fs.readFileSync(getPath(file)).toString();
   parseTranslationsForLocalize(content).then((result: Record<MessageId, TargetMessage>) => {
-    list.push({id: codes[0], data: result});
+    list.push({id: id, data: result});
     codes.splice(0, 1);
     if (codes.length === 0) {
       fs.writeFileSync(getPath(outFile), JSON.stringify(list));

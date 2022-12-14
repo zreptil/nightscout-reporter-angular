@@ -1,6 +1,21 @@
 import {Log} from '@/_services/log.service';
 
 export class Utils {
+  static replace(text: string, src: string | string[], dst: string | string[]): string {
+    if (!Array.isArray(src) && !Array.isArray(dst)) {
+      src = [src];
+      dst = [dst];
+    }
+    if (src.length !== dst.length) {
+      console.error('Utils.replace: src and dst must have the same length', text, src, dst);
+      return text;
+    }
+    for (let i = 0; i < src.length; i++) {
+      text = text.replace(src[i], dst[i]);
+    }
+    return text;
+  }
+
   static last<T>(list: T[]): T {
     return list?.[list.length - 1] ?? null;
   }
