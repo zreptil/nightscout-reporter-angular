@@ -1,6 +1,7 @@
 import {GlobalsData} from '@/_model/globals-data';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {Utils} from '@/classes/utils';
+import {CrowdinData} from '@/_model/nightscout/crowdin-data';
 
 export class Settings {
   static SharedData = 'sharedData';
@@ -38,18 +39,21 @@ export class Settings {
     xmas: Settings.msgThemeXmas
   }
   // for the cache.
+  // images were retrieved using https://findicons.com/files/icons/2758/flag_icons/32/*.png
   subVersion = '1';
   languageList: LangData[] = [
-    new LangData('de-DE', $localize`Deutsch`, 'de'),
-    new LangData('en-US', $localize`English (USA)`, 'us'),
-    new LangData('en-GB', $localize`English (GB)`, 'gb'),
-    new LangData('es-ES', $localize`Español`, 'es'),
-    new LangData('pl-PL', $localize`Polski`, 'pl'),
-    new LangData('ja-JP', $localize`日本の`, 'jp'),
-    new LangData('sk-SK', $localize`Slovenský`, 'sk'),
-    new LangData('fr-FR', $localize`Français`, 'fr'),
-    new LangData('pt-PT', $localize`Português`, 'pt'),
-    new LangData('nl-NL', $localize`Dansk`, 'nl')
+    new LangData('de-DE', $localize`Deutsch`, 'de', null),
+    new LangData('en-GB', $localize`English (GB)`, 'gb', CrowdinData.factoryGerman()),
+    new LangData('en-US', $localize`English (USA)`, 'us', CrowdinData.factoryGerman()),
+    new LangData('sk-SK', $localize`Slovenský`, 'sk', CrowdinData.factoryGerman()),
+    new LangData('es-ES', $localize`Español`, 'es', CrowdinData.factoryGerman()),
+    new LangData('pl-PL', $localize`Polski`, 'pl', CrowdinData.factoryEnglish()),
+    new LangData('ja-JP', $localize`日本の`, 'jp', CrowdinData.factoryEnglish()),
+    new LangData('fr-FR', $localize`Français`, 'fr', CrowdinData.factoryEnglish()),
+    new LangData('pt-PT', $localize`Português`, 'pt', CrowdinData.factoryEnglish()),
+    new LangData('nl-NL', $localize`Dansk`, 'nl', CrowdinData.factoryEnglish()),
+    new LangData('no-NO', $localize`Norsk`, 'no', CrowdinData.factoryEnglish()),
+    new LangData('ru-RU', $localize`Русский`, 'ru', CrowdinData.factoryEnglish()),
   ];
 
   static get hastiod(): boolean {

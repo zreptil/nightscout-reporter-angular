@@ -48,7 +48,7 @@
   "legalBodyFore": "black",
   "legalHeaderBack": "mat-light-green-900",
   "legalHeaderFore": "mat-light-green-300",
-  "legalLink": "rgba(255,255,255,0.6)",
+  "legalLink": "mat-light-green-900",
   "legalScrollThumb": "mat-light-green-700",
   "localBack": "mat-purple-100",
   "localFore": "mat-purple-500",

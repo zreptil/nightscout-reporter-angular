@@ -815,7 +815,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "344"
+                  "#text": "359"
                 }
               ]
             }
@@ -902,7 +902,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "122"
+                  "#text": "137"
                 }
               ]
             }
@@ -1832,7 +1832,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "143"
+                "#text": "176"
               }
             ]
           }
@@ -2324,7 +2324,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "79"
+                "#text": "94"
               }
             ]
           }
@@ -2358,7 +2358,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "81"
+                "#text": "96"
               }
             ]
           }
@@ -2385,7 +2385,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "84"
+                "#text": "99"
               }
             ]
           }
@@ -2412,7 +2412,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "84"
+                "#text": "99"
               }
             ]
           }
@@ -2436,7 +2436,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "349"
+                "#text": "364"
               }
             ]
           }
@@ -2460,7 +2460,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "350"
+                "#text": "365"
               }
             ]
           }
@@ -2484,7 +2484,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "356"
+                "#text": "371"
               }
             ]
           }
@@ -2508,7 +2508,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "357"
+                "#text": "372"
               }
             ]
           }
@@ -2532,7 +2532,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "364"
+                "#text": "379"
               }
             ]
           }
@@ -2557,7 +2557,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "365"
+                  "#text": "380"
                 }
               ]
             },
@@ -2570,7 +2570,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1245"
+                  "#text": "1260"
                 }
               ]
             }
@@ -2595,7 +2595,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "368"
+                "#text": "383"
               }
             ]
           }
@@ -2619,7 +2619,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "369"
+                "#text": "384"
               }
             ]
           }
@@ -2651,7 +2651,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "157"
+                  "#text": "159"
                 }
               ]
             }
@@ -2844,7 +2844,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "153"
+                  "#text": "155"
                 }
               ]
             }
@@ -3017,6 +3017,29 @@
           }
         },
         {
+          "@id": "7784776148483401026",
+          "@datatype": "html",
+          "source": "Mit Google synchronisieren",
+          "context-group": {
+            "@purpose": "location",
+            "context": [
+              {
+                "@context-type": "sourcefile",
+                "#text": "src/app/components/main/main.component.html"
+              },
+              {
+                "@context-type": "linenumber",
+                "#text": "46"
+              }
+            ]
+          },
+          "note": {
+            "@priority": "1",
+            "@from": "description",
+            "#text": "synchronize with google drive"
+          }
+        },
+        {
           "@id": "1974187181485501471",
           "@datatype": "html",
           "source": "Google Assistant",
@@ -3029,7 +3052,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "55"
+                "#text": "60"
               }
             ]
           },
@@ -3053,7 +3076,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "60"
+                  "#text": "65"
                 }
               ]
             },
@@ -3090,7 +3113,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "66"
+                "#text": "71"
               }
             ]
           },
@@ -3113,7 +3136,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "71"
+                "#text": "76"
               }
             ]
           },
@@ -3136,7 +3159,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "76"
+                "#text": "81"
               }
             ]
           },
@@ -3159,7 +3182,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "81"
+                "#text": "86"
               }
             ]
           },
@@ -3182,7 +3205,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "120"
+                "#text": "122"
               }
             ]
           }
@@ -3751,7 +3774,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "609"
+                  "#text": "624"
                 }
               ]
             }
@@ -3789,7 +3812,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "613"
+                  "#text": "628"
                 }
               ]
             }
@@ -4072,7 +4095,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "617"
+                  "#text": "632"
                 }
               ]
             },
@@ -4880,7 +4903,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "737"
+                  "#text": "752"
                 }
               ]
             }
@@ -4967,7 +4990,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "845"
+                  "#text": "860"
                 }
               ]
             }
@@ -14452,7 +14475,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "725"
+                  "#text": "740"
                 }
               ]
             }
@@ -14927,7 +14950,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "534"
+                "#text": "549"
               }
             ]
           }
@@ -14945,7 +14968,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "538"
+                "#text": "553"
               }
             ]
           }
@@ -14963,7 +14986,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "542"
+                "#text": "557"
               }
             ]
           }
@@ -14981,7 +15004,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "546"
+                "#text": "561"
               }
             ]
           }
@@ -14989,7 +15012,7 @@
         {
           "@id": "msgMealBolus",
           "@datatype": "html",
-          "source": "bolus to handle a meal|:Mahlzeitenbolus",
+          "source": "Mahlzeitenbolus",
           "context-group": {
             "@purpose": "location",
             "context": [
@@ -14999,15 +15022,20 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "557"
+                "#text": "572"
               }
             ]
+          },
+          "note": {
+            "@priority": "1",
+            "@from": "description",
+            "#text": "bolus to handle a meal"
           }
         },
         {
           "@id": "msgBolusWizard",
           "@datatype": "html",
-          "source": "bolus calculated by the bolus wizard|:Bolus Rechner",
+          "source": "Bolus Rechner",
           "context-group": {
             "@purpose": "location",
             "context": [
@@ -15017,9 +15045,14 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "561"
+                "#text": "576"
               }
             ]
+          },
+          "note": {
+            "@priority": "1",
+            "@from": "description",
+            "#text": "bolus calculated by the bolus wizard"
           }
         },
         {
@@ -15035,7 +15068,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "565"
+                "#text": "580"
               }
             ]
           }
@@ -15054,7 +15087,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "569"
+                  "#text": "584"
                 }
               ]
             },
@@ -15067,7 +15100,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "797"
+                  "#text": "812"
                 }
               ]
             }
@@ -15086,7 +15119,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "573"
+                "#text": "588"
               }
             ]
           }
@@ -15104,7 +15137,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "577"
+                "#text": "592"
               }
             ]
           }
@@ -15123,7 +15156,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "585"
+                  "#text": "600"
                 }
               ]
             },
@@ -15156,7 +15189,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "589"
+                  "#text": "604"
                 }
               ]
             },
@@ -15188,7 +15221,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "593"
+                "#text": "608"
               }
             ]
           }
@@ -15206,7 +15239,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "597"
+                "#text": "612"
               }
             ]
           }
@@ -15224,7 +15257,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "601"
+                "#text": "616"
               }
             ]
           }
@@ -15243,7 +15276,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "605"
+                  "#text": "620"
                 }
               ]
             },
@@ -15256,7 +15289,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "869"
+                  "#text": "884"
                 }
               ]
             }
@@ -15275,7 +15308,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "621"
+                "#text": "636"
               }
             ]
           }
@@ -15293,7 +15326,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "625"
+                "#text": "640"
               }
             ]
           }
@@ -15311,7 +15344,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "629"
+                "#text": "644"
               }
             ]
           }
@@ -15329,7 +15362,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "633"
+                "#text": "648"
               }
             ]
           }
@@ -15347,7 +15380,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "637"
+                "#text": "652"
               }
             ]
           }
@@ -15365,7 +15398,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "641"
+                "#text": "656"
               }
             ]
           }
@@ -15383,7 +15416,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "645"
+                "#text": "660"
               }
             ]
           }
@@ -15401,7 +15434,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "649"
+                "#text": "664"
               }
             ]
           }
@@ -15419,7 +15452,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "653"
+                "#text": "668"
               }
             ]
           }
@@ -15437,7 +15470,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "657"
+                "#text": "672"
               }
             ]
           }
@@ -15455,7 +15488,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "661"
+                "#text": "676"
               }
             ]
           }
@@ -15473,7 +15506,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "665"
+                "#text": "680"
               }
             ]
           }
@@ -15491,7 +15524,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "669"
+                "#text": "684"
               }
             ]
           }
@@ -15509,7 +15542,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "673"
+                "#text": "688"
               }
             ]
           }
@@ -15527,7 +15560,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "677"
+                "#text": "692"
               }
             ]
           }
@@ -15545,7 +15578,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "681"
+                "#text": "696"
               }
             ]
           }
@@ -15563,7 +15596,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "685"
+                "#text": "700"
               }
             ]
           }
@@ -15581,7 +15614,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "689"
+                "#text": "704"
               }
             ]
           }
@@ -15599,7 +15632,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "693"
+                "#text": "708"
               }
             ]
           }
@@ -15617,7 +15650,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "697"
+                "#text": "712"
               }
             ]
           }
@@ -15635,7 +15668,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "701"
+                "#text": "716"
               }
             ]
           }
@@ -15653,7 +15686,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "705"
+                "#text": "720"
               }
             ]
           }
@@ -15672,7 +15705,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "709"
+                  "#text": "724"
                 }
               ]
             },
@@ -15717,7 +15750,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "713"
+                "#text": "728"
               }
             ]
           }
@@ -15735,7 +15768,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "717"
+                "#text": "732"
               }
             ]
           }
@@ -15753,7 +15786,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "721"
+                "#text": "736"
               }
             ]
           }
@@ -15771,7 +15804,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "729"
+                "#text": "744"
               }
             ]
           }
@@ -15789,7 +15822,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "733"
+                "#text": "748"
               }
             ]
           }
@@ -15807,7 +15840,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "741"
+                "#text": "756"
               }
             ]
           }
@@ -15825,7 +15858,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "745"
+                "#text": "760"
               }
             ]
           }
@@ -15843,7 +15876,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "749"
+                "#text": "764"
               }
             ]
           }
@@ -15861,7 +15894,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "753"
+                "#text": "768"
               }
             ]
           }
@@ -15879,7 +15912,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "757"
+                "#text": "772"
               }
             ]
           }
@@ -15897,7 +15930,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "761"
+                "#text": "776"
               }
             ]
           }
@@ -15915,7 +15948,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "765"
+                "#text": "780"
               }
             ]
           }
@@ -15933,7 +15966,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "769"
+                "#text": "784"
               }
             ]
           }
@@ -15951,7 +15984,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "773"
+                "#text": "788"
               }
             ]
           }
@@ -15969,7 +16002,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "777"
+                "#text": "792"
               }
             ]
           }
@@ -15987,7 +16020,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "781"
+                "#text": "796"
               }
             ]
           }
@@ -16005,7 +16038,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "785"
+                "#text": "800"
               }
             ]
           }
@@ -16023,7 +16056,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "789"
+                "#text": "804"
               }
             ]
           }
@@ -16041,7 +16074,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "793"
+                "#text": "808"
               }
             ]
           }
@@ -16059,7 +16092,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "801"
+                "#text": "816"
               }
             ]
           }
@@ -16077,7 +16110,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "805"
+                "#text": "820"
               }
             ]
           }
@@ -16095,7 +16128,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "809"
+                "#text": "824"
               }
             ]
           }
@@ -16113,7 +16146,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "813"
+                "#text": "828"
               }
             ]
           }
@@ -16131,7 +16164,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "817"
+                "#text": "832"
               }
             ]
           }
@@ -16149,7 +16182,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "821"
+                "#text": "836"
               }
             ]
           }
@@ -16167,7 +16200,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "825"
+                "#text": "840"
               }
             ]
           }
@@ -16185,7 +16218,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "829"
+                "#text": "844"
               }
             ]
           }
@@ -16203,7 +16236,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "833"
+                "#text": "848"
               }
             ]
           }
@@ -16221,7 +16254,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "837"
+                "#text": "852"
               }
             ]
           }
@@ -16239,7 +16272,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "841"
+                "#text": "856"
               }
             ]
           }
@@ -16257,7 +16290,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "849"
+                "#text": "864"
               }
             ]
           }
@@ -16275,7 +16308,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "853"
+                "#text": "868"
               }
             ]
           }
@@ -16293,7 +16326,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "857"
+                "#text": "872"
               }
             ]
           }
@@ -16311,7 +16344,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "861"
+                "#text": "876"
               }
             ]
           }
@@ -16329,7 +16362,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "865"
+                "#text": "880"
               }
             ]
           }
@@ -16347,7 +16380,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "873"
+                "#text": "888"
               }
             ]
           }
@@ -16365,7 +16398,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "877"
+                "#text": "892"
               }
             ]
           }
@@ -16383,7 +16416,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "881"
+                "#text": "896"
               }
             ]
           }
@@ -16401,7 +16434,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "885"
+                "#text": "900"
               }
             ]
           }
@@ -16419,7 +16452,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "889"
+                "#text": "904"
               }
             ]
           }
@@ -16437,7 +16470,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "893"
+                "#text": "908"
               }
             ]
           }
@@ -16455,7 +16488,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "897"
+                "#text": "912"
               }
             ]
           }
@@ -16473,7 +16506,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "901"
+                "#text": "916"
               }
             ]
           }
@@ -16491,7 +16524,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "905"
+                "#text": "920"
               }
             ]
           }
@@ -16515,7 +16548,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "940"
+                "#text": "955"
               }
             ]
           }
@@ -16539,7 +16572,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "944"
+                "#text": "959"
               }
             ]
           }
@@ -16563,7 +16596,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "948"
+                "#text": "963"
               }
             ]
           }
@@ -16602,7 +16635,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "952"
+                "#text": "967"
               }
             ]
           }
@@ -16620,7 +16653,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1032"
+                "#text": "1047"
               }
             ]
           }
@@ -16644,7 +16677,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1033"
+                "#text": "1048"
               }
             ]
           }
@@ -16662,7 +16695,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1040"
+                "#text": "1055"
               }
             ]
           }
@@ -16686,7 +16719,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1041"
+                "#text": "1056"
               }
             ]
           }
@@ -16710,7 +16743,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1050"
+                "#text": "1065"
               }
             ]
           }
@@ -16743,7 +16776,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1054"
+                "#text": "1069"
               }
             ]
           }
@@ -16767,7 +16800,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1058"
+                "#text": "1073"
               }
             ]
           }
@@ -16791,7 +16824,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1062"
+                "#text": "1077"
               }
             ]
           }
@@ -16824,7 +16857,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1066"
+                "#text": "1081"
               }
             ]
           }
@@ -16862,7 +16895,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1070"
+                "#text": "1085"
               }
             ]
           }
@@ -16880,7 +16913,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1074"
+                "#text": "1089"
               }
             ]
           }
@@ -16907,7 +16940,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1078"
+                "#text": "1093"
               }
             ]
           }
@@ -16934,7 +16967,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1082"
+                "#text": "1097"
               }
             ]
           }
@@ -16961,7 +16994,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1086"
+                "#text": "1101"
               }
             ]
           }
@@ -16988,7 +17021,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1090"
+                "#text": "1105"
               }
             ]
           }
@@ -17015,7 +17048,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1094"
+                "#text": "1109"
               }
             ]
           }
@@ -17042,7 +17075,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1101"
+                "#text": "1116"
               }
             ]
           }
@@ -17069,7 +17102,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1105"
+                "#text": "1120"
               }
             ]
           }
@@ -17096,7 +17129,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1109"
+                "#text": "1124"
               }
             ]
           }
@@ -17123,7 +17156,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1113"
+                "#text": "1128"
               }
             ]
           }
@@ -17150,7 +17183,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1117"
+                "#text": "1132"
               }
             ]
           }
@@ -17174,7 +17207,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1121"
+                "#text": "1136"
               }
             ]
           }
@@ -17193,7 +17226,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1126"
+                  "#text": "1141"
                 }
               ]
             },
@@ -17206,7 +17239,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1135"
+                  "#text": "1150"
                 }
               ]
             },
@@ -17219,7 +17252,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1143"
+                  "#text": "1158"
                 }
               ]
             }
@@ -17238,7 +17271,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1127"
+                "#text": "1142"
               }
             ]
           }
@@ -17262,7 +17295,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1128"
+                "#text": "1143"
               }
             ]
           }
@@ -17280,7 +17313,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1136"
+                "#text": "1151"
               }
             ]
           }
@@ -17304,7 +17337,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1137"
+                "#text": "1152"
               }
             ]
           }
@@ -17322,7 +17355,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1144"
+                "#text": "1159"
               }
             ]
           }
@@ -17349,7 +17382,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1145"
+                "#text": "1160"
               }
             ]
           }
@@ -17382,7 +17415,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1150"
+                "#text": "1165"
               }
             ]
           }
@@ -17406,7 +17439,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1154"
+                "#text": "1169"
               }
             ]
           }
@@ -17430,7 +17463,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1158"
+                "#text": "1173"
               }
             ]
           }
@@ -17457,7 +17490,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1162"
+                "#text": "1177"
               }
             ]
           }
@@ -17484,7 +17517,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1166"
+                "#text": "1181"
               }
             ]
           }
@@ -17518,7 +17551,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1170"
+                "#text": "1185"
               }
             ]
           }
@@ -17545,7 +17578,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1174"
+                "#text": "1189"
               }
             ]
           }
@@ -17572,7 +17605,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1178"
+                "#text": "1193"
               }
             ]
           }
@@ -17599,7 +17632,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1182"
+                "#text": "1197"
               }
             ]
           }
@@ -17626,7 +17659,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1188"
+                "#text": "1203"
               }
             ]
           }
@@ -17653,7 +17686,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1189"
+                "#text": "1204"
               }
             ]
           }
@@ -17680,7 +17713,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1196"
+                "#text": "1211"
               }
             ]
           }
@@ -17707,7 +17740,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1197"
+                "#text": "1212"
               }
             ]
           }
@@ -17734,7 +17767,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1204"
+                "#text": "1219"
               }
             ]
           }
@@ -17761,7 +17794,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1205"
+                "#text": "1220"
               }
             ]
           }
@@ -17785,7 +17818,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1211"
+                "#text": "1226"
               }
             ]
           }
@@ -17803,7 +17836,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1216"
+                "#text": "1231"
               }
             ]
           }
@@ -17821,7 +17854,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1217"
+                "#text": "1232"
               }
             ]
           }
@@ -17845,7 +17878,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1218"
+                "#text": "1233"
               }
             ]
           }
@@ -17872,7 +17905,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1224"
+                "#text": "1239"
               }
             ]
           }
@@ -17896,7 +17929,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1229"
+                "#text": "1244"
               }
             ]
           }
@@ -17920,7 +17953,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1233"
+                "#text": "1248"
               }
             ]
           }
@@ -17944,7 +17977,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1237"
+                "#text": "1252"
               }
             ]
           }
@@ -17974,7 +18007,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1241"
+                "#text": "1256"
               }
             ]
           }
@@ -18001,7 +18034,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1250"
+                "#text": "1265"
               }
             ]
           }
@@ -18035,7 +18068,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1256"
+                "#text": "1271"
               }
             ]
           }
@@ -18070,7 +18103,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1262"
+                  "#text": "1277"
                 }
               ]
             },
@@ -18083,7 +18116,7 @@
                 },
                 {
                   "@context-type": "linenumber",
-                  "#text": "1289"
+                  "#text": "1304"
                 }
               ]
             }
@@ -18111,7 +18144,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1267"
+                "#text": "1282"
               }
             ]
           }
@@ -18138,7 +18171,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1283"
+                "#text": "1298"
               }
             ]
           }
@@ -18172,7 +18205,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1295"
+                "#text": "1310"
               }
             ]
           }
@@ -18199,7 +18232,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1300"
+                "#text": "1315"
               }
             ]
           }
@@ -18223,7 +18256,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1315"
+                "#text": "1330"
               }
             ]
           }
@@ -18241,7 +18274,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1320"
+                "#text": "1335"
               }
             ]
           }
@@ -18259,7 +18292,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1321"
+                "#text": "1336"
               }
             ]
           }
@@ -18286,7 +18319,7 @@
               },
               {
                 "@context-type": "linenumber",
-                "#text": "1322"
+                "#text": "1337"
               }
             ]
           }
@@ -21151,7 +21184,7 @@
         {
           "@id": "help-glucdist",
           "@datatype": "html",
-          "source": "Dieses Formular zeig die Verteilung der Glukosewerte\nim ausgewählten Zeitraum an.",
+          "source": "Dieses Formular zeigt die Verteilung der Glukosewerte\nim ausgewählten Zeitraum an.",
           "context-group": {
             "@purpose": "location",
             "context": [

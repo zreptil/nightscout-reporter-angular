@@ -1,5 +1,15 @@
+import {CrowdinData} from '@/_model/nightscout/crowdin-data';
+
 export class LangData {
-  constructor(public code: string, public name: string, public img: string) {
+  constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData) {
+    if (crowdin != null) {
+      const parts = code.toLowerCase().split('-');
+      if (parts[0] === parts[1]) {
+        crowdin.langCode = parts[0];
+      } else {
+        crowdin.langCode = `${parts[0]}${parts[1]}`;
+      }
+    }
   }
 
   get is24HourFormat(): boolean {

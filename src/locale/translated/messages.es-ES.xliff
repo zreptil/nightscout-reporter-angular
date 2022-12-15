@@ -258,6 +258,14 @@
 <source>Die Zeit pro Tag in Minuten, in denen die Werte ausserhalb des Bereichs {$PH} bis {$PH_1} liegen.</source>
 <target state="final">El tiempo en minutos en el que los valores se encuentran fuera del margen {$PH} a {$PH_1}.</target>
 </trans-unit>
+<trans-unit id="msgHYPOInfo" datatype="html">
+<source>Die Intensität von Hypoglykämien pro Tag (Werte kleiner oder gleich {$PH}).</source>
+<target state="final">La intensidad de hipoglucemias por día (valores bajo o igual {$PH}).</target>
+</trans-unit>
+<trans-unit id="msgHYPERInfo" datatype="html">
+<source>Die Intensität von Hyperglykämien pro Tag (Werte grösser oder gleich {$PH}).</source>
+<target state="final">La intensidad de hiperglucemias por día (valores bajo o igual {$PH}).</target>
+</trans-unit>
 <trans-unit id="msgMEANInfo" datatype="html">
 <source>Der glykämische Mittelwert im betrachteten Zeitraum.</source>
 <target state="final">Glucemia media en el período elegido.</target>
@@ -334,6 +342,11 @@
 <source>Unbegrenzt</source>
 <target state="final">Sin límite</target>
 </trans-unit>
+<trans-unit id="7716816989054584047" datatype="html">
+<source>Beim Auslesen der Profile ist ein Fehler aufgetreten. Möglicherweise sind zu viele Daten in der Profiltabelle (wird z.B. von iOS Loop verursacht).
+Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildatensätzen zu verringern.</source>
+<target state="final">Al leer los perfiles ha ocurrido un error. Probablemente hay demasiados datos en la tabla del perfil (se produce por ejemplo por el bucle de iOS). Puedes intentar reducir el número de registros de perfil que se van a leer en la configuración.</target>
+</trans-unit>
 <trans-unit id="5517254381877899996" datatype="html">
 <source>Lade die Basisdaten...</source>
 <target state="final">Cargando los datos básicos...</target>
@@ -350,6 +363,22 @@
 <source>Bereite Daten vor...</source>
 <target state="final">Preparando datos...</target>
 </trans-unit>
+<trans-unit id="8912953969714276103" datatype="html">
+<source>Es konnten nicht alle Profile geladen werden, da im ausgewählten Zeitraum mehr als {$PH} gespeichert sind. </source>
+<target state="final">No se han podido cargar todos perfiles, por que en el tiempo seleccionado hay más de {$PH} guardados.</target>
+</trans-unit>
+<trans-unit id="3802873172037186880" datatype="html">
+<source>Der Uploader "{$PH}" hat die Datensätze angelegt.</source>
+<target state="final">El uploader "{$PH}" ha creado registros.</target>
+</trans-unit>
+<trans-unit id="7979899145647988883" datatype="html">
+<source>Folgende Uploader haben die Datensätze angelegt: {$PH}</source>
+<target state="final">Siguientes Uploaders han creado registros: {$PH}</target>
+</trans-unit>
+<trans-unit id="3927439908064576549" datatype="html">
+<source>Lade Daten für {$PH}...</source>
+<target state="final">Cargando datos para {$PH}...</target>
+</trans-unit>
 <trans-unit id="3117299459475029064" datatype="html">
 <source>Erzeuge PDF...</source>
 <target state="final">Creando PDF...</target>
@@ -362,9 +391,47 @@
 <source>PDF anzeigen</source>
 <target state="final">Mostrar PDF</target>
 </trans-unit>
+<trans-unit id="6530668891861059555" datatype="html">
+<source>Fehler beim Laden der Daten:{$PH}{$PH_1}</source>
+<target state="final">Error al cargar los datos: 
+{$PH}
+${PH_1}</target>
+</trans-unit>
 <trans-unit id="5863317744980308324" datatype="html">
 <source>Die URL wurde noch nicht festgelegt</source>
 <target state="final">La URL aún no ha sido determinada</target>
+</trans-unit>
+<trans-unit id="106915923521054589" datatype="html">
+<source>{$PH} Minute</source>
+<target state="final">{$PH} minuto</target>
+</trans-unit>
+<trans-unit id="5649152052903402207" datatype="html">
+<source>{$PH} Minuten</source>
+<target state="final">{$PH} minutos</target>
+</trans-unit>
+<trans-unit id="5715822374601764396" datatype="html">
+<source>{$PH} Stunde</source>
+<target state="final">{$PH} hora</target>
+</trans-unit>
+<trans-unit id="6787170888491959005" datatype="html">
+<source>{$PH} Stunden</source>
+<target state="final">{$PH} Horas</target>
+</trans-unit>
+<trans-unit id="2243853424457768965" datatype="html">
+<source>{$PH} Tag</source>
+<target state="final">{$PH} Día</target>
+</trans-unit>
+<trans-unit id="3499176050291189451" datatype="html">
+<source>{$PH} Tage</source>
+<target state="final">{$PH} dias</target>
+</trans-unit>
+<trans-unit id="610068718017122607" datatype="html">
+<source>{$PH} Stunde</source>
+<target state="final">{$PH} hora</target>
+</trans-unit>
+<trans-unit id="896232652852247226" datatype="html">
+<source>{$PH} Stunden</source>
+<target state="final">{$PH} Horas</target>
 </trans-unit>
 <trans-unit id="7623135239551445678" datatype="html">
 <source>Datenschutzerklärung</source>
@@ -423,6 +490,10 @@ info for DSGVO in dataprotection:</target>
 <source>Zur Kachelansicht</source>
 <target state="final">Ir a la vista de mosaico</target>
 </trans-unit>
+<trans-unit id="7784776148483401026" datatype="html">
+<source>Mit Google synchronisieren</source>
+<target state="final">Sincronizar con Google Drive</target>
+</trans-unit>
 <trans-unit id="1974187181485501471" datatype="html">
 <source>Google Assistant</source>
 <target state="final">Asistente Google</target>
@@ -458,6 +529,10 @@ info for DSGVO in dataprotection:</target>
 <trans-unit id="4411190801473304003" datatype="html">
 <source> zu Vergleichszwecken (z.B. Arzt) </source>
 <target state="final">para comparaciónes (p.e. médicos)</target>
+</trans-unit>
+<trans-unit id="3976173699076358131" datatype="html">
+<source>Maximaler Glukosewert in Grafiken</source>
+<target state="final">Valor máximo de glucosa en gráfico</target>
 </trans-unit>
 <trans-unit id="3462597418071398844" datatype="html">
 <source>Genauigkeit der Basalangaben:</source>
@@ -515,9 +590,17 @@ info for DSGVO in dataprotection:</target>
 <source>CGP immer mit Standard Zielbereich</source>
 <target state="final">CGP siempre con objetivos de glucosa estándar</target>
 </trans-unit>
+<trans-unit id="1278432863271212107" datatype="html">
+<source>Standard Zielbereich verwenden ({$PH}{$PH_1} - {$PH_2}{$PH_3})</source>
+<target state="final">Usar objetivo de glucemia estándar ({$PH} {$PH_1} - {$PH_2} {$PH_3})</target>
+</trans-unit>
 <trans-unit id="5477028811151651395" datatype="html">
 <source>Spenden</source>
 <target state="final">Donación</target>
+</trans-unit>
+<trans-unit id="4662145775420138869" datatype="html">
+<source>{$START_TAG_MAT_ICON}settings{$CLOSE_TAG_MAT_ICON} Einstellungen </source>
+<target state="final">{$START_TAG_MAT_ICON}settings{$CLOSE_TAG_MAT_ICON} Ajustes</target>
 </trans-unit>
 <trans-unit id="2282062055953871612" datatype="html">
 <source>Benutzerdaten</source>
@@ -559,6 +642,10 @@ info for DSGVO in dataprotection:</target>
 <source>Speichern</source>
 <target state="final">Guardar</target>
 </trans-unit>
+<trans-unit id="2522417553765949487" datatype="html">
+<source>Url zur Nightscout-API (z.B. https://xxx.ns.10be.de)</source>
+<target state="final">URL Nightscout API (https://xxx.ns.10be.de)</target>
+</trans-unit>
 <trans-unit id="8953033926734869941" datatype="html">
 <source>Name</source>
 <target state="final">Nombre</target>
@@ -587,6 +674,15 @@ info for DSGVO in dataprotection:</target>
 <source>Ermittle letzten Tag mit Daten</source>
 <target state="final">Averigua el último día con datos</target>
 </trans-unit>
+<trans-unit id="4562561451144140468" datatype="html">
+<source>Die Profiltabelle sollte normalerweise nur Daten zu den verwendeten
+  Profilen beinhalten. iOS Loop verwendet diese Tabelle aber dazu, um dort eigene Einstellungen zu speichern
+  und tut dies bei einigen Benutzern exzessiv. Ab einer bestimmten Datenmenge kann die Profiltabelle über
+  die API dann nicht mehr korrekt abgefragt werden. Deswegen gibt es hier die Möglichkeit, die Anzahl an
+  Datensätzen einzuschränken, die aus dieser Tabelle geholt werden. Das ist so lange notwendig, wie
+  iOS Loop oder andere Uploader diese Tabelle falsch befüllen.&lt;br&gt;&lt;br&gt;Maximale Anzahl an Profildatensätzen:</source>
+<target state="final">Normalmente, la tabla de perfiles debe contener solo datos sobre los perfiles utilizados. Sin embargo, iOS Loop utiliza esta tabla para almacenar su propia configuración allí y lo hace excesivamente para algunos usuarios. A partir de una cierta cantidad de datos, la tabla de perfil ya no se puede consultar correctamente a través de la API. Por lo tanto, existe la posibilidad de limitar el número de registros que se recuperan de esta tabla. Esto es necesario siempre y cuando iOS Loop u otros cargadores rellenen incorrectamente esta tabla. Número máximo de registros de perfil:</target>
+</trans-unit>
 <trans-unit id="msgAccessTokenHint" datatype="html">
 <source>Der Zugriffsschlüssel wird nur benötigt, wenn der Zugriff in Nightscout über AUTH_DEFAULT_ROLES eingeschränkt wurde</source>
 <target state="final">Solo se necesita la clave de acceso si se ha restringido el acceso a nightscout por AUTH_DEFAULT_ROLES</target>
@@ -598,6 +694,10 @@ info for DSGVO in dataprotection:</target>
 <trans-unit id="msgEndDateHint" datatype="html">
 <source>Das Datum des letzten kompletten Tages mit Daten</source>
 <target state="final">La fecha del último día con datos completos</target>
+</trans-unit>
+<trans-unit id="msgCheckUser" datatype="html">
+<source>Überprüfe Zugriff auf {$PH}...</source>
+<target state="final">Compruebe el acceso a ${PH}...</target>
 </trans-unit>
 <trans-unit id="6494831464643926227" datatype="html">
 <source> Ein Shortcut beinhaltet den Zeitraum und die ausgewählten Formulare mit den jeweils gesetzten Optionen. Wenn ein Shortcut aktiviert wird, werden die darin gespeicherten Einstellungen geladen und aktiviert. </source>
@@ -627,6 +727,14 @@ texto informativo sobre atajos.</target>
 <trans-unit id="932668547741342874" datatype="html">
 <source>Shortcut ändern</source>
 <target state="final">Cambiar atajo</target>
+</trans-unit>
+<trans-unit id="2014733470790569227" datatype="html">
+<source>1 Formular</source>
+<target state="final">1 Formulario</target>
+</trans-unit>
+<trans-unit id="6184761557716292861" datatype="html">
+<source>{$PH} Formulare</source>
+<target state="final">{$PH} Formularios</target>
 </trans-unit>
 <trans-unit id="8646390268693319754" datatype="html">
 <source>Soll der Shortcut mit der Bezeichnung</source>
@@ -708,6 +816,22 @@ texto informativo sobre atajos.</target>
 <source>Skala</source>
 <target state="final">Escala</target>
 </trans-unit>
+<trans-unit id="7906820745486253849" datatype="html">
+<source>Sensor-Wechsel</source>
+<target state="final">Cambio de sensor</target>
+</trans-unit>
+<trans-unit id="6302070337805031317" datatype="html">
+<source>Katheter-Wechsel</source>
+<target state="final">Cambio de catéter</target>
+</trans-unit>
+<trans-unit id="4195240722921774740" datatype="html">
+<source>Ampullen-Wechsel</source>
+<target state="final">Cambio deposito</target>
+</trans-unit>
+<trans-unit id="3674308659547457904" datatype="html">
+<source>Batterie-Wechsel</source>
+<target state="final">Cambio de pila</target>
+</trans-unit>
 <trans-unit id="5928437581414846354" datatype="html">
 <source>Night-Watch</source>
 <target state="final">Night-Watch</target>
@@ -723,6 +847,10 @@ texto informativo sobre atajos.</target>
 <trans-unit id="3623177105972637781" datatype="html">
 <source> Die Daten, die Du hier eingibst, werden normalerweise im localStorage des Browsers gespeichert. Dieser beinhaltet webseitenbezogene Daten, die nur von dieser Webseite ausgelesen werden können. In diesem Fall werden keine Cookies verwendet und es werden keine Daten auf Servern gespeichert. Es wird lediglich eine Verbindung zur angegebenen Nightscout-Instanz aufgebaut und die dort vorhandenen Daten ausgelesen, um daraus ein PDF-Dokument zu erzeugen. Dieses kann dann dem Diabetesberater oder sonstigen Interessenten vorgelegt werden. </source>
 <target state="final">Los datos que introduces aquí, se almacenan normalmente en el navegador localStorage. Esto incluye datos relacionados con la página web que se pueden leer solamente en este sitio web. En este caso, no se utilizan cookies y no se guardan datos en los servidores. Se establece sólo una conexión a la instancia especificada de Nightscout y se leen los datos existentes para crear un documento PDF. Esto puede presentarse al endocrinologo a otras partes interesadas.</target>
+</trans-unit>
+<trans-unit id="2360508661070570624" datatype="html">
+<source> Wenn in den Einstellungen eine Verbindung zum Google-Konto hergestellt wird, werden die Cookies von Google verwendet und die Daten zusätzlich im AppStorage auf Google Drive gespeichert. Auf diese Art kann man die Daten zentralisiert verwalten und hat diese in jedem Browser zur Verfügung, der mit dem angegebenen Google Konto verbunden ist. </source>
+<target state="final">En caso de que en los ajustes conectes con una cuenta de Google, seran utilizados los cookies por Google y los datos no se almacenan en el localStorage del navegador, pero en la AppStorage de Google drive. De esta manera, usted puede gestionar los datos centralizados y los tiene disponible en cualquier navegador, asociado a la cuenta de Google especificada.</target>
 </trans-unit>
 <trans-unit id="2544369118898450507" datatype="html">
 <source> Einstellungen für die Verwendung der Seite vornehmen </source>
@@ -772,6 +900,10 @@ texto informativo sobre atajos.</target>
 <source>3.0.0 - 21.08.2022</source>
 <target state="final">3.0.0 - 21.08.2022</target>
 </trans-unit>
+<trans-unit id="4027913842661346247" datatype="html">
+<source> Eine neue Ansicht namens {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT} wurde hinzugefügt. In dieser Ansicht sieht man, so wie auch in der Uhr-Anzeige auf der Nightscout-Seite, den aktuellen Glukosewert und weitere Informationen, die man sich in gewissem Rahmen so konfigurieren kann, wie sie einem gefallen. Night-Watch wird über diese URL aufgerufen: {$START_LINK} https://nightscout-reporter.zreptil.de/watch {$CLOSE_LINK} Es kann auch über das Hauptmenü unter dem Menüpunkt {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT} aufgerufen werden, oder indem man den aktuellen Zuckerwert in der Titelleiste von Nightscout Reporter anklickt, wenn man diesen in den Einstellungen aktiviert hat. </source>
+<target state="final">Se ha agregado una nueva vista denominada {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT}. En esta vista, así como en la pantalla del reloj en la página Nightscout, puede ver el valor actual de glucosa y otra información que puede configurar en cierta medida como desee. Night-Watch se llama a través de esta URL: {$START_LINK}https://nightscout-reporter.zreptil.de/watch{$CLOSE_LINK} También se puede llamar desde el menú principal bajo el elemento de menú {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT}.</target>
+</trans-unit>
 <trans-unit id="5736239371712783896" datatype="html">
 <source> Die Konfiguration erfolgt direkt im Fenster von Night-Watch, indem man etwas anklickt. Dadurch wechselt die Seite in den Editiermodus und mit den Controls am unteren Rand des Fensters können die vorhandenen Elemente verändert, verschoben, gelöscht oder neue Elemente hinzugefügt werden. Mit dem Speichern-Icon in den Controls werden die Einstellungen gespeichert und der Editiermodus beendet. Er kann auch beendet werden, indem man das aktive Element anklickt, wobei dann die Änderungen aber nicht gespeichert werden. Nach dem Neuladen der Seite hat man dann die letzte Ansicht vor sich. </source>
 <target state="final">La configuración se realiza directamente en la ventana de Night-Watch haciendo clic en algo. Esto cambia la página al modo de edición y con los controles en la parte inferior de la ventana, los elementos existentes se pueden cambiar, mover, eliminar o agregar nuevos elementos. Con el icono de guardar en los controles, la configuración se guarda y el modo de edición termina. También se puede terminar haciendo clic en el elemento activo, pero así no se realizan los cambios y no se guardan. Después de volver a cargar la página, tendra la última vista.</target>
@@ -779,6 +911,10 @@ texto informativo sobre atajos.</target>
 <trans-unit id="1050317483122628114" datatype="html">
 <source> Wenn Night-Watch beim Aufruf feststellt, dass noch keine Konfiguration vorgenommen wurde, dann kann man über das altbekannte Settingsfenster seine Einstellungen vornehmen. Das kommt vor, wenn man die Seite als WebApp installiert, da dort der Browserspeicher, in dem die Konfiguration gehalten wird, normalerweise noch nicht befüllt wurde. </source>
 <target state="final">Si Night-Watch detecta que aún no se ha realizado ninguna configuración, puede realizar sus ajustes a través de la ventana de configuración conocida. Esto sucede cuando instala la página como una WebApp, porque la memoria del navegador en la que se encuentra la configuración generalmente aún no se ha cargado.</target>
+</trans-unit>
+<trans-unit id="5947493486939609850" datatype="html">
+<source> Dort, wo ein CGP erstellt werden kann, gibt es nun die Option {$START_ITALIC_TEXT}Linien um Bereiche{$CLOSE_ITALIC_TEXT}. Diese ist standardmässig eingeschaltet. Wenn sie ausgeschaltet wird, werden die Wertebereiche für den gesunden und den aktuellen Menschen nicht mehr mit einer Linie umrandet. Damit sieht die Grafik etwas blasser aus, aber man kann die Werte auf den Achsen genauer untersuchen, wenn man das möchte. </source>
+<target state="final">Se ha agregado una nueva vista denominada {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT}. En esta vista, así como en la pantalla del reloj en la página Nightscout, puede ver el valor actual de glucosa y otra información que puede configurar en cierta medida como desee. Night-Watch se llama a través de esta URL: {startTag1}https://nightscout-reporter.zreptil.de/watch{endTag1} También se puede llamar desde el menú principal bajo el elemento de menú {startTag2}Night-Watch{endTag2}.</target>
 </trans-unit>
 <trans-unit id="8360132556674484241" datatype="html">
 <source> Die Anpassung der Glukosewerte wird nun bei den Einstellungen gespeichert. Sie kann aber weiterhin bei den Ausgabeparametern geändert werden, um ohne grosse Umwege einen Vergleich erstellen zu können. </source>
@@ -927,6 +1063,10 @@ texto informativo sobre atajos.</target>
 <trans-unit id="180382405131627291" datatype="html">
 <source>2.0.6 - 17.03.2021</source>
 <target state="final">2.0.6 - 17.03.2021</target>
+</trans-unit>
+<trans-unit id="5719790065377190370" datatype="html">
+<source> Nachdem ich immer wieder gefragt wurde, ob man mir eine Spende zukommen lassen kann, habe ich mich jetzt dann doch dazu entschlossen, so eine Möglichkeit zur Verfügung zu stellen. Nightscout Reporter ist aber nach wie vor komplett kostenlos und wird das auch bleiben. Wer dennoch seiner Zuneigung zum Programm Ausdruck verleihen will, dem will ich mich nicht länger in den Weg stellen. Der Spenden-Button ist nicht sichtbar. Aber wer etwas in den {$START_BOLD_TEXT}Hut{$CLOSE_BOLD_TEXT} werfen will, der wird ihn finden :) </source>
+<target state="final">Después de que me preguntaron una y otra vez si se me podía dar una donación, ahora he decidido proporcionar esa posibilidad. Nightscout Reporter sigue siendo completamente libre y lo seguirá siendo. Si todavía quieres expresar tu afecto por el programa, ya no quiero interponerme en el camino. El botón de donación no está visible. Pero si quieres lanzar algo en el {$START_BOLD_TEXT}Sombrero{$CLOSE_BOLD_TEXT}, lo encontrarás :)</target>
 </trans-unit>
 <trans-unit id="8107955527265901582" datatype="html">
 <source> Das Logo von Nightscout Reporter wurde geändert. Es ist nach wie vor die bekannte und beliebte Eule, aber sie hat nun eine Mütze auf wie die Zeitungsausträger und teilweise auch Journalisten in uralten Filmen. Das Logo ist nur im Programm vorhanden und erscheint nicht auf den PDFs. Dort ist nach wie vor das normale Nightscout Logo, weil es dort platziert wurde, um auf Nightscout selbst hinzuweisen. </source>
@@ -2104,6 +2244,18 @@ texto informativo sobre atajos.</target>
 <source>Glukosewerte anpassen</source>
 <target state="final">Ajustar valores de glucosa</target>
 </trans-unit>
+<trans-unit id="_msgAdjustTarget" datatype="html">
+<source>Die Werte für BG_TARGET_BOTTOM und BG_TARGET_TOP wurden durch den Faktor {$PH} geteilt</source>
+<target state="final">Los valores de BG_TARGET_BOTTOM y BG_TARGET_TOP se dividieron por el factor {$PH}</target>
+</trans-unit>
+<trans-unit id="_msgAdjustCalc" datatype="html">
+<source>Errechneter HbA1C: {$PH}%</source>
+<target state="final">HbA1c calculado: {$PH}%</target>
+</trans-unit>
+<trans-unit id="_msgAdjustLab" datatype="html">
+<source>Im Labor ermittelter HbA1C: {$PH}%</source>
+<target state="final">Valor HbA1c calculado en laboratorio: {$PH}%</target>
+</trans-unit>
 <trans-unit id="6413617351871198124" datatype="html">
 <source>Ausgabe</source>
 <target state="final">Edición</target>
@@ -2179,6 +2331,14 @@ texto informativo sobre atajos.</target>
 <trans-unit id="msgGlucosekurve" datatype="html">
 <source>Glukosekurve</source>
 <target state="final">Curva glucosa</target>
+</trans-unit>
+<trans-unit id="msgMealBolus" datatype="html">
+<source>Mahlzeitenbolus</source>
+<target state="final">Bolo comida</target>
+</trans-unit>
+<trans-unit id="msgBolusWizard" datatype="html">
+<source>Bolus Rechner</source>
+<target state="final">Calculadora de Bolo</target>
 </trans-unit>
 <trans-unit id="msgBolusExtInsulin" datatype="html">
 <source>Verzögerter Bolus</source>
@@ -2304,6 +2464,12 @@ texto informativo sobre atajos.</target>
 <source>Basal</source>
 <target state="final">Basal</target>
 </trans-unit>
+<trans-unit id="4370541832116997140" datatype="html">
+<source>Basalrate
+IE / Stunde</source>
+<target state="final">Programa basal
+UI / Hora</target>
+</trans-unit>
 <trans-unit id="5332830754562778560" datatype="html">
 <source>Keine</source>
 <target state="final">Ninguna</target>
@@ -2324,6 +2490,11 @@ texto informativo sobre atajos.</target>
 <source>Ges.</source>
 <target state="final">Sum.</target>
 </trans-unit>
+<trans-unit id="5716956580689550728" datatype="html">
+<source>Uhr-
+zeit</source>
+<target state="final">Hora</target>
+</trans-unit>
 <trans-unit id="5090553636000273831" datatype="html">
 <source>IE/std</source>
 <target state="final">UI /h</target>
@@ -2339,6 +2510,12 @@ texto informativo sobre atajos.</target>
 <trans-unit id="6520529921725441580" datatype="html">
 <source>Notiz</source>
 <target state="final">Nota</target>
+</trans-unit>
+<trans-unit id="7814380740217085349" datatype="html">
+<source>Anpas-
+sung</source>
+<target state="final">Adapta-
+ción</target>
 </trans-unit>
 <trans-unit id="3991336875625498115" datatype="html">
 <source>Glukose zu niedrig</source>
@@ -2392,6 +2569,12 @@ texto informativo sobre atajos.</target>
 <source>Ø ISF/Stunde</source>
 <target state="final">Ø ISF/hora</target>
 </trans-unit>
+<trans-unit id="4091766776237352490" datatype="html">
+<source>Insulin Kohlenhydrate Verhältnis (ICR)
+X g Kohlenhydrate für 1 IE</source>
+<target state="final">Relación insulina carbohidratos (ICR)
+X gr carbohidratos para 1 UI</target>
+</trans-unit>
 <trans-unit id="190462900005986981" datatype="html">
 <source>Profileinstellungen</source>
 <target state="final">Configuraciónes de perfil</target>
@@ -2420,6 +2603,11 @@ texto informativo sobre atajos.</target>
 <source>Verteilung</source>
 <target state="final">Distribuición</target>
 </trans-unit>
+<trans-unit id="6054305971182360492" datatype="html">
+<source>Mess-
+werte</source>
+<target state="final">Valores medidos</target>
+</trans-unit>
 <trans-unit id="4912803901980915876" datatype="html">
 <source>Min</source>
 <target state="final">Min</target>
@@ -2431,6 +2619,23 @@ texto informativo sobre atajos.</target>
 <trans-unit id="2245223703355813532" datatype="html">
 <source>IE</source>
 <target state="final">UI</target>
+</trans-unit>
+<trans-unit id="954997609648411319" datatype="html">
+<source>Mittel-
+wert</source>
+<target state="final">Valor medio</target>
+</trans-unit>
+<trans-unit id="7612401945163585274" datatype="html">
+<source>Std.
+Abw.</source>
+<target state="final">h
+desv.</target>
+</trans-unit>
+<trans-unit id="3085022192590638473" datatype="html">
+<source>VarK
+in %</source>
+<target state="final">VarK
+in %</target>
 </trans-unit>
 <trans-unit id="114014997560884624" datatype="html">
 <source>10%</source>
@@ -2456,9 +2661,280 @@ texto informativo sobre atajos.</target>
 <source>Standardabweichung</source>
 <target state="final">Desviación estándar</target>
 </trans-unit>
+<trans-unit id="2633729073167909034" datatype="html">
+<source>{$PH} Uhr</source>
+<target state="final">{$PH} hora</target>
+</trans-unit>
+<trans-unit id="194157074469443413" datatype="html">
+<source>{$PH} am</source>
+<target state="final">{$PH} am</target>
+</trans-unit>
+<trans-unit id="7975293901451211912" datatype="html">
+<source>{$PH} pm</source>
+<target state="final">{$PH} pm</target>
+</trans-unit>
+<trans-unit id="658509511596516220" datatype="html">
+<source>Kalibrierung (scale {$PH} / intercept {$PH_1} / slope {$PH_2})</source>
+<target state="final">Calibración (scale {$PH} / intercept {$PH_1} / slope {$PH_2})</target>
+</trans-unit>
+<trans-unit id="6901562133099764608" datatype="html">
+<source>1 Seite oder mehr</source>
+<target state="final">1 página o más</target>
+</trans-unit>
+<trans-unit id="1149582344080641990" datatype="html">
+<source>{$PH} Seiten oder mehr</source>
+<target state="final">{$PH} páginas o más</target>
+</trans-unit>
+<trans-unit id="6506885859968423722" datatype="html">
+<source>1 Seite</source>
+<target state="final">1 página</target>
+</trans-unit>
+<trans-unit id="1857951656960027099" datatype="html">
+<source>{$PH} Seiten</source>
+<target state="final">{$PH} páginas</target>
+</trans-unit>
+<trans-unit id="msgKW" datatype="html">
+<source>KW{$PH}</source>
+<target state="final">KW{$PH}</target>
+</trans-unit>
+<trans-unit id="msgValidRange" datatype="html">
+<source>gültig von {$PH} bis {$PH_1}</source>
+<target state="final">valido de {$PH} a {$PH_1}</target>
+</trans-unit>
+<trans-unit id="msgValidFrom" datatype="html">
+<source>gültig ab {$PH}</source>
+<target state="final">valido a partir de {$PH}</target>
+</trans-unit>
+<trans-unit id="msgValidTo" datatype="html">
+<source>gültig bis {$PH}</source>
+<target state="final">valido hasta {$PH}</target>
+</trans-unit>
+<trans-unit id="msgDuration" datatype="html">
+<source>{$PH} Std {$PH_1} Min</source>
+<target state="final">{$PH} h {$PH_1} min</target>
+</trans-unit>
+<trans-unit id="msgTargetArea" datatype="html">
+<source>Zielbereich ({$PH} - {$PH_1}{$PH_2})</source>
+<target state="final">Rango objetivo ({$PH} - {$PH_1} {$PH_2})</target>
+</trans-unit>
 <trans-unit id="msgTargetValue" datatype="html">
 <source>Zielwert</source>
 <target state="final">Objectivo</target>
+</trans-unit>
+<trans-unit id="_msgLowerGlucHint" datatype="html">
+<source>Alle sensorischen Glukosewerte wurden um {$PH} % verringert</source>
+<target state="final">Todos valores sensoriales se han reducido por {$PH} %</target>
+</trans-unit>
+<trans-unit id="_msgRaiseGlucHint" datatype="html">
+<source>Alle sensorischen Glukosewerte wurden um {$PH} % erhöht</source>
+<target state="final">Todos valores sensoriales se han aumentado por {$PH} %</target>
+</trans-unit>
+<trans-unit id="msgCarbs" datatype="html">
+<source>Kohlenhydrate ({$PH}g)</source>
+<target state="final">Carbohidratos ({$PH}g)</target>
+</trans-unit>
+<trans-unit id="msgBolusInsulin" datatype="html">
+<source>Bolus Insulin ({$PH})</source>
+<target state="final">Insulina bolo ({$PH})</target>
+</trans-unit>
+<trans-unit id="msgCorrectBolusInsulin" datatype="html">
+<source>Korrektur Bolus ({$PH})</source>
+<target state="final">Bolo de corrección ({$PH})</target>
+</trans-unit>
+<trans-unit id="2630105366061918724" datatype="html">
+<source>Mahlzeiten Bolus ({$PH})</source>
+<target state="final">Bolo de comida ({$PH})</target>
+</trans-unit>
+<trans-unit id="6548316943536498969" datatype="html">
+<source>SMB ({$PH})</source>
+<target state="final">SMB ({$PH})</target>
+</trans-unit>
+<trans-unit id="3909704910396085444" datatype="html">
+<source>Basalrate für den Tag ({$PH})</source>
+<target state="final">Perfil basal diario ({$PH})</target>
+</trans-unit>
+<trans-unit id="4286587832391329338" datatype="html">
+<source>Basalrate aus dem Profil ({$PH})</source>
+<target state="final">Tasas basales del perfil ({$PH})</target>
+</trans-unit>
+<trans-unit id="5570859919727012443" datatype="html">
+<source>Gesamtinsulin ({$PH})</source>
+<target state="final">Insulina en total ({$PH})</target>
+</trans-unit>
+<trans-unit id="5078435853672992591" datatype="html">
+<source>{$PH}g</source>
+<target state="final">{$PH} g</target>
+</trans-unit>
+<trans-unit id="310135135909995723" datatype="html">
+<source>Keine Messwerte vorhanden</source>
+<target state="final">no hay datos</target>
+</trans-unit>
+<trans-unit id="4642711167787568908" datatype="html">
+<source>1 Messung am Tag</source>
+<target state="final">1 medicion diaria</target>
+</trans-unit>
+<trans-unit id="9100627874396355833" datatype="html">
+<source>{$PH} Messungen am Tag</source>
+<target state="final">{$PH} mediciones diarias</target>
+</trans-unit>
+<trans-unit id="5046449995628369445" datatype="html">
+<source>1 Messung pro Stunde</source>
+<target state="final">1 medicion por hora</target>
+</trans-unit>
+<trans-unit id="2690513100444212741" datatype="html">
+<source>{$PH} Messungen pro Stunde</source>
+<target state="final">{$PH} mediciones por hora</target>
+</trans-unit>
+<trans-unit id="7131139370526216674" datatype="html">
+<source>1 Messung pro Minute</source>
+<target state="final">1 medicion por minuto</target>
+</trans-unit>
+<trans-unit id="8334446718946772191" datatype="html">
+<source>Messung alle {$PH} Minuten</source>
+<target state="final">medición cada {$PH}minutos</target>
+</trans-unit>
+<trans-unit id="4341500156747589894" datatype="html">
+<source>Werte zwischen {$PH} und {$PH_1}</source>
+<target state="final">Valores entre {$PH} y {$PH_1}</target>
+</trans-unit>
+<trans-unit id="7258244579318280186" datatype="html">
+<source>Werte unter {$PH}</source>
+<target state="final">Valores bajo {$PH}</target>
+</trans-unit>
+<trans-unit id="1561702909227178336" datatype="html">
+<source>Werte über {$PH}</source>
+<target state="final">Valores superior a {$PH}</target>
+</trans-unit>
+<trans-unit id="3146896021015651634" datatype="html">
+<source>Sehr hohe Werte ( &gt; {$PH})</source>
+<target state="final">Valores muy altos ( &gt; {$PH})</target>
+</trans-unit>
+<trans-unit id="5643627311954309822" datatype="html">
+<source>Hohe Werte ({$PH})</source>
+<target state="final">Valores altos ({$PH})</target>
+</trans-unit>
+<trans-unit id="5281244940059566908" datatype="html">
+<source>Zielbereich ({$PH} - {$PH_1})</source>
+<target state="final">Objetivos ({$PH} - {$PH_1})</target>
+</trans-unit>
+<trans-unit id="6356747117170967509" datatype="html">
+<source>Niedrige Werte ({$PH})</source>
+<target state="final">Valores bajos ({$PH})</target>
+</trans-unit>
+<trans-unit id="8465282339211094633" datatype="html">
+<source>'Sehr niedrige Werte (&lt; {$PH})</source>
+<target state="final">Valores muy bajos ( &lt; {$PH})</target>
+</trans-unit>
+<trans-unit id="7032229894851079271" datatype="html">
+<source>g KH ({$PH} BE)</source>
+<target state="final">g HC ({$PH} unidades HC)</target>
+</trans-unit>
+<trans-unit id="1479891049004238768" datatype="html">
+<source>({$PH} Tag pro Ampulle)</source>
+<target state="final">({$PH}dias por ampolla)</target>
+</trans-unit>
+<trans-unit id="5947608586796983691" datatype="html">
+<source>({$PH} Tage pro Ampulle)</source>
+<target state="final">({$PH} dias por ampolla)</target>
+</trans-unit>
+<trans-unit id="4127636796372029708" datatype="html">
+<source>({$PH} Tag pro Katheter)</source>
+<target state="final">({$PH}dias por catéter)</target>
+</trans-unit>
+<trans-unit id="6739967434924345460" datatype="html">
+<source>({$PH} Tage pro Katheter)</source>
+<target state="final">({$PH} dias por catéter)</target>
+</trans-unit>
+<trans-unit id="5306121135087520090" datatype="html">
+<source>({$PH} Tag pro Sensor)</source>
+<target state="final">({$PH}dias por sensor)</target>
+</trans-unit>
+<trans-unit id="5615330300156559861" datatype="html">
+<source>({$PH} Tage pro Sensor)</source>
+<target state="final">({$PH} dias por sensor)</target>
+</trans-unit>
+<trans-unit id="1382429000553069395" datatype="html">
+<source>Tief{$PH}</source>
+<target state="final">Bajo{$PH}</target>
+</trans-unit>
+<trans-unit id="5351459095868569938" datatype="html">
+<source>Kein Wert</source>
+<target state="final">ningún dato</target>
+</trans-unit>
+<trans-unit id="7070333232316529621" datatype="html">
+<source>1 Wert</source>
+<target state="final">1 dato</target>
+</trans-unit>
+<trans-unit id="4834711968050618724" datatype="html">
+<source>{$PH} Werte</source>
+<target state="final">{$PH} datos</target>
+</trans-unit>
+<trans-unit id="6842756027191066886" datatype="html">
+<source>(StdAbw {$PH})</source>
+<target state="final">(dev h {$PH})</target>
+</trans-unit>
+<trans-unit id="6573896715468220408" datatype="html">
+<source>Hoch{$PH}</source>
+<target state="final">Alto{$PH}</target>
+</trans-unit>
+<trans-unit id="2819034921980842641" datatype="html">
+<source>Insulin Sensitivitäts Faktoren (ISF)
+1 IE senkt BG um X {$PH}</source>
+<target state="final">Factores sensibilidad insulina (ISF)
+1 Ui baja la glucosa por X {$PH}</target>
+</trans-unit>
+<trans-unit id="4415704711981908542" datatype="html">
+<source>Glukose-Zielbereich{$PH}</source>
+<target state="final">Objectvo de glucosa
+{$PH}</target>
+</trans-unit>
+<trans-unit id="8436223332064456837" datatype="html">
+<source>{$PH} - {$PH_1}</source>
+<target state="final">{$PH} - {$PH_1}</target>
+</trans-unit>
+<trans-unit id="3960347178741939388" datatype="html">
+<source>nicht vorhanden (kleiner {$PH})</source>
+<target state="final">no disponible (menor a {$PH})</target>
+</trans-unit>
+<trans-unit id="4039828375117343729" datatype="html">
+<source>sehr gut ({$PH} bis {$PH_1})</source>
+<target state="final">muy bueno ({$PH} a {$PH_1})</target>
+</trans-unit>
+<trans-unit id="8014171383833842560" datatype="html">
+<source>gut ({$PH} bis {$PH_1})</source>
+<target state="final">bueno ({$PH} a {$PH_1})</target>
+</trans-unit>
+<trans-unit id="2186320724771371544" datatype="html">
+<source>schlecht (grösser {$PH})</source>
+<target state="final">malo (mayor a {$PH})</target>
+</trans-unit>
+<trans-unit id="3049594061037724196" datatype="html">
+<source>exzellent (kleiner {$PH})</source>
+<target state="final">excelente (menos de {$PH})</target>
+</trans-unit>
+<trans-unit id="7127621015227459339" datatype="html">
+<source>schlecht ({$PH} bis {$PH_1})</source>
+<target state="final">malo ({$PH} a {$PH_1})</target>
+</trans-unit>
+<trans-unit id="9038529253462906018" datatype="html">
+<source>sehr schlecht (grösser {$PH})</source>
+<target state="final">muy malo (mayor a {$PH})</target>
+</trans-unit>
+<trans-unit id="151955983675362130" datatype="html">
+<source>Historisch {$PH}</source>
+<target state="final">Histórico {$PH}</target>
+</trans-unit>
+<trans-unit id="1935073897932930018" datatype="html">
+<source>Eine Spalte abwählen, um eine@nl@andere aktivieren zu können</source>
+<target state="final">Deseleccionar una columna para poder activar @nl otra</target>
+</trans-unit>
+<trans-unit id="3334517318339819734" datatype="html">
+<source>Noch eine Spalte verfügbar</source>
+<target state="final">Una columna eligible</target>
+</trans-unit>
+<trans-unit id="2476631956251729930" datatype="html">
+<source>Noch {$PH} Spalten verfügbar</source>
+<target state="final">Quedan {$PH} columnas a eligir</target>
 </trans-unit>
 <trans-unit id="7200754624091064171" datatype="html">
 <source>SMB Werte anzeigen</source>
@@ -2471,6 +2947,53 @@ texto informativo sobre atajos.</target>
 <trans-unit id="389462419024683353" datatype="html">
 <source>Keine Änderung</source>
 <target state="final">Sin cambio</target>
+</trans-unit>
+<trans-unit id="8299939202081804590" datatype="html">
+<source>Profil "{$PH}" verwenden</source>
+<target state="final">Usar perfil "{$PH}"</target>
+</trans-unit>
+<trans-unit id="2206933345783710470" datatype="html">
+<source>Das Profil mit dem Namen "{$PH}" wurde nicht gefunden.
+        Das muss im Profileditor auf der Nightscout Seite eingerichtet werden. Dort muss ein Profil eingerichtet werden,
+        das den Namen "{$PH_1}" hat, um dieses Formular erzeugen zu können. Mit dem Link unten wird
+        der Profileditor aufgerufen. Unter Umständen muss dort dann noch ganz unten auf der Seite die
+        Authentifizierung durchgeführt werden, um die Werte ändern zu können.</source>
+<target state="final">No se ha encontrado el perfil "{$PH}". Este se debe editar en el editor de perfil en la página Nightscout. Aquí se debe crear un perfil con el nombre "{$PH_1}" para poder crear el formulario. El enlace de abajo te llevará al editor de perfil. A lo mejor te tendrás que autentificar para poder editar los valores.</target>
+</trans-unit>
+<trans-unit id="6410546578813470883" datatype="html">
+<source>Profilwechsel - {$PH} =&gt; {$PH_1}</source>
+<target state="final">Cambio de perfil - {$PH} =&gt; {$PH_1}</target>
+</trans-unit>
+<trans-unit id="396109618115340249" datatype="html">
+<source>Profilwechsel - {$PH} =&gt; {$PH_1} für {$PH_2} Minuten</source>
+<target state="final">Cambio de perfil {$PH} =&gt; {$PH_1} für {$PH_2} minutos</target>
+</trans-unit>
+<trans-unit id="4898050799154424568" datatype="html">
+<source>{$PH}{$PH_1} =&gt; {$PH_2}</source>
+<target state="final">{$PH} {$PH_1} =&gt; {$PH_2}</target>
+</trans-unit>
+<trans-unit id="help-analysis" datatype="html">
+<source>
+  Dieses Formular zeigt die Auswertung der Werte des ausgewählten
+  Zeitraums. Dabei wird auch der durchscnittliche Verbrauch an Materialien
+  rechnerisch ermittelt und angezeigt. Dieses Formular beinhaltet die meisten
+  Informationen, die Diabetologen gerne wissen wollen.
+
+  Der HbA1c wird rechnerisch aus den vorhandenen Daten ermittelt und weicht
+  normalerweise nicht unerheblich von dem tatsächlich gemessenen Wert ab. Der
+  Wert, der aus der Blutprobe ermittelt wird, gibt die tatsächliche Bindung
+  von Glukose im Blut wieder. Da diese von zusätzlichen Faktoren abhängig ist
+  und nicht nur von den hier verwendeten Messdaten, ergeben sich Unterschiede
+  zum errechneten Wert. Vor allem, wenn es sich bei den gemessenen Werten nicht
+  um Blutzucker, sondern um Gewebszucker handelt, wie er von CGM-Systemen
+  verwendet wird.
+
+  Trotzdem ist dieser Wert ein grober Anhaltspunkt für die Qualität der
+  Glukoseeinstellung und wird in der vom Labor ermittelten Form gerne von
+  Diabetologen als Richtwert verwendet, weshalb er hier angezeigt wird. Er wird
+  aber in schwächerer Schrift ausgegeben, damit seine zweifelhafte Natur auch
+  erkennbar ist.</source>
+<target state="final">Este formulario muestra la evaluación de los valores del período seleccionado. También se calcula y visualiza el consumo medio de materiales. Este formulario contiene la mayor parte de las informaciónes que interesan a los endocrinologos. El HbA1c se calcula a partir de los datos existentes y, por lo general, difiere significantemente del valor medido real. El valor obtenido de la muestra de sangre refleja la concentracíon real de la glucosa en la sangre. Dado que esto depende de factores adicionales y no sólo de los datos de medición utilizados aquí, hay diferencias con el valor calculado. Especialmente si los valores medidos no son azúcar en la sangre, sino azúcar de tejido, como utilizan los sistemas de MGC. Sin embargo, este valor es una indicación aproximada de la calidad de la configuración de glucosa y a menudo es utilizado por los endocrinologos como una directriz en la forma determinada por el laboratorio, razón por la cual se muestra aquí. Pero se muestra en escritura más débil, por lo que su naturaleza dudosa también es reconocible.</target>
 </trans-unit>
 <trans-unit id="7363002699976597223" datatype="html">
 <source>Material mit Nachkommastellen</source>
@@ -2504,9 +3027,31 @@ texto informativo sobre atajos.</target>
 <source>Letzte Unterzuckerung</source>
 <target state="final">Última hipoglucemia</target>
 </trans-unit>
+<trans-unit id="4324982987263927268" datatype="html">
+<source>Unterzuckerungen (&lt; {$PH})</source>
+<target state="final">Hipoglycemia (&lt; {$PH})</target>
+</trans-unit>
+<trans-unit id="help-basal" datatype="html">
+<source>Dieses Formular zeigt die Basalrate, die im Profil eingestellt ist in graphischer Form an.
+Es werden normalerweise alle Basalraten des ausgewählten Zeitraums ausgegeben. Wenn sich in dem Zeitraum
+die Basalrate geändert hat, wird eine neue Seite erzeugt.
+
+Es gibt aber eine Option, welche nur die letzte Basalrate des Zeitraums ausgibt.</source>
+<target state="final">Este formulario muestra la tasa basal establecida en el perfil en forma gráfica. Normalmente, se emiten todas las tasas basales del período de tiempo seleccionado. Si la tasa basal ha cambiado en ese período, se crea una nueva página. Sin embargo, hay una opción que devuelve solo la última tasa basal del período.</target>
+</trans-unit>
 <trans-unit id="8295900363681132228" datatype="html">
 <source>Nur letzte Basalrate ausgeben</source>
 <target state="final">Solo mostrar perfil basal reciente</target>
+</trans-unit>
+<trans-unit id="help-cgp" datatype="html">
+<source>Dieses Formular zeigt das Comprehensive Glucose Pentagon an, welches die Qualität der
+Glukoseeinstellung in einer schnell zu erfassenden Weise darstellt. Es wird für den ausgewählten Zeitraum angezeigt
+wie lange der Glukosewert im Schnitt während des Tages ausserhalb des Zielbereichs war, wie hoch die Intensität
+der Überzuckerungen und der Unterzuckerungen war, wie hoch der Mittelwert war und wie hoch die Variabilität der
+Werte war.
+
+Diese Grafik kann auch bei @05@ und @08@ ausgegeben werden.</source>
+<target state="final">Est formulario meuestra el Pentágono de glucosa integral, que muestra la calidad de la configuración de glucosa de una manera rápida de ver y comprender. Para el período seleccionado, se muestra cuánto tiempo el valor de glucosa fue en promedio fuera del objetivo durante el día, la intensidad del exceso de azúcar y del bajo en azúcar, la media y la variabilidad de los valores. Este gráfico también se puede imprimir en @05@ y @08@.</target>
 </trans-unit>
 <trans-unit id="3707056548214150537" datatype="html">
 <source>Hochformat</source>
@@ -2528,9 +3073,30 @@ texto informativo sobre atajos.</target>
 <source>CGP</source>
 <target state="final">CGP</target>
 </trans-unit>
+<trans-unit id="help-daily-analysis" datatype="html">
+<source>Dieses Formular zeigt eine Übersicht für einen Tag. Hier
+  werden die Tagesgrafik, die Basalrate, die Basalratenanpassungen, Insulin On
+  Board und Carbs On Board angezeigt.</source>
+<target state="final">Esta página muestra la información sobe un día. Aquí se muestran el gráfico diario, la tasa basal, los ajustes a la tasa basal, insulina a bordo y carbohidratos a bordo.</target>
+</trans-unit>
 <trans-unit id="261350535439168292" datatype="html">
 <source>Tagesanalyse</source>
 <target state="final">Analisis diaria</target>
+</trans-unit>
+<trans-unit id="help-daygluc" datatype="html">
+<source>Dieses Formular zeigt den Trend der Glukosewerte über den Tag hinweg
+an. Dabei wird in der Spalte Trend immer angezeigt, um wieviel Prozent sich
+der Wert von einer vollen Stunde zur nächsten verändert hat. Dieser Trend ist
+ganz hilfreich, wenn man bei einem Basalratentest erkennen will, wie sich der
+Glukosewert nur anhand der Basalrate entwickelt. Es kann auch eine Spalte für
+die Boluswerte und die Kohlenhydrate angezeigt werden. Diese sollten aber bei
+einem Basalratentest natürlich leer sein. Ebenso muss ein eventuell
+vorhandener Loop im Zeitraum des Tests abgeschaltet sein. Es geht dabei nur
+um den Diabetiker und seine Basalrate.\nEs wird auch eine Spalte mit der
+Basalrate angezeigt, wenn die Option 'Alle Werte für einen Tag anzeigen'
+nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
+(und auch der Sinn), diese darzustellen.</source>
+<target state="final">Este formulario muestra la tendencia en los niveles de glucosa a lo largo del día. La columna tendencia siempre muestra el porcentaje de que el valor ha cambiado de una hora a la siguiente. Esta tendencia es muy útil si desea ver cómo el valor de glucosa se desarrolla sólo sobre la base de la tasa basal en una fase de prueba de tasa basal. También puede mostrar una columna para los valores de bolo y carbohidratos. Sin embargo, estos deben, por supuesto, estar vacíos en una fase de prueba de tasa basal. Del mismo modo, un bucle cerrado que puede existir debe desactivarse durante el período de prueba. Se trata exclusivamente del diabético y su tasa basal. También se muestra una columna con la tasa basal si la opción "Mostrar todos los valores de una día" no está seleccionada. Si la opción está seleccionada, entonces no hay espacio (ni el sentido) para representarla.</target>
 </trans-unit>
 <trans-unit id="7094314932127907936" datatype="html">
 <source>Tagestrend</source>
@@ -2543,6 +3109,27 @@ texto informativo sobre atajos.</target>
 <trans-unit id="1599620860571320711" datatype="html">
 <source>Bolusspalte anzeigen</source>
 <target state="final">Mostrar columna bolo</target>
+</trans-unit>
+<trans-unit id="msgBasalInfo" datatype="html">
+<source>Die angezeigte Basalrate ist seit {$PH}  gültig und beinhaltet keine temporären Änderungen.</source>
+<target state="final">La tasa basal está activada desde {time} y no contiene cambios.</target>
+</trans-unit>
+<trans-unit id="help-daygraph" datatype="html">
+<source>Dieses Formular zeigt den Verlauf der Glukosekurve für einen Tag. Pro Tag im ausgewählten
+Zeitraum wird eine Seite erzeugt. Es gibt sehr viele Optionen, mit denen dieses Formular angepasst werden kann.
+Die Optionen, die auf einen Loop hinweisen sind andersfarbig markiert, um sie schneller identifizieren zu
+können. Die Optionen COB und IOB verlangsamen die Ausgabe teilweise erheblich, weshalb man diese nur dann
+verwenden sollte, wenn sie wirklich von Interesse sind.
+
+Unter der Grafik kann die Basalrate angezeigt werden. Ein laufender Loop wird diese immer wieder hoch und runter
+setzen. Deshalb kann man sowohl die tatsächliche Basalrate als auch die im Profil eingestellte Basalrate
+anzeigen lassen. Für die Basalrate gibt es noch die Formulare @09@, @11@ und @02@, auf denen man sie genauer
+analysieren kann. Man kann auch das @10@ für den Tag erzeugen lassen. Das wird dann auf einer neuen Seite ausgegeben.
+
+Dieses Formular ist eines der seitenintensivsten Formulare in Nightscout Reporter. Deshalb gibt es hier
+die Möglichkeit, mehrere Tagesgrafiken auf einer Seite ausgeben zu lassen. Darunter leidet natürlich die Lesbarkeit,
+aber für einen Überblick über den Verlauf ist das ganz nützlich.</source>
+<target state="final">Este formulario muestra el curso de la curva de glucosa durante un día. Se crea una página por día en el período seleccionado. Hay muchas opciones que se pueden usar para personalizar este formulario. Las opciones que indican un bucle cerrado se marcan de otro color para poder identificarlas rápidamente. Las opciones COB e IOB ralentizan considerablemente la salida, por lo que solo debe usarlas si son realmente de interés. La tasa basal se puede mostrar debajo del gráfico. Un bucle en ejecución los configurará una y otra vez. Por lo tanto, se pueden mostrar tanto la tasa basal real como la tasa basal establecida en el perfil. Para la tasa basal, también existen los formularios@'09@, @11@ y @02@, con las que se pueden analizar con más detalle. También se puede crear el @10@ para el día. A continuación, se imprimirá en una nueva página. Este formulario es uno de los formularios de más páginas en Nightscout Reporter. Es por eso que se pueden configurar varias salidas de gráficos diarias en una página. Por supuesto, la visibilidad sufre un poco, pero es muy útil para una visión general del curso.</target>
 </trans-unit>
 <trans-unit id="6914057216791490720" datatype="html">
 <source>Eine</source>
@@ -2676,6 +3263,15 @@ texto informativo sobre atajos.</target>
 <source>Blutige Messung</source>
 <target state="final">Prueba de glucosa en sangre</target>
 </trans-unit>
+<trans-unit id="help-dayhours" datatype="html">
+<source>Dieses Formular zeigt eine Übersicht über die
+Stunden der Tage des ausgewählten Zeitraums an. Die angezeigten Werte sind die
+Mittelwerte der innerhalb der entsprechenden Stunde gemessenen Werte. Sie
+werden anhand des ausgewählten Zielbereichs eingefärbt. In den Formularoptionen
+kann man die Startstunde festlegen. Die Datumsspalte befindet sich immer links
+von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.</source>
+<target state="final">Este formulario muestra un resumen de las horas de los días del período de tiempo seleccionado. Los valores mostrados son los valores medios de los valores medidos en la hora correspondiente. Se colorean en función del rango de destino seleccionado. En las opciones del formulario se puede configurar la hora de inicio. La columna de fecha está siempre a la izquierda de las 0h en punto y muestra dónde comienza un nuevo día.</target>
+</trans-unit>
 <trans-unit id="880634898405162142" datatype="html">
 <source>Startstunde</source>
 <target state="final">Hora de inicio</target>
@@ -2683,6 +3279,13 @@ texto informativo sobre atajos.</target>
 <trans-unit id="5884320300627823155" datatype="html">
 <source>Tagesstunden</source>
 <target state="final">Horas de dia</target>
+</trans-unit>
+<trans-unit id="help-daylog" datatype="html">
+<source>Dieses Formular zeigt die Daten in tabellarischer Form an. Es kann abhängig von den
+ausgewählten Optionen sehr viele Seiten umfassen. Es ist vor allem dafür sinnvoll, um bestimmte Daten aufzufinden.
+Zum Beispiel kann man damit ermitteln, wann Katheterwechsel vorgenommen wurden, wieviele Datensätze als doppelt
+erkannt wurden oder wo Notizen erfasst wurden.</source>
+<target state="final">Este formulario muestra los datos en forma tabular. Puede abarcar un gran número de páginas, dependiendo de las opciones seleccionadas. Es especialmente útil para encontrar ciertos datos. Por ejemplo, puede usarlo para determinar cuándo se realizaron cambios en el catéter, cuántos registros se reconocieron como duplicados o dónde se recogieron las notas.</target>
 </trans-unit>
 <trans-unit id="2184160425911341073" datatype="html">
 <source>1 Minute</source>
@@ -2780,6 +3383,48 @@ texto informativo sobre atajos.</target>
 <source>Batteriewechsel</source>
 <target state="final">Cambio de pila</target>
 </trans-unit>
+<trans-unit id="msgLogTempTarget" datatype="html">
+<source>temp. Ziel {$PH} für {$PH_1} min, Grund: {$PH_2}</source>
+<target state="final">objetivo temporal {$PH} para {$PH_1} min, razon: {$PH_2}</target>
+</trans-unit>
+<trans-unit id="msgLogTempBasal" datatype="html">
+<source>temp. Basal {$PH}% / {$PH_1} min</source>
+<target state="final">basal temporal {$PH}% / {$PH_1} min</target>
+</trans-unit>
+<trans-unit id="msgLogTempBasalAbsolute" datatype="html">
+<source>temp. Basal {$PH} / {$PH_1} min</source>
+<target state="final">basal temp. {$PH} / {$PH_1} min</target>
+</trans-unit>
+<trans-unit id="msgLogSMB" datatype="html">
+<source>SMB {$PH}{$PH_1}</source>
+<target state="final">SMB {$PH} {$PH_1}</target>
+</trans-unit>
+<trans-unit id="msgLogMicroBolus" datatype="html">
+<source>Microbolus {$PH}{$PH_1}</source>
+<target state="final">Micro bolo {$PH} {$PH_1}</target>
+</trans-unit>
+<trans-unit id="msgMBG" datatype="html">
+<source>Blutige Messung {$PH}{$PH_1}</source>
+<target state="final">Medición capilar {$PH} {$PH_1}</target>
+</trans-unit>
+<trans-unit id="msgLogOverride" datatype="html">
+<source>temp. Override für {$PH} min, Grund: {$PH_1}, Zielbereich: {$PH_2}, Anpassung: {$PH_3}%</source>
+<target state="final">sust. temp. Por {$PH} min, razón: {$PH_1}, objectivo: {$PH_2}, ajuste: {$PH_3}%</target>
+</trans-unit>
+<trans-unit id="help-dayprofile" datatype="html">
+<source>Dieses Formular zeigt die tatsächliche Basalrate, die während des Tages gelaufen ist unter
+Berücksichtigung aller temporären Basalratenanpassungen. Zusätzlich kann noch die im Profil hinterlegte
+Basalrate angezeigt werden. Die Basalrate kann als Wert, als prozentuale Änderung in Bezug auf die Profilbasalrate
+oder mit beidem angezeigt werden. Die Summenspalte zeigt die bis zur entsprechenden Uhrzeit abgegebene Basalrate
+an. Es ist auch möglich, die Uhrzeit mit Sekunden anzeigen zu lassen. Damit kann man die angezeigten Werte
+rechnerisch überprüfen.
+
+Wenn die Basalrate aus dem Profil angezeigt wird, wird das Maximum für die Darstellung der Balken anhand des
+maximalen Wertes der Profilbasalrate ermittelt. Dadurch werden bei Werten über 100% des Maximalwerts der
+Profilbasalrate die Balken über die Spalte hinaus verlängert. Es gibt aber eine Option, um diese Balken abzuschneiden
+und als Pfeile darstellen zu lassen.</source>
+<target state="final">Este formulario muestra la tasa basal real que se ha ejecutado durante el día, teniendo en cuenta todos los ajustes temporales de la tasa basal. Además, se puede visualizar la tasa basal almacenada en el perfil. La tasa basal se puede mostrar como un valor, como un cambio porcentual en términos de la tasa basal del perfil, o ambos. La columna total muestra la tasa basal entregada hasta el momento adecuado. También es posible mostrar el tiempo con segundos. Esto permite comprobar matemáticamente los valores mostrados. Cuando la tasa basal se muestra desde el perfil, el máximo para mostrar las barras viene determinado por el valor máximo de la tasa basal del perfil. Esto extiende las barras más allá de la columna para valores superiores al 100% del valor máximo de la tasa basal del perfil. Sin embargo, hay una opción para cortar estas barras y mostrarlas como flechas.</target>
+</trans-unit>
 <trans-unit id="8124451201840566994" datatype="html">
 <source>Prozent</source>
 <target state="final">Porcentaje</target>
@@ -2811,6 +3456,13 @@ texto informativo sobre atajos.</target>
 <trans-unit id="4548474655990620010" datatype="html">
 <source>Tagesprofil</source>
 <target state="final">Perfil de día</target>
+</trans-unit>
+<trans-unit id="help-daystats" datatype="html">
+<source>Dieses Formular zeigt die statistischen Werte für die Tage des ausgewählten Zeitraums
+an. Für jeden Tag wird eine Zeile erzeugt. Die Spalten kann man teilweise konfigurieren. Auch hier wird der geschätzte
+HbA1c ausgegeben. Dieser hat wie auch im Formular @01@ nur sehr wenig Aussagekraft, weshalb er auch hier nur mit
+schwächerer Schrift angezeigt wird.</source>
+<target state="final">Este formulario muestra los valores estadísticos de los días del período seleccionado. Se crea una línea para cada día. Las columnas se pueden configurar parcialmente. Una vez más, se emite el HbA1c estimado. Esto tiene muy poco significado, como en la forma @01@ por lo que sólo se muestra aquí con una fuente más débil.</target>
 </trans-unit>
 <trans-unit id="4880106617017348160" datatype="html">
 <source>Tagesstatistik</source>
@@ -2856,6 +3508,11 @@ texto informativo sobre atajos.</target>
 <source>TDD anzeigen</source>
 <target state="final">Mostrar TTD</target>
 </trans-unit>
+<trans-unit id="help-glucdist" datatype="html">
+<source>Dieses Formular zeigt die Verteilung der Glukosewerte
+im ausgewählten Zeitraum an.</source>
+<target state="final">Este formulario muestra la distribución de los valores de glucosa durante el periodo seleccionado.</target>
+</trans-unit>
 <trans-unit id="6160815810377399445" datatype="html">
 <source>Bei 0 beginnen</source>
 <target state="final">Comenzar con 0</target>
@@ -2867,6 +3524,15 @@ texto informativo sobre atajos.</target>
 <trans-unit id="8964781173389567185" datatype="html">
 <source>Verteilung der Glukosewerte</source>
 <target state="final">Distribución de valores de glucosa</target>
+</trans-unit>
+<trans-unit id="help-percentile" datatype="html">
+<source>Dieses Formular zeigt an, wie sich die Glukosewerte im ausgewählten Zeitraum über den Tag
+verteilen. Diese Verteilung kann graphisch und tabellarisch ausgegeben werden.
+
+In der Grafik sind die Bereiche für bestimmte Abweichungen farblich markiert. Die Linie zeigt den Medianwert
+an. In der Tabelle kann man diese Werte nachlesen. Wenn die Basalrate mit ausgegeben wird, dann ist das die
+Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.</source>
+<target state="final">Este formulario muestra cómo se distribuyen los niveles de glucosa durante el día durante el período seleccionado. Esta distribución se puede generar gráfica y tabularmente. En el gráfico, las áreas están codificadas por colores para desviaciones específicas. La línea muestra el valor medio. Estos valores se pueden leer en la tabla. Si se muestra la tasa basal, esa es la tasa basal que estaba activa al principio del período seleccionado.</target>
 </trans-unit>
 <trans-unit id="7173379012655254518" datatype="html">
 <source>Basalrate anzeigen</source>
@@ -2904,6 +3570,19 @@ texto informativo sobre atajos.</target>
 <source>Spalten für 10% und 90% anzeigen</source>
 <target state="final">Mostrar columnas para 10% y 90%</target>
 </trans-unit>
+<trans-unit id="msgBasalInfo1" datatype="html">
+<source>Diese Basalrate war am {$PH} aktiv.</source>
+<target state="final">Esta tasa basal estaba activa {$PH}.</target>
+</trans-unit>
+<trans-unit id="help-profile" datatype="html">
+<source>Dieses Formular zeigt das Profil an. Es werden normalerweise alle Profile des ausgewählten
+Zeitraums ausgegeben. Wenn sich in dem Zeitraum das Profil geändert hat, wird ein neues Blatt erzeugt.
+
+Es gibt aber eine Option, welche nur das letzte Profil des Zeitraums ausgibt. Ausserdem gibt es eine Option,
+mit der gleiche Zeilen zusammengefasst werden. Das führt zu einem kürzeren Profil, wenn mehrere Zeiten nacheinander
+die gleichen Werte beinhalten.</source>
+<target state="final">Este formulario muestra el perfil. Normalmente, se generan todos los perfiles del período de tiempo seleccionado. Si el perfil ha cambiado en el período, se crea una pagina nueva. Sin embargo, hay una opción que devuelve solo el último perfil del período. También hay una opción para resumir las mismas líneas. Esto da como resultado un perfil más corto si varias veces seguidas contienen los mismos valores.</target>
+</trans-unit>
 <trans-unit id="2310164324833522712" datatype="html">
 <source>Zeilen mit gleichen Werten zusammenfassen</source>
 <target state="final">Sumar lineas con valores identicos</target>
@@ -2935,6 +3614,13 @@ texto informativo sobre atajos.</target>
 <trans-unit id="6815445088506407592" datatype="html">
 <source>Alle Benutzer ausgeben</source>
 <target state="final">Mostrar todos usuarios</target>
+</trans-unit>
+<trans-unit id="help-weekgraph" datatype="html">
+<source>Dieses Formular zeigt den Verlauf der Glukosekurve über eine Woche hinweg an. Der Zeitraum wird
+dazu in Wochenabschnitte aufgeteilt und jede Woche wird auf einer eigenen Seite ausgegeben. Die Wochen werden
+farblich markiert, so dass man sie gut unterscheiden kann. Zusätzlich kann noch das @10@ für die jeweilige
+Woche erzeugt werden.</source>
+<target state="final">Este formulario muestra el curso de la curva de glucosa durante una semana. El período se divide en secciones semanales y cada semana se imprime en su propia página. Las semanas están codificadas por colores para que puedan distinguirse. Además, puede crear el @1@ para la semana respectiva.</target>
 </trans-unit>
 <trans-unit id="8542543527497914702" datatype="html">
 <source>Tagesnamen in Grafik anzeigen</source>

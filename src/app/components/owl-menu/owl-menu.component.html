@@ -8,9 +8,12 @@
 </div>
 <div [style]="langStyle" class="langPanel">
   <div frame>
-    <button (click)="togglePanels(item)" *ngFor="let item of globals.languageList; let idx = index" class="themelogo" mat-flat-button>
-      <img [class]="ss.languageClass(item)" alt="language image" src="{{item.imgPath}}">
-    </button>
+    <div *ngFor="let item of globals.languageList; let idx = index">
+      <button (click)="togglePanels(item)" [class]="ss.languageClass(item)" mat-icon-button>
+        <img alt="language image" class="language" src="{{item.imgPath}}">
+      </button>
+      <a *ngIf="item.crowdin != null" [href]="item.crowdin.languageUrl" class="crowdin" target="_blank" title="Crowdin"><img [src]="item.crowdin.badgeUrl"></a>
+    </div>
   </div>
 </div>
 <button (click)="togglePanels('')" [style]="logoStyle" class="owllogo" mat-fab>

@@ -4,7 +4,7 @@
     "@id": "10",
     "@original": "/intl_en_GB.arb",
     "@source-language": "en",
-    "@target-language": "fr",
+    "@target-language": "fr-FR",
     "@datatype": "plaintext",
     "@project-id": "353031",
     "@tool-id": "crowdin",

@@ -232,16 +232,20 @@ mat-drawer-container {
       .menu-legal {
         display: flex;
         flex-flow: row;
+        overflow: hidden;
 
         button {
           width: initial;
           font-size: 0.8em;
           padding: 0 1em;
           flex: 1;
+          white-space: break-spaces;
 
           ::ng-deep .mat-button-wrapper {
             justify-content: center;
             padding: 0 1em;
+            word-break: break-word;
+            line-height: 1em;
           }
         }
       }
@@ -297,6 +301,7 @@ mat-drawer-container {
         align-items: center;
         justify-content: space-between;
         position: relative;
+        overflow-x: hidden;
 
         .basePanel {
           justify-content: center;

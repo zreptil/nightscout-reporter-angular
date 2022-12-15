@@ -87,12 +87,8 @@
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-legal">
-          <button (click)="ss.showPopup('impressum')" class="legal" mat-flat-button>
-            {{msgImpressum}}
-          </button>
-          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-flat-button>
-            {{msgDSGVO}}
-          </button>
+          <button (click)="ss.showPopup('impressum')" class="legal" mat-flat-button>{{msgImpressum}}</button>
+          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-flat-button>{{msgDSGVO}}</button>
           <!--
                   <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
                     <div *ngIf="g.isDebug" class="toggle-debug">

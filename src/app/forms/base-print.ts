@@ -147,21 +147,6 @@ export abstract class BasePrint extends FormConfig {
     this.form = this;
   }
 
-  get isVisible(): boolean {
-    if (this.isDebugOnly && !GLOBALS.isDebug) {
-      return false;
-    }
-    if (this.isLocalOnly && !GLOBALS.isLocal) {
-      return false;
-    }
-    // noinspection RedundantIfStatementJS
-    if (this.isBetaOrLocal && !(GLOBALS.isBeta || GLOBALS.isLocal)) {
-      return false;
-    }
-
-    return true;
-  }
-
   static get msgOutput(): string {
     return $localize`Ausgabe`;
   };
@@ -220,6 +205,21 @@ export abstract class BasePrint extends FormConfig {
 
   static get msgNight(): string {
     return $localize`Nacht (21:00 - 05:59)`;
+  }
+
+  get isVisible(): boolean {
+    if (this.isDebugOnly && !GLOBALS.isDebug) {
+      return false;
+    }
+    if (this.isLocalOnly && !GLOBALS.isLocal) {
+      return false;
+    }
+    // noinspection RedundantIfStatementJS
+    if (this.isBetaOrLocal && !(GLOBALS.isBeta || GLOBALS.isLocal)) {
+      return false;
+    }
+
+    return true;
   }
 
   abstract get title(): string;
@@ -569,11 +569,11 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get msgMealBolus(): string {
-    return $localize`:@@ msgMealBolus:bolus to handle a meal|:Mahlzeitenbolus`;
+    return $localize`:|bolus to handle a meal@@msgMealBolus:Mahlzeitenbolus`;
   }
 
   get msgBolusWizard(): string {
-    return $localize`:@@msgBolusWizard:bolus calculated by the bolus wizard|:Bolus Rechner`;
+    return $localize`:|bolus calculated by the bolus wizard@@msgBolusWizard:Bolus Rechner`;
   }
 
   get msgBolusExtInsulin(): string {

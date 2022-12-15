@@ -8,19 +8,20 @@ import {MessageId, TargetMessage} from '@angular/localize';
 // const lng = localStorage.getItem('language') || 'de-DE';
 const outFile = '../src/assets/messages.json';
 
-// Erzeugt aus den Dateien messages.xxx.xlf die Datei messages.json
-//createJson(['de-DE', 'en-GB'], []);
+// Erzeugt aus den Dateien messages.xxx.xlf die Datei messages.json,
+// die dann sämtliche Übersetzungen beinhaltet.
+// createJson(['@de-DE', 'en-GB'], []);
 
-createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES'], []);
+createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr-FR', 'ja-JP', 'nl-NL', 'no-NO', 'pl-PL', 'pt-PT', 'sk-SK', 'ru-RU'], []);
 
 function createJson(codes: any, list: any): void {
   let file;
   let id = codes[0];
   if (id.startsWith('@')) {
     id = id.substring(1);
-    file = `../src/locale/messages.${id.substring(1)}.xlf`;
+    file = `../src/locale/messages.${id}.xliff`;
   } else {
-    file = `../temp/${id}/messages.${id}.xlf`;
+    file = `../temp/messages.${id}.xliff`;
   }
   const content = fs.readFileSync(getPath(file)).toString();
   parseTranslationsForLocalize(content).then((result: Record<MessageId, TargetMessage>) => {

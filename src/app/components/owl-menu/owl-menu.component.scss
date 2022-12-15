@@ -19,8 +19,9 @@
     align-items: center;
     justify-content: flex-start;
     border: 1px solid var(--mainHeaderBack);
-    background-color: var(--mainBodyBack);
+    background-color: var(--primaryBack);
     border-radius: 0.5em;
+    padding: 0.2em;
   }
 
   button {
@@ -39,6 +40,11 @@
         height: initial;
       }
     }
+  }
+
+  .crowdin {
+    margin-top: 0.5em;
+    position: fixed;
   }
 }
 

@@ -1,14 +1,6 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {registerLocaleData} from '@angular/common';
-import localeDe from '@angular/common/locales/de';
-import localeEnGB from '@angular/common/locales/en-GB';
-import localeEnUS from '@angular/common/locales/en';
 import {GLOBALS} from '@/_model/globals-data';
 import {LogService} from '@/_services/log.service';
-
-registerLocaleData(localeDe);
-registerLocaleData(localeEnGB);
-registerLocaleData(localeEnUS);
 
 @Component({
   selector: 'app-root',

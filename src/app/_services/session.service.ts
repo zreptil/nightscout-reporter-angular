@@ -364,13 +364,13 @@ export class SessionService {
         this.ds.save();
       } else {
         this.ds.saveWebData();
-        this.reload();
       }
+      this.reload();
     }
   }
 
   languageClass(item: LangData): string[] {
-    const ret = ['language'];
+    const ret = ['themelogo'];
     if (GLOBALS.language != null && item.code === GLOBALS.language.code) {
       ret.push('currLang');
     }

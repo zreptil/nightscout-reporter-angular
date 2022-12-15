@@ -28,9 +28,9 @@ export class DartImporterComponent implements OnInit {
     this.extractColorJson();
   }
 
-  get messagesJSON(): any {
-    return this.messages?.[0].data;
-  }
+  // get messagesJSON(): any {
+  //   return this.messages?.[0].data;
+  // }
 
   get globals(): GlobalsData {
     return GLOBALS;
@@ -56,8 +56,10 @@ export class DartImporterComponent implements OnInit {
       ` target-language="${this.intlJSON.file['@target-language']}"`,
       ` datatype="plaintext" original="ng2.template">`,
       '<body>'];
-    for (const key of Object.keys(this.messagesJSON)) {
-      const parts = this.messagesJSON[key].trim().split('\n');
+    const msgKey = this.intlJSON.file['@source-language'] === 'de' ? 'de-DE' : 'en-GB';
+    const messagesJSON = this.messages.find((e: any) => e.id === msgKey)?.data;
+    for (const key of Object.keys(messagesJSON)) {
+      const parts = messagesJSON[key].trim().split('\n');
       const list = this.intlJSON.file.body['trans-unit'];
       let check: any = null;
       let unit = list.find((e: any) => e['@id'] === key);
@@ -88,7 +90,11 @@ export class DartImporterComponent implements OnInit {
           if (check != null) {
             if (check.regex != null) {
               if (check.regex !== 'full') {
-                trans = trans.match(check.regex).groups?.['trans'] ?? trans;
+                try {
+                  trans = trans.match(check.regex).groups?.['trans'] ?? trans;
+                } catch (ex) {
+                  Log.error(`check ${key} failed: ${check.id} - ${trans}`);
+                }
               }
               if (check.replaceAfter != null) {
                 trans = Utils.replace(trans, check.replaceAfter.src, check.replaceAfter.dst);
@@ -99,14 +105,14 @@ export class DartImporterComponent implements OnInit {
           }
           // Log.info(`${key} ${trans}`);
           output.push(`<trans-unit id="${key}" datatype="html">`);
-          output.push(`<source>${this.cvt4XML(this.messagesJSON[key])}</source>`);
+          output.push(`<source>${this.cvt4XML(messagesJSON[key])}</source>`);
           output.push(`<target state="final">${this.cvt4XML(trans)}</target>`);
           output.push(`</trans-unit>`);
         }
         showError = trans == null;
       }
       if (showError) {
-        Log.error(`${key} ${this.messagesJSON[key]}`);
+        Log.error(`${key} ${messagesJSON[key]}`);
       }
     }
     output.push('</body>');
@@ -175,10 +181,10 @@ export class DartImporterComponent implements OnInit {
       '194157074469443413': {id: '2114', regex: 'full', replaceAfter: {src: '{time}', dst: '{$PH}'}},
       '7975293901451211912': {id: '2116', regex: 'full', replaceAfter: {src: '{time}', dst: '{$PH}'}},
       '658509511596516220': {id: '6861', regex: 'full', replaceAfter: {src: ['{scale}', '{intercept}', '{slope}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
-      '6901562133099764608': {id: '6388', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
-      '1149582344080641990': {id: '6388', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
-      '6506885859968423722': {id: '6390', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
-      '1857951656960027099': {id: '6390', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      '6901562133099764608': {id: '6388', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '1149582344080641990': {id: '6388', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      '6506885859968423722': {id: '6390', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '1857951656960027099': {id: '6390', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
       'msgKW': {id: '12970', regex: 'full', replaceAfter: {src: '{date}', dst: '{$PH}'}},
       'msgValidRange': {id: '642', regex: 'full', replaceAfter: {src: ['{begDate}', '{endDate}'], dst: ['{$PH}', '{$PH_1}']}},
       'msgValidFrom': {id: '644', regex: 'full', replaceAfter: {src: '{begDate}', dst: '{$PH}'}},
@@ -205,83 +211,154 @@ export class DartImporterComponent implements OnInit {
       'help-basal': {id: '7824'},
       'help-analysis': {id: '10186'},
       '2206933345783710470': {id: '12889', regex: 'full', replaceAfter: {src: ['{name}', '{name}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgBasalInfo': {id: '6993'},
+      'msgLogTempTarget': {id: '6362', regex: 'full', replaceAfter: {src: ['{target}', '{duration}', '{reason}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
+      'msgLogTempBasal': {id: '6364', regex: 'full', replaceAfter: {src: ['{percent}', '{duration}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgLogTempBasalAbsolute': {id: '7342', regex: 'full', replaceAfter: {src: ['{value}', '{duration}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgLogSMB': {id: '6366', regex: 'full', replaceAfter: {src: ['{insulin}', '{unit}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgLogMicroBolus': {id: '7344', regex: 'full', replaceAfter: {src: ['{insulin}', '{unit}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgMBG': {id: '6430', regex: 'full', replaceAfter: {src: ['{gluc}', '{unit}'], dst: ['{$PH}', '{$PH_1}']}},
+      'msgLogOverride': {id: '7726', regex: 'full', replaceAfter: {src: ['{duration}', '{reason}', '{range}', '{scale}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}', '{$PH_3}']}},
+      'msgBasalInfo1': {id: '7214', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      '151955983675362130': {id: '4898', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '1935073897932930018': {id: '12871', regex: /(.*)=0{(?<trans>.*)}=1(.*)/},
+      '3334517318339819734': {id: '12871', regex: /(.*)=1{(?<trans>.*)}other(.*)/},
+      '2476631956251729930': {id: '12871', regex: /(.*)other{(?<trans>.*)}}/, replaceAfter: {src: '{count}', dst: '{$PH}'}},
+      '2630105366061918724': {id: '4676', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '6548316943536498969': {id: '4698', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '3909704910396085444': {id: '820', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '4286587832391329338': {id: '822', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '5570859919727012443': {id: '1750', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '5078435853672992591': {id: '1742', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '310135135909995723': {id: '584', regex: /(.*)=0\s*{(?<trans>.*)}\s*=1(.*)/},
+      '4642711167787568908': {id: '584', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '9100627874396355833': {id: '584', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{fmt}', dst: '{$PH}'}},
+      '5046449995628369445': {id: '586', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '2690513100444212741': {id: '586', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{fmt}', dst: '{$PH}'}},
+      '7131139370526216674': {id: '588', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '8334446718946772191': {id: '588', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{fmt}', dst: '{$PH}'}},
+      '4341500156747589894': {id: '832', regex: 'full', replaceAfter: {src: ['{low}', '{high}'], dst: ['{$PH}', '{$PH_1}']}},
+      '7258244579318280186': {id: '834', regex: 'full', replaceAfter: {src: '{low}', dst: '{$PH}'}},
+      '1561702909227178336': {id: '836', regex: 'full', replaceAfter: {src: '{high}', dst: '{$PH}'}},
+      '3146896021015651634': {id: '5150', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '5643627311954309822': {id: '5152', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '5281244940059566908': {id: '6330', regex: 'full', replaceAfter: {src: ['{low}', '{high}'], dst: ['{$PH}', '{$PH_1}']}},
+      '6356747117170967509': {id: '5154', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '8465282339211094633': {id: '5156', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '7032229894851079271': {id: '596', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '1479891049004238768': {id: '838', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '5947608586796983691': {id: '838', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '4127636796372029708': {id: '840', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '6739967434924345460': {id: '840', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '5306121135087520090': {id: '842', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '5615330300156559861': {id: '842', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{txt}', dst: '{$PH}'}},
+      '1382429000553069395': {id: '658', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '5351459095868569938': {id: '4864', regex: /(.*)=0\s*{(?<trans>.*)}\s*=1(.*)/},
+      '7070333232316529621': {id: '4864', regex: /(.*)=1\s*{(?<trans>.*)}\s*other(.*)/},
+      '4834711968050618724': {id: '4864', regex: /(.*)other\s*{(?<trans>.*)}}/, replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '6842756027191066886': {id: '2130', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '6573896715468220408': {id: '660', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '2819034921980842641': {id: '880', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      '4415704711981908542': {id: '882', regex: 'full', replaceAfter: {src: '{unit}', dst: '{$PH}'}},
+      '8436223332064456837': {id: '884', regex: 'full', replaceAfter: {src: ['{beg}', '{end}'], dst: ['{$PH}', '{$PH_1}']}},
+      '3960347178741939388': {id: '2138', regex: 'full', replaceAfter: {src: '{min}', dst: '{$PH}'}},
+      '7784776148483401026': {id: '6502'},
+      '5649152052903402207': {id: '5016', regex: 'full', replaceAfter: {src: '5', dst: '{$PH}'}},
+      '6787170888491959005': {id: '890', regex: 'full', replaceAfter: {src: /^/, dst: '{$PH} '}},
+      '896232652852247226': {id: '890', regex: 'full', replaceAfter: {src: /^/, dst: '{$PH} '}},
+      '5715822374601764396': {id: '894', regex: 'full', replaceAfter: {src: /.*\/ /, dst: '{$PH} '}},
+      '106915923521054589': {id: '6426', regex: 'full', replaceAfter: {src: /^1 /, dst: '{$PH} '}},
+      '3499176050291189451': {id: '902', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
+      '2243853424457768965': {id: '7072', regex: 'full', replaceAfter: {src: [/ \(.*\)/, /^/], dst: ['', '{$PH} ']}},
+      '610068718017122607': {id: '5022', regex: 'full', replaceAfter: {src: /^1 /, dst: '{$PH} '}},
+      '4039828375117343729': {id: '2140', regex: 'full', replaceAfter: {src: ['{min}', '{max}'], dst: ['{$PH}', '{$PH_1}']}},
+      '8014171383833842560': {id: '2142', regex: 'full', replaceAfter: {src: ['{min}', '{max}'], dst: ['{$PH}', '{$PH_1}']}},
+      '2186320724771371544': {id: '2144', regex: 'full', replaceAfter: {src: '{max}', dst: '{$PH}'}},
+      '3049594061037724196': {id: '2146', regex: 'full', replaceAfter: {src: '{min}', dst: '{$PH}'}},
+      '7127621015227459339': {id: '2150', regex: 'full', replaceAfter: {src: ['{min}', '{max}'], dst: ['{$PH}', '{$PH_1}']}},
+      '9038529253462906018': {id: '2152', regex: 'full', replaceAfter: {src: '{max}', dst: '{$PH}'}},
+      '8299939202081804590': {id: '12887', regex: 'full', replaceAfter: {src: '{name}', dst: '{$PH}'}},
+      '6410546578813470883': {id: '2158', regex: 'full', replaceAfter: {src: ['{oldName}', '{newName}'], dst: ['{$PH}', '{$PH_1}']}},
+      '396109618115340249': {id: '6540', regex: 'full', replaceAfter: {src: ['{oldName}', '{newName}', '{duration}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
+      '4898050799154424568': {id: '4950', regex: 'full', replaceAfter: {src: ['{name}', '{from}', '{to}'], dst: ['{$PH}', '{$PH_1}', '{$PH_2}']}},
+      '4324982987263927268': {id: '6897', regex: 'full', replaceAfter: {src: '{value}', dst: '{$PH}'}},
     }[key];
   }
 
-  async clickLanguage_old(lang: LangData) {
-    const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
-    const url = `assets/old-dart/${filename}`;
-    console.log(url);
-    this.intlARB = await this.ds.request(url, {asJson: true});
-    console.log(lang.code, this.intlARB);
-    Log.clear();
-    GLOBALS.isDebug = true;
-    for (const key of Object.keys(this.messagesJSON)) {
-      const parts = this.messagesJSON[key].trim().split('\n');
-      if (this.intlARB[key] != null) {
-        const trans = this.intlARB[key];
-        Log.info(`${key} ${trans}`);
-        continue;
-      }
-      const cvtKey = Utils.join(parts, '\\n', text => {
-        return text?.trim().replace(/<br>/g, '\n');
-      });
-      const trans = this.intlARB[cvtKey];
-      if (key === 'help-cgp') {
-        console.log(key, cvtKey, trans);
-      }
-      if (trans == null) {
-        const src = this.xlfJSON.file.body['trans-unit'] ?? [];
-        let entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
-        let showError = true;
-        if (entry == null) {
-          let check = this.messagesJSON[key];
-//            .replace(/</g, '&lt;');
-//          check = check.replace(/>/g, '&gt;');
-          entry = src.find((e: any) => e['source'] === check);
-          if (entry != null) {
-            const keyList = Object.keys(this.intlARB);
-            let found: string = null;
-            for (let i = 0; i < keyList.length && found == null; i++) {
-              if (keyList[i] === entry.source) {
-                found = keyList[i];
-              }
-            }
-            if (found != null) {
-              const id = found;
-              console.log('nix', check, id, entry);
-              if (this.intlARB[id] != null) {
-                Log.warn(`${id} => ${this.intlARB[id]}`);
-                showError = false;
-              }
-            }
-          }
-          entry = null;
-        }
-        if (entry != null) {
-          const keyList = Object.keys(this.intlARB);
-          let found: string = null;
-          for (let i = 0; i < keyList.length && found == null; i++) {
-            if (this.intlARB[keyList[i]].description === entry.note?.['#text']) {
-              found = keyList[i];
-            }
-          }
-          if (found != null) {
-            const id = found.substring(1);
-            if (this.intlARB[id] != null) {
-              Log.warn(`${key} => ${this.intlARB[id]}`);
-              showError = false;
-            }
-          }
-        }
-        if (showError) {
-          Log.error(`${key} ${this.messagesJSON[key]}`);
-        }
-      } else {
-        Log.info(`${key} ${trans}`);
-      }
-    }
-  }
+//   async clickLanguage_old(lang: LangData) {
+//     const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
+//     const url = `assets/old-dart/${filename}`;
+//     console.log(url);
+//     this.intlARB = await this.ds.request(url, {asJson: true});
+//     console.log(lang.code, this.intlARB);
+//     Log.clear();
+//     GLOBALS.isDebug = true;
+//     for (const key of Object.keys(this.messagesJSON)) {
+//       const parts = this.messagesJSON[key].trim().split('\n');
+//       if (this.intlARB[key] != null) {
+//         const trans = this.intlARB[key];
+//         Log.info(`${key} ${trans}`);
+//         continue;
+//       }
+//       const cvtKey = Utils.join(parts, '\\n', text => {
+//         return text?.trim().replace(/<br>/g, '\n');
+//       });
+//       const trans = this.intlARB[cvtKey];
+//       if (key === 'help-cgp') {
+//         console.log(key, cvtKey, trans);
+//       }
+//       if (trans == null) {
+//         const src = this.xlfJSON.file.body['trans-unit'] ?? [];
+//         let entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
+//         let showError = true;
+//         if (entry == null) {
+//           let check = this.messagesJSON[key];
+// //            .replace(/</g, '&lt;');
+// //          check = check.replace(/>/g, '&gt;');
+//           entry = src.find((e: any) => e['source'] === check);
+//           if (entry != null) {
+//             const keyList = Object.keys(this.intlARB);
+//             let found: string = null;
+//             for (let i = 0; i < keyList.length && found == null; i++) {
+//               if (keyList[i] === entry.source) {
+//                 found = keyList[i];
+//               }
+//             }
+//             if (found != null) {
+//               const id = found;
+//               console.log('nix', check, id, entry);
+//               if (this.intlARB[id] != null) {
+//                 Log.warn(`${id} => ${this.intlARB[id]}`);
+//                 showError = false;
+//               }
+//             }
+//           }
+//           entry = null;
+//         }
+//         if (entry != null) {
+//           const keyList = Object.keys(this.intlARB);
+//           let found: string = null;
+//           for (let i = 0; i < keyList.length && found == null; i++) {
+//             if (this.intlARB[keyList[i]].description === entry.note?.['#text']) {
+//               found = keyList[i];
+//             }
+//           }
+//           if (found != null) {
+//             const id = found.substring(1);
+//             if (this.intlARB[id] != null) {
+//               Log.warn(`${key} => ${this.intlARB[id]}`);
+//               showError = false;
+//             }
+//           }
+//         }
+//         if (showError) {
+//           Log.error(`${key} ${this.messagesJSON[key]}`);
+//         }
+//       } else {
+//         Log.info(`${key} ${trans}`);
+//       }
+//     }
+//   }
 
   cvt4XML(src: string): string {
     src = src.replace(/&/g, '&amp;');

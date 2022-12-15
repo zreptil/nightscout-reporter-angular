@@ -51,7 +51,8 @@
             ],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/web.config"
             ],
             "index": "src/index.html",
             "inlineStyleLanguage": "scss",

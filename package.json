@@ -6,9 +6,10 @@
     "start": "ng serve --port 3002 --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "i18n-extract": "ng extract-i18n --output-path src/locale --out-file messages.de-DE.xlf --progress",
+    "i18n-extract": "ng extract-i18n --output-path src/locale --out-file messages.de-DE.xliff --format xliff --progress",
     "i18n-createJson": "tsc tools/dev-localizer.ts && node tools/dev-localizer.js",
     "i18n-make": "npm run i18n-extract && npm run i18n-createJson",
+    "i18n-createEn": "tsc tools/dev-create-en.ts && node tools/dev-create-en.js",
     "test": "ng test"
   },
   "private": true,
