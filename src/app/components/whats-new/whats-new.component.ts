@@ -16,15 +16,7 @@ export class WhatsNewComponent implements AfterViewInit {
   classFor(id: number): string[] {
     const ret: string[] = [];
     if (id !== +this.checkId) {
-      ret.push('hidden');
-    }
-    return ret;
-  }
-
-  iconFor(id: number): string {
-    let ret = 'expand_more';
-    if (id !== +this.checkId) {
-      return 'expand_less';
+      // ret.push('hidden');
     }
     return ret;
   }

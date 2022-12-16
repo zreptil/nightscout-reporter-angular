@@ -356,6 +356,7 @@ export class SessionService {
     params.doReload ??= true;
     params.checkConfigured ??= false;
     GLOBALS.language = value;
+    // this.ls.activate(value);
     if (params.checkConfigured && !GLOBALS.isConfigured) {
       this.ss.clearStorage();
     }

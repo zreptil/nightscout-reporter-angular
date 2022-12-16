@@ -8,7 +8,6 @@ export class DatepickerPeriod {
   static dowNames = $localize`Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag`.split('|');
   static dowShortNames = $localize`Mo|Di|Mi|Do|Fr|Sa|So`.split('|');
   static shiftNames = $localize`Bis heute|Bis gestern|Bis Wochenende`.split('|');
-
   emptyReason: string;
   firstDayOfWeek = 1;
   start: Date;

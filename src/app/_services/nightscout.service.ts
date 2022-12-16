@@ -407,7 +407,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.dayCount = -1;
     this.ps.value = 0;
     this.ps.max = Utils.differenceInDays(endDate, begDate)
-    this.ps.info = GLOBALS.period.display;
+    this.ps.info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {

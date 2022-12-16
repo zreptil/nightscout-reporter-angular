@@ -69,6 +69,9 @@ export class StorageService {
       if (key.endsWith(Settings.WebData) || key.endsWith(Settings.DebugFlag)) {
         doKill = false;
       }
+      if (key.startsWith('thumbs')) {
+        doKill = false;
+      }
       if (doKill) {
         window.localStorage.removeItem(key);
       }

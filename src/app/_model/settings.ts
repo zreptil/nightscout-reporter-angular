@@ -147,8 +147,8 @@ export class Settings {
     if (src.startsWith('{')) {
       return src;
     }
-    let pos = Math.floor(src.length / 2);
-    src = `${src.substring(pos + 1)}${src.substring(0, pos - 1)}`;
+    // let pos = Math.floor(src.length / 2);
+    // src = `${src.substring(pos + 1)}${src.substring(0, pos - 1)}`;
     ret = Utils.decodeBase64(src, '');
     return ret;
   }
@@ -157,10 +157,13 @@ export class Settings {
     if (!this.hastiod) {
       return src;
     }
+    return Utils.encodeBase64(src, '');
+/*
     let ret = Utils.encodeBase64(src, '');
     const pos = Math.floor(ret.length / 2);
     String.fromCharCode(Utils.rnd(26) + 64);
     ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
     return ret;
+*/
   }
 }
