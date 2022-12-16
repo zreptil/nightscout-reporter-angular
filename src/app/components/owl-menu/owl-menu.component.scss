@@ -42,8 +42,14 @@
     }
   }
 
+  .btnLanguage:not(:hover) {
+    .crowdin {
+      display: none;
+    }
+  }
+
   .crowdin {
-    margin-top: 0.5em;
+    margin-top: 12px;
     position: fixed;
   }
 }

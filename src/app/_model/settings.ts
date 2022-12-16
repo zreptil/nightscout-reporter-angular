@@ -42,18 +42,18 @@ export class Settings {
   // images were retrieved using https://findicons.com/files/icons/2758/flag_icons/32/*.png
   subVersion = '1';
   languageList: LangData[] = [
-    new LangData('de-DE', $localize`Deutsch`, 'de', null),
-    new LangData('en-GB', $localize`English (GB)`, 'gb', CrowdinData.factoryGerman()),
-    new LangData('en-US', $localize`English (USA)`, 'us', CrowdinData.factoryGerman()),
-    new LangData('sk-SK', $localize`Slovenský`, 'sk', CrowdinData.factoryGerman()),
-    new LangData('es-ES', $localize`Español`, 'es', CrowdinData.factoryGerman()),
-    new LangData('pl-PL', $localize`Polski`, 'pl', CrowdinData.factoryEnglish()),
-    new LangData('ja-JP', $localize`日本の`, 'jp', CrowdinData.factoryEnglish()),
-    new LangData('fr-FR', $localize`Français`, 'fr', CrowdinData.factoryEnglish()),
-    new LangData('pt-PT', $localize`Português`, 'pt', CrowdinData.factoryEnglish()),
-    new LangData('nl-NL', $localize`Dansk`, 'nl', CrowdinData.factoryEnglish()),
-    new LangData('no-NO', $localize`Norsk`, 'no', CrowdinData.factoryEnglish()),
-    new LangData('ru-RU', $localize`Русский`, 'ru', CrowdinData.factoryEnglish()),
+    new LangData('de-DE', `Deutsch`, 'de', null, 0),
+    new LangData('en-GB', `English (GB)`, 'gb', CrowdinData.factoryGerman(), 0),
+    new LangData('en-US', `English (USA)`, 'us', CrowdinData.factoryGerman(), 1),
+    new LangData('sk-SK', `Slovenský`, 'sk', CrowdinData.factoryGerman(), 3),
+    new LangData('es-ES', `Español`, 'es', CrowdinData.factoryGerman(), 2),
+    new LangData('pl-PL', `Polski`, 'pl', CrowdinData.factoryEnglish(), 4),
+    new LangData('ja-JP', `日本の`, 'jp', CrowdinData.factoryEnglish(), 1),
+    new LangData('fr-FR', `Français`, 'fr', CrowdinData.factoryEnglish(), 0),
+    new LangData('pt-PT', `Português`, 'pt', CrowdinData.factoryEnglish(), 5),
+    new LangData('nl-NL', `Dansk`, 'nl', CrowdinData.factoryEnglish(), 2),
+    new LangData('no-NO', `Norsk`, 'no', CrowdinData.factoryEnglish(), 3),
+    new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 6),
   ];
 
   static get hastiod(): boolean {

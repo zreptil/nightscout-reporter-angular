@@ -1,18 +1,32 @@
+// creates from files messages.xxx.xlf the file messages.json,
+// which contains all the translations
 import * as fs from 'fs';
 import * as path from 'path';
+const extract = require('extract-zip');
 // @ts-ignore
 import xliff from 'xliff';
 import {MessageId, TargetMessage} from '@angular/localize';
-
-// const fileList = [];
-// const lng = localStorage.getItem('language') || 'de-DE';
 const outFile = '../src/assets/messages.json';
 
-// Erzeugt aus den Dateien messages.xxx.xlf die Datei messages.json,
-// die dann sämtliche Übersetzungen beinhaltet.
-// createJson(['@de-DE', 'en-GB'], []);
+async function main() {
+  try {
+    let zipfile = getPath('../nightrep (translations).zip');
+    console.log('extracting', zipfile, '...');
+    await extract(zipfile, {dir: getPath('../temp')});
+    zipfile = getPath('../nightrep (english) (translations).zip');
+    console.log('extracting', zipfile, '...');
+    await extract(zipfile, {dir: getPath('../temp')});
+    createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr/fr-FR', 'ja/ja-JP', 'nl/nl-NL', 'no/no-NO', 'pl/pl-PL', 'pt-PT', 'sk/sk-SK', 'ru/ru-RU'], []);
+  } catch (ex) {
+    console.error('error when creating messages', ex);
+  }
+}
 
-createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr-FR', 'ja-JP', 'nl-NL', 'no-NO', 'pl-PL', 'pt-PT', 'sk-SK', 'ru-RU'], []);
+main();
+// const fileList = [];
+// const lng = localStorage.getItem('language') || 'de-DE';
+
+// createJson(['@de-DE', 'en-GB'], []);
 
 function createJson(codes: any, list: any): void {
   let file;
@@ -21,7 +35,13 @@ function createJson(codes: any, list: any): void {
     id = id.substring(1);
     file = `../src/locale/messages.${id}.xliff`;
   } else {
-    file = `../temp/messages.${id}.xliff`;
+    const parts = codes[0].split('/');
+    let path = codes[0];
+    if (parts.length === 2) {
+      id = parts[1];
+      path = parts[0];
+    }
+    file = `../temp/${path}/messages.${id}.xliff`;
   }
   const content = fs.readFileSync(getPath(file)).toString();
   parseTranslationsForLocalize(content).then((result: Record<MessageId, TargetMessage>) => {
@@ -29,7 +49,7 @@ function createJson(codes: any, list: any): void {
     codes.splice(0, 1);
     if (codes.length === 0) {
       fs.writeFileSync(getPath(outFile), JSON.stringify(list));
-      console.log(`Die Datei ${getPath(outFile)} wurde erstellt`);
+      console.log(`created file ${getPath(outFile)}`);
     } else {
       createJson(codes, list);
     }
