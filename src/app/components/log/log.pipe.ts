@@ -2,10 +2,10 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {Utils} from '@/classes/utils';
 
 @Pipe({
+  standalone: true,
   name: 'log'
 })
 export class LogPipe implements PipeTransform {
-
   transform(value: unknown, ...args: unknown[]): unknown {
     if (typeof value === 'string') {
       return value;

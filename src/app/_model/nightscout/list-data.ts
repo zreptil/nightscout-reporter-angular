@@ -191,7 +191,6 @@ export class ListData {
       this.stat[key].varianz /= this.stat[key].values.length;
     }
   }
-
   extractData(data: ReportData): void {
     this.catheterCount = 0;
     this.ampulleCount = 0;

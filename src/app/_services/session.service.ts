@@ -132,36 +132,6 @@ export class SessionService {
         }
       }
     }
-
-    setTimeout(() => {
-      Log.todo('Die Dragmethode in SessionService.checkPrint ist noch nicht vollständig implementiert');
-      /*
-            if (this._drag != null) {
-              this._drag.onDragEnd.listen(null);
-              this._drag.onDragStart.listen(null);
-              this._drag.destroy();
-            }
-
-            _drag = Draggable(html.querySelectorAll('.sortable'),
-              avatarHandler: g.viewType === 'tile' ? TileAvatarHandler() : AvatarHandler.clone(),
-              draggingClass: 'dragging',
-              handle: g.viewType === 'tile' ? null : '[name]>material-icon',
-              verticalOnly: g.viewType === 'list');
-            _drag.onDragStart.listen((DraggableEvent event) {});
-            _drag.onDragEnd.listen((DraggableEvent event) {
-              event.draggableElement.animate([
-                {'transform': 'rotate(180)'}
-              ], 500);
-            });
-            if (_drop != null) _drop.onDrop.listen(null);
-            _drop = Dropzone(html.querySelectorAll('.sortable'), overClass: 'dragover');
-            _drop.onDrop.listen((DropzoneEvent event) {
-              if (!dropElement(event.draggableElement, event.dropzoneElement)) {
-                event.dropzoneElement.attributes['dontclick'] = 'true';
-              }
-            });
-      */
-    }, 100);
     this.activeCfgCount = count;
   }
 

@@ -18,6 +18,7 @@ import {EntryData} from '@/_model/nightscout/entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 import {GoogleService} from '@/_services/google.service';
+import {LanguageService} from '@/_services/language.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -36,7 +37,8 @@ export class DataService {
 
   constructor(public http: HttpClient,
               public ss: StorageService,
-              public gs: GoogleService
+              public gs: GoogleService,
+              public ls: LanguageService
   ) {
     // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
     //   next: data => {
@@ -55,9 +57,12 @@ export class DataService {
   }
 
   set syncWithGoogle(value: boolean) {
+    // Aktuell deaktiviert. Wenn Benutzer das gerne wieder hätten,
+    // wird es wieder aktiviert. Dazu muss dann die Speicherung
+    // und Datenhaltung in Google Drive neu implementiert werden.
+    value = false;
     this._syncWithGoogle = value ?? false;
     if (value) {
-      console.log('Auf zu Google!!!');
       this.gs.onEvent.subscribe({
         next: () => {
           // @ts-ignore
@@ -83,9 +88,9 @@ export class DataService {
           // });
         }
       });
-      this.gs.init();
+      // this.gs.init();
     } else {
-      this.gs.logout();
+      // this.gs.logout();
     }
     this.saveWebData();
   }
@@ -334,6 +339,7 @@ export class DataService {
       GLOBALS.ppPdfSameWindow = JsonData.toBool(json.d12);
       GLOBALS.ppPdfDownload = JsonData.toBool(json.d13);
       GLOBALS.isWatchColor = JsonData.toBool(json.d14);
+      GLOBALS.ppSkipSensorChange = JsonData.toNumber(json.d15);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }
@@ -558,6 +564,7 @@ export class DataService {
     GLOBALS.language = value;
     this.saveWebData();
     this.save();
+    this.ls.activate(value.code);
     // Intl.systemLocale = Intl.canonicalizedLocale(language.code);
     // await tz.initializeTimeZone();
     // await initializeMessages(language.code);

@@ -6,7 +6,6 @@ import {AutofocusDirective} from '@/_directives/autofocus.directive';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog';
-import {LogPipe} from '@/components/log/log.pipe';
 import {LogComponent} from '@/components/log/log.component';
 import {ColorPickerComponent} from '@/controls/color-picker/color-picker.component';
 import {ColorPickerImageComponent} from '@/controls/color-picker/color-picker-image/color-picker-image.component';
@@ -33,7 +32,6 @@ import {OwlMenuComponent} from './components/owl-menu/owl-menu.component';
 import {WatchComponent} from './components/watch/watch.component';
 import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
 import {OutputParamsComponent} from './components/output-params/output-params.component';
-import {DartImporterComponent} from './components/dart-importer/dart-importer.component';
 import {ProgressComponent} from './components/progress/progress.component';
 import {DatepickerComponent} from './controls/datepicker/datepicker.component';
 import {DatepickerMonthComponent} from './controls/datepicker/datepicker-month/datepicker-month.component';
@@ -41,14 +39,13 @@ import {DatepickerDialogComponent} from './controls/datepicker/datepicker-dialog
 import {ShortcutEditComponent} from './components/shortcut-edit/shortcut-edit.component';
 import {FormParamsDialogComponent} from './components/form-params-dialog/form-params-dialog.component';
 import {FormParamsComponent} from './controls/form-params/form-params.component';
+import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 
 @NgModule({
   declarations: [
     AutofocusDirective,
     TextareaAutoresizeDirective,
-    LogPipe,
     AppComponent,
-    LogComponent,
     DialogComponent,
     ColorPickerComponent,
     ColorPickerDialog,
@@ -71,8 +68,6 @@ import {FormParamsComponent} from './controls/form-params/form-params.component'
     WatchComponent,
     WatchEntryComponent,
     OutputParamsComponent,
-    DartImporterComponent,
-    ProgressComponent,
     DatepickerComponent,
     DatepickerMonthComponent,
     DatepickerDialogComponent,
@@ -87,7 +82,10 @@ import {FormParamsComponent} from './controls/form-params/form-params.component'
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    DragDropModule
+    DragDropModule,
+    LogComponent,
+    ProgressComponent,
+    LocalToolsComponent
   ],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

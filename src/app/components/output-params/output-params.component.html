@@ -95,6 +95,19 @@
     <mat-checkbox [(ngModel)]="globals.ppFixAAPS30" class="chk" i18n="label for fix for AAPS 3.0">
       Korrektur für Datenänderungen in AAPS 3.0
     </mat-checkbox>
+    <div class="line">
+      <mat-form-field long>
+        <mat-label i18n="label for max basalprecision in printparams">Stunden, die Werte nach einem Sensorstart ignoriert werden:</mat-label>
+        <mat-select [(value)]="skipSensorChange" class="selectButton" panelClass="output-params">
+          <mat-option (click)="skipSensorChange=idx"
+                      *ngFor="let item of globals.listSkipSensorChange; let idx=index"
+                      [value]="item.idx"
+                      class="selectItem">
+            <div class="itemTitle">{{item.label}}</div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="subtitle" i18n="label of area for timeshift">Historische Daten</div>
     <div class="timeshift">
       <div i18n="description of timeshift">

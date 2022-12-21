@@ -2,8 +2,12 @@ import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {ProgressService} from '@/_services/progress.service';
 import {ThemeService} from '@/_services/theme.service';
 import {Subscription} from 'rxjs';
+import {CommonModule} from '@angular/common';
+import {MaterialModule} from '@/material.module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MaterialModule],
   selector: 'app-progress',
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']

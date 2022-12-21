@@ -180,7 +180,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       GlobalsData.user.isReachable = GlobalsData.user.status != null;
     }
 
-    if (!needed.needsData || !GlobalsData.user.isReachable) {
+    if (!needed.needsData || !data.user.isReachable) {
+      console.log('Schaut schlecht aus', needed, GlobalsData.user);
       return data;
     }
 
@@ -581,6 +582,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
     data.ns.activityList.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
 
+    const listSensorChanges = data.ns.treatments.filter(t => t.isSensorChange);
+
     if (!this.ps.next()) {
       return data;
     }
@@ -624,7 +627,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           while (Utils.isAfter(current, target) || Utils.isSameMoment(current, target)) {
             const factor = max === 0 ? 0 : Utils.differenceInMinutes(target, prev.time) / max;
             next = next.copy;
-            if (max >= minGapKeep) {
+            if (max >= minGapKeep || this.isAfterSensorChange(entry, listSensorChanges)) {
               next.isGap = true;
             }
             next.time = target;
@@ -665,5 +668,18 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
     data.isValid = true;
     return data;
+  }
+
+  isAfterSensorChange(entry: EntryData, listSensorChanges: TreatmentData[]): boolean {
+    if (GLOBALS.ppSkipSensorChange === 0) {
+      return false;
+    }
+    return listSensorChanges.find(t => {
+      const diff = Utils.differenceInHours(entry.time, t.createdAt);
+      if (diff >= 0 && diff <= GLOBALS.listSkipSensorChange[GLOBALS.ppSkipSensorChange].value) {
+        return true;
+      }
+      return false;
+    }) != null;
   }
 }

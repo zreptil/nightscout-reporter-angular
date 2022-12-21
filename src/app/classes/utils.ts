@@ -230,12 +230,12 @@ export class Utils {
     return Math.min(ret, 3);
   }
 
-  static isAfter(date1: Date, date2: Date): boolean {
-    return date1?.getTime() > date2?.getTime();
+  static isAfter(later: Date, earlier: Date): boolean {
+    return later?.getTime() > earlier?.getTime();
   }
 
-  static isBefore(date1: Date, date2: Date): boolean {
-    return date1?.getTime() < date2?.getTime();
+  static isBefore(earlier: Date, later: Date): boolean {
+    return earlier?.getTime() < later?.getTime();
   }
 
   static isSameDay(date1: Date, date2: Date) {
@@ -248,12 +248,12 @@ export class Utils {
     return date1.getTime() === date2.getTime();
   }
 
-  static isOnOrBefore(date1: Date, date2: Date) {
-    return this.isBefore(date1, date2) || this.isSameDay(date1, date2);
+  static isOnOrBefore(earlier: Date, later: Date) {
+    return this.isBefore(earlier, later) || this.isSameDay(later, earlier);
   }
 
-  static isOnOrAfter(date1: Date, date2: Date) {
-    return this.isAfter(date1, date2) || this.isSameDay(date1, date2);
+  static isOnOrAfter(later: Date, earlier: Date) {
+    return this.isAfter(later, earlier) || this.isSameDay(later, earlier);
   }
 
   static differenceInDays(later: Date, earlier: Date): number {
@@ -261,23 +261,23 @@ export class Utils {
     return Math.floor(ret / 1000 / 60 / 60 / 24);
   }
 
-  static differenceInSeconds(date1: Date, date2: Date): number {
-    const ret = date1?.getTime() - date2?.getTime();
+  static differenceInSeconds(later: Date, earlier: Date): number {
+    const ret = later?.getTime() - earlier?.getTime();
     return Math.floor(ret / 1000);
   }
 
-  static differenceInMinutes(date1: Date, date2: Date): number {
-    const ret = date1?.getTime() - date2?.getTime();
+  static differenceInMinutes(later: Date, earlier: Date): number {
+    const ret = later?.getTime() - earlier?.getTime();
     return Math.floor(ret / 1000 / 60);
   }
 
-  static differenceInHours(date1: Date, date2: Date): number {
-    const ret = date1?.getTime() - date2?.getTime();
+  static differenceInHours(later: Date, earlier: Date): number {
+    const ret = later?.getTime() - earlier?.getTime();
     return Math.floor(ret / 1000 / 60 / 60);
   }
 
-  static differenceInMilliseconds(date1: Date, date2: Date): number {
-    return date1?.getTime() - date2?.getTime();
+  static differenceInMilliseconds(later: Date, earlier: Date): number {
+    return later?.getTime() - earlier?.getTime();
   }
 
   static findLast<T>(list: T[], method: (e: T) => boolean) {
@@ -289,7 +289,6 @@ export class Utils {
   }
 
   static plural(value: number, options: any): string {
-    Log.todo('Plural muss noch überprüft werden');
     return options[value] ?? options.other;
   }
 
@@ -321,7 +320,9 @@ export class Utils {
     // atob alleine reicht an dieser Stelle nicht, weil dadurch Umlaute nicht korrekt
     // konvertiert werden.
     try {
+      console.error('pre', src);
       src = atob(src);
+      console.log('post', src);
       const decoder = new TextDecoder();
       const buf = new ArrayBuffer(src.length);
       const bufView = new Uint8Array(buf);

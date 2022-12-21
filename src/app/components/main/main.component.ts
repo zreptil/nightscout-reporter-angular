@@ -324,14 +324,11 @@ export class MainComponent implements OnInit {
       case 'nightscout':
         this.ss.navigate(GLOBALS.user.apiUrl(null, '', {noApi: true}));
         break;
-      case 'nightscoutstatus':
-        this.ss.navigate('https://nielsmaerten.github.io/nightscout-assistant/#/${g.language.img}/home');
-        break;
       case 'menu':
         this.changeView();
         break;
-      case 'dart':
-        window.location.href = '#dart';
+      case 'local-tools':
+        this.ss.navigate('#tools');
         break;
     }
   }
@@ -392,6 +389,6 @@ export class MainComponent implements OnInit {
   }
 
   clickUserImage() {
-    
+
   }
 }

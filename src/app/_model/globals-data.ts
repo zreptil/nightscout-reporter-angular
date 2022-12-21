@@ -45,6 +45,7 @@ export class GlobalsData extends Settings {
   ppShowUrlInPDF = false;
   ppHideLoopData = false;
   ppFixAAPS30 = false;
+  ppSkipSensorChange = 0;
   isCreatingPDF = false;
   currPeriodShift: PeriodShift;
   isDebug = localStorage.getItem('forceDebug') === 'true';
@@ -70,6 +71,17 @@ export class GlobalsData extends Settings {
   public onPeriodChange: Observable<DatepickerPeriod>;
   maxLogEntries = 20;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
+
+  private static _listSkipSensorChange = [
+    {idx: 0, value: 0, label: $localize`Keine`},
+    {idx: 1, value: 3, label: $localize`3 Stunden`},
+    {idx: 2, value: 6, label: $localize`6 Stunden`},
+    {idx: 3, value: 12, label: $localize`12 Stunden`},
+    {idx: 4, value: 24, label: $localize`24 Stunden`}
+  ];
+  get listSkipSensorChange(): any[] {
+    return GlobalsData._listSkipSensorChange;
+  }
 
   constructor() {
     super();
@@ -225,6 +237,10 @@ export class GlobalsData extends Settings {
   }
 
   set viewType(value: string) {
+    // Der viewType ist aktuell immer tile.
+    // Wenn Benutzer wieder die Listenansicht haben wollen,
+    // wird sie wieder aktiviert.
+    value = 'tile';
     switch (value) {
       case 'tile':
       case 'list':
@@ -428,6 +444,7 @@ export class GlobalsData extends Settings {
       + `,"d12":"${this.ppPdfSameWindow ? 'true' : 'false'}"`
       + `,"d13":"${this.ppPdfDownload ? 'true' : 'false'}"`
       + `,"d14":"${this.isWatchColor ? 'true' : 'false'}"`
+      + `,"d15":"${this.ppSkipSensorChange?.toString() ?? 0}"`
       + '}';
   }
 

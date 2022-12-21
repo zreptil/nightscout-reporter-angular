@@ -21,13 +21,13 @@
             "production": {
               "budgets": [
                 {
-                  "maximumError": "3mb",
-                  "maximumWarning": "2mb",
+                  "maximumError": "5mb",
+                  "maximumWarning": "4mb",
                   "type": "initial"
                 },
                 {
-                  "maximumError": "3mb",
-                  "maximumWarning": "2mb",
+                  "maximumError": "5mb",
+                  "maximumWarning": "4mb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -47,7 +47,8 @@
               "file-saver",
               "https://apis.google.com/js/api.js",
               "pdfmake",
-              "fast-sha256"
+              "fast-sha256",
+              "pdfjs-dist"
             ],
             "assets": [
               "src/favicon.ico",
@@ -57,9 +58,12 @@
             "index": "src/index.html",
             "inlineStyleLanguage": "scss",
             "main": "src/main.ts",
-            "outputPath": "dist/nightscout-reporter",
+            "outputPath": "dist/nightrep",
             "polyfills": "src/polyfills.ts",
-            "scripts": [],
+            "scripts": [
+              "src/assets/scripts/pdf.js",
+              "src/assets/scripts/pdf.worker.js"
+            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"

@@ -27,6 +27,26 @@
     background-color: var(--mainHeaderBack);
     color: var(--mainHeaderFore);
   }
+
+  @media (max-width: 800px) {
+    mat-toolbar {
+      mat-toolbar-row {
+        .title {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    mat-toolbar {
+      mat-toolbar-row {
+        .userPanel {
+          transform: scale(0.8);
+        }
+      }
+    }
+  }
 }
 
 .selectItem:hover:not(.mat-option-disabled),
@@ -472,4 +492,3 @@ mat-drawer-container {
   background-color: var(--mainBodyBack);
   max-height: 95% !important;
 }
-

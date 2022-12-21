@@ -237,7 +237,6 @@ export class SettingsComponent implements OnInit {
         if (pos >= 0) {
           content = content.substring(pos + 1);
         }
-        content = atob(content);
         content = Utils.decodeBase64(content);
         this.ds.fromSharedString(Settings.tiod(content));
         this.ds._initAfterLoad();

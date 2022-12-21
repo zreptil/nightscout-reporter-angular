@@ -21,6 +21,8 @@ export class OutputParamsComponent implements OnInit {
   periodShift: PeriodShift;
   glucMaxIdx: number;
   basalPrecisionIdx: number;
+  skipSensorChange: number;
+
   listPeriodShift: PeriodShift[] = [];
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -63,6 +65,7 @@ export class OutputParamsComponent implements OnInit {
     this.fillComboBoxes();
     this.glucMaxIdx = GLOBALS.ppGlucMaxIdx;
     this.basalPrecisionIdx = GLOBALS.ppBasalPrecisionIdx;
+    this.skipSensorChange = GLOBALS.ppSkipSensorChange;
   }
 
   changeGlucUnits(value: number) {
@@ -125,6 +128,10 @@ export class OutputParamsComponent implements OnInit {
     GLOBALS.currPeriodShift = this.periodShift;
     GLOBALS.ppGlucMaxIdx = this.glucMaxIdx;
     GLOBALS.ppBasalPrecisionIdx = this.basalPrecisionIdx;
+    if (this.skipSensorChange !== GLOBALS.ppSkipSensorChange) {
+      this.ns.reportData.isValid = false;
+      GLOBALS.ppSkipSensorChange = this.skipSensorChange;
+    }
     this.pdf.generatePdf().then(_ => {
       if (!this.ns.reportData?.isValid) {
         this.ss.showPopup('outputparams');

@@ -10,8 +10,10 @@ import {Utils} from '@/classes/utils';
 import {forkJoin, map, Observable, of} from 'rxjs';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {DataService} from './data.service';
-import {LangData} from '@/_model/nightscout/lang-data';
 import {TCreatedPdf} from 'pdfmake/build/pdfmake';
+import {PrintCGP} from '@/forms/nightscout/print-cgp';
+import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
+import {PrintPercentile} from '@/forms/nightscout/print-percentile';
 
 export class PdfData {
   isPrinted = false;
@@ -29,8 +31,6 @@ export class PdfService {
   pdfList: PdfData[] = [];
   pdfDoc: any = null;
   images: any;
-  thumbLangIdx: number = -1;
-  thumbLangSave: LangData = null;
 
   constructor(public http: HttpClient,
               public ps: ProgressService,
@@ -67,14 +67,15 @@ export class PdfService {
     }
   }
 
-  async generatePdf(isForThumbs = false) {
-    this.ds.save({skipReload: isForThumbs});
+  async generatePdf(createThumbs?: (pdf: TCreatedPdf) => void) {
+    this.ds.save({skipReload: createThumbs != null});
     this.pdfList = [];
     this.ps.max = 1;
     this.ps.value = 0;
     this.ps.text = this.msgPreparingPDF;
-    const repData = await this.ns.loadData(isForThumbs);
+    const repData = await this.ns.loadData(createThumbs != null);
     if (!repData?.isValid) {
+      console.error('repData ist nicht gültig', repData);
       return;
     }
     GLOBALS.isCreatingPDF = true;
@@ -95,22 +96,22 @@ export class PdfService {
       // let docLen = 0;
       // let prevPage: PageData = null;
       let listConfig: FormConfig[] = [];
-      if (isForThumbs) {
+      if (createThumbs != null) {
         for (let cfg of GLOBALS.listConfigOrg) {
           listConfig.push(cfg);
           switch (cfg.id) {
             case 'cgp':
-//                              cfg = new FormConfig(PrintCGP(), false);
+              cfg = new FormConfig(new PrintCGP(this), false);
               cfg.form.params[0].thumbValue = 1;
               listConfig.push(cfg);
               break;
             case 'dayanalysis':
-//                              cfg = new FormConfig(PrintDailyAnalysis(), false);
+              cfg = new FormConfig(new PrintDailyAnalysis(this), false);
               cfg.form.params[2].thumbValue = 1;
               listConfig.push(cfg);
               break;
             case 'percentile':
-//                              cfg = new FormConfig(PrintPercentile(), false);
+              cfg = new FormConfig(new PrintPercentile(this), false);
               cfg.form.params[0].thumbValue = 0;
               cfg.form.params[2].thumbValue = true;
               listConfig.push(cfg);
@@ -123,7 +124,7 @@ export class PdfService {
       const cfgList: Observable<any>[] = [];
       let idx = 0;
       for (const cfg of listConfig) {
-        cfgList.push(this.collectPages(cfg, idx++, isForThumbs, repData));
+        cfgList.push(this.collectPages(cfg, idx++, repData, createThumbs));
       }
       forkJoin(cfgList).subscribe({
         next: (dataList: { idx: number, docList: any[] }[]) => {
@@ -136,7 +137,6 @@ export class PdfService {
           // });
           dataList = dataList.filter(entry => entry != null);
           dataList.sort((a, b) => Utils.compare(a.idx, b.idx));
-          console.log(dataList);
           const docList: any[] = []
           for (const data of dataList) {
             Utils.pushAll(docList, data.docList);
@@ -164,7 +164,7 @@ export class PdfService {
               }
               pdfData.content.push(docList[i].content);
             }
-            this.makePdf(pdfData, isForThumbs);
+            this.makePdf(pdfData, createThumbs);
             return;
             // this.pdfList = [];
             // let pdfDoc: any = null;
@@ -190,7 +190,7 @@ export class PdfService {
           } else {
             this.pdfDoc = docList[0];
           }
-          this.makePdf(this.pdfDoc, isForThumbs);
+          this.makePdf(this.pdfDoc, createThumbs);
         }, error: (error) => {
           Log.devError(error, 'Fehler im PdfService');
         }
@@ -236,19 +236,19 @@ export class PdfService {
   }
 
   showPdf(data: any) {
-    this._generatePdf(data, false);
+    this._generatePdf(data);
   }
 
-  private collectPages(cfg: FormConfig, idx: number, isForThumbs: boolean, repData: ReportData): Observable<{ idx: number, docList: any[] }> {
+  private collectPages(cfg: FormConfig, idx: number, repData: ReportData, createThumbs?: (pdf: TCreatedPdf) => void): Observable<{ idx: number, docList: any[] }> {
     let doc: any;
     const docList: any[] = [];
 
     const form = cfg.form;
     let prevPage: PageData;
-    if (this.ns.checkCfg(cfg) || isForThumbs) {
+    if (this.ns.checkCfg(cfg) || createThumbs != null) {
       const docLen = JSON.stringify(doc ?? {}).length;
       const gmiSave = GLOBALS.glucMGDLIdx;
-      if (isForThumbs) {
+      if (createThumbs != null) {
         GLOBALS.glucMGDLIdx = 0;
       }
       return form.getFormPages(repData, docLen).pipe(map((formPages: PageData[]) => {
@@ -268,7 +268,7 @@ export class PdfService {
           }
         }
 
-        if (isForThumbs && fileList.length > 1) {
+        if (createThumbs != null && fileList.length > 1) {
           fileList.splice(1, fileList.length - 1);
           if (fileList[0].length > 1) {
             fileList[0].splice(1, fileList[0].length - 1);
@@ -341,36 +341,19 @@ export class PdfService {
     //        prevForm = form;
   }
 
-  private makePdf(data: any, isForThumbs: boolean) {
+  private makePdf(data: any, createThumbs?: (pdf: TCreatedPdf) => void) {
     if (GLOBALS.isDebug) {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
       Log.displayLink('Playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
       this.ps.clear();
       return;
     }
-    this._generatePdf(data, isForThumbs).then(_ => {
+    this._generatePdf(data, createThumbs).then(_ => {
       this.ps.clear();
     });
   }
 
-  async createThumbs() {
-    console.log(this.thumbLangSave, this.thumbLangIdx);
-    if (this.thumbLangSave == null && GLOBALS.language.code !== 'de-DE') {
-      this.thumbLangIdx = GLOBALS.languageList.length;
-      this.thumbLangSave = GLOBALS.language;
-    } else {
-      this.thumbLangSave ??= GLOBALS.language;
-      this.thumbLangIdx++;
-      await this.ds.setLanguage(GLOBALS.languageList[this.thumbLangIdx]);
-    }
-    this.generatePdf(true).then( () => {
-      if ( this.thumbLangIdx < GLOBALS.languageList.length-1) {
-        setTimeout(() => this.createThumbs(), 500);
-      }
-    });
-  }
-
-  private async _generatePdf(data: any, isForThumbs: boolean) {
+  private async _generatePdf(data: any, createThumbs?: (pdf: TCreatedPdf) => void) {
     if (data == null) {
       Log.error('Es sind keine Seiten vorhanden');
       return;
@@ -392,8 +375,8 @@ export class PdfService {
         vfs = null;
       }
       const pdf: TCreatedPdf = this.pdfMake.createPdf(JSON.parse(JSON.stringify(data)), null, fonts, vfs);
-      if (isForThumbs) {
-        pdf.open();
+      if (createThumbs != null) {
+        createThumbs(pdf);
         // pdf.getBase64(base64 => {
         //   localStorage.setItem(`thumbs.${GLOBALS.language.code}`, base64);
         // });
@@ -423,357 +406,4 @@ export class PdfService {
         return {id: id, url: `data:image/png;base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
       }));
   }
-  /*
-<?php
-$vfs = 'vfs';
-$isdebug = false;
-$filename = '';
-$createImages = '';
-$exportCfg = '';
-
-if(array_key_exists('vfs', $_REQUEST))
-  $vfs = $_REQUEST['vfs'];
-if(array_key_exists('debug', $_REQUEST))
-  $isdebug = true;
-if(array_key_exists('filename', $_REQUEST))
-  $filename = $_REQUEST['filename'];
-if(array_key_exists('images', $_REQUEST))
-  $createImages = $_REQUEST['images'];
-if(array_key_exists('exportCfg', $_REQUEST))
-  $exportCfg = $_REQUEST['exportCfg'];
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <title>Pdf</title>
-  <script src="pdfmake.min.js"></script>
-  <script src="<?=$vfs?>_fonts.js"></script>
-  <script src="index.js"></script>
-<?php
-if($createImages!='')
-{
-?>
-  <script src="pdf.js"></script>
-  <script src="pdf.worker.js"></script>
-  <script src="jszip.min.js"></script>
-  <script src="filesaver.min.js"></script>
-<?php
-}
-?>
-  <script type="text/javascript">
-    var _remaining = 1;
-    function mm(pt)
-    {
-      return pt/0.35277;
-    }
-    function cm(pt)
-    {
-      return pt/0.035277;
-    }
-    $(document).ready(function()
-    {
-      $("#message").hide();
-      $("#debug").hide();
-      $("#pdfimg").hide();
-      var src = "<?=$_REQUEST['data']?>";
-  src = Utf8.decode(atob(src));
-  if('<?=$exportCfg?>' != '')
-{
-  var blob = new Blob([src], {type: "text/json;charset=utf-8"});
-  saveAs(blob,"nightscout-reporter-cfg.txt");
-  $("#output").hide();
-  $("#message").show();
-  $("#message").text("<?=$exportCfg?>");
-  return;
-}
-if('<?=$isdebug?>' == '1')
-  $("#debug").text(src);
-try
-{
-  eval("var form=" + src);
-  if("<?=$vfs?>" == "ja")
-  {
-    pdfMake.fonts = {
-      Roboto: {
-        normal: "ipagp.ttf",
-        bold: "ipagp.ttf",
-        italics: "ipagp.ttf",
-        bolditalics: "ipagp.ttf"
-      }
-    };
-  }
-  if("<?=$filename?>" != "")
-  {
-    pdfMake.createPdf(form,null,fonts).download("<?=$filename?>");
-  }
-  else
-  {
-    <?php
-    if($createImages!='')
-    {
-        ?>
-      var pdfDoc;
-      pdfMake.createPdf(form,null,fonts).getDataUrl(function(outDoc)
-      {
-        PDFJS.getDocument({ url: outDoc }).then(function(pdf_doc)
-        {
-          pdfDoc = pdf_doc;
-
-          // Hide the pdf loader and show pdf container in HTML
-          $("#output").hide();
-          $("#message").show();
-          var pageDefs = [{i:1,n:"test"}
-            ,{i:2,n:"analysis"}
-            ,{i:3,n:"profile"}
-            ,{i:4,n:"percentile-0"}
-            ,{i:5,n:"percentile-1"}
-            ,{i:6,n:"percentile-3"}
-            ,{i:7,n:"daystats"}
-            ,{i:8,n:"daygraph"}
-            ,{i:10,n:"dayanalysis"}
-            ,{i:11,n:"dayanalysis-landscape"}
-            ,{i:12,n:"daylog"}
-            ,{i:13,n:"weekgraph"}
-            ,{i:15,n:"basal"}
-            ,{i:16,n:"cgp"}
-            ,{i:17,n:"cgp-landscape"}
-            ,{i:18,n:"dayprofile"}
-            ,{i:19,n:"daygluc-full"}
-            ,{i:20,n:"daygluc"}
-            ,{i:21,n:"dayhours"}
-            ,{i:22,n:"userdata"}
-            ,{i:23,n:"glucdist"}
-          ];
-          _remaining = pageDefs.length + 3;
-          pageDefs.forEach(function(item){
-            loadPdfPage(pdfDoc,item.i,item);
-          });
-          combinePdfPages(pdfDoc,4,5,"percentile-2");
-          combinePdfPages(pdfDoc,6,5,"percentile-4",false);
-          combinePdfPages(pdfDoc,8,9,"daygraph-cgp");
-          combinePdfPages(pdfDoc,13,14,"weekgraph-cgp");
-          setTimeout(function(){checkReady(outDoc);},1000);
-
-          // Show the first page
-//              showPage(1);
-        }).catch(function(error)
-        {
-          alert(error.message);
-        });
-      });
-      <?php
-    }
-    else
-    {
-        ?>
-      pdfMake.createPdf(form,null,fonts).getDataUrl(function(outDoc)
-      {
-        $("#output").attr("src", outDoc);
-      });
-      <?php
-    }
-      ?>
-  }
-}
-catch(err)
-{
-}
-});
-<?php
-if($createImages!='')
-{
-    ?>
-  var smallSide = 174;
-
-  function checkReady(outDoc)
-  {
-    if(_remaining > 0)
-    {
-      setTimeout(function(){checkReady(outDoc);},1000);
-      return;
-    }
-    $("body").css("background","#e0ffe0");
-    $("#message").text("Packe Bilder zusammen ...");
-    var zip = new JSZip();
-    var img = zip.folder("");
-    $("#pdfimg").children().each(function(){
-      var data = this.toDataURL();
-      data = data.substr(data.indexOf("base64")+6);
-      img.file($(this).attr("title")+".png", data, {base64:true});
-    });
-    zip.generateAsync({type:"blob"}).then(function(content){
-      saveAs(content,"nr-images.<?=$createImages?>.zip");
-      $("#message").html($("<button>Fenster schliessen</button>").click(function(){window.close();}));
-      $("#message").append($("<button id='btnPdf'>PDF anzeigen</button>").click(function()
-      {
-        if($("#output").is(":visible"))
-        {
-          $("#output").hide();
-          $("#btnPdf").text("PDF anzeigen");
-        }
-        else
-        {
-          $("#output").show();
-          $("#output").attr("src", outDoc);
-          $("#btnPdf").text("PDF verbergen");
-        }
-      }));
-      $("#message").append($("<button id='btnImg'>Bilder anzeigen</button>").click(function()
-      {
-        if($("#pdfimg").is(":visible"))
-        {
-          $("#pdfimg").hide();
-          $("#btnImg").text("Bilder anzeigen");
-        }
-        else
-        {
-          $("#pdfimg").show();
-          $("#btnImg").text("Bilder verbergen");
-        }
-      }));
-    });
-  }
-  function loadPdfPage(pdfDoc,idx,item,callback=undefined)
-  {
-    // Fetch the page
-    pdfDoc.getPage(idx).then(function(page) {
-      $("#message").text("Erzeuge " + item.n + ".png ...");
-      var canvas = $("<canvas></canvas>");
-      canvas.attr("title", item.n);
-      var cvs = canvas.get(0);
-      var orgWid = page.pageInfo.view[2] - page.pageInfo.view[0];
-      var orgHig = page.pageInfo.view[3] - page.pageInfo.view[1];
-      var ctx = cvs.getContext("2d");
-      var isPortrait = orgWid < orgHig;
-      // As the canvas is of a fixed width we need to set the scale of the viewport accordingly
-      var scale_required = isPortrait ? smallSide/orgWid : smallSide/orgHig;
-
-      // Get viewport of the page at required scale
-      var viewport = page.getViewport(scale_required);
-      cvs.width = smallSide;
-      cvs.height = smallSide;
-      if(isPortrait)
-        cvs.height = smallSide/orgWid*orgHig;
-      else
-        cvs.width = smallSide/orgHig*orgWid;
-
-      var renderContext = {
-        canvasContext: ctx,
-        viewport: viewport
-      };
-
-      // Render the page contents in the canvas
-      page.render(renderContext).then(function() {
-        if(callback !== undefined)
-        {
-          callback(canvas);
-        }
-        else
-        {
-          _remaining--;
-          $("#pdfimg").append(canvas);
-        }
-      });
-    });
-  }
-  function combinePdfPages(pdfDoc,idx1,idx2,name,tileVert=true)
-  {
-    var item = {i:idx1,n:""};
-    loadPdfPage(pdfDoc,item.i,item,function(c1)
-    {
-      var item = {i:idx2,n:name};
-      loadPdfPage(pdfDoc,item.i,item,function(c2)
-      {
-        $("#message").text("Erzeuge " + item.n + ".png ...");
-        var canvas = $("<canvas></canvas>");
-        canvas.attr("title", item.n);
-        var cvs = canvas.get(0);
-        var ctx = cvs.getContext("2d");
-        var w1 = c1.get(0).width;
-        var h1 = c1.get(0).height;
-        var w2 = c2.get(0).width;
-        var h2 = c2.get(0).height;
-        if(tileVert)
-        {
-          cvs.width = w1;
-          cvs.height = h1+h2+2;
-          cvs.width = smallSide;
-          cvs.height = (h1+h2+2)*cvs.width/w1;
-          ctx.scale(smallSide/w1,smallSide/w1);
-          ctx.drawImage(c1.get(0),0,0);
-          ctx.drawImage(c2.get(0),(w1-w2)/2,h1+2);
-        }
-        else
-        {
-          cvs.height = h1;
-          cvs.width = w1+w2+2;
-          cvs.height = smallSide;
-          cvs.width = (w1+w2+2)*cvs.height/h1;
-          ctx.scale(smallSide/h1,smallSide/h1);
-          ctx.drawImage(c1.get(0),0,0);
-          ctx.drawImage(c2.get(0),w1+2,(h1-h2)/2);
-        }
-        _remaining--;
-        $("#pdfimg").append(canvas);
-      });
-    });
-  }
-  <?php
-}
-  ?>
-</script>
-<style type="text/css">
-  body
-{
-  font-family: tahoma,verdana,arial;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-iframe,#message
-{
-  width: 100vw;
-  height: 100vh;
-  border: none;
-}
-#message
-{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-canvas
-{
-  border: 1px solid black;
-}
-#pdfimg
-{
-  display: none;
-  height: 100vh;
-  overflow-y: scroll;
-}
-button
-{
-  border: 0;
-  padding: 1em;
-  cursor: pointer;
-  background-color: transparent;
-}
-button:hover
-{
-  background-color: #40ff40;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-</style>
-</head>
-<body>
-<iframe id="output"></iframe>
-  <div id="message"></div>
-  <div id="debug"></div>
-  <div id="pdfimg"></div>
-  </body>
-  </html>
-  */
 }

@@ -95,7 +95,7 @@ export class TestComponent implements OnInit {
     GLOBALS.ppHideNightscoutInPDF = false;
     const repData = new ReportData(new Date(), new Date());
     repData.user = GLOBALS.userList[0];
-    this.pdf.generatePdf(true);
+    // this.pdf.generatePdf(true);
   }
 
   testDialog() {

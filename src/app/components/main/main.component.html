@@ -30,6 +30,9 @@
           <mat-icon>settings</mat-icon>
           <div i18n="title of settings">Einstellungen</div>
         </button>
+        <!--
+        globals.viewType wird aktuell nicht ausgewertet. Es gibt zunächst nur den
+        Tileview. Wenn Benutzer den Listview zurück wollen, wird der wieder aktiviert.
         <button (click)="clickMenuButton('menu')" class="iconButton" mat-flat-button>
           <ng-container *ngIf="globals.viewType==='tile'">
             <mat-icon>list</mat-icon>
@@ -40,11 +43,18 @@
             <div i18n="title of change to tileview">Zur Kachelansicht</div>
           </ng-container>
         </button>
+        -->
+        <!--
+        Wird aktuell noch nicht unterstützt. Die Verbindung zu Google One Tap
+        funktioniert, aber die Speicherung in Google Drive ist noch nicht
+        implementiert. Die Daten können über die Settings mit Import / Export
+        zwischen den Anwendungen ausgetauscht werden.
         <button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
           <mat-icon *ngIf="gs?.userImage == null">sync_disabled</mat-icon>
           <mat-icon *ngIf="gs?.userImage != null">sync</mat-icon>
           <div i18n="synchronize with google drive">Mit Google synchronisieren</div>
         </button>
+        -->
         <!--
                 <signin [isVisible]="true"
                         [autoStart]="false"
@@ -55,11 +65,6 @@
                         (onEvent)="signinEvent($event)"
                         (signinResult)="g.client=$event"></signin>
                         -->
-        <button (click)="clickMenuButton('nightscoutstatus')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
-          <mat-icon>assistant</mat-icon>
-          <div i18n="title of nightscout status">Google Assistant</div>
-          <mat-icon small>open_in_new</mat-icon>
-        </button>
         <button (click)="ss.showPopup('whatsnew')" class="iconButton" mat-flat-button>
           <mat-icon>new_releases</mat-icon>
           <div i18n="title of whatsnew screen">Was bisher geschah...</div>
@@ -81,9 +86,9 @@
           <div i18n="title of night-watch">Night-Watch</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('dart')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
+        <button (click)="clickMenuButton('local-tools')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
           <img alt="nightscout white" src="assets/img/nightscout.png">
-          <div i18n="title of nightscout reports">Dart Localization Import</div>
+          <div i18n="title of local tools">Local Tools</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-legal">
@@ -147,7 +152,7 @@
             <mat-form-field appearance="standard">
               <mat-select [(value)]="userIdx">
                 <mat-select-trigger>
-                  {{ss.isEmpty(globals.user.display) ? 'SCHISS' : globals.user.display}}
+                  {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
                 </mat-select-trigger>
                 <mat-option (click)="activateUser(idx)"
                             *ngFor="let item of globals.userList; let idx = index"
@@ -170,7 +175,7 @@
           </button>
           <div class="title">
             <div>
-              <span>{{globals.appTitle}}</span>
+              <span class="appTitle">{{globals.appTitle}}</span>
               <span *ngIf="globals.isBeta" class="betaTitle">BETA</span>
               <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="localTitle" mat-flat-button>
                 <div *ngIf="globals.isLocal">Lokal</div>
@@ -186,9 +191,6 @@
           </button>
           <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-icon-button mat-mini-fab>
             <mat-icon>bug_report</mat-icon>
-          </button>
-          <button (click)="pdf.createThumbs()" *ngIf="globals.isLocal" class="is-local" mat-icon-button>
-            <mat-icon>{{globals.language.code == 'de_DE' ? 'burst_mode' : 'image'}}</mat-icon>
           </button>
           <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>
             <img [src]="gs?.userImage" alt="userimage" class="userimage">
