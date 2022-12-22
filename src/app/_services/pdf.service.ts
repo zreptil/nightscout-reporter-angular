@@ -99,23 +99,26 @@ export class PdfService {
       if (createThumbs != null) {
         for (let cfg of GLOBALS.listConfigOrg) {
           listConfig.push(cfg);
-          switch (cfg.id) {
-            case 'cgp':
-              cfg = new FormConfig(new PrintCGP(this), false);
-              cfg.form.params[0].thumbValue = 1;
-              listConfig.push(cfg);
+          switch (cfg.dataId) {
+            case 'cgp': {
+              const cfg1 = new FormConfig(new PrintCGP(this), false);
+              cfg1.form.params[0].thumbValue = 1;
+              listConfig.push(cfg1);
               break;
-            case 'dayanalysis':
-              cfg = new FormConfig(new PrintDailyAnalysis(this), false);
-              cfg.form.params[2].thumbValue = 1;
-              listConfig.push(cfg);
+            }
+            case 'dayanalysis': {
+              const cfg1 = new FormConfig(new PrintDailyAnalysis(this), false);
+              cfg1.form.params[2].thumbValue = 1;
+              listConfig.push(cfg1);
               break;
-            case 'percentile':
-              cfg = new FormConfig(new PrintPercentile(this), false);
-              cfg.form.params[0].thumbValue = 0;
-              cfg.form.params[2].thumbValue = true;
-              listConfig.push(cfg);
+            }
+            case 'percentile': {
+              const cfg1 = new FormConfig(new PrintPercentile(this), false);
+              cfg1.form.params[0].thumbValue = 0;
+              cfg1.form.params[2].thumbValue = true;
+              listConfig.push(cfg1);
               break;
+            }
           }
         }
       } else {

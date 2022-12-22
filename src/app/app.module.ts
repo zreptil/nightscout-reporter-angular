@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {AutofocusDirective} from '@/_directives/autofocus.directive';
-import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog';
 import {LogComponent} from '@/components/log/log.component';
@@ -44,7 +43,6 @@ import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.componen
 @NgModule({
   declarations: [
     AutofocusDirective,
-    TextareaAutoresizeDirective,
     AppComponent,
     DialogComponent,
     ColorPickerComponent,

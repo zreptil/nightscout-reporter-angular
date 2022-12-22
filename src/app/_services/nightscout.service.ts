@@ -85,10 +85,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     if (isForThumbs) {
       beg = new Date(2019, 8, 26);
       end = new Date(2019, 9, 1);
-
       // beg = new Date(2022, 9, 26);
       // end = new Date(2022, 9, 26);
-      end = new Date(2019, 9, 26);
       this.reportData = null;
     } else {
       beg = GLOBALS.period.shiftStartBy(GLOBALS.currPeriodShift.months);

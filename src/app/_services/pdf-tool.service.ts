@@ -6,6 +6,9 @@ import {PdfService} from '@/_services/pdf.service';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {DataService} from '@/_services/data.service';
 import {GLOBALS} from '@/_model/globals-data';
+import {Log} from '@/_services/log.service';
+import * as JSZip from 'jszip';
+import {saveAs} from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -42,17 +45,13 @@ export class PdfToolService {
 
   private createThumb(pdf: TCreatedPdf): void {
     const PDFJS = require('../../assets/scripts/pdf.js');
-    require('../../assets/scripts/pdf.worker.js');
-    // PDFJS.workerSrc = '../../assets/scripts/pdf.worker.js';
-    console.log(PDFJS);
-    // PDFJS.GlobalWorkerOptions.workerSrc = 'assets/scripts/pdf.worker';
+    // require('../../assets/scripts/pdf.worker.js');
     this._remaining = 1;
     try {
       // let pdfDoc: any = null;
       pdf.getDataUrl((outDoc) => {
         PDFJS.getDocument({url: outDoc}).promise.then((pdf_doc: any) => {
           const pdfDoc = pdf_doc;
-          console.log('pdfDoc', pdfDoc);
           const pageDefs = [
             {i: 1, n: 'test'}
             , {i: 2, n: 'analysis'}
@@ -105,20 +104,23 @@ export class PdfToolService {
       }, 1000);
       return;
     }
-    // $('body').css('background', '#e0ffe0');
-    // Log.info('Packe Bilder zusammen ...')
-    // var zip = new JSZip();
-    // var img = zip.folder('');
-    // $('#pdfimg').children().each(() => {
-    //   var data = this.toDataURL();
-    //   data = data.substr(data.indexOf('base64') + 6);
-    //   img.file($(this).attr('title') + '.png', data, {base64: true});
-    // });
-    // zip.generateAsync({type: 'blob'}).then(function (content) {
-    //   saveAs(content, 'nr-images.<?=$createImages?>.zip');
-    //   $('#message').html($('<button>Fenster schliessen</button>').click(function () {
-    //     window.close();
-    //   }));
+    Log.info('Packe Bilder zusammen ...')
+    const zip = new JSZip();
+    const img = zip.folder('');
+    const len = document.getElementById('pdfimg').children.length;
+    img.folder(GLOBALS.language.img);
+    for (let i = 0; i < len; i++) {
+      const item = document.getElementById('pdfimg').children.item(i);
+      let data = (item as any).toDataURL();
+      data = data.substring(data.indexOf('base64') + 6);
+      img.file(`${GLOBALS.language.img}/${item.getAttribute('title')}.png`, data, {base64: true});
+    }
+
+    zip.generateAsync({type: 'blob'}).then(function (content) {
+      saveAs(content, `nr-images.${GLOBALS.language.img}.zip`);
+      // $('#message').html($('<button>Fenster schliessen</button>').click(function () {
+      // window.close();
+    });
     //   $('#message').append($('<button id=\'btnPdf\'>PDF anzeigen</button>').click(function () {
     //     if ($('#output').is(':visible')) {
     //       $('#output').hide();
@@ -165,8 +167,6 @@ export class PdfToolService {
         canvas.width = this.smallSide / orgHig * orgWid;
       }
 
-      console.log(canvas);
-
       const renderContext = {
         canvasContext: ctx,
         viewport: viewport
@@ -184,39 +184,37 @@ export class PdfToolService {
     });
   }
 
-  private combinePdfPages(pdfDoc: any, idx1: number, idx2: number, name: string, _tileVert = true): void {
+  private combinePdfPages(pdfDoc: any, idx1: number, idx2: number, name: string, tileVert = true): void {
     var item = {i: idx1, n: ''};
-    this.loadPdfPage(pdfDoc, item.i, item, (_c1) => {
+    this.loadPdfPage(pdfDoc, item.i, item, (c1) => {
       var item = {i: idx2, n: name};
-      this.loadPdfPage(pdfDoc, item.i, item, (_c2) => {
-        // $("#message").text("Erzeuge " + item.n + ".png ...");
-        // const canvas = document.createElement('<canvas></canvas>');
-        // canvas.attributes.setNamedItem('title', item.n);
-        // var cvs = canvas.get(0);
-        // var ctx = cvs.getContext('2d');
-        // var w1 = c1.get(0).width;
-        // var h1 = c1.get(0).height;
-        // var w2 = c2.get(0).width;
-        // var h2 = c2.get(0).height;
-        // if (tileVert) {
-        //   cvs.width = w1;
-        //   cvs.height = h1 + h2 + 2;
-        //   cvs.width = this.smallSide;
-        //   cvs.height = (h1 + h2 + 2) * cvs.width / w1;
-        //   ctx.scale(this.smallSide / w1, this.smallSide / w1);
-        //   ctx.drawImage(c1.get(0), 0, 0);
-        //   ctx.drawImage(c2.get(0), (w1 - w2) / 2, h1 + 2);
-        // } else {
-        //   cvs.height = h1;
-        //   cvs.width = w1 + w2 + 2;
-        //   cvs.height = this.smallSide;
-        //   cvs.width = (w1 + w2 + 2) * cvs.height / h1;
-        //   ctx.scale(this.smallSide / h1, this.smallSide / h1);
-        //   ctx.drawImage(c1.get(0), 0, 0);
-        //   ctx.drawImage(c2.get(0), w1 + 2, (h1 - h2) / 2);
-        // }
-        // this._remaining--;
-        // $("#pdfimg").append(canvas);
+      this.loadPdfPage(pdfDoc, item.i, item, (c2) => {
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('title', item.n);
+        const ctx = canvas.getContext('2d');
+        const w1 = c1.width;
+        const h1 = c1.height;
+        const w2 = c2.width;
+        const h2 = c2.height;
+        if (tileVert) {
+          canvas.width = w1;
+          canvas.height = h1 + h2 + 2;
+          canvas.width = this.smallSide;
+          canvas.height = (h1 + h2 + 2) * canvas.width / w1;
+          ctx.scale(this.smallSide / w1, this.smallSide / w1);
+          ctx.drawImage(c1, 0, 0);
+          ctx.drawImage(c2, (w1 - w2) / 2, h1 + 2);
+        } else {
+          canvas.height = h1;
+          canvas.width = w1 + w2 + 2;
+          canvas.height = this.smallSide;
+          canvas.width = (w1 + w2 + 2) * canvas.height / h1;
+          ctx.scale(this.smallSide / h1, this.smallSide / h1);
+          ctx.drawImage(c1, 0, 0);
+          ctx.drawImage(c2, w1 + 2, (h1 - h2) / 2);
+        }
+        this._remaining--;
+        document.getElementById('pdfimg').append(canvas);
       });
     });
   }

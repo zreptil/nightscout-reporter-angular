@@ -34,10 +34,9 @@
   }
 
   .pdfimg {
-    display: flex;
+    display: none;
     flex-flow: row;
     flex-wrap: wrap;
-    background: lime;
 
     canvas {
       border: 10px solid red;
