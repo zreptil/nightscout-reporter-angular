@@ -45,3 +45,5 @@ Thumbs.db
 /tools/**/*.js.map
 /src/locale/messages.*.xlf
 
+/temp/
+/src/locale/translated/

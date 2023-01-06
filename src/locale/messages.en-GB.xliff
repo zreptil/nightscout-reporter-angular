@@ -347,7 +347,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">362</context>
+          <context context-type="linenumber">361</context>
         </context-group>
         <source>Just now</source>
       </trans-unit>
@@ -631,7 +631,7 @@
       <trans-unit id="9090867213238754343" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">181</context>
         </context-group>
         <source>there was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds from <x id="PH_1" equiv-text="url"/></source>
       </trans-unit>
@@ -651,7 +651,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <source>Loading basedata...</source>
       </trans-unit>
@@ -710,49 +710,49 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="3336682057311020015" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">196</context>
         </context-group>
         <source>state</source>
       </trans-unit>
       <trans-unit id="2165535070589083340" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">351</context>
         </context-group>
         <source>Sorting profiles...</source>
       </trans-unit>
       <trans-unit id="553411606026393175" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">358</context>
+          <context context-type="linenumber">357</context>
         </context-group>
         <source>Calculating profile lengths...</source>
       </trans-unit>
       <trans-unit id="203160200131643954" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">394</context>
+          <context context-type="linenumber">393</context>
         </context-group>
         <source>Sorting calculated profiles...</source>
       </trans-unit>
       <trans-unit id="6933690798138526926" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">402</context>
+          <context context-type="linenumber">401</context>
         </context-group>
         <source>Removing empty profiles...</source>
       </trans-unit>
       <trans-unit id="4634217142135775947" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">606</context>
+          <context context-type="linenumber">605</context>
         </context-group>
         <source>Cleaning up data...</source>
       </trans-unit>
       <trans-unit id="3117299459475029064" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">text when pdf is being created</note>
         <source>Creating PDF...</source>
@@ -760,14 +760,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="1634398240503205507" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <source>Error loading data</source>
       </trans-unit>
       <trans-unit id="3402864355211188521" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <source>Show PDF</source>
       </trans-unit>
@@ -777,21 +777,21 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 <x id="PH_1" equiv-text="stacktrace"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <source>Error loading data: {$PH} ${PH_1}</source>
       </trans-unit>
       <trans-unit id="1008046558562314154" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">412</context>
+          <context context-type="linenumber">396</context>
         </context-group>
         <source>The PDF could not be displayed. Is a pop-up blocker active?</source>
       </trans-unit>
       <trans-unit id="5863317744980308324" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">331</context>
+          <context context-type="linenumber">301</context>
         </context-group>
         <source>The URL has not been set yet</source>
       </trans-unit>
@@ -826,42 +826,42 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="106915923521054589" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">367</context>
+          <context context-type="linenumber">366</context>
         </context-group>
         <source>{$PH} Minute</source>
       </trans-unit>
       <trans-unit id="5649152052903402207" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">368</context>
+          <context context-type="linenumber">367</context>
         </context-group>
         <source>{$PH} Minutes</source>
       </trans-unit>
       <trans-unit id="5715822374601764396" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">374</context>
+          <context context-type="linenumber">373</context>
         </context-group>
         <source>{$PH} hour</source>
       </trans-unit>
       <trans-unit id="6787170888491959005" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">375</context>
+          <context context-type="linenumber">374</context>
         </context-group>
         <source>{$PH} hours</source>
       </trans-unit>
       <trans-unit id="2243853424457768965" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">382</context>
+          <context context-type="linenumber">381</context>
         </context-group>
         <source>{$PH} Day</source>
       </trans-unit>
       <trans-unit id="3499176050291189451" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">383</context>
+          <context context-type="linenumber">382</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -872,14 +872,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="610068718017122607" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">386</context>
+          <context context-type="linenumber">385</context>
         </context-group>
         <source>{$PH} Hour</source>
       </trans-unit>
       <trans-unit id="896232652852247226" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">387</context>
+          <context context-type="linenumber">386</context>
         </context-group>
         <source>{$PH} hours</source>
       </trans-unit>
@@ -995,18 +995,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <note priority="1" from="description">title of settings</note>
         <source>Settings</source>
       </trans-unit>
-      <trans-unit id="1974187181485501471" datatype="html" approved="yes">
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <note priority="1" from="description">title of nightscout status</note>
-        <source>Google Assistant</source>
-      </trans-unit>
       <trans-unit id="3884532559361891104" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
@@ -1018,7 +1010,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="8960233799181110623" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="description">title of nightscout page</note>
         <source>Nighscout Site</source>
@@ -1026,7 +1018,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="5528370461881275549" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <note priority="1" from="description">title of nightscout reports</note>
         <source>Nightscout Reports</source>
@@ -1034,18 +1026,18 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       <trans-unit id="3650664205119216637" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="description">title of night-watch</note>
         <source>Night-Watch</source>
       </trans-unit>
-      <trans-unit id="5420444488464625479" datatype="html" approved="yes">
+      <trans-unit id="2156010794189477883" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">91</context>
         </context-group>
-        <note priority="1" from="description">title of nightscout reports</note>
-        <source>Dart Localization Import</source>
+        <note priority="1" from="description">title of local tools</note>
+        <source>Local Tools</source>
       </trans-unit>
       <trans-unit id="623302995999546215" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -2057,13 +2049,13 @@ Maximum number of profile datasets:</target>
         <note priority="1" from="description">version</note>
         <source>Version</source>
       </trans-unit>
-      <trans-unit id="6531665188528193744" datatype="html" approved="yes">
+      <trans-unit id="2964199674389046686" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
         <note priority="1" from="description">v400</note>
-        <source>4.0.0 - xx.xx.2022</source>
+        <source>4.0.0 - 07/01/2023</source>
       </trans-unit>
       <trans-unit id="7994419806233540093" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -2241,13 +2233,13 @@ Maximum number of profile datasets:</target>
         <note priority="1" from="description">v300</note>
         <source>3.0.0 - 21/08/2022</source>
       </trans-unit>
-      <trans-unit id="4027913842661346247" datatype="html" approved="yes">
+      <trans-unit id="1791903212401138744" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">115,126</context>
         </context-group>
         <note priority="1" from="description">v300a1</note>
-        <source>A new view called {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT} has been added. In this view, as in the clock display on the Nightscout page, you can see the current glucose value and other information that you can configure to a certain extent as you like it. Night-Watch is accessed via this URL: {$START_LINK}https://nightscout-reporter.zreptil.de/watch{$CLOSE_LINK} It can also be accessed via the main menu under the menu item {$START_ITALIC_TEXT}Night-Watch{$CLOSE_ITALIC_TEXT}, or by clicking on the current sugar value in Nightscout Reporter's title bar if you have activated it in the settings.</source>
+        <source> A new view called <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Night-Watch<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> has been added. In this view, as in the clock display on the Nightscout page, you can see the current glucose value and other information that you can configure to a certain extent as you like it. Night-Watch is accessed via this URL: <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://nightrep.zreptil.de/watch&quot; target=&quot;_blank&quot;&gt;"/> https://nightrep.zreptil.de/watch <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> It can also be accessed via the main menu under the menu item <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Night-Watch<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>, or by clicking on the current sugar value in Nightscout Reporter's title bar if you have activated it in the settings. </source>
       </trans-unit>
       <trans-unit id="5736239371712783896" datatype="html" approved="yes">
         <context-group purpose="location">

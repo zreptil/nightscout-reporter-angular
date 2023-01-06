@@ -626,7 +626,7 @@
         <source>Es gab keine Antwort innerhalb von <x id="PH" equiv-text="params.timeout / 1000"/> Sekunden bei <x id="PH_1" equiv-text="url"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7716816989054584047" datatype="html">
@@ -645,7 +645,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="623955052110859995" datatype="html">
@@ -704,49 +704,49 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>status</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">196</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2165535070589083340" datatype="html">
         <source>Sortiere Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">351</context>
         </context-group>
       </trans-unit>
       <trans-unit id="553411606026393175" datatype="html">
         <source>Berechne Profillängen...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">358</context>
+          <context context-type="linenumber">357</context>
         </context-group>
       </trans-unit>
       <trans-unit id="203160200131643954" datatype="html">
         <source>Sortiere berechnete Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">394</context>
+          <context context-type="linenumber">393</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6933690798138526926" datatype="html">
         <source>Entferne leere Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">402</context>
+          <context context-type="linenumber">401</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4634217142135775947" datatype="html">
         <source>Bereinige Daten...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">606</context>
+          <context context-type="linenumber">605</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3117299459475029064" datatype="html">
         <source>Erzeuge PDF...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">text when pdf is being created</note>
       </trans-unit>
@@ -754,14 +754,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Fehler beim Laden der Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3402864355211188521" datatype="html">
         <source>PDF anzeigen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6530668891861059555" datatype="html">
@@ -770,14 +770,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 <x id="PH_1" equiv-text="stacktrace"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1008046558562314154" datatype="html">
         <source>Das PDF konnte nicht angezeigt werden. Ist ein Popup-Blocker aktiv?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">412</context>
+          <context context-type="linenumber">396</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5863317744980308324" datatype="html">
@@ -987,19 +987,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         </context-group>
         <note priority="1" from="description">title of settings</note>
       </trans-unit>
-      <trans-unit id="1974187181485501471" datatype="html">
-        <source>Google Assistant</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <note priority="1" from="description">title of nightscout status</note>
-      </trans-unit>
       <trans-unit id="3884532559361891104" datatype="html">
         <source>Was bisher geschah...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
@@ -1011,7 +1003,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Nightscout Seite</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="description">title of nightscout page</note>
       </trans-unit>
@@ -1019,7 +1011,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Nightscout Berichte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <note priority="1" from="description">title of nightscout reports</note>
       </trans-unit>
@@ -1027,17 +1019,17 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Night-Watch</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="description">title of night-watch</note>
       </trans-unit>
-      <trans-unit id="5420444488464625479" datatype="html">
-        <source>Dart Localization Import</source>
+      <trans-unit id="2156010794189477883" datatype="html">
+        <source>Local Tools</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">91</context>
         </context-group>
-        <note priority="1" from="description">title of nightscout reports</note>
+        <note priority="1" from="description">title of local tools</note>
       </trans-unit>
       <trans-unit id="623302995999546215" datatype="html">
         <source>Hinzufügen</source>
@@ -2047,8 +2039,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         </context-group>
         <note priority="1" from="description">version</note>
       </trans-unit>
-      <trans-unit id="6531665188528193744" datatype="html">
-        <source>4.0.0 - xx.xx.2022</source>
+      <trans-unit id="2964199674389046686" datatype="html">
+        <source>4.0.0 - 07.01.2023</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">13</context>
