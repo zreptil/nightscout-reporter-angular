@@ -8663,8 +8663,10 @@
       if (typeof wdw === 'undefined') {
         // node.js - disable worker and set require.ensure.
         isWorkerDisabled = true;
-        if (typeof require.ensure === 'undefined') {
-          require.ensure = require('node-ensure');
+        if (typeof require !== 'undefined') {
+          if (typeof require.ensure === 'undefined') {
+            require.ensure = require('node-ensure');
+          }
         }
         useRequireEnsure = true;
       }

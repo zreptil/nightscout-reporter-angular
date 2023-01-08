@@ -45,6 +45,7 @@ mat-dialog-content {
   font-size: 1.2em;
   background-color: var(--secondaryBack);
   color: var(--secondaryFore);
+  height: 40vh;
 
   div {
     text-align: justify;
@@ -76,7 +77,7 @@ mat-dialog-actions {
 
 
 @media(max-width: 33em) {
-  div[header] {
+  div[mat-dialog-title] {
     flex-direction: column !important;
   }
 }

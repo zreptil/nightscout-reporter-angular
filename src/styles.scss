@@ -155,7 +155,16 @@ mat-icon[small] {
 }
 
 .dialog-box {
+  max-height: 90vh;
   min-width: 30vw;
+  max-width: 90vw !important;
+
+  .cdk-drag {
+    display: flex;
+    flex-flow: column;
+    max-width: 90vw;
+    overflow-x: hidden;
+  }
 
   mat-dialog-container {
     padding: 0;

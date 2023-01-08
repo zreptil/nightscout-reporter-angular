@@ -261,7 +261,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   override async fillPages(pages: PageData[]) {
-    //* ---------------------------
+    /* ---------------------------
     this.showNotes = true;
     this.showCarbs = true;
     this.showIE = true;
