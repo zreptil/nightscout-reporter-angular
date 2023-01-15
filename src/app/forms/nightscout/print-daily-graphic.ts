@@ -467,7 +467,6 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     return ret;
   }
 
-
   carbsForIE(src: ReportData, t: TreatmentData): number {
     if (t.boluscalc != null) {
       return t.boluscalc.insulinCarbs;
@@ -1338,11 +1337,11 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         {text: `${GLOBALS.fmtNumber(prz, 1)} %`, color: this.colBolus, fontSize: this.fs(10), alignment: 'right'}
       ]);
       if (this.showZeroBasal) {
-        const duration = day.basalZeroDuration;
+        const duration = day.basalZeroDuration / 60;
         infoBody.push([
           {text: this.msgBasalZero, fontSize: this.fs(10)},
           {
-            text: `${this.msgDuration(Math.floor(duration / 60), duration % 60)}`,
+            text: `${this.msgDuration(Math.floor(duration / 60), Math.floor(duration % 60))}`,
             color: this.colBasalDay,
             fontSize: this.fs(10),
             alignment: 'right'

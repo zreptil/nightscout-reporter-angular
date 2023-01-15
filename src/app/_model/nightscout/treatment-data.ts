@@ -115,7 +115,7 @@ export class TreatmentData extends JsonData {
   }
 
   get isSensorChange(): boolean {
-    return this._t === 'sensor change' || this._t === 'sensor main';
+    return this._t === 'sensor change' || this._t === 'sensor start';
   }
 
   get isPumpBatteryChange(): boolean {
@@ -385,7 +385,7 @@ export class TreatmentData extends JsonData {
 
   calcTotalCOB(data: ReportData,
                yesterday: DayData,
-               ret: {totalCOB: number, isDecaying: boolean, lastDecayedBy: Date},
+               ret: { totalCOB: number, isDecaying: boolean, lastDecayedBy: Date },
                profile: ProfileGlucData,
                time: Date,
                iob: (data: ReportData, time: Date, yesterday: DayData) => CalcIOBData): void {
