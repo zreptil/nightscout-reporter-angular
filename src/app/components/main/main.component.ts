@@ -330,6 +330,9 @@ export class MainComponent implements OnInit {
       case 'local-tools':
         this.ss.navigate('#tools');
         break;
+      case 'googlecloud':
+        this.ss.navigate('https://navid200.github.io/xDrip/docs/Nightscout/GoogleCloud.html');
+        break;
     }
   }
 

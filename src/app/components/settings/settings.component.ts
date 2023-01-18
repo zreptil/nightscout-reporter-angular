@@ -352,16 +352,25 @@ export class SettingsComponent implements OnInit {
     // set isConfigured to true, if url is reachable
     // never set isConfigured to false, since this
     // will trigger the welcome dialog
+    if (ret != null) {
+      if (saveData) {
+        this.ss.confirm($localize`Die URL ist nicht erreichbar. Soll trotzdem gespeichert werden?`, 'settings').subscribe(result => {
+          switch (result.btn) {
+            case DialogResultButton.yes:
+              this.ds.saveWebData();
+              this.dlgRef.close({btn: DialogResultButton.ok});
+              break;
+          }
+        });
+      }
+    }
     if (ret == null) {
       GLOBALS.isConfigured = true;
       this.ds.saveWebData();
       if (saveData) {
         this.dlgRef.close({btn: DialogResultButton.ok});
       }
-    } else if (saveData) {
-      Log.todo('Überlegen, ob es sinnvoll ist, einen User speichern zu dürfen, dessen URL nicht erreichbar ist.')
     }
-// if (ret == null && event != null) fire(event);
   }
 
   dateChange(item: any, setter: string, event: any) {

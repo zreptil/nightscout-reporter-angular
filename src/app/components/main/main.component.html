@@ -91,6 +91,11 @@
           <div i18n="title of local tools">Local Tools</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
+        <button (click)="clickMenuButton('googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
+          <img alt="nightscout white" src="assets/img/nightscout.png">
+          <div i18n="title of local tools">Google Cloud Setup</div>
+          <mat-icon small>open_in_new</mat-icon>
+        </button>
         <div class="menu-legal">
           <button (click)="ss.showPopup('impressum')" class="legal" mat-flat-button>{{msgImpressum}}</button>
           <button (click)="ss.showPopup('dsgvo')" class="legal" mat-flat-button>{{msgDSGVO}}</button>
