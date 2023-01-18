@@ -184,7 +184,7 @@ die gleichen Werte beinhalten.`;
       for (let i = 0; i < profile.store.listTargetHigh.length; i++) {
         const high = profile.store.listTargetHigh[i];
         const low = profile.store.listTargetLow[i];
-        if (high.time(date) != low.time(date)) {
+        if (Utils.compareDate(high.time(date), low.time(date)) !== 0) {
           continue;
         }
         const entry = new ProfileEntryData(profile.store.timezone, high.time(date));

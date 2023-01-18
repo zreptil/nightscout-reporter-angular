@@ -199,6 +199,15 @@ export class Utils {
     return false;
   }
 
+  /**
+   * compare two values
+   * @param a first value
+   * @param b second value
+   * @returns
+   * 0 if a === b
+   * -1 if a < b
+   * 1 if a > b
+   */
   static compare(a: any, b: any): number {
     if (a === b) {
       return 0;
@@ -206,6 +215,15 @@ export class Utils {
     return (a < b) ? -1 : 1;
   }
 
+  /**
+   * compare two dates
+   * @param a first date
+   * @param b second date
+   * @returns
+   * 0 if a === b
+   * -1 if a < b
+   * 1 if a > b
+   */
   static compareDate(a: Date, b: Date): number {
     return Utils.compare(a?.getTime(), b?.getTime());
   }
