@@ -215,7 +215,7 @@ export class SettingsComponent implements OnInit {
   }
 
   clickExport(): void {
-    saveAs(new Blob([Settings.doit(GLOBALS.asSharedString)]), `nightscout-reporter-cfg.${Utils.fmtDate(new Date(), 'yyyyMMddhhmm')}.txt`);
+    saveAs(new Blob([Settings.doit(GLOBALS.asSharedString)]), `nightrep-cfg.${Utils.fmtDate(new Date(), 'yyyyMMdd-hhmm')}.json`);
     // this.exportData = convert.base64Encode(convert.utf8.encode(Settings.doit(g.asSharedString)));
     //
     // Future.delayed(Duration(milliseconds: 100), () {
@@ -308,16 +308,6 @@ export class SettingsComponent implements OnInit {
 
   msgCheckUser(url: string): string {
     return $localize`:@@msgCheckUser:Überprüfe Zugriff auf ${url}...`;
-  }
-
-  deleteUser(): void {
-    this.ss.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, 'settings').subscribe(result => {
-      switch (result.btn) {
-        case DialogResultButton.yes:
-          GLOBALS.userList.splice(GLOBALS.userIdx, 1);
-          break;
-      }
-    });
   }
 
   addUser(): void {

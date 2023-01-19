@@ -51,8 +51,7 @@
                 mat-mini-fab>
           <mat-icon>add</mat-icon>
         </button>
-        <button (click)="deleteUser()"
-                mat-mini-fab>
+        <button (click)="ss.deleteUser()" mat-mini-fab>
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -143,15 +142,15 @@
     <div class="sub">
       <div class="subtitle" i18n="label of area for additional functions">Zusatzfunktionen</div>
       <div class="functions">
-      <div *ngIf="globals.isBeta" class="sub">
-        <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
-          <mat-icon>file_copy</mat-icon>
-          <div i18n="buttonlabel for copy of settings to beta version">
-            Einstellungen von Release-Version übernehmen
-          </div>
-        </button>
-      </div>
-      <app-gluc-adjust></app-gluc-adjust>
+        <div *ngIf="globals.isBeta" class="sub">
+          <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
+            <mat-icon>file_copy</mat-icon>
+            <div i18n="buttonlabel for copy of settings to beta version">
+              Einstellungen von Release-Version übernehmen
+            </div>
+          </button>
+        </div>
+        <app-gluc-adjust></app-gluc-adjust>
       </div>
     </div>
   </mat-dialog-content>

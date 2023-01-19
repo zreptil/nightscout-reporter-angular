@@ -9,6 +9,20 @@
     </div>
   </div>
   <mat-dialog-content>
+    <h2 (click)="click(40.1)">
+      <span i18n="version">Version</span><span i18n="v400">4.0.1 - 19.01.2023</span></h2>
+    <ul [class]="classFor(40.1)">
+      <li class="changed" i18n="v401c1">
+        Die Auswahl des Benutzers wurde geändert. Bisher klappte eine Liste auf, in der die Benutzer zu
+        sehen waren, wenn man den Benutzernamen in der Titelzeile angeklickt hat. Statt der Liste wird
+        nun der Inhaltsbereich verwendet, um die Benutzer mit Kacheln darzustellen. Der aktuelle Benutzer
+        ist so markiert, wie ein ausgewähltes Formular. Beim aktuellen Benutzer kann man mit dem
+        Mülleimer-Icon links eine Löschung desselben vornehmen und mit dem Zahnrad-Icon rechts die
+        Einstellungen aufrufen. Es können nach wie vor beliebig viele Benutzer angelegt werden. Wenn
+        die Liste der Benutzer zu gross für den Bildschirm wird, dann wird sie scrollbar. Wenn der aktuelle
+        Benutzer angeklickt wird, wird wieder zur Liste der Formulare gewechselt.
+      </li>
+    </ul>
     <h2 (click)="click(40.0)">
       <span i18n="version">Version</span><span i18n="v400">4.0.0 - 07.01.2023</span></h2>
     <ul [class]="classFor(40.0)">

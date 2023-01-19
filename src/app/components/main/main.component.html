@@ -152,14 +152,15 @@
                class="userName">
             {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
           </div>
-          <div *ngIf="globals.userList.length > 1"
+          <button (click)="clickUser()" class="userName" mat-flat-button>{{globals.user.display}}</button>
+          <div *ngIf="globals.userList.length > 1 && false"
                [class]="classForView('userPanel')">
             <mat-form-field appearance="standard">
               <mat-select [(value)]="userIdx">
                 <mat-select-trigger>
                   {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
                 </mat-select-trigger>
-                <mat-option (click)="activateUser(idx)"
+                <mat-option (click)="ss.activateUser(idx)"
                             *ngFor="let item of globals.userList; let idx = index"
                             [class]="userClass(item)"
                             [value]="idx">
@@ -233,96 +234,7 @@
     <div class="content">
       <app-view-tile *ngIf="globals.viewType==='tile'"></app-view-tile>
       <app-view-list *ngIf="globals.viewType==='list'"></app-view-list>
-      <!--
-        <material-content class="main">
-          <helpview *ngIf="tileHelp.isNotEmpty" [tileHelp]="tileHelp" (buttonClicked)="tileHelpButtonClicked"></helpview>
-          <infoview *ngIf="g.info.hasContent && currPage=='normal' && progressText==null"></infoview>
-          <div class="tileparams" *ngIf="tileParams!=null && progressText == null && !g.showAllTileParams">
-            <div title>
-              <material-checkbox class="is-local" [(checked)]="allParams" *ngIf="g.isLocal" (trigger)="checkAllParams()"></material-checkbox>
-              {{tileParams.form.display}}
-              <div>
-                <material-button (trigger)="clickTileParamListToggle($event)">
-                  <material-icon icon="list"></material-icon>
-                </material-button>
-                <material-button (trigger)="clickTileParamClose($event)">
-                  <material-icon icon="close"></material-icon>
-                </material-button>
-              </div>
-            </div>
-            <div parampanel>
-              <formparams [paramList]="tileParams.form.sortedParams"></formparams>
-            </div>
-          </div>
-          <div class="tileparams" *ngIf="tileParams!=null && progressText == null && g.showAllTileParams">
-            <div title>
-              <ng-container @i18n="title for parameters">Optionen</ng-container>
-              <div>
-                <material-button (trigger)="clickTileParamListToggle($event)">
-                  <material-icon icon="description"></material-icon>
-                </material-button>
-                <material-button (trigger)="clickTileParamSingleClose($event)">
-                  <material-icon icon="close"></material-icon>
-                </material-button>
-              </div>
-            </div>
-            <div parampanel>
-              <template ngFor let-cfg [ngForOf]="g.listConfig">
-                <div *ngIf="isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0">
-                  <div paramtitle>{{cfg.form.display}}</div>
-                  <formparams [paramList]="cfg.form.sortedParams"></formparams>
-                </div>
-              </template>
-            </div>
-          </div>
-          <div [class]="classForView('normal-content')" *ngIf="tileParams==null"
-               [style.display]="progressText == null && currPage=='normal'?'':'none'">
-            <div class="formlist" *ngIf="g.viewType=='list'">
-              <template ngFor let-cfg [ngForOf]="g.listConfig">
-                <div *ngIf="isFormVisible(cfg.form)">
-                  <div class="sortable" id="list-{{cfg.id}}">
-                    <material-expansionpanel
-                      (click)="expansionPanelClicked($event,cfg)"
-                      (open)="expansionPanelOpen($event,cfg)"
-                      (close)="expansionPanelClose($event,cfg)"
-                      [class]="expansionClass(cfg)" flat
-                      name=""
-                      [disableHeaderExpansion]="true"
-                      secondaryText="" [showSaveCancel]="false" [hideExpandedHeader]="false"
-                      [alwaysHideExpandIcon]="cfg.form.sortedParams.isEmpty || !cfg.checked">
-                      <div name>
-                        <material-icon *ngIf="cfg.form.help!=null" icon="help_outline" (click)="clickTileHelp($event,cfg)"></material-icon>
-                        <material-icon *ngIf="cfg.form.help==null" icon="drag_handle"></material-icon>
-                        <div>{{cfg.form.display}}</div>
-                      </div>
-                      <formparams [paramList]="cfg.form.sortedParams"></formparams>
-                    </material-expansionpanel>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-          <div *ngIf="currPage=='normal'&&tileParams==null&&sendIcon!='stop'" [class]="classForView('sendPanel')">
-            <material-fab [raised]="true"
-                          [class]="sendClass(0,sendIcon)"
-                          [disabled]="sendDisabled"
-                          (trigger)="sendClick()">
-              <material-icon [icon]="createIcon"></material-icon>
-            </material-fab>
-          </div>
-          <div class="themePanel" [style]="themeStyle" *ngIf="currPage=='normal'">
-            <material-button class="donation" (trigger)="g.donationClick()" @i18n="title of donate button">Spenden</material-button>
-            <material-fab mini class="" *ngFor="let item of g.themeList.keys; let idx = index"
-                          (trigger)="toggleThemePanel(item)">
-              <img class="logo" src="packages/nightscout_reporter/assets/themes/wizard.png" *ngIf="item==null">
-              <img class="logo" src="packages/nightscout_reporter/assets/themes/{{item}}/owl.png" *ngIf="item!=null">
-            </material-fab>
-          </div>
-          <material-fab class="owllogo" (trigger)="toggleThemePanel('')" [style]="logoStyle">
-            <img src="packages/nightscout_reporter/assets/themes/{{g.theme}}/owl.png">
-          </material-fab>
-        </material-content>
-      -->
+      <app-view-users *ngIf="globals.viewType==='users'"></app-view-users>
     </div>
     <div *ngIf="globals.viewType==='tile'" class="footer">
       <app-owl-menu></app-owl-menu>

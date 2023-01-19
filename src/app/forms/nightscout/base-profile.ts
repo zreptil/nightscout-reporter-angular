@@ -9,7 +9,6 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DayData} from '@/_model/nightscout/day-data';
-import {Log} from '@/_services/log.service';
 
 export class CalcData {
   firstGluc = 0.0;
@@ -124,7 +123,7 @@ export abstract class BaseProfile extends BasePrint {
     const profiles = this.repData.profiles;
     const _alreadyDone: string[] = [];
     let lastIdx = -1;
-    Log.info(`Report ${this.fmtDate(this.repData.begDate)} - ${this.fmtDate(this.repData.endDate)}`);
+    // Log.info(`Report ${this.fmtDate(this.repData.begDate)} - ${this.fmtDate(this.repData.endDate)}`);
     for (let i = 0; i < this.repData.profiles.length; i++) {
       // print(repData.profiles[i].current.name);
       this.profStartTime = this.repData.profiles[i].startDate;

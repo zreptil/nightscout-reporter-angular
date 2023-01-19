@@ -70,7 +70,7 @@ export class UrlData {
     return ret;
   }
 
-  fullUrl(cmd: string, params = '', noApi = false): string {
+  fullUrl(cmd: string, params = '', noApi = false, noToken = false): string {
     let ret = this.url;
     if (ret == null) {
       return ret;
@@ -91,7 +91,7 @@ export class UrlData {
     } else {
       ret = `${ret}${cmd}`;
     }
-    if (this.token != null && !Utils.isEmpty(this.token)) {
+    if (this.token != null && !Utils.isEmpty(this.token) && !noToken) {
       ret = `${ret}?token=${this.token}&`;
     } else {
       ret = `${ret}?`;

@@ -347,4 +347,23 @@ export class SessionService {
     }
     return ret;
   }
+
+  activateUser(idx: number): void {
+    GLOBALS.userIdx = idx;
+    this.ns.reportData = null;
+    this.ds.save();
+    this.ds.getCurrentGluc();
+    this.checkPrint();
+    this.ds._initAfterLoad();
+  }
+
+  deleteUser(): void {
+    this.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, 'settings').subscribe(result => {
+      switch (result.btn) {
+        case DialogResultButton.yes:
+          GLOBALS.userList.splice(GLOBALS.userIdx, 1);
+          break;
+      }
+    });
+  }
 }

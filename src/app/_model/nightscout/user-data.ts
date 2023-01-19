@@ -129,15 +129,16 @@ export class UserData {
   }
 
   // retrieves the url to the api for a data
-  apiUrl(date: Date, cmd: string, params?: { params?: string, noApi?: boolean }): string {
+  apiUrl(date: Date, cmd: string, params?: { params?: string, noApi?: boolean, noToken?: boolean }): string {
     params ??= {};
     params.params ??= '';
     params.noApi ??= false;
+    params.noToken ??= false;
     if (Utils.isEmpty(this.listApiUrl)) {
       return null;
     }
     const found = this.urlDataFor(date);
-    return found.fullUrl(cmd, params.params, params.noApi);
+    return found.fullUrl(cmd, params.params, params.noApi, params.noToken);
   }
 
   // retrieves the url for a date

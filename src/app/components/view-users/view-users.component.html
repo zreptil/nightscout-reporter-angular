@@ -1,0 +1,19 @@
+<div class="tilelist">
+  <ng-container *ngFor="let user of globals.userList; let idx=index">
+    <div (click)="tileClicked($event,idx)"
+         [class]="tileClass(idx)"
+         id="tile-{{idx}}">
+      <div (click)="clickDelete($event)" *ngIf="idx===globals.userIdx" settings>
+        <mat-icon>delete</mat-icon>
+      </div>
+      <div row>
+        <div name>{{user.display}}</div>
+        <div subtext>{{user.apiUrl(null, "", {noApi: true, noToken: true})}}</div>
+      </div>
+      <div (click)="clickSettings($event)" *ngIf="idx===globals.userIdx" settings>
+        <mat-icon>settings</mat-icon>
+      </div>
+      <div index>{{idx + 1}}</div>
+    </div>
+  </ng-container>
+</div>

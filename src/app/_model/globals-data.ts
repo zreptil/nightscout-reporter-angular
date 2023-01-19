@@ -72,17 +72,6 @@ export class GlobalsData extends Settings {
   maxLogEntries = 20;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
-  private static _listSkipSensorChange = [
-    {idx: 0, value: 0, label: $localize`Keine`},
-    {idx: 1, value: 3, label: $localize`3 Stunden`},
-    {idx: 2, value: 6, label: $localize`6 Stunden`},
-    {idx: 3, value: 12, label: $localize`12 Stunden`},
-    {idx: 4, value: 24, label: $localize`24 Stunden`}
-  ];
-  get listSkipSensorChange(): any[] {
-    return GlobalsData._listSkipSensorChange;
-  }
-
   constructor() {
     super();
     GLOBALS = this;
@@ -168,6 +157,18 @@ export class GlobalsData extends Settings {
     return $localize`Viertes Quartal`;
   }
 
+  private static _listSkipSensorChange = [
+    {idx: 0, value: 0, label: $localize`Keine`},
+    {idx: 1, value: 3, label: $localize`3 Stunden`},
+    {idx: 2, value: 6, label: $localize`6 Stunden`},
+    {idx: 3, value: 12, label: $localize`12 Stunden`},
+    {idx: 4, value: 24, label: $localize`24 Stunden`}
+  ];
+
+  get listSkipSensorChange(): any[] {
+    return GlobalsData._listSkipSensorChange;
+  }
+
   _pdfOrder = '';
 
   get pdfOrder(): string {
@@ -237,13 +238,17 @@ export class GlobalsData extends Settings {
   }
 
   set viewType(value: string) {
-    // Der viewType ist aktuell immer tile.
+    // Der viewType wird aktuell immer auf tile gesetzt,
+    // wenn list gesetzt werden soll.
     // Wenn Benutzer wieder die Listenansicht haben wollen,
-    // wird sie wieder aktiviert.
-    value = 'tile';
+    // wird list wieder aktiviert.
+    if (value === 'list') {
+      value = 'tile';
+    }
     switch (value) {
       case 'tile':
       case 'list':
+      case 'users':
         break;
       default:
         value = 'tile';
@@ -767,7 +772,7 @@ export class GlobalsData extends Settings {
       let ret = `${date.getDate()}`.padStart(2, '0') + '.';
       ret += `${date.getMonth() + 1}`.padStart(2, '0') + '.';
       ret += `${date.getFullYear()}, `;
-      ret += `${date.getHours()}`.padStart(2, '0') + ',';
+      ret += `${date.getHours()}`.padStart(2, '0') + ':';
       ret += `${date.getMinutes()}`.padStart(2, '0');
       if (params.withSeconds) {
         ret += ':' + `${date.getSeconds()}`.padStart(2, '0');

@@ -231,15 +231,6 @@ export class MainComponent implements OnInit {
     return ret;
   }
 
-  activateUser(idx: number): void {
-    GLOBALS.userIdx = idx;
-    this.ns.reportData = null;
-    this.ds.save();
-    this.ds.getCurrentGluc();
-    this.ss.checkPrint();
-    this.ds._initAfterLoad();
-  }
-
   clickLocalTitle() {
     GLOBALS.isLocal = !GLOBALS.isLocal;
     this.ss.checkPrint();
@@ -393,5 +384,9 @@ export class MainComponent implements OnInit {
 
   clickUserImage() {
 
+  }
+
+  clickUser() {
+    GLOBALS.viewType = GLOBALS.viewType === 'users' ? 'tile' : 'users';
   }
 }

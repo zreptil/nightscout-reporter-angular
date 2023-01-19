@@ -338,9 +338,7 @@ export class Utils {
     // atob alleine reicht an dieser Stelle nicht, weil dadurch Umlaute nicht korrekt
     // konvertiert werden.
     try {
-      console.error('pre', src);
       src = atob(src);
-      console.log('post', src);
       const decoder = new TextDecoder();
       const buf = new ArrayBuffer(src.length);
       const bufView = new Uint8Array(buf);

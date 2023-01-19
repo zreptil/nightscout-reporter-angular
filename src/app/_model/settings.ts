@@ -27,7 +27,7 @@ export class Settings {
   static PDFUNLIMITED: number = 4000000;
   static PDFDIVIDER: number = 100000;
 
-  version = '4.0.0';
+  version = '4.0.1';
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
@@ -158,12 +158,12 @@ export class Settings {
       return src;
     }
     return Utils.encodeBase64(src, '');
-/*
-    let ret = Utils.encodeBase64(src, '');
-    const pos = Math.floor(ret.length / 2);
-    String.fromCharCode(Utils.rnd(26) + 64);
-    ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
-    return ret;
-*/
+    /*
+        let ret = Utils.encodeBase64(src, '');
+        const pos = Math.floor(ret.length / 2);
+        String.fromCharCode(Utils.rnd(26) + 64);
+        ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
+        return ret;
+    */
   }
 }
