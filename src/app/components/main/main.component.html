@@ -236,9 +236,10 @@
       <app-view-list *ngIf="globals.viewType==='list'"></app-view-list>
       <app-view-users *ngIf="globals.viewType==='users'"></app-view-users>
     </div>
-    <div *ngIf="globals.viewType==='tile'" class="footer">
+    <div *ngIf="hasFooterBar" class="footer">
       <app-owl-menu></app-owl-menu>
       <button (click)="clickSend()"
+              *ngIf="globals.viewType === 'tile'"
               [class]="sendClass(0,sendIcon)"
               [disabled]="ss.activeCfgCount===0"
               mat-fab
@@ -247,7 +248,7 @@
         <mat-icon>{{createIcon}}</mat-icon>
       </button>
     </div>
-    <ng-container *ngIf="globals.viewType==='list'">
+    <ng-container *ngIf="globals.viewType === 'list'">
       <div class="owlPanel">
         <app-owl-menu></app-owl-menu>
       </div>

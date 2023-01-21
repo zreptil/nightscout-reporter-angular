@@ -124,3 +124,27 @@
 .-cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+[group] {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 1em;
+  margin: 0.5em;
+  max-width: 30%;
+
+  [title] {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    font-size: 3em;
+  }
+
+  [content] {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+}

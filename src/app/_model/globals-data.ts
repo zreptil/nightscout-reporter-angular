@@ -276,7 +276,7 @@ export class GlobalsData extends Settings {
   }
 
   get msgUrlFailureSuffix(): string {
-    return $localize`<br><br>Wenn diese URL geschützt ist, muss ausserdem der Zugriffsschlüssel korrekt definiert sein. Diesen erreicht man über "Administrator-Werkzeuge" auf der persönlichen Nightscout Seite.`;
+    return $localize`<br><br>Wenn diese URL geschützt ist (AUTH_DEFAULT_ROLES steht nicht auf "readable"), muss ausserdem der Zugriffsschlüssel korrekt definiert sein. Diesen erreicht man über "Administrator-Werkzeuge" auf der persönlichen Nightscout Seite.`;
   }
 
   _period: DatepickerPeriod = new DatepickerPeriod();
@@ -297,6 +297,10 @@ export class GlobalsData extends Settings {
 
   get msgUrlFailure10be(): string {
     return $localize`Auf 10be muss beim Server in den Standardeinstellungen der Haken bei "cors" aktiviert werden, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen. Wenn "cors" aktiviert wurde, muss auf dem Server eventuell noch ReDeploy gemacht werden, bevor es wirklich verfügbar ist.`;
+  }
+
+  get msgUrlFailureGoogleCloud(): string {
+    return '<br><br>' + $localize`Die Servervariable ENABLE muss das Wort "cors" beinhalten, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen.<br><br>Wenn sich der Server in der Google Cloud befindet, müssen die Einstellungen in einem SSH-Terminal vorgenommen werden.`;
   }
 
   get msgUrlNotSafe(): string {
@@ -611,14 +615,26 @@ export class GlobalsData extends Settings {
     return ret;
   }
 
-  msgUrlFailure(url: string): string {
+  msgUrlFailure(url: string): any {
     if (url.startsWith('http:') && window.location.protocol.startsWith('https')) {
-      return this.msgUrlNotSafe;
+      return {msg: this.msgUrlNotSafe};
     }
+
+    const regex = new RegExp('.*\\.(chickenkiller|crabdance|ignorelist|jumpingcrab|mooo|strangled|twilightparadox)(\\.com|\\.net).*', 'g');
     if (url.indexOf('ns.10be') >= 0) {
-      return `${this.msgUrlFailurePrefix}${this.msgUrlFailure10be}${this.msgUrlFailureSuffix}`;
+      return {
+        buttons: [{title: 'ns.10be', url: 'https://ns.10be.de', icon: 'open_in_new'}],
+        msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailure10be}${this.msgUrlFailureSuffix}`
+      };
+    } else if (regex.test(url)) {
+      return {
+        buttons: [{title: $localize`Google Cloud Variablen`, url: 'https://navid200.github.io/xDrip/docs/Nightscout/NS_Variables', icon: 'open_in_new'}],
+        msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailureGoogleCloud}${this.msgUrlFailureSuffix}`
+      };
     }
-    return `${this.msgUrlFailurePrefix}${this.msgUrlFailureHerokuapp}${this.msgUrlFailureSuffix}`;
+    return {
+      msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailureHerokuapp}${this.msgUrlFailureSuffix}`
+    };
   }
 
   getGlucInfo(): any {
@@ -859,5 +875,15 @@ export class GlobalsData extends Settings {
 
   timeForCalc(time: Date): number {
     return time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds();
+  }
+
+  userGroup(key: string): UserData[] {
+    return this.userList.filter(user => user.display?.toLowerCase().startsWith(key));
+  }
+
+  sortUserList() {
+    const user = this.user;
+    this.userList.sort((a, b) => Utils.compare(a.display.toLowerCase(), b.display.toLowerCase()));
+    this.userIdx = this.userList.findIndex(u => u.display === user.display);
   }
 }

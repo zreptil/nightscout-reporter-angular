@@ -593,7 +593,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get msgServerNotReachable(): string {
-    return GLOBALS.msgUrlFailure('').replace('<br>', '\n');
+    return GLOBALS.msgUrlFailure('')?.msg.replace('<br>', '\n');
   }
 
   get msgCatheterChange(): string {

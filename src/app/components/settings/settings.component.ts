@@ -12,7 +12,7 @@ import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {MatDialogRef} from '@angular/material/dialog';
-import {DialogResultButton} from '@/_model/dialog-data';
+import {DialogResultButton, DialogType} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-settings',
@@ -20,8 +20,6 @@ import {DialogResultButton} from '@/_model/dialog-data';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  errUserInvalid: string;
-
   confirmIdx = 0;
   currApiUrlIdx = -1;
   showPwd = -1;
@@ -333,34 +331,42 @@ export class SettingsComponent implements OnInit {
     GLOBALS.user.listApiUrl.push(new UrlData());
   }
 
-  async checkUser(saveData = true) {
+  async checkUser() {
     GLOBALS.user.listApiUrl.sort((a, b) => Utils.compareDate(a.endDate, b.endDate));
     this.ps.text = this.msgCheckUser(GLOBALS.user.apiUrl(null, '', {noApi: true}));
     const ret = await this.ss.isUserValid(GLOBALS.user);
     this.ps.text = null;
-    this.errUserInvalid = ret;
-    // set isConfigured to true, if url is reachable
-    // never set isConfigured to false, since this
-    // will trigger the welcome dialog
     if (ret != null) {
-      if (saveData) {
-        this.ss.confirm($localize`Die URL ist nicht erreichbar. Soll trotzdem gespeichert werden?`, 'settings').subscribe(result => {
+      this.ss.showDialog({
+        type: DialogType.confirm,
+        title: $localize`Soll gespeichert werden?`,
+        buttons: [
+          ...(ret as any)?.buttons,
+          {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
+          {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
+        ]
+      }, ret.msg, false, 'settings')
+        //        this.ss.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
+        .subscribe(result => {
           switch (result.btn) {
             case DialogResultButton.yes:
               this.ds.saveWebData();
-              this.dlgRef.close({btn: DialogResultButton.ok});
+              this.closeDialog();
               break;
           }
         });
-      }
+      return;
     }
     if (ret == null) {
       GLOBALS.isConfigured = true;
       this.ds.saveWebData();
-      if (saveData) {
-        this.dlgRef.close({btn: DialogResultButton.ok});
-      }
+      this.closeDialog();
     }
+  }
+
+  closeDialog(): void {
+    GLOBALS.sortUserList();
+    this.dlgRef.close({btn: DialogResultButton.ok});
   }
 
   dateChange(item: any, setter: string, event: any) {
@@ -368,6 +374,6 @@ export class SettingsComponent implements OnInit {
   }
 
   clickSave() {
-    this.checkUser(true);
+    this.checkUser();
   }
 }

@@ -27,7 +27,7 @@ export class Settings {
   static PDFUNLIMITED: number = 4000000;
   static PDFDIVIDER: number = 100000;
 
-  version = '4.0.1';
+  version = '4.0.2';
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';

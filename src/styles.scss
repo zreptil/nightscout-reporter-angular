@@ -212,6 +212,12 @@ mat-icon[small] {
   }
 }
 
+@media (min-width: 1200px) {
+  .dialog-box.confirm {
+    max-width: 50% !important;
+  }
+}
+
 * {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }

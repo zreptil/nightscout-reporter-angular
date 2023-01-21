@@ -59,6 +59,10 @@ export class DialogComponent implements OnInit, AfterViewChecked {
     this.dialogRef.close(btn.result);
   }
 
+  openUrl(btn: IDialogButton) {
+    window.open(btn.url);
+  }
+
   writeToBackend(): Observable<boolean> {
     return of(true);
   }

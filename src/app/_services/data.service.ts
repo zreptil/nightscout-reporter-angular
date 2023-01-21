@@ -404,7 +404,7 @@ export class DataService {
             u.formParams = {};
             userList.add(u);
       // */
-      GLOBALS.userList.sort((a, b) => Utils.compare(a.display, b.display));
+      GLOBALS.sortUserList();
       GLOBALS.userListLoaded = true;
       GLOBALS.userIdx = JsonData.toNumber(json.s4);
       // get shortcuts if available

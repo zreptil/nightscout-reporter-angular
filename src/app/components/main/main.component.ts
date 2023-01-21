@@ -106,6 +106,10 @@ export class MainComponent implements OnInit {
     // }), 1000);
   }
 
+  get hasFooterBar(): boolean {
+    return GLOBALS.viewType === 'tile' || GLOBALS.viewType === 'users';
+  }
+
   get userIdx(): number {
     return GLOBALS.userIdx;
   }

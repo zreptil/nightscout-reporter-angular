@@ -22,7 +22,8 @@ export class DialogResult {
 
 export interface IDialogButton {
   title: string;
-  result: DialogResult;
+  result?: DialogResult;
+  url?: string;
   icon?: string;
   focus?: boolean;
 }

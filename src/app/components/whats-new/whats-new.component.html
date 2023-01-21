@@ -9,8 +9,28 @@
     </div>
   </div>
   <mat-dialog-content>
+    <h2 (click)="click(40.2)">
+      <span i18n="version">Version</span><span i18n="v402">4.0.2 - 19.01.2023</span></h2>
+    <ul [class]="classFor(40.2)">
+      <li class="added" i18n="v402a1">
+        In der Benutzerliste ist jetzt auch das Eulenmenü links unten verfügbar.
+      </li>
+      <li class="changed" i18n="v402c1">
+        Die Benutzerliste wird jetzt alphabetisch ohne Berücksichtigung der Gross-/Kleinschreibung
+        sortiert.
+      </li>
+      <li class="changed" i18n="v402c2">
+        Wenn die Überprüfung der URL beim Speichern eines Benutzers fehl schlägt, wird nun ein
+        Dialog angezeigt, der den Grund für die fehlgeschlagene Speicherung anzeigt und die
+        Möglichkeit gibt, trotzdem zu speichern. Ausserdem wird versucht, anhand der URL zu
+        ermitteln, welcher Dienst für die Nightscout Instanz verwendet wird. Wenn es ein
+        bekannter Dienst ist (zur Zeit ns.10be.de und Google Cloud), wird in der Fusszeile
+        des Dialogs noch ein Button erzeugt, der weiterführende Informationen oder den
+        Dienst selbst aufruft.
+      </li>
+    </ul>
     <h2 (click)="click(40.1)">
-      <span i18n="version">Version</span><span i18n="v400">4.0.1 - 19.01.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v401">4.0.1 - 19.01.2023</span></h2>
     <ul [class]="classFor(40.1)">
       <li class="changed" i18n="v401c1">
         Die Auswahl des Benutzers wurde geändert. Bisher klappte eine Liste auf, in der die Benutzer zu

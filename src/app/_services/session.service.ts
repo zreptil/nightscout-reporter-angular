@@ -271,8 +271,14 @@ export class SessionService {
       return of(ret);
     }
     if (this.dlgRef?.componentInstance == null) {
+      const cls = ['dialog-box', 'dialog'];
+      if (typeof type === 'number') {
+        cls.push(DialogType[type]);
+      } else {
+        cls.push(DialogType[type.type]);
+      }
       this.dlgRef = this.dialog.open(DialogComponent, {
-        panelClass: ['dialog-box', 'dialog'],
+        panelClass: cls,
         data: new DialogData(type, content, null, theme),
         disableClose
       });
@@ -298,9 +304,9 @@ export class SessionService {
   // checks if the url of the user is valid
   async isUserValid(user: UserData) {
     if (user.apiUrl(null, '') == null) {
-      return $localize`Die URL wurde noch nicht festgelegt`;
+      return {msg: $localize`Die URL wurde noch nicht festgelegt`};
     }
-    let ret: string = null;
+    let ret = null;
     const check = user.apiUrl(null, 'status');
     await this.ds.request(check).then(response => {
       if (response.body.status != 'ok') {

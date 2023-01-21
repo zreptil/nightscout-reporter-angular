@@ -18,7 +18,7 @@
     <div class="subtitle">
       <ng-container i18n="label for settings-area with user data">Benutzerdaten</ng-container>
       <div class="navControls">
-        <button (click)="globals.userIdx=globals.userIdx-1" [disabled]="globals.userIdx==0" mat-flat-button>
+        <button (click)="globals.userIdx=globals.userIdx-1" [disabled]="globals.userIdx===0" mat-flat-button>
           <mat-icon>chevron_left</mat-icon>
         </button>
         {{globals.userIdx + 1}} / {{globals.userList?.length ?? 1}}
@@ -27,7 +27,6 @@
         </button>
       </div>
     </div>
-    <div *ngIf="errUserInvalid!=null" [innerHTML]="errUserInvalid" class="error"></div>
     <div class="userinfo">
       <mat-form-field>
         <mat-label>{{msgName}}</mat-label>
@@ -59,11 +58,11 @@
     <div *ngFor="let item of globals.user.listApiUrl; let idx = index" class="urlPanel">
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
-          <mat-label *ngIf="idx==0">{{msgUrlNightscout}}</mat-label>
+          <mat-label *ngIf="idx===0">{{msgUrlNightscout}}</mat-label>
           <input [(ngModel)]="item.url" matInput>
-          <mat-hint *ngIf="idx==globals.user.listApiUrl.length-1"></mat-hint>
+          <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1"></mat-hint>
         </mat-form-field>
-        <mat-hint *ngIf="idx==globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
           {{msgUrlHint}}
         </mat-hint>
       </div>
@@ -72,25 +71,25 @@
       </button>
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
-          <mat-label *ngIf="idx==0">{{msgAccessToken}}</mat-label>
-          <input [(ngModel)]="item.token" [type]="showPwd==idx?'password':'text'" matInput>
+          <mat-label *ngIf="idx===0">{{msgAccessToken}}</mat-label>
+          <input [(ngModel)]="item.token" [type]="showPwd!==idx?'password':'text'" matInput>
         </mat-form-field>
-        <mat-hint *ngIf="idx==globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-          {{msgAccessTokenHint(idx == globals.user.listApiUrl.length - 1)}}
+        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgAccessTokenHint(idx === globals.user.listApiUrl.length - 1)}}
         </mat-hint>
       </div>
-      <button (click)="showPwd=(showPwd==idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-flat-button>
-        <mat-icon class="urlIcon">{{showPwd == idx ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <button (click)="showPwd=(showPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-flat-button>
+        <mat-icon class="urlIcon">{{showPwd !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
-          <mat-label *ngIf="idx==0">{{msgStartDate}}</mat-label>
+          <mat-label *ngIf="idx===0">{{msgStartDate}}</mat-label>
           <input [(ngModel)]="item.startDate" [matDatepicker]="dpStartDate" matInput>
           <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpStartDate></mat-datepicker>
         </mat-form-field>
-        <mat-hint *ngIf="idx==globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-          {{msgStartDateHint(idx == globals.user.listApiUrl.length - 1)}}
+        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgStartDateHint(idx === globals.user.listApiUrl.length - 1)}}
         </mat-hint>
       </div>
       <button (click)="calculateFirstDay(item)" [disabled]="ss.isEmpty(item.url)" mat-flat-button>
@@ -98,18 +97,18 @@
       </button>
       <div class="formfield mat-form-field-infix">
         <mat-form-field>
-          <mat-label *ngIf="idx==0">{{msgEndDate}}</mat-label>
+          <mat-label *ngIf="idx===0">{{msgEndDate}}</mat-label>
           <input [(ngModel)]="item.endDate" [matDatepicker]="dpEndDate" matInput>
           <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpEndDate></mat-datepicker>
         </mat-form-field>
-        <mat-hint *ngIf="idx==globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
-          {{msgEndDateHint(idx == globals.user.listApiUrl.length - 1)}}
+        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+          {{msgEndDateHint(idx === globals.user.listApiUrl.length - 1)}}
         </mat-hint>
       </div>
       <div class="controls">
         <button (click)="addUrl()"
-                *ngIf="idx==globals.user.listApiUrl.length-1"
+                *ngIf="idx===globals.user.listApiUrl.length-1"
                 [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
                 mat-mini-fab>
           <mat-icon>add</mat-icon>
@@ -174,37 +173,3 @@
     <input #fileSelect (change)="fileSelected($event)" type="file">
   </mat-dialog-actions>
 </div>
-<!--
-    <material-dialog *ngIf="confirmIdx>0" confirm headered class="headered-dialog">
-      <div *ngIf="confirmIdx!=3" header @i18n="title of confirmation dialog">Bestätigung</div>
-      <div *ngIf="confirmIdx==3" header>{{msgCalcDayTitle}}</div>
-      <div class="content" *ngIf="confirmIdx==1">
-        <ng-container @i18n="should the user with url">Soll der Benutzer mit der URL</ng-container>
-        <div class="marked">{{g.user.apiUrl(null, '', noApi: true)}}</div>
-        <ng-container @i18n="really be deleted">wirklich gelöscht werden?</ng-container>
-      </div>
-      <div class="content" *ngIf="confirmIdx==2">
-        <ng-container @i18n="should the url of the user">Soll die URL</ng-container>
-        <div class="marked">{{g.user.listApiUrl[currApiUrlIdx].url}}</div>
-        <ng-container @i18n="of the user really be deleted">vom Benutzer wirklich gelöscht werden?</ng-container>
-      </div>
-      <div class="content" *ngIf="confirmIdx==3">
-        {{msgCalculatingDay(calcDate.format(g.fmtDateForDisplay))}}
-      </div>
-      <div footer *ngIf="confirmIdx<3">
-        <material-button class="iconButton" (trigger)="confirmOk">
-          <material-icon icon="done"></material-icon>
-          <ng-container @i18n="buttonlabel for confirmation yes">Ja</ng-container>
-        </material-button>
-        <material-button class="iconButton" (trigger)="confirmIdx=0">
-          <material-icon icon="cancel"></material-icon>
-          <ng-container @i18n="buttonlabel for confirmation no">Nein</ng-container>
-        </material-button>
-      </div>
-      <div footer *ngIf="confirmIdx==3">
-        <material-button class="iconButton" (trigger)="cancelCalculation()">
-          <material-icon icon="cancel"></material-icon>
-          <ng-container @i18n="buttonlabel for cancel">Abbruch</ng-container>
-        </material-button>
-      </div>
-    -->
