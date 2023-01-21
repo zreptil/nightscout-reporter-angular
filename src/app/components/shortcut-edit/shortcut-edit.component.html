@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <mat-dialog-content>
+  <mat-dialog-content *ngIf="globals.currShortcut != null">
     <div class="info" i18n="info text for shortcuts">
       Ein Shortcut beinhaltet den Zeitraum und die ausgewählten Formulare mit den jeweils gesetzten Optionen. Wenn ein Shortcut
       aktiviert wird, werden die darin gespeicherten Einstellungen geladen und aktiviert.
