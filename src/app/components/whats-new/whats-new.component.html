@@ -15,11 +15,7 @@
       <li class="added" i18n="v402a1">
         In der Benutzerliste ist jetzt auch das Eulenmenü links unten verfügbar.
       </li>
-      <li class="changed" i18n="v402c1">
-        Die Benutzerliste wird jetzt alphabetisch ohne Berücksichtigung der Gross-/Kleinschreibung
-        sortiert.
-      </li>
-      <li class="changed" i18n="v402c2">
+      <li class="added" i18n="v402a2">
         Wenn die Überprüfung der URL beim Speichern eines Benutzers fehl schlägt, wird nun ein
         Dialog angezeigt, der den Grund für die fehlgeschlagene Speicherung anzeigt und die
         Möglichkeit gibt, trotzdem zu speichern. Ausserdem wird versucht, anhand der URL zu
@@ -27,6 +23,25 @@
         bekannter Dienst ist (zur Zeit ns.10be.de und Google Cloud), wird in der Fusszeile
         des Dialogs noch ein Button erzeugt, der weiterführende Informationen oder den
         Dienst selbst aufruft.
+      </li>
+      <li class="added" i18n="v402a3">
+        Beim Fortschrittsbalken für das Laden der Daten wird nun mit angegeben, wenn die Ausgabe für
+        historische Daten erfolgt.
+      </li>
+      <li class="changed" i18n="v402c1">
+        Die Benutzerliste wird jetzt alphabetisch ohne Berücksichtigung der Gross-/Kleinschreibung
+        sortiert.
+      </li>
+      <li class="fixed" i18n="v402f1">
+        Wenn die Profiltabelle durch die Uploader mit zu vielen Einträgen überfrachtet wurde, dann
+        kommt es vor, dass Nightscout Reporter keinen Report erzeugen kann, weil diese Datenflut
+        jede sinnvolle Auswertung unmöglich macht. Deswegen gibt es in den Einstellungen schon seit
+        längerer Zeit die Möglichkeit, die Anzahl an Profildatensätzen beim Laden zu reduzieren. Diese
+        Reduzierung wird nun automatisch vorgenommen, wenn Nightscout Reporter beim Laden merkt, dass
+        er keine Datensätze erhält oder zu lange warten muss. Die Einstellung bleibt vorerst aber
+        erhalten, damit man etwas Einfluss auf das Ergebnis nehmen kann, wenn man das möchte. Das behebt
+        nicht das grundsätzliche Problem von amoklaufenden Uploadern (z.B. Loop auf iOS), aber es
+        ermöglicht jetzt immerhin die Erstellung der Reports, wenn die Datenmenge kritisch wird.
       </li>
     </ul>
     <h2 (click)="click(40.1)">
