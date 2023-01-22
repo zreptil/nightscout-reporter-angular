@@ -177,8 +177,8 @@ die gleichen Werte beinhalten.`;
       });
 
     const basalTargetBody: any[] = [];
-    const bodyBasal = this.getFactorBody(page, date, profile.store.listBasal, this.msgFactorEntry,
-      {precision: GLOBALS.basalPrecision, sum: profile.store.ieBasalSum, sumTitle: this.msgBasalSum});
+    const bodyBasal = this.getFactorBody(page, date, profile.store?.listBasal, this.msgFactorEntry,
+      {precision: GLOBALS.basalPrecision, sum: profile.store?.ieBasalSum, sumTitle: this.msgBasalSum});
     const listTarget: ProfileEntryData[] = [];
     if (profile.store.listTargetHigh.length === profile.store.listTargetLow.length) {
       for (let i = 0; i < profile.store.listTargetHigh.length; i++) {

@@ -206,32 +206,45 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     let baseProfile: ProfileData;
 
     const list = GLOBALS.findUrlDataFor(begDate, endDate);
-    const maxCount = GLOBALS.profileMaxCounts[data.user.profileMaxIdx ?? 0];
+    data.user.profileMaxIdx ??= 0;
+    let maxCount = GLOBALS.profileMaxCounts[data.user.profileMaxIdx];
 //*
     for (const urlData of list) {
       // Mit dieser Abfrage kann man Daten filtern (nirgends dokumentiert, funktioniert auch nicht immer)
       // https://xxx/api/v1/profiles.json?find[startDate][$gt]=2018-01-01T11:30:17.694Z
       url = urlData.fullUrl('profile.json', `count=${maxCount}`);
       content = await this.ds.requestJson(url);
+      while (content == null && data.user.profileMaxIdx < GLOBALS.profileMaxCounts.length - 1) {
+        data.user.profileMaxIdx++;
+        maxCount = GLOBALS.profileMaxCounts[data.user.profileMaxIdx];
+        url = urlData.fullUrl('profile.json', `count=${maxCount}`);
+        content = await this.ds.requestJson(url);
+      }
       Log.displayLink(`profiles (${content?.length})`, url, {count: content?.length, type: 'debug'});
 
       try {
         GLOBALS.basalPrecisionAuto = 0;
-        const src: any[] = content;
+        let src: any[] = content;
         const uploaders: string[] = [];
-        for (const entry of src) {
-          // don't add profiles that cannot be read
-          try {
-            const profile = ProfileData.fromJson(entry, true);
-            data.profiles.push(profile);
-            if (uploaders.indexOf(profile.enteredBy) < 0) {
-              uploaders.push(profile.enteredBy);
+
+        if (src == null) {
+          src = [];
+          console.error('Vermutlich sind zu viele Einträge in der Profiltabelle. Bitte bei Einstellungen die Maximale Anzahl an Datensätzen reduzieren.');
+        } else {
+          for (const entry of src) {
+            // don't add profiles that cannot be read
+            try {
+              const profile = ProfileData.fromJson(entry, true);
+              data.profiles.push(profile);
+              if (uploaders.indexOf(profile.enteredBy) < 0) {
+                uploaders.push(profile.enteredBy);
+              }
+            } catch (ex) {
             }
-          } catch (ex) {
+            GLOBALS.basalPrecisionAuto = Math.max(GLOBALS.basalPrecision, Utils.last(data.profiles).maxPrecision);
           }
-          GLOBALS.basalPrecisionAuto = Math.max(GLOBALS.basalPrecision, Utils.last(data.profiles).maxPrecision);
+          data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
         }
-        data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
 
         const check = Utils.addDateDays(new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999), -1);
         if (src.length === maxCount && Utils.isAfter(Utils.last(data.profiles).startDate, check)) {
@@ -362,11 +375,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       if (last.duration >= duration || last.duration === 0) {
         last.duration = duration;
       } else {
-        const temp = baseProfile.copy;
-        temp.startDate = Utils.addTimeSeconds(last.startDate, last.duration);
-        temp.createdAt = temp.startDate;
-        temp.duration = Utils.differenceInSeconds(current.startDate, temp.startDate);
-        data.profiles.splice(i, 0, temp);
+        if (baseProfile != null) {
+          const temp = baseProfile.copy;
+          temp.startDate = Utils.addTimeSeconds(last.startDate, last.duration);
+          temp.createdAt = temp.startDate;
+          temp.duration = Utils.differenceInSeconds(current.startDate, temp.startDate);
+          data.profiles.splice(i, 0, temp);
+        }
         i++;
       }
       if (current.isFromNS) {
@@ -376,10 +391,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
     if (baseProfile != null && Utils.last(data.profiles).duration > 0) {
       //    if (last.duration > 0 && data.profiles.length > 1) {
-      const temp = baseProfile.copy;
-      temp.startDate = Utils.addTimeSeconds(Utils.last(data.profiles).startDate, Utils.last(data.profiles).duration);
-      temp.createdAt = temp.startDate;
-      data.profiles.push(temp);
+      // noinspection PointlessBooleanExpressionJS
+      if (baseProfile != null) {
+        const temp = baseProfile.copy;
+        temp.startDate = Utils.addTimeSeconds(Utils.last(data.profiles).startDate, Utils.last(data.profiles).duration);
+        temp.createdAt = temp.startDate;
+        data.profiles.push(temp);
+      }
     }
 
     if (Utils.isEmpty(data.profiles)) {

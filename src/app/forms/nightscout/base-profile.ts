@@ -126,7 +126,7 @@ export abstract class BaseProfile extends BasePrint {
     // Log.info(`Report ${this.fmtDate(this.repData.begDate)} - ${this.fmtDate(this.repData.endDate)}`);
     for (let i = 0; i < this.repData.profiles.length; i++) {
       // print(repData.profiles[i].current.name);
-      this.profStartTime = this.repData.profiles[i].startDate;
+      this.profStartTime = this.repData.profiles[i].startDate ?? GlobalsData.now;
       if (i < this.repData.profiles.length - 1) {
         this.profEndTime = Utils.addTimeMinutes(this.repData.profiles[i + 1].startDate, -1);
       } else {
@@ -144,21 +144,21 @@ export abstract class BaseProfile extends BasePrint {
       let done = false;
       const calc = new CalcData();
       if (i < this.repData.profiles.length - 1) {
-        calc.nextBRTimes = this.repData.profiles[i + 1].current.listBasal;
+        calc.nextBRTimes = this.repData.profiles[i + 1].current?.listBasal;
         calc.endDate = Utils.addDateDays(this.repData.profiles[i + 1].startDate, -1);
         if (Utils.differenceInHours(startDate, this.repData.profiles[i + 1].startDate) >= 0) {
           continue;
         }
       } else {
-        calc.nextBRTimes = this.repData.profiles[i].current.listBasal;
+        calc.nextBRTimes = this.repData.profiles[i].current?.listBasal;
         calc.endDate = null;
       }
 
-      if (this.namedProfile && this.repData.profiles[i].current.name != BaseProfile.namedProfileName) {
+      if (this.namedProfile && this.repData.profiles[i].current?.name != BaseProfile.namedProfileName) {
         continue;
       }
 
-      const hash = this.repData.profiles[i].current.hash;
+      const hash = this.repData.profiles[i].current?.hash;
       if (_alreadyDone.includes(hash)) {
         continue;
       }
@@ -178,6 +178,17 @@ export abstract class BaseProfile extends BasePrint {
           }
         }
       }
+    }
+
+    if (pageList.length === 0) {
+      pageList.push(new PageData(this.isPortrait, [
+        this.headerFooter(),
+        {
+          margin: [this.cm(this.xorg), this.cm(this.yorg - 0.5), this.cm(0), this.cm(0)],
+          text: $localize`Es konnten keine Profile geladen werden. Es kann sein, dass die Profiltabelle zu viele Einträge beinhaltet.
+          In diesem Falle kann es helfen, wenn in den Einstellungen die "Maximale Anzahl an Profildatensätzen" herabgesetzt wird.`,
+          color: this.colWarning
+        }]));
     }
 
     if ((this.onlyLast || this.repData.isForThumbs) && !Utils.isEmpty(pageList)) {
