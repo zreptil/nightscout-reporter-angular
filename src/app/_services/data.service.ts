@@ -209,10 +209,10 @@ export class DataService {
     }
 
     this.loadWebData();
+    this.loadFromStorage();
     if (this.syncWithGoogle && !skipSyncGoogle) {
       await this._loadFromGoogle();
     }
-    this.loadFromStorage();
     this._initAfterLoad();
   }
 
@@ -226,42 +226,16 @@ export class DataService {
   }
 
   async _loadFromGoogle() {
-    Log.todo('DataService._loadFromGoogle ist noch nicht vollständig implementiert');
-
-    const file = await this.gds.findFileByName(this.env.settingsFilename);
-    console.log('von Google:', file);
-    // if (this._client == null || this.drive == null) {
-    //   return;
-    // }
-
-    /*
-    const query = `name="${this.settingsFilename}" and not trashed`;
-        _searchDocuments(1, query).then((gd.FileList list) {
-          if (list?.files?.isNotEmpty ?? false) {
-            settingsFile = list.files[0];
-          } else {
-            settingsFile = gd.File()
-              ..name = settingsFilename
-              ..parents = [driveParent]
-              ..mimeType = 'text/json';
-            drive.files.generateIds(count: 1, space: driveParent).then((gd.GeneratedIds ids) {
-              settingsFile.id = ids.ids[0];
-              drive.files.create(settingsFile).then((file) {
-                _getFromGoogle();
-              }).catchError((error) {
-                showDebug('Fehler in _loadFromGoogle: ${error}');
-              });
-              return;
-            });
-    //        if (driveParent != null)settingsFile.parents = [driveParent];
-          }
-          _getFromGoogle();
-        }).catchError((error) {
-          showDebug('Fehler bei _loadFromGoogle: ${error}');
-          loadFromStorage();
-          _initAfterLoad();
-        });
-     */
+    let settings = await this.gds.findFileByName(this.env.settingsFilename, {createIfMissing: true});
+    if (settings == null) {
+      console.log('loading settings from Nightscout Reporter 3.0');
+      // load the settings from nightscout reporter 3.0 in the settings, if they are not there
+      settings = await this.gds.findFileByName('nr-settings', {createIfMissing: false});
+    }
+    if (settings?.s11 > GLOBALS.timestamp) {
+      // set the settings retrieved from Google Drive to the internal data
+      this.fromSharedJson(settings);
+    }
   }
 
   // loads all settings from localStorage

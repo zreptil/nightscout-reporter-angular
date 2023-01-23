@@ -9,5 +9,5 @@ export const environment = {
   // api key for cloud_data
   GOOGLE_API_KEY: 'AIzaSyDp7Skby_Lno-4-sQV51WU6olJMYxrrXZI',
   // name of settings file in google appdatafolder
-  settingsFilename: 'nr-settings'
+  settingsFilename: 'nightrep-settings'
 };

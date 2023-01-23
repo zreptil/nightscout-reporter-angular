@@ -97,14 +97,16 @@ export class GoogleDriveService {
    *
    * @param filename  name of the file
    * @param params    parameters for the request, object with following entries
-   *                  responseType = responseType for the request, has to be valid for http.request, json by default
-   *                  spaces       = spaces of google drive to be queried, appDataFolder by default
+   *                  responseType    = responseType for the request, has to be valid for http.request, json by default
+   *                  spaces          = spaces of google drive to be queried, appDataFolder by default
+   *                  createIfMissing = if true the file will be created if it could not be found
    * @returns content of file or null if not available
    */
-  async findFileByName(filename: string, params?: { responseType?: 'arraybuffer' | 'blob' | 'json' | 'text', spaces?: 'drive' | 'appDataFolder' }) {
+  async findFileByName(filename: string, params?: { responseType?: 'arraybuffer' | 'blob' | 'json' | 'text', spaces?: 'drive' | 'appDataFolder', createIfMissing?: boolean }) {
     params ??= {};
     params.responseType ??= 'json';
     params.spaces ??= 'appDataFolder';
+    params.createIfMissing ??= false;
     if (!this.isValid) {
       return of(null);
     }
@@ -120,6 +122,25 @@ export class GoogleDriveService {
       });
       response = await lastValueFrom(this.http.request(req));
       ret = response?.body;
+    } else if (response?.files?.length === 0 && params.createIfMissing) {
+      // create file
+      url = `https://www.googleapis.com/drive/v3/files/generateIds?count=1&space=${params.spaces}&access_token=${this.accessToken}`;
+      response = await lastValueFrom(this.http.get(url));
+      if (response?.ids?.length === 1) {
+        const id = response.ids[0];
+        url = `https://www.googleapis.com/drive/v3/files?access_token=${this.accessToken}`;
+        const body = {
+          id: id,
+          name: filename,
+          parents: [params.spaces],
+          mimeType: params.responseType
+        };
+        const req = new HttpRequest('POST', url, body, {
+          headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
+        });
+        response = await lastValueFrom(this.http.request(req));
+        console.log('created', response);
+      }
     }
     return ret;
   }
