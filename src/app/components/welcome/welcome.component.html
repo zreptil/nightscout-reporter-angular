@@ -56,6 +56,12 @@
           Einstellungen für die Verwendung der Seite vornehmen
         </div>
       </button>
+      <button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
+        <mat-icon>sync_disabled</mat-icon>
+        <div i18n="label for button to sync with google drive on welcome screen">
+          Mit Google Drive synchronisieren
+        </div>
+      </button>
       <!--
         <signin [isVisible]="true"
                 [raised]="true" [(isAuthorized)]="g.syncGoogle"

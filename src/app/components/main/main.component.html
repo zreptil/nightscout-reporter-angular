@@ -44,17 +44,11 @@
           </ng-container>
         </button>
         -->
-        <!--
-        Wird aktuell noch nicht unterstützt. Die Verbindung zu Google One Tap
-        funktioniert, aber die Speicherung in Google Drive ist noch nicht
-        implementiert. Die Daten können über die Settings mit Import / Export
-        zwischen den Anwendungen ausgetauscht werden.
         <button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
-          <mat-icon *ngIf="gs?.userImage == null">sync_disabled</mat-icon>
-          <mat-icon *ngIf="gs?.userImage != null">sync</mat-icon>
+          <mat-icon *ngIf="ds.oauthToken == null">sync_disabled</mat-icon>
+          <mat-icon *ngIf="ds.oauthToken != null">sync</mat-icon>
           <div i18n="synchronize with google drive">Mit Google synchronisieren</div>
         </button>
-        -->
         <!--
                 <signin [isVisible]="true"
                         [autoStart]="false"
@@ -198,9 +192,13 @@
           <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-icon-button mat-mini-fab>
             <mat-icon>bug_report</mat-icon>
           </button>
+          <!--
           <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>
-            <img [src]="gs?.userImage" alt="userimage" class="userimage">
+            <img (error)="ss.handleMissingImage($event)"
+                 [src]="ss.reloadUserImg ? gs?.userImage : 'https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA'"
+                 alt="userimage" class="userimage">
           </button>
+          -->
           <!--
                     <material-button *ngIf="g.showCurrentGluc" raised class="currentGluc" (trigger)="navigate('?watch')">
                       <pre *ngIf="!g.currentGlucVisible" @i18n="message for current glucose if not active">Pausiert</pre>

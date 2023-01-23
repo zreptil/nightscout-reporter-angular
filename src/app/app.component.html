@@ -1,4 +1,7 @@
-<app-main *ngIf="appType===''"></app-main>
-<app-watch *ngIf="appType==='watch'"></app-watch>
-<app-local-tools *ngIf="appType==='tools'"></app-local-tools>
-<app-test *ngIf="appType==='test'"></app-test>
+<ng-container [ngSwitch]="appType">
+  <app-watch *ngSwitchCase="'watch'"></app-watch>
+  <app-local-tools *ngSwitchCase="'tools'"></app-local-tools>
+  <app-test *ngSwitchCase="'test'"></app-test>
+  <app-drive-test *ngSwitchCase="'drive'"></app-drive-test>
+  <app-main *ngSwitchDefault></app-main>
+</ng-container>

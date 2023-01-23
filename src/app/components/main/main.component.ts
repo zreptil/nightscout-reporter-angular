@@ -10,7 +10,7 @@ import {ProgressService} from '@/_services/progress.service';
 import {UserData} from '@/_model/nightscout/user-data';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {ShortcutData} from '@/_model/shortcut-data';
-import {GoogleService} from '@/_services/google.service';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-main',
@@ -100,7 +100,7 @@ export class MainComponent implements OnInit {
               public ss: SessionService,
               public ps: ProgressService,
               public ns: NightscoutService,
-              public gs: GoogleService) {
+  ) {
     // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
     //
     // }), 1000);
@@ -383,11 +383,20 @@ export class MainComponent implements OnInit {
   }
 
   syncWithGoogle() {
-    this.ds.syncWithGoogle = !this.ds.syncWithGoogle;
+    if (this.ds.syncWithGoogle) {
+      this.ss.confirm(`Soll die Synchronisierung mit Google Drive aufgehoben werden?`).subscribe(result => {
+        if (result.btn == DialogResultButton.yes) {
+          this.ds.syncWithGoogle = false;
+        }
+      });
+      return;
+    }
+    this.ds.gds.oauth2Check();
   }
 
   clickUserImage() {
-
+    this.ss.reloadUserImg = true;
+    // console.log(JSON.parse(atob(this.gs?.id_token?.split('.')[1])));
   }
 
   clickUser() {

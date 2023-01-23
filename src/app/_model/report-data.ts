@@ -69,7 +69,7 @@ export class ReportData {
 // get profile for a specific time
   profile(time: Date, treatments: TreatmentData[] = null, doMix = true): ProfileGlucData {
 //    DateTime check = DateTime(time.year, time.month, time.day);
-    let ret = new ProfileGlucData(new ProfileStoreData(`${time.toISOString()}`));
+    let ret = new ProfileGlucData(new ProfileStoreData(`${time?.toISOString()}`));
     let profile: ProfileData;
 
     let idx = -1;
@@ -87,18 +87,18 @@ export class ReportData {
       while (idx < this.profiles.length && doMix) {
         const d = this.profiles[idx].startDate;
         // only profiles with same day as requested
-        if (d.getFullYear() === time.getFullYear()
-          && d.getMonth() === time.getMonth()
-          && d.getDate() === time.getDate()) {
+        if (d?.getFullYear() === time?.getFullYear()
+          && d?.getMonth() === time?.getMonth()
+          && d?.getDate() === time?.getDate()) {
           profile.mixWith(this.profiles[idx]);
         }
         idx++;
       }
       if (treatments != null) {
         for (const t of treatments) {
-          if (t.createdAt.getFullYear() === time.getFullYear()
-            && t.createdAt.getMonth() === time.getMonth()
-            && t.createdAt.getDate() === time.getDate()) {
+          if (t.createdAt.getFullYear() === time?.getFullYear()
+            && t.createdAt.getMonth() === time?.getMonth()
+            && t.createdAt.getDate() === time?.getDate()) {
             profile.includeTreatment(t);
           }
         }
@@ -109,7 +109,7 @@ export class ReportData {
     }
 
     if (profile != null) {
-      const date = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+      const date = new Date(time?.getFullYear(), time?.getMonth(), time?.getDate());
       ret = new ProfileGlucData(profile.current);
       ret.basal = ret.find(date, time, ret.store.listBasal);
       ret.carbRatio = ret.find(date, time, ret.store.listCarbratio);

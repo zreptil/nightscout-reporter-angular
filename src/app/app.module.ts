@@ -40,6 +40,7 @@ import {FormParamsDialogComponent} from './components/form-params-dialog/form-pa
 import {FormParamsComponent} from './controls/form-params/form-params.component';
 import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 import { ViewUsersComponent } from './components/view-users/view-users.component';
+import { DriveTestComponent } from './components/drive-test/drive-test.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ViewUsersComponent } from './components/view-users/view-users.component
     ShortcutEditComponent,
     FormParamsDialogComponent,
     FormParamsComponent,
-    ViewUsersComponent
+    ViewUsersComponent,
+    DriveTestComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,9 @@ import {environment} from '@environments/environment';
 })
 export class EnvironmentService {
   isProduction: boolean = environment.production;
-  GAPI_CLIENT_ID: string = environment.GAPI_CLIENT_ID;
+  OAUTH2_CLIENT_ID: string = environment.OAUTH2_CLIENT_ID;
+  GOOGLE_API_KEY: string = environment.GOOGLE_API_KEY;
+  settingsFilename: string = environment.settingsFilename;
 
   constructor() {
   }

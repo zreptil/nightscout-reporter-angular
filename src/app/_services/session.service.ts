@@ -79,6 +79,7 @@ export class SessionService {
     new PrintUserData(this.pdf, this.ds),
     new PrintGlucDistribution(this.pdf)
   ];
+  reloadUserImg = true;
   private dlgRef: MatDialogRef<any>;
   private dlgList: { [key: string]: ComponentType<any> } = {
     welcome: WelcomeComponent,
@@ -371,5 +372,11 @@ export class SessionService {
           break;
       }
     });
+  }
+
+  handleMissingImage(_evt: ErrorEvent) {
+    this.reloadUserImg = false;
+    // (evt.target as HTMLImageElement).src = src;
+    // (evt.target as HTMLImageElement).style.display = 'none';
   }
 }

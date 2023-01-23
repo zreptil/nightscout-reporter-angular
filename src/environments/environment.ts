@@ -4,15 +4,10 @@
 
 export const environment = {
   production: false,
-  // client id for nightscout_reporter, works also on port 4200
-  GAPI_CLIENT_ID: '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh.apps.googleusercontent.com',
+  // client id for cloud_data
+  OAUTH2_CLIENT_ID: '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh.apps.googleusercontent.com',
+  // api key for cloud_data
+  GOOGLE_API_KEY: 'AIzaSyDp7Skby_Lno-4-sQV51WU6olJMYxrrXZI',
+  // name of settings file in google appdatafolder
+  settingsFilename: 'nr-settings'
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

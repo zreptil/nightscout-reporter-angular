@@ -51,4 +51,8 @@ export class WelcomeComponent implements OnInit {
   clickDebug() {
     this.globals.isDebug = !this.globals.isDebug;
   }
+
+  syncWithGoogle() {
+    this.ds.gds.oauth2Check();
+  }
 }

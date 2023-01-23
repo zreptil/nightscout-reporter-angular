@@ -3,7 +3,7 @@ import {HttpClient, HttpRequest} from '@angular/common/http';
 import {lastValueFrom, throwError, timeout} from 'rxjs';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
-import {Log, LogService} from '@/_services/log.service';
+import {Log} from '@/_services/log.service';
 import {StorageService} from '@/_services/storage.service';
 import {Settings} from '@/_model/settings';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
@@ -17,8 +17,9 @@ import {StatusData} from '@/_model/nightscout/status-data';
 import {EntryData} from '@/_model/nightscout/entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
-import {GoogleService} from '@/_services/google.service';
 import {LanguageService} from '@/_services/language.service';
+import {GoogleDriveService} from '@/_services/google-drive.service';
+import {EnvironmentService} from '@/_services/environment.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -34,11 +35,14 @@ export class DataService {
   isLoading = false;
   onAfterLoad: () => void = null;
   _googleLoaded = false;
+  settingsFilename = 'nightrep-settings';
+  oauthToken: string = null;
 
   constructor(public http: HttpClient,
               public ss: StorageService,
-              public gs: GoogleService,
-              public ls: LanguageService
+              public ls: LanguageService,
+              public gds: GoogleDriveService,
+              public env: EnvironmentService
   ) {
     // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
     //   next: data => {
@@ -57,42 +61,14 @@ export class DataService {
   }
 
   set syncWithGoogle(value: boolean) {
-    // Aktuell deaktiviert. Wenn Benutzer das gerne wieder hätten,
-    // wird es wieder aktiviert. Dazu muss dann die Speicherung
-    // und Datenhaltung in Google Drive neu implementiert werden.
-    value = false;
     this._syncWithGoogle = value ?? false;
-    if (value) {
-      this.gs.onEvent.subscribe({
-        next: () => {
-          // @ts-ignore
-          LogService.refreshUI();
-          // const url = `http://corg.reptilefarm.ddns.net/pillman.php`;
-          // const req = new HttpRequest('POST', url, this.gs.id_token, {
-          //   responseType: 'text'
-          // });
-          // let response = '';
-          // this.http.request<string>(req).subscribe({
-          //   next: (data: any) => {
-          //     if (data.body != null) {
-          //       response += data.body;
-          //     }
-          //   }, error: (error) => {
-          //     Log.error(error);
-          //     this.gs.logout();
-          //   }, complete: () => {
-          //     // retrieved data from webapi
-          //     console.log(response);
-          //     LogService.refreshUI();
-          //   }
-          // });
-        }
-      });
-      // this.gs.init();
-    } else {
-      // this.gs.logout();
-    }
     this.saveWebData();
+    if (this._syncWithGoogle) {
+      this.gds.oauth2Check();
+    } else {
+      this.oauthToken = null;
+      this.saveWebData();
+    }
   }
 
   setPdfOrder(value: string): void {
@@ -193,7 +169,8 @@ export class DataService {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
       w2: GLOBALS._theme,
-      w3: (this._syncWithGoogle ?? false) ? 'true' : 'false'
+      w3: (this._syncWithGoogle ?? false) ? 'true' : 'false',
+      w4: this.oauthToken
     };
     this.ss.write(Settings.WebData, data);
     // `{"w0":"${GLOBALS.version}"`
@@ -210,6 +187,7 @@ export class DataService {
       GLOBALS.language = GLOBALS.languageList.find((lang) => lang.code === code);
       GLOBALS.theme = JsonData.toText(json.w2, null);
       this._syncWithGoogle = JsonData.toBool(json.w3);
+      this.oauthToken = JsonData.toText(json.w4, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }
@@ -217,7 +195,7 @@ export class DataService {
 
   async loadSettingsJson(skipSyncGoogle = false) {
     try {
-      const data = await this.request('settings.json', {showError: false});
+      const data = await this.request('assets/settings.json', {showError: false});
       if (data != null) {
         if (data.urlPlayground != null) {
           GLOBALS.urlPlayground = data.urlPlayground;
@@ -247,12 +225,17 @@ export class DataService {
       && !Utils.isEmpty(GLOBALS.userList);
   }
 
-  _loadFromGoogle(): void {
-    Log.todo('DataService._loadFromGoogle ist noch nicht implementiert');
-    /*
-        if (_client == null || drive == null) return;
+  async _loadFromGoogle() {
+    Log.todo('DataService._loadFromGoogle ist noch nicht vollständig implementiert');
 
-        const query = 'name="${settingsFilename}" and not trashed';
+    const file = await this.gds.findFileByName(this.env.settingsFilename);
+    console.log('von Google:', file);
+    // if (this._client == null || this.drive == null) {
+    //   return;
+    // }
+
+    /*
+    const query = `name="${this.settingsFilename}" and not trashed`;
         _searchDocuments(1, query).then((gd.FileList list) {
           if (list?.files?.isNotEmpty ?? false) {
             settingsFile = list.files[0];
@@ -303,6 +286,12 @@ export class DataService {
       // shared = shared.replaceAll("\"[", "[");
       // shared = shared.replaceAll("]\"", "]");
       // device = device.replaceAll("{,", "{");
+      if (Utils.isEmpty(shared)) {
+        shared = '{}';
+      }
+      if (Utils.isEmpty(device)) {
+        device = '{}';
+      }
       this.fromSharedJson(JSON.parse(shared));
       this.fromDeviceJson(JSON.parse(device));
     } catch (ex) {

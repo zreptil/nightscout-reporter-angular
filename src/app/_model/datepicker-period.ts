@@ -92,16 +92,20 @@ export class DatepickerPeriod {
   }
 
   get display(): string {
+    let ret = `${GLOBALS.fmtDate(this.start)} - ${GLOBALS.fmtDate(this.end)}`;
     if (this.entryKey != null) {
-      return this.entryTitle;
+      ret = this.entryTitle;
     }
     if (this.isEmpty) {//this.start == null || this.end == null) {
-      return this.msgPeriodEmpty;
+      ret = this.msgPeriodEmpty;
     }
     if (Utils.isSameDay(this.start, this.end)) {
-      return GLOBALS.fmtDate(this.start);
+      ret = GLOBALS.fmtDate(this.start);
     }
-    return `${GLOBALS.fmtDate(this.start)} - ${GLOBALS.fmtDate(this.end)}`;
+    if (GLOBALS.currPeriodShift.months !== 0) {
+      ret = `${ret} - ${GLOBALS.currPeriodShift.title}`;
+    }
+    return ret;
   }
 
   get isEmpty(): boolean {
