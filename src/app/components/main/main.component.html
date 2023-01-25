@@ -1,4 +1,9 @@
 <!--suppress HtmlUnknownTarget -->
+<!-- div data-auto_select="true"
+     data-client_id="939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh.apps.googleusercontent.com"
+     data-login_uri="https://localhost:3002#test"
+     id="g_id_onload">
+</div -->
 <mat-drawer-container autosize hasBackdrop="false">
   <mat-drawer #drawer class="mat-elevation-z10">
     <div class="tabs">
@@ -44,11 +49,11 @@
           </ng-container>
         </button>
         -->
-        <button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
+        <!-- button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
           <mat-icon *ngIf="ds.oauthToken == null">sync_disabled</mat-icon>
           <mat-icon *ngIf="ds.oauthToken != null">sync</mat-icon>
-          <div i18n="synchronize with google drive">Mit Google synchronisieren</div>
-        </button>
+          <div class="g_id_signout" i18n="synchronize with google drive">Mit Google synchronisieren</div>
+        </button -->
         <!--
                 <signin [isVisible]="true"
                         [autoStart]="false"
@@ -142,13 +147,8 @@
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
         <div [class]="classForView('basePanel')">
-          <div *ngIf="globals.userListLoaded && globals.userList.length == 1"
-               class="userName">
-            {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
-          </div>
           <button (click)="clickUser()" class="userName" mat-flat-button>{{globals.user.display}}</button>
-          <div *ngIf="globals.userList.length > 1 && false"
-               [class]="classForView('userPanel')">
+          <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
             <mat-form-field appearance="standard">
               <mat-select [(value)]="userIdx">
                 <mat-select-trigger>

@@ -114,7 +114,7 @@ body {
   --glucNormHigh: #aacc00;
   --glucHigh: #cccc00;
   --datepickerBtnEmptyBack: #e67c73;
-  --datepickerBtnEmptyFore: white;
+  --datepickerBtnEmptyFore: black;
   --datepickerHeaderEmptyBack: #db4437;
   --datepickerHeaderEmptyFore: white;
   --datepickerHeaderBack: #006064;
@@ -461,5 +461,9 @@ form.oauth2 {
 
   input {
     width: 50em;
+    border: none;
+    background: var(--primaryBack);
+    color: var(--primaryFore);
+    border-radius: 0.5em;
   }
 }

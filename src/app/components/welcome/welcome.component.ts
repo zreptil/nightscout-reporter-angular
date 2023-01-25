@@ -53,6 +53,6 @@ export class WelcomeComponent implements OnInit {
   }
 
   syncWithGoogle() {
-    this.ds.gds.oauth2Check();
+//    this.ds.gds.oauth2Check();
   }
 }

@@ -10,7 +10,7 @@
   </div>
   <mat-dialog-content>
     <h2 (click)="click(40.2)">
-      <span i18n="version">Version</span><span i18n="v402">4.0.2 - 19.01.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v402">4.0.2 - 25.01.2023</span></h2>
     <ul [class]="classFor(40.2)">
       <li class="added" i18n="v402a1">
         In der Benutzerliste ist jetzt auch das Eulenmenü links unten verfügbar.
@@ -28,6 +28,16 @@
         Beim Fortschrittsbalken für das Laden der Daten wird nun mit angegeben, wenn die Ausgabe für
         historische Daten erfolgt.
       </li>
+      <!-- li class="added" i18n="v402a4">
+        Die Synchronisierung mit Google Drive ist nun auch in dieser Version verfügbar. Dazu gibt es
+        im Hauptmenü wieder den Punkt "Mit Google synchronisieren". Wenn das aktiviert wird, wird
+        der Authentifizierungsworkflow von Google gestartet, mit dem man Nightscout Reporter
+        Zugriff auf das eigene Google Drive gewährt. Wenn diese Verbindung hergestellt ist, dann
+        werden die Einstellungen beim Laden dort gesucht und beim speichern dort gespeichert. Die
+        Speicherung erfolgt im appDataFolder. Die gespeicherten Dateien können also nicht in
+        Google Drive selbst gefunden werden. Wenn die Verbindung zu Google Drive nicht mehr erfolgen
+        soll, dann muss einfach nur der Menüpunkt im Hauptmenü erneut angeklickt werden.
+      </li -->
       <li class="changed" i18n="v402c1">
         Die Benutzerliste wird jetzt alphabetisch ohne Berücksichtigung der Gross-/Kleinschreibung
         sortiert.

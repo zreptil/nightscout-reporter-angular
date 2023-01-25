@@ -63,7 +63,7 @@
   "glucNormHigh": "#aacc00",
   "glucHigh": "#cccc00",
   "datepickerBtnEmptyBack": "mat-red-300",
-  "datepickerBtnEmptyFore": "white",
+  "datepickerBtnEmptyFore": "black",
   "datepickerHeaderEmptyBack": "mat-red-500",
   "datepickerHeaderEmptyFore": "white",
   "datepickerHeaderBack": "mat-cyan-900",

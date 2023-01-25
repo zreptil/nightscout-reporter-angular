@@ -105,6 +105,9 @@ export class DatepickerPeriod {
     if (GLOBALS.currPeriodShift.months !== 0) {
       ret = `${ret} - ${GLOBALS.currPeriodShift.title}`;
     }
+    if (Utils.isEmpty(ret)) {
+      ret = this.msgPeriodEmpty;
+    }
     return ret;
   }
 
@@ -115,7 +118,7 @@ export class DatepickerPeriod {
     }
 
     let beg = this.start;
-    if (this.start.getFullYear() === 1970 && this.start.getMonth() === 0 && this.start.getDate() === 1) {
+    if (this.start == null || (this.start.getFullYear() === 1970 && this.start.getMonth() === 0 && this.start.getDate() === 1)) {
       return true;
     }
     while (beg != null && this.end != null && Utils.isOnOrBefore(beg, this.end)) {

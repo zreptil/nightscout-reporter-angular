@@ -39,7 +39,7 @@ export class DatepickerComponent implements OnInit {
 
   get periodLabelMain(): string {
     if (this.data.period == null) {
-      return '';
+      return this.msgPeriod;
     }
     return this.data.period.display;
   }

@@ -7,6 +7,18 @@ export class SigninConfirmation {
   debug: boolean;
 }
 
+export enum gdsStatus {
+  ok,
+  error,
+  info
+}
+
+export class GDSStatus {
+  constructor(public status?: gdsStatus,
+              public text?: string) {
+  }
+}
+
 /**
  * created by zreptil
  *
@@ -44,15 +56,18 @@ export class GoogleDriveService {
 
   OAUTH2_CLIENT_ID: string;
   GOOGLE_API_KEY: string;
-  msgInvalid = 'GoogleDriveService can only be used if OAUTH2_CLIENT_ID and GOOGLE_API_KEY are set.';
+  msgInvalid = $localize`GoogleDriveService kann nur benutzt werden, wenn OAUTH2_CLIENT_ID und GOOGLE_API_KEY gesetzt sind.`;
+  lastStatus: GDSStatus = new GDSStatus();
 
-  constructor(public http: HttpClient) {
+  constructor(// public gots: GoogleOneTapService,
+    public http: HttpClient) {
   }
 
   get isValid(): boolean {
     const ret = this.OAUTH2_CLIENT_ID != null && this.GOOGLE_API_KEY != null;
     if (!ret) {
       console.error(this.msgInvalid);
+      this.lastStatus = new GDSStatus(gdsStatus.error, this.msgInvalid);
     }
     return ret;
   }
@@ -73,8 +88,143 @@ export class GoogleDriveService {
     return of({doSignin: true, debug: false});
   }
 
-  checkUrl(): void {
+  /**
+   * Get file contents by filename. Only returns contents of the file, if it is one single file that can
+   * be found. If there is more or less than one file then the return value will be null.
+   *
+   * @param filename  name of the file
+   * @param params    parameters for the request, object with following entries
+   *                  responseType    = responseType for the request, has to be valid for HttpClient.request, json by default
+   *                  spaces          = spaces of Google Drive to be queried, appDataFolder by default
+   *                  createIfMissing = if true the file will be created if it could not be found
+   * @returns content of file or null if not available. lastStatus contains the status of the operation.
+   */
+  async findFileByName(filename: string, params?: { responseType?: 'arraybuffer' | 'blob' | 'json' | 'text', spaces?: 'drive' | 'appDataFolder', createIfMissing?: boolean }) {
+    params ??= {};
+    params.responseType ??= 'json';
+    params.spaces ??= 'appDataFolder';
+    params.createIfMissing ??= false;
+    this.lastStatus = new GDSStatus();
     if (!this.isValid) {
+      return of(null);
+    }
+    let url = `https://www.googleapis.com/drive/v3/files?q=name="${filename}" and not trashed&spaces=${params.spaces}&fields=files(id)&key=${this.GOOGLE_API_KEY}`;
+    let ret = null;
+    try {
+      let req = new HttpRequest('GET', url, {
+        headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
+      });
+      let response: any = await lastValueFrom(this.http.request(req));
+      console.log('RESPONSE', response);
+      if (response?.body?.files?.length === 1) {
+        const id = response.body.files[0].id;
+        url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${this.GOOGLE_API_KEY}`;
+        req = new HttpRequest('GET', url, {
+          headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`}),
+          responseType: params.responseType
+        });
+        console.log('REQ', req);
+        response = await lastValueFrom(this.http.request(req));
+        ret = response?.body;
+        this.lastStatus = new GDSStatus(gdsStatus.ok);
+      } else if (response?.files?.length === 0 && params.createIfMissing) {
+        // create the file
+        await this.createFile(filename, {mimeType: params.responseType, spaces: params.spaces});
+      } else if (response?.files?.length === 0) {
+        this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Die Datei ${filename} wurde nicht in Google Drive gefunden.`);
+      } else {
+        this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Es wurden ${response?.files?.length} Dateien mit dem Namen ${filename} in Google Drive gefunden.`);
+      }
+    } catch (ex) {
+      console.error('error when searching file on Google Drive', ex);
+      console.log('removing accesstoken for Google Drive');
+      this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Es gab einen Fehler beim Zugriff auf Google Drive: ${ex}`);
+      this.setOAuth2ToStorage(null);
+    }
+    return ret;
+  }
+
+  /**
+   * Create a file.
+   *
+   * @param filename  name of the file
+   * @param params    parameters for the request, object with following entries
+   *                  mimeType    = mimeType for the file
+   *                  spaces      = spaces of Google Drive where the file will be available after creation
+   * @returns the id of the created file. lastStatus contains the status of the operation.
+   */
+  async createFile(filename: string, params?: { mimeType?: string, spaces?: 'drive' | 'appDataFolder' }) {
+    params ??= {};
+    params.mimeType ??= 'text/json';
+    params.spaces ??= 'appDataFolder';
+    this.lastStatus = new GDSStatus();
+    let url = `https://www.googleapis.com/drive/v3/files/generateIds?count=1&space=${params.spaces}&access_token=${this.accessToken}`;
+    let ret = null;
+    try {
+      let response: any = await lastValueFrom(this.http.get(url));
+      if (response?.ids?.length === 1) {
+        const id = response.ids[0];
+        url = `https://www.googleapis.com/drive/v3/files?access_token=${this.accessToken}`;
+        const body = {
+          id: id,
+          name: filename,
+          parents: [params.spaces],
+          mimeType: params.mimeType
+        };
+        const req = new HttpRequest('POST', url, body, {
+          headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
+        });
+        response = await lastValueFrom(this.http.request(req));
+        this.lastStatus = new GDSStatus(gdsStatus.info, $localize`Die Datei ${filename} wurde auf Google Drive erzeugt.`);
+        ret = id;
+      } else {
+        this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Die Datei ${filename} konnte nicht auf Google Drive erzeugt werden.`);
+      }
+    } catch (ex) {
+      console.error('error when searching file on Google Drive', ex);
+      console.log('removing accesstoken for Google Drive');
+      this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Es gab einen Fehler beim Zugriff auf Google Drive: ${ex}`);
+      this.setOAuth2ToStorage(null);
+    }
+
+    return ret;
+  }
+
+  async uploadFile(filename: string, content: any, params?: { mimeType?: string, spaces?: 'drive' | 'appDataFolder' }) {
+    params ??= {};
+    params.mimeType ??= 'text/json';
+    params.spaces ??= 'appDataFolder';
+    this.lastStatus = new GDSStatus();
+    let url = `https://www.googleapis.com/drive/v3/files?q=name="${filename}" and not trashed&spaces=${params.spaces}&fields=files(id)&access_token=${this.accessToken}`;
+    let ret = null;
+    try {
+      let response: any = await lastValueFrom(this.http.get(url));
+      let id = response?.files?.[0]?.id;
+      if (response?.files?.length > 1) {
+        this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Es wurden mehrere Dateien mit dem Namen ${filename} auf Google Drive gefunden. Es wurde kein Upload durchgeführt.`);
+        return this.lastStatus;
+      } else if (response?.files?.length === 0) {
+        id = await this.createFile(filename, {mimeType: params.mimeType, spaces: params.spaces});
+      }
+      if (id == null) {
+        this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Die Datei ${filename} konnte nicht auf Google Drive gefunden werden. Es wurde kein Upload durchgeführt.`);
+        return this.lastStatus;
+      }
+      url = `https://www.googleapis.com/upload/drive/v3/files/${id}?uploadType=media&access_token=${this.accessToken}`;
+      const req = new HttpRequest('PATCH', url, content, {
+        headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
+      });
+      await lastValueFrom(this.http.request(req));
+      this.lastStatus = new GDSStatus(gdsStatus.ok);
+    } catch (ex) {
+      console.error('error when uploading file on Google Drive', ex);
+      this.lastStatus = new GDSStatus(gdsStatus.error, $localize`Es gab einen Fehler beim Zugriff auf Google Drive.`);
+    }
+    return this.lastStatus;
+  }
+
+  checkUrl(): void {
+    if (!this.isValid || true) {
       return;
     }
     const params: any = {};
@@ -91,75 +241,6 @@ export class GoogleDriveService {
     }
   }
 
-  /**
-   * Get file contents by filename. Only returns contents of the file, if it is one single file that can
-   * be found. If there is more than one file then the return value will be null.
-   *
-   * @param filename  name of the file
-   * @param params    parameters for the request, object with following entries
-   *                  responseType    = responseType for the request, has to be valid for http.request, json by default
-   *                  spaces          = spaces of google drive to be queried, appDataFolder by default
-   *                  createIfMissing = if true the file will be created if it could not be found
-   * @returns content of file or null if not available
-   */
-  async findFileByName(filename: string, params?: { responseType?: 'arraybuffer' | 'blob' | 'json' | 'text', spaces?: 'drive' | 'appDataFolder', createIfMissing?: boolean }) {
-    params ??= {};
-    params.responseType ??= 'json';
-    params.spaces ??= 'appDataFolder';
-    params.createIfMissing ??= false;
-    if (!this.isValid) {
-      return of(null);
-    }
-    let url = `https://www.googleapis.com/drive/v3/files?q=name="${filename}" and not trashed&spaces=${params.spaces}&fields=files(id)&access_token=${this.accessToken}`;
-    let ret = null;
-    let response: any = await lastValueFrom(this.http.get(url));
-    if (response?.files?.length === 1) {
-      const id = response.files[0].id;
-      url = `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${this.GOOGLE_API_KEY}`;
-      const req = new HttpRequest('GET', url, {
-        headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`}),
-        responseType: params.responseType
-      });
-      response = await lastValueFrom(this.http.request(req));
-      ret = response?.body;
-    } else if (response?.files?.length === 0 && params.createIfMissing) {
-      // create file
-      url = `https://www.googleapis.com/drive/v3/files/generateIds?count=1&space=${params.spaces}&access_token=${this.accessToken}`;
-      response = await lastValueFrom(this.http.get(url));
-      if (response?.ids?.length === 1) {
-        const id = response.ids[0];
-        url = `https://www.googleapis.com/drive/v3/files?access_token=${this.accessToken}`;
-        const body = {
-          id: id,
-          name: filename,
-          parents: [params.spaces],
-          mimeType: params.responseType
-        };
-        const req = new HttpRequest('POST', url, body, {
-          headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
-        });
-        response = await lastValueFrom(this.http.request(req));
-        console.log('created', response);
-      }
-    }
-    return ret;
-  }
-
-  trySampleRequest(): void {
-    const access_token = this.getOAuth2FromStorage();
-    if (access_token != null) {
-      const url = `https://www.googleapis.com/drive/v3/about?fields=user&access_token=${access_token}`;
-      this.http.get(url).subscribe((response: any) => {
-        console.log(response);
-      }, error => {
-        console.error(error);
-        this.oauth2SignIn();
-      });
-    } else {
-      this.oauth2SignIn();
-    }
-  }
-
   oauth2Check(): void {
     const access_token = this.getOAuth2FromStorage();
     if (access_token == null) {
@@ -168,7 +249,7 @@ export class GoogleDriveService {
   }
 
   oauth2SignIn(): void {
-    if (!this.isValid) {
+    if (!this.isValid || true) {
       return;
     }
     this.beforeSignin?.().subscribe(signinConfirmation => {

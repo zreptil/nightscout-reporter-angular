@@ -25,11 +25,11 @@ export class GoogleOneTapService {
   constructor(public env: EnvironmentService,
               public http: HttpClient) {
     // @ts-ignore
-    window.onGoogleLibraryLoad = () => {
-      this.login();
-      gapi.load('client', this.initializeGapiClient.bind(this));
-      this.gisInitialized();
-    };
+    // window.onGoogleLibraryLoad = () => {
+    //   // this.login();
+    //   gapi.load('client', this.initializeGapiClient.bind(this));
+    //   this.gisInitialized();
+    // };
   }
 
   _id_token: string;
@@ -117,36 +117,37 @@ export class GoogleOneTapService {
     if (resp.error !== undefined) {
       throw (resp);
     }
-    let response;
-    try {
-      response = await gapi.client.drive.files.list({
-        pageSize: 10,
-        q: `name="${this.env.settingsFilename}"`,
-        spaces: 'appDataFolder',
-        fields: 'files(id, name)',
-      });
-    } catch (err: any) {
-      console.log('Fählär', err);
-      return;
-    }
-    const files = response.result.files;
-    if (!files || files.length == 0) {
-      console.log('Keine Dateien vorhanden');
-      return;
-    }
-    console.log('gfunna', files);
-    if (files.length === 1) {
-      try {
-        response = await gapi.client.drive.files.get({
-          fileId: files[0].id,
-          alt: 'media'
-        });
-      } catch (err: any) {
-        console.log('Hatte was, aber nix!!!', err);
-        return;
-      }
-      console.log('hab was', response.result);
-    }
+
+    // let response;
+    // try {
+    //   response = await gapi.client.drive.files.list({
+    //     pageSize: 10,
+    //     q: `name="${this.env.settingsFilename}"`,
+    //     spaces: 'appDataFolder',
+    //     fields: 'files(id, name)',
+    //   });
+    // } catch (err: any) {
+    //   console.log('Fählär', err);
+    //   return;
+    // }
+    // const files = response.result.files;
+    // if (!files || files.length == 0) {
+    //   console.log('Keine Dateien vorhanden');
+    //   return;
+    // }
+    // console.log('gfunna', files);
+    // if (files.length === 1) {
+    //   try {
+    //     response = await gapi.client.drive.files.get({
+    //       fileId: files[0].id,
+    //       alt: 'media'
+    //     });
+    //   } catch (err: any) {
+    //     console.log('Hatte was, aber nix!!!', err);
+    //     return;
+    //   }
+    //   console.log('hab was', response.result);
+    // }
   }
 
   logout(): void {
@@ -162,6 +163,7 @@ export class GoogleOneTapService {
   }
 
   login(): void {
+    console.log('Auf gehts!!!!!');
     this.id_token = sessionStorage.getItem('token');
     if (this.id_token != null) {
       this.onEvent.next(null);

@@ -18,7 +18,6 @@ import {EntryData} from '@/_model/nightscout/entry-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 import {LanguageService} from '@/_services/language.service';
-import {GoogleDriveService} from '@/_services/google-drive.service';
 import {EnvironmentService} from '@/_services/environment.service';
 
 class CustomTimeoutError extends Error {
@@ -41,7 +40,7 @@ export class DataService {
   constructor(public http: HttpClient,
               public ss: StorageService,
               public ls: LanguageService,
-              public gds: GoogleDriveService,
+              // public gds: GoogleDriveService,
               public env: EnvironmentService
   ) {
     // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
@@ -64,7 +63,7 @@ export class DataService {
     this._syncWithGoogle = value ?? false;
     this.saveWebData();
     if (this._syncWithGoogle) {
-      this.gds.oauth2Check();
+      // this.gds.oauth2Check();
     } else {
       this.oauthToken = null;
       this.saveWebData();
@@ -226,16 +225,17 @@ export class DataService {
   }
 
   async _loadFromGoogle() {
-    let settings = await this.gds.findFileByName(this.env.settingsFilename, {createIfMissing: true});
-    if (settings == null) {
-      console.log('loading settings from Nightscout Reporter 3.0');
-      // load the settings from nightscout reporter 3.0 in the settings, if they are not there
-      settings = await this.gds.findFileByName('nr-settings', {createIfMissing: false});
-    }
-    if (settings?.s11 > GLOBALS.timestamp) {
-      // set the settings retrieved from Google Drive to the internal data
-      this.fromSharedJson(settings);
-    }
+    // let settings = await this.gds.findFileByName(this.env.settingsFilename, {createIfMissing: true});
+    // if (settings == null) {
+    //   console.log('loading settings from Nightscout Reporter 3.0');
+    //   // load the settings from nightscout reporter 3.0 in the settings, if they are not there
+    //   settings = await this.gds.findFileByName('nr-settings', {createIfMissing: false});
+    // }
+    // // console.log('from Google', settings, settings?.s11, GLOBALS.timestamp);
+    // if (settings?.s11 > GLOBALS.timestamp) {
+    //   // set the settings retrieved from Google Drive to the internal data
+    //   this.fromSharedJson(settings);
+    // }
   }
 
   // loads all settings from localStorage
@@ -458,51 +458,19 @@ export class DataService {
 
     const doReload = (GLOBALS.language.code !== oldLang && GLOBALS.language.code !== null) && !params.skipReload;
     if (this.syncWithGoogle && params.updateSync) {
-      this._uploadToGoogle(doReload);
+      this._uploadToGoogle(doReload).then(_r => {
+      });
     } else if (doReload) {
       this.reload();
     }
   }
 
   // noinspection JSUnusedLocalSymbols
-  _uploadToGoogle(doReload: boolean): void {
-    Log.todo('DataService._uploadToGoogle ist noch nicht implementiert');
-    /*
-      if (!_googleLoaded) return;
-      if (drive == null) {
-      syncGoogle = false;
-      return;
-    }
-
-    settingsFile ??= gd.File()
-      ..name = settingsFilename
-      ..parents = [driveParent]
-      ..mimeType = 'text/json'
-      ..id = null;
-
-    const controller = StreamController<String>();
-    const content = asSharedString;
-    controller.add(content);
-    const media =
-      commons.Media(controller.stream.transform(convert.Utf8Encoder()), content.length, contentType: 'text/json');
-    if (settingsFile.id == null) {
-      drive.files.generateIds(count: 1, space: driveParent).then((gd.GeneratedIds ids) {
-        settingsFile.id = ids.ids[0];
-        drive.files.create(settingsFile, uploadMedia: media).then((_) {});
-      });
-    } else {
-      const file = gd.File();
-      file.trashed = false;
-      drive.files.update(file, settingsFile.id, uploadMedia: media).then((gd.File file) {
-        if (doReload) reload();
-    //        showDebug("Datei ${file.name} gespeichert");
-      })?.catchError((error) {
-        const msg = error.toString();
-        showDebug('Fehler beim Upload zu Google (${settingsFile.name}): $msg');
-      }, test: (error) => true);
-    }
-    controller.close();
-    */
+  async _uploadToGoogle(doReload: boolean) {
+    // const status = await this.gds.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
+    // if (status.status === gdsStatus.error) {
+    //   Log.error(status.text);
+    // }
   }
 
   async changeLanguage(value: LangData, params?: { doReload?: boolean, checkConfigured?: boolean }) {

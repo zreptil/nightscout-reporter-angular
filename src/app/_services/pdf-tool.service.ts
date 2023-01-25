@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {TCreatedPdf} from 'pdfmake/build/pdfmake';
-// import * as PDFJS from 'pdfjs-dist';
-// import * as PDFJS from 'src/assets/scripts/pdf';
 import {PdfService} from '@/_services/pdf.service';
 import {LangData} from '@/_model/nightscout/lang-data';
 import {DataService} from '@/_services/data.service';
