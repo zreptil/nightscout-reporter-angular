@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from './storage.service';
 import {Observable, of} from 'rxjs';
-import {DialogData, DialogResult, DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
+import {DialogData, DialogParams, DialogResult, DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {Log} from '@/_services/log.service';
@@ -251,19 +251,20 @@ export class SessionService {
     return Utils.isEmpty(value);
   }
 
-  info(content: string | string[], theme = 'main'): Observable<DialogResult> {
-    return this.showDialog(DialogType.info, content, false, theme);
+  info(content: string | string[], params?: DialogParams): Observable<DialogResult> {
+    return this.showDialog(DialogType.info, content, false, params);
   }
 
-  confirm(content: string | string[], theme = 'main'): Observable<DialogResult> {
-    return this.showDialog(DialogType.confirm, content, false, theme);
+  confirm(content: string | string[], params?: DialogParams): Observable<DialogResult> {
+    return this.showDialog(DialogType.confirm, content, false, params);
   }
 
-  ask(content: string | string[], type: IDialogDef, theme = 'main'): Observable<DialogResult> {
-    return this.showDialog(type, content, false, theme);
+  ask(content: string | string[], type: IDialogDef, params?: DialogParams): Observable<DialogResult> {
+    return this.showDialog(type, content, false, params);
   }
 
-  showDialog(type: DialogType | IDialogDef, content: string | string[], disableClose = false, theme = 'standard'): Observable<DialogResult> {
+  showDialog(type: DialogType | IDialogDef, content: string | string[], disableClose = false, params?: DialogParams): Observable<DialogResult> {
+    params ??= new DialogParams();
     // console.error(content);
     if (content == null || content === '' || content.length === 0) {
       const ret = new DialogResult();
@@ -280,7 +281,7 @@ export class SessionService {
       }
       this.dlgRef = this.dialog.open(DialogComponent, {
         panelClass: cls,
-        data: new DialogData(type, content, null, theme),
+        data: new DialogData(type, content, params, null),
         disableClose
       });
       this.dlgRef.keydownEvents().subscribe(event => {
@@ -365,7 +366,7 @@ export class SessionService {
   }
 
   deleteUser(): void {
-    this.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, 'settings').subscribe(result => {
+    this.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);

@@ -10,6 +10,9 @@ import {ProgressService} from '@/_services/progress.service';
 import {UserData} from '@/_model/nightscout/user-data';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {ShortcutData} from '@/_model/shortcut-data';
+import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
+import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
+import {DropboxService} from '@/_services/sync/dropbox.service';
 
 @Component({
   selector: 'app-main',
@@ -98,7 +101,8 @@ export class MainComponent implements OnInit {
               public pdf: PdfService,
               public ss: SessionService,
               public ps: ProgressService,
-              public ns: NightscoutService
+              public ns: NightscoutService,
+              public dbs: DropboxService
   ) {
     // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
     //
@@ -381,19 +385,20 @@ export class MainComponent implements OnInit {
     this.ss.checkPrint();
   }
 
-//   syncWithGoogle() {
-//     if (this.ds.syncWithGoogle) {
-//       this.ss.confirm(`Soll die Synchronisierung mit Google Drive aufgehoben werden?`).subscribe(result => {
-//         if (result.btn == DialogResultButton.yes) {
-//           google.accounts.id.disableAutoSelect();
-//           this.ds.syncWithGoogle = false;
-//         }
-//       });
-//       return;
-//     }
-//     this.gots.login();
-// //    this.ds.gds.oauth2Check();
-//   }
+  toggleSync() {
+    if (this.ds.syncType === oauth2SyncType.dropbox) {
+      const params = new DialogParams();
+      params.image = 'assets/img/dropbox.png';
+      this.ss.confirm($localize`Soll die Synchronisierung mit Dropbox aufgehoben werden?`, params).subscribe(result => {
+        if (result.btn == DialogResultButton.yes) {
+          this.dbs.disconnect();
+          this.ds.syncType = oauth2SyncType.none;
+        }
+      });
+    } else {
+      this.dbs.connect();
+    }
+  }
 
   clickUserImage() {
     this.ss.reloadUserImg = true;

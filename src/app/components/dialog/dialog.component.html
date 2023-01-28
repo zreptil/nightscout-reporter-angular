@@ -3,7 +3,8 @@
      cdkDragRootElement=".dialog-box.dialog">
   <div [style]="customStyle('Header')" cdkDragHandle class="type{{data?.type}}" mat-dialog-title>
     <h1>
-      <mat-icon *ngIf="type!=null">{{type}}</mat-icon>
+      <mat-icon *ngIf="showTitleIcon">{{titleIcon}}</mat-icon>
+      <img (error)="noImage($event)" *ngIf="showTitleImage" [src]="titleImage" alt="titleimage">
       {{data.title}}
     </h1>
     <div spacer></div>

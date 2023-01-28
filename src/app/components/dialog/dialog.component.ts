@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
-import {DialogData, DialogResultButton, DialogType, IDialogButton} from '@/_model/dialog-data';
+import {DialogData, DialogParams, DialogResultButton, DialogType, IDialogButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
 
 @Component({
@@ -15,6 +15,31 @@ export class DialogComponent implements OnInit, AfterViewChecked {
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  get showTitleIcon(): boolean {
+    return (this.data.params.icon != null || this.type != null) && !this.showTitleImage;
+  };
+
+  get showTitleImage(): boolean {
+    return this.data.params.image != null;
+  };
+
+  get titleIcon(): string {
+    if (this.data.params.icon != null) {
+      return this.data.params.icon;
+    }
+    if (this.type != null) {
+      return this.type;
+    }
+    return null;
+  }
+
+  get titleImage(): string {
+    if (this.data.params.image != null) {
+      return this.data.params.image;
+    }
+    return null;
   }
 
   get type(): string {
@@ -34,15 +59,15 @@ export class DialogComponent implements OnInit, AfterViewChecked {
 
   customStyle(key: string): string {
     const ret = [];
-    if (this.data.theme != null) {
-      ret.push(`background-color:var(--${this.data.theme}${key}Back)`);
-      ret.push(`color:var(--${this.data.theme}${key}Fore)`);
+    if (this.data.params.theme != null) {
+      ret.push(`background-color:var(--${this.data.params.theme}${key}Back)`);
+      ret.push(`color:var(--${this.data.params.theme}${key}Fore)`);
     }
     return Utils.join(ret, ';');
   }
 
   update(data: string | string[]): void {
-    this.data = new DialogData(this.data.type, data);
+    this.data = new DialogData(this.data.type, data, new DialogParams());
   }
 
   ngOnInit(): void {
@@ -69,5 +94,9 @@ export class DialogComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     this.mayFireValueChanges = true;
+  }
+
+  noImage(evt: ErrorEvent) {
+    (evt.target as any).src = 'assets/img/empty.print.png';
   }
 }

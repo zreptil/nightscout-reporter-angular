@@ -1,9 +1,4 @@
 <!--suppress HtmlUnknownTarget -->
-<!-- div data-auto_select="true"
-     data-client_id="939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh.apps.googleusercontent.com"
-     data-login_uri="https://localhost:3002#test"
-     id="g_id_onload">
-</div -->
 <mat-drawer-container autosize hasBackdrop="false">
   <mat-drawer #drawer class="mat-elevation-z10">
     <div class="tabs">
@@ -49,11 +44,16 @@
           </ng-container>
         </button>
         -->
-        <!-- button (click)="syncWithGoogle()" class="iconButton" mat-flat-button>
-          <mat-icon *ngIf="ds.oauthToken == null">sync_disabled</mat-icon>
-          <mat-icon *ngIf="ds.oauthToken != null">sync</mat-icon>
-          <div class="g_id_signout" i18n="synchronize with google drive">Mit Google synchronisieren</div>
-        </button -->
+        <button (click)="toggleSync()" class="iconButton" mat-flat-button>
+          <ng-container *ngIf="!ds.hasSync">
+            <mat-icon>sync_disabled</mat-icon>
+            <div i18n="synchronize">Synchronisieren</div>
+          </ng-container>
+          <ng-container *ngIf="ds.hasSync">
+            <img alt="dropbox" src="assets/img/dropbox.png">
+            <div i18n="synchronized with dropbox">Mit Dropbox synchronisiert</div>
+          </ng-container>
+        </button>
         <!--
                 <signin [isVisible]="true"
                         [autoStart]="false"

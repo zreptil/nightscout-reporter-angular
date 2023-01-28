@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {Utils} from '@/classes/utils';
-import {DialogResultButton} from '@/_model/dialog-data';
+import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -83,7 +83,7 @@ export class ShortcutEditComponent implements OnInit {
     const msg1 = $localize`Soll der Shortcut mit der Bezeichnung`;
     const msg2 = `@${GLOBALS.currShortcut.name}@`;
     const msg3 = $localize`wirklich gelöscht werden?`;
-    this.ss.confirm([msg1, msg2, msg3], 'shortcut').subscribe(result => {
+    this.ss.confirm([msg1, msg2, msg3], new DialogParams({theme: 'shortcut', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           if (GLOBALS.currShortcutIdx >= 0 && GLOBALS.currShortcutIdx < GLOBALS.shortcutList.length) {
@@ -109,7 +109,7 @@ export class ShortcutEditComponent implements OnInit {
     const msg3 = $localize`mit dem Zeitraum`;
     const msg4 = `@${GLOBALS.period.display}@`;
     const msg5 = $localize`ersetzt werden?`;
-    this.ss.confirm([msg1, msg2, msg3, msg4, msg5], 'shortcut').subscribe(result => {
+    this.ss.confirm([msg1, msg2, msg3, msg4, msg5], new DialogParams({theme: 'shortcut'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.currShortcut.periodData = GLOBALS.period.toString();
@@ -121,7 +121,7 @@ export class ShortcutEditComponent implements OnInit {
 
   clickForms() {
     const msg1 = $localize`Soll die Formularauswahl mit der aktuellen Auswahl ersetzt werden?`;
-    this.ss.confirm(msg1, 'shortcut').subscribe(result => {
+    this.ss.confirm(msg1, new DialogParams({theme: 'shortcut'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.currShortcut.loadCurrentForms();
@@ -136,7 +136,7 @@ export class ShortcutEditComponent implements OnInit {
     const msg3 = $localize`mit der Einheit`;
     const msg4 = `@${GLOBALS.listGlucUnits[GLOBALS.glucMGDLIdx]}@`;
     const msg5 = $localize`ersetzt werden?`;
-    this.ss.confirm([msg1, msg2, msg3, msg4, msg5], 'shortcut').subscribe(result => {
+    this.ss.confirm([msg1, msg2, msg3, msg4, msg5], new DialogParams({theme: 'shortcut'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.currShortcut.glucMGDLIdx = GLOBALS.glucMGDLIdx;

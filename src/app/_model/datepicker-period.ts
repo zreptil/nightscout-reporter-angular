@@ -102,7 +102,7 @@ export class DatepickerPeriod {
     if (Utils.isSameDay(this.start, this.end)) {
       ret = GLOBALS.fmtDate(this.start);
     }
-    if (GLOBALS.currPeriodShift.months !== 0) {
+    if ((GLOBALS.currPeriodShift?.months ?? 0) !== 0) {
       ret = `${ret} - ${GLOBALS.currPeriodShift.title}`;
     }
     if (Utils.isEmpty(ret)) {

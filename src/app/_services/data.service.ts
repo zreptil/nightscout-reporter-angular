@@ -19,6 +19,8 @@ import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 import {LanguageService} from '@/_services/language.service';
 import {EnvironmentService} from '@/_services/environment.service';
+import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
+import {DropboxService} from '@/_services/sync/dropbox.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -34,14 +36,14 @@ export class DataService {
   isLoading = false;
   onAfterLoad: () => void = null;
   _googleLoaded = false;
-  settingsFilename = 'nightrep-settings';
-  oauthToken: string = null;
+  oauth2AccessToken: string = null;
 
   constructor(public http: HttpClient,
               public ss: StorageService,
               public ls: LanguageService,
               // public gds: GoogleDriveService,
-              public env: EnvironmentService
+              public env: EnvironmentService,
+              public dbs: DropboxService
   ) {
     // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
     //   next: data => {
@@ -53,20 +55,25 @@ export class DataService {
     // });
   }
 
-  _syncWithGoogle = false;
-
-  get syncWithGoogle(): boolean {
-    return this._syncWithGoogle;
+  get hasSync(): boolean {
+    return this.syncType !== oauth2SyncType.none;
   }
 
-  set syncWithGoogle(value: boolean) {
-    this._syncWithGoogle = value ?? false;
+  _syncType: oauth2SyncType = oauth2SyncType.none;
+
+  get syncType(): oauth2SyncType {
+    return this._syncType;
+  }
+
+  set syncType(value: oauth2SyncType) {
+    this._syncType = value ?? oauth2SyncType.none;
     this.saveWebData();
-    if (this._syncWithGoogle) {
-      // this.gds.oauth2Check();
-    } else {
-      this.oauthToken = null;
+    if (this._syncType === oauth2SyncType.none) {
+      this.oauth2AccessToken = null;
       this.saveWebData();
+    } else {
+      this.dbs.connect();
+      // this.gds.oauth2Check();
     }
   }
 
@@ -168,15 +175,10 @@ export class DataService {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
       w2: GLOBALS._theme,
-      w3: (this._syncWithGoogle ?? false) ? 'true' : 'false',
-      w4: this.oauthToken
+      w3: this._syncType,
+      w4: this.oauth2AccessToken
     };
     this.ss.write(Settings.WebData, data);
-    // `{"w0":"${GLOBALS.version}"`
-    // + `,"w1":"${GLOBALS.language.code ?? 'de_DE'}"`
-    // + `,"w2":"${GLOBALS.theme}"`
-    // + `,"w3":${(this._syncGoogle ?? false) ? 'true' : 'false'}`
-    // + '}');
   }
 
   loadWebData(): void {
@@ -185,14 +187,17 @@ export class DataService {
       const code = JsonData.toText(json.w1);
       GLOBALS.language = GLOBALS.languageList.find((lang) => lang.code === code);
       GLOBALS.theme = JsonData.toText(json.w2, null);
-      this._syncWithGoogle = JsonData.toBool(json.w3);
-      this.oauthToken = JsonData.toText(json.w4, null);
+      this._syncType = JsonData.toNumber(json.w3);
+      this.oauth2AccessToken = JsonData.toText(json.w4, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }
+    if (this.oauth2AccessToken == null) {
+      this._syncType = oauth2SyncType.none;
+    }
   }
 
-  async loadSettingsJson(skipSyncGoogle = false) {
+  async loadSettingsJson(skipSync = false) {
     try {
       const data = await this.request('assets/settings.json', {showError: false});
       if (data != null) {
@@ -209,8 +214,8 @@ export class DataService {
 
     this.loadWebData();
     this.loadFromStorage();
-    if (this.syncWithGoogle && !skipSyncGoogle) {
-      await this._loadFromGoogle();
+    if (this.syncType !== oauth2SyncType.none && !skipSync) {
+      await this._loadFromSync();
     }
     this._initAfterLoad();
   }
@@ -222,20 +227,6 @@ export class DataService {
       GLOBALS.lastVersion != null
       && !Utils.isEmpty(GLOBALS.lastVersion)
       && !Utils.isEmpty(GLOBALS.userList);
-  }
-
-  async _loadFromGoogle() {
-    // let settings = await this.gds.findFileByName(this.env.settingsFilename, {createIfMissing: true});
-    // if (settings == null) {
-    //   console.log('loading settings from Nightscout Reporter 3.0');
-    //   // load the settings from nightscout reporter 3.0 in the settings, if they are not there
-    //   settings = await this.gds.findFileByName('nr-settings', {createIfMissing: false});
-    // }
-    // // console.log('from Google', settings, settings?.s11, GLOBALS.timestamp);
-    // if (settings?.s11 > GLOBALS.timestamp) {
-    //   // set the settings retrieved from Google Drive to the internal data
-    //   this.fromSharedJson(settings);
-    // }
   }
 
   // loads all settings from localStorage
@@ -432,13 +423,15 @@ export class DataService {
     }
     let oldLang: string = null;
     let oldWebTheme: string = null;
-    let oldGoogle: boolean = null;
+    let oldSyncType: number = null;
+    let oldOauth2: string = null;
     try {
       GLOBALS.user.loadParamsFromForms();
       const json = this.ss.read(Settings.WebData);
       oldLang = JsonData.toText(json.w1);
       oldWebTheme = JsonData.toText(json.w2);
-      oldGoogle = JsonData.toBool(json.w3);
+      oldSyncType = JsonData.toNumber(json.w3);
+      oldOauth2 = JsonData.toText(json.w4, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.save`);
     }
@@ -449,7 +442,8 @@ export class DataService {
       this.ss.write(Settings.DebugFlag, Settings.DebugActive, false);
     }
 
-    this.syncWithGoogle = oldGoogle;
+    this._syncType = oldSyncType;
+    this.oauth2AccessToken = oldOauth2;
     GLOBALS._theme = oldWebTheme;
 
     this.saveWebData();
@@ -457,17 +451,36 @@ export class DataService {
     this.ss.writeCrypt(Settings.DeviceData, GLOBALS.asDeviceString);
 
     const doReload = (GLOBALS.language.code !== oldLang && GLOBALS.language.code !== null) && !params.skipReload;
-    if (this.syncWithGoogle && params.updateSync) {
-      this._uploadToGoogle(doReload).then(_r => {
+    if (this.syncType !== oauth2SyncType.none && params.updateSync) {
+      this._uploadToSync(doReload).then(_r => {
       });
     } else if (doReload) {
       this.reload();
     }
   }
 
-  // noinspection JSUnusedLocalSymbols
-  async _uploadToGoogle(doReload: boolean) {
-    // const status = await this.gds.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
+  async _loadFromSync() {
+    const settings = await this.dbs.downloadFile(this.env.settingsFilename);
+    if (settings != null) {
+      this.fromSharedJson(settings);
+    }
+  }
+
+  // async _loadFromGoogle() {
+  // let settings = await this.gds.findFileByName(this.env.settingsFilename, {createIfMissing: true});
+  // if (settings == null) {
+  //   console.log('loading settings from Nightscout Reporter 3.0');
+  //   // load the settings from nightscout reporter 3.0 in the settings, if they are not there
+  //   settings = await this.gds.findFileByName('nr-settings', {createIfMissing: false});
+  // }
+  // // console.log('from Google', settings, settings?.s11, GLOBALS.timestamp);
+  // if (settings?.s11 > GLOBALS.timestamp) {
+  //   // set the settings retrieved from Google Drive to the internal data
+  //   this.fromSharedJson(settings);
+  // }
+
+  async _uploadToSync(doReload: boolean) {
+    const status = await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
     // if (status.status === gdsStatus.error) {
     //   Log.error(status.text);
     // }

@@ -9,6 +9,23 @@
     </div>
   </div>
   <mat-dialog-content>
+    <h2 (click)="click(40.3)">
+      <span i18n="version">Version</span><span i18n="v403">4.0.3 - 29.01.2023</span></h2>
+    <ul [class]="classFor(40.3)">
+      <li class="added" i18n="v403a1">
+        Ab dieser Version gibt es wieder die Möglichkeit, die Einstellungen von Nightscout Reporter
+        zu synchronisieren, so dass man sie in anderen Browsern oder auf anderen Geräten nicht mehr
+        eingeben muss. Die Synchronisierung funktioniert zunächst nur über Dropbox. Wenn man dort
+        ein Konto hat, kann eine Verbindung damit hergestellt werden. Dies geschieht im Hauptmenü
+        auf der linken Seite mit dem Punkt "Synchronisieren". Wenn der aufgerufen wird, dann
+        wird nach einer Nachfrage der Authentifizierungsworkflow von Dropbox gestartet. Wenn dieser
+        erfolgreich abgeschlossen wurde, dann werden die Einstellungen beim Laden dort gesucht und
+        beim speichern dort gespeichert. Die Speicherung erfolgt im Verzeichnis Apps/Nightscout Reporter.
+        Nightscout Reporter benötigt dafür nur die Berechtigung in genau diesem Verzeichnis Dateien
+        schreiben und lesen zu dürfen. Wenn die Verbindung zu Dropbox nicht mehr erfolgen soll,
+        dann muss einfach nur der Menüpunkt im Hauptmenü erneut angeklickt werden.
+      </li>
+    </ul>
     <h2 (click)="click(40.2)">
       <span i18n="version">Version</span><span i18n="v402">4.0.2 - 25.01.2023</span></h2>
     <ul [class]="classFor(40.2)">

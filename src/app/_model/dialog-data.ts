@@ -15,6 +15,20 @@ export enum DialogType {
   warning
 }
 
+export class DialogParams {
+  theme: string;
+  icon: string;
+  image: string;
+
+  constructor(init?: { theme?: string, icon?: string, image?: string }) {
+    init ??= {};
+    init.theme ??= 'main';
+    for (const key of Object.keys(init)) {
+      (this as any)[key] = (init as any)[key];
+    }
+  }
+}
+
 export class DialogResult {
   btn: DialogResultButton | any;
   data?: any;
@@ -85,8 +99,8 @@ export class DialogData {
 
   constructor(public type: DialogType | IDialogDef,
               public content: string | string[],
-              public ownButtons?: IDialogButton[],
-              public theme: string = 'main') {
+              public params: DialogParams,
+              public ownButtons?: IDialogButton[]) {
     if (typeof type === 'number') {
       this.buttons = this.defs.get(type).buttons;
       this.title = this.defs.get(type).title;

@@ -12,7 +12,7 @@ import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {MatDialogRef} from '@angular/material/dialog';
-import {DialogResultButton, DialogType} from '@/_model/dialog-data';
+import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-settings',
@@ -316,7 +316,7 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUrl(idx: number): void {
-    this.ss.confirm($localize`Soll die URL ${GLOBALS.user.listApiUrl[idx].url} vom Benutzer wirklich gelöscht werden?`, 'settings').subscribe(result => {
+    this.ss.confirm($localize`Soll die URL ${GLOBALS.user.listApiUrl[idx].url} vom Benutzer wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.user.listApiUrl.splice(idx, 1);
@@ -345,7 +345,7 @@ export class SettingsComponent implements OnInit {
           {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
           {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
         ]
-      }, ret.msg, false, 'settings')
+      }, ret.msg, false, new DialogParams({theme: 'settings'}))
         //        this.ss.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
         .subscribe(result => {
           switch (result.btn) {
