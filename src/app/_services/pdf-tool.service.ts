@@ -24,7 +24,7 @@ export class PdfToolService {
   async createThumbs(lang: LangData) {
     await this.ds.setLanguage(lang);
     console.log(GLOBALS.language);
-    this.pdf.generatePdf(this.createThumb.bind(this));
+    await this.pdf.generatePdf(this.createThumb.bind(this));
     // console.log(this.thumbLangSave, this.thumbLangIdx);
     // if (this.thumbLangSave == null && GLOBALS.language.code !== 'de-DE') {
     //   this.thumbLangIdx = GLOBALS.languageList.length;

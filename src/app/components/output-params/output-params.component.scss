@@ -291,6 +291,7 @@ material-input {
   margin-left: 2em;
 }
 
+//noinspection CssReplaceWithShorthandSafely
 .selectButton {
   background: var(--outputparamsHeaderBack);
   color: var(--outputparamsHeaderFore);
