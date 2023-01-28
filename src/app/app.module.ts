@@ -39,8 +39,7 @@ import {ShortcutEditComponent} from './components/shortcut-edit/shortcut-edit.co
 import {FormParamsDialogComponent} from './components/form-params-dialog/form-params-dialog.component';
 import {FormParamsComponent} from './controls/form-params/form-params.component';
 import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
-import { ViewUsersComponent } from './components/view-users/view-users.component';
-import { DriveTestComponent } from './components/drive-test/drive-test.component';
+import {ViewUsersComponent} from './components/view-users/view-users.component';
 
 @NgModule({
   declarations: [
@@ -74,8 +73,7 @@ import { DriveTestComponent } from './components/drive-test/drive-test.component
     ShortcutEditComponent,
     FormParamsDialogComponent,
     FormParamsComponent,
-    ViewUsersComponent,
-    DriveTestComponent
+    ViewUsersComponent
   ],
   imports: [
     BrowserModule,
