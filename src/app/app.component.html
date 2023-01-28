@@ -1,6 +1,7 @@
-<ng-container [ngSwitch]="appType">
+<ng-container [ngSwitch]="env.appType">
   <app-watch *ngSwitchCase="'watch'"></app-watch>
   <app-local-tools *ngSwitchCase="'tools'"></app-local-tools>
   <app-test *ngSwitchCase="'test'"></app-test>
+  <app-shortcut *ngSwitchCase="'shortcut'"></app-shortcut>
   <app-main *ngSwitchDefault></app-main>
 </ng-container>

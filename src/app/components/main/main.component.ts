@@ -244,42 +244,44 @@ export class MainComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ds.loadWebData();
-    await this.ts.setTheme(GLOBALS.theme);
-    this.ds.onAfterLoad = this.afterLoad.bind(this);
-    GLOBALS.listConfig = [];
-    GLOBALS.listConfigOrg = [];
-    for (const form of this.ss.formList) {
-      GLOBALS.listConfigOrg.push(new FormConfig(form, false));
-    }
-    Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
-
-    this.ds.loadSettingsJson().then((_) => {
-      let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
-      dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
-      this.ss.showPopup(dlgId).subscribe(_ => {
-
-      });
-      // if (!GLOBALS.dsgvoAccepted) {
-      //   _currPage = 'dsgvo';
-      // }
-      // _lastPage = _currPage;
-      this.ds.sortConfigs();
-      for (const entry of GLOBALS.listConfig) {
-        GLOBALS.user.formParams[entry.id] = entry.asString;
-      }
-      /*
-
-              try {
-                GLOBALS.period.minDate = Date.parseLoose(GLOBALS.user.birthDate, GLOBALS.fmtDateForDisplay);
-              } catch (ex) {
-                GLOBALS.period.minDate = null;
-              }
-              GLOBALS.getCurrentGluc();
-              if (_currPage === 'whatsnew') GLOBALS.saveWebData();
-              checkPrint();
-          //*/
-    });
+    this.ds.onAfterLoadShared = this.afterLoad.bind(this);
+    this.ss.initialLoad();
+    // this.ds.loadWebData();
+    // await this.ts.setTheme(GLOBALS.theme);
+    // this.ds.onAfterLoadShared = this.afterLoad.bind(this);
+    // GLOBALS.listConfig = [];
+    // GLOBALS.listConfigOrg = [];
+    // for (const form of this.ss.formList) {
+    //   GLOBALS.listConfigOrg.push(new FormConfig(form, false));
+    // }
+    // Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
+    //
+    // this.ds.loadSettingsJson().then((_) => {
+    //   let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
+    //   dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
+    //   this.ss.showPopup(dlgId).subscribe(_ => {
+    //
+    //   });
+    //   // if (!GLOBALS.dsgvoAccepted) {
+    //   //   _currPage = 'dsgvo';
+    //   // }
+    //   // _lastPage = _currPage;
+    //   this.ds.sortConfigs();
+    //   for (const entry of GLOBALS.listConfig) {
+    //     GLOBALS.user.formParams[entry.id] = entry.asString;
+    //   }
+    //   /*
+    //
+    //           try {
+    //             GLOBALS.period.minDate = Date.parseLoose(GLOBALS.user.birthDate, GLOBALS.fmtDateForDisplay);
+    //           } catch (ex) {
+    //             GLOBALS.period.minDate = null;
+    //           }
+    //           GLOBALS.getCurrentGluc();
+    //           if (_currPage === 'whatsnew') GLOBALS.saveWebData();
+    //           checkPrint();
+    //       //*/
+    // });
   }
 
   afterLoad(): void {

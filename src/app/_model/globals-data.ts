@@ -47,7 +47,6 @@ export class GlobalsData extends Settings {
   ppFixAAPS30 = false;
   ppSkipSensorChange = 0;
   isCreatingPDF = false;
-  currPeriodShift: PeriodShift;
   isDebug = localStorage.getItem('forceDebug') === 'true';
   isBeta = window.location.href.indexOf('/beta/') >= 0;
   basalPrecisionAuto = 1;
@@ -155,6 +154,17 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  _currPeriodShift: PeriodShift;
+
+  get currPeriodShift(): PeriodShift {
+    return this._currPeriodShift;
+  }
+
+  set currPeriodShift(value: PeriodShift) {
+    console.error(value);
+    this._currPeriodShift = value;
   }
 
   private static _listSkipSensorChange = [

@@ -25,6 +25,17 @@
         schreiben und lesen zu dürfen. Wenn die Verbindung zu Dropbox nicht mehr erfolgen soll,
         dann muss einfach nur der Menüpunkt im Hauptmenü erneut angeklickt werden.
       </li>
+      <li class="added" i18n="v403a2">
+        Es ist jetzt möglich, mit Angabe eines Shortcuts in der Url direkt ein PDF erzeugen zu lassen,
+        das auf den Einstellungen in diesem Shortcut basiert. Die Url muss dabei folgendermassen aufgebaut
+        sein:
+        <br><br>
+        {{originUrl}}#shortcut?name=x&shift=y
+        <br><br>
+        Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.<br>
+        Die Angabe von shift ist optional. y ist dabei die Anzahl an Monaten, die der gespeicherte Zeitraum
+        in die Vergangenheit verschoben wird.
+      </li>
     </ul>
     <h2 (click)="click(40.2)">
       <span i18n="version">Version</span><span i18n="v402">4.0.2 - 25.01.2023</span></h2>

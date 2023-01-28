@@ -63,7 +63,7 @@ export class AppComponent {
 //     };
 //
 //     gds.setOAuth2ToStorage = (value: string) => {
-//       if (!ds.syncWithGoogle) {
+//       if (!ds.doSync) {
 //         value = null;
 //       }
 //       if (value != null) {
@@ -89,7 +89,7 @@ export class AppComponent {
 //     }
 //
 //     ds.loadWebData();
-//     if (ds.syncWithGoogle) {
+//     if (ds.doSync) {
 //       gots.login();
 //       gots.onEvent.subscribe(token => {
 //         if (gots.id_token != null) {
@@ -104,10 +104,6 @@ export class AppComponent {
 
   get globals() {
     return GLOBALS;
-  }
-
-  get appType(): string {
-    return window.location.hash?.substring(1);
   }
 
   msgOauth2Workflow(serviceName: string): string {

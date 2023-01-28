@@ -44,6 +44,7 @@ import {PrintUserData} from '@/forms/nightscout/print-user-data';
 import {PrintTest} from '@/forms/nightscout/print-test';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {FormParamsDialogComponent} from '@/components/form-params-dialog/form-params-dialog.component';
+import {ThemeService} from '@/_services/theme.service';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -98,7 +99,8 @@ export class SessionService {
               public ds: DataService,
               private dialog: MatDialog,
               public ns: NightscoutService,
-              public pdf: PdfService) {
+              public pdf: PdfService,
+              public ts: ThemeService) {
     GLOBALS.onPeriodChange.subscribe(_ => {
       this.checkPrint();
     });
@@ -379,5 +381,32 @@ export class SessionService {
     this.reloadUserImg = false;
     // (evt.target as HTMLImageElement).src = src;
     // (evt.target as HTMLImageElement).style.display = 'none';
+  }
+
+  async initialLoad() {
+    this.ds.loadWebData();
+    await this.ts.setTheme(GLOBALS.theme);
+    GLOBALS.listConfig = [];
+    GLOBALS.listConfigOrg = [];
+    for (const form of this.formList) {
+      GLOBALS.listConfigOrg.push(new FormConfig(form, false));
+    }
+    Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
+
+    this.ds.loadSettingsJson().then((_) => {
+      let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
+      dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
+      this.showPopup(dlgId).subscribe(_ => {
+
+      });
+      // if (!GLOBALS.dsgvoAccepted) {
+      //   _currPage = 'dsgvo';
+      // }
+      // _lastPage = _currPage;
+      this.ds.sortConfigs();
+      for (const entry of GLOBALS.listConfig) {
+        GLOBALS.user.formParams[entry.id] = entry.asString;
+      }
+    });
   }
 }

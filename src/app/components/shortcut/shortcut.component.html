@@ -1,0 +1,9 @@
+<ng-container *ngIf="shortcut==null">
+  <div i18n>Der Shortcut mit dem Namen {{env.appParams.name}} ist nicht vorhanden.</div>
+  <br>
+  <button (click)="clickBack()" mat-flat-button>Zurück zu Nightscout Reporter</button>
+</ng-container>
+<ng-container *ngIf="shortcut!=null" i18n>
+  Führe die PDF-Erstellung für Shortcut "{{env.appParams.name}}" aus.
+</ng-container>
+<app-progress></app-progress>

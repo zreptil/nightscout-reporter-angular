@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {DataService} from '@/_services/data.service';
 import {SessionService} from '@/_services/session.service';
+import {DropboxService} from '@/_services/sync/dropbox.service';
 
 @Component({
   selector: 'app-welcome',
@@ -11,7 +12,8 @@ import {SessionService} from '@/_services/session.service';
 export class WelcomeComponent implements OnInit {
 
   constructor(public ds: DataService,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public dbs: DropboxService) {
   }
 
   get globals(): GlobalsData {
@@ -52,7 +54,7 @@ export class WelcomeComponent implements OnInit {
     this.globals.isDebug = !this.globals.isDebug;
   }
 
-  syncWithGoogle() {
-//    this.ds.gds.oauth2Check();
+  doSync() {
+    this.dbs.connect();
   }
 }

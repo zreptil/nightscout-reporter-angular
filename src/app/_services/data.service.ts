@@ -34,7 +34,8 @@ class CustomTimeoutError extends Error {
 })
 export class DataService {
   isLoading = false;
-  onAfterLoad: () => void = null;
+  onAfterLoadShared: () => void = null;
+  onAfterLoadDevice: () => void = null;
   _googleLoaded = false;
   oauth2AccessToken: string = null;
 
@@ -242,7 +243,7 @@ export class DataService {
   // loads the settings that are not synchronized to google
   loadLocalOnlySettings(): void {
     GLOBALS.fmtDateForDisplay = new DatePipe(GLOBALS.language.code);
-    GLOBALS.currPeriodShift = GLOBALS.listPeriodShift[0];
+    // GLOBALS.currPeriodShift = GLOBALS.listPeriodShift[0];
   }
 
   // loads the settings from json-encoded strings
@@ -296,6 +297,11 @@ export class DataService {
       GLOBALS.ppSkipSensorChange = JsonData.toNumber(json.d15);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
+    }
+    try {
+      this.onAfterLoadDevice?.();
+    } catch (ex) {
+      Log.devError(ex, `Fehler bei DataService.fromDeviceJson (onAfterLoadDevice)`);
     }
   }
 
@@ -397,11 +403,9 @@ export class DataService {
       Log.devError(ex, `Fehler bei DataService.fromSharedJson`);
     }
     try {
-      if (this.onAfterLoad != null) {
-        this.onAfterLoad();
-      }
+      this.onAfterLoadShared?.();
     } catch (ex) {
-      Log.devError(ex, `Fehler bei DataService.fromSharedJson (onAfterLoad)`);
+      Log.devError(ex, `Fehler bei DataService.fromSharedJson (onAfterLoadShared)`);
     }
   }
 
@@ -479,7 +483,7 @@ export class DataService {
   //   this.fromSharedJson(settings);
   // }
 
-  async _uploadToSync(doReload: boolean) {
+  async _uploadToSync(_doReload: boolean) {
     const status = await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
     // if (status.status === gdsStatus.error) {
     //   Log.error(status.text);

@@ -13,6 +13,10 @@ export class WhatsNewComponent implements AfterViewInit {
   constructor() {
   }
 
+  get originUrl(): string {
+    return location.origin.replace(/\/$/, '');
+  }
+
   classFor(id: number): string[] {
     const ret: string[] = [];
     if (id !== +this.checkId) {
