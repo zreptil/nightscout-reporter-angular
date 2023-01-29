@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {encode as base64encode} from 'base64-arraybuffer';
 import {Oauth2pkce} from '@/_services/sync/oauth2pkce';
 import {lastValueFrom, Observable, of} from 'rxjs';
+import {Utils} from '@/classes/utils';
 
 enum oauthStatus {
   none,
@@ -33,7 +34,6 @@ export class DropboxService {
   // during oauth-workflow
   status: oauthStatus = oauthStatus.none;
   lastStatus: DBSStatus = new DBSStatus();
-  private oauth2Url: string;
 
   constructor(public env: EnvironmentService,
               public http: HttpClient) {
@@ -86,14 +86,13 @@ export class DropboxService {
       const params = [
         `client_id=${this.env.DROPBOX_APP_KEY}`,
         `redirect_uri=${location.origin}`,
-        `response_type=code`,
-        // `reject_cors_preflight=true`,
+        'response_type=code',
+        'token_access_type=offline',
         `code_verifier=${codeVerifier}`,
         `code_challenge=${code_challenge}`,
         'code_challenge_method=S256'
       ];
       const url = `https://www.dropbox.com/oauth2/authorize?${params.join('&')}`;
-      const oauth2 = new Oauth2pkce();
       this.startOauth2Workflow().subscribe(oauth2 => {
         if (oauth2.doSignin) {
           location.href = url;
@@ -120,22 +119,25 @@ export class DropboxService {
    *
    * @param filename name of the file to upload (containig path)   */
   async downloadFile(filename: string) {
-    let ret: any = null;
+    let ret: any;
+    let url = 'https://content.dropboxapi.com/2/files/download';
+    const req = new HttpRequest('POST', url, null, {
+      headers: this.requestHeader({
+        'Dropbox-API-Arg': JSON.stringify({
+          path: `/${filename}`
+        }),
+        'content-type': 'application/octet-stream'
+      })
+    });
+    let response: any;
     try {
-      let url = 'https://content.dropboxapi.com/2/files/download';
-      const req = new HttpRequest('POST', url, null, {
-        headers: this.requestHeader({
-          'Dropbox-API-Arg': JSON.stringify({
-            path: `/${filename}`
-          }),
-          'content-type': 'application/octet-stream'
-        })
-      });
-      const response: any = await lastValueFrom(this.http.request(req));
+      response = await lastValueFrom(this.http.request(req));
       ret = response?.body;
       this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde von Dropbox heruntergeladen.`);
     } catch (ex) {
       console.error('error when downloading file from Dropbox', ex);
+      response = await this.checkRefreshToken(req, ex);
+      ret = response?.body;
     }
     return ret;
   }
@@ -188,13 +190,13 @@ export class DropboxService {
    */
   private loadCredentials(): any {
     const src = this.getCredentialsFromStorage();
-    // const src = '9JyaVRHcFpHNSlEOnhje1x0Y54WdpJ1VkFVUrB1bZlHNRRlQMlUe24GUU'
-    // + 'ZDbEZjc510TzEVZIlUT2N1QSl0UJNUcPd2TPtWQQNEZp52QIF3QXhUUYZ2cyIDbfNWd'
-    // + '3EXZwpXNjZVWFNkTXt2N2ZVaItkUsZkd4JGW0kHdSVFMOJFMB9WYihleYJkLsNnI6IC'
-    // + 'dhJCLigDcYhENC50aEBVLXlHN1tWOFVjUUtkNB5nVSlDcMB3azoERJJHSzRGdzxWONJ'
-    // + 'Xewhmaph3TZF0N3QTZH5yQVplZxhXTPxmI6IidjJCLiQzZjhULLJzRkVESGljbvBlNq'
-    // + 'FmeQ90dZJUQBFUQBFUQzVTZFpUW1oWRl9lI6IyYhJye';
-    let ret: any = null;
+    // const src = '9JCeLRFdhdmd3ZEWBJkUXZ3Txx2cFNEORFEblV2NDVWY'
+    // + 'xZ0YzAVaCdWaEZUZBFUQBFUQBFUQBl1b3tUTPZzN2p0TiojI0JnIsI'
+    // + 'CM3JUeypGMP9mMSJWLHRENq1SRxsER3UGNXdHMrtkc4xkaY'
+    // + 'xEbxhDMQJFbBF2VuhmM0l0SVlmcjJkazUXb4JHMG9UU2JFS'
+    // + 'sFka4M0QphjcWdVQVJjWThmNa92NyJ1djJ1NQFkeid3SwVW'
+    // + 'bfpFVw9Vdsp0YXZHNPhHePZVbpBTVVZldxsUeYJkLsNnI6ICdhJye';
+    let ret: any;
     try {
       ret = JSON.parse(atob(this.reverse(src)));
     } catch (ex) {
@@ -213,11 +215,9 @@ export class DropboxService {
    */
   private saveCredentials(value: any): void {
     let dst = this.reverse(btoa(JSON.stringify(value)));
-    console.log('saveCredentials', value, dst);
-    // const ret = {
-    //   ac: 'authorization_code',
-    //   cv: 'codeVerifier',
-    //   at: 'access_token'
+    // value = {
+    //   at: 'access_token',
+    //   rt: 'refresh_token'
     // }
     this.setCredentialsToStorage(dst);
   }
@@ -245,7 +245,6 @@ export class DropboxService {
     const data = encoder.encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
     const base64Digest = base64encode(digest);
-    // you can extract this replacing code to a function
     return base64Digest
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
@@ -268,6 +267,52 @@ export class DropboxService {
     }
   }
 
+  /**
+   * check the status of the given response and refresh the access_token,
+   * if it is 401.
+   *
+   * @param response response to check
+   * @param request request to repeat, if the status was 401
+   * @returns the new response if the status was 401 or the old
+   * response if it was ok
+   */
+  private async checkRefreshToken(request: HttpRequest<any>, response: any) {
+    console.error('checkRefreshToken', response, request);
+    if (+response?.status === 401) {
+      try {
+        const cr = this.loadCredentials();
+        const params = [
+          `refresh_token=${cr.rt}`,
+          `grant_type=refresh_token`,
+          `client_id=${this.env.DROPBOX_APP_KEY}`,
+        ];
+        const url = `https://api.dropbox.com/oauth2/token?${params.join('&')}`;
+        const req = new HttpRequest('POST', url, new HttpHeaders({
+          responseType: 'text'
+        }));
+        console.log('Hole ein neues access token', Utils.jsonize(cr));
+        const resp: any = await lastValueFrom(this.http.request(req));
+        if (resp?.body?.access_token != null) {
+          cr.at = resp.body.access_token;
+          this.saveCredentials(cr);
+          console.log('Habs', cr);
+          response = await lastValueFrom(this.http.request(request));
+        } else {
+          console.log('War nix', cr);
+          this.lastStatus = new DBSStatus(dbsStatus.error, $localize`Der Zugriff auf Dropbox konnte nicht mehr hergestellt werden.`);
+        }
+      } catch (ex) {
+        console.error('gaaaaaaanz schlecht', ex)
+      }
+    }
+    return response;
+  }
+
+  /**
+   *
+   * @param authorization_code
+   * @private
+   */
   private getAccessToken(authorization_code: string): void {
     const codeVerifier = sessionStorage.getItem('cv');
     const params = [
@@ -284,9 +329,10 @@ export class DropboxService {
     this.http.request(req).subscribe((response: any) => {
       if (response?.body?.access_token != null) {
         const data = {
-          ac: authorization_code,
-          cv: codeVerifier,
-          at: response.body.access_token
+          // ac: authorization_code,
+          // cv: codeVerifier,
+          at: response.body.access_token,
+          rt: response.body.refresh_token
         }
         this.saveCredentials(data);
         location.href = location.origin;

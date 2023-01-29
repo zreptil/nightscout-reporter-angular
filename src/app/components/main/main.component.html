@@ -171,7 +171,11 @@
         </div>
         <div>
           <button (click)="drawer.toggle()" mat-icon-button>
-            <mat-icon>{{drawer.opened ? 'menu_open' : 'menu'}}</mat-icon>
+            <mat-icon *ngIf="drawer.opened">menu_open</mat-icon>
+            <ng-container *ngIf="!drawer.opened">
+              <mat-icon *ngIf="!ds.hasSync">menu</mat-icon>
+              <img *ngIf="ds.hasSync" alt="dropbox" src="assets/img/dropbox.png">
+            </ng-container>
           </button>
           <div class="title">
             <div>
