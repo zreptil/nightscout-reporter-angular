@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {encode as base64encode} from 'base64-arraybuffer';
 import {Oauth2pkce} from '@/_services/sync/oauth2pkce';
 import {lastValueFrom, Observable, of} from 'rxjs';
-import {Utils} from '@/classes/utils';
 
 enum oauthStatus {
   none,
@@ -60,8 +59,11 @@ export class DropboxService {
    * writes the credentials to storage.
    * can be overwritten from outside of this component
    * to place the accesss_token elsewhere.
+   *
+   * @param value the value to write to storage
+   * @param isRefreshing if true, then a refrehtoken is being written
    */
-  setCredentialsToStorage(value: string): void {
+  setCredentialsToStorage(value: string, isRefreshing = false): void {
     localStorage.setItem('oauth2', value);
   }
 
@@ -155,6 +157,18 @@ export class DropboxService {
    * @param content content of the file to upload
    */
   async uploadFile(filename: string, content: string) {
+    let url = `https://content.dropboxapi.com/2/files/upload`;
+    const req = new HttpRequest('POST', url, content, {
+      headers: this.requestHeader({
+        'Dropbox-API-Arg': JSON.stringify({
+          autorename: false,
+          mode: 'overwrite',
+          mute: true, // no notification of the user for a change in dropbox
+          path: `/${filename}`, strict_conflict: false
+        }),
+        'content-type': 'application/octet-stream'
+      })
+    });
     try {
       const check = await this.downloadFile(filename);
       if (this.isSameContent(check, content)) {
@@ -162,22 +176,12 @@ export class DropboxService {
         console.log(this.lastStatus.text);
         return;
       }
-      let url = `https://content.dropboxapi.com/2/files/upload`;
-      const req = new HttpRequest('POST', url, content, {
-        headers: this.requestHeader({
-          'Dropbox-API-Arg': JSON.stringify({
-            autorename: false,
-            mode: 'overwrite',
-            mute: true, // no notification of the user for a change in dropbox
-            path: `/${filename}`, strict_conflict: false
-          }),
-          'content-type': 'application/octet-stream'
-        })
-      });
-      const response: any = await lastValueFrom(this.http.request(req));
+      await lastValueFrom(this.http.request(req));
       this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde auf Dropbox hochgeladen.`);
     } catch (ex) {
       console.error('error when uploading file to Dropbox', ex);
+      await this.checkRefreshToken(req, ex);
+      await lastValueFrom(this.http.request(req));
     }
   }
 
@@ -190,12 +194,6 @@ export class DropboxService {
    */
   private loadCredentials(): any {
     const src = this.getCredentialsFromStorage();
-    // const src = '9JCeLRFdhdmd3ZEWBJkUXZ3Txx2cFNEORFEblV2NDVWY'
-    // + 'xZ0YzAVaCdWaEZUZBFUQBFUQBFUQBl1b3tUTPZzN2p0TiojI0JnIsI'
-    // + 'CM3JUeypGMP9mMSJWLHRENq1SRxsER3UGNXdHMrtkc4xkaY'
-    // + 'xEbxhDMQJFbBF2VuhmM0l0SVlmcjJkazUXb4JHMG9UU2JFS'
-    // + 'sFka4M0QphjcWdVQVJjWThmNa92NyJ1djJ1NQFkeid3SwVW'
-    // + 'bfpFVw9Vdsp0YXZHNPhHePZVbpBTVVZldxsUeYJkLsNnI6ICdhJye';
     let ret: any;
     try {
       ret = JSON.parse(atob(this.reverse(src)));
@@ -211,15 +209,12 @@ export class DropboxService {
    * to a string and saves them to storage.
    *
    * @param value credentials in datastructure
+   * @param isRefreshing if true, then a refrehtoken is being written
    * @private
    */
-  private saveCredentials(value: any): void {
+  private saveCredentials(value: any, isRefreshing = false): void {
     let dst = this.reverse(btoa(JSON.stringify(value)));
-    // value = {
-    //   at: 'access_token',
-    //   rt: 'refresh_token'
-    // }
-    this.setCredentialsToStorage(dst);
+    this.setCredentialsToStorage(dst, isRefreshing);
   }
 
   private reverse(value: string): string {
@@ -277,7 +272,6 @@ export class DropboxService {
    * response if it was ok
    */
   private async checkRefreshToken(request: HttpRequest<any>, response: any) {
-    console.error('checkRefreshToken', response, request);
     if (+response?.status === 401) {
       try {
         const cr = this.loadCredentials();
@@ -290,19 +284,15 @@ export class DropboxService {
         const req = new HttpRequest('POST', url, new HttpHeaders({
           responseType: 'text'
         }));
-        console.log('Hole ein neues access token', Utils.jsonize(cr));
         const resp: any = await lastValueFrom(this.http.request(req));
         if (resp?.body?.access_token != null) {
           cr.at = resp.body.access_token;
-          this.saveCredentials(cr);
-          console.log('Habs', cr);
+          this.saveCredentials(cr, true);
           response = await lastValueFrom(this.http.request(request));
         } else {
-          console.log('War nix', cr);
           this.lastStatus = new DBSStatus(dbsStatus.error, $localize`Der Zugriff auf Dropbox konnte nicht mehr hergestellt werden.`);
         }
       } catch (ex) {
-        console.error('gaaaaaaanz schlecht', ex)
       }
     }
     return response;

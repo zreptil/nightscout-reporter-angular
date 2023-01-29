@@ -40,13 +40,17 @@ export class AppComponent {
       return ds.oauth2AccessToken;
     };
 
-    dbs.setCredentialsToStorage = (value: string) => {
+    dbs.setCredentialsToStorage = (value: string, isRefreshing = false) => {
       ds.oauth2AccessToken = value;
       if (value != null) {
-        ds.syncType = oauth2SyncType.dropbox;
+        if (!isRefreshing) {
+          ds.syncType = oauth2SyncType.dropbox;
+        }
         ds.saveWebData();
       } else {
-        ds.syncType = oauth2SyncType.none;
+        if (!isRefreshing) {
+          ds.syncType = oauth2SyncType.none;
+        }
       }
     }
 
