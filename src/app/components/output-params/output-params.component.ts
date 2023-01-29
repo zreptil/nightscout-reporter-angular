@@ -129,8 +129,9 @@ export class OutputParamsComponent implements OnInit {
     GLOBALS.ppGlucMaxIdx = this.glucMaxIdx;
     GLOBALS.ppBasalPrecisionIdx = this.basalPrecisionIdx;
     if (this.skipSensorChange !== GLOBALS.ppSkipSensorChange) {
-      this.ns.reportData.isValid = false;
-      GLOBALS.ppSkipSensorChange = this.skipSensorChange;
+      // this.ns.reportData.isValid = false;
+      GLOBALS.ppSkipSensorChange = 0;
+      this.skipSensorChange = 0;
     }
     this.pdf.generatePdf().then(_ => {
       if (!this.ns.reportData?.isValid) {

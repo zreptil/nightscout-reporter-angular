@@ -67,8 +67,10 @@ export class PdfService {
     }
   }
 
-  async generatePdf(createThumbs?: (pdf: TCreatedPdf) => void) {
-    this.ds.save({skipReload: createThumbs != null});
+  async generatePdf(doSave = true, createThumbs?: (pdf: TCreatedPdf) => void) {
+    if (doSave) {
+      this.ds.save({skipReload: createThumbs != null});
+    }
     this.pdfList = [];
     this.ps.max = 1;
     this.ps.value = 0;

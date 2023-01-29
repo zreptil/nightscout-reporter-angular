@@ -159,11 +159,13 @@ export class GlobalsData extends Settings {
   _currPeriodShift: PeriodShift;
 
   get currPeriodShift(): PeriodShift {
+    if (this._currPeriodShift == null) {
+      this._currPeriodShift = this.listPeriodShift[0];
+    }
     return this._currPeriodShift;
   }
 
   set currPeriodShift(value: PeriodShift) {
-    console.error(value);
     this._currPeriodShift = value;
   }
 

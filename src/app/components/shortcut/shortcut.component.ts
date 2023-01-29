@@ -51,7 +51,7 @@ export class ShortcutComponent implements OnInit {
       GLOBALS.currPeriodShift = new PeriodShift(title, shift);
       GLOBALS.ppPdfSameWindow = true;
       GLOBALS.ppPdfDownload = false;
-      this.pdf.generatePdf().then(_ => {
+      this.pdf.generatePdf(false).then(_ => {
         if (!this.ns.reportData?.isValid) {
           this.ss.showPopup('outputparams');
         }
