@@ -174,7 +174,7 @@ export class GoogleDriveService {
         const req = new HttpRequest('POST', url, body, {
           headers: new HttpHeaders({authorization: `Bearer ${this.accessToken}`})
         });
-        response = await lastValueFrom(this.http.request(req));
+        await lastValueFrom(this.http.request(req));
         this.lastStatus = new GDSStatus(gdsStatus.info, $localize`Die Datei ${filename} wurde auf Google Drive erzeugt.`);
         ret = id;
       } else {
@@ -196,7 +196,6 @@ export class GoogleDriveService {
     params.spaces ??= 'appDataFolder';
     this.lastStatus = new GDSStatus();
     let url = `https://www.googleapis.com/drive/v3/files?q=name="${filename}" and not trashed&spaces=${params.spaces}&fields=files(id)&access_token=${this.accessToken}`;
-    let ret = null;
     try {
       let response: any = await lastValueFrom(this.http.get(url));
       let id = response?.files?.[0]?.id;
@@ -237,7 +236,7 @@ export class GoogleDriveService {
 
     if (Object.keys(params).length > 0) {
       this.setOAuth2ToStorage(params.access_token);
-      window.location.href = window.origin;
+      location.href = location.origin;
     }
   }
 

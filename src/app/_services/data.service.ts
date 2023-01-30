@@ -125,7 +125,7 @@ export class DataService {
       idList.push(cfg.idx);
     }
     GLOBALS._pdfOrder = Utils.join(idList, '');
-    this.save({updateSync: false});
+    this.save({updateSync: false, skipReload: true});
   }
 
   async requestJson(url: string, params?: { method?: string, options?: any, body?: any, showError?: boolean, asJson?: boolean, timeout?: number }) {
@@ -324,11 +324,15 @@ export class DataService {
       const users = json.s2;
       const shortcuts = json.s3;
       GLOBALS.glucMGDLIdx = JsonData.toNumber(json.s5);
-      const langId = JsonData.toText(json.s6);
-      const idx = GLOBALS.languageList.findIndex((v) => v.code === langId);
-      if (idx >= 0) {
-        GLOBALS.language = GLOBALS.languageList[idx];
-      }
+      // Die Speicherung der Sprache in sharedData ist
+      // zunächst mal ausgeschaltet, weil das beim Start
+      // Probleme mit der Zuordnung gibt
+      //
+      // const langId = JsonData.toText(json.s6);
+      // const idx = GLOBALS.languageList.findIndex((v) => v.code === langId);
+      // if (idx >= 0) {
+      //   GLOBALS.language = GLOBALS.languageList[idx];
+      // }
       GLOBALS.showCurrentGluc = JsonData.toBool(json.s7);
       GLOBALS.period = new DatepickerPeriod(JsonData.toText(json.s8));
       GLOBALS._pdfOrder = JsonData.toText(json.s9);
@@ -410,11 +414,12 @@ export class DataService {
   }
 
   reload(): void {
-    const pos = window.location.href.indexOf('?');
-    if (pos > 0) {
-      window.location.href = window.location.href.substring(0, pos - 1);
+    if (location.href != location.origin) {
+      console.error('jetzt wird neu geladen');
+      location.href = location.origin;
     } else {
-      window.location.reload();
+      console.error('Jetzt guck nach, was los ist!');
+      location.reload();
     }
   }
 
@@ -484,7 +489,7 @@ export class DataService {
   // }
 
   async _uploadToSync(_doReload: boolean) {
-    const status = await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
+    await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
     // if (status.status === gdsStatus.error) {
     //   Log.error(status.text);
     // }
@@ -503,8 +508,8 @@ export class DataService {
         this.save();
       } else {
         this.saveWebData();
-        this.reload();
       }
+      this.reload();
     }
   }
 

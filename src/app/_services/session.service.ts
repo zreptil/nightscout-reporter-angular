@@ -322,15 +322,6 @@ export class SessionService {
     return ret;
   }
 
-  reload(): void {
-    const pos = window.location.href.indexOf('?');
-    if (pos > 0) {
-      window.location.href = window.location.href.substring(0, pos - 1);
-    } else {
-      window.location.reload();
-    }
-  }
-
   async changeLanguage(value: LangData, params?: { doReload?: boolean, checkConfigured?: boolean }) {
     params ??= {};
     params.doReload ??= true;
@@ -342,12 +333,11 @@ export class SessionService {
     }
     if (params.doReload) {
       if (GLOBALS.isConfigured) {
-        this.ds.save();
+        this.ds.save({updateSync: false});
       } else {
         this.ds.saveWebData();
       }
-      // TODO bei Synchronisierung funktioniert die Umschaltung nicht korrekt
-      this.reload();
+      this.ds.reload();
     }
   }
 
