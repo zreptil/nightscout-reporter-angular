@@ -11,6 +11,7 @@
 
   .select {
     margin-top: 1em;
+
     ::ng-deep mat-list {
       background: var(--settingsBodyBack);
       padding: 0;
@@ -131,4 +132,8 @@ mat-checkbox {
     outline: 5px solid var(--loopMarked);
     background-color: var(--loopMarked);
   }
+}
+
+.wrap {
+  white-space: break-spaces;
 }

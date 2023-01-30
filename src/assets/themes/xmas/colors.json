@@ -52,7 +52,7 @@
   "legalScrollThumb": "mat-light-green-700",
   "localBack": "mat-purple-100",
   "localFore": "mat-purple-500",
-  "loopMarked": "rgba(255,255,255,0.6)",
+  "loopMarked": "rgba(255,255,255,0.4)",
   "outputparamsBodyBack": "mat-red-300",
   "outputparamsBodyFore": "black",
   "outputparamsHeaderBack": "mat-red-900",

@@ -7,7 +7,7 @@
     <mat-checkbox [(ngModel)]="param.boolValue"
                   [class]="getClass(param)"
                   [disabled]="param.isDisabled">
-      {{param.title}}
+      <div class="wrap">{{param.title}}</div>
     </mat-checkbox>
   </div>
   <div *ngIf="param.intValue!=null && param.list == null && param.isVisible" class="paramSlider">

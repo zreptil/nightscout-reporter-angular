@@ -190,12 +190,20 @@
   flex: 1;
   min-width: 20%;
   max-height: 80%;
+
+  mat-icon {
+    color: rgba(0, 0, 0, 0.6);
+  }
 }
 
 .tilechecked {
   background: var(--mainHeaderBack) !important;
   color: var(--mainHeaderFore) !important;
   _border: 2px solid var(--mainHeaderBack) !important;
+
+  mat-icon {
+    color: rgba(255, 255, 255, 0.7);
+  }
 }
 
 .tilechecked.is-debug {

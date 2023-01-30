@@ -346,6 +346,7 @@ export class SessionService {
       } else {
         this.ds.saveWebData();
       }
+      // TODO bei Synchronisierung funktioniert die Umschaltung nicht korrekt
       this.reload();
     }
   }
