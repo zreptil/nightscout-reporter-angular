@@ -311,10 +311,6 @@ export class SettingsComponent implements OnInit {
   addUser(): void {
     if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
       const user = new UserData();
-      if (Log.mayDebug) {
-        user.name = '401 Fehler';
-        user.listApiUrl[0].url = 'https://corg.zreptil.de/error.php?code=401&message=Unauthorized&description=Invalid/Missing';
-      }
       GLOBALS.userList.push(user);
       GLOBALS.userIdx = GLOBALS.userList.length - 1;
     }
