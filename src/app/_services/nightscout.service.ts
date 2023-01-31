@@ -424,7 +424,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.dayCount = -1;
     this.ps.value = 0;
     this.ps.max = Utils.differenceInDays(endDate, begDate)
-    this.ps.info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
+    const info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
+    this.ps.info = $localize`${info} für ${GLOBALS.user.name}`;
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
@@ -692,6 +693,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
     return listSensorChanges.find(t => {
       const diff = Utils.differenceInHours(entry.time, t.createdAt);
+      // noinspection RedundantIfStatementJS
       if (diff >= 0 && diff <= GLOBALS.listSkipSensorChange[GLOBALS.ppSkipSensorChange].value) {
         return true;
       }

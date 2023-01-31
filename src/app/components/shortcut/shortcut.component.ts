@@ -29,8 +29,17 @@ export class ShortcutComponent implements OnInit {
   }
 
   afterLoadDevice(): void {
-    this.shortcut = GLOBALS.shortcutList.find(sc => sc.name.toLowerCase() === this.env.appParams?.name?.toLowerCase());
-    if (this.shortcut != null) {
+    GLOBALS.avoidSaveAndLoad = true;
+    if (this.env.appParams.user != null) {
+      const idx = GLOBALS.userList.findIndex(u => u.name.toLowerCase() === this.env.appParams.user.toLowerCase());
+      if (idx >= 0) {
+        GLOBALS._userIdx = idx;
+      }
+    }
+    const idx = GLOBALS.shortcutList.findIndex(sc => sc.name.toLowerCase() === this.env.appParams?.name?.toLowerCase());
+    if (idx >= 0) {
+      this.shortcut = GLOBALS.shortcutList[idx];
+      this.ss.activateShortcut(idx);
       // make sure the value uses the correct factor
       GLOBALS.user.adjustGluc = GLOBALS.user.adjustGluc;
       let shift = +(this.env.appParams.shift ?? 0);
@@ -45,13 +54,11 @@ export class ShortcutComponent implements OnInit {
           other: $localize`${shift} Monate vorher`
         });
       }
-      console.log(this.env.appParams);
-      console.log(this.env.appParams.shift);
-      console.log(+this.env.appParams.shift, shift);
       GLOBALS.currPeriodShift = new PeriodShift(title, shift);
       GLOBALS.ppPdfSameWindow = true;
       GLOBALS.ppPdfDownload = false;
       this.pdf.generatePdf(false).then(_ => {
+        GLOBALS.avoidSaveAndLoad = false;
         if (!this.ns.reportData?.isValid) {
           this.ss.showPopup('outputparams');
         }
@@ -59,10 +66,9 @@ export class ShortcutComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.ds.onAfterLoadDevice = this.afterLoadDevice.bind(this);
-    this.ss.initialLoad().then(() => {
-    });
+    await this.ss.initialLoad();
   }
 
   clickBack() {

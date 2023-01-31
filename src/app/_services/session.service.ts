@@ -384,20 +384,28 @@ export class SessionService {
     }
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
 
-    this.ds.loadSettingsJson().then((_) => {
-      let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
-      dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
-      this.showPopup(dlgId).subscribe(_ => {
+    await this.ds.loadSettingsJson();
+    let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
+    dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
+    this.showPopup(dlgId).subscribe(_ => {
 
-      });
-      // if (!GLOBALS.dsgvoAccepted) {
-      //   _currPage = 'dsgvo';
-      // }
-      // _lastPage = _currPage;
-      this.ds.sortConfigs();
-      for (const entry of GLOBALS.listConfig) {
-        GLOBALS.user.formParams[entry.id] = entry.asString;
-      }
     });
+    // if (!GLOBALS.dsgvoAccepted) {
+    //   _currPage = 'dsgvo';
+    // }
+    // _lastPage = _currPage;
+    this.ds.sortConfigs();
+    for (const entry of GLOBALS.listConfig) {
+      GLOBALS.user.formParams[entry.id] = entry.asString;
+    }
+  }
+
+  activateShortcut(shortcutIdx: number): void {
+    if (shortcutIdx != null) {
+      const data = GLOBALS.shortcutList[shortcutIdx];
+      this.fillFormsFromShortcut(data);
+      this.checkPrint();
+      this.ds._initAfterLoad();
+    }
   }
 }

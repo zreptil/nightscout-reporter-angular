@@ -122,7 +122,7 @@
     <div [class]="getDrawerClass(1)">
       <div class="content">
         <div *ngFor="let item of globals.shortcutList; let idx = index" [class]="shortcutClass(item)">
-          <button (click)="activateShortcut(idx)" mat-flat-button>
+          <button (click)="ss.activateShortcut(idx)" mat-flat-button>
             <div content>
               <mat-icon>{{item.icon}}</mat-icon>
               <div text>{{item.name}}</div>

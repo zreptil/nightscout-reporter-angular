@@ -19,6 +19,8 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
+
+  avoidSaveAndLoad = false;
   userList: UserData[] = [];
   shortcutList: ShortcutData[] = [];
   glucMGDLIdx: number;

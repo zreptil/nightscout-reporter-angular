@@ -36,7 +36,7 @@ export class EnvironmentService {
         if (p.length === 1) {
           this.appParams[p[0]] = true;
         } else if (p.length === 2) {
-          this.appParams[p[0]] = p[1];
+          this.appParams[p[0]] = decodeURIComponent(p[1]);
         }
       }
     }

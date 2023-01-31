@@ -166,15 +166,6 @@ export class MainComponent implements OnInit {
     return $localize`Datenschutzerklärung`;
   }
 
-  activateShortcut(shortcutIdx: number): void {
-    if (shortcutIdx != null) {
-      const data = GLOBALS.shortcutList[shortcutIdx];
-      this.ss.fillFormsFromShortcut(data);
-      this.ss.checkPrint();
-      this.ds._initAfterLoad();
-    }
-  }
-
   shortcutClass(data: ShortcutData): string[] {
     const ret = ['shortcut'];
     if (data.isActive) {

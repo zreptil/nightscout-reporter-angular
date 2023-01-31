@@ -279,6 +279,9 @@ export class DataService {
 
   // loads the device settings from a json stucture
   fromDeviceJson(json: any): void {
+    if (GLOBALS.avoidSaveAndLoad) {
+      return;
+    }
     try {
       GLOBALS.ppHideNightscoutInPDF = JsonData.toBool(json.d1);
       GLOBALS.ppShowUrlInPDF = JsonData.toBool(json.d2);
@@ -319,6 +322,9 @@ export class DataService {
 
   // loads the shared settings from a json stucture
   fromSharedJson(json: any): void {
+    if (GLOBALS.avoidSaveAndLoad) {
+      return;
+    }
     try {
       GLOBALS.lastVersion = JsonData.toText(json.s1);
       const users = json.s2;
@@ -424,6 +430,9 @@ export class DataService {
   }
 
   save(params?: { updateSync?: boolean, skipReload?: boolean }) {
+    if (GLOBALS.avoidSaveAndLoad) {
+      return;
+    }
     params ??= {};
     params.updateSync ??= true;
     params.skipReload ??= false;
