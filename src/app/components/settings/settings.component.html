@@ -81,7 +81,7 @@
       <button (click)="showPwd=(showPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-flat-button>
         <mat-icon class="urlIcon">{{showPwd !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
-      <div class="formfield mat-form-field-infix">
+      <div class="formfield mat-form-field-infix date">
         <mat-form-field>
           <mat-label *ngIf="idx===0">{{msgStartDate}}</mat-label>
           <input [(ngModel)]="item.startDate" [matDatepicker]="dpStartDate" matInput>
@@ -95,7 +95,7 @@
       <button (click)="calculateFirstDay(item)" [disabled]="ss.isEmpty(item.url)" mat-flat-button>
         <mat-icon class="urlIcon">calculate</mat-icon>
       </button>
-      <div class="formfield mat-form-field-infix">
+      <div class="formfield mat-form-field-infix date">
         <mat-form-field>
           <mat-label *ngIf="idx===0">{{msgEndDate}}</mat-label>
           <input [(ngModel)]="item.endDate" [matDatepicker]="dpEndDate" matInput>

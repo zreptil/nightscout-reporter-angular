@@ -313,7 +313,7 @@ export class SessionService {
     let ret = null;
     const check = user.apiUrl(null, 'status');
     await this.ds.request(check).then(response => {
-      if (response.body.status != 'ok') {
+      if (response?.body?.status !== 'ok') {
         ret = GLOBALS.msgUrlFailure(check);
       }
     }).catch(_ => {

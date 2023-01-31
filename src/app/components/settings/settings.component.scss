@@ -119,7 +119,7 @@ mat-dialog-content {
   ::ng-deep .mat-checkbox-label {
     white-space: normal;
   }
-  
+
   ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
     color: var(--settingsBodyFore);
   }
@@ -243,6 +243,10 @@ mat-dialog[confirm] {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   text-align: justify;
+}
+
+.formfield.date {
+  width: 7em;
 }
 
 .formfield {

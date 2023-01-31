@@ -310,7 +310,12 @@ export class SettingsComponent implements OnInit {
 
   addUser(): void {
     if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
-      GLOBALS.userList.push(new UserData());
+      const user = new UserData();
+      if (Log.mayDebug) {
+        user.name = '401 Fehler';
+        user.listApiUrl[0].url = 'https://corg.zreptil.de/error.php?code=401&message=Unauthorized&description=Invalid/Missing';
+      }
+      GLOBALS.userList.push(user);
       GLOBALS.userIdx = GLOBALS.userList.length - 1;
     }
   }
@@ -337,14 +342,16 @@ export class SettingsComponent implements OnInit {
     const ret = await this.ss.isUserValid(GLOBALS.user);
     this.ps.text = null;
     if (ret != null) {
+      const buttons = [];
+      if ((ret as any)?.buttons != null) {
+        buttons.push(...(ret as any).buttons);
+      }
+      buttons.push({title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'});
+      buttons.push({title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'});
       this.ss.showDialog({
         type: DialogType.confirm,
         title: $localize`Soll gespeichert werden?`,
-        buttons: [
-          ...(ret as any)?.buttons,
-          {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
-          {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
-        ]
+        buttons: buttons
       }, ret.msg, false, new DialogParams({theme: 'settings'}))
         //        this.ss.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
         .subscribe(result => {
