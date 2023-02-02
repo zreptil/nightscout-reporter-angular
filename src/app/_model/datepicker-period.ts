@@ -46,7 +46,7 @@ export class DatepickerPeriod {
       case 1:
         return Utils.addDateDays(GlobalsData.now, -1);
       case 2:
-        let diff = -(GlobalsData.now.getDay() - this.firstDayOfWeek + 1);
+        let diff = -(GlobalsData.now.getDay() - this.firstDayOfWeek);
         while (diff > 0) {
           diff -= 7;
         }
