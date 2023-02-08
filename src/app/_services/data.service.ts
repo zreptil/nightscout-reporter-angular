@@ -566,10 +566,11 @@ export class DataService {
     }
     GLOBALS.glucRunning = true;
     let url = GLOBALS.user.apiUrl(null, 'status.json');
+    let status: StatusData = null;
     if (!GLOBALS.hasMGDL) {
       const content = await this.requestJson(url);
       if (content != null) {
-        const status = StatusData.fromJson(content);
+        status = StatusData.fromJson(content);
         GLOBALS.setGlucMGDL(status);
         GLOBALS.targetBottom = status.settings.bgTargetBottom;
         GLOBALS.targetTop = status.settings.bgTargetTop;
@@ -634,10 +635,10 @@ export class DataService {
     }
 
     const changes: any = {
-      ampulle: new WatchChangeData('ampulle', '?'),
-      katheter: new WatchChangeData('katheter', '?'),
-      battery: new WatchChangeData('battery', '?'),
-      sensor: new WatchChangeData('sensor', '?')
+      ampulle: new WatchChangeData('ampulle', '?', status?.extendedSettings.iage),
+      katheter: new WatchChangeData('katheter', '?', status?.extendedSettings.cage),
+      battery: new WatchChangeData('battery', '?', status?.extendedSettings.bage),
+      sensor: new WatchChangeData('sensor', '?', status?.extendedSettings.sage)
     };
     const end = new Date();
     const beg = Utils.addDateMonths(end, -1);
@@ -654,15 +655,19 @@ export class DataService {
       }
       list.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
       for (const change of list) {
-        const time = Utils.durationText(change.createdAt, GlobalsData.now);
+        const timeDisp = Utils.durationText(change.createdAt, GlobalsData.now);
         if (change.isInsulinChange) {
-          changes['ampulle'].lasttime = time
+          changes['ampulle'].lasttime = timeDisp;
+          changes['ampulle'].calcAlarm(change.createdAt);
         } else if (change.isSiteChange) {
-          changes['katheter'].lasttime = time
+          changes['katheter'].lasttime = timeDisp;
+          changes['katheter'].calcAlarm(change.createdAt);
         } else if (change.isPumpBatteryChange) {
-          changes['battery'].lasttime = time
+          changes['battery'].lasttime = timeDisp;
+          changes['battery'].calcAlarm(change.createdAt);
         } else if (change.isSensorChange) {
-          changes['sensor'].lasttime = time
+          changes['sensor'].lasttime = timeDisp;
+          changes['sensor'].calcAlarm(change.createdAt);
         }
       }
     }

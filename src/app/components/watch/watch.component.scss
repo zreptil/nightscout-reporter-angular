@@ -316,6 +316,22 @@ app-watch-entry[type=arrow] {
 
   div[typePanel] {
     position: relative;
+    display: flex;
+    flex-flow: row;
+
+    button {
+      display: flex;
+      flex: 1;
+      padding: 0;
+    }
+
+    button:first-child {
+      justify-content: flex-start;
+    }
+
+    button:nth-child(2) {
+      justify-content: flex-end;
+    }
 
     material-icon {
       color: rgba(0, 0, 0, 0.4);
@@ -337,5 +353,72 @@ app-watch-entry[type=arrow] {
 
   material-button {
     text-transform: none;
+  }
+}
+
+.alarm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5em;
+  height: 1.5em;
+}
+
+.alarm0 {
+}
+
+.alarm1 {
+  background-color: red;
+  color: white;
+  animation: shake 3s;
+  animation-iteration-count: infinite;
+}
+
+.alarm2 {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.alarm3 {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+    background-color: rgba(255, 0, 0, 0);
+    color: black;
+  }
+  5% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  10% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  15% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  20% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  25% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  30% {
+    transform: translate(3px, 1px) rotate(0deg);
+  }
+  35% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  40% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  45% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  50% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+  55% {
+    transform: translate(1px, 1px) rotate(0deg);
   }
 }

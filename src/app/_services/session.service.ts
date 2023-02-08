@@ -45,6 +45,7 @@ import {PrintTest} from '@/forms/nightscout/print-test';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {FormParamsDialogComponent} from '@/components/form-params-dialog/form-params-dialog.component';
 import {ThemeService} from '@/_services/theme.service';
+import {WatchSettingsComponent} from '@/components/watch-settings/watch-settings.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -92,7 +93,8 @@ export class SessionService {
     outputparams: OutputParamsComponent,
     datepickerdialog: DatepickerDialogComponent,
     shortcutedit: ShortcutEditComponent,
-    formparamsdialog: FormParamsDialogComponent
+    formparamsdialog: FormParamsDialogComponent,
+    watchsettings: WatchSettingsComponent
   }
 
   constructor(public ss: StorageService,
