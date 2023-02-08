@@ -30,7 +30,7 @@ export class ColorPickerImageComponent extends ColorPickerBaseComponent implemen
   hl: number;
   cr: DOMRect;
   currentRGB: string;
-  paintSize = 2;
+  paintSize = 1;
 
   constructor() {
     super();
@@ -63,7 +63,6 @@ export class ColorPickerImageComponent extends ColorPickerBaseComponent implemen
     this.canvas.width = box.clientWidth;
     this.canvas.height = box.clientHeight;
     const img = this.img.nativeElement;
-    console.log(box.clientWidth, box.clientHeight);
     this.cw = this.canvas.clientWidth;
     this.ch = Math.floor(this.cw * img.height / img.width);
     if (this.ch > this.canvas.clientHeight) {
@@ -118,10 +117,10 @@ export class ColorPickerImageComponent extends ColorPickerBaseComponent implemen
 
   getPixelAt(x: number, y: number): number[] {
     const i = (x + y * this.cw) * 4;
-    let R = this.pixels[i];
-    let G = this.pixels[i + 1];
-    let B = this.pixels[i + 2];
-    if (this.pixels[i + 3] === 0) {
+    let R = this.pixels?.[i];
+    let G = this.pixels?.[i + 1];
+    let B = this.pixels?.[i + 2];
+    if (this.pixels?.[i + 3] === 0) {
       R = 255;
       G = 255;
       B = 255;

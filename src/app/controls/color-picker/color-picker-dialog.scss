@@ -1,23 +1,27 @@
-.mat-dialog-title {
+::ng-deep .mat-select-panel.colorpicker {
+  background-color: var(--settingsBodyBack);
+  max-height: initial !important;
+}
+
+[mat-dialog-title] {
+  background-color: var(--settingsHeaderBack);
+  color: var(--settingsHeaderFore);
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.mat-dialog-content {
+mat-dialog-content {
+  color: var(--settingsBodyFore);
+  background-color: var(--settingsBodyBack);
   display: flex;
   flex-flow: column;
-}
-
-[spacer] {
-  flex: 1 1 auto;
 }
 
 .dialog {
   display: flex;
   flex-flow: row;
-  background: white;
   z-index: 10000;
 
   [controls] {
@@ -41,4 +45,20 @@
 .current {
   border: 1px solid black;
   border-radius: 0.2em;
+}
+
+:host {
+  ::ng-deep mat-dialog-actions {
+    background-color: var(--settingsHeaderBack);
+
+    [spacer] {
+      flex: 1 1 auto;
+    }
+
+    padding-left: 1em !important;
+
+    .mat-button-wrapper {
+      color: var(--settingsHeaderFore);
+    }
+  }
 }
