@@ -3,6 +3,7 @@ import {SessionService} from '@/_services/session.service';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {MatDialogRef} from '@angular/material/dialog';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
+import {ColorData} from '@/_model/color-data';
 
 @Component({
   selector: 'app-watch-settings',
@@ -10,6 +11,9 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
   styleUrls: ['./watch-settings.component.scss']
 })
 export class WatchSettingsComponent {
+  colpick: ColorData;
+  savedColors: ColorData[] = [];
+
   constructor(private dlgRef: MatDialogRef<WatchSettingsComponent>,
               public ss: SessionService) {
 

@@ -821,14 +821,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Die URL wurde noch nicht festgelegt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">311</context>
+          <context context-type="linenumber">313</context>
         </context-group>
       </trans-unit>
       <trans-unit id="252203167182468471" datatype="html">
         <source>Soll der Benutzer <x id="PH" equiv-text="GLOBALS.user.name"/> wirklich gelöscht werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">362</context>
+          <context context-type="linenumber">364</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3404402744117770812" datatype="html">
@@ -1424,6 +1424,10 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/shortcut-edit/shortcut-edit.component.html</context>
           <context context-type="linenumber">55</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
         <note priority="1" from="description">buttonlabel for saving data</note>
       </trans-unit>
       <trans-unit id="5065735907279008206" datatype="html">
@@ -1738,6 +1742,28 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut/shortcut.component.ts</context>
           <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2298534771047803885" datatype="html">
+        <source>Watch Einstellungen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">title for watch settings dialog</note>
+      </trans-unit>
+      <trans-unit id="4072251623479943952" datatype="html">
+        <source>Farbig</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5678618763959188413" datatype="html">
+        <source>Dunkel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.ts</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6173747547691801544" datatype="html">

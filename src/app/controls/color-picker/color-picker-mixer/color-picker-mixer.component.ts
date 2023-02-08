@@ -140,6 +140,7 @@ export class ColorPickerMixerComponent extends ColorPickerBaseComponent implemen
     } else {
       this.colorList[0].color = color;
     }
+    this.colorWheelX = -1000;
     this.colorClick?.emit(color);
   }
 
