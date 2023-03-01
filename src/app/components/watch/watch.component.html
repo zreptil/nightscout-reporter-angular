@@ -86,6 +86,11 @@
       <button (click)="clickSave($event)" mat-flat-button>
         <mat-icon>save</mat-icon>
       </button>
+      <button (click)="globals.isDebug = !globals.isDebug" *ngIf="ss.mayDebug" mat-flat-button>
+        <mat-icon *ngIf="!globals.isDebug">bug_report</mat-icon>
+        <mat-icon *ngIf="globals.isDebug">pest_control</mat-icon>
+      </button>
     </div>
+    <app-log></app-log>
   </div>
 </div>

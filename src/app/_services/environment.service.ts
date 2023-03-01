@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
+import {Settings} from '@/_model/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class EnvironmentService {
     for (const p of src) {
       const parts = p.split('=');
       this.urlParams[parts[0]] = parts[1];
+    }
+    console.log('params', this.urlParams);
+    if (this.urlParams['enableDebug'] === 'true') {
+      localStorage.setItem(Settings.DebugFlag, Settings.DebugActive);
+    } else if (this.urlParams['enableDebug'] === 'false') {
+      localStorage.removeItem(Settings.DebugFlag);
     }
     const temp = window.location.hash?.substring(1);
     this.appType = temp;

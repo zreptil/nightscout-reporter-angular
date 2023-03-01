@@ -544,6 +544,7 @@ export class DataService {
   }
 
   async getCurrentGluc(params?: { force?: boolean, timeout?: number }) {
+    // Log.debug('{time} fetching current gluc...');
     params ??= {};
     params.force ??= false;
     params.timeout ??= 60;
@@ -558,6 +559,7 @@ export class DataService {
     GLOBALS.currentGlucCounter++;
 
     if (GLOBALS.glucRunning) {
+      // Log.debug('{time} glucRunning!');
       return '';
     }
 
@@ -577,7 +579,9 @@ export class DataService {
       }
     }
     url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=2'});
+    // Log.debug(`{time} waiting for ${url}`);
     let src = await this.requestJson(url);
+    // Log.debug(`{time} returned`);
     if (src != null) {
       if (src.length != 2) {
         GLOBALS.currentGlucSrc = null;
@@ -647,7 +651,9 @@ export class DataService {
         + `&find[created_at][$gte]=${beg.toISOString()}`
         + `&find[eventType][$regex]=Change`
     });
+    // Log.debug(`{time} waiting for ${url}`);
     src = await this.requestJson(url);
+    // Log.debug(`{time} returned`);
     if (src != null) {
       const list = [];
       for (const entry of src) {
@@ -682,8 +688,10 @@ export class DataService {
       const milliNow = GlobalsData.now.getSeconds() * 1000 + GlobalsData.now.getMilliseconds();
       const part = Math.floor(milliNow / milliseconds);
       milliseconds = (part + 1) * milliseconds - milliNow;
+      // Log.debug(`{time} initiating timer ${milliseconds}`);
       GLOBALS.glucTimer = setTimeout(() => this.getCurrentGluc(params), milliseconds);
     }
+    // Log.debug(`{time} resetting glucRunning`);
     GLOBALS.glucRunning = false;
     return ret;
   }

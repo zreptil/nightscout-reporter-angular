@@ -111,15 +111,6 @@ export class Utils {
     })
   }
 
-  static fmtTime(time: number): string {
-    if (isNaN(time)) {
-      time = 0;
-    }
-    const hour = Math.floor(time / 60);
-    const minute = time % 60;
-    return Utils.fmtDate(new Date(0, 0, 0, hour, minute), 'hh:mm Uhr');
-  }
-
   static parseDate(value: string): Date {
     let ret = null;
     if (value.length === 8) {
@@ -130,6 +121,21 @@ export class Utils {
     }
 
     return ret;
+  }
+
+  static fmtTime(time: number): string {
+    if (isNaN(time)) {
+      time = 0;
+    }
+    let fmt = $localize`hh:mm:ss Uhr`;
+    if (time < 1440) {
+      fmt = $localize`hh:mm Uhr`;
+      time *= 60;
+    }
+    const hour = Math.floor(time / 3600) % 24;
+    const minute = Math.floor(time % 3600 / 60);
+    const second = time % 60;
+    return Utils.fmtDate(new Date(0, 0, 0, hour, minute, second), fmt);
   }
 
   static fmtDate(date: Date, fmt: string = null): string {
