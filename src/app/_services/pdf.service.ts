@@ -197,7 +197,10 @@ export class PdfService {
           }
           this.makePdf(this.pdfDoc, createThumbs);
         }, error: (error) => {
+          GLOBALS.isCreatingPDF = false;
           Log.devError(error, 'Fehler im PdfService');
+        }, complete: () => {
+          GLOBALS.isCreatingPDF = false;
         }
       });
       // if (!g.isDebug) {
@@ -217,9 +220,9 @@ export class PdfService {
       // sendIcon = 'send';
       // progressText = null;
     } catch (ex) {
+      GLOBALS.isCreatingPDF = false;
       Log.devError(ex, 'Fehler im PdfService');
     } finally {
-      GLOBALS.isCreatingPDF = false;
     }
     /*
         }).catchError((error) {
