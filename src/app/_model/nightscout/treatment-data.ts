@@ -281,6 +281,10 @@ export class TreatmentData extends JsonData {
       // }
     }
 
+    if (!ret.isSMB && ret.eventType === 'Correction Bolus' && ret.enteredBy === 'loop://iPhone von Mika') {
+      ret.isSMB = true;
+    }
+
     return ret;
   }
 

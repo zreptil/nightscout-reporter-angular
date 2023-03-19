@@ -139,91 +139,91 @@
       <trans-unit id="4609106925336303462" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">113</context>
         </context-group>
         <source>Today</source>
       </trans-unit>
       <trans-unit id="5904041394389170462" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <source>Last 2 days</source>
       </trans-unit>
       <trans-unit id="3753908710962332501" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">121</context>
         </context-group>
         <source>Last 3 days</source>
       </trans-unit>
       <trans-unit id="4552894200644449843" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <source>Last week</source>
       </trans-unit>
       <trans-unit id="8819199067642626219" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">129</context>
         </context-group>
         <source>Last 2 weeks</source>
       </trans-unit>
       <trans-unit id="101470742938506804" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">133</context>
         </context-group>
         <source>Last 3 weeks</source>
       </trans-unit>
       <trans-unit id="2000702703315269520" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <source>Last month</source>
       </trans-unit>
       <trans-unit id="1070566507761088905" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">141</context>
         </context-group>
         <source>Last 3 months</source>
       </trans-unit>
       <trans-unit id="7441923818926073330" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">145</context>
         </context-group>
         <source>First Quarter</source>
       </trans-unit>
       <trans-unit id="2017499472136539166" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <source>Second Quarter</source>
       </trans-unit>
       <trans-unit id="5487195230082733790" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">154</context>
+          <context context-type="linenumber">153</context>
         </context-group>
         <source>Third Quarter</source>
       </trans-unit>
       <trans-unit id="2711034407981793742" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <source>Fourth Quarter</source>
       </trans-unit>
       <trans-unit id="5332830754562778560" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">185</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -242,77 +242,77 @@
       <trans-unit id="7904450916939936640" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">186</context>
         </context-group>
         <source>3 Hours</source>
       </trans-unit>
       <trans-unit id="654274934088033548" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">187</context>
         </context-group>
         <source>6 Hours</source>
       </trans-unit>
       <trans-unit id="3652555051803795441" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">178</context>
+          <context context-type="linenumber">188</context>
         </context-group>
         <source>12 Hours</source>
       </trans-unit>
       <trans-unit id="6019474054661909422" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">189</context>
         </context-group>
         <source>24 Hours</source>
       </trans-unit>
       <trans-unit id="3217863696400545387" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">289</context>
+          <context context-type="linenumber">299</context>
         </context-group>
         <source>The specified URL is not reachable. If the URL is correct, then it may be due to the Nightscout-settings.</source>
       </trans-unit>
       <trans-unit id="7975962135946833615" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">293</context>
+          <context context-type="linenumber">303</context>
         </context-group>
         <source>&lt;br&gt;&lt;br&gt;If this URL is protected (AUTH_DEFAULT_ROLES is not set to "readable"), the access key must also be correctly defined. This can be reached via "Administrator tools" on the personal Nightscout page.</source>
       </trans-unit>
       <trans-unit id="2383228502926115665" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">309</context>
+          <context context-type="linenumber">319</context>
         </context-group>
         <source>The variable ENABLE must contain the word "cors" so that external tools like this one can access the data.</source>
       </trans-unit>
       <trans-unit id="6595412903016005597" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">313</context>
+          <context context-type="linenumber">323</context>
         </context-group>
         <source>On 10be, the default settings for the server must enable the "cors" checkbox so that external tools like this one can access the data. If "cors" has been activated, ReDeploy may have to be done on the server before it is really available.</source>
       </trans-unit>
       <trans-unit id="8407735350178179537" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">317</context>
+          <context context-type="linenumber">327</context>
         </context-group>
         <source>The server variable ENABLE must contain the word "cors" so that external tools like this one can access the data.&lt;br&gt;&lt;br&gt;If the server is in the Google Cloud, the settings must be made in an SSH terminal.</source>
       </trans-unit>
       <trans-unit id="781258887519852436" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">321</context>
+          <context context-type="linenumber">331</context>
         </context-group>
         <source>The Url to the Nightscout API must start with https, since Nightscout Reporter also runs on https. Access to unsafe http resources is not possible.</source>
       </trans-unit>
       <trans-unit id="2794107815134152683" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">374</context>
+          <context context-type="linenumber">385</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut/shortcut.component.ts</context>
@@ -327,71 +327,71 @@
       <trans-unit id="9159519588031360427" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">375</context>
+          <context context-type="linenumber">386</context>
         </context-group>
         <source>One month before</source>
       </trans-unit>
       <trans-unit id="6747117754964396439" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">376</context>
+          <context context-type="linenumber">387</context>
         </context-group>
         <source>Three months before</source>
       </trans-unit>
       <trans-unit id="6456973552694094312" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">377</context>
+          <context context-type="linenumber">388</context>
         </context-group>
         <source>Six months before</source>
       </trans-unit>
       <trans-unit id="2253731368282111375" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">378</context>
+          <context context-type="linenumber">389</context>
         </context-group>
         <source>One year before</source>
       </trans-unit>
       <trans-unit id="6702640511673365425" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">479</context>
+          <context context-type="linenumber">490</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">483</context>
+          <context context-type="linenumber">494</context>
         </context-group>
         <source>No data</source>
       </trans-unit>
       <trans-unit id="4657328650853061238" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">610</context>
+          <context context-type="linenumber">621</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">377</context>
+          <context context-type="linenumber">383</context>
         </context-group>
         <source>Just now</source>
       </trans-unit>
       <trans-unit id="8653385405278371687" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">611</context>
+          <context context-type="linenumber">622</context>
         </context-group>
         <source><x id="PH" equiv-text="time"/> minute ago</source>
       </trans-unit>
       <trans-unit id="2487173854002315363" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">612</context>
+          <context context-type="linenumber">623</context>
         </context-group>
         <source>{$PH} minutes ago</source>
       </trans-unit>
       <trans-unit id="4920445515897514905" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">645</context>
+          <context context-type="linenumber">656</context>
         </context-group>
         <source>Google Cloud Variables</source>
       </trans-unit>
@@ -402,7 +402,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">143</context>
         </context-group>
         <note priority="1" from="description">this is the dateformat, please use dd for days, MM for months and yyyy for year. It has to be the english formatstring.</note>
         <source>dd/MM/yyyy</source>
@@ -913,45 +913,59 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <source>in <x id="PH" equiv-text="minutes"/> Min</source>
       </trans-unit>
+      <trans-unit id="3083516475525745900" datatype="html">
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/classes/utils.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+        <source>hh:mm:ss Uhr</source>
+      </trans-unit>
+      <trans-unit id="5317528448449182656" datatype="html">
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/classes/utils.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+        <source>hh:mm Uhr</source>
+      </trans-unit>
       <trans-unit id="106915923521054589" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">382</context>
+          <context context-type="linenumber">388</context>
         </context-group>
         <source>{$PH} Minute</source>
       </trans-unit>
       <trans-unit id="5649152052903402207" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">383</context>
+          <context context-type="linenumber">389</context>
         </context-group>
         <source>{$PH} Minutes</source>
       </trans-unit>
       <trans-unit id="5715822374601764396" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">389</context>
+          <context context-type="linenumber">395</context>
         </context-group>
         <source>{$PH} hour</source>
       </trans-unit>
       <trans-unit id="6787170888491959005" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">390</context>
+          <context context-type="linenumber">396</context>
         </context-group>
         <source>{$PH} hours</source>
       </trans-unit>
       <trans-unit id="2243853424457768965" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">397</context>
+          <context context-type="linenumber">403</context>
         </context-group>
         <source>{$PH} Day</source>
       </trans-unit>
       <trans-unit id="3499176050291189451" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">398</context>
+          <context context-type="linenumber">404</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -962,14 +976,14 @@ Soll der Bestätigungsablauf gestartet werden?</source>
       <trans-unit id="610068718017122607" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">401</context>
+          <context context-type="linenumber">407</context>
         </context-group>
         <source>{$PH} Hour</source>
       </trans-unit>
       <trans-unit id="896232652852247226" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">402</context>
+          <context context-type="linenumber">408</context>
         </context-group>
         <source>{$PH} hours</source>
       </trans-unit>
@@ -1768,14 +1782,14 @@ Maximum number of profile datasets:</target>
       <trans-unit id="4072251623479943952" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <source>Coloured</source>
       </trans-unit>
       <trans-unit id="5678618763959188413" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <source>Dark</source>
       </trans-unit>
@@ -5176,17 +5190,24 @@ Maximum number of profile datasets:</target>
         <note priority="1" from="description">v100a1</note>
         <source>Initial version, everything is new!</source>
       </trans-unit>
-      <trans-unit id="3253285846028235067" datatype="html" approved="yes">
+      <trans-unit id="1034342214183348854" datatype="html">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/controls/color-picker/color-picker-dialog.html</context>
-          <context context-type="linenumber">3,6</context>
+          <context context-type="linenumber">5</context>
         </context-group>
-        <source><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>Colorselection<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button (click)=&quot;clickClose()&quot; mat-icon-button&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>close<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/></source>
+        <source>Farbauswahl</source>
+      </trans-unit>
+      <trans-unit id="5625678343679985724" datatype="html">
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/controls/color-picker/color-picker-image/color-picker-image.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <source> Mit dem Button rechts unten kann ein Bild<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>geladen werden. Aus diesem kann dann<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/>eine Farbe entnommen werden. </source>
       </trans-unit>
       <trans-unit id="1502678440868604199" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/controls/color-picker/color-picker-image/color-picker-image.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <source>The file has <x id="PH" equiv-text="file.size"/> bytes, but must not have more than <x id="PH_1" equiv-text="this.data.maxFilesize"/> bytes.</source>
       </trans-unit>
