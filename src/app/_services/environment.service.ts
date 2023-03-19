@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
 import {Settings} from '@/_model/settings';
+import {Router} from '@angular/router';
+import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class EnvironmentService {
   appType: string;
   appParams: any = {};
 
-  constructor() {
+  constructor(router: Router) {
     for (const key of Object.keys(environment)) {
       (this as any)[key] = (environment as any)[key];
     }
@@ -34,6 +36,11 @@ export class EnvironmentService {
     }
     const temp = window.location.hash?.substring(1);
     this.appType = temp;
+    if (Utils.isEmpty(this.appType)) {
+      if (window.location.href.endsWith('/watch')) {
+        this.appType = 'watch';
+      }
+    }
     const pos = this.appType.indexOf('?');
     if (pos > 0) {
       this.appType = temp.substring(0, pos);
