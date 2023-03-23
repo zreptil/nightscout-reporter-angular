@@ -34,12 +34,12 @@ export class ThemeService {
     //     bodyTag.style.removeProperty(`--${key}`);
     //   }
     //   bodyTag.animate([
-    //     this.getThemeSytle(this.currTheme),
-    //     this.getThemeSytle(theme)
+    //     this.getThemeStyle(this.currTheme),
+    //     this.getThemeStyle(theme)
     //   ], {duration: 1000, direction: 'normal', fill: 'forwards'});
-    //   console.log(this.getThemeSytle(this.currTheme));
-    //   console.log(this.getThemeSytle(theme));
-    //   // this.getThemeSytle(theme);
+    //   console.log(this.getThemeStyle(this.currTheme));
+    //   console.log(this.getThemeStyle(theme));
+    //   // this.getThemeStyle(theme);
     // } else {
     this.assignStyle(document.body.style, theme);
 //    }
@@ -61,7 +61,7 @@ export class ThemeService {
     }
   }
 
-  getThemeSytle(theme: any): any {
+  getThemeStyle(theme: any): any {
     const ret: any = {};
     for (const key of Object.keys(theme)) {
       let value = theme[key];
