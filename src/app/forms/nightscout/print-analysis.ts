@@ -654,7 +654,7 @@ export class PrintAnalysis extends BasePrint {
           {text: '', style: 'infotitle'},
           {
             text: this.msgValuesBelow(
-              `${GLOBALS.glucFromData(70)} ${GLOBALS.getGlucInfo().unit}'`),
+              `${GLOBALS.glucFromData(70)} ${GLOBALS.getGlucInfo().unit}`),
             style: 'infotitle'
           },
           {
