@@ -136,5 +136,8 @@
       }
     }
   },
-  "version": 1
+  "version": 1,
+  "cli": {
+    "analytics": "30a9b09d-7682-4302-916b-8e3f7c176ff9"
+  }
 }
