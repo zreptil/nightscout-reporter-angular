@@ -47,7 +47,7 @@ export class Log {
   }
 
   static addText(id: string, ...text: any[]): void {
-    if (text && text.length > 1) {
+    if (text != null && text.length > 1) {
       text.forEach((line, idx) => {
         // entries that have the format {_: ...} are treated by log.component
         // so that it will remove the line between the current entry and
@@ -61,7 +61,10 @@ export class Log {
 
   static cvtText(text: string): string {
     const time = new Date();
-    return text.replace(/{time}/g, Utils.fmtTime(time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds()));
+    if (typeof text === 'string') {
+      text = text.replace(/{time}/g, Utils.fmtTime(time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds()));
+    }
+    return text;
   }
 
   static isInList(check: any, list: any[]): boolean {

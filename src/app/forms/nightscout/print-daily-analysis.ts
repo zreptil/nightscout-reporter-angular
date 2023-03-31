@@ -649,7 +649,7 @@ export class PrintDailyAnalysis extends BaseDaily {
       temp.sort((a, b) =>
         Utils.compareDate(a.time(day.date, useProfile), b.time(day.date, useProfile)));
 
-      if (temp[0].timeAsSeconds != -temp[0].localDiff * 60 * 60) {
+      if (temp.length > 0 && temp[0].timeAsSeconds != -temp[0].localDiff * 60 * 60) {
         const clone = temp[0].clone(new Date(0, 1, 1, -temp[0].localDiff, 0));
         temp.splice(0, 0, clone);
       }
