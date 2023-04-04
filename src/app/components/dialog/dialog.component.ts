@@ -74,9 +74,11 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   }
 
   clickClose(): void {
-    this.dialogRef.close({
-      btn: DialogResultButton.cancel
-    });
+    if (!this.dialogRef.disableClose) {
+      this.dialogRef.close({
+        btn: DialogResultButton.cancel
+      });
+    }
   }
 
   closeDialog(btn: IDialogButton): any {

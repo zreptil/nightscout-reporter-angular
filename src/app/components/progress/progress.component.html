@@ -1,4 +1,4 @@
-<div [class]="classForOverlay(!ps.isActive)" overlay>
+<div [class]="classForOverlay(!ps.isActive)" overlay *ngIf="!ps.isPaused">
   <div #overlay panel>
     <div *ngIf="ps.info!=null" label>{{ps.info}}</div>
     <mat-progress-bar [value]="value"

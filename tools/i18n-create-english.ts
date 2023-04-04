@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 const extract = require('extract-zip');
 async function main() {
   try {
-    const zipfile = getPath('../nightrep (translations).zip');
+    const zipfile = getPath(`${os.homedir()}/Downloads/nightrep (translations).zip`);
     console.log('extracting', zipfile, '...');
     await extract(zipfile, {dir: getPath('../temp')});
     console.log('converting english to source...');

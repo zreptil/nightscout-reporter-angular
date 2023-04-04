@@ -1,9 +1,9 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.settings">
   <div cdkDragHandle mat-dialog-title>
-    <h1 i18n="title for settings dialog">
+    <h1>
       <mat-icon>settings</mat-icon>
-      Einstellungen
+      <div  i18n="title for settings dialog">Einstellungen</div>
     </h1>
     <div>
       <button *ngIf="ss.isEmpty(ps.text)"

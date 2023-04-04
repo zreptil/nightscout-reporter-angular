@@ -19,7 +19,9 @@ export class ReportData {
   status: StatusData;
   isForThumbs = false;
   isValid = false;
-
+  deviceList: string[] = [];
+  mustReload = false;
+  device: string = '';
   constructor(public begDate: Date, public endDate: Date) {
   }
 

@@ -80,6 +80,9 @@ export class PdfService {
       console.error('repData ist nicht gültig', repData);
       return;
     }
+    if (repData.deviceList.length > 1) {
+      console.log('Wir haben einige Devices in den Daten:', repData.deviceList);
+    }
     GLOBALS.isCreatingPDF = true;
     try {
       this.ps.max = 1;

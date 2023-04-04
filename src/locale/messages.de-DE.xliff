@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--suppress ALL -->
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="de" datatype="plaintext" original="ng2.template">
     <body>
@@ -140,95 +141,95 @@
         <source>Heute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5904041394389170462" datatype="html">
         <source>Letzte 2 Tage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3753908710962332501" datatype="html">
         <source>Letzte 3 Tage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4552894200644449843" datatype="html">
         <source>Letzte Woche</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8819199067642626219" datatype="html">
         <source>Letzte 2 Wochen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="101470742938506804" datatype="html">
         <source>Letzte 3 Wochen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2000702703315269520" datatype="html">
         <source>Letzter Monat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1070566507761088905" datatype="html">
         <source>Letzte 3 Monate</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7441923818926073330" datatype="html">
         <source>Erstes Quartal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2017499472136539166" datatype="html">
         <source>Zweites Quartal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5487195230082733790" datatype="html">
         <source>Drittes Quartal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2711034407981793742" datatype="html">
         <source>Viertes Quartal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5332830754562778560" datatype="html">
         <source>Keine</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">175</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">724</context>
+          <context context-type="linenumber">728</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-analysis.ts</context>
@@ -243,77 +244,77 @@
         <source>3 Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="654274934088033548" datatype="html">
         <source>6 Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3652555051803795441" datatype="html">
         <source>12 Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6019474054661909422" datatype="html">
         <source>24 Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3217863696400545387" datatype="html">
         <source>Die angegebene URL ist nicht erreichbar. Wenn die URL stimmt, dann kann es an den Nightscout-Einstellungen liegen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">299</context>
+          <context context-type="linenumber">289</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7975962135946833615" datatype="html">
         <source>&lt;br&gt;&lt;br&gt;Wenn diese URL geschützt ist (AUTH_DEFAULT_ROLES steht nicht auf &quot;readable&quot;), muss ausserdem der Zugriffsschlüssel korrekt definiert sein. Diesen erreicht man über &quot;Administrator-Werkzeuge&quot; auf der persönlichen Nightscout Seite.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">303</context>
+          <context context-type="linenumber">293</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2383228502926115665" datatype="html">
         <source>In der Variable ENABLE muss das Wort &quot;cors&quot; stehen, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">319</context>
+          <context context-type="linenumber">309</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6595412903016005597" datatype="html">
         <source>Auf 10be muss beim Server in den Standardeinstellungen der Haken bei &quot;cors&quot; aktiviert werden, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen. Wenn &quot;cors&quot; aktiviert wurde, muss auf dem Server eventuell noch ReDeploy gemacht werden, bevor es wirklich verfügbar ist.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">323</context>
+          <context context-type="linenumber">313</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8407735350178179537" datatype="html">
         <source>Die Servervariable ENABLE muss das Wort &quot;cors&quot; beinhalten, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen.&lt;br&gt;&lt;br&gt;Wenn sich der Server in der Google Cloud befindet, müssen die Einstellungen in einem SSH-Terminal vorgenommen werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">327</context>
+          <context context-type="linenumber">317</context>
         </context-group>
       </trans-unit>
       <trans-unit id="781258887519852436" datatype="html">
         <source>Die Url zur Nightscout-API muss mit https beginnen, da Nightscout Reporter auch auf https läuft. Ein Zugriff auf unsichere http-Resourcen ist nicht möglich.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">331</context>
+          <context context-type="linenumber">321</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2794107815134152683" datatype="html">
         <source>Ausgewählter Zeitraum</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">385</context>
+          <context context-type="linenumber">374</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut/shortcut.component.ts</context>
@@ -328,46 +329,46 @@
         <source>Einen Monat vorher</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">386</context>
+          <context context-type="linenumber">375</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6747117754964396439" datatype="html">
         <source>Drei Monate vorher</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">387</context>
+          <context context-type="linenumber">376</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6456973552694094312" datatype="html">
         <source>Sechs Monate vorher</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">388</context>
+          <context context-type="linenumber">377</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2253731368282111375" datatype="html">
         <source>Ein Jahr vorher</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">389</context>
+          <context context-type="linenumber">378</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6702640511673365425" datatype="html">
         <source>Keine Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">490</context>
+          <context context-type="linenumber">479</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">494</context>
+          <context context-type="linenumber">483</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4657328650853061238" datatype="html">
         <source>Gerade eben</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">621</context>
+          <context context-type="linenumber">610</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
@@ -378,21 +379,21 @@
         <source>vor <x id="PH" equiv-text="time"/> Minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">622</context>
+          <context context-type="linenumber">611</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2487173854002315363" datatype="html">
         <source>vor <x id="PH" equiv-text="time"/> Minuten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">623</context>
+          <context context-type="linenumber">612</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4920445515897514905" datatype="html">
         <source>Google Cloud Variablen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
-          <context context-type="linenumber">656</context>
+          <context context-type="linenumber">645</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8321702175940480370" datatype="html">
@@ -664,14 +665,14 @@
 Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildatensätzen zu verringern.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">35,36</context>
+          <context context-type="linenumber">40,41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5517254381877899996" datatype="html">
         <source>Lade die Basisdaten...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
@@ -682,14 +683,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Bitte einen Zeitraum wählen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1212886905101328952" datatype="html">
         <source>Max Mustermann</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="description">modelname used in images on tiles</note>
       </trans-unit>
@@ -697,7 +698,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Bereite Daten vor...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="description">text when data was received and is being prepared to be used in the report</note>
       </trans-unit>
@@ -705,28 +706,28 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Es konnten nicht alle Profile geladen werden, da im ausgewählten Zeitraum mehr als <x id="PH" equiv-text="maxCount"/> gespeichert sind. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3802873172037186880" datatype="html">
         <source>Der Uploader &quot;<x id="PH" equiv-text="text"/>&quot; hat die Datensätze angelegt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7979899145647988883" datatype="html">
         <source>Folgende Uploader haben die Datensätze angelegt: <x id="PH" equiv-text="text"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3927439908064576549" datatype="html">
         <source>Lade Daten für <x id="PH" equiv-text="date"/>...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="description">displayed when data of a day is loading</note>
       </trans-unit>
@@ -734,49 +735,70 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>status</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2165535070589083340" datatype="html">
         <source>Sortiere Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">364</context>
+          <context context-type="linenumber">370</context>
         </context-group>
       </trans-unit>
       <trans-unit id="553411606026393175" datatype="html">
         <source>Berechne Profillängen...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">370</context>
+          <context context-type="linenumber">376</context>
         </context-group>
       </trans-unit>
       <trans-unit id="203160200131643954" datatype="html">
         <source>Sortiere berechnete Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">411</context>
+          <context context-type="linenumber">417</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6933690798138526926" datatype="html">
         <source>Entferne leere Profile...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">419</context>
+          <context context-type="linenumber">425</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2549880268686154135" datatype="html">
         <source><x id="PH" equiv-text="info"/> für <x id="PH_1" equiv-text="GLOBALS.user.name"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">428</context>
+          <context context-type="linenumber">434</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6663654121912104043" datatype="html">
+        <source>Bitte wählen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
+          <context context-type="linenumber">593</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3044976190675332923" datatype="html">
+        <source>Alle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
+          <context context-type="linenumber">594</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3284249334268903550" datatype="html">
+        <source>Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte den Button für das Gerät betätigen, dessen Daten ausgewertet werden sollen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
+          <context context-type="linenumber">600</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4634217142135775947" datatype="html">
         <source>Bereinige Daten...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">624</context>
+          <context context-type="linenumber">660</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3117299459475029064" datatype="html">
@@ -814,7 +836,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Das PDF konnte nicht angezeigt werden. Ist ein Popup-Blocker aktiv?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
-          <context context-type="linenumber">398</context>
+          <context context-type="linenumber">404</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5863317744980308324" datatype="html">
@@ -961,7 +983,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1260</context>
+          <context context-type="linenumber">1264</context>
         </context-group>
       </trans-unit>
       <trans-unit id="610068718017122607" datatype="html">
@@ -1087,6 +1109,10 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
         <note priority="1" from="description">title of settings</note>
       </trans-unit>
@@ -1335,15 +1361,6 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <note priority="1" from="description">title of donate button</note>
       </trans-unit>
-      <trans-unit id="4662145775420138869" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="settings&lt;/mat-icon&gt;
-      Ein"/>settings<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Einstellungen </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">5,7</context>
-        </context-group>
-        <note priority="1" from="description">title for settings dialog</note>
-      </trans-unit>
       <trans-unit id="2282062055953871612" datatype="html">
         <source>Benutzerdaten</source>
         <context-group purpose="location">
@@ -1364,7 +1381,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">624</context>
+          <context context-type="linenumber">628</context>
         </context-group>
         <note priority="1" from="description">label of editfield for birthday</note>
       </trans-unit>
@@ -1376,7 +1393,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">628</context>
+          <context context-type="linenumber">632</context>
         </context-group>
         <note priority="1" from="description">label of editfield for diabetes since</note>
       </trans-unit>
@@ -1477,7 +1494,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">632</context>
+          <context context-type="linenumber">636</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-graphic.ts</context>
@@ -1816,7 +1833,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">752</context>
+          <context context-type="linenumber">756</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8377516972708378852" datatype="html">
@@ -1848,7 +1865,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">860</context>
+          <context context-type="linenumber">864</context>
         </context-group>
       </trans-unit>
       <trans-unit id="56228327617948862" datatype="html">
@@ -5205,7 +5222,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">740</context>
+          <context context-type="linenumber">744</context>
         </context-group>
         <note priority="1" from="description">title for datepicker dialog</note>
       </trans-unit>
@@ -5390,21 +5407,21 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>bis</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">557</context>
+          <context context-type="linenumber">561</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgGlucosekurve" datatype="html">
         <source>Glukosekurve</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">561</context>
+          <context context-type="linenumber">565</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgMealBolus" datatype="html">
         <source>Mahlzeitenbolus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">572</context>
+          <context context-type="linenumber">576</context>
         </context-group>
         <note priority="1" from="description">bolus to handle a meal</note>
       </trans-unit>
@@ -5412,7 +5429,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Bolus Rechner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">576</context>
+          <context context-type="linenumber">580</context>
         </context-group>
         <note priority="1" from="description">bolus calculated by the bolus wizard</note>
       </trans-unit>
@@ -5420,39 +5437,39 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Verzögerter Bolus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">580</context>
+          <context context-type="linenumber">584</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2219368439683381667" datatype="html">
         <source>Basalrate</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">584</context>
+          <context context-type="linenumber">588</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">812</context>
+          <context context-type="linenumber">816</context>
         </context-group>
       </trans-unit>
       <trans-unit id="749625153693614079" datatype="html">
         <source>TDD</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">588</context>
+          <context context-type="linenumber">592</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4076382777671752130" datatype="html">
         <source>Es sind keine Daten für den Ausdruck vorhanden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">592</context>
+          <context context-type="linenumber">596</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4454748570434478881" datatype="html">
         <source>Katheterwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">600</context>
+          <context context-type="linenumber">604</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-log.ts</context>
@@ -5463,7 +5480,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Sensorwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">604</context>
+          <context context-type="linenumber">608</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-log.ts</context>
@@ -5474,179 +5491,179 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Reservoirwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">608</context>
+          <context context-type="linenumber">612</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8455752117784953913" datatype="html">
         <source>Aufsummierte Werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">612</context>
+          <context context-type="linenumber">616</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5384898210620182184" datatype="html">
         <source>Berechnete IE für Kohlenhydrate</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">616</context>
+          <context context-type="linenumber">620</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5704746599911012534" datatype="html">
         <source>KH</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">620</context>
+          <context context-type="linenumber">624</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">884</context>
+          <context context-type="linenumber">888</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5827116118592472242" datatype="html">
         <source>Ausgewertete Tage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">636</context>
+          <context context-type="linenumber">640</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1835952148608981798" datatype="html">
         <source>Anzahl Messungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">640</context>
+          <context context-type="linenumber">644</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1050378413846699180" datatype="html">
         <source>Anzahl Ampullenwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">644</context>
+          <context context-type="linenumber">648</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1372288784830026329" datatype="html">
         <source>Anzahl Katheterwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">648</context>
+          <context context-type="linenumber">652</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7355001655062739838" datatype="html">
         <source>Anzahl Sensorenwechsel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">652</context>
+          <context context-type="linenumber">656</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8509885123077207041" datatype="html">
         <source>gesch. HbA1c</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">656</context>
+          <context context-type="linenumber">660</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1827304388834236660" datatype="html">
         <source>Geschätzter HbA1c</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">660</context>
+          <context context-type="linenumber">664</context>
         </context-group>
       </trans-unit>
       <trans-unit id="91599463657009748" datatype="html">
         <source>Niedrigster Wert im Zeitraum</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">664</context>
+          <context context-type="linenumber">668</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2310845179337180115" datatype="html">
         <source>Höchster Wert im Zeitraum</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">668</context>
+          <context context-type="linenumber">672</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3108179215936124659" datatype="html">
         <source>Ø Zuckerwert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">672</context>
+          <context context-type="linenumber">676</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5457473337498968322" datatype="html">
         <source>Glykämischer Variabilitäts Index (GVI)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">676</context>
+          <context context-type="linenumber">680</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2560018446621143068" datatype="html">
         <source>Patient Glykämischer Status (PGS)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">680</context>
+          <context context-type="linenumber">684</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4285342514168660953" datatype="html">
         <source>Ø KH pro Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">684</context>
+          <context context-type="linenumber">688</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2695192575116129638" datatype="html">
         <source>Ø KH pro Mahlzeit</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">688</context>
+          <context context-type="linenumber">692</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3643936595511867160" datatype="html">
         <source>Ø Insulin pro Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">692</context>
+          <context context-type="linenumber">696</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1987555743730291808" datatype="html">
         <source>Ø Bolus pro Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">696</context>
+          <context context-type="linenumber">700</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5777511888156505900" datatype="html">
         <source>Ø Basal pro Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">700</context>
+          <context context-type="linenumber">704</context>
         </context-group>
       </trans-unit>
       <trans-unit id="461810520483495155" datatype="html">
         <source>Ø Microbolus pro Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">704</context>
+          <context context-type="linenumber">708</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8106907906617014665" datatype="html">
         <source>Ø Insulinverhältnis</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">708</context>
+          <context context-type="linenumber">712</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4465176480961650842" datatype="html">
         <source>Bolus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">712</context>
+          <context context-type="linenumber">716</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5456331975294648312" datatype="html">
         <source>Basal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">716</context>
+          <context context-type="linenumber">720</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4370541832116997140" datatype="html">
@@ -5654,35 +5671,35 @@ Soll der Bestätigungsablauf gestartet werden?</source>
 IE / Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">720</context>
+          <context context-type="linenumber">724</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3844704342810498163" datatype="html">
         <source>Eigene Grenzwerte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">728</context>
+          <context context-type="linenumber">732</context>
         </context-group>
       </trans-unit>
       <trans-unit id="417194596190787156" datatype="html">
         <source>Standardgrenzwerte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">732</context>
+          <context context-type="linenumber">736</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8735196119108420705" datatype="html">
         <source>Behandlungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">736</context>
+          <context context-type="linenumber">740</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8665839107223122205" datatype="html">
         <source>Ges.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">744</context>
+          <context context-type="linenumber">748</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5716956580689550728" datatype="html">
@@ -5690,35 +5707,35 @@ IE / Stunde</source>
 zeit</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">748</context>
+          <context context-type="linenumber">752</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5090553636000273831" datatype="html">
         <source>IE/std</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">756</context>
+          <context context-type="linenumber">760</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6941480264920362873" datatype="html">
         <source>Summe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">760</context>
+          <context context-type="linenumber">764</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7079029906993509129" datatype="html">
         <source>Trend</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">764</context>
+          <context context-type="linenumber">768</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6520529921725441580" datatype="html">
         <source>Notiz</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">768</context>
+          <context context-type="linenumber">772</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7814380740217085349" datatype="html">
@@ -5726,98 +5743,98 @@ zeit</source>
 sung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">772</context>
+          <context context-type="linenumber">776</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3991336875625498115" datatype="html">
         <source>Glukose zu niedrig</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">776</context>
+          <context context-type="linenumber">780</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5989584839847863549" datatype="html">
         <source>Glukose im Zielbereich</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">780</context>
+          <context context-type="linenumber">784</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2715465607997830491" datatype="html">
         <source>Quelle: Vigersky, R. A., Shin, J., Jiang, B., Siegmund, T., McMahon, C., &amp; Thomas, A. (2018). The Comprehensive Glucose Pentagon: A Glucose-Centric Composite Metric for Assessing Glycemic Control in Persons With Diabetes. Journal of Diabetes Science and Technology, 12(1), 114-123. (https://doi.org/10.1177/1932296817718561)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">784</context>
+          <context context-type="linenumber">788</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1997128442622489168" datatype="html">
         <source>Glukose zu hoch</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">788</context>
+          <context context-type="linenumber">792</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3080483882937310852" datatype="html">
         <source>Normal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">792</context>
+          <context context-type="linenumber">796</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1944749227875658217" datatype="html">
         <source>10% - 90% der Werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">796</context>
+          <context context-type="linenumber">800</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4040392642686639683" datatype="html">
         <source>25% - 75% der Werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">800</context>
+          <context context-type="linenumber">804</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8403380952577227473" datatype="html">
         <source>Insulin Kohlenhydrate Verhältnis (ICR)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">804</context>
+          <context context-type="linenumber">808</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1285090408683202139" datatype="html">
         <source>Insulin Sensitivitäts Faktoren (ISF)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">808</context>
+          <context context-type="linenumber">812</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1933013871016789910" datatype="html">
         <source>Gesamt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">816</context>
+          <context context-type="linenumber">820</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3846842741887786114" datatype="html">
         <source>Zielbereich</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">820</context>
+          <context context-type="linenumber">824</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6633861517381811980" datatype="html">
         <source>Ø ICR/Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">824</context>
+          <context context-type="linenumber">828</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7614103255736405267" datatype="html">
         <source>Ø ISF/Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">828</context>
+          <context context-type="linenumber">832</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4091766776237352490" datatype="html">
@@ -5825,56 +5842,56 @@ sung</source>
 X g Kohlenhydrate für 1 IE</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">832</context>
+          <context context-type="linenumber">836</context>
         </context-group>
       </trans-unit>
       <trans-unit id="190462900005986981" datatype="html">
         <source>Profileinstellungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">836</context>
+          <context context-type="linenumber">840</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6838298781579903570" datatype="html">
         <source>Dauer der Insulinaktivität (DIA)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">840</context>
+          <context context-type="linenumber">844</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8281622806981246575" datatype="html">
         <source>Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">844</context>
+          <context context-type="linenumber">848</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5653192105985208694" datatype="html">
         <source>Dauer der Kohlenhydrataktivität</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">848</context>
+          <context context-type="linenumber">852</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7508842946929094457" datatype="html">
         <source>Zeitzone</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">852</context>
+          <context context-type="linenumber">856</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8565690938370306884" datatype="html">
         <source>g / Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">856</context>
+          <context context-type="linenumber">860</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8198237091765701133" datatype="html">
         <source>Verteilung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">864</context>
+          <context context-type="linenumber">868</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6054305971182360492" datatype="html">
@@ -5882,28 +5899,28 @@ X g Kohlenhydrate für 1 IE</source>
 werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">868</context>
+          <context context-type="linenumber">872</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4912803901980915876" datatype="html">
         <source>Min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">872</context>
+          <context context-type="linenumber">876</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3667949571823271511" datatype="html">
         <source>Max</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">876</context>
+          <context context-type="linenumber">880</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2245223703355813532" datatype="html">
         <source>IE</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">880</context>
+          <context context-type="linenumber">884</context>
         </context-group>
       </trans-unit>
       <trans-unit id="954997609648411319" datatype="html">
@@ -5911,7 +5928,7 @@ werte</source>
 wert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">888</context>
+          <context context-type="linenumber">892</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7612401945163585274" datatype="html">
@@ -5919,7 +5936,7 @@ wert</source>
 Abw.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">892</context>
+          <context context-type="linenumber">896</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3085022192590638473" datatype="html">
@@ -5927,435 +5944,435 @@ Abw.</source>
 in %</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">896</context>
+          <context context-type="linenumber">900</context>
         </context-group>
       </trans-unit>
       <trans-unit id="114014997560884624" datatype="html">
         <source>10%</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">900</context>
+          <context context-type="linenumber">904</context>
         </context-group>
       </trans-unit>
       <trans-unit id="410694998387368400" datatype="html">
         <source>25%</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">904</context>
+          <context context-type="linenumber">908</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8486829037533787324" datatype="html">
         <source>75%</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">908</context>
+          <context context-type="linenumber">912</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9145809862065332211" datatype="html">
         <source>90%</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">912</context>
+          <context context-type="linenumber">916</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5030829345161940560" datatype="html">
         <source>Durchschnitt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">916</context>
+          <context context-type="linenumber">920</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6993938051305400866" datatype="html">
         <source>Standardabweichung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">920</context>
+          <context context-type="linenumber">924</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2633729073167909034" datatype="html">
         <source><x id="PH" equiv-text="time"/> Uhr</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">955</context>
+          <context context-type="linenumber">959</context>
         </context-group>
       </trans-unit>
       <trans-unit id="194157074469443413" datatype="html">
         <source><x id="PH" equiv-text="time"/> am</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">959</context>
+          <context context-type="linenumber">963</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7975293901451211912" datatype="html">
         <source><x id="PH" equiv-text="time"/> pm</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">963</context>
+          <context context-type="linenumber">967</context>
         </context-group>
       </trans-unit>
       <trans-unit id="658509511596516220" datatype="html">
         <source>Kalibrierung (scale <x id="PH" equiv-text="scale"/> / intercept <x id="PH_1" equiv-text="intercept"/> / slope <x id="PH_2" equiv-text="slope"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">967</context>
+          <context context-type="linenumber">971</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6901562133099764608" datatype="html">
         <source>1 Seite oder mehr</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1047</context>
+          <context context-type="linenumber">1051</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1149582344080641990" datatype="html">
         <source><x id="PH" equiv-text="count"/> Seiten oder mehr</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1048</context>
+          <context context-type="linenumber">1052</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6506885859968423722" datatype="html">
         <source>1 Seite</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1055</context>
+          <context context-type="linenumber">1059</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1857951656960027099" datatype="html">
         <source><x id="PH" equiv-text="count"/> Seiten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1056</context>
+          <context context-type="linenumber">1060</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgKW" datatype="html">
         <source>KW<x id="PH" equiv-text="week"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1065</context>
+          <context context-type="linenumber">1069</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgValidRange" datatype="html">
         <source>gültig von <x id="PH" equiv-text="begDate"/> bis <x id="PH_1" equiv-text="endDate"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1069</context>
+          <context context-type="linenumber">1073</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgValidFrom" datatype="html">
         <source>gültig ab <x id="PH" equiv-text="begDate"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1073</context>
+          <context context-type="linenumber">1077</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgValidTo" datatype="html">
         <source>gültig bis <x id="PH" equiv-text="endDate"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1077</context>
+          <context context-type="linenumber">1081</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgDuration" datatype="html">
         <source><x id="PH" equiv-text="hours"/> Std <x id="PH_1" equiv-text="minutes"/> Min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1081</context>
+          <context context-type="linenumber">1085</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgTargetArea" datatype="html">
         <source>Zielbereich (<x id="PH" equiv-text="min"/> - <x id="PH_1" equiv-text="max"/> <x id="PH_2" equiv-text="units"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1085</context>
+          <context context-type="linenumber">1089</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgTargetValue" datatype="html">
         <source>Zielwert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1089</context>
+          <context context-type="linenumber">1093</context>
         </context-group>
       </trans-unit>
       <trans-unit id="_msgLowerGlucHint" datatype="html">
         <source>Alle sensorischen Glukosewerte wurden um <x id="PH" equiv-text="factor"/> % verringert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1093</context>
+          <context context-type="linenumber">1097</context>
         </context-group>
       </trans-unit>
       <trans-unit id="_msgRaiseGlucHint" datatype="html">
         <source>Alle sensorischen Glukosewerte wurden um <x id="PH" equiv-text="factor"/> % erhöht</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1097</context>
+          <context context-type="linenumber">1101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCarbs" datatype="html">
         <source>Kohlenhydrate (<x id="PH" equiv-text="value"/>g)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1101</context>
+          <context context-type="linenumber">1105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgBolusInsulin" datatype="html">
         <source>Bolus Insulin (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1105</context>
+          <context context-type="linenumber">1109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCorrectBolusInsulin" datatype="html">
         <source>Korrektur Bolus (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1109</context>
+          <context context-type="linenumber">1113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2630105366061918724" datatype="html">
         <source>Mahlzeiten Bolus (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1116</context>
+          <context context-type="linenumber">1120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6548316943536498969" datatype="html">
         <source>SMB (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1120</context>
+          <context context-type="linenumber">1124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3909704910396085444" datatype="html">
         <source>Basalrate für den Tag (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1124</context>
+          <context context-type="linenumber">1128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4286587832391329338" datatype="html">
         <source>Basalrate aus dem Profil (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1128</context>
+          <context context-type="linenumber">1132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5570859919727012443" datatype="html">
         <source>Gesamtinsulin (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1132</context>
+          <context context-type="linenumber">1136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5078435853672992591" datatype="html">
         <source><x id="PH" equiv-text="value"/>g</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1136</context>
+          <context context-type="linenumber">1140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="310135135909995723" datatype="html">
         <source>Keine Messwerte vorhanden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1141</context>
+          <context context-type="linenumber">1145</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1150</context>
+          <context context-type="linenumber">1154</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1158</context>
+          <context context-type="linenumber">1162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4642711167787568908" datatype="html">
         <source>1 Messung am Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1142</context>
+          <context context-type="linenumber">1146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9100627874396355833" datatype="html">
         <source><x id="PH" equiv-text="fmt"/> Messungen am Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1143</context>
+          <context context-type="linenumber">1147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5046449995628369445" datatype="html">
         <source>1 Messung pro Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1151</context>
+          <context context-type="linenumber">1155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2690513100444212741" datatype="html">
         <source><x id="PH" equiv-text="fmt"/> Messungen pro Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1152</context>
+          <context context-type="linenumber">1156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7131139370526216674" datatype="html">
         <source>1 Messung pro Minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1159</context>
+          <context context-type="linenumber">1163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8334446718946772191" datatype="html">
         <source>Messung alle <x id="PH" equiv-text="fmt"/> Minuten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1160</context>
+          <context context-type="linenumber">1164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4341500156747589894" datatype="html">
         <source>Werte zwischen <x id="PH" equiv-text="low"/> und <x id="PH_1" equiv-text="high"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1165</context>
+          <context context-type="linenumber">1169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7258244579318280186" datatype="html">
         <source>Werte unter <x id="PH" equiv-text="low"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1169</context>
+          <context context-type="linenumber">1173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1561702909227178336" datatype="html">
         <source>Werte über <x id="PH" equiv-text="high"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1173</context>
+          <context context-type="linenumber">1177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3146896021015651634" datatype="html">
         <source>Sehr hohe Werte ( &gt; <x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1177</context>
+          <context context-type="linenumber">1181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5643627311954309822" datatype="html">
         <source>Hohe Werte (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1181</context>
+          <context context-type="linenumber">1185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5281244940059566908" datatype="html">
         <source>Zielbereich (<x id="PH" equiv-text="low"/> - <x id="PH_1" equiv-text="high"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1185</context>
+          <context context-type="linenumber">1189</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6356747117170967509" datatype="html">
         <source>Niedrige Werte (<x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1189</context>
+          <context context-type="linenumber">1193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8465282339211094633" datatype="html">
         <source>&apos;Sehr niedrige Werte (&lt; <x id="PH" equiv-text="value"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1193</context>
+          <context context-type="linenumber">1197</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7032229894851079271" datatype="html">
         <source>g KH (<x id="PH" equiv-text="value"/> BE)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1197</context>
+          <context context-type="linenumber">1201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1479891049004238768" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tag pro Ampulle)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1203</context>
+          <context context-type="linenumber">1207</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5947608586796983691" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tage pro Ampulle)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1204</context>
+          <context context-type="linenumber">1208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4127636796372029708" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tag pro Katheter)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1211</context>
+          <context context-type="linenumber">1215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6739967434924345460" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tage pro Katheter)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1212</context>
+          <context context-type="linenumber">1216</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5306121135087520090" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tag pro Sensor)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1219</context>
+          <context context-type="linenumber">1223</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5615330300156559861" datatype="html">
         <source>(<x id="PH" equiv-text="txt"/> Tage pro Sensor)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1220</context>
+          <context context-type="linenumber">1224</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1382429000553069395" datatype="html">
         <source>Tief<x id="PH" equiv-text="value"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1226</context>
+          <context context-type="linenumber">1230</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5351459095868569938" datatype="html">
         <source>Kein Wert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1231</context>
+          <context context-type="linenumber">1235</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7070333232316529621" datatype="html">
         <source>1 Wert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1232</context>
+          <context context-type="linenumber">1236</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4834711968050618724" datatype="html">
         <source><x id="PH" equiv-text="count"/> Werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1233</context>
+          <context context-type="linenumber">1237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6842756027191066886" datatype="html">
         <source>(StdAbw <x id="PH" equiv-text="text"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1239</context>
+          <context context-type="linenumber">1243</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6573896715468220408" datatype="html">
         <source>Hoch<x id="PH" equiv-text="text"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1244</context>
+          <context context-type="linenumber">1248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2819034921980842641" datatype="html">
@@ -6363,7 +6380,7 @@ in %</source>
 1 IE senkt BG um X <x id="PH" equiv-text="unit"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1248</context>
+          <context context-type="linenumber">1252</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4415704711981908542" datatype="html">
@@ -6371,95 +6388,95 @@ in %</source>
 <x id="PH" equiv-text="unit"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1252</context>
+          <context context-type="linenumber">1256</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8436223332064456837" datatype="html">
         <source><x id="PH" equiv-text="beg"/> - <x id="PH_1" equiv-text="end"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1256</context>
+          <context context-type="linenumber">1260</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3960347178741939388" datatype="html">
         <source>nicht vorhanden (kleiner <x id="PH" equiv-text="text"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1265</context>
+          <context context-type="linenumber">1269</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4039828375117343729" datatype="html">
         <source>sehr gut (<x id="PH" equiv-text="txtMin"/> bis <x id="PH_1" equiv-text="txtMax"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1271</context>
+          <context context-type="linenumber">1275</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8014171383833842560" datatype="html">
         <source>gut (<x id="PH" equiv-text="txtMin"/> bis <x id="PH_1" equiv-text="txtMax"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1277</context>
+          <context context-type="linenumber">1281</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1304</context>
+          <context context-type="linenumber">1308</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2186320724771371544" datatype="html">
         <source>schlecht (grösser <x id="PH" equiv-text="txtMax"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1282</context>
+          <context context-type="linenumber">1286</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3049594061037724196" datatype="html">
         <source>exzellent (kleiner <x id="PH" equiv-text="txtMin"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1298</context>
+          <context context-type="linenumber">1302</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7127621015227459339" datatype="html">
         <source>schlecht (<x id="PH" equiv-text="txtMin"/> bis <x id="PH_1" equiv-text="txtMax"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1310</context>
+          <context context-type="linenumber">1314</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9038529253462906018" datatype="html">
         <source>sehr schlecht (grösser <x id="PH" equiv-text="txtMax"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1315</context>
+          <context context-type="linenumber">1319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="151955983675362130" datatype="html">
         <source>Historisch <x id="PH" equiv-text="value"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1330</context>
+          <context context-type="linenumber">1334</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1935073897932930018" datatype="html">
         <source>Eine Spalte abwählen, um eine@nl@andere aktivieren zu können</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1335</context>
+          <context context-type="linenumber">1339</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3334517318339819734" datatype="html">
         <source>Noch eine Spalte verfügbar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1336</context>
+          <context context-type="linenumber">1340</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2476631956251729930" datatype="html">
         <source>Noch <x id="PH" equiv-text="count"/> Spalten verfügbar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
-          <context context-type="linenumber">1337</context>
+          <context context-type="linenumber">1341</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7200754624091064171" datatype="html">

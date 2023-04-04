@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
 import {Settings} from '@/_model/settings';
-import {Router} from '@angular/router';
 import {Utils} from '@/classes/utils';
 
 @Injectable({
@@ -19,7 +18,7 @@ export class EnvironmentService {
   appType: string;
   appParams: any = {};
 
-  constructor(router: Router) {
+  constructor() {
     for (const key of Object.keys(environment)) {
       (this as any)[key] = (environment as any)[key];
     }
@@ -28,7 +27,6 @@ export class EnvironmentService {
       const parts = p.split('=');
       this.urlParams[parts[0]] = parts[1];
     }
-    console.log('params', this.urlParams);
     if (this.urlParams['enableDebug'] === 'true') {
       localStorage.setItem(Settings.DebugFlag, Settings.DebugActive);
     } else if (this.urlParams['enableDebug'] === 'false') {
