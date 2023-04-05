@@ -162,20 +162,17 @@ mat-drawer-container {
               border-top-left-radius: 20px;
               border-bottom-left-radius: 20px;
 
-              ::ng-deep .mat-button-wrapper {
+              [content] {
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                white-space: initial;
+                line-height: 1.2em;
 
-                [content] {
+                [text] {
                   display: flex;
-                  flex-flow: row;
-                  align-items: center;
-                  white-space: initial;
-                  line-height: 1.2em;
-
-                  [text] {
-                    display: flex;
-                    flex: 1;
-                    padding: 0.5em 0;
-                  }
+                  flex: 1;
+                  padding: 0.5em 0;
                 }
               }
             }
@@ -213,16 +210,15 @@ mat-drawer-container {
       button {
         width: 100%;
 
-        ::ng-deep .mat-button-wrapper {
-          display: flex;
-          flex-flow: row;
-          gap: 1em;
-          align-items: center;
-          padding: 0.7em 0.57em;
+        display: flex;
+        flex-flow: row;
+        gap: 1em;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0.7em 0.57em;
 
-          img {
-            height: 2em;
-          }
+        img {
+          height: 2em;
         }
       }
 
@@ -236,15 +232,12 @@ mat-drawer-container {
           padding: 0;
           min-width: 0;
 
-          ::ng-deep .mat-button-wrapper {
-            justify-content: center;
-            padding: 0;
+          justify-content: center;
 
-            img {
-              padding: 0.3em;
-              width: 1.5em;
-              height: initial;
-            }
+          img {
+            padding: 0.3em;
+            width: 1.5em;
+            height: initial;
           }
         }
       }
@@ -258,15 +251,13 @@ mat-drawer-container {
           width: initial;
           font-size: 0.8em;
           padding: 0 1em;
+          display: flex;
           flex: 1;
           white-space: break-spaces;
 
-          ::ng-deep .mat-button-wrapper {
-            justify-content: center;
-            padding: 0 1em;
-            word-break: break-word;
-            line-height: 1em;
-          }
+          justify-content: center;
+          word-break: break-word;
+          line-height: 1em;
         }
       }
     }
@@ -321,7 +312,7 @@ mat-drawer-container {
         align-items: center;
         justify-content: space-between;
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
 
         .basePanel {
           justify-content: center;
@@ -432,26 +423,24 @@ mat-drawer-container {
       width: 7em;
       border-radius: 2em;
 
-      ::ng-deep .mat-button-wrapper {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5em;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
 
-        div {
-          font-weight: bold;
-          font-size: 200%;
-          color: var(--sendCountFore);
-          --sc: var(--sendCountFrame);
-          --w: 2px;
-          --w-: -2px;
-          text-shadow: var(--w) var(--w) 0 var(--sc), var(--w) var(--w-) 0 var(--sc), var(--w-) var(--w) 0 var(--sc), var(--w-) var(--w-) 0 var(--sc), var(--w) 0 0 var(--sc), 0 var(--w) 0 var(--sc), var(--w-) 0 0 var(--sc), 0 var(--w-) 0 var(--sc);
-        }
+      div {
+        font-weight: bold;
+        font-size: 200%;
+        color: var(--sendCountFore);
+        --sc: var(--sendCountFrame);
+        --w: 2px;
+        --w-: -2px;
+        text-shadow: var(--w) var(--w) 0 var(--sc), var(--w) var(--w-) 0 var(--sc), var(--w-) var(--w) 0 var(--sc), var(--w-) var(--w-) 0 var(--sc), var(--w) 0 0 var(--sc), 0 var(--w) 0 var(--sc), var(--w-) 0 0 var(--sc), 0 var(--w-) 0 var(--sc);
+      }
 
-        mat-fab {
-          margin-top: 0;
-          margin-right: 0.5em;
-        }
+      mat-fab {
+        margin-top: 0;
+        margin-right: 0.5em;
       }
     }
   }

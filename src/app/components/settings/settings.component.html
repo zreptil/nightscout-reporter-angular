@@ -3,7 +3,7 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
-      <div  i18n="title for settings dialog">Einstellungen</div>
+      <div i18n="title for settings dialog">Einstellungen</div>
     </h1>
     <div>
       <button *ngIf="ss.isEmpty(ps.text)"
@@ -14,15 +14,15 @@
     </div>
   </div>
 
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <div class="subtitle">
       <ng-container i18n="label for settings-area with user data">Benutzerdaten</ng-container>
       <div class="navControls">
-        <button (click)="globals.userIdx=globals.userIdx-1" [disabled]="globals.userIdx===0" mat-flat-button>
+        <button (click)="globals.userIdx=globals.userIdx-1" [disabled]="globals.userIdx===0" mat-button>
           <mat-icon>chevron_left</mat-icon>
         </button>
         {{globals.userIdx + 1}} / {{globals.userList?.length ?? 1}}
-        <button (click)="globals.userIdx=globals.userIdx+1" [disabled]="globals.userIdx>=(globals.userList?.length ?? 0)-1" mat-flat-button>
+        <button (click)="globals.userIdx=globals.userIdx+1" [disabled]="globals.userIdx>=(globals.userList?.length ?? 0)-1" mat-button>
           <mat-icon>chevron_right</mat-icon>
         </button>
       </div>
@@ -60,13 +60,13 @@
         <mat-form-field>
           <mat-label *ngIf="idx===0">{{msgUrlNightscout}}</mat-label>
           <input [(ngModel)]="item.url" matInput>
-          <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1"></mat-hint>
         </mat-form-field>
-        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+        <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint"></div>
+        <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
           {{msgUrlHint}}
-        </mat-hint>
+        </div>
       </div>
-      <button (click)="navigate(item.fullUrl('','', true))" [disabled]="ss.isEmpty(item.url)" mat-flat-button>
+      <button (click)="navigate(item.fullUrl('','', true))" [disabled]="ss.isEmpty(item.url)" mat-button>
         <mat-icon class="urlIcon">open_in_new</mat-icon>
       </button>
       <div class="formfield mat-form-field-infix">
@@ -74,11 +74,11 @@
           <mat-label *ngIf="idx===0">{{msgAccessToken}}</mat-label>
           <input [(ngModel)]="item.token" [type]="showPwd!==idx?'password':'text'" matInput>
         </mat-form-field>
-        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+        <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
           {{msgAccessTokenHint(idx === globals.user.listApiUrl.length - 1)}}
-        </mat-hint>
+        </div>
       </div>
-      <button (click)="showPwd=(showPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-flat-button>
+      <button (click)="showPwd=(showPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-button>
         <mat-icon class="urlIcon">{{showPwd !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
       <div class="formfield mat-form-field-infix date">
@@ -88,11 +88,11 @@
           <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpStartDate></mat-datepicker>
         </mat-form-field>
-        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+        <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
           {{msgStartDateHint(idx === globals.user.listApiUrl.length - 1)}}
-        </mat-hint>
+        </div>
       </div>
-      <button (click)="calculateFirstDay(item)" [disabled]="ss.isEmpty(item.url)" mat-flat-button>
+      <button (click)="calculateFirstDay(item)" [disabled]="ss.isEmpty(item.url)" mat-button>
         <mat-icon class="urlIcon">calculate</mat-icon>
       </button>
       <div class="formfield mat-form-field-infix date">
@@ -102,9 +102,9 @@
           <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dpEndDate></mat-datepicker>
         </mat-form-field>
-        <mat-hint *ngIf="idx===globals.user.listApiUrl.length-1" class="mat-form-field-subscript-wrapper">
+        <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
           {{msgEndDateHint(idx === globals.user.listApiUrl.length - 1)}}
-        </mat-hint>
+        </div>
       </div>
       <div class="controls">
         <button (click)="addUrl()"
@@ -142,7 +142,7 @@
       <div class="subtitle" i18n="label of area for additional functions">Zusatzfunktionen</div>
       <div class="functions">
         <div *ngIf="globals.isBeta" class="sub">
-          <button (click)="ds.copyFromOtherStorage()" mat-flat-button>
+          <button (click)="ds.copyFromOtherStorage()" mat-button>
             <mat-icon>file_copy</mat-icon>
             <div i18n="buttonlabel for copy of settings to beta version">
               Einstellungen von Release-Version übernehmen
@@ -152,24 +152,24 @@
         <app-gluc-adjust></app-gluc-adjust>
       </div>
     </div>
-  </mat-dialog-content>
+  </div>
 
-  <mat-dialog-actions>
+  <div mat-dialog-actions>
     <div>
-      <button (click)="clickExport()" *ngIf="ss.isEmpty(ps.text)" mat-flat-button>
+      <button (click)="clickExport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
         <mat-icon>cloud_download</mat-icon>
         <div i18n="buttonlabel for exporting data">Exportieren</div>
       </button>
-      <button (click)="clickImport()" *ngIf="ss.isEmpty(ps.text)" mat-flat-button>
+      <button (click)="clickImport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
         <mat-icon>cloud_upload</mat-icon>
         <div i18n="buttonlabel for importing data">Importieren</div>
       </button>
     </div>
-    <button (click)="clickSave()" *ngIf="ss.isEmpty(ps.text)" mat-flat-button>
+    <button (click)="clickSave()" *ngIf="ss.isEmpty(ps.text)" mat-button>
       <mat-icon>save</mat-icon>
       <div i18n="buttonlabel for saving data">Speichern</div>
     </button>
     <!-- Import / Export Controls -->
     <input #fileSelect (change)="fileSelected($event)" type="file">
-  </mat-dialog-actions>
+  </div>
 </div>

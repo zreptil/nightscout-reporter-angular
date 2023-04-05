@@ -9,7 +9,7 @@
     </button>
   </div>
 
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <button (click)="clickMode()" mat-icon-button>
       <mat-icon>{{modeIcon}}</mat-icon>
     </button>
@@ -22,7 +22,7 @@
     <ng-container *ngIf="data.mode === 'rgb'">
       <app-color-picker-rgb (colorClick)="currentColorClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-rgb>
     </ng-container>
-  </mat-dialog-content>
+  </div>
 
   <mat-dialog-actions>
     <div (click)="colorClick($event, data.color)"

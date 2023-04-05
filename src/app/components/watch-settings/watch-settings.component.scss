@@ -110,7 +110,7 @@ mat-slider {
   color: var(--settingsHeaderFore);
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   color: var(--settingsBodyFore);
   background-color: var(--settingsBodyBack);
 }
@@ -135,18 +135,10 @@ mat-dialog-content {
     }
   }
 
-  ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: var(--settingsHeaderFore);
-  }
-
-  ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: var(--settingsHeaderBack);
-  }
-
-  ::ng-deep mat-dialog-actions {
+  [mat-dialog-actions] {
     background-color: var(--settingsHeaderBack);
 
-    .mat-button-wrapper {
+    button {
       color: var(--settingsHeaderFore);
     }
   }

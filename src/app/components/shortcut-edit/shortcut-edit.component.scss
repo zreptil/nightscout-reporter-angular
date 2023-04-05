@@ -1,8 +1,8 @@
 :host {
-  ::ng-deep mat-dialog-actions {
+  [mat-dialog-actions] {
     background-color: var(--shortcutHeaderBack);
 
-    .mat-button-wrapper {
+    button {
       color: var(--shortcutHeaderFore);
     }
   }
@@ -28,7 +28,7 @@
   color: var(--shortcutHeaderFore);
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   color: var(--shortcutBodyFore);
   background-color: var(--shortcutBodyBack);
 }

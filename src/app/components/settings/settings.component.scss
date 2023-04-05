@@ -68,7 +68,6 @@ mat-slider {
 
 .controls {
   display: flex;
-  flex: 1;
   justify-content: flex-end;
   min-width: 7em;
 
@@ -89,10 +88,10 @@ mat-slider {
   border-radius: 1em;
   padding: 0.5em;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  flex: 1;
 
-  mat-input {
-    flex-shrink: 0;
-    flex-grow: 1;
+  .formfield {
+    flex: 1;
   }
 
   button:not([disabled]) .urlIcon {
@@ -110,7 +109,7 @@ mat-slider {
   color: var(--settingsHeaderFore);
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   color: var(--settingsBodyFore);
   background-color: var(--settingsBodyBack);
 }
@@ -141,10 +140,10 @@ mat-dialog-content {
     background-color: var(--settingsHeaderBack);
   }
 
-  ::ng-deep mat-dialog-actions {
+  [mat-dialog-actions] {
     background-color: var(--settingsHeaderBack);
 
-    .mat-button-wrapper {
+    button {
       color: var(--settingsHeaderFore);
     }
   }
@@ -215,7 +214,6 @@ div[header] {
 
 .date {
   width: 6em;
-  flex-grow: 0 !important;
 }
 
 mat-dialog[confirm] {
@@ -253,17 +251,24 @@ mat-dialog[confirm] {
   display: flex;
   flex-flow: column;
 
-  .mat-form-field ::ng-deep .mat-form-field-wrapper {
+  mat-form-field {
     padding-bottom: 0;
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
 
     .mat-form-field-underline {
       bottom: 0;
     }
   }
 
-  mat-hint {
-    margin-top: 0.1em;
+  .hint {
+    font-size: 0.8em;
+    line-height: 1em;
+    margin-top: 0.3em;
     position: initial;
+    color: rgba(0, 0, 0, 0.6);
   }
 }
 

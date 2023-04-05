@@ -163,7 +163,7 @@ mat-icon[small] {
     display: flex;
     flex-flow: column;
     max-width: 90vw;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   mat-dialog-container {
@@ -188,14 +188,13 @@ mat-icon[small] {
       }
     }
 
-    mat-dialog-content {
+    [mat-dialog-content] {
       padding: 1em;
       margin: 0;
-      font-size: 1.2em;
       min-width: 50%;
     }
 
-    mat-dialog-actions {
+    [mat-dialog-actions] {
       margin: 0;
       padding: 0;
       min-height: 3em;
@@ -466,4 +465,101 @@ form.oauth2 {
     color: var(--primaryFore);
     border-radius: 0.5em;
   }
+}
+
+.mat-mdc-slide-toggle {
+  --mdc-switch-disabled-selected-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-disabled-unselected-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-disabled-selected-track-color: var(--settingsHeaderBack);
+  --mdc-switch-disabled-unselected-track-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-focus-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-pressed-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-hover-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-focus-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-pressed-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-focus-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-hover-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-unselected-pressed-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-handle-surface-color: var(--mdc-theme-surface, #fff);
+  --mdc-switch-unselected-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-icon-color: #fff;
+  --mdc-switch-disabled-selected-icon-color: #fff;
+  --mdc-switch-disabled-unselected-icon-color: #fff;
+  --mdc-switch-unselected-icon-color: #fff;
+}
+
+.mat-mdc-slide-toggle.mat-accent {
+  --mdc-switch-selected-focus-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-hover-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-pressed-state-layer-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-focus-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-hover-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-pressed-handle-color: var(--settingsHeaderBack);
+  --mdc-switch-selected-focus-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-hover-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-pressed-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-track-color: rgba(255, 255, 255, 0.5);
+}
+
+.mat-mdc-slider.mat-primary {
+  --mdc-slider-handle-color: var(--settingsHeaderBack);
+  --mdc-slider-focus-handle-color: var(--settingsHeaderBack);
+  --mdc-slider-hover-handle-color: var(--settingsHeaderBack);
+  --mdc-slider-active-track-color: var(--settingsHeaderBack);
+  --mdc-slider-inactive-track-color: var(--settingsHeaderBack);
+  --mdc-slider-with-tick-marks-active-container-color: #fff;
+  --mdc-slider-with-tick-marks-inactive-container-color: var(--settingsHeaderBack);
+  --mat-mdc-slider-ripple-color: var(--settingsHeaderBack);
+  --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
+  --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
+}
+
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-checkmark-color: rgba(255, 255, 255, 0.8);
+  --mdc-checkbox-selected-focus-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-selected-hover-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-selected-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-selected-pressed-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-unselected-focus-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-unselected-hover-icon-color: var(--settingsHeaderBack);
+  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
+  --mdc-fab-container-color: var(--settingsHeaderBack);
+  --mdc-fab-icon-color: var(--settingsHeaderFore);
+  --mat-mdc-fab-color: var(--settingsHeaderFore);
+}
+
+.mdc-menu-surface {
+  background-color: var(--settingsBodyBack);
+  color: var(--settingsBodyFore);
+}
+
+.mat-mdc-option {
+  color: var(--settingsBodyFore);
+}
+
+.mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: var(--settingsHeaderBack);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: initial;
+}
+
+.mat-datepicker-content {
+  background-color: var(--settingsBodyBack);
+  color: var(--settingsBodyFore);
+}
+
+.mat-calendar-body-selected {
+  background-color: var(--settingsHeaderBack);
+  color: var(--settingsHeaderFore);
 }

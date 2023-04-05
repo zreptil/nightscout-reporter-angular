@@ -35,12 +35,12 @@ div[header] {
 }
 
 [mat-dialog-title],
-mat-dialog-actions {
+[mat-dialog-actions] {
   background-color: var(--primaryBack);
   color: var(--primaryFore);
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
   background-color: var(--secondaryBack);
@@ -53,7 +53,7 @@ mat-dialog-content {
   }
 }
 
-mat-dialog-actions {
+[mat-dialog-actions] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

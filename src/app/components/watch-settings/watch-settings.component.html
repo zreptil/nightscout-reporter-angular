@@ -13,16 +13,16 @@
     </div>
   </div>
 
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <mat-slide-toggle [(ngModel)]="globals.isWatchColor">{{watchColorLabel}}</mat-slide-toggle>
     <app-color-picker [(color)]="colpick" [savedColors]="savedColors"></app-color-picker>
-  </mat-dialog-content>
+  </div>
 
-  <mat-dialog-actions>
+  <div mat-dialog-actions>
     <div></div>
-    <button (click)="clickSave()" mat-flat-button>
+    <button (click)="clickSave()" mat-button>
       <mat-icon>save</mat-icon>
       <div i18n="buttonlabel for saving data">Speichern</div>
     </button>
-  </mat-dialog-actions>
+  </div>
 </div>

@@ -13,7 +13,7 @@
         <img alt="language image" class="language" src="{{item.imgPath}}">
       </button>
       <a *ngIf="item.crowdin != null" [href]="item.crowdin.languageUrl" class="crowdin" target="_blank" title="Crowdin">
-        <img alt="{{item.crowdin.langName}} proofreading" [src]="item.crowdin.languageBadgeUrl" >
+        <img [src]="item.crowdin.languageBadgeUrl" alt="{{item.crowdin.langName}} proofreading">
       </a>
     </div>
   </div>

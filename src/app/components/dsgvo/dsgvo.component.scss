@@ -11,7 +11,7 @@ div[header] {
   align-items: center;
 }
 
-mat-dialog-actions {
+[mat-dialog-actions] {
   background-color: var(--legalHeaderBack);
   color: var(--legalHeaderFore);
 
@@ -20,7 +20,7 @@ mat-dialog-actions {
   }
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
   color: var(--legalBodyFore);

@@ -25,7 +25,7 @@
     background-color: var(--outputparamsHeaderBack);
   }
 
-  ::ng-deep mat-dialog-actions {
+  ::ng-deep [mat-dialog-actions] {
     background-color: var(--outputparamsHeaderBack);
 
     button:not(.mat-button-disabled) {
@@ -155,7 +155,7 @@ div[header] {
   align-items: center;
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   display: flex;
   flex-flow: column;
   padding: 1em;

@@ -11,12 +11,12 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <div class="root">
       <ng-container *ngFor="let item of tileHelp[tileHelp.length-1].form.helpStrings;let idx=index">
         <span *ngIf="item.type==='text'" [innerHtml]="item.text"></span>
         <span (click)="onLinkClick(idx)" *ngIf="item.type==='btn'" class="btn">{{item.cfg.form.title}}</span>
       </ng-container>
     </div>
-  </mat-dialog-content>
+  </div>
 </div>

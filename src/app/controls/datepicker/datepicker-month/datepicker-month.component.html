@@ -3,7 +3,7 @@
   <button (click)="weekdayClicked(dow)"
           *ngFor="let dow of month.weeks[0].days"
           class="btn" i18n-title="title for button of weekdayname"
-          mat-flat-button
+          mat-button
           title="Als ersten Tag der Woche festlegen">
     {{dow.shortName}}
   </button>
@@ -15,7 +15,7 @@
               *ngIf="!day.isRaised"
               [class]="dayclass(day)"
               [disabled]="!day.isEnabled"
-              mat-flat-button>{{day.day}}
+              mat-button>{{day.day}}
       </button>
       <button (click)="dayClicked(day)"
               *ngIf="day.isRaised"
@@ -29,7 +29,7 @@
     <button (click)="period.activateDow(weekday(dow.date), !period.isDowActive(weekday(dow.date)))"
             *ngFor="let dow of month.weeks[0].days"
             [class]="dowmark(weekday(dow.date))"
-            mat-flat-button>
+            mat-button>
       <mat-icon>{{period.isDowActive(weekday(dow.date)) ? 'done' : 'close'}}</mat-icon>
     </button>
   </div>

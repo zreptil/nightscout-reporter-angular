@@ -8,14 +8,14 @@
       {{data.title}}
     </h1>
     <div spacer></div>
-    <button (click)="clickClose()" mat-icon-button *ngIf="!dialogRef.disableClose">
+    <button (click)="clickClose()" *ngIf="!dialogRef.disableClose" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <mat-dialog-content [style]="customStyle('Body')" class="dialog-text">
+  <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
-  </mat-dialog-content>
-  <mat-dialog-actions [style]="customStyle('Header')" align="end" class="type{{data?.type}}">
+  </div>
+  <div [style]="customStyle('Header')" align="end" class="type{{data?.type}}" mat-dialog-actions>
     <ng-container *ngFor="let btn of data.buttons; let idx = index">
       <button (click)="closeDialog(btn)" *ngIf="btn.url == null" mat-button>
         <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>
@@ -26,5 +26,5 @@
         {{btn.title}}
       </button>
     </ng-container>
-  </mat-dialog-actions>
+  </div>
 </div>

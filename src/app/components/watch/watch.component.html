@@ -41,52 +41,52 @@
       </app-watch-entry>
     </ng-container>
     <div *ngIf="isEditMode" class="controls">
-      <button (click)="clickLeft($event)" [disabled]="leftDisabled" mat-flat-button>
+      <button (click)="clickLeft($event)" [disabled]="leftDisabled" mat-button>
         <mat-icon>arrow_left</mat-icon>
       </button>
-      <button (click)="clickRight($event)" [disabled]="rightDisabled" mat-flat-button>
+      <button (click)="clickRight($event)" [disabled]="rightDisabled" mat-button>
         <mat-icon>arrow_right</mat-icon>
       </button>
-      <button (click)="clickSmaller($event)" [disabled]="smallerDisabled" mat-flat-button>
+      <button (click)="clickSmaller($event)" [disabled]="smallerDisabled" mat-button>
         <mat-icon>text_decrease</mat-icon>
       </button>
-      <button (click)="clickBigger($event)" [disabled]="biggerDisabled" mat-flat-button>
+      <button (click)="clickBigger($event)" [disabled]="biggerDisabled" mat-button>
         <mat-icon>text_increase</mat-icon>
       </button>
-      <button (click)="clickBold($event)" [class]="(selected?.bold??false)?'active':''" [disabled]="selected==null" mat-flat-button>
+      <button (click)="clickBold($event)" [class]="(selected?.bold??false)?'active':''" [disabled]="selected==null" mat-button>
         <mat-icon>format_bold</mat-icon>
       </button>
-      <button (click)="clickItalic($event)" [class]="(selected?.italic??false)?'active':''" [disabled]="selected==null" mat-flat-button>
+      <button (click)="clickItalic($event)" [class]="(selected?.italic??false)?'active':''" [disabled]="selected==null" mat-button>
         <mat-icon>format_italic</mat-icon>
       </button>
-      <button (click)="clickVertical($event)" [disabled]="selected==null" mat-flat-button>
+      <button (click)="clickVertical($event)" [disabled]="selected==null" mat-button>
         <mat-icon>{{verticalIcon}}</mat-icon>
       </button>
-      <button (click)="clickDelete($event)" [disabled]="selected==null" mat-flat-button>
+      <button (click)="clickDelete($event)" [disabled]="selected==null" mat-button>
         <mat-icon>delete</mat-icon>
       </button>
       <div typePanel>
-        <button (click)="clickTypeSub($event)" [disabled]="selected==null" mat-flat-button>
+        <button (click)="clickTypeSub($event)" [disabled]="selected==null" mat-button>
           <mat-icon>arrow_left</mat-icon>
         </button>
-        <button (click)="clickTypeAdd($event)" [disabled]="selected==null" mat-flat-button>
+        <button (click)="clickTypeAdd($event)" [disabled]="selected==null" mat-button>
           <mat-icon>arrow_right</mat-icon>
         </button>
         <div typeName>{{types[selected?.type]}}</div>
       </div>
-      <button (click)="clickAdd($event)" mat-flat-button>
+      <button (click)="clickAdd($event)" mat-button>
         <mat-icon>add</mat-icon>
       </button>
-      <button (click)="clickWatchSettings($event)" [class]="(globals.isWatchColor??true)?'active':''" mat-flat-button>
+      <button (click)="clickWatchSettings($event)" [class]="(globals.isWatchColor??true)?'active':''" mat-button>
         <mat-icon>palette</mat-icon>
       </button>
-      <button (click)="clickSettings($event)" mat-flat-button>
+      <button (click)="clickSettings($event)" mat-button>
         <mat-icon>settings</mat-icon>
       </button>
-      <button (click)="clickSave($event)" mat-flat-button>
+      <button (click)="clickSave($event)" mat-button>
         <mat-icon>save</mat-icon>
       </button>
-      <button (click)="globals.isDebug = !globals.isDebug" *ngIf="ss.mayDebug" mat-flat-button>
+      <button (click)="globals.isDebug = !globals.isDebug" *ngIf="ss.mayDebug" mat-button>
         <mat-icon *ngIf="!globals.isDebug">bug_report</mat-icon>
         <mat-icon *ngIf="globals.isDebug">pest_control</mat-icon>
       </button>

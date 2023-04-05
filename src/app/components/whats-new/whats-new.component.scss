@@ -15,7 +15,7 @@ div[header] {
   align-items: center;
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
   background-color: var(--whatsnewBodyBack);
@@ -25,7 +25,6 @@ mat-dialog-content {
 h2 {
   display: flex;
   flex-flow: row;
-  align-items: center;
   font-size: 1.3em;
   padding: 0 0.5em;
   gap: 0.5em;

@@ -1,0 +1,16 @@
+::ng-deep .mdc-dialog__title::before {
+  content: none !important;
+}
+
+::ng-deep button {
+  border: none;
+  cursor: pointer;
+
+  .inlay {
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

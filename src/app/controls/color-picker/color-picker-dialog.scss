@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   color: var(--settingsBodyFore);
   background-color: var(--settingsBodyBack);
   display: flex;
@@ -48,7 +48,7 @@ mat-dialog-content {
 }
 
 :host {
-  ::ng-deep mat-dialog-actions {
+  ::ng-deep [mat-dialog-actions] {
     background-color: var(--settingsHeaderBack);
 
     [spacer] {

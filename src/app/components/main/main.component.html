@@ -2,16 +2,16 @@
 <mat-drawer-container autosize hasBackdrop="false">
   <mat-drawer #drawer class="mat-elevation-z10">
     <div class="tabs">
-      <button (click)="menuIdx=0" [class]="getDrawerButtonClass(0)" i18n="tab title for menu" mat-flat-button>Menü</button>
-      <button (click)="menuIdx=1" [class]="getDrawerButtonClass(1)" i18n="tab title for shortcuts" mat-flat-button>Shortcuts</button>
+      <button (click)="menuIdx=0" [class]="getDrawerButtonClass(0)" i18n="tab title for menu" mat-button>Menü</button>
+      <button (click)="menuIdx=1" [class]="getDrawerButtonClass(1)" i18n="tab title for shortcuts" mat-button>Shortcuts</button>
     </div>
     <div [class]="getDrawerClass(0)">
       <div class="menu-controls">
-        <button (click)="ss.showPopup('welcome')" class="iconButton" mat-flat-button>
+        <button (click)="ss.showPopup('welcome')" class="iconButton">
           <mat-icon>home</mat-icon>
           <div i18n="title of welcome screen">Willkommen</div>
         </button>
-        <button (click)="clickMenuButton('facebook')" class="iconButton" mat-flat-button>
+        <button (click)="clickMenuButton('facebook')" class="iconButton">
           <svg height="1.5em" id="Layer_1" viewBox="0 0 266.893 266.895" width="1.5em"
                x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
             <path
@@ -26,14 +26,14 @@
           <div i18n="title of facebook link">Facebook Seite</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="ss.showSettings()" class="iconButton" mat-flat-button>
+        <button (click)="ss.showSettings()" class="iconButton">
           <mat-icon>settings</mat-icon>
           <div i18n="title of settings">Einstellungen</div>
         </button>
         <!--
         globals.viewType wird aktuell nicht ausgewertet. Es gibt zunächst nur den
         Tileview. Wenn Benutzer den Listview zurück wollen, wird der wieder aktiviert.
-        <button (click)="clickMenuButton('menu')" class="iconButton" mat-flat-button>
+        <button (click)="clickMenuButton('menu')" class="iconButton">
           <ng-container *ngIf="globals.viewType==='tile'">
             <mat-icon>list</mat-icon>
             <div i18n="title of change to listview">Zur Listenansicht</div>
@@ -44,7 +44,7 @@
           </ng-container>
         </button>
         -->
-        <button (click)="toggleSync()" class="iconButton" mat-flat-button>
+        <button (click)="toggleSync()" class="iconButton">
           <ng-container *ngIf="!ds.hasSync">
             <mat-icon>sync_disabled</mat-icon>
             <div i18n="synchronize">Synchronisieren</div>
@@ -64,40 +64,40 @@
                         (onEvent)="signinEvent($event)"
                         (signinResult)="g.client=$event"></signin>
                         -->
-        <button (click)="ss.showPopup('whatsnew')" class="iconButton" mat-flat-button>
+        <button (click)="ss.showPopup('whatsnew')" class="iconButton">
           <mat-icon>new_releases</mat-icon>
           <div i18n="title of whatsnew screen">Was bisher geschah...</div>
         </button>
       </div>
       <div class="menu-links">
-        <button (click)="clickMenuButton('nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton" mat-flat-button>
+        <button (click)="clickMenuButton('nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
           <div i18n="title of nightscout page">Nightscout Seite</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user.reportUrl != null" class="iconButton" mat-flat-button>
+        <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user.reportUrl != null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
           <div i18n="title of nightscout reports">Nightscout Berichte</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('nswatch')" class="iconButton" mat-flat-button>
+        <button (click)="clickMenuButton('nswatch')" class="iconButton">
           <img alt="nightscout white" src="assets/img/night-watch-white.png">
           <div i18n="title of night-watch">Night-Watch</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('local-tools')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
+        <button (click)="clickMenuButton('local-tools')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
           <div i18n="title of local tools">Local Tools</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local" mat-flat-button>
+        <button (click)="clickMenuButton('googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
           <div i18n="title of local tools">Google Cloud Setup</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-legal">
-          <button (click)="ss.showPopup('impressum')" class="legal" mat-flat-button>{{msgImpressum}}</button>
-          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-flat-button>{{msgDSGVO}}</button>
+          <button (click)="ss.showPopup('impressum')" class="legal" mat-button>{{msgImpressum}}</button>
+          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-button>{{msgDSGVO}}</button>
           <!--
                   <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
                     <div *ngIf="g.isDebug" class="toggle-debug">
@@ -122,18 +122,18 @@
     <div [class]="getDrawerClass(1)">
       <div class="content">
         <div *ngFor="let item of globals.shortcutList; let idx = index" [class]="shortcutClass(item)">
-          <button (click)="ss.activateShortcut(idx)" mat-flat-button>
+          <button (click)="ss.activateShortcut(idx)">
             <div content>
               <mat-icon>{{item.icon}}</mat-icon>
               <div text>{{item.name}}</div>
             </div>
           </button>
-          <button (click)="editShortcut(idx)" mat-flat-button>
+          <button (click)="editShortcut(idx)">
             <mat-icon small>edit</mat-icon>
           </button>
         </div>
         <div class="shortcut">
-          <button (click)="editShortcut(-1)" class="add" mat-flat-button>
+          <button (click)="editShortcut(-1)" class="add">
             <div content>
               <mat-icon>add</mat-icon>
               <div text>{{msgAddText}}</div>
@@ -147,7 +147,7 @@
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
         <div [class]="classForView('basePanel')">
-          <button (click)="clickUser()" class="userName" mat-flat-button>{{globals.user.display}}</button>
+          <button (click)="clickUser()" class="userName">{{globals.user.display}}</button>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
             <mat-form-field appearance="standard">
               <mat-select [(value)]="userIdx">
@@ -181,19 +181,19 @@
             <div>
               <span class="appTitle">{{globals.appTitle}}</span>
               <span *ngIf="globals.isBeta" class="betaTitle">BETA</span>
-              <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="localTitle" mat-flat-button>
+              <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="localTitle" mat-button>
                 <div *ngIf="globals.isLocal">Lokal</div>
                 <div *ngIf="!globals.isLocal">Vorschau</div>
               </button>
             </div>
-            <button (click)="ss.showPopup('whatsnew')" class="versionText" mat-flat-button>{{globals.version}}</button>
+            <button (click)="ss.showPopup('whatsnew')" class="versionText">{{globals.version}}</button>
           </div>
         </div>
         <nav class="material-navigation">
           <button (click)="globals.showInfo=!globals.showInfo" *ngIf="globals.isLocal" class="is-local" mat-icon-button>
             <mat-icon>help_outline</mat-icon>
           </button>
-          <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-icon-button mat-mini-fab>
+          <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-mini-fab>
             <mat-icon>bug_report</mat-icon>
           </button>
           <!--
@@ -244,8 +244,7 @@
               *ngIf="globals.viewType === 'tile'"
               [class]="sendClass(0,sendIcon)"
               [disabled]="ss.activeCfgCount===0"
-              mat-fab
-              mat-raised-button>
+              mat-fab>
         <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
         <mat-icon>{{createIcon}}</mat-icon>
       </button>
@@ -258,8 +257,7 @@
         <button (click)="clickSend()"
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="ss.activeCfgCount===0"
-                mat-fab
-                mat-raised-button>
+                mat-fab>
           <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
           <mat-icon>{{createIcon}}</mat-icon>
         </button>
