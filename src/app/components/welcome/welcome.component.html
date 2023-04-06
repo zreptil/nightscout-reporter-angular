@@ -75,7 +75,7 @@
   -->
     </div>
     <div class="right">
-      <button (click)="ss.showVideo('intro')" class="imageButton" mat-flat-button>
+      <button (click)="ss.showVideo('intro')" class="imageButton" mat-button>
         <img alt="video intro" src="assets/img/youtube_social_icon_red.png"/>
         <ng-container i18n="label for button to open settings on welcome screen">
           Einstiegsvideo
@@ -83,12 +83,12 @@
       </button>
       <button (click)="ss.showPopup('impressum')"
               class="legal"
-              i18n="label for inprint button" mat-flat-button>
+              i18n="label for inprint button" mat-button>
         Impressum
       </button>
       <button (click)="ss.showPopup('dsgvo')"
               class="legal"
-              i18n="label for dataprotection button" mat-flat-button>
+              i18n="label for dataprotection button" mat-button>
         Datenschutzerklärung
       </button>
     </div>

@@ -13,6 +13,7 @@ import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-settings',
@@ -34,7 +35,8 @@ export class SettingsComponent implements OnInit {
               public ds: DataService,
               public ps: ProgressService,
               public ss: SessionService,
-              public ns: NightscoutService) {
+              public ns: NightscoutService,
+              public ms: MessageService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
   }
@@ -317,7 +319,7 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUrl(idx: number): void {
-    this.ss.confirm($localize`Soll die URL ${GLOBALS.user.listApiUrl[idx].url} vom Benutzer wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
+    this.ms.confirm($localize`Soll die URL ${GLOBALS.user.listApiUrl[idx].url} vom Benutzer wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.user.listApiUrl.splice(idx, 1);
@@ -344,12 +346,12 @@ export class SettingsComponent implements OnInit {
       }
       buttons.push({title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'});
       buttons.push({title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'});
-      this.ss.showDialog({
+      this.ms.showDialog({
         type: DialogType.confirm,
         title: $localize`Soll gespeichert werden?`,
         buttons: buttons
       }, ret.msg, false, new DialogParams({theme: 'settings'}))
-        //        this.ss.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
+        //        this.ms.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
         .subscribe(result => {
           switch (result.btn) {
             case DialogResultButton.yes:

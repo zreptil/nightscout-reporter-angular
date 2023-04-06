@@ -12,6 +12,7 @@ import {DataService} from '@/_services/data.service';
 import {PdfService} from '@/_services/pdf.service';
 import {SessionService} from '@/_services/session.service';
 import {ProgressService} from '@/_services/progress.service';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-test',
@@ -27,6 +28,7 @@ export class TestComponent implements OnInit {
               public ds: DataService,
               public pdf: PdfService,
               public ss: SessionService,
+              public ms: MessageService,
               public ps: ProgressService) {
   }
 
@@ -99,7 +101,7 @@ export class TestComponent implements OnInit {
   }
 
   testDialog() {
-    this.ss.confirm('To be or not to be').subscribe(result => {
+    this.ms.confirm('To be or not to be').subscribe(result => {
       Log.info(`Da hast Du dann wohl ${result.btn} gedrückt`);
     });
   }

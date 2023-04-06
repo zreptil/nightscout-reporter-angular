@@ -1,3 +1,14 @@
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--whatsnewHeaderBack);
+    --primaryFore: var(--whatsnewHeaderFore);
+    --secondaryBack: var(--whatsnewBodyBack);
+    --secondaryFore: var(--whatsnewBodyFore);
+    --accentBack: var(--whatsnewHeaderBack);
+    --accentFore: var(--whatsnewHeaderFore);
+  }
+}
+
 h1 {
   margin-top: 0;
   margin-bottom: 0.5em;
@@ -34,17 +45,9 @@ div[header] {
   }
 }
 
-[mat-dialog-title],
-[mat-dialog-actions] {
-  background-color: var(--primaryBack);
-  color: var(--primaryFore);
-}
-
 [mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
-  background-color: var(--secondaryBack);
-  color: var(--secondaryFore);
   height: 40vh;
 
   div {

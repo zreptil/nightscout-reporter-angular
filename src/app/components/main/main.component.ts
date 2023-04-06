@@ -13,6 +13,7 @@ import {ShortcutData} from '@/_model/shortcut-data';
 import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {DropboxService} from '@/_services/sync/dropbox.service';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-main',
@@ -102,7 +103,8 @@ export class MainComponent implements OnInit {
               public ss: SessionService,
               public ps: ProgressService,
               public ns: NightscoutService,
-              public dbs: DropboxService
+              public dbs: DropboxService,
+              public ms: MessageService
   ) {
     // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
     //
@@ -382,7 +384,7 @@ export class MainComponent implements OnInit {
     if (this.ds.syncType === oauth2SyncType.dropbox) {
       const params = new DialogParams();
       params.image = 'assets/img/dropbox.png';
-      this.ss.confirm($localize`Soll die Synchronisierung mit Dropbox aufgehoben werden?`, params).subscribe(result => {
+      this.ms.confirm($localize`Soll die Synchronisierung mit Dropbox aufgehoben werden?`, params).subscribe(result => {
         if (result.btn == DialogResultButton.yes) {
           this.dbs.disconnect();
           this.ds.syncType = oauth2SyncType.none;

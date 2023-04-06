@@ -60,8 +60,11 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   customStyle(key: string): string {
     const ret = [];
     if (this.data.params.theme != null) {
-      ret.push(`background-color:var(--${this.data.params.theme}${key}Back)`);
-      ret.push(`color:var(--${this.data.params.theme}${key}Fore)`);
+      const id = `${this.data.params.theme}${key}`;
+      ret.push(`--back:var(--${id}Back)`);
+      ret.push(`--fore:var(--${id}Fore)`);
+      ret.push(`background-color:var(--back)`);
+      ret.push(`color:var(--fore)`);
     }
     return Utils.join(ret, ';');
   }

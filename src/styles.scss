@@ -575,13 +575,27 @@ form.oauth2 {
   color: var(--primaryFore);
 }
 
-[mat-dialog-title] {
+[---mat-dialog-title] {
   background-color: var(--primaryBack);
-  color: red; // var(--primaryFore);
 }
 
-[mat-dialog-content] {
+[---mat-dialog-content] {
   color: var(--secondaryFore);
   background-color: var(--secondaryBack);
 }
 
+.mat-mdc-dialog-container .mdc-dialog__title,
+.mat-mdc-dialog-container .mdc-dialog__actions {
+  color: var(--primaryFore) !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content,
+.mat-mdc-dialog-container .mdc-dialog__content.root {
+  background-color: var(--secondaryBack);
+  color: var(--secondaryFore);
+}
+
+.dialog-box .cdk-drag {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
