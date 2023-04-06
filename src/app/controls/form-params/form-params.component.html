@@ -12,9 +12,11 @@
   </div>
   <div *ngIf="param.intValue!=null && param.list == null && param.isVisible" class="paramSlider">
     <div [class]="getClass(param)">{{param.title}}: {{param.intValue}}</div>
-    <mat-slider [(value)]="param.sliderValue"
-                [class]="getClass(param, 'slider')" [max]="param.max"
+    <mat-slider [(ngModel)]="param.sliderValue"
+                [class]="getClass(param, 'slider')"
+                [max]="param.max"
                 [min]="param.min">
+      <input [(ngModel)]="param.sliderValue" matSliderThumb>
     </mat-slider>
   </div>
   <div *ngIf="param.stringValue!=null && param.isVisible">
@@ -24,12 +26,11 @@
     </mat-form-field>
   </div>
   <div *ngIf="param.list!=null && param.isVisible" class="paramList">
-    <mat-form-field class="select">
+    <mat-form-field appearance="fill" class="select">
       <mat-label>{{param.title}}</mat-label>
-      <mat-select [(ngModel)]="param.intValue" panelClass="selectparams">
-        <mat-option (click)="param.intValue=idx"
-                    *ngFor="let item of param.list; let idx = index"
-                    [value]="param.intValue"
+      <mat-select [(value)]="param.intValue" panelClass="selectparams">
+        <mat-option *ngFor="let item of param.list; let idx = index"
+                    [value]="idx"
                     class="selectItem">
           <div class="itemTitle">{{item}}</div>
         </mat-option>
