@@ -56,5 +56,4 @@ export class ProgressComponent implements AfterViewInit, OnDestroy {
     this.subPsInit?.unsubscribe();
     this.subPsInit = null;
   }
-
 }

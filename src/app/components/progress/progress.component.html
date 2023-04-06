@@ -1,8 +1,9 @@
-<div [class]="classForOverlay(!ps.isActive)" overlay *ngIf="!ps.isPaused">
+<div *ngIf="!ps.isPaused" [class]="classForOverlay(!ps.isActive)" overlay>
   <div #overlay panel>
     <div *ngIf="ps.info!=null" label>{{ps.info}}</div>
     <mat-progress-bar [value]="value"
-                      mode="determinate"></mat-progress-bar>
+                      mode="determinate">
+    </mat-progress-bar>
     <div label>{{ps.text}}</div>
     <button (click)="ps.cancel()" *ngIf="ps.mayCancel" mat-icon-button>
       <mat-icon>cancel</mat-icon>
