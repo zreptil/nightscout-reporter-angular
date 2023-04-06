@@ -1,5 +1,16 @@
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--settingsHeaderBack);
+    --primaryFore: var(--settingsHeaderFore);
+    --secondaryBack: var(--settingsBodyBack);
+    --secondaryFore: var(--settingsBodyFore);
+    --accentBack: var(--settingsHeaderBack);
+    --accentFore: var(--settingsHeaderFore);
+  }
+}
+
 ::ng-deep .mat-select-panel.selectparams {
-  background-color: var(--settingsBodyBack);
+  ---background-color: var(--settingsBodyBack);
   max-height: initial !important;
 }
 
@@ -13,7 +24,7 @@
     margin-top: 1em;
 
     ::ng-deep mat-list {
-      background: var(--settingsBodyBack);
+      ---background: var(--settingsBodyBack);
       padding: 0;
 
       mat-select-item {
@@ -22,18 +33,18 @@
         line-height: initial;
         align-items: flex-start;
         padding: 0.2em 0.5em;
-        color: var(--settingsBodyFore);
+        ---color: var(--settingsBodyFore);
 
         div.itemSub {
           font-size: 75%;
         }
 
         .selected-accent {
-          background-color: var(--settingsHeaderBack);
+          ---background-color: var(--settingsHeaderBack);
         }
       }
 
-      mat-select-item.selected {
+      ---mat-select-item.selected {
         background-color: var(--settingsHeaderBack);
         color: var(--settingsHeaderFore);
       }
@@ -41,11 +52,11 @@
   }
 
   ::ng-deep .mat-form-field .mat-form-field-label {
-    color: var(--settingsBodyFore);
+    ---color: var(--settingsBodyFore);
   }
 
   ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
-    color: var(--settingsBodyFore);
+    ---color: var(--settingsBodyFore);
   }
 
   [select] {
@@ -56,17 +67,17 @@
   }
 
   ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
-    background-color: var(--settingsHeaderBack);
+    ---background-color: var(--settingsHeaderBack);
 
     .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
-      stroke: var(--settingsHeaderFore) !important;
+      ---stroke: var(--settingsHeaderFore) !important;
     }
   }
 
   ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
   ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
   ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
-    background-color: var(--settingsHeaderBack);
+    ---background-color: var(--settingsHeaderBack);
   }
 }
 
@@ -91,8 +102,8 @@
 
   material-dropdown-select {
     margin-left: 1em;
-    background: var(--primaryBack);
-    color: var(--primaryFore);
+    ---background: var(--primaryBack);
+    ---color: var(--primaryFore);
 
     ::ng-deep .button {
       padding: 0.5em;
@@ -102,7 +113,7 @@
 
 .paramSelect {
   ::ng-deep mat-list {
-    background: var(--secondaryBack);
+    ---background: var(--secondaryBack);
   }
 }
 
@@ -130,7 +141,7 @@ mat-checkbox {
   ::ng-deep .mat-checkbox-inner-container {
     border-radius: 50%;
     outline: 5px solid var(--loopMarked);
-    background-color: var(--loopMarked);
+    ---background-color: var(--loopMarked);
   }
 }
 

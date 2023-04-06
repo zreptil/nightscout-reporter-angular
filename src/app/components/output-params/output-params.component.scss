@@ -1,14 +1,23 @@
 [mat-dialog-title] {
-  background-color: var(--outputparamsHeaderBack);
-  color: var(--outputparamsHeaderFore);
+  ---background-color: var(--outputparamsHeaderBack);
+  ---color: var(--outputparamsHeaderFore);
 }
 
 ::ng-deep .mat-select-panel.output-params {
-  background-color: var(--outputparamsBodyBack);
+  ---background-color: var(--outputparamsBodyBack);
   max-height: initial !important;
 }
 
 :host {
+
+  ::ng-deep * {
+    --primaryBack: var(--outputparamsHeaderBack);
+    --primaryFore: var(--outputparamsHeaderFore);
+    --secondaryBack: var(--outputparamsBodyBack);
+    --secondaryFore: var(--outputparamsBodyFore);
+    --accentBack: var(--outputparamsHeaderBack);
+  }
+
   font-size: 90%;
 
   ::ng-deep .mat-form-field .mat-form-field-label {
@@ -337,3 +346,4 @@ material-button[raised] {
 material-dropdown-select {
   margin-bottom: 0.2em;
 }
+

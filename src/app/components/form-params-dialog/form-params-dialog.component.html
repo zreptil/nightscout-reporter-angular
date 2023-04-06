@@ -18,7 +18,7 @@
         <mat-checkbox (ngModelChange)="setAllParamsFor($event, form.params)" [ngModel]="false"></mat-checkbox>
         {{form.display}}
         <div>
-          <button (click)="clickListToggle()" mat-flat-button>
+          <button (click)="clickListToggle()" mat-button>
             <mat-icon>list</mat-icon>
           </button>
         </div>
@@ -29,7 +29,7 @@
       <div title>
         <div i18n="title for parameters">Optionen</div>
         <div>
-          <button (click)="clickListToggle()" mat-flat-button>
+          <button (click)="clickListToggle()" mat-button>
             <mat-icon>description</mat-icon>
           </button>
         </div>

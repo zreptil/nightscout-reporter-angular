@@ -1,3 +1,14 @@
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--settingsHeaderBack);
+    --primaryFore: var(--settingsHeaderFore);
+    --secondaryBack: var(--settingsBodyBack);
+    --secondaryFore: var(--settingsBodyFore);
+    --accentBack: var(--settingsHeaderBack);
+    --accentFore: var(--settingsHeaderFore);
+  }
+}
+
 ::ng-deep .mat-select-panel.settings {
   background-color: var(--settingsBodyBack);
   max-height: initial !important;
@@ -75,7 +86,7 @@ mat-slider {
     padding-right: 2em;
   }
 
-  mat-fab:not([disabled]) {
+  __mat-fab:not([disabled]) {
     background-color: var(--settingsHeaderBack);
     color: var(--primaryFore);
   }
@@ -94,7 +105,7 @@ mat-slider {
     flex: 1;
   }
 
-  button:not([disabled]) .urlIcon {
+  __button:not([disabled]) .urlIcon {
     color: var(--settingsHeaderBack);
   }
 }
@@ -104,12 +115,12 @@ mat-slider {
   background-color: transparent !important;
 }
 
-[mat-dialog-title] {
+[__mat-dialog-title] {
   background-color: var(--settingsHeaderBack);
   color: var(--settingsHeaderFore);
 }
 
-[mat-dialog-content] {
+[__mat-dialog-content] {
   color: var(--settingsBodyFore);
   background-color: var(--settingsBodyBack);
 }
