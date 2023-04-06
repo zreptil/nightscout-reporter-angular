@@ -1,9 +1,16 @@
 :host {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   margin-bottom: 1em;
 
   div {
+    display: flex;
+
+    mat-slider {
+      display: flex;
+      flex: 1;
+    }
+
     flex: 1;
   }
 }
@@ -27,13 +34,13 @@
 }
 
 [col-h] {
-  background: linear-gradient(0turn, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
 }
 
 [col-s] {
-  background: red;
+  background: linear-gradient(90deg, #000, #fff);
 }
 
 [col-l] {
-  background: red;
+  background: linear-gradient(90deg, #000, #fff);
 }
