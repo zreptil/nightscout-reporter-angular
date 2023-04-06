@@ -553,12 +553,72 @@ form.oauth2 {
   color: var(--secondaryFore);
 }
 
-.mat-mdc-option {
-  color: var(--secondaryFore);
+.mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+  border-radius: 0.5em;
 }
 
-.mat-primary .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
-  color: var(--primaryBack);
+.mdc-menu-surface.output-params {
+  background-color: var(--outputparamsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--outputparamsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--outputparamsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+}
+
+.mdc-menu-surface.settings {
+  background-color: var(--settingsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    // color: var(--settingsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--settingsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--settingsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--settingsHeaderFore);
+    }
+  }
+}
+
+.mdc-menu-surface.selectparams {
+  background-color: var(--selectparamsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--selectparamsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--outputparamsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+}
+
+.mat-mdc-option {
+  color: var(--secondaryFore);
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -575,18 +635,25 @@ form.oauth2 {
   color: var(--primaryFore);
 }
 
-[---mat-dialog-title] {
-  background-color: var(--primaryBack);
-}
-
-[---mat-dialog-content] {
-  color: var(--secondaryFore);
-  background-color: var(--secondaryBack);
-}
-
 .mat-mdc-dialog-container .mdc-dialog__title,
 .mat-mdc-dialog-container .mdc-dialog__actions {
   color: var(--primaryFore) !important;
+
+  button {
+    color: var(--primaryHeaderFore);
+  }
+}
+
+.mat-mdc-select-value {
+  color: var(--secondaryFore);
+}
+
+.mat-mdc-select-arrow {
+  color: var(--secondaryFore);
+}
+
+.mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
+  transform: inherit !important;
 }
 
 .mat-mdc-dialog-container .mdc-dialog__content,
@@ -596,6 +663,11 @@ form.oauth2 {
 }
 
 .dialog-box .cdk-drag {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+.mdc-button.mat-mdc-raised-button:not(:disabled) {
   background-color: var(--primaryBack);
   color: var(--primaryFore);
 }

@@ -1,56 +1,20 @@
-[mat-dialog-title] {
-  ---background-color: var(--outputparamsHeaderBack);
-  ---color: var(--outputparamsHeaderFore);
-}
-
-::ng-deep .mat-select-panel.output-params {
-  ---background-color: var(--outputparamsBodyBack);
-  max-height: initial !important;
-}
-
 :host {
-
   ::ng-deep * {
     --primaryBack: var(--outputparamsHeaderBack);
     --primaryFore: var(--outputparamsHeaderFore);
     --secondaryBack: var(--outputparamsBodyBack);
     --secondaryFore: var(--outputparamsBodyFore);
     --accentBack: var(--outputparamsHeaderBack);
+    --accentFore: var(--outputparamsHeaderFore);
   }
+}
 
+::ng-deep .mat-select-panel.output-params {
+  max-height: initial !important;
+}
+
+:host {
   font-size: 90%;
-
-  ::ng-deep .mat-form-field .mat-form-field-label {
-    color: var(--outputparamsBodyFore);
-  }
-
-  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
-    color: var(--outputparamsHeaderFore);
-  }
-
-  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
-  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
-  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
-    background-color: var(--outputparamsHeaderBack);
-  }
-
-  ::ng-deep [mat-dialog-actions] {
-    background-color: var(--outputparamsHeaderBack);
-
-    button:not(.mat-button-disabled) {
-      .mat-button-wrapper {
-        color: var(--outputparamsHeaderFore);
-      }
-    }
-  }
-
-  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
-    background-color: var(--outputparamsHeaderBack);
-
-    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
-      stroke: var(--outputparamsHeaderFore) !important;
-    }
-  }
 
   ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
     white-space: normal;
@@ -60,55 +24,12 @@
     white-space: normal;
   }
 
-  ::ng-deep .mat-checkbox-disabled:not(.mat-checkbox-checked) .mat-checkbox-frame {
-    border-color: rgba(0, 0, 0, 0.38);
-  }
-
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: var(--outputparamsHeaderBack);
-  }
-
-  ::ng-deep .mat-raised-button {
-    background-color: var(--outputparamsHeaderBack);
-    color: var(--outputparamsHeaderFore);
-  }
-
-  ::ng-deep .mat-form-field-underline,
-  ::ng-deep .mat-form-field-subscript-wrapper {
-    display: none
-  }
-
-  ::ng-deep .mat-select-value {
-    color: inherit;
-  }
-
-  ::ng-deep .mat-slide-toggle.mat-checked {
-    .mat-slide-toggle-bar {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    .mat-slide-toggle-thumb {
-      background-color: var(--outputparamsHeaderBack);
-      color: var(--outputparamsHeaderFore);
-    }
-  }
-
-  ::ng-deep .mat-slide-toggle-thumb {
-    background-color: var(--outputparamsHeaderFore);
-    color: var(--outputparamsHeaderFore);
-  }
-
-  .loop {
-    ::ng-deep .mat-checkbox-inner-container {
+  mat-checkbox.loop {
+    ::ng-deep .mdc-checkbox__background {
       border-radius: 50%;
       outline: 5px solid var(--loopMarked);
       background-color: var(--loopMarked);
     }
-  }
-
-  ::ng-deep .mat-form-field-wrapper {
-    padding-top: 0.5em;
-    padding-bottom: 0;
   }
 }
 
@@ -133,23 +54,6 @@
     font-size: 75%;
     line-height: 1em;
   }
-}
-
-.selectItem:hover:not(.mat-option-disabled),
-.selectItem:focus:not(.mat-option-disabled) {
-  background-color: var(--outputparamsHeaderBack);
-  color: var(--outputparamsHeaderFore);
-  border-radius: 0.5em;
-}
-
-.selectItem.mat-selected:not(.mat-option-disabled,:hover) {
-  background-color: var(--outputparamsBodyBack);
-  color: var(--outputparamsBodyFore);
-  border: 2px solid rgba(0, 0, 0, 0.6);
-}
-
-.selectItem.mat-selected:not(.mat-option-disabled) {
-  border-radius: 0.5em;
 }
 
 mat-form-field[long] {
@@ -301,12 +205,21 @@ material-input {
 }
 
 //noinspection CssReplaceWithShorthandSafely
-.selectButton {
-  background: var(--outputparamsHeaderBack);
+//.selectButton {
+//  background: var(--outputparamsHeaderBack);
+//  color: var(--outputparamsHeaderFore);
+//  padding: 0.2em;
+//  padding-left: 0.4em;
+//  border-radius: 2px;
+//}
+
+material-button[raised] {
+  background-color: var(--outputparamsHeaderBack);
   color: var(--outputparamsHeaderFore);
-  padding: 0.2em;
-  padding-left: 0.4em;
-  border-radius: 2px;
+}
+
+material-dropdown-select {
+  margin-bottom: 0.2em;
 }
 
 .selectSelect {
@@ -338,12 +251,20 @@ material-input {
   }
 }
 
-material-button[raised] {
-  background-color: var(--outputparamsHeaderBack);
-  color: var(--outputparamsHeaderFore);
-}
+//.selectItem:hover:not(.mat-option-disabled),
+//.selectItem:focus:not(.mat-option-disabled) {
+//  background-color: var(--outputparamsHeaderBack);
+//  color: var(--outputparamsHeaderFore);
+//  border-radius: 0.5em;
+//}
 
-material-dropdown-select {
-  margin-bottom: 0.2em;
+//.selectItem.mat-selected:not(.mat-option-disabled,:hover) {
+//  background-color: var(--outputparamsBodyBack);
+//  color: var(--outputparamsBodyFore);
+//  border: 2px solid rgba(0, 0, 0, 0.6);
+//}
+
+.selectItem.mat-selected:not(.mat-option-disabled) {
+  border-radius: 0.5em;
 }
 

@@ -183,8 +183,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       GlobalsData.user.isReachable = GlobalsData.user.status != null;
     }
 
-    if (!needed.needsData || !data.user.isReachable) {
-      console.log('Schaut schlecht aus', needed, GlobalsData.user);
+    if (!needed.needsData || !GLOBALS.user.isReachable) {
+      console.log('Schaut schlecht aus', needed, GLOBALS.user);
+      setTimeout(() => this.ms.info('Abbruch, weil der Benutzer nicht erreichbar ist.'), 10);
+      this.ps.cancel();
       return data;
     }
 

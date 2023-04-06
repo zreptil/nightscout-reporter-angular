@@ -213,8 +213,19 @@ export class SessionService {
   }
 
   showPopup(id: string, data?: any): Observable<DialogResult> {
+    if (id == null) {
+      return of(null);
+    }
+    let parts = id?.split('|');
+    let cssId = parts[0];
+    if (parts.length > 1) {
+      id = parts[0];
+      cssId = parts[1];
+    }
+    console.log(id, cssId);
+
     if (this.dlgList[id] != null) {
-      const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', id], disableClose: true});
+      const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', cssId], disableClose: true});
       return dlgRef.afterClosed();
     } else if (id === 'all') {
       for (const key of Object.keys(this.dlgList)) {

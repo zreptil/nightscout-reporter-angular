@@ -28,7 +28,7 @@
   <div *ngIf="param.list!=null && param.isVisible" class="paramList">
     <mat-form-field appearance="fill" class="select">
       <mat-label>{{param.title}}</mat-label>
-      <mat-select [(value)]="param.intValue" panelClass="selectparams">
+      <mat-select [(value)]="param.intValue" panelClass="settings">
         <mat-option *ngFor="let item of param.list; let idx = index"
                     [value]="idx"
                     class="selectItem">
