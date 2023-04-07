@@ -58,6 +58,7 @@ export class ShortcutComponent implements OnInit {
       GLOBALS.period.refresh();
       GLOBALS.ppPdfSameWindow = true;
       GLOBALS.ppPdfDownload = false;
+      GLOBALS.period.refresh();
       this.pdf.generatePdf(false).then(_ => {
         GLOBALS.avoidSaveAndLoad = false;
         if (!this.ns.reportData?.isValid) {
