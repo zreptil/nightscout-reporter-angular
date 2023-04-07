@@ -1,5 +1,5 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
-     cdkDragRootElement=".dialog-box.colorpicker">
+     cdkDragRootElement=".dialog-box.settings">
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <div i18n>Farbauswahl</div>
@@ -32,7 +32,6 @@
          *ngFor="let color of savedColors; let idx = index"
          [class]="classForCurrColor(idx)"
          [ngStyle]="{backgroundColor:color.display}"></div>
-    <div spacer></div>
     <ng-container *ngIf="data.mode === 'image'">
       <button (click)="fire.emit('File')" mat-icon-button>
         <mat-icon>upload</mat-icon>

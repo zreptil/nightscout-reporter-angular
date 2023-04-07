@@ -11,11 +11,9 @@ canvas {
 [color-select] {
   width: var(--size);
   height: var(--size);
-  border: 1px solid black;
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  z-index: 0;
 }
 
 [color-line] {
@@ -26,26 +24,40 @@ canvas {
 
 [canvas-container] {
   position: relative;
-  padding: calc(var(--size) / 2);
+  padding: calc(var(--size) * 2.5);
 
   [image] {
+    position: relative;
     display: flex;
     flex: 1;
-    position: relative;
     z-index: 1;
   }
 
+  [edge] {
+    position: absolute;
+    display: flex;
+    width: calc(var(--size) * 3);
+    height: calc(var(--size) * 3);
+    z-index: 0;
+  }
+
   [tl] {
+    align-items: flex-end;
+    justify-content: flex-end;
     top: 0;
     left: 0;
   }
 
   [tr] {
+    align-items: flex-end;
+    justify-content: flex-start;
     top: 0;
     right: 0;
   }
 
   [bl] {
+    align-items: flex-start;
+    justify-content: flex-end;
     bottom: 0;
     left: 0;
   }
@@ -57,10 +69,10 @@ canvas {
 }
 
 [color-wheel] {
-  --size: 12em;
-  --col-size: var(--size) / 3.7;
-  width: var(--size);
-  height: var(--size);
+  --size1: 10em;
+  --col-size: var(--size1) / 3.7;
+  width: calc(var(--size) * 4.5);
+  height: calc(var(--size) * 4.5);
   background-color: transparent;
   position: absolute;
   z-index: 100;
@@ -73,8 +85,8 @@ canvas {
   [color] {
     position: absolute;
     left: calc(50% - calc(var(--col-size) / 2));
-    top: calc(50% - calc(var(--size) / 2));
-    transform-origin: center calc(var(--size) / 2);
+    top: calc(50% - calc(var(--size1) / 2));
+    transform-origin: center calc(var(--size1) / 2);
     width: calc(var(--col-size));
     height: calc(var(--col-size));
     border-radius: 50%;
