@@ -671,3 +671,7 @@ form.oauth2 {
   background-color: var(--primaryBack);
   color: var(--primaryFore);
 }
+
+.mat-mdc-dialog-container .mdc-dialog__content {
+  color: initial !important;
+}

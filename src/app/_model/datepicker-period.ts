@@ -10,13 +10,13 @@ export class DatepickerPeriod {
   static shiftNames = $localize`Bis heute|Bis gestern|Bis Wochenende`.split('|');
   emptyReason: string;
   firstDayOfWeek = 1;
-  start: Date;
   end: Date;
   entryKey: string;
   minDate: Date;
   maxDate: Date;
   _dowActive = [true, true, true, true, true, true, true];
   list: DatepickerEntry[] = [];
+  start: Date;
 
   constructor(src: string = '') {
     this.reset(src);

@@ -55,6 +55,7 @@ export class ShortcutComponent implements OnInit {
         });
       }
       GLOBALS.currPeriodShift = new PeriodShift(title, shift);
+      GLOBALS.period.refresh();
       GLOBALS.ppPdfSameWindow = true;
       GLOBALS.ppPdfDownload = false;
       this.pdf.generatePdf(false).then(_ => {

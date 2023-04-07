@@ -222,7 +222,6 @@ export class SessionService {
       id = parts[0];
       cssId = parts[1];
     }
-    console.log(id, cssId);
 
     if (this.dlgList[id] != null) {
       const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', cssId], disableClose: true});
