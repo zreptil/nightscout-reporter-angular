@@ -9,6 +9,37 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(40.5)">
+      <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.04.2023</span></h2>
+    <ul [class]="classFor(40.5)">
+      <li class="added" i18n="v405a1">
+        Nach dem Laden der Daten wird überprüft, ob es Datensätze gibt, die von verschiedenen Geräten
+        hochgeladen wurden. Wenn das der Fall ist, wird ein Dialog angezeigt, in dem das gewünschte
+        Gerät für die Auswertung ausgewählt werden muss. Es gibt auch die Auswahl "Alle", mit der
+        dann die Werte wie bisher auch gesammelt angezeigt werden. Wenn diese Auswahl getroffen wird,
+        dann wird auf jeder Seite rechts oben ein Warnhinweis ausgegeben, der auf diesen Umstand
+        hinweist.
+      </li>
+      <li class="added">
+        <span i18n>Beim Aufruf mit einem shortcut-Parameter wurde ein neuer Parameter hinzugefügt, der
+        es ermöglicht ein Gerät anzugeben, für das die Auswertung erfolgen soll. Wenn keines
+        angegeben wird, dann wird automatisch die Auswahl "Alle" vorgenommen. Der Aufruf mit
+        allen Parametern sieht dann so aus:</span>
+        <br><br>
+        {{originUrl}}#shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
+        <br><br>
+        <b>x</b>: <span i18n>der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span><br>
+        <b>u</b>: <span i18n>der Name des Benutzers, für den das PDF erzeugt werden soll.
+        Wenn diese Angabe nicht vorhanden ist, wird der zuletzt geöffnete Bentzer
+        verwendet.</span><br>
+        <b>s</b>: <span i18n>die Anzahl an Monaten, die der gespeicherte Zeitraum in die Vergangenheit
+        verschoben wird.</span><br>
+        <b>d</b>: <span i18n>die Bezeichnung des Gerätes, für das die Auswertung erfolgen soll. Wenn diese
+        Angabe vorhanden ist und kein Eintrag diesen Text beinhaltet, dann werden alle Einträge
+        ausgegeben. Gleiches gilt, wenn diese Angabe nicht vorhanden ist.</span><br>
+        <br><span i18n>Sämtliche Angaben werden ohne Beachtung der Goss/Klein-Schreibung berücksichtigt.</span>
+      </li>
+    </ul>
     <h2 (click)="click(40.4)">
       <span i18n="version">Version</span><span i18n="v404">4.0.4 - 07.04.2023</span></h2>
     <ul [class]="classFor(40.4)">
@@ -34,19 +65,19 @@
         schreiben und lesen zu dürfen. Wenn die Verbindung zu Dropbox nicht mehr erfolgen soll,
         dann muss einfach nur der Menüpunkt im Hauptmenü erneut angeklickt werden.
       </li>
-      <li class="added" i18n="v403a2">
-        Es ist jetzt möglich, mit Angabe eines Shortcuts in der Url direkt ein PDF erzeugen zu lassen,
+      <li class="added">
+        <span i18n>Es ist jetzt möglich, mit Angabe eines Shortcuts in der Url direkt ein PDF erzeugen zu lassen,
         das auf den Einstellungen in diesem Shortcut basiert. Die Url muss dabei folgendermassen aufgebaut
-        sein:
+        sein:</span>
         <br><br>
         {{originUrl}}#shortcut?name=x&user=u&shift=s
-        <br><br>
-        Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.<br>
-        Die Angabe von user ist optional. u ist dabei der Name des Benutzers, für den das PDF
+        <br>
+        <br><span i18n>Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span>
+        <br><span i18n>Die Angabe von user ist optional. u ist dabei der Name des Benutzers, für den das PDF
         erzeugt werden soll. Wenn diese Angabe nicht vorhanden ist, wird der zuletzt geöffnete Bentzer
-        verwendet.<br>
-        Die Angabe von shift ist ebenfalls optional. s ist dabei die Anzahl an Monaten, die der
-        gespeicherte Zeitraum in die Vergangenheit verschoben wird.
+        verwendet.</span>
+        <br><span i18n>Die Angabe von shift ist ebenfalls optional. s ist dabei die Anzahl an Monaten, die der
+        gespeicherte Zeitraum in die Vergangenheit verschoben wird.</span>
       </li>
       <li class="changed" i18n="v403c1">
         Das Icon, mit dem man das Menü öffnet zeigt nun das Logo des Dienstes, der zur Synchronisation

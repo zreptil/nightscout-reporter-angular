@@ -675,3 +675,10 @@ form.oauth2 {
 .mat-mdc-dialog-container .mdc-dialog__content {
   color: initial !important;
 }
+
+.mat-mdc-dialog-container, .mat-mdc-dialog-container .mdc-dialog__container, .mat-mdc-dialog-container .mdc-dialog__surface {
+  max-height: inherit;
+  min-height: inherit;
+  min-width: inherit;
+  max-width: inherit;
+}

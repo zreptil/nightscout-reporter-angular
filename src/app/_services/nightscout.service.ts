@@ -79,6 +79,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
   async loadData(isForThumbs: boolean) {
     Log.clear();
+    GLOBALS.pdfWarnings = [];
     this.ps.init({
       progressPanelBack: this.ts.currTheme.outputparamsHeaderBack,
       progressPanelFore: this.ts.currTheme.outputparamsHeaderFore,
@@ -469,7 +470,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
               }
 
               const device = e.device ?? '';
-              if (this.reportData.deviceList.find(d => d === device) == null) {
+              if (this.reportData.deviceList.find(d => d.toLowerCase() === device.toLowerCase()) == null) {
                 this.reportData.deviceList.push(device);
               }
             } catch (ex) {
@@ -589,23 +590,34 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
     if (this.reportData.deviceList.length > 1) {
-      const dlg: IDialogDef = {
-        type: DialogType.confirm,
-        title: $localize`Bitte wählen`,
-        buttons: [{title: $localize`Alle`, result: {btn: null}}]
-      };
-      for (const device of this.reportData.deviceList) {
-        dlg.buttons.push({title: device, result: {btn: device}});
+      if (GLOBALS.avoidSaveAndLoad) {
+        if (this.reportData.deviceList.find(dl => dl.toLowerCase() === GLOBALS.deviceForShortcut.toLowerCase()) != null) {
+          this.reportData.device = GLOBALS.deviceForShortcut;
+        } else {
+          this.reportData.device = null;
+        }
+      } else {
+        const dlg: IDialogDef = {
+          type: DialogType.confirm,
+          title: $localize`Bitte wählen`,
+          buttons: [{title: $localize`Alle`, result: {btn: null}}]
+        };
+        for (const device of this.reportData.deviceList) {
+          dlg.buttons.push({title: device, result: {btn: device}});
+        }
+        this.ps.isPaused = true;
+        const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte den Button für das Gerät betätigen, dessen Daten ausgewertet werden sollen.`;
+        const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
+        this.ps.isPaused = false;
+        this.reportData.device = result.btn;
       }
-      this.ps.isPaused = true;
-      const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte den Button für das Gerät betätigen, dessen Daten ausgewertet werden sollen.`;
-      const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
-      this.ps.isPaused = false;
-      this.reportData.device = result.btn;
-      if (this.reportData.device != null) {
-        data.ns.entries = data.ns.entries.filter(e => e.device === this.reportData.device);
-        data.ns.bloody = data.ns.bloody.filter(e => e.device === this.reportData.device);
-        data.ns.remaining = data.ns.remaining.filter(e => e.device === this.reportData.device);
+      if (this.reportData.device == null) {
+        GLOBALS.pdfWarnings.push($localize`Die Glukosewerte stammen aus verschiedenen Quellen`);
+      } else {
+        const check = this.reportData.device.toLowerCase();
+        data.ns.entries = data.ns.entries.filter(e => e.device.toLowerCase() === check);
+        data.ns.bloody = data.ns.bloody.filter(e => e.device.toLowerCase() === check);
+        data.ns.remaining = data.ns.remaining.filter(e => e.device.toLowerCase() === check);
       }
       this.reportData.mustReload = true;
     }

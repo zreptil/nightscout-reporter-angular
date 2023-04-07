@@ -1509,13 +1509,21 @@ export abstract class BasePrint extends FormConfig {
         ]
       });
     }
+    let listWarn: string[ ] = [...GLOBALS.pdfWarnings];
+    // listWarn.push('Das ist eine Warnung für alle, die keine Ahnung haben und für alle, die denken, eine Warnung wäre nicht nötig, aber ÜBERRASCHUNG!!!!! Sie ist nötig!!!!');
+    console.log(listWarn);
     if (GlobalsData.user.adjustGluc) {
+      listWarn.push(this.msgAdjustGlucHint);
+    }
+    const msgWarn = Utils.join(listWarn, '\n');
+    if (msgWarn != null) {
+      const xPos = (this.width - this.xframe) / 2;
       stack.push({
-        relativePosition: {x: this.cm(this.width - this.xframe - 5.0), 'y': this.cm(1.0)},
+        relativePosition: {x: this.cm(xPos), 'y': this.cm(1.0)},
         columns: [
           {
-            width: this.cm(5.0),
-            text: this.msgAdjustGlucHint,
+            width: this.cm(this.width - this.xframe - xPos),
+            text: msgWarn,
             fontSize: this.fs(8),
             color: this.colWarning,
             bold: true,

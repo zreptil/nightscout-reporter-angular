@@ -71,6 +71,8 @@ export class GlobalsData extends Settings {
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
   public onPeriodChange: Observable<DatepickerPeriod>;
   maxLogEntries = 20;
+  pdfWarnings: string[] = [];
+  deviceForShortcut: string = null;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
