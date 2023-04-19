@@ -8,7 +8,7 @@
     <div *ngIf="!globals.isConfigured" class="langPanel">
       <ng-container *ngFor="let lang of globals.languageList; let idx = index">
         <button (click)="ds.changeLanguage(lang, {checkConfigured: true})"
-                *ngIf="lang.code!=globals.language.code" mat-flat-button>
+                *ngIf="lang.code!=globals.language.code" mat-button>
           <img alt="language {{lang.code}}" src="{{lang.imgPath}}">
         </button>
       </ng-container>
@@ -52,13 +52,13 @@
   <div class="controls" mat-dialog-actions>
     <div class="left">
       <ng-container *ngIf="!globals.isConfigured">
-        <button (click)="ss.showSettings()" autofocus class="iconButton" mat-flat-button>
+        <button (click)="ss.showSettings()" autofocus class="iconButton" mat-button>
           <mat-icon>settings</mat-icon>
           <div i18n="label for button to open settings on welcome screen">
             Einstellungen für die Verwendung der Seite vornehmen
           </div>
         </button>
-        <button (click)="doSync()" class="iconButton" mat-flat-button>
+        <button (click)="doSync()" class="iconButton" mat-button>
           <mat-icon>sync_disabled</mat-icon>
           <div i18n="label for button to synchronize on welcome screen">
             Synchronisieren

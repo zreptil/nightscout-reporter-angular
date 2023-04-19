@@ -381,6 +381,10 @@ export class GlobalsData extends Settings {
     ];
   }
 
+  get basalPrecision(): number {
+    return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
+  }
+
   // get pdfControlMaxSize(): number {
   //   return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
   // }
@@ -402,10 +406,6 @@ export class GlobalsData extends Settings {
   //   value = Math.min(value, Settings.PDFUNLIMITED);
   //   this._pdfCreationMaxSize = value;
   // }
-
-  get basalPrecision(): number {
-    return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
-  }
 
   get basalPrecisionValues(): number[] {
     return [null, 0, 1, 2, 3];
@@ -596,6 +596,11 @@ export class GlobalsData extends Settings {
         return 0.0;
       }
     }
+  }
+
+  watchListForGroup(id: string): WatchElement[] {
+    this._watchList ??= [];
+    return this._watchList.filter(wl => (wl.groupId ?? 'center') === id);
   }
 
   isMGDL(status: StatusData): boolean {

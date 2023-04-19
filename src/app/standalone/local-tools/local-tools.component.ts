@@ -441,7 +441,6 @@ export class LocalToolsComponent implements OnInit {
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
     await this.ds.loadSettingsJson().then((_) => {
       this.pdf.createThumbs(lang);
-      Log.info('OLeole');
     });
   }
 }

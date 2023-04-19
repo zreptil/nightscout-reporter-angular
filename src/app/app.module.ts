@@ -42,6 +42,7 @@ import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.componen
 import {ViewUsersComponent} from './components/view-users/view-users.component';
 import { ShortcutComponent } from './components/shortcut/shortcut.component';
 import { WatchSettingsComponent } from './components/watch-settings/watch-settings.component';
+import { WatchGroupComponent } from './components/watch-group/watch-group.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { WatchSettingsComponent } from './components/watch-settings/watch-settin
     FormParamsComponent,
     ViewUsersComponent,
     ShortcutComponent,
-    WatchSettingsComponent
+    WatchSettingsComponent,
+    WatchGroupComponent
   ],
   imports: [
     BrowserModule,

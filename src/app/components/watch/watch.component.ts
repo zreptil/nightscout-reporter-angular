@@ -6,6 +6,7 @@ import {Utils} from '@/classes/utils';
 import {DataService} from '@/_services/data.service';
 import {ThemeService} from '@/_services/theme.service';
 import {SessionService} from '@/_services/session.service';
+import {WatchService} from '@/_services/watch.service';
 
 @Component({
   selector: 'app-watch',
@@ -17,7 +18,8 @@ export class WatchComponent implements OnInit {
 
   constructor(public ds: DataService,
               public ts: ThemeService,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public ws: WatchService) {
   }
 
   get globals(): GlobalsData {
@@ -118,77 +120,7 @@ export class WatchComponent implements OnInit {
   }
 
   get verticalIcon(): string {
-    return this._verticalIcon[this.selected?.vertical ?? 1];
-  }
-
-  get isEditMode(): boolean {
-    return this.selected != null || (Utils.isEmpty(GLOBALS.watchList) ?? true);
-  }
-
-  get selected(): WatchElement {
-    return GLOBALS.watchList?.find((e) => e.selected);
-  }
-
-  get selectedIndex(): number {
-    return GLOBALS.watchList?.findIndex((e) => e.selected) ?? -1;
-  }
-
-  get maxGluc(): number {
-    return Math.max(
-      Settings.stdHigh ?? 0,
-      GLOBALS.targetTop ?? 0,
-      GLOBALS.currentGlucValue ?? 0,
-      (GLOBALS.lastGlucValue ?? 0) + 5
-    );
-  }
-
-  get styleTargetLow(): any {
-    return {width: `calc(100%*${GLOBALS.targetBottom}/${this.maxGluc})`};
-  }
-
-  get styleTargetNorm(): any {
-    return {width: `calc(100%*${GLOBALS.targetTop - GLOBALS.targetBottom}/${this.maxGluc})`};
-  }
-
-  get styleTargetHigh(): any {
-    return {width: `calc(100%*${this.maxGluc - GLOBALS.targetTop}/${this.maxGluc})`};
-  }
-
-  get styleCurrentGluc(): any {
-    return {left: `calc(100%*${GLOBALS.currentGlucValue ?? 0}/${this.maxGluc})`};
-  }
-
-  get styleLastGluc(): any {
-    return {left: `calc(100%*${GLOBALS.lastGlucValue ?? 0}/${this.maxGluc})`};
-  }
-
-  get styleArrowTip(): any {
-    if ((GLOBALS.currentGlucValue ?? 0) === (GLOBALS.lastGlucValue ?? 0)) {
-      return {display: 'none'};
-    }
-    const x = (GLOBALS.currentGlucValue ?? 0) / this.maxGluc;
-    if ((GLOBALS.currentGlucValue ?? 0) < (GLOBALS.lastGlucValue ?? 0)) {
-      return {transform: 'rotate(135deg)', left: `calc(100%*${x} + 2px)`};
-    }
-    return {transform: 'rotate(-45deg)', left: `calc(100%*${x} - 12px)`};
-  }
-
-  get styleArrowTrack(): any {
-    const len = (GLOBALS.currentGlucValue ?? 0) - (GLOBALS.lastGlucValue ?? 0);
-    if ((GLOBALS.currentGlucValue ?? 0) < (GLOBALS.lastGlucValue ?? 0)) {
-      return {left: `calc(100%*${GLOBALS.currentGlucValue ?? 0}/${this.maxGluc})`, width: `calc(100%*${-len}/${this.maxGluc})`};
-    }
-    return {left: `calc(100%*${GLOBALS.lastGlucValue ?? 0}/${this.maxGluc})`, width: `calc(100%*${len}/${this.maxGluc})`};
-  }
-
-  get classForWatch(): string {
-    const ret = ['root'];
-    let prefix = 'dark-';
-    if (GLOBALS.isWatchColor) {
-      prefix = 'color-';
-    }
-    ret.push(`${prefix}${this.colForGluc(GLOBALS.currentGlucValue)}`);
-    return ret.join(' ');
+    return this._verticalIcon[this.ws.selected?.vertical ?? 1];
   }
 
   get msgTitle(): string {
@@ -196,39 +128,35 @@ export class WatchComponent implements OnInit {
   }
 
   get smallerDisabled(): boolean {
-    let ret = this.selected == null;
-    if (this.selected != null) {
-      ret ||= this.selected.size <= 1;
+    let ret = this.ws.selected == null;
+    if (this.ws.selected != null) {
+      ret ||= this.ws.selected.size <= 1;
     }
     return ret;
   }
 
   get biggerDisabled(): boolean {
-    let ret = this.selected == null;
-    if (this.selected != null) {
-      ret ||= this.selected.size >= WatchElement.maxSize;
+    let ret = this.ws.selected == null;
+    if (this.ws.selected != null) {
+      ret ||= this.ws.selected.size >= WatchElement.maxSize;
     }
     return ret;
   }
 
   get leftDisabled(): boolean {
-    let ret = this.selected == null;
-    if (this.selected != null) {
-      ret ||= this.selectedIndex === 0;
+    let ret = this.ws.selected == null;
+    if (this.ws.selected != null) {
+      ret ||= this.ws.selectedIndex === 0;
     }
     return ret;
   }
 
   get rightDisabled(): boolean {
-    let ret = this.selected == null;
-    if (this.selected != null) {
-      ret ||= this.selectedIndex >= GLOBALS.watchList.length - 1;
+    let ret = this.ws.selected == null;
+    if (this.ws.selected != null) {
+      ret ||= this.ws.selectedIndex >= GLOBALS.watchList.length - 1;
     }
     return ret;
-  }
-
-  get now(): Date {
-    return GlobalsData.now;
   }
 
   async ngOnInit() {
@@ -253,54 +181,42 @@ export class WatchComponent implements OnInit {
   }
 
   async showSettings() {
-    this.ss.showSettings(this.showSettings);
-  }
-
-  colForGluc(gluc: number): string {
-    if (gluc == null) {
-      return 'norm';
-    }
-    if (gluc < GLOBALS.targetBottom) {
-      return 'low';
-    } else if (gluc > GLOBALS.targetTop) {
-      return 'high';
-    }
-    return 'norm';
+    this.ss.showSettings.bind(this.ss)(this.showSettings);
   }
 
   clickSmaller(evt: MouseEvent) {
     evt.stopPropagation();
     if (!this.smallerDisabled) {
-      this.selected.size--;
+      this.ws.selected.size--;
     }
   }
 
   clickBigger(evt: MouseEvent) {
     evt.stopPropagation();
     if (!this.biggerDisabled) {
-      this.selected.size++;
+      this.ws.selected.size++;
     }
   }
 
   clickBold(evt: MouseEvent) {
     evt.stopPropagation();
-    if (this.selected != null) {
-      this.selected.bold = !this.selected.bold;
+    if (this.ws.selected != null) {
+      this.ws.selected.bold = !this.ws.selected.bold;
     }
   }
 
   clickItalic(evt: MouseEvent) {
     evt.stopPropagation();
-    if (this.selected != null) {
-      this.selected.italic = !this.selected.italic;
+    if (this.ws.selected != null) {
+      this.ws.selected.italic = !this.ws.selected.italic;
     }
   }
 
   clickLeft(evt: MouseEvent) {
     evt.stopPropagation();
     if (!this.leftDisabled) {
-      const idx = this.selectedIndex;
-      const elem = this.selected;
+      const idx = this.ws.selectedIndex;
+      const elem = this.ws.selected;
       GLOBALS.watchList.splice(idx, 1);
       GLOBALS.watchList.splice(idx - 1, 0, elem);
     }
@@ -308,7 +224,7 @@ export class WatchComponent implements OnInit {
 
   clickAdd(evt: MouseEvent) {
     evt.stopPropagation();
-    let idx = this.selectedIndex;
+    let idx = this.ws.selectedIndex;
     if (idx < 0) {
       idx = GLOBALS.watchList.length - 1;
     } else {
@@ -323,36 +239,36 @@ export class WatchComponent implements OnInit {
 
   clickTypeSub(evt: MouseEvent) {
     evt.stopPropagation();
-    if (this.selected != null) {
+    if (this.ws.selected != null) {
       let useKey = true;
-      const check = this.selected.type;
-      this.selected.type = null;
+      const check = this.ws.selected.type;
+      this.ws.selected.type = null;
       for (const key of Object.keys(this.types)) {
         if (key === check) {
           useKey = false;
         }
         if (useKey) {
-          this.selected.type = key;
+          this.ws.selected.type = key;
         }
       }
-      this.selected.type ??= Object.keys(this.types)[Object.keys(this.types).length - 1];
+      this.ws.selected.type ??= Object.keys(this.types)[Object.keys(this.types).length - 1];
     }
   }
 
   clickTypeAdd(evt: MouseEvent) {
     evt.stopPropagation();
-    if (this.selected != null) {
+    if (this.ws.selected != null) {
       let useKey = false;
       for (const key of Object.keys(this.types)) {
         if (useKey) {
-          this.selected.type = key;
+          this.ws.selected.type = key;
           useKey = false;
-        } else if (key === this.selected.type) {
+        } else if (key === this.ws.selected.type) {
           useKey = true;
         }
       }
       if (useKey) {
-        this.selected.type = Object.keys(this.types)[0];
+        this.ws.selected.type = Object.keys(this.types)[0];
       }
     }
   }
@@ -360,8 +276,8 @@ export class WatchComponent implements OnInit {
   clickRight(evt: MouseEvent) {
     evt.stopPropagation();
     if (!this.rightDisabled) {
-      const idx = this.selectedIndex;
-      const elem = this.selected;
+      const idx = this.ws.selectedIndex;
+      const elem = this.ws.selected;
       GLOBALS.watchList.splice(idx, 1);
       GLOBALS.watchList.splice(idx + 1, 0, elem);
     }
@@ -369,19 +285,19 @@ export class WatchComponent implements OnInit {
 
   clickVertical(evt: MouseEvent) {
     evt.stopPropagation();
-    if (this.selected != null) {
-      let value = this.selected.vertical;
+    if (this.ws.selected != null) {
+      let value = this.ws.selected.vertical;
       value++;
       if (value > 2) {
         value = 0;
       }
-      this.selected.vertical = value;
+      this.ws.selected.vertical = value;
     }
   }
 
   clickDelete(evt: MouseEvent) {
     evt.stopPropagation();
-    let idx = this.selectedIndex;
+    let idx = this.ws.selectedIndex;
     if (idx >= 0) {
       GLOBALS.watchList.splice(idx, 1);
     }
@@ -393,16 +309,8 @@ export class WatchComponent implements OnInit {
     }
   }
 
-  onClick(element: WatchElement) {
-    const value = !element.selected;
-    for (const entry of GLOBALS.watchList) {
-      entry.selected = false;
-    }
-    element.selected = value;
-  }
-
   clickBackground() {
-    if (!this.isEditMode) {
+    if (!this.ws.isEditMode) {
       if (Utils.isEmpty(GLOBALS.watchList)) {
         GLOBALS.watchList.push(WatchElement.fromJson({type: 'gluc', selected: true}));
       }
@@ -444,18 +352,15 @@ export class WatchComponent implements OnInit {
   //       break;
   //   }
   // }
-  changeImage(entry: WatchElement): string {
-    const id = entry.type?.substring(7);
-    return `assets/img/${GLOBALS.currentChanges?.[id]?.type ?? 'empty'}.print.png`;
-  }
-
-  changeClass(entry: WatchElement): string[] {
-    const id = entry.type.substring(7);
-    return ['alarm', `alarm${GLOBALS.currentChanges?.[id]?.alarm}`];
-  }
-
-  changeInfo(entry: WatchElement): string {
-    const id = entry.type.substring(7);
-    return GLOBALS.currentChanges?.[id]?.lasttime;
+  clickGroup(evt: MouseEvent) {
+    evt.stopPropagation();
+    const ids: any = {
+      center: 'tl',
+      tl: 'tr',
+      tr: 'bl',
+      bl: 'br',
+      br: 'center'
+    };
+    this.ws.selected.groupId = ids[this.ws.selected.groupId] ?? 'tl';
   }
 }

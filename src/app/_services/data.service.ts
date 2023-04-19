@@ -578,12 +578,15 @@ export class DataService {
         GLOBALS.targetTop = status.settings.bgTargetTop;
       }
     }
-    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=2'});
+    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=20'});
     // Log.debug(`{time} waiting for ${url}`);
-    let src = await this.requestJson(url);
+    let src: any[] = await this.requestJson(url);
     // Log.debug(`{time} returned`);
     if (src != null) {
-      if (src.length != 2) {
+      src.sort((a, b) => {
+        return Utils.compare(b.date, a.date);
+      });
+      if (src.length != 20) {
         GLOBALS.currentGlucSrc = null;
         GLOBALS.lastGlucSrc = null;
         GLOBALS.currentGlucDiff = '';
@@ -591,17 +594,11 @@ export class DataService {
       } else {
         try {
           let eNow = EntryData.fromJson(src[0]);
-          let ePrev = EntryData.fromJson(src[1]);
-          if (eNow.device !== ePrev.device) {
-            url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=10'});
-            src = await this.requestJson(url);
-            eNow = EntryData.fromJson(src[0]);
-            ePrev = null;
-            for (let i = 1; i < src.length && ePrev == null; i++) {
-              const check = EntryData.fromJson(src[i]);
-              if (check.device === eNow.device) {
-                ePrev = check;
-              }
+          let ePrev: EntryData = null;
+          for (let i = 1; i < src.length && ePrev == null; i++) {
+            const check = EntryData.fromJson(src[i]);
+            if (check.device === eNow.device) {
+              ePrev = check;
             }
           }
           if (ePrev == null) {

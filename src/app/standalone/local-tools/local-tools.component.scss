@@ -10,61 +10,68 @@
     flex: 1;
   }
 
-  mat-tab-body {
+  ::ng-deep .mat-mdc-tab-body-wrapper {
     display: flex;
-    flex-flow: column;
-    align-items: center;
     flex: 1;
-  }
 
-  [lang] {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
+    ::ng-deep mat-tab-body {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      flex: 1;
 
-  div {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
+      [lang] {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
 
-  .pdfimg {
-    display: none;
-    flex-flow: row;
-    flex-wrap: wrap;
+      div {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
 
-    canvas {
-      border: 10px solid red;
+      .pdfimg {
+        display: none;
+        flex-flow: row;
+        flex-wrap: wrap;
+
+        canvas {
+          border: 10px solid red;
+        }
+      }
+
+      [link] {
+        max-width: 50%;
+        height: initial;
+
+        ::ng-deep .mdc-button__label {
+          display: block;
+          white-space: normal;
+        }
+      }
+
+      [controls] {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
     }
-  }
 
-  [link] {
-    max-width: 50%;
+    .dartcode {
+      display: flex;
+      flex: 1;
+      width: 100%;
 
-    ::ng-deep .mat-button-wrapper {
-      white-space: normal;
+      ::ng-deep .mat-form-field-wrapper {
+        width: 100%;
+      }
     }
-  }
-
-  [controls] {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: flex-start;
-  }
-}
-
-.dartcode {
-  display: flex;
-  flex: 1;
-  width: 100%;
-
-  ::ng-deep .mat-form-field-wrapper {
-    width: 100%;
   }
 }

@@ -1,7 +1,7 @@
 <mat-tab-group>
   <mat-tab label="PDF Tools">
     <div lang>
-      <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-flat-button>
+      <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-button>
         {{lang.code}}<br><img [src]="lang.imgPath" alt="language image">
       </button>
     </div>
@@ -9,7 +9,7 @@
   </mat-tab>
   <mat-tab label="Language Importer">
     <div>
-      <button (click)="ss.navigate('https://www.freeformatter.com/xml-to-json-converter.html')" link mat-flat-button>
+      <button (click)="ss.navigate('https://www.freeformatter.com/xml-to-json-converter.html')" link mat-button>
         Die Datei /locale/messages.de-DE.xlf muss zur Verwendung mit diesem Tool in json konvertiert werden.
         Das kann ein Online-Dienst erledigen, der hier aufgerufen werden kann. Dort die Datei hochladen
         und das Ergebnis in /assets/old-dart/json/de_DE.json speichern.
@@ -17,7 +17,7 @@
       </button>
     </div>
     <div lang>
-      <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-flat-button>
+      <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-button>
         {{lang.code}}<br><img [src]="lang.imgPath" alt="language image">
       </button>
     </div>
