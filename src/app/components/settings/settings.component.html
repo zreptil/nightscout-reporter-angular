@@ -66,7 +66,7 @@
           {{msgUrlHint}}
         </div>
       </div>
-      <button (click)="navigate(item.fullUrl('','', true))" [disabled]="ss.isEmpty(item.url)" mat-button>
+      <button (click)="ss.navigate(item.fullUrl('','', true))" [disabled]="ss.isEmpty(item.url)" mat-button>
         <mat-icon class="urlIcon">open_in_new</mat-icon>
       </button>
       <div class="formfield mat-form-field-infix">

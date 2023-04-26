@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
 import {Settings} from '@/_model/settings';
-import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class EnvironmentService {
 
   urlParams: any = {};
 
-  appType: string;
+  // appType: string;
   appParams: any = {};
 
   constructor() {
@@ -32,17 +31,18 @@ export class EnvironmentService {
     } else if (this.urlParams['enableDebug'] === 'false') {
       localStorage.removeItem(Settings.DebugFlag);
     }
-    const temp = window.location.hash?.substring(1);
-    this.appType = temp;
-    if (Utils.isEmpty(this.appType)) {
-      if (window.location.href.endsWith('/watch')) {
-        this.appType = 'watch';
-      }
-    }
-    const pos = this.appType.indexOf('?');
-    if (pos > 0) {
-      this.appType = temp.substring(0, pos);
-      const parts = temp.substring(pos + 1).split('&');
+    // const temp = window.location.hash?.substring(1);
+    // this.appType = temp;
+    // if (Utils.isEmpty(this.appType)) {
+    //   if (window.location.href.endsWith('/watch')) {
+    //     this.appType = 'watch';
+    //   }
+    // }
+    // const pos = this.appType.indexOf('?');
+    const pos = location.search.indexOf('?');
+    if (pos >= 0) {
+      // this.appType = location.href.substring(0, pos);
+      const parts = location.search.substring(pos + 1).split('&');
       for (const part of parts) {
         const p = part.split('=');
         if (p.length === 1) {

@@ -18,7 +18,14 @@ import {ProgressComponent} from '@/components/progress/progress.component';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 
 @Component({
-  imports: [CommonModule, MaterialModule, FormsModule, LogComponent, ProgressComponent, TextareaAutoresizeDirective],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    LogComponent,
+    ProgressComponent,
+    TextareaAutoresizeDirective
+  ],
   selector: 'app-local-tools',
   standalone: true,
   styleUrls: ['./local-tools.component.scss'],

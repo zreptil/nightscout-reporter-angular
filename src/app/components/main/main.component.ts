@@ -309,7 +309,7 @@ export class MainComponent implements OnInit {
         this.ss.navigate('https://jsonformatter.org/json-parser');
         break;
       case 'nswatch':
-        this.ss.navigate('#watch');
+        this.ss.navigate('watch');
         break;
       case 'nsreports':
         this.ss.navigate(GLOBALS.user.reportUrl);
@@ -321,7 +321,7 @@ export class MainComponent implements OnInit {
         this.changeView();
         break;
       case 'local-tools':
-        this.ss.navigate('#tools');
+        this.ss.navigate('tools');
         break;
       case 'googlecloud':
         this.ss.navigate('https://navid200.github.io/xDrip/docs/Nightscout/GoogleCloud.html');

@@ -12,6 +12,19 @@
     <h2 (click)="click(40.5)">
       <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.04.2023</span></h2>
     <ul [class]="classFor(40.5)">
+      <li class="changed">
+        Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
+        wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt
+        <br><br>
+        {{originUrl}}#watch
+        <br><br>
+        wird jetzt Folgendes verwendet:
+        <br><br>
+        {{originUrl}}/watch
+        <br><br>
+        Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones
+        stabiler, wenn man die Seiten neu lädt.
+      </li>
       <li class="added" i18n="v405a1">
         Nach dem Laden der Daten wird überprüft, ob es Datensätze gibt, die von verschiedenen Geräten
         hochgeladen wurden. Wenn das der Fall ist, wird ein Dialog angezeigt, in dem das gewünschte
@@ -26,7 +39,7 @@
         angegeben wird, dann wird automatisch die Auswahl "Alle" vorgenommen. Der Aufruf mit
         allen Parametern sieht dann so aus:</span>
         <br><br>
-        {{originUrl}}#shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
+        {{originUrl}}/shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
         <br><br>
         <b>x</b>: <span i18n>der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span><br>
         <b>u</b>: <span i18n>der Name des Benutzers, für den das PDF erzeugt werden soll.

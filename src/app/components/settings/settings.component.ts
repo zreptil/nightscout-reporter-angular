@@ -299,10 +299,6 @@ export class SettingsComponent implements OnInit {
     errUserInvalid = null;
   }
   */
-  navigate(url: string): void {
-    window.open(url, '_blank');
-  }
-
   ngOnInit(): void {
   }
 

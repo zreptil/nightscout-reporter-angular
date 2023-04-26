@@ -38,7 +38,7 @@
                 }
               ],
               "outputHashing": "all",
-              "sourceMap": false
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production",
