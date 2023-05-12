@@ -242,10 +242,9 @@
       <app-owl-menu></app-owl-menu>
       <button (click)="clickSend()"
               *ngIf="globals.viewType === 'tile'"
+              [attr.aria-label]="ss.msgAriaPlay"
               [class]="sendClass(0,sendIcon)"
               [disabled]="ss.activeCfgCount===0"
-              aria-label="{{ss.activeCfgCount}} erzeugen"
-              i18n-aria-label
               mat-fab>
         <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
         <mat-icon>{{createIcon}}</mat-icon>
@@ -257,10 +256,9 @@
       </div>
       <div class="sendPanel">
         <button (click)="clickSend()"
+                [attr.aria-label]="ss.msgAriaPlay"
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="ss.activeCfgCount===0"
-                aria-label="{{ss.activeCfgCount}} erzeugen"
-                i18n-aria-label
                 mat-fab>
           <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
           <mat-icon>{{createIcon}}</mat-icon>
