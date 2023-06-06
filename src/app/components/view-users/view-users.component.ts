@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {SessionService} from '@/_services/session.service';
+import {DataService} from '@/_services/data.service';
 
 @Component({
   selector: 'app-view-users',
@@ -9,7 +10,8 @@ import {SessionService} from '@/_services/session.service';
 })
 export class ViewUsersComponent {
 
-  constructor(public ss: SessionService) {
+  constructor(public ss: SessionService,
+              public ds: DataService) {
 
   }
 
@@ -20,6 +22,7 @@ export class ViewUsersComponent {
   tileClicked($event: MouseEvent, idx: number) {
     if (idx === GLOBALS.userIdx) {
       GLOBALS.viewType = 'tile';
+      this.ds.save();
     } else {
       this.ss.activateUser(idx)
     }

@@ -326,6 +326,17 @@ export class MainComponent implements OnInit {
       case 'googlecloud':
         this.ss.navigate('https://navid200.github.io/xDrip/docs/Nightscout/GoogleCloud.html');
         break;
+      case 'feedback':
+        const params: any = {
+          subject: $localize`Feedback zu Nightscout Reporter ${GLOBALS.version}`,
+          body: `${GLOBALS.user.name}%0d----%0dURL zur Nightscout Instanz:%0d${GLOBALS.user.urlDataFor(new Date()).fullUrl('', '', true)}%0d----%0d`
+        };
+        const paramList: string[] = [];
+        for (const key of Object.keys(params)) {
+          paramList.push(`${key}=${params[key]}`)
+        }
+        this.ss.navigate(`mailto:nightrep@zreptil.de?${Utils.join(paramList, '&')}`);
+        break;
     }
   }
 
@@ -402,5 +413,6 @@ export class MainComponent implements OnInit {
 
   clickUser() {
     GLOBALS.viewType = GLOBALS.viewType === 'users' ? 'tile' : 'users';
+    this.ds.save();
   }
 }

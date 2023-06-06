@@ -10,7 +10,7 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(40.5)">
-      <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.04.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.06.2023</span></h2>
     <ul [class]="classFor(40.5)">
       <li class="changed">
         Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
@@ -51,6 +51,23 @@
         Angabe vorhanden ist und kein Eintrag diesen Text beinhaltet, dann werden alle Einträge
         ausgegeben. Gleiches gilt, wenn diese Angabe nicht vorhanden ist.</span><br>
         <br><span i18n>Sämtliche Angaben werden ohne Beachtung der Goss/Klein-Schreibung berücksichtigt.</span>
+      </li>
+      <li class="removed">
+        Der Link zur Facebookseite wurde aus dem Menü entfernt, da die Facebookseite nur der allgemeinen
+        Information über eine neue Version dient und dort keine Informationen zu finden sind, die im
+        Programm nicht vorhanden sind. Ausserdem ist der Entwickler unfähig, die Facebook-Apps so zu
+        konfigurieren, dass sie ihm Benachrichtigungen über Kontaktaufnahmen zuschicken. Vielleicht ist
+        auch Facebook generell so schlecht, dass das nicht möglich ist, ohne mit unwichtigen Benachrichtigungen
+        zugemüllt zu werden. Deswegen haben in der Vergangenheit einige Benutzer recht lange auf eine
+        Nachricht warten müssen. Daher wurde Folgendes hinzugefügt:
+      </li>
+      <li class="added">
+        Im Hauptmenü wurde der Punkt <b>Feedback</b> hinzugefügt. In dem Dialog kann eine Nachricht an
+        den Entwickler versendet werden, um Fragen zu stellen oder Probleme zu melden. Da die meisten
+        Probleme nur durch die entsprechenden Daten nachvollzogen werden können, kann über einen Button
+        die URL zur Nightscout Instanz eingefügt werden. Ausserdem kann man dort Kontaktdaten angeben,
+        über die der Entwickler sich dann melden kann, wenn er der Meinung ist, etwas hilfreiches
+        beitragen zu können.
       </li>
     </ul>
     <h2 (click)="click(40.4)">
