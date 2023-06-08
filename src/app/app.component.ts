@@ -63,6 +63,10 @@ export class AppComponent {
       delete (dst?.s11);
       return JSON.stringify(src) === JSON.stringify(dst);
     };
+
+    // remove oauth2 from localStorage, since this can prevent
+    // dropbox sync from working
+    localStorage.removeItem('oauth2');
   }
 
   get globals() {
