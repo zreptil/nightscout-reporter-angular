@@ -9,6 +9,10 @@ export class UrlData {
   startDate: Date;
   endDate: Date;
   startDateEditString: string;
+  apiSecret: string;
+  linkupUsername: string;
+  linkupPassword: string;
+  linkupRegion: string;
 
   constructor() {
   }
@@ -18,7 +22,11 @@ export class UrlData {
       u: this.url,
       t: this.token,
       sd: JsonData.fromDate(this.startDate, '19700101'),
-      ed: JsonData.fromDate(this.endDate)
+      ed: JsonData.fromDate(this.endDate),
+      as: this.apiSecret,
+      lun: this.linkupUsername,
+      lup: this.linkupPassword,
+      lur: this.linkupRegion
     };
   }
 
@@ -64,6 +72,10 @@ export class UrlData {
       ret.token = JsonData.toText(json.t);
       ret.startDate = json.sd == null ? new Date(1970, 0, 1) : JsonData.parseDate(json.sd);
       ret.endDate = JsonData.parseDate(json.ed);
+      ret.apiSecret = JsonData.toText(json.as);
+      ret.linkupUsername = JsonData.toText(json.lun);
+      ret.linkupPassword = JsonData.toText(json.lup);
+      ret.linkupRegion = JsonData.toText(json.lur) ?? 'DE';
     } catch (ex) {
       Log.devError(ex, `Fehler bei UrlData.fromJson`);
     }

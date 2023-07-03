@@ -1,5 +1,5 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
-     cdkDragRootElement=".dialog-box.settings">
+     cdkDragRootElement=".dialog-box.watchsettings">
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
@@ -14,8 +14,15 @@
   </div>
 
   <div mat-dialog-content>
-    <mat-slide-toggle [(ngModel)]="globals.isWatchColor">{{watchColorLabel}}</mat-slide-toggle>
-    <app-color-picker [(color)]="colpick" [savedColors]="savedColors"></app-color-picker>
+    <!-- app-color-picker [(color)]="colpick" [savedColors]="savedColors"></app-color-picker -->
+    <div class="sub">
+      <div class="subtitle" i18n="label of area for watch settings - display">Anzeigeeinstellungen</div>
+      <div class="functions">
+        <mat-slide-toggle [(ngModel)]="globals.isWatchColor">{{watchColorLabel}}</mat-slide-toggle>
+      </div>
+    </div>
+    <div class="sub">
+    </div>
   </div>
 
   <div mat-dialog-actions>

@@ -63,7 +63,7 @@ body {
   --settingsBodyBack: #4dd0e1;
   --settingsBodyFore: black;
   --settingsScrollThumb: #0097a7;
-  --settingsError: #db4437;
+  --settingsError: maroon;
   --legalHeaderBack: #e65100;
   --legalHeaderFore: #ffe0b2;
   --legalBodyBack: #ffb74d;
@@ -141,6 +141,8 @@ body {
   --feedbackHeaderFore: black;
   --feedbackBodyBack: #afa;
   --feedbackBodyFore: black;
+  --infoButtonBack: var(--settingsHeaderBack);
+  --infoButtonFore: var(--settingsHeaderFore);
 }
 
 mat-icon[small] {
@@ -230,6 +232,7 @@ mat-icon[small] {
   position: absolute;
   top: 50%;
   left: 50%;
+  display: none;
 }
 
 .cover {

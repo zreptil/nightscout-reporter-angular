@@ -118,7 +118,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">343</context>
+          <context context-type="linenumber">399</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8807722618432376624" datatype="html">
@@ -133,7 +133,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">344</context>
+          <context context-type="linenumber">400</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4609106925336303462" datatype="html">
@@ -849,21 +849,21 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source><x id="PH" equiv-text="this.activeCfgCount"/> erzeugen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5863317744980308324" datatype="html">
         <source>Die URL wurde noch nicht festgelegt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">277</context>
+          <context context-type="linenumber">275</context>
         </context-group>
       </trans-unit>
       <trans-unit id="252203167182468471" datatype="html">
         <source>Soll der Benutzer <x id="PH" equiv-text="GLOBALS.user.name"/> wirklich gelöscht werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/session.service.ts</context>
-          <context context-type="linenumber">328</context>
+          <context context-type="linenumber">326</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3404402744117770812" datatype="html">
@@ -894,6 +894,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           <context context-type="linenumber">293</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="730703184011067892" datatype="html">
+        <source>Dropbox</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2102256811886373951" datatype="html">
         <source>Für die Verbindung mit <x id="PH" equiv-text="serviceName"/> ist eine Bestätigung erforderlich, dass Nightscout Reporter die
 Daten von <x id="PH_1" equiv-text="serviceName"/> lesen und schreiben darf. Diese Bestätigung wird mit speziellen Dialogen von <x id="PH_2" equiv-text="serviceName"/>
@@ -901,7 +908,7 @@ angefordert. Was dort alles bestätigt werden muss, entzieht sich der Kontrolle 
 Soll der Bestätigungsablauf gestartet werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.ts</context>
-          <context context-type="linenumber">65,68</context>
+          <context context-type="linenumber">77,80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6942991069579974059" datatype="html">
@@ -1050,50 +1057,6 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <note priority="1" from="description">info for dsgvo in dataprotection</note>
       </trans-unit>
-      <trans-unit id="8429316238784832901" datatype="html">
-        <source>Feedback</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/feedback/feedback.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="description">title for feedback dialog</note>
-      </trans-unit>
-      <trans-unit id="6481674271086904852" datatype="html">
-        <source> Bitte das Feedback eingeben </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/feedback/feedback.component.html</context>
-          <context context-type="linenumber">19,21</context>
-        </context-group>
-        <note priority="1" from="description">description of feedback textfield</note>
-      </trans-unit>
-      <trans-unit id="5047166643731986722" datatype="html">
-        <source> Zugangsdaten für Nightscout einfügen </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/feedback/feedback.component.html</context>
-          <context context-type="linenumber">26,28</context>
-        </context-group>
-        <note priority="1" from="description">label for button to insert accessdata for nightscout in feedback</note>
-      </trans-unit>
-      <trans-unit id="6632923877048954417" datatype="html">
-        <source> Kontaktdaten, falls eine Antwort gewünscht wird </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/feedback/feedback.component.html</context>
-          <context context-type="linenumber">30,32</context>
-        </context-group>
-        <note priority="1" from="description">description of feedback textfield</note>
-      </trans-unit>
-      <trans-unit id="4392993924409588244" datatype="html">
-        <source>Absenden</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/feedback/feedback.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-        <note priority="1" from="description">buttonlabel for sending feedback</note>
-      </trans-unit>
       <trans-unit id="9103478354855300867" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>tune<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Formularparameter </source>
         <context-group purpose="location">
@@ -1145,6 +1108,14 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="linenumber">12</context>
         </context-group>
         <note priority="1" from="description">title of welcome screen</note>
+      </trans-unit>
+      <trans-unit id="8429316238784832901" datatype="html">
+        <source>Feedback</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">title of feedback</note>
       </trans-unit>
       <trans-unit id="4435703504669117699" datatype="html">
         <source>Einstellungen</source>
@@ -1233,11 +1204,18 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="412051503823250652" datatype="html">
+        <source>Feedback zu Nightscout Reporter <x id="PH" equiv-text="GLOBALS.version"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
+          <context context-type="linenumber">331</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7582790153734020223" datatype="html">
         <source>Soll die Synchronisierung mit Dropbox aufgehoben werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">387</context>
+          <context context-type="linenumber">398</context>
         </context-group>
       </trans-unit>
       <trans-unit id="238096398375218127" datatype="html">
@@ -1439,11 +1417,23 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <note priority="1" from="description">label of editfield for diabetes since</note>
       </trans-unit>
+      <trans-unit id="3777837906102079273" datatype="html">
+        <source> LibreLinkUp </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
+          <context context-type="linenumber">113,114</context>
+        </context-group>
+        <note priority="1" from="description">label of area for watch settings - librelinkup</note>
+      </trans-unit>
       <trans-unit id="3396314321097880980" datatype="html">
         <source>Anzeigeeinstellungen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.html</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="description">label of area for display setting</note>
       </trans-unit>
@@ -1451,7 +1441,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source> Auf Kacheln Bilder statt Namen anzeigen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">137,138</context>
+          <context context-type="linenumber">191,192</context>
         </context-group>
         <note priority="1" from="description">label for checkbox to show images on tiles</note>
       </trans-unit>
@@ -1459,7 +1449,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Zusatzfunktionen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">196</context>
         </context-group>
         <note priority="1" from="description">label of area for additional functions</note>
       </trans-unit>
@@ -1467,7 +1457,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source> Einstellungen von Release-Version übernehmen </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">148,149</context>
+          <context context-type="linenumber">202,203</context>
         </context-group>
         <note priority="1" from="description">buttonlabel for copy of settings to beta version</note>
       </trans-unit>
@@ -1475,7 +1465,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Exportieren</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">215</context>
         </context-group>
         <note priority="1" from="description">buttonlabel for exporting data</note>
       </trans-unit>
@@ -1483,7 +1473,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Importieren</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">219</context>
         </context-group>
         <note priority="1" from="description">buttonlabel for importing data</note>
       </trans-unit>
@@ -1491,7 +1481,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Speichern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">224</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut-edit/shortcut-edit.component.html</context>
@@ -1499,7 +1489,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/watch-settings/watch-settings.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="description">buttonlabel for saving data</note>
       </trans-unit>
@@ -1507,21 +1497,21 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Url zur Nightscout-API</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2522417553765949487" datatype="html">
         <source>Url zur Nightscout-API (z.B. https://xxx.ns.10be.de)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html">
         <source>Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-user-data.ts</context>
@@ -1532,7 +1522,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Insulin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -1551,35 +1541,74 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Zugriffsschlüssel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6533786609232046856" datatype="html">
+        <source>Username für Zugriff auf LibreLinkUp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1213593374077989872" datatype="html">
+        <source>Passwort für Zugriff auf LibreLinkUp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5324498437447909499" datatype="html">
+        <source>Region bei Zugriff auf LibreLinkUp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3171615835928522212" datatype="html">
         <source>Daten von</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4391891567115525191" datatype="html">
         <source>Daten bis</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4265956136039965395" datatype="html">
         <source>Ermittle ersten Tag mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8753888603691598520" datatype="html">
         <source>Ermittle letzten Tag mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4191173912022256463" datatype="html">
+        <source>Die Konfiguration von LibreLinkUp ermöglicht es Nightwatch, die Werte, die
+    über die Libre-App von Abbott vom Sensor empfangen werden, an Nightscout zu übermitteln. Um
+    das zu tun, ist es notwendig, dass Nightscout Reporter auch das API-Secret der Nightscout
+    Instanz kennt, weshalb man dieses hier hinterlegen muss. Die übrigen Einstellungen in diesem Bereich
+    dienen dazu, die Daten von LibreLinkUp zu empfangen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">112,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7216405079245914772" datatype="html">
+        <source>API-Secret für Nightscout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4562561451144140468" datatype="html">
@@ -1591,67 +1620,95 @@ Soll der Bestätigungsablauf gestartet werden?</source>
   iOS Loop oder andere Uploader diese Tabelle falsch befüllen.&lt;br&gt;&lt;br&gt;Maximale Anzahl an Profildatensätzen:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">92,97</context>
+          <context context-type="linenumber">124,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="msgLinkupUsernameHint" datatype="html">
+        <source>Diese Usernamen / Passwort Kombination ermöglicht es, Daten von LibreLinkUp zu erhalten.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="msgLinkupRegionHint" datatype="html">
+        <source>Hier muss die Region für LibreLinkUp angegeben werden.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgAccessTokenHint" datatype="html">
         <source>Der Zugriffsschlüssel wird nur benötigt, wenn der Zugriff in Nightscout über AUTH_DEFAULT_ROLES eingeschränkt wurde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="msgApiSecretHint" datatype="html">
+        <source>Das API-Secret muss nur erfasst werden, wenn die LibreLinkUp-Funktionaliät benutzt werden soll.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4907738756705330706" datatype="html">
+        <source>Dieses Passwort ermöglicht es, Daten in die Nightscout Instanz zu schreiben. Bitte auf keinen Fall an andere weitergeben!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
+          <context context-type="linenumber">165</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgStartDateHint" datatype="html">
         <source>Das Datum des ersten Tages mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">171</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgEndDateHint" datatype="html">
         <source>Das Datum des letzten kompletten Tages mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCalculatingDay" datatype="html">
         <source>Überprüfe <x id="PH" equiv-text="date"/> ...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4523326423447298135" datatype="html">
         <source>Prüfe <x id="PH" equiv-text="Utils.fmtDate(this.calcDate)"/> ...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">159</context>
+          <context context-type="linenumber">215</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">251</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCheckUser" datatype="html">
         <source>Überprüfe Zugriff auf <x id="PH" equiv-text="url"/>...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">306</context>
+          <context context-type="linenumber">362</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6976047278355685385" datatype="html">
         <source>Soll die URL <x id="PH" equiv-text="GLOBALS.user.listApiUrl[idx].url"/> vom Benutzer wirklich gelöscht werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">318</context>
+          <context context-type="linenumber">374</context>
         </context-group>
       </trans-unit>
       <trans-unit id="94497717439360872" datatype="html">
         <source>Soll gespeichert werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">347</context>
+          <context context-type="linenumber">403</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6494831464643926227" datatype="html">

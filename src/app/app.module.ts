@@ -44,6 +44,7 @@ import {ShortcutComponent} from './components/shortcut/shortcut.component';
 import {WatchSettingsComponent} from './components/watch-settings/watch-settings.component';
 import {WatchGroupComponent} from './components/watch-group/watch-group.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { InfoButtonComponent } from './controls/info-button/info-button.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ViewUsersComponent,
     ShortcutComponent,
     WatchSettingsComponent,
-    WatchGroupComponent
+    WatchGroupComponent,
+    InfoButtonComponent
   ],
   imports: [
     BrowserModule,

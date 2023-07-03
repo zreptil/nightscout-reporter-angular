@@ -7,4 +7,26 @@
     --accentBack: var(--settingsHeaderBack);
     --accentFore: var(--settingsHeaderFore);
   }
+
+
+  .sub {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: justify;
+
+    .subtitle {
+      display: flex;
+      flex-flow: row;
+      color: var(--settingsHeaderBack);
+      font-size: 1.5em;
+      padding-bottom: 0.5em;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .subinfo {
+      font-size: 75%;
+    }
+  }
+
 }

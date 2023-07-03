@@ -134,7 +134,14 @@ export class DataService {
     });
   }
 
-  async request(url: string, params?: { method?: string, options?: any, body?: any, showError?: boolean, asJson?: boolean, timeout?: number }) {
+  async request(url: string, params?: {
+    method?: string,
+    options?: any,
+    body?: any,
+    showError?: boolean,
+    asJson?: boolean,
+    timeout?: number
+  }) {
     params ??= {};
     params.method ??= 'get';
     params.showError ??= true;
