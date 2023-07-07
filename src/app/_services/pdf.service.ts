@@ -355,7 +355,7 @@ export class PdfService {
   /**
    * Preprocesses the pdf-data before creating it with pdfmake.
    * Every text-node is checked for special format-information
-   * and precessed accordingly.
+   * and processed accordingly.
    * @param data data to process
    */
   private preprocessData(data: any) {
@@ -372,7 +372,9 @@ export class PdfService {
           }
           if (isHebrew) {
             data.font = 'Hebrew';
-            // data.text = data.text.split('').reverse();
+            const text = Utils.join(data.text.split(' ').reverse(), '  ');
+            data.text = undefined;
+            data.stack = text.split(',').reverse();
           }
         } else {
           this.preprocessData(data[key]);

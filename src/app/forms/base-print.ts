@@ -1511,7 +1511,6 @@ export abstract class BasePrint extends FormConfig {
     }
     let listWarn: string[ ] = [...GLOBALS.pdfWarnings];
     // listWarn.push('Das ist eine Warnung für alle, die keine Ahnung haben und für alle, die denken, eine Warnung wäre nicht nötig, aber ÜBERRASCHUNG!!!!! Sie ist nötig!!!!');
-    console.log(listWarn);
     if (GlobalsData.user.adjustGluc) {
       listWarn.push(this.msgAdjustGlucHint);
     }
