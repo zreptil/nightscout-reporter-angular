@@ -600,31 +600,32 @@ export class DataService {
         GLOBALS.glucDir = 360;
       } else {
         try {
-          let eNow = EntryData.fromJson(src[0]);
+          let eLast = EntryData.fromJson(src[0]);
           let ePrev: EntryData = null;
           for (let i = 1; i < src.length && ePrev == null; i++) {
             const check = EntryData.fromJson(src[i]);
-            if (check.device === eNow.device) {
+            if (check.device === eLast.device) {
               ePrev = check;
             }
           }
           if (ePrev == null) {
-            ePrev = eNow;
+            ePrev = eLast;
           }
-          const span = Math.max(Utils.differenceInMinutes(eNow.time, ePrev.time), 1);
+          const span = Math.max(Utils.differenceInMinutes(eLast.time, ePrev.time), 1);
           GLOBALS.glucDir = 360;
           GLOBALS.currentGlucDiff = '';
           GLOBALS.currentGlucTime = '';
           if (span > 15) {
             return GLOBALS.currentGluc;
           }
-          const time = Utils.differenceInMinutes(GlobalsData.now, eNow.time);
+          const time = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
           GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(time);
-
-          GLOBALS.currentGlucSrc = eNow;
-          GLOBALS.lastGlucSrc = ePrev;
-          const diff = eNow.gluc - ePrev.gluc;
-          GLOBALS.currentGlucDiff = `${eNow.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
+          if (time < 15) {
+            GLOBALS.currentGlucSrc = eLast;
+            GLOBALS.lastGlucSrc = ePrev;
+          }
+          const diff = eLast.gluc - ePrev.gluc;
+          GLOBALS.currentGlucDiff = `${eLast.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
           const limit = Math.floor(10 * span);
           if (diff > limit) {
             GLOBALS.glucDir = -90;

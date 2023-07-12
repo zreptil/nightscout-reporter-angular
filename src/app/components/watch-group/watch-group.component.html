@@ -8,7 +8,7 @@
     </ng-container>
     <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='time'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtTime(ws.now)}}</app-watch-entry>
     <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='date'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtDate(ws.now)}}</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='unit'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'unit')" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
     <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='gluc'" [element]="entry" [isEditMode]="ws.isEditMode">
       <div gluc>
         <div>{{globals.currentGluc}}</div>
@@ -25,7 +25,7 @@
     <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type.startsWith('change')" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
       <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{changeInfo(entry)}}
     </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='target'" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'target')" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
       <div class="target">
         <div [ngStyle]="styleTargetLow" class="low">{{globals.targetBottom}}</div>
         <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
@@ -36,7 +36,7 @@
         <div [ngStyle]="styleArrowTip" class="arrowtip"></div>
       </div>
     </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='arrow'" [element]="entry" [isEditMode]="ws.isEditMode">
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
       <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
            xmlns="http://www.w3.org/2000/svg">
         <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">

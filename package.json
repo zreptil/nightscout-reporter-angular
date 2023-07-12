@@ -56,8 +56,7 @@
     "jasmine-core": "~4.5.0",
     "npm-build-zip": "^1.0.3",
     "typescript": "~5.1.6",
-    "xliff": "^6.1.0",
-    "better-npm-audit": "^3.7.3"
+    "xliff": "^6.1.0"
   },
   "overrides": {
     "semver": "~7.5.3"

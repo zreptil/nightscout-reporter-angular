@@ -91,7 +91,7 @@ export class WatchGroupComponent {
 
   colForGluc(gluc: number): string {
     if (gluc == null) {
-      return 'norm';
+      return 'unknown';
     }
     if (gluc < GLOBALS.targetBottom) {
       return 'low';
@@ -122,5 +122,21 @@ export class WatchGroupComponent {
   changeInfo(entry: WatchElement): string {
     const id = entry.type.substring(7);
     return GLOBALS.currentChanges?.[id]?.lasttime;
+  }
+
+  showEntry(entry: WatchElement, type: string) {
+    if (entry.type !== type) {
+      return false;
+    }
+    if (this.ws.isEditMode) {
+      return true;
+    }
+    switch (type) {
+      case 'unit':
+      case 'target':
+      case 'arrow':
+        return GLOBALS.currentGlucSrc != null;
+    }
+    return false;
   }
 }
