@@ -59,13 +59,13 @@ export class GlobalsData extends Settings {
   glucDir = 360;
   glucTimer: any;
   glucRunning = false;
-  currentGlucVisible = true;
   currentGlucCounter = 0;
   targetBottom = Settings.stdLow;
   targetTop = Settings.stdHigh;
   currentGlucSrc: EntryData;
   currentChanges: { [key: string]: WatchChangeData };
   lastGlucSrc: EntryData;
+  currentGlucPast: number;
   currentGlucDiff: string;
   currentGlucTime: string;
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
@@ -158,6 +158,10 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  get currentGlucValid(): boolean {
+    return this.currentGlucPast < 14;
   }
 
   _currPeriodShift: PeriodShift;

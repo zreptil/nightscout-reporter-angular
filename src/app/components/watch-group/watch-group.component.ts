@@ -90,7 +90,7 @@ export class WatchGroupComponent {
   }
 
   colForGluc(gluc: number): string {
-    if (gluc == null) {
+    if (gluc == null || !GLOBALS.currentGlucValid) {
       return 'unknown';
     }
     if (gluc < GLOBALS.targetBottom) {
@@ -134,8 +134,9 @@ export class WatchGroupComponent {
     switch (type) {
       case 'unit':
       case 'target':
-      case 'arrow':
         return GLOBALS.currentGlucSrc != null;
+      case 'arrow':
+        return GLOBALS.currentGlucValid;
     }
     return false;
   }

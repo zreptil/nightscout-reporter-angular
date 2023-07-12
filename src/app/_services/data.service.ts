@@ -618,9 +618,9 @@ export class DataService {
           if (span > 15) {
             return GLOBALS.currentGluc;
           }
-          const time = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
-          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(time);
-          if (time < 15) {
+          GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
+          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(GLOBALS.currentGlucPast);
+          if (GLOBALS.currentGlucValid || GLOBALS.currentGlucSrc == null) {
             GLOBALS.currentGlucSrc = eLast;
             GLOBALS.lastGlucSrc = ePrev;
           }
@@ -684,9 +684,9 @@ export class DataService {
     }
     GLOBALS.currentChanges = changes;
 
-    if (GLOBALS.currentGlucVisible || params.force) {
+    if (params.force) {
       let milliseconds = params.timeout * 1000;
-      //  calculate the milliseconds to the next full part of the minute for the timer
+      // calculate the milliseconds to the next full part of the minute for the timer
       // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
       // this is done for that the display of the time will match the current
       // time when entering a new minute
