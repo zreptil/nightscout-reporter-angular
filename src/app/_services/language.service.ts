@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as messages from '../../assets/messages.json';
 import {registerLocaleData} from '@angular/common';
 import de from '@angular/common/locales/de';
@@ -13,6 +13,7 @@ import frFR from '@angular/common/locales/fr';
 import noNO from '@angular/common/locales/no';
 import nlNL from '@angular/common/locales/nl';
 import ruRU from '@angular/common/locales/ru';
+import csCZ from '@angular/common/locales/cs';
 import {loadTranslations} from '@angular/localize';
 
 @Injectable({
@@ -20,7 +21,8 @@ import {loadTranslations} from '@angular/localize';
 })
 export class LanguageService {
 
-  constructor() { }
+  constructor() {
+  }
 
   activate(langCode: string) {
     // const check = JSON.parse(localStorage.getItem('webData'))?.w1 || 'de-DE';
@@ -41,7 +43,8 @@ export class LanguageService {
       'pl-PL': plPL,
       'pt-PT': ptPT,
       'ru-RU': ruRU,
-      'sk-SK': skSK
+      'sk-SK': skSK,
+      'cs-CZ': csCZ
     } as any)[lng.id]);
   }
 }

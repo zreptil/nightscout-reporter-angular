@@ -6,7 +6,9 @@ export class LangData {
       crowdin.langName = name;
       crowdin.langIdx = langIdx;
       const parts = code.toLowerCase().split('-');
-      if (parts[0] === parts[1]) {
+      if (parts.length === 3) {
+        crowdin.langCode = parts[2];
+      } else if (parts[0] === parts[1]) {
         crowdin.langCode = parts[0];
       } else {
         crowdin.langCode = `${parts[0]}${parts[1]}`;

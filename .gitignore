@@ -49,3 +49,4 @@ Thumbs.db
 /src/locale/translated/
 /nightrep (translations).zip
 /nightrep (english) (translations).zip
+/package-lock.json

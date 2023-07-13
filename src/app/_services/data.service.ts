@@ -533,7 +533,12 @@ export class DataService {
     GLOBALS.language = value;
     this.saveWebData();
     this.save();
-    this.ls.activate(value.code);
+    const parts = value.code.split('-');
+    if (parts.length === 3) {
+      this.ls.activate(`${parts[0]}-${parts[1]}`);
+    } else {
+      this.ls.activate(value.code);
+    }
     // Intl.systemLocale = Intl.canonicalizedLocale(language.code);
     // await tz.initializeTimeZone();
     // await initializeMessages(language.code);
