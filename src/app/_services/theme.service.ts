@@ -9,6 +9,8 @@ import {GLOBALS} from '@/_model/globals-data';
 })
 export class ThemeService {
   readonly currTheme: any = {};
+  themeWidth = '13em';
+  langHeight = '15em';
 
   constructor(public ds: DataService,
               public ms: MaterialColorService) {
@@ -59,6 +61,8 @@ export class ThemeService {
       this.currTheme[key] = value;
       style.setProperty(`--${key}`, value);
     }
+    style.setProperty('--lang-height', this.langHeight);
+    style.setProperty('--theme-width', this.themeWidth);
   }
 
   getThemeStyle(theme: any): any {

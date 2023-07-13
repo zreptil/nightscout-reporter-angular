@@ -10,8 +10,14 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(40.5)">
-      <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.06.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.07.2023</span></h2>
     <ul [class]="classFor(40.5)">
+      <li class="changed">
+        Die Anzeige von Night Watch wurde korrigiert, damit sie bei Werten, die zu lange zurück
+        liegen grau dargestellt wird. So sieht man auf einen Blick, ob der Wert zur Betrachtung
+        der aktuellen Blutzuckerlage herangezogen werden sollte oder nicht. "Zu lange zurück"
+        heisst in diesem Fall länger als 14 Minuten.
+      </li>
       <li class="changed">
         Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
         wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt

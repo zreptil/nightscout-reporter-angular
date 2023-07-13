@@ -8,14 +8,14 @@
 .langPanel {
   position: absolute;
   bottom: 3.5em;
-  width: 3em;
+  width: 12em;
   left: 0.5em;
   overflow: hidden;
   border-radius: 0.5em;
 
   [frame] {
-    display: flex;
-    flex-flow: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-content: flex-start;
     border: 1px solid var(--mainHeaderBack);

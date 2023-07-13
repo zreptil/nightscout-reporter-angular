@@ -28,6 +28,7 @@
     "@angular/router": "^16.1.4",
     "@types/google-one-tap": "^1.2.2",
     "@types/pdfmake": "^0.2.1",
+    "@types/ws": "^8.5.4",
     "base64-arraybuffer": "^1.0.2",
     "better-npm-audit": "^3.7.3",
     "extract-zip": "^2.0.1",

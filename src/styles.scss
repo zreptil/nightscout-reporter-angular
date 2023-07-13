@@ -370,8 +370,6 @@ mat-icon[small] {
   color: var(--logDebugFore) !important;
 }
 
-$theme-width: 13em;
-$lang-height: 31em;
 @keyframes owl_showthemes {
   0% {
     width: 0;
@@ -380,19 +378,19 @@ $lang-height: 31em;
     width: 0;
   }
   90% {
-    width: calc(#{$theme-width} + 1em);
+    width: calc(var(--theme-width) + 1em);
   }
   100% {
-    width: $theme-width;
+    width: var(--theme-width);
   }
 }
 
 @keyframes owl_hidethemes {
   0% {
-    width: $theme-width;
+    width: var(--theme-width);
   }
   10% {
-    width: calc(#{$theme-width} + 1em);
+    width: calc(var(--theme-width) + 1em);
   }
   90% {
     width: 0;
@@ -410,19 +408,19 @@ $lang-height: 31em;
     height: 0;
   }
   90% {
-    height: calc(#{$lang-height} + 1em);
+    height: calc(var(--lang-height) + 1em);
   }
   100% {
-    height: $lang-height;
+    height: var(--lang-height);
   }
 }
 
 @keyframes owl_hidelanguages {
   0% {
-    height: $lang-height;
+    height: var(--lang-height);
   }
   10% {
-    height: calc(#{$lang-height} + 1em);
+    height: calc(var(--lang-height) + 1em);
   }
   90% {
     height: 0;
