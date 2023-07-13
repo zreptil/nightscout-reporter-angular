@@ -1,8 +1,9 @@
 <mat-tab-group>
   <mat-tab label="PDF Tools">
     <div lang>
-      <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-button>
-        {{lang.code}}<br><img [src]="lang.imgPath" alt="language image">
+      <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-raised-button>
+        <img [src]="lang.imgPath" alt="language image">
+        <div>{{lang.code}}</div>
       </button>
     </div>
     <div class="pdfimg" id="pdfimg"></div>
@@ -17,8 +18,9 @@
       </button>
     </div>
     <div lang>
-      <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-button>
-        {{lang.code}}<br><img [src]="lang.imgPath" alt="language image">
+      <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-raised-button>
+        <img [src]="lang.imgPath" alt="language image">
+        <div>{{lang.code}}</div>
       </button>
     </div>
   </mat-tab>

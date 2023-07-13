@@ -21,11 +21,19 @@
       flex: 1;
 
       [lang] {
-        display: flex;
-        flex-flow: row;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         align-items: center;
-        justify-content: center;
-        flex: 1;
+        flex: 0;
+
+        button {
+          height: 5em;
+
+          .mdc-button__label {
+            display: flex;
+            flex-flow: column;
+          }
+        }
       }
 
       div {

@@ -54,7 +54,7 @@ export class Settings {
     new LangData('nl-NL', `Dansk`, 'nl', CrowdinData.factoryEnglish(), 2),
     new LangData('no-NO', `Norsk`, 'no', CrowdinData.factoryEnglish(), 3),
     new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 6),
-    new LangData('cs-CZ-cs', `čeština`, 'cz', CrowdinData.factoryEnglish(), 7),
+    new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 7, 'cs'),
   ];
 
   static get hastiod(): boolean {

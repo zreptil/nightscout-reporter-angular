@@ -12,25 +12,6 @@
     <h2 (click)="click(40.5)">
       <span i18n="version">Version</span><span i18n="v405">4.0.5 - xx.07.2023</span></h2>
     <ul [class]="classFor(40.5)">
-      <li class="changed">
-        Die Anzeige von Night Watch wurde korrigiert, damit sie bei Werten, die zu lange zurück
-        liegen grau dargestellt wird. So sieht man auf einen Blick, ob der Wert zur Betrachtung
-        der aktuellen Blutzuckerlage herangezogen werden sollte oder nicht. "Zu lange zurück"
-        heisst in diesem Fall länger als 14 Minuten.
-      </li>
-      <li class="changed">
-        Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
-        wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt
-        <br><br>
-        {{originUrl}}#watch
-        <br><br>
-        wird jetzt Folgendes verwendet:
-        <br><br>
-        {{originUrl}}/watch
-        <br><br>
-        Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones
-        stabiler, wenn man die Seiten neu lädt.
-      </li>
       <li class="added" i18n="v405a1">
         Nach dem Laden der Daten wird überprüft, ob es Datensätze gibt, die von verschiedenen Geräten
         hochgeladen wurden. Wenn das der Fall ist, wird ein Dialog angezeigt, in dem das gewünschte
@@ -58,7 +39,43 @@
         ausgegeben. Gleiches gilt, wenn diese Angabe nicht vorhanden ist.</span><br>
         <br><span i18n>Sämtliche Angaben werden ohne Beachtung der Goss/Klein-Schreibung berücksichtigt.</span>
       </li>
-      <li class="removed">
+      <li class="added" i18n="v405a4">
+        Wenn die Notizen in hebräisch erfasst werden, werden sie nun auch korrekt dargestellt. Es gibt
+        da bei mehrzeiligen Kommentaren das Problem, dass die Reihenfolge der Zeilen umgekehrt ist,
+        was durch Kommata im Text korrigert werden kann. Also statt:
+        <br><br>
+        זהו טקסט נפלא עם יותר מדי מילים
+        <br><br>
+        sollte es so geschrieben werden:
+        <br><br>
+        זה טקסט נפלא, עם יותר מדי מילים
+        <br><br>
+        Das sorgt dann dafür, dass im PDF zwei Zeilen in der richtigen Reihenfolge erscheinen.
+        Nightscout Reporter hat bislang keine generelle Unterstützung für Schriften, die von
+        rechts nach links geschrieben werden. Da sich bisher auch noch niemand gemeldet hat,
+        der so etwas gerne hätte und die Übersetzung der Texte in Nightscout Reporter übernehmen
+        würde, wird es aktuell bei dieser Sonderlösung für hebräische Notizen bleiben.
+      </li>
+      <li class="changed" i18n="v405c1">
+        Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
+        wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt
+        <br><br>
+        {{originUrl}}#watch
+        <br><br>
+        wird jetzt Folgendes verwendet:
+        <br><br>
+        {{originUrl}}/watch
+        <br><br>
+        Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones
+        stabiler, wenn man die Seiten neu lädt.
+      </li>
+      <li class="changed" i18n="v405c2">
+        Die Anzeige von Night Watch wurde korrigiert, damit sie bei Werten, die zu lange zurück
+        liegen grau dargestellt wird. So sieht man auf einen Blick, ob der Wert zur Betrachtung
+        der aktuellen Blutzuckerlage herangezogen werden sollte oder nicht. "Zu lange zurück"
+        heisst in diesem Fall länger als 14 Minuten.
+      </li>
+      <li class="removed" i18n="v405r1">
         Der Link zur Facebookseite wurde aus dem Menü entfernt, da die Facebookseite nur der allgemeinen
         Information über eine neue Version dient und dort keine Informationen zu finden sind, die im
         Programm nicht vorhanden sind. Ausserdem ist der Entwickler unfähig, die Facebook-Apps so zu
@@ -67,13 +84,14 @@
         zugemüllt zu werden. Deswegen haben in der Vergangenheit einige Benutzer recht lange auf eine
         Nachricht warten müssen. Daher wurde Folgendes hinzugefügt:
       </li>
-      <li class="added">
-        Im Hauptmenü wurde der Punkt <b>Feedback</b> hinzugefügt. In dem Dialog kann eine Nachricht an
-        den Entwickler versendet werden, um Fragen zu stellen oder Probleme zu melden. Da die meisten
-        Probleme nur durch die entsprechenden Daten nachvollzogen werden können, kann über einen Button
-        die URL zur Nightscout Instanz eingefügt werden. Ausserdem kann man dort Kontaktdaten angeben,
-        über die der Entwickler sich dann melden kann, wenn er der Meinung ist, etwas hilfreiches
-        beitragen zu können.
+      <li class="added" i18n="v405a3">
+        Im Hauptmenü wurde der Punkt <b>Feedback</b> hinzugefügt. Damit wird das für Mails eingestellte
+        Programm im System gestartet und eine Mail zum Versand an den Entwickler vorbereitet. Die Mail
+        kann dann beliebig editiert werden, um dort zu beschreiben, was dem Entwickler mitgeteilt
+        werden soll. In der Mail wird auch die URL zur Nightscout Instanz eingetragen, da diese
+        Information in den meisten Fällen sehr nützlich ist, um speziellen Problemen auf den Grund
+        gehen zu können. Diese URL kann aber auch vor dem Versand aus der Mail gelöscht werden,
+        falls sie für die Nachvollziehbarkeit des Problems nicht relevant ist.
       </li>
     </ul>
     <h2 (click)="click(40.4)">
