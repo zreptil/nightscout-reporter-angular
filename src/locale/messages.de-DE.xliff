@@ -2372,13 +2372,13 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <note priority="1" from="description">version</note>
       </trans-unit>
-      <trans-unit id="4406105815889205704" datatype="html">
-        <source>4.0.5 - xx.07.2023</source>
+      <trans-unit id="8712146730084057068" datatype="html">
+        <source>4.1.0 - 15.07.2023</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
-        <note priority="1" from="description">v405</note>
+        <note priority="1" from="description">v410</note>
       </trans-unit>
       <trans-unit id="6104897900996596813" datatype="html">
         <source> Nach dem Laden der Daten wird überprüft, ob es Datensätze gibt, die von verschiedenen Geräten hochgeladen wurden. Wenn das der Fall ist, wird ein Dialog angezeigt, in dem das gewünschte Gerät für die Auswertung ausgewählt werden muss. Es gibt auch die Auswahl &quot;Alle&quot;, mit der dann die Werte wie bisher auch gesammelt angezeigt werden. Wenn diese Auswahl getroffen wird, dann wird auf jeder Seite rechts oben ein Warnhinweis ausgegeben, der auf diesen Umstand hinweist. </source>
@@ -2386,7 +2386,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">15,22</context>
         </context-group>
-        <note priority="1" from="description">v405a1</note>
+        <note priority="1" from="description">v410a1</note>
       </trans-unit>
       <trans-unit id="7148032414959418926" datatype="html">
         <source>Beim Aufruf mit einem shortcut-Parameter wurde ein neuer Parameter hinzugefügt, der es ermöglicht ein Gerät anzugeben, für das die Auswertung erfolgen soll. Wenn keines angegeben wird, dann wird automatisch die Auswahl &quot;Alle&quot; vorgenommen. Der Aufruf mit allen Parametern sieht dann so aus:</source>
@@ -2436,7 +2436,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">42,58</context>
         </context-group>
-        <note priority="1" from="description">v405a4</note>
+        <note priority="1" from="description">v410a4</note>
       </trans-unit>
       <trans-unit id="4752503161171459512" datatype="html">
         <source> Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>#watch <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> wird jetzt Folgendes verwendet: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>/watch <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones stabiler, wenn man die Seiten neu lädt. </source>
@@ -2444,7 +2444,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">59,71</context>
         </context-group>
-        <note priority="1" from="description">v405c1</note>
+        <note priority="1" from="description">v410c1</note>
       </trans-unit>
       <trans-unit id="906220988767368582" datatype="html">
         <source> Die Anzeige von Night Watch wurde korrigiert, damit sie bei Werten, die zu lange zurück liegen grau dargestellt wird. So sieht man auf einen Blick, ob der Wert zur Betrachtung der aktuellen Blutzuckerlage herangezogen werden sollte oder nicht. &quot;Zu lange zurück&quot; heisst in diesem Fall länger als 14 Minuten. </source>
@@ -2452,7 +2452,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">72,77</context>
         </context-group>
-        <note priority="1" from="description">v405c2</note>
+        <note priority="1" from="description">v410c2</note>
       </trans-unit>
       <trans-unit id="94711824034349494" datatype="html">
         <source> Da mit Tschechisch eine neue Sprache hinzugekommen ist (viele Dank an Lukáš Trčka, der diese Übersetzung übernimmt), wurde das Sprachmenü, das über die Eule links unten zu erreichen ist, mehrspaltig umgestaltet. </source>
@@ -2460,7 +2460,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">78,82</context>
         </context-group>
-        <note priority="1" from="description">v405c3</note>
+        <note priority="1" from="description">v410c3</note>
       </trans-unit>
       <trans-unit id="8483841813240634416" datatype="html">
         <source> Der Link zur Facebookseite wurde aus dem Menü entfernt, da die Facebookseite nur der allgemeinen Information über eine neue Version dient und dort keine Informationen zu finden sind, die im Programm nicht vorhanden sind. Ausserdem ist der Entwickler unfähig, die Facebook-Apps so zu konfigurieren, dass sie ihm Benachrichtigungen über Kontaktaufnahmen zuschicken. Vielleicht ist auch Facebook generell so schlecht, dass das nicht möglich ist, ohne mit unwichtigen Benachrichtigungen zugemüllt zu werden. Deswegen haben in der Vergangenheit einige Benutzer recht lange auf eine Nachricht warten müssen. Daher wurde Folgendes hinzugefügt: </source>
@@ -2468,7 +2468,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">83,91</context>
         </context-group>
-        <note priority="1" from="description">v405r1</note>
+        <note priority="1" from="description">v410r1</note>
       </trans-unit>
       <trans-unit id="4137795264534617440" datatype="html">
         <source> Im Hauptmenü wurde der Punkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Feedback<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> hinzugefügt. Damit wird das für Mails eingestellte Programm im System gestartet und eine Mail zum Versand an den Entwickler vorbereitet. Die Mail kann dann beliebig editiert werden, um dort zu beschreiben, was dem Entwickler mitgeteilt werden soll. In der Mail wird auch die URL zur Nightscout Instanz eingetragen, da diese Information in den meisten Fällen sehr nützlich ist, um speziellen Problemen auf den Grund gehen zu können. Diese URL kann aber auch vor dem Versand aus der Mail gelöscht werden, falls sie für die Nachvollziehbarkeit des Problems nicht relevant ist. </source>
@@ -2476,7 +2476,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">92,100</context>
         </context-group>
-        <note priority="1" from="description">v405a3</note>
+        <note priority="1" from="description">v410a3</note>
       </trans-unit>
       <trans-unit id="9066596414521795114" datatype="html">
         <source>4.0.4 - 07.04.2023</source>

@@ -2387,20 +2387,20 @@ Maximum number of profile datasets:</target>
         <note priority="1" from="description">version</note>
         <source>Version</source>
       </trans-unit>
-      <trans-unit id="4406105815889205704" datatype="html" approved="yes">
+      <trans-unit id="8712146730084057068" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
-        <note priority="1" from="description">v405</note>
-        <source>4.0.5 - xx/07/2023</source>
+        <note priority="1" from="description">v410</note>
+        <source>4.1.0 - 15/07/2023</source>
       </trans-unit>
       <trans-unit id="6104897900996596813" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">15,22</context>
         </context-group>
-        <note priority="1" from="description">v405a1</note>
+        <note priority="1" from="description">v410a1</note>
         <source> After loading the data, the data is checked whether there are any datasets that have been uploaded from different devices. If this is the case, a dialog is displayed in which the desired device for the evaluation must be selected. There is also the option "All", with which the values are displayed alltogether as before. If this selection is made, a warning will be displayed in the top right corner of every page, pointing out this circumstance. </source>
       </trans-unit>
       <trans-unit id="7148032414959418926" datatype="html" approved="yes">
@@ -2450,7 +2450,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">42,58</context>
         </context-group>
-        <note priority="1" from="description">v405a4</note>
+        <note priority="1" from="description">v410a4</note>
         <source> If the notes are entered in Hebrew, they are now also displayed correctly. There is the problem with multi-line comments that the order of the lines is reversed, which can be corrected by commas in the text. So instead of: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> זהו טקסט נפלא עם יותר מדי מילים <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> it should be written like this: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> זה טקסט נפלא, עם יותר מדי מילים <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> This then ensures that two lines appear in the correct order in the PDF. Nightscout Reporter does not yet have general support for fonts written from right to left. Since no one has so far shown up who would like something like this and would do the translation of the texts in Nightscout Reporter, this special solution for Hebrew notes will currently be the only one. </source>
       </trans-unit>
       <trans-unit id="4752503161171459512" datatype="html" approved="yes">
@@ -2458,7 +2458,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">59,71</context>
         </context-group>
-        <note priority="1" from="description">v405c1</note>
+        <note priority="1" from="description">v410c1</note>
         <target state="final"> The start with shortcuts and Night Watch has been slightly modified. Instead of a # character, the call is now executed using the corresponding specification in the path. So instead of <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>#watch <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> the following is used: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>/watch 
 <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> With that, the use as installed apps is more stable on Windows and smartphones when you refresh the pages. </target>
       </trans-unit>
@@ -2467,7 +2467,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">72,77</context>
         </context-group>
-        <note priority="1" from="description">v405c2</note>
+        <note priority="1" from="description">v410c2</note>
         <source> Fixed Night Watch display to gray out for values that are too far in the past. So you can see at a glance whether the value should be used to look at the current blood sugar level or not. In this case, "too far in the past" means longer than 14 minutes. </source>
       </trans-unit>
       <trans-unit id="94711824034349494" datatype="html" approved="yes">
@@ -2475,7 +2475,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">78,82</context>
         </context-group>
-        <note priority="1" from="description">v405c3</note>
+        <note priority="1" from="description">v410c3</note>
         <source> Since Czech was added as a new language (many thanks to Lukáš Trčka, who takes care of the translation), the language menu, which can be reached via the owl at the bottom left, has been redesigned with multiple columns. </source>
       </trans-unit>
       <trans-unit id="8483841813240634416" datatype="html" approved="yes">
@@ -2483,7 +2483,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">83,91</context>
         </context-group>
-        <note priority="1" from="description">v405r1</note>
+        <note priority="1" from="description">v410r1</note>
         <source> The link to the facebook page has been removed from the menu because the facebook page is only for general information about a new version and you won't find any information there that isn't available in the program. In addition, the developer is unable to configure the Facebook apps to send him notifications that he has been contacted. Maybe Facebook is so bad in general that it's not possible without being bombarded with unimportant notifications. Because of this, in the past some users had to wait quite a long time for a message. Therefore the following has been added: </source>
       </trans-unit>
       <trans-unit id="4137795264534617440" datatype="html" approved="yes">
@@ -2491,7 +2491,7 @@ Maximum number of profile datasets:</target>
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">92,100</context>
         </context-group>
-        <note priority="1" from="description">v405a3</note>
+        <note priority="1" from="description">v410a3</note>
         <source> In the main menu the menuitem <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Feedback<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/ b&gt;"/> was added. This starts the program set for emails in the system and prepares an email to be sent to the developer. The mail can then be edited as desired to describe what needs to be known by the developer. The URL to the Nightscout instance is also copied to the mail, since this information is very useful in most cases to be able to reproduce the problem. However, this URL can also be deleted from the email before it is sent if it is not relevant for the reproducibility of the problem. </source>
       </trans-unit>
       <trans-unit id="9066596414521795114" datatype="html" approved="yes">

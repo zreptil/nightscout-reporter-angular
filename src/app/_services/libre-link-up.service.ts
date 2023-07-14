@@ -9,7 +9,6 @@ import {Log} from '@/_services/log.service';
 import {DataService} from '@/_services/data.service';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {LibreLinkUpHttpHeaders} from '@/_model/libre-link-up/interfaces/http-headers';
-import {firstValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -96,29 +95,31 @@ export class LibreLinkUpService {
       });
 
       this.http.request(req).subscribe(response => {
-        console.log('Da ist was', req, response);
+        console.log('Request-Response', req, response);
       });
 
-      const response: any = await firstValueFrom(this.http.request(req));
-      console.log('Hab was', response);
-      try {
-        if (response?.data?.status !== 0) {
-          Log.error(`LLU - Non-zero status code: ${JSON.stringify(response.data)}`)
-          return null;
-        }
-        if (response?.data?.data?.redirect === true && response?.data?.data?.region) {
-          const correctRegion = response.data.data.region.toUpperCase();
-          Log.error(
-            `LLU - Logged in to the wrong region. Switch to '${correctRegion}' region.`
-          );
-          return null;
-        }
-        Log.info('LLU: Logged in to LibreLink Up');
-        return response?.data?.data?.authTicket;
-      } catch (err) {
-        Log.error('LLU: Invalid authentication token. Please check your LibreLink Up credentials', err);
-        return null;
-      }
+      return null;
+
+      // const response: any = await firstValueFrom(this.http.request(req));
+      // console.log('Hab was', response);
+      // try {
+      //   if (response?.data?.status !== 0) {
+      //     Log.error(`LLU - Non-zero status code: ${JSON.stringify(response.data)}`)
+      //     return null;
+      //   }
+      //   if (response?.data?.data?.redirect === true && response?.data?.data?.region) {
+      //     const correctRegion = response.data.data.region.toUpperCase();
+      //     Log.error(
+      //       `LLU - Logged in to the wrong region. Switch to '${correctRegion}' region.`
+      //     );
+      //     return null;
+      //   }
+      //   Log.info('LLU: Logged in to LibreLink Up');
+      //   return response?.data?.data?.authTicket;
+      // } catch (err) {
+      //   Log.error('LLU: Invalid authentication token. Please check your LibreLink Up credentials', err);
+      //   return null;
+      // }
     } catch (error) {
       Log.error('LLU: Invalid credentials', error);
       return null;

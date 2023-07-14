@@ -108,13 +108,13 @@
           </div>
         </div>
       </div>
-      <ng-container *ngIf="globals.isDebug">
-        <div class="row debug">
+      <ng-container *ngIf="globals.isLocal">
+        <div class="row is-local">
           <div class="subtitle" i18n="label of area for watch settings - librelinkup">
             LibreLinkUp
           </div>
         </div>
-        <div class="row debug">
+        <div class="row is-local">
           <div class="formfield mat-form-field-infix">
             <mat-form-field>
               <mat-label *ngIf="idx===0">{{msgLinkupUsername}}</mat-label>
@@ -146,7 +146,7 @@
             </div>
           </div>
         </div>
-        <div class="row debug">
+        <div class="row is-local">
           <div class="formfield mat-form-field-infix">
             <mat-form-field>
               <mat-label>{{msgApiSecret}}</mat-label>

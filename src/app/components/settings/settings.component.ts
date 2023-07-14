@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
               private llu: LibreLinkUpService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
-    if (GLOBALS.isDebug) {
+    if (GLOBALS.isLocal) {
       llu.nightScoutHttpHeaders().then(_value => {
         llu.execute();
       });
