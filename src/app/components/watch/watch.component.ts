@@ -418,9 +418,10 @@ export class WatchComponent implements OnInit {
     this.ds.save({skipReload: true});
   }
 
-  clickColor(evt: MouseEvent) {
+  clickWatchSettings(evt: MouseEvent) {
     evt.stopPropagation();
-    GLOBALS.isWatchColor = !GLOBALS.isWatchColor;
+    this.ss.showPopup('watchsettings');
+    // GLOBALS.isWatchColor = !GLOBALS.isWatchColor;
     this.ds.save({skipReload: true});
   }
 
@@ -446,6 +447,11 @@ export class WatchComponent implements OnInit {
   changeImage(entry: WatchElement): string {
     const id = entry.type?.substring(7);
     return `assets/img/${GLOBALS.currentChanges?.[id]?.type ?? 'empty'}.print.png`;
+  }
+
+  changeClass(entry: WatchElement): string[] {
+    const id = entry.type.substring(7);
+    return ['alarm', `alarm${GLOBALS.currentChanges?.[id]?.alarm}`];
   }
 
   changeInfo(entry: WatchElement): string {

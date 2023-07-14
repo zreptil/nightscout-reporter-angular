@@ -45,15 +45,15 @@ body {
   --helpBack: #fff;
   --helpFore: #000;
   --markBorder: 1px solid #000;
-  --mainHeaderBack: var(--primaryBack);
-  --mainHeaderFore: var(--primaryFore);
-  --mainBodyBack: var(--secondaryBack);
-  --mainBodyFore: var(--secondaryFore);
+  --mainHeaderBack: #055524;
+  --mainHeaderFore: white;
+  --mainBodyBack: #57bb8a;
+  --mainBodyFore: black;
 
-  --primaryBack: #055524;
-  --primaryFore: white;
-  --secondaryBack: #57bb8a;
-  --secondaryFore: black;
+  ---primaryBack: #055524;
+  ---primaryFore: white;
+  ---secondaryBack: #57bb8a;
+  ---secondaryFore: black;
   --debugFirst: #220;
   --debugSecond: #550;
   --debugFore: #f4b400;
@@ -163,7 +163,7 @@ mat-icon[small] {
     display: flex;
     flex-flow: column;
     max-width: 90vw;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   mat-dialog-container {
@@ -188,14 +188,13 @@ mat-icon[small] {
       }
     }
 
-    mat-dialog-content {
+    [mat-dialog-content] {
       padding: 1em;
       margin: 0;
-      font-size: 1.2em;
       min-width: 50%;
     }
 
-    mat-dialog-actions {
+    [mat-dialog-actions] {
       margin: 0;
       padding: 0;
       min-height: 3em;
@@ -466,4 +465,213 @@ form.oauth2 {
     color: var(--primaryFore);
     border-radius: 0.5em;
   }
+}
+
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--mainHeaderBack);
+    --primaryFore: var(--mainHeaderFore);
+    --secondaryBack: var(--mainBodyBack);
+    --secondaryFore: var(--mainBodyFore);
+    --accentBack: var(--mainHeaderBack);
+    --accentFore: var(--mainHeaderFore);
+  }
+}
+
+.mat-mdc-slide-toggle {
+  --mdc-switch-disabled-selected-handle-color: var(--primaryBack);
+  --mdc-switch-disabled-unselected-handle-color: var(--primaryBack);
+  --mdc-switch-disabled-selected-track-color: var(--primaryBack);
+  --mdc-switch-disabled-unselected-track-color: var(--primaryBack);
+  --mdc-switch-unselected-focus-state-layer-color: var(--primaryBack);
+  --mdc-switch-unselected-pressed-state-layer-color: var(--primaryBack);
+  --mdc-switch-unselected-hover-state-layer-color: var(--primaryBack);
+  --mdc-switch-unselected-focus-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-pressed-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3);
+  --mdc-switch-unselected-focus-handle-color: var(--primaryBack);
+  --mdc-switch-unselected-hover-handle-color: var(--primaryBack);
+  --mdc-switch-unselected-pressed-handle-color: var(--primaryBack);
+  --mdc-switch-handle-surface-color: var(--mdc-theme-surface, #fff);
+  --mdc-switch-unselected-handle-color: var(--primaryBack);
+  --mdc-switch-selected-icon-color: #fff;
+  --mdc-switch-disabled-selected-icon-color: #fff;
+  --mdc-switch-disabled-unselected-icon-color: #fff;
+  --mdc-switch-unselected-icon-color: #fff;
+}
+
+.mat-mdc-slide-toggle.mat-accent {
+  --mdc-switch-selected-focus-state-layer-color: var(--accentBack);
+  --mdc-switch-selected-handle-color: var(--accentBack);
+  --mdc-switch-selected-hover-state-layer-color: var(--accentBack);
+  --mdc-switch-selected-pressed-state-layer-color: var(--accentBack);
+  --mdc-switch-selected-focus-handle-color: var(--accentBack);
+  --mdc-switch-selected-hover-handle-color: var(--accentBack);
+  --mdc-switch-selected-pressed-handle-color: var(--accentBack);
+  --mdc-switch-selected-focus-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-hover-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-pressed-track-color: rgba(255, 255, 255, 0.5);
+  --mdc-switch-selected-track-color: rgba(255, 255, 255, 0.5);
+}
+
+.mat-mdc-slider.mat-primary {
+  --mdc-slider-handle-color: var(--primaryBack);
+  --mdc-slider-focus-handle-color: var(--primaryBack);
+  --mdc-slider-hover-handle-color: var(--primaryBack);
+  --mdc-slider-active-track-color: var(--primaryBack);
+  --mdc-slider-inactive-track-color: var(--primaryBack);
+  --mdc-slider-with-tick-marks-active-container-color: #fff;
+  --mdc-slider-with-tick-marks-inactive-container-color: var(--primaryBack);
+  --mat-mdc-slider-ripple-color: var(--primaryBack);
+  --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
+  --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
+}
+
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-checkmark-color: rgba(255, 255, 255, 0.8);
+  --mdc-checkbox-selected-focus-icon-color: var(--primaryBack);
+  --mdc-checkbox-selected-hover-icon-color: var(--primaryBack);
+  --mdc-checkbox-selected-icon-color: var(--primaryBack);
+  --mdc-checkbox-selected-pressed-icon-color: var(--primaryBack);
+  --mdc-checkbox-unselected-focus-icon-color: var(--primaryBack);
+  --mdc-checkbox-unselected-hover-icon-color: var(--primaryBack);
+  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
+  --mdc-fab-container-color: var(--primaryBack);
+  --mdc-fab-icon-color: var(--primaryFore);
+  --mat-mdc-fab-color: var(--primaryFore);
+}
+
+.mdc-menu-surface {
+  background-color: var(--secondaryBack);
+  color: var(--secondaryFore);
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+  border-radius: 0.5em;
+}
+
+.mdc-menu-surface.output-params {
+  background-color: var(--outputparamsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--outputparamsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--outputparamsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+}
+
+.mdc-menu-surface.settings {
+  background-color: var(--settingsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    // color: var(--settingsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--settingsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--settingsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--settingsHeaderFore);
+    }
+  }
+}
+
+.mdc-menu-surface.selectparams {
+  background-color: var(--selectparamsBodyBack);
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+    color: var(--selectparamsBodyFore);
+  }
+
+  .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
+    color: var(--outputparamsHeaderFore);
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background-color: var(--outputparamsHeaderBack);
+
+    .mdc-list-item__primary-text {
+      color: var(--outputparamsHeaderFore);
+    }
+  }
+}
+
+.mat-mdc-option {
+  color: var(--secondaryFore);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: initial;
+}
+
+.mat-datepicker-content {
+  background-color: var(--settingsBodyBack);
+  color: var(--secondaryFore);
+}
+
+.mat-calendar-body-selected {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__title,
+.mat-mdc-dialog-container .mdc-dialog__actions {
+  color: var(--primaryFore) !important;
+
+  button {
+    color: var(--primaryHeaderFore);
+  }
+}
+
+.mat-mdc-select-value {
+  color: var(--secondaryFore);
+}
+
+.mat-mdc-select-arrow {
+  color: var(--secondaryFore);
+}
+
+.mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
+  transform: inherit !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content,
+.mat-mdc-dialog-container .mdc-dialog__content.root {
+  background-color: var(--secondaryBack);
+  color: var(--secondaryFore);
+}
+
+.dialog-box .cdk-drag {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+.mdc-button.mat-mdc-raised-button:not(:disabled) {
+  background-color: var(--primaryBack);
+  color: var(--primaryFore);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content {
+  color: initial !important;
 }

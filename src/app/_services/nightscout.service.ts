@@ -18,6 +18,9 @@ import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {ActivityData} from '@/_model/nightscout/activity-data';
 import {ThemeService} from '@/_services/theme.service';
+import {DialogType, IDialogDef} from '@/_model/dialog-data';
+import {MessageService} from '@/_services/message.service';
+import {firstValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +31,8 @@ export class NightscoutService {
 
   constructor(public ps: ProgressService,
               public ds: DataService,
-              public ts: ThemeService) {
+              public ts: ThemeService,
+              public ms: MessageService) {
   }
 
   get msgProfileError(): string {
@@ -96,7 +100,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     if (this.reportData != null
       && Utils.isSameDay(this.reportData.begDate, beg)
       && Utils.isSameDay(this.reportData.endDate, end)
-      && this.reportData.isValid) {
+      && this.reportData.isValid
+      && !this.reportData.mustReload) {
       this.ps.text = this.msgPreparingPDF;
       this.ps.max = 1;
       this.ps.value = 0;
@@ -178,8 +183,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       GlobalsData.user.isReachable = GlobalsData.user.status != null;
     }
 
-    if (!needed.needsData || !data.user.isReachable) {
-      console.log('Schaut schlecht aus', needed, GlobalsData.user);
+    if (!needed.needsData || !GLOBALS.user.isReachable) {
+      console.log('Schaut schlecht aus', needed, GLOBALS.user);
+      setTimeout(() => this.ms.info('Abbruch, weil der Benutzer nicht erreichbar ist.'), 10);
+      this.ps.cancel();
       return data;
     }
 
@@ -444,6 +451,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         let src = await this.ds.requestJson(url);
         if (src != null) {
           Log.displayLink(`e${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
+          this.reportData.deviceList = [];
+          this.reportData.mustReload = false;
           for (const entry of src) {
             try {
               const e = EntryData.fromJson(entry);
@@ -458,12 +467,18 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
                 hasData = true;
                 data.ns.remaining.push(e);
               }
+
+              const device = e.device ?? '';
+              if (this.reportData.deviceList.find(d => d === device) == null) {
+                this.reportData.deviceList.push(device);
+              }
             } catch (ex) {
               Log.devError(ex, `Fehler im Entry-Datensatz: ${entry.toString()}`);
               break;
             }
           }
         }
+
         if (data.lastTempBasal == null) {
           // find last temp basal of treatments of day before current day.
           url = data.user.apiUrl(urlDate, 'treatments.json',
@@ -573,6 +588,28 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
+    if (this.reportData.deviceList.length > 1) {
+      const dlg: IDialogDef = {
+        type: DialogType.confirm,
+        title: $localize`Bitte wählen`,
+        buttons: [{title: $localize`Alle`, result: {btn: null}}]
+      };
+      for (const device of this.reportData.deviceList) {
+        dlg.buttons.push({title: device, result: {btn: device}});
+      }
+      this.ps.isPaused = true;
+      const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte den Button für das Gerät betätigen, dessen Daten ausgewertet werden sollen.`;
+      const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
+      this.ps.isPaused = false;
+      this.reportData.device = result.btn;
+      if (this.reportData.device != null) {
+        data.ns.entries = data.ns.entries.filter(e => e.device === this.reportData.device);
+        data.ns.bloody = data.ns.bloody.filter(e => e.device === this.reportData.device);
+        data.ns.remaining = data.ns.remaining.filter(e => e.device === this.reportData.device);
+      }
+      this.reportData.mustReload = true;
+    }
+
 //  if (sendIcon === 'stop') {
     this.ps.value = 1;
     this.ps.max = 6;

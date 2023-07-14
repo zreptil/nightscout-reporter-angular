@@ -70,7 +70,7 @@ export class ViewTileComponent implements OnInit {
       'Würde exakt so auch bei der Listenansicht zum Einsatz kommen.'
     );
 
-    this.ss.showPopup('formparamsdialog', form);
+    this.ss.showPopup('formparamsdialog|settings', form);
     evt.stopPropagation();
   }
 

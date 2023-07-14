@@ -8,6 +8,7 @@ import {map} from 'rxjs';
 import {DataService} from '@/_services/data.service';
 import {Oauth2pkce, oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,12 @@ export class AppComponent {
               cr: ChangeDetectorRef,
               ds: DataService,
               ss: SessionService,
+              ms: MessageService,
               dbs: DropboxService) {
     LogService.cr = cr;
     dbs.startOauth2Workflow = () => {
       const msg = this.msgOauth2Workflow($localize`Dropbox`);
-      return ss.confirm(msg, new DialogParams({image: 'assets/img/dropbox.png'})).pipe(map(result => {
+      return ms.confirm(msg, new DialogParams({image: 'assets/img/dropbox.png'})).pipe(map(result => {
         const ret = new Oauth2pkce();
         ret.doSignin = result.btn === DialogResultButton.yes;
         ret.isDebug = ss.mayDebug;

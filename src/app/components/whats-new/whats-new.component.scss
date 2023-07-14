@@ -1,31 +1,33 @@
-::ng-deep .dialog-box.whatsnew {
-  min-width: 80vw;
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--whatsnewHeaderBack);
+    --primaryFore: var(--whatsnewHeaderFore);
+    --secondaryBack: var(--whatsnewBodyBack);
+    --secondaryFore: var(--whatsnewBodyFore);
+    --accentBack: var(--whatsnewHeaderBack);
+    --accentFore: var(--whatsnewHeaderFore);
+  }
 }
 
-[mat-dialog-title] {
-  background-color: var(--whatsnewHeaderBack);
-  color: var(--whatsnewHeaderFore);
+::ng-deep .dialog-box.whatsnew {
+  min-width: 80vw;
 }
 
 div[header] {
   display: flex;
   flex-flow: row;
-  color: var(--whatsnewHeaderFore);
   justify-content: space-between;
   align-items: center;
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
-  background-color: var(--whatsnewBodyBack);
-  color: var(--whatsnewBodyFore);
 }
 
 h2 {
   display: flex;
   flex-flow: row;
-  align-items: center;
   font-size: 1.3em;
   padding: 0 0.5em;
   gap: 0.5em;

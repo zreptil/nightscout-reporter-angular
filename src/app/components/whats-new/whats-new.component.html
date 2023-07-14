@@ -8,16 +8,7 @@
       </button>
     </div>
   </div>
-  <mat-dialog-content>
-    <h2 (click)="click(40.4)">
-      <span i18n="version">Version</span><span i18n="v404">4.0.4 - 07.04.2023</span></h2>
-    <ul [class]="classFor(40.4)">
-      <li class="fixed" i18n="v404f1">
-        Der Aufruf mit einem shortcut-Parameter konnte einen falschen Zeitraum verwenden. Das
-        wurde behoben. Der gespeicherte Zeitraum wird nun auch bei autmatischer Erstellung der
-        PDFs korrekt ausgewertet.
-      </li>
-    </ul>
+  <div mat-dialog-content>
     <h2 (click)="click(40.3)">
       <span i18n="version">Version</span><span i18n="v403">4.0.3 - 29.01.2023</span></h2>
     <ul [class]="classFor(40.3)">
@@ -1597,5 +1588,5 @@
         Initiale Version, alles ist neu!
       </li>
     </ul>
-  </mat-dialog-content>
+  </div>
 </div>

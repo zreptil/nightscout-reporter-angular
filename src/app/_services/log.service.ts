@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Injectable} from '@angular/core';
 import {GLOBALS} from '@/_model/globals-data';
+import {Utils} from '@/classes/utils';
 
 export class LinkDef {
   constructor(public url: string,
@@ -46,16 +47,24 @@ export class Log {
   }
 
   static addText(id: string, ...text: any[]): void {
-    if (text && text.length > 1) {
+    if (text != null && text.length > 1) {
       text.forEach((line, idx) => {
         // entries that have the format {_: ...} are treated by log.component
         // so that it will remove the line between the current entry and
         // the next entry
-        Log.addLine(id, idx < text.length - 1 ? {_: line} : line);
+        Log.addLine(id, idx < text.length - 1 ? {_: Log.cvtText(line)} : Log.cvtText(line));
       });
     } else {
-      Log.addLine(id, text[0]);
+      Log.addLine(id, Log.cvtText(text[0]));
     }
+  }
+
+  static cvtText(text: string): string {
+    const time = new Date();
+    if (typeof text === 'string') {
+      text = text.replace(/{time}/g, Utils.fmtTime(time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds()));
+    }
+    return text;
   }
 
   static isInList(check: any, list: any[]): boolean {
@@ -73,7 +82,7 @@ export class Log {
   static addLine(id: string, line: any): void {
     const list = LogService.instance.msg[id];
     if (list != null && (id === 'debug' || !Log.isInList(line, list))) {
-      list.push(line);
+      list.splice(0, 0, line);
       // if not in debug mode, then limit the length of the log entries per list
       // to GLOBALS.maxLogEntries so that the app will not suffer from running
       // for a long time without cleaning the log (could be the case, when using

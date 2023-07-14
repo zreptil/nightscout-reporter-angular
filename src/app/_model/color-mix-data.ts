@@ -14,10 +14,10 @@ export class ColorMix extends BaseData {
 
   get asJson(): any {
     return {
-      tl: this.tl.asJson,
-      tr: this.tr.asJson,
-      bl: this.bl.asJson,
-      br: this.br.asJson
+      tl: this.tl?.asJson,
+      tr: this.tr?.asJson,
+      bl: this.bl?.asJson,
+      br: this.br?.asJson
     };
   }
 

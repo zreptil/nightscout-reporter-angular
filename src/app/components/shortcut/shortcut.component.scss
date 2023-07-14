@@ -1,6 +1,15 @@
 :host {
-  background-color: var(--shortcutBodyBack);
-  color: var(--shortcutBodyFore);
+  ::ng-deep * {
+    --primaryBack: var(--shortcutHeaderBack);
+    --primaryFore: var(--shortcutHeaderFore);
+    --secondaryBack: var(--shortcutBodyBack);
+    --secondaryFore: var(--shortcutBodyFore);
+    --accentBack: var(--shortcutHeaderBack);
+    --accentFore: var(--shortcutHeaderFore);
+  }
+}
+
+:host {
   display: flex;
   flex-flow: column;
   width: 100vw;

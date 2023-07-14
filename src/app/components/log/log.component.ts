@@ -41,6 +41,7 @@ export class LogComponent implements OnInit {
 
   onClickDelete(event: Event, type: string): void {
     event.preventDefault();
+    event.stopPropagation();
     Log.clear(type);
   }
 

@@ -54,7 +54,7 @@ export class ShortcutData {
     return ret;
   }
 
-// retrieve the data as a json-encoded-string
+  // retrieve the data as a json-encoded-string
   get asJsonString(): string {
     return '{'
       + `"n":"${this.name}",`
@@ -65,7 +65,7 @@ export class ShortcutData {
       + '}';
   }
 
-// creates an instance and fills it with data from a json-structure
+  // creates an instance and fills it with data from a json-structure
   static fromJson(json: any): ShortcutData {
     const ret = new ShortcutData();
     try {

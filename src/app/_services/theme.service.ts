@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {DataService} from '@/_services/data.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
-import {Log} from '@/_services/log.service';
 import {GLOBALS} from '@/_model/globals-data';
 
 @Injectable({
@@ -27,7 +26,7 @@ export class ThemeService {
     if (theme == null) {
       return;
     }
-    Log.todo('In ThemeService.setTheme könnten die Farben animiert werden, wenn ich rausfinde, wie das durch Veränderung der CSS-Variablen funktioniert.');
+    // Log.todo('In ThemeService.setTheme könnten die Farben animiert werden, wenn ich rausfinde, wie das durch Veränderung der CSS-Variablen funktioniert.');
     // Versuch einer Farbanimation über Veränderung der Variablen - bisher leider erfolglos
     // if (this.currTheme != null) {
     //   const bodyTag = document.querySelector('body') as HTMLBodyElement;
@@ -35,12 +34,12 @@ export class ThemeService {
     //     bodyTag.style.removeProperty(`--${key}`);
     //   }
     //   bodyTag.animate([
-    //     this.getThemeSytle(this.currTheme),
-    //     this.getThemeSytle(theme)
+    //     this.getThemeStyle(this.currTheme),
+    //     this.getThemeStyle(theme)
     //   ], {duration: 1000, direction: 'normal', fill: 'forwards'});
-    //   console.log(this.getThemeSytle(this.currTheme));
-    //   console.log(this.getThemeSytle(theme));
-    //   // this.getThemeSytle(theme);
+    //   console.log(this.getThemeStyle(this.currTheme));
+    //   console.log(this.getThemeStyle(theme));
+    //   // this.getThemeStyle(theme);
     // } else {
     this.assignStyle(document.body.style, theme);
 //    }
@@ -62,7 +61,7 @@ export class ThemeService {
     }
   }
 
-  getThemeSytle(theme: any): any {
+  getThemeStyle(theme: any): any {
     const ret: any = {};
     for (const key of Object.keys(theme)) {
       let value = theme[key];

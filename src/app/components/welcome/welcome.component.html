@@ -17,7 +17,6 @@
       <button (click)="clickDebug()"
               *ngIf="ss.mayDebug"
               class="debug"
-              mat-flat-button
               mat-mini-fab>
         <mat-icon>bug_report</mat-icon>
       </button>
@@ -26,7 +25,7 @@
       </button>
     </div>
   </div>
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <div i18n="welcome section 1">
       Diese Seite dient der Erzeugung von PDF-Dokumenten mit den bei Nightscout gespeicherten Daten. Dafür ist es
       notwendig, auf diese Daten zugreifen zu können, weshalb zunächst ein paar Einstellungen gespeichert werden
@@ -49,8 +48,8 @@
     <div i18n="welcome section 4">
       Die Webseite verwendet Javascript zur Erledigung ihrer Aufgaben.
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions class="controls">
+  </div>
+  <div class="controls" mat-dialog-actions>
     <div class="left">
       <ng-container *ngIf="!globals.isConfigured">
         <button (click)="ss.showSettings()" autofocus class="iconButton" mat-flat-button>
@@ -76,7 +75,7 @@
   -->
     </div>
     <div class="right">
-      <button (click)="ss.showVideo('intro')" class="imageButton" mat-flat-button>
+      <button (click)="ss.showVideo('intro')" class="imageButton" mat-button>
         <img alt="video intro" src="assets/img/youtube_social_icon_red.png"/>
         <ng-container i18n="label for button to open settings on welcome screen">
           Einstiegsvideo
@@ -84,14 +83,14 @@
       </button>
       <button (click)="ss.showPopup('impressum')"
               class="legal"
-              i18n="label for inprint button" mat-flat-button>
+              i18n="label for inprint button" mat-button>
         Impressum
       </button>
       <button (click)="ss.showPopup('dsgvo')"
               class="legal"
-              i18n="label for dataprotection button" mat-flat-button>
+              i18n="label for dataprotection button" mat-button>
         Datenschutzerklärung
       </button>
     </div>
-  </mat-dialog-actions>
+  </div>
 </div>

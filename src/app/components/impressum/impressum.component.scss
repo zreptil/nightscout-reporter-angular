@@ -1,21 +1,24 @@
-[mat-dialog-title] {
-  background-color: var(--legalHeaderBack);
-  color: var(--legalHeaderFore);
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--legalHeaderBack);
+    --primaryFore: var(--legalHeaderFore);
+    --secondaryBack: var(--legalBodyBack);
+    --secondaryFore: var(--legalBodyFore);
+    --accentBack: var(--legalHeaderBack);
+    --accentFore: var(--legalHeaderFore);
+  }
 }
 
 div[header] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: var(--legalHeaderFore);
   align-items: center;
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   padding: 1em;
   font-size: 1.2em;
-  color: var(--legalBodyFore);
-  background-color: var(--legalBodyBack);
 }
 
 h1 {

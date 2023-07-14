@@ -3,16 +3,14 @@
     font-size: 0.8em;
   }
 
-  ::ng-deep mat-dialog-actions {
+  ::ng-deep [mat-dialog-actions] {
     background-color: var(--datepickerHeaderBack);
     display: flex;
     flex-flow: row;
     flex-shrink: 0;
     justify-content: flex-end;
 
-    .mat-button-wrapper {
-      color: var(--datepickerHeaderFore);
-    }
+    color: var(--datepickerHeaderFore);
   }
 
   [cdkDrag] {
@@ -27,10 +25,8 @@
 .shift {
   padding: 1em 0;
 
-  ::ng-deep .mat-button-wrapper {
-    white-space: normal;
-    line-height: 1.5em;
-  }
+  white-space: normal;
+  line-height: 1.5em;
 }
 
 [mat-dialog-title] {
@@ -47,7 +43,7 @@
   color: var(--datepickerHeaderEmptyFore);
 }
 
-mat-dialog-content {
+[mat-dialog-content] {
   display: flex;
   flex-flow: column;
   padding: 1em;
@@ -111,23 +107,28 @@ a, a:visited, a:active {
 .shortcuts {
   line-height: 2.2em;
 
-  material-button {
+  .mdc-button {
     font-size: 75%;
+  }
 
-    &[raised] {
-      background-color: var(--datepickerBtnRaisedKeyBack);
-      color: var(--datepickerBtnRaisedKeyFore);
-    }
+  .mat-mdc-raised-button:not(:disabled) {
+    background-color: var(--datepickerBtnRaisedKeyBack);
+    color: var(--datepickerBtnRaisedKeyFore);
+  }
+
+  .mat-mdc-button:not(:disabled) {
+    color: var(--datepickerBtnRaisedKeyFore);
   }
 
   .toggle {
   }
 }
 
-.shift {
-  border-radius: 0.5em;
+.shift.mat-mdc-button:not(:disabled) {
   background-color: var(--datepickerBtnShiftKeyBack);
   color: var(--datepickerBtnShiftKeyFore);
+  font-size: 75%;
+  border-radius: 0.5em;
 }
 
 div.month {
@@ -149,17 +150,13 @@ material-button.ok {
   }
 
   .shift {
-    ::ng-deep .mat-button-wrapper {
-      color: var(--datepickerBtnShiftKeyFore);
-    }
+    color: var(--datepickerBtnShiftKeyFore);
   }
 }
 
-material-button.prev,
-material-button.next,
-material-button.ok {
-  ::ng-deep .content {
-    height: 100%;
-    padding: 0 !important;
-  }
+.prev.mdc-button,
+.next.mdc-button,
+.ok.mdc-button {
+  display: flex;
+  height: inherit;
 }

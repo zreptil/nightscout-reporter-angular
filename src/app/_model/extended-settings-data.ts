@@ -6,6 +6,8 @@ export class ExtendedSettingsData extends JsonData {
   upbatWarn: number;
   cage: AgeData;
   sage: AgeData;
+  bage: AgeData;
+  iage: AgeData;
   pumpFields: string[] = [];
   advancedDeviceStatus: boolean;
 
@@ -28,7 +30,9 @@ export class ExtendedSettingsData extends JsonData {
       ret.upbatWarn = JsonData.toNumber(json.upbat.warn);
     }
     ret.cage = AgeData.fromJson(json.cage);
-    ret.cage = AgeData.fromJson(json.sage);
+    ret.sage = AgeData.fromJson(json.sage);
+    ret.bage = AgeData.fromJson(json.bage);
+    ret.iage = AgeData.fromJson(json.iage);
     ret.advancedDeviceStatus = JsonData.toBool(json.advancedDeviceStatus);
     return ret;
   }

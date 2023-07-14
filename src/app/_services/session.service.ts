@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {StorageService} from './storage.service';
 import {Observable, of} from 'rxjs';
-import {DialogData, DialogParams, DialogResult, DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {DialogComponent} from '@/components/dialog/dialog.component';
+import {DialogParams, DialogResult, DialogResultButton} from '@/_model/dialog-data';
+import {MatDialog} from '@angular/material/dialog';
 import {Log} from '@/_services/log.service';
 import {BaseData} from '@/_model/base-data';
 import {WhatsNewComponent} from '@/components/whats-new/whats-new.component';
@@ -45,6 +44,8 @@ import {PrintTest} from '@/forms/nightscout/print-test';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {FormParamsDialogComponent} from '@/components/form-params-dialog/form-params-dialog.component';
 import {ThemeService} from '@/_services/theme.service';
+import {WatchSettingsComponent} from '@/components/watch-settings/watch-settings.component';
+import {MessageService} from '@/_services/message.service';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -81,7 +82,6 @@ export class SessionService {
     new PrintGlucDistribution(this.pdf)
   ];
   reloadUserImg = true;
-  private dlgRef: MatDialogRef<any>;
   private dlgList: { [key: string]: ComponentType<any> } = {
     welcome: WelcomeComponent,
     whatsnew: WhatsNewComponent,
@@ -92,7 +92,8 @@ export class SessionService {
     outputparams: OutputParamsComponent,
     datepickerdialog: DatepickerDialogComponent,
     shortcutedit: ShortcutEditComponent,
-    formparamsdialog: FormParamsDialogComponent
+    formparamsdialog: FormParamsDialogComponent,
+    watchsettings: WatchSettingsComponent
   }
 
   constructor(public ss: StorageService,
@@ -100,7 +101,8 @@ export class SessionService {
               private dialog: MatDialog,
               public ns: NightscoutService,
               public pdf: PdfService,
-              public ts: ThemeService) {
+              public ts: ThemeService,
+              public ms: MessageService) {
     GLOBALS.onPeriodChange.subscribe(_ => {
       this.checkPrint();
     });
@@ -211,8 +213,18 @@ export class SessionService {
   }
 
   showPopup(id: string, data?: any): Observable<DialogResult> {
+    if (id == null) {
+      return of(null);
+    }
+    let parts = id?.split('|');
+    let cssId = parts[0];
+    if (parts.length > 1) {
+      id = parts[0];
+      cssId = parts[1];
+    }
+
     if (this.dlgList[id] != null) {
-      const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', id], disableClose: true});
+      const dlgRef = this.dialog.open(this.dlgList[id], {data: data, panelClass: ['dialog-box', cssId], disableClose: true});
       return dlgRef.afterClosed();
     } else if (id === 'all') {
       for (const key of Object.keys(this.dlgList)) {
@@ -251,58 +263,6 @@ export class SessionService {
 
   isEmpty(value: any): boolean {
     return Utils.isEmpty(value);
-  }
-
-  info(content: string | string[], params?: DialogParams): Observable<DialogResult> {
-    return this.showDialog(DialogType.info, content, false, params);
-  }
-
-  confirm(content: string | string[], params?: DialogParams): Observable<DialogResult> {
-    return this.showDialog(DialogType.confirm, content, false, params);
-  }
-
-  ask(content: string | string[], type: IDialogDef, params?: DialogParams): Observable<DialogResult> {
-    return this.showDialog(type, content, false, params);
-  }
-
-  showDialog(type: DialogType | IDialogDef, content: string | string[], disableClose = false, params?: DialogParams): Observable<DialogResult> {
-    params ??= new DialogParams();
-    // console.error(content);
-    if (content == null || content === '' || content.length === 0) {
-      const ret = new DialogResult();
-      ret.btn = DialogResultButton.cancel;
-      console.error('Es soll ein leerer Dialog angezeigt werden');
-      return of(ret);
-    }
-    if (this.dlgRef?.componentInstance == null) {
-      const cls = ['dialog-box', 'dialog'];
-      if (typeof type === 'number') {
-        cls.push(DialogType[type]);
-      } else {
-        cls.push(DialogType[type.type]);
-      }
-      this.dlgRef = this.dialog.open(DialogComponent, {
-        panelClass: cls,
-        data: new DialogData(type, content, params, null),
-        disableClose
-      });
-      this.dlgRef.keydownEvents().subscribe(event => {
-        if (event.code === 'Escape') {
-          this.dlgRef.close({btn: DialogResultButton.abort});
-          this.dlgRef = null;
-        }
-      });
-      if (!disableClose) {
-        this.dlgRef.backdropClick().subscribe(_ => {
-          this.dlgRef.close({btn: DialogResultButton.abort});
-          this.dlgRef = null;
-        });
-      }
-    } else {
-      (this.dlgRef.componentInstance as DialogComponent).update(content);
-    }
-
-    return this.dlgRef.afterClosed();
   }
 
   // checks if the url of the user is valid
@@ -359,7 +319,7 @@ export class SessionService {
   }
 
   deleteUser(): void {
-    this.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
+    this.ms.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);

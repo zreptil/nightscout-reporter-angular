@@ -29,16 +29,12 @@
     padding: 0;
     min-width: 0;
     border-radius: 20%;
+    justify-content: center;
 
-    ::ng-deep .mat-button-wrapper {
-      justify-content: center;
-      padding: 0;
-
-      img {
-        padding: 0.3em;
-        width: 1.5em;
-        height: initial;
-      }
+    img {
+      padding: 0.3em;
+      width: 1.0em;
+      height: initial;
     }
   }
 
@@ -68,12 +64,8 @@
     background-color: transparent;
     box-shadow: none;
 
-    ::ng-deep .mat-button-wrapper {
-      padding: 0;
-
-      img {
-        height: 32px;
-      }
+    img {
+      height: 32px;
     }
   }
 
@@ -93,11 +85,12 @@
   background-color: transparent;
   box-shadow: none;
 
-  ::ng-deep .mat-button-wrapper {
-    padding: 0;
-
-    img {
-      width: 32px;
-    }
+  ::ng-deep img {
+    width: 32px;
   }
 }
+
+.currLang {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+

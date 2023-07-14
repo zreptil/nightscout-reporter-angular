@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <mat-dialog-content>
+  <div mat-dialog-content>
     <div class="subtitle">
       <div i18n="label of area for section general in printparams">Allgemeines</div>
       <div class="comparable">
@@ -116,28 +116,30 @@
       </div>
       <ng-container *ngFor="let item of listPeriodShift">
         <button (click)="periodShift=item"
-                *ngIf="item===periodShift" mat-raised-button>
+                *ngIf="item===periodShift"
+                mat-raised-button>
           {{item.title}}
         </button>
         <button (click)="periodShift=item"
-                *ngIf="item!==periodShift" mat-flat-button>
+                *ngIf="item!==periodShift"
+                mat-button>
           {{item.title}}
         </button>
       </ng-container>
     </div>
     <app-gluc-adjust></app-gluc-adjust>
     <!-- -->
-  </mat-dialog-content>
-  <mat-dialog-actions>
+  </div>
+  <div mat-dialog-actions>
     <div></div>
     <button (click)="clickExecute()"
             [disabled]="globals.period.isEmpty"
             class="iconButton"
-            mat-dialog-close="ok"
-            mat-flat-button>
+            mat-button
+            mat-dialog-close="ok">
       <mat-icon>picture_as_pdf</mat-icon>
       <ng-container i18n="buttonlabel for saving data">PDF erzeugen</ng-container>
     </button>
-  </mat-dialog-actions>
+  </div>
 </div>
 

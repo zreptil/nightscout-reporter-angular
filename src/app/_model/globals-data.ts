@@ -350,7 +350,7 @@ export class GlobalsData extends Settings {
   }
 
   get profileMaxCounts(): number[] {
-    return [100000, 2000, 1000, 500, 250, 100];
+    return [100000, 2000, 1000, 500, 250, 100, 50, 10];
   }
 
   get glucMGDL(): boolean {

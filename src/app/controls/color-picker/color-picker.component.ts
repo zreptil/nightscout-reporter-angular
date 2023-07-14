@@ -51,6 +51,7 @@ export class ColorPickerComponent {
   onDialogEvent = new EventEmitter<ColorDialogData>();
 
   constructor(public dialog: MatDialog) {
+    this.mixColors = ColorMix.fromJson({})
   }
 
   clickActivate(_: MouseEvent) {
@@ -68,7 +69,7 @@ export class ColorPickerComponent {
     };
     this.onDialogEvent?.emit(data);
     const dlgRef = this.dialog.open(ColorPickerDialog, {
-      data: data
+      data: data, panelClass: ['dialog-box', 'colorpicker']
     });
     dlgRef.componentInstance.fireMode();
     dlgRef.afterClosed().subscribe(data => {

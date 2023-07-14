@@ -6,14 +6,17 @@ const extract = require('extract-zip');
 // @ts-ignore
 import xliff from 'xliff';
 import {MessageId, TargetMessage} from '@angular/localize';
+import * as os from 'os';
 const outFile = '../src/assets/messages.json';
 
 async function main() {
   try {
-    let zipfile = getPath('../nightrep (translations).zip');
+    let zipfile = getPath(`${os.homedir()}/Downloads/nightrep (translations).zip`);
+    // let zipfile = getPath('../nightrep (translations).zip');
     console.log('extracting', zipfile, '...');
     await extract(zipfile, {dir: getPath('../temp')});
-    zipfile = getPath('../nightrep (english) (translations).zip');
+    zipfile = getPath(`${os.homedir()}/Downloads/nightrep (english) (translations).zip`);
+    // zipfile = getPath('../nightrep (english) (translations).zip');
     console.log('extracting', zipfile, '...');
     await extract(zipfile, {dir: getPath('../temp')});
     createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr/fr-FR', 'ja/ja-JP', 'nl/nl-NL', 'no/no-NO', 'pl/pl-PL', 'pt-PT', 'sk/sk-SK', 'ru/ru-RU'], []);

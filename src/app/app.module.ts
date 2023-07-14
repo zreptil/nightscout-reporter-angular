@@ -41,6 +41,7 @@ import {FormParamsComponent} from './controls/form-params/form-params.component'
 import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 import {ViewUsersComponent} from './components/view-users/view-users.component';
 import { ShortcutComponent } from './components/shortcut/shortcut.component';
+import { WatchSettingsComponent } from './components/watch-settings/watch-settings.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ShortcutComponent } from './components/shortcut/shortcut.component';
     FormParamsDialogComponent,
     FormParamsComponent,
     ViewUsersComponent,
-    ShortcutComponent
+    ShortcutComponent,
+    WatchSettingsComponent
   ],
   imports: [
     BrowserModule,

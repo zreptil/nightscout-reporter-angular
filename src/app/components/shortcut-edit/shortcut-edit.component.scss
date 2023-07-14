@@ -1,10 +1,11 @@
 :host {
-  ::ng-deep mat-dialog-actions {
-    background-color: var(--shortcutHeaderBack);
-
-    .mat-button-wrapper {
-      color: var(--shortcutHeaderFore);
-    }
+  ::ng-deep * {
+    --primaryBack: var(--shortcutHeaderBack);
+    --primaryFore: var(--shortcutHeaderFore);
+    --secondaryBack: var(--shortcutBodyBack);
+    --secondaryFore: var(--shortcutBodyFore);
+    --accentBack: var(--shortcutHeaderBack);
+    --accentFore: var(--shortcutHeaderFore);
   }
 }
 
@@ -16,21 +17,6 @@
   .label {
     padding-right: 2em;
   }
-
-  material-fab:not([disabled]) {
-    background-color: var(--shortcutHeaderBack);
-    color: var(--shortcutHeaderFore);
-  }
-}
-
-[mat-dialog-title] {
-  background-color: var(--shortcutHeaderBack);
-  color: var(--shortcutHeaderFore);
-}
-
-mat-dialog-content {
-  color: var(--shortcutBodyFore);
-  background-color: var(--shortcutBodyBack);
 }
 
 .info {
@@ -48,14 +34,6 @@ mat-form-field {
   display: flex;
   flex: 1;
 
-  ::ng-deep .focused-underline {
-    background: var(--shortcutHeaderBack);
-  }
-
-  ::ng-deep .focused.label-text {
-    color: var(--shortcutHeaderBack);
-  }
-
   ::ng-deep .mat-form-field-wrapper {
     display: flex;
     flex: 1;
@@ -69,9 +47,3 @@ mat-form-field {
 .data {
   text-transform: none;
 }
-
-material-button[raised] {
-  background-color: var(--shortcutHeaderBack);
-  color: var(--shortcutHeaderFore);
-}
-

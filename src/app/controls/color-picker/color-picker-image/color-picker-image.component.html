@@ -1,11 +1,15 @@
-<input #imgSelect (change)="fileSelected($event)" type="file">
+<input #imgSelect (change)="fileSelected($event)" accept="image/png,image/gif,image/jpeg,image/apng,image/avif,image/webp" type="file">
 <div #canvasBox image>
+  <div *ngIf="data.imageDataUrl == null" i18n>
+    Mit dem Button rechts unten kann ein Bild<br>geladen werden. Aus diesem kann dann<br>eine Farbe entnommen werden.
+  </div>
   <canvas #canvasImage
           (click)="clickCanvas($event)"
           (mouseenter)="canvasMouseEnter($event)"
           (mousemove)="paintLens($event)"
           (mouseout)="canvasMouseOut($event)"
-          (wheel)="wheelLens($event)"></canvas>
+          (wheel)="wheelLens($event)"
+          *ngIf="data.imageDataUrl != null"></canvas>
 </div>
 <canvas #canvasLens class="lens" height="100"
         width="100"></canvas>

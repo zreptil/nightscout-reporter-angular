@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
+import {Settings} from '@/_model/settings';
+import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +27,18 @@ export class EnvironmentService {
       const parts = p.split('=');
       this.urlParams[parts[0]] = parts[1];
     }
+    if (this.urlParams['enableDebug'] === 'true') {
+      localStorage.setItem(Settings.DebugFlag, Settings.DebugActive);
+    } else if (this.urlParams['enableDebug'] === 'false') {
+      localStorage.removeItem(Settings.DebugFlag);
+    }
     const temp = window.location.hash?.substring(1);
     this.appType = temp;
+    if (Utils.isEmpty(this.appType)) {
+      if (window.location.href.endsWith('/watch')) {
+        this.appType = 'watch';
+      }
+    }
     const pos = this.appType.indexOf('?');
     if (pos > 0) {
       this.appType = temp.substring(0, pos);

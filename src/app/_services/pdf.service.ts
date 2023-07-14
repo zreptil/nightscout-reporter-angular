@@ -80,6 +80,9 @@ export class PdfService {
       console.error('repData ist nicht gültig', repData);
       return;
     }
+    if (repData.deviceList.length > 1) {
+      console.log('Wir haben einige Devices in den Daten:', repData.deviceList);
+    }
     GLOBALS.isCreatingPDF = true;
     try {
       this.ps.max = 1;
@@ -197,7 +200,10 @@ export class PdfService {
           }
           this.makePdf(this.pdfDoc, createThumbs);
         }, error: (error) => {
+          GLOBALS.isCreatingPDF = false;
           Log.devError(error, 'Fehler im PdfService');
+        }, complete: () => {
+          GLOBALS.isCreatingPDF = false;
         }
       });
       // if (!g.isDebug) {
@@ -217,9 +223,9 @@ export class PdfService {
       // sendIcon = 'send';
       // progressText = null;
     } catch (ex) {
+      GLOBALS.isCreatingPDF = false;
       Log.devError(ex, 'Fehler im PdfService');
     } finally {
-      GLOBALS.isCreatingPDF = false;
     }
     /*
         }).catchError((error) {

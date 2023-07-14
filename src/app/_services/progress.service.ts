@@ -8,6 +8,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class ProgressService {
   max: number;
   isStopped = false;
+  isPaused = false;
   info: string;
   mayCancel = true;
   public initializer: Observable<any>;

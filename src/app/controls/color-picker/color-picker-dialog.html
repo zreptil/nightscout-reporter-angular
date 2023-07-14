@@ -1,10 +1,14 @@
-<div class="adialog">
-  <h1 i18n mat-dialog-title>
-    <div>Farbauswahl</div>
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.colorpicker">
+  <div cdkDragHandle mat-dialog-title>
+    <h1>
+      <div i18n>Farbauswahl</div>
+    </h1>
     <button (click)="clickClose()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
-  </h1>
+  </div>
+
   <div mat-dialog-content>
     <button (click)="clickMode()" mat-icon-button>
       <mat-icon>{{modeIcon}}</mat-icon>
@@ -19,7 +23,8 @@
       <app-color-picker-rgb (colorClick)="currentColorClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-rgb>
     </ng-container>
   </div>
-  <div mat-dialog-actions>
+
+  <mat-dialog-actions>
     <div (click)="colorClick($event, data.color)"
          [ngStyle]="{backgroundColor:data.color.display,marginRight:'1em'}"
          class="color"></div>
@@ -33,5 +38,5 @@
         <mat-icon>upload</mat-icon>
       </button>
     </ng-container>
-  </div>
+  </mat-dialog-actions>
 </div>

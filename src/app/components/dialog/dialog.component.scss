@@ -7,3 +7,7 @@
     font-weight: bold;
   }
 }
+
+.mat-mdc-button:not(:disabled) {
+  color: var(--fore);
+}
