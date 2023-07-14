@@ -40,8 +40,11 @@ import {FormParamsDialogComponent} from './components/form-params-dialog/form-pa
 import {FormParamsComponent} from './controls/form-params/form-params.component';
 import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 import {ViewUsersComponent} from './components/view-users/view-users.component';
-import { ShortcutComponent } from './components/shortcut/shortcut.component';
-import { WatchSettingsComponent } from './components/watch-settings/watch-settings.component';
+import {ShortcutComponent} from './components/shortcut/shortcut.component';
+import {WatchSettingsComponent} from './components/watch-settings/watch-settings.component';
+import {WatchGroupComponent} from './components/watch-group/watch-group.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { InfoButtonComponent } from './controls/info-button/info-button.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,9 @@ import { WatchSettingsComponent } from './components/watch-settings/watch-settin
     FormParamsComponent,
     ViewUsersComponent,
     ShortcutComponent,
-    WatchSettingsComponent
+    WatchSettingsComponent,
+    WatchGroupComponent,
+    InfoButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +94,8 @@ import { WatchSettingsComponent } from './components/watch-settings/watch-settin
     DragDropModule,
     LogComponent,
     ProgressComponent,
-    LocalToolsComponent
+    LocalToolsComponent,
+    BrowserAnimationsModule
   ],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

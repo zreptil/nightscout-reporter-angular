@@ -1,0 +1,52 @@
+<div [class]="classForRoot">
+  <ng-container *ngFor="let entry of globals.watchListForGroup(groupId)">
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='space'" [element]="entry" [isEditMode]="ws.isEditMode">&nbsp;</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='nl'" [element]="entry" [isEditMode]="ws.isEditMode"></app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='user'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.user.name}}</app-watch-entry>
+    <ng-container *ngIf="entry.type==='factor'">
+      <app-watch-entry (click)="onClick(entry)" *ngIf="globals.user.adjustGluc" [element]="entry" [isEditMode]="ws.isEditMode">*{{globals.msgAdjustFactor}}</app-watch-entry>
+    </ng-container>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='time'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtTime(ws.now)}}</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='date'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtDate(ws.now)}}</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'unit')" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='gluc'" [element]="entry" [isEditMode]="ws.isEditMode">
+      <div gluc>
+        <div>{{globals.currentGluc}}</div>
+        <div *ngIf="globals.currentGlucSrc?.device != null" device>{{globals.currentGlucSrc.device}}</div>
+      </div>
+    </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='glucorg'" [element]="entry" [isEditMode]="ws.isEditMode">
+      <div gluc>
+        <div>{{globals.currentGlucOrg}}</div>
+        <div *ngIf="globals.currentGlucSrc?.device != null" device>{{globals.currentGlucSrc.device}}</div>
+      </div>
+    </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='lasttime'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.currentGlucTime}}</app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type.startsWith('change')" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+      <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{changeInfo(entry)}}
+    </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'target')" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
+      <div class="target">
+        <div [ngStyle]="styleTargetLow" class="low">{{globals.targetBottom}}</div>
+        <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
+        <div [ngStyle]="styleTargetHigh" class="high">{{globals.targetTop}}</div>
+        <div [ngStyle]="styleLastGluc" class="marker last"></div>
+        <div [ngStyle]="styleCurrentGluc" class="marker"></div>
+        <div [ngStyle]="styleArrowTrack" class="arrowtrack"></div>
+        <div [ngStyle]="styleArrowTip" class="arrowtip"></div>
+      </div>
+    </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
+      <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
+           xmlns="http://www.w3.org/2000/svg">
+        <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
+          <circle class="circle" cx="50" cy="50" r="37.391"/>
+        </g>
+        <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
+          <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
+        </g>
+      </svg>
+      <div class="centered">{{globals.currentGlucDiff}}</div>
+    </app-watch-entry>
+  </ng-container>
+</div>

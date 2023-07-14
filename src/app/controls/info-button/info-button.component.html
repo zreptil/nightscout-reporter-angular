@@ -1,0 +1,6 @@
+<button (click)="btnInfoClick($event)" class="infoButton" mat-mini-fab>i</button>
+<div (mouseout)="onInfoMouseOut($event)"
+     *ngIf="showInfo"
+     [innerHTML]="text"
+     [ngStyle]="infoStyle"
+     class="infoText"></div>

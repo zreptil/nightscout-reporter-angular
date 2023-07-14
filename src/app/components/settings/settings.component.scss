@@ -94,19 +94,29 @@ mat-slider {
 
 .urlPanel {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  border-radius: 1em;
-  padding: 0.5em;
+  flex-flow: column;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  flex: 1;
+  border-radius: 1em;
 
-  .formfield {
+  .row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    padding: 0.5em;
     flex: 1;
-  }
 
-  __button:not([disabled]) .urlIcon {
-    color: var(--settingsHeaderBack);
+    .formfield {
+      flex: 1;
+    }
+
+    __button:not([disabled]) .urlIcon {
+      color: var(--settingsHeaderBack);
+    }
+
+    .subtitle {
+      font-size: 75%;
+      font-weight: bold;
+    }
   }
 }
 

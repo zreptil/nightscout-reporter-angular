@@ -352,7 +352,44 @@ export class PdfService {
     //        prevForm = form;
   }
 
+  /**
+   * Preprocesses the pdf-data before creating it with pdfmake.
+   * Every text-node is checked for special format-information
+   * and processed accordingly.
+   * @param data data to process
+   */
+  private preprocessData(data: any) {
+    if (typeof data === 'object' && data != null) {
+      for (const key of Object.keys(data)) {
+        if (key === 'text') {
+          const text = data[key];
+          let isHebrew = false;
+          for (let i = 0; i < text?.length; i++) {
+            const code = text.charCodeAt(i);
+            if (code >= 1425 && code <= 1524) {
+              isHebrew = true;
+            }
+          }
+          if (isHebrew) {
+            data.font = 'Hebrew';
+            const text = Utils.join(data.text.split(' ').reverse(), '  ');
+            data.text = undefined;
+            data.stack = text.split(',').reverse();
+          }
+        } else {
+          this.preprocessData(data[key]);
+        }
+      }
+    } else if (Array.isArray(data)) {
+      for (const subdata of data) {
+        this.preprocessData(subdata);
+      }
+      return;
+    }
+  }
+
   private makePdf(data: any, createThumbs?: (pdf: TCreatedPdf) => void) {
+    this.preprocessData(data.content);
     if (GLOBALS.isDebug) {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
       Log.displayLink('Playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
@@ -371,19 +408,31 @@ export class PdfService {
     }
     await this.loadPdfMaker();
     // pdfmake changes the
-    this.http.get('assets/fonts/pdfmake-font.ja.json').subscribe(vfs => {
-      let fonts = null;
-      if (GLOBALS.language.code === 'ja-JP') {
-        fonts = {
-          Roboto: {
-            normal: 'ipagp.ttf',
-            bold: 'ipagp.ttf',
-            italics: 'ipagp.ttf',
-            bolditalics: 'ipagp.ttf',
-          }
+    this.http.get('assets/fonts/pdfmake-fonts.json').subscribe(vfs => {
+      let fonts: any = {
+        Roboto: {
+          normal: 'Roboto-Regular.ttf',
+          bold: 'Roboto-Medium.ttf',
+          italics: 'Roboto-Italic.ttf',
+          bolditalics: 'Roboto-MediumItalic.ttf'
         }
+      };
+
+      if (GLOBALS.language.code === 'ja-JP') {
+        fonts['Roboto'] = {
+          normal: 'ipagp.ttf',
+          bold: 'ipagp.ttf',
+          italics: 'ipagp.ttf',
+          bolditalics: 'ipagp.ttf'
+        };
       } else {
-        vfs = null;
+        fonts['Hebrew'] = {
+          normal: 'Open Sans Hebrew.ttf',
+          bold: 'Open Sans Hebrew Bold.ttf',
+          italics: 'Open Sans Hebrew Italic.ttf',
+          bolditalics: 'Open Sans Hebrew Bold Italic.ttf'
+        };
+        // vfs = null;
       }
       const pdf: TCreatedPdf = this.pdfMake.createPdf(JSON.parse(JSON.stringify(data)), null, fonts, vfs);
       if (createThumbs != null) {

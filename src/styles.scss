@@ -15,6 +15,7 @@
 
 html, body {
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -62,7 +63,7 @@ body {
   --settingsBodyBack: #4dd0e1;
   --settingsBodyFore: black;
   --settingsScrollThumb: #0097a7;
-  --settingsError: #db4437;
+  --settingsError: maroon;
   --legalHeaderBack: #e65100;
   --legalHeaderFore: #ffe0b2;
   --legalBodyBack: #ffb74d;
@@ -113,6 +114,7 @@ body {
   --glucNorm: #00cc00;
   --glucNormHigh: #aacc00;
   --glucHigh: #cccc00;
+  --glucUnknown: #ccc;
   --datepickerBtnEmptyBack: #e67c73;
   --datepickerBtnEmptyFore: black;
   --datepickerHeaderEmptyBack: #db4437;
@@ -136,6 +138,12 @@ body {
   --datepickerDowInactiveFore: #eda29b;
   --sendCountFore: black;
   --sendCountFrame: white;
+  --feedbackHeaderBack: #383;
+  --feedbackHeaderFore: black;
+  --feedbackBodyBack: #afa;
+  --feedbackBodyFore: black;
+  --infoButtonBack: var(--settingsHeaderBack);
+  --infoButtonFore: var(--settingsHeaderFore);
 }
 
 mat-icon[small] {
@@ -225,6 +233,7 @@ mat-icon[small] {
   position: absolute;
   top: 50%;
   left: 50%;
+  display: none;
 }
 
 .cover {
@@ -344,8 +353,16 @@ mat-icon[small] {
   }
 }
 
-.mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+[mat-button] {
   font-weight: normal;
+
+  .mdc-button__label {
+    display: flex;
+    flex-flow: row;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .debug {
@@ -353,8 +370,6 @@ mat-icon[small] {
   color: var(--logDebugFore) !important;
 }
 
-$theme-width: 13em;
-$lang-height: 31em;
 @keyframes owl_showthemes {
   0% {
     width: 0;
@@ -363,19 +378,19 @@ $lang-height: 31em;
     width: 0;
   }
   90% {
-    width: calc(#{$theme-width} + 1em);
+    width: calc(var(--theme-width) + 1em);
   }
   100% {
-    width: $theme-width;
+    width: var(--theme-width);
   }
 }
 
 @keyframes owl_hidethemes {
   0% {
-    width: $theme-width;
+    width: var(--theme-width);
   }
   10% {
-    width: calc(#{$theme-width} + 1em);
+    width: calc(var(--theme-width) + 1em);
   }
   90% {
     width: 0;
@@ -393,19 +408,19 @@ $lang-height: 31em;
     height: 0;
   }
   90% {
-    height: calc(#{$lang-height} + 1em);
+    height: calc(var(--lang-height) + 1em);
   }
   100% {
-    height: $lang-height;
+    height: var(--lang-height);
   }
 }
 
 @keyframes owl_hidelanguages {
   0% {
-    height: $lang-height;
+    height: var(--lang-height);
   }
   10% {
-    height: calc(#{$lang-height} + 1em);
+    height: calc(var(--lang-height) + 1em);
   }
   90% {
     height: 0;
@@ -674,4 +689,52 @@ form.oauth2 {
 
 .mat-mdc-dialog-container .mdc-dialog__content {
   color: initial !important;
+}
+
+.mat-mdc-dialog-container, .mat-mdc-dialog-container .mdc-dialog__container, .mat-mdc-dialog-container .mdc-dialog__surface {
+  max-height: inherit;
+  min-height: inherit;
+  min-width: inherit;
+  max-width: inherit;
+}
+
+@keyframes alarm-shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+    background-color: var(--alarm1StartBack);
+    color: var(--alarm1StartFore);
+  }
+  5% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  10% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  15% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  20% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  25% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  30% {
+    transform: translate(3px, 1px) rotate(0deg);
+  }
+  35% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  40% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  45% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  50% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+  55% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
 }

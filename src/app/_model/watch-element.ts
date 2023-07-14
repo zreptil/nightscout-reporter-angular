@@ -6,6 +6,7 @@ export class WatchElement {
   selected = false;
   bold = false;
   italic = false;
+  groupId?: string;
 
   constructor() {
   }
@@ -49,6 +50,7 @@ export class WatchElement {
       + `,"b":${this.bold}`
       + `,"i":${this.italic}`
       + `,"v":${this.vertical}`
+      + `,"g":"${this.groupId ?? ''}"`
       + '}';
   }
 
@@ -61,6 +63,10 @@ export class WatchElement {
       ret.italic = json.i ?? false;
       ret.selected = json.selected ?? false;
       ret.vertical = json.v ?? 1;
+      ret.groupId = json.g ?? 'center';
+      if (ret.groupId === '') {
+        ret.groupId = 'center';
+      }
     } catch (ex) {
       Log.devError(ex, `Fehler bei WatchElement.fromJson`);
     }

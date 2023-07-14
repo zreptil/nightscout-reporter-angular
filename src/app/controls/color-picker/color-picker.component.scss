@@ -1,0 +1,10 @@
+:host {
+  ::ng-deep * {
+    --primaryBack: var(--settingsHeaderBack);
+    --primaryFore: var(--settingsHeaderFore);
+    --secondaryBack: var(--settingsBodyBack);
+    --secondaryFore: var(--settingsBodyFore);
+    --accentBack: var(--settingsHeaderBack);
+    --accentFore: var(--settingsHeaderFore);
+  }
+}

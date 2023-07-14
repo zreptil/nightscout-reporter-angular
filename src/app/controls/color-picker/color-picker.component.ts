@@ -69,7 +69,8 @@ export class ColorPickerComponent {
     };
     this.onDialogEvent?.emit(data);
     const dlgRef = this.dialog.open(ColorPickerDialog, {
-      data: data, panelClass: ['dialog-box', 'colorpicker']
+      data: data,
+      panelClass: ['dialog-box', 'settings']
     });
     dlgRef.componentInstance.fireMode();
     dlgRef.afterClosed().subscribe(data => {

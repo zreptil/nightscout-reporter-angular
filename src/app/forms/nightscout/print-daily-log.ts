@@ -203,6 +203,8 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   get msgChangeSite(): string {
+//    const ret = 'זה טקסט מבחן שאמור להגיד בעברית שזה פשוט טקסט חסר משמעות לחלוטין שפשוט אמור להיות ארוך כדי שתוכלו לראות איך הוא מתנהג בתדפיס.';
+//    return ret;
     return $localize`Katheterwechsel`;
   }
 

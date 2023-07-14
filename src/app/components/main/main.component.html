@@ -11,6 +11,8 @@
           <mat-icon>home</mat-icon>
           <div i18n="title of welcome screen">Willkommen</div>
         </button>
+        <!-- facebook is not the best choice for contact, so i removed it.
+         lets see, what the community thinks, maybe it needs to be reenabled
         <button (click)="clickMenuButton('facebook')" class="iconButton">
           <svg height="1.5em" id="Layer_1" viewBox="0 0 266.893 266.895" width="1.5em"
                x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
@@ -25,6 +27,11 @@
           </svg>
           <div i18n="title of facebook link">Facebook Seite</div>
           <mat-icon small>open_in_new</mat-icon>
+        </button>
+        -->
+        <button (click)="clickMenuButton('feedback')" class="iconButton">
+          <mat-icon>feedback</mat-icon>
+          <div i18n="title of feedback">Feedback</div>
         </button>
         <button (click)="ss.showSettings()" class="iconButton">
           <mat-icon>settings</mat-icon>
@@ -75,7 +82,7 @@
           <div i18n="title of nightscout page">Nightscout Seite</div>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user.reportUrl != null" class="iconButton">
+        <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user?.reportUrl != null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
           <div i18n="title of nightscout reports">Nightscout Berichte</div>
           <mat-icon small>open_in_new</mat-icon>
@@ -149,7 +156,7 @@
         <div [class]="classForView('basePanel')">
           <button (click)="clickUser()" class="userName">{{globals.user.display}}</button>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
-            <mat-form-field appearance="standard">
+            <mat-form-field>
               <mat-select [(value)]="userIdx">
                 <mat-select-trigger>
                   {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
@@ -242,6 +249,7 @@
       <app-owl-menu></app-owl-menu>
       <button (click)="clickSend()"
               *ngIf="globals.viewType === 'tile'"
+              [attr.aria-label]="ss.msgAriaPlay"
               [class]="sendClass(0,sendIcon)"
               [disabled]="ss.activeCfgCount===0"
               mat-fab>
@@ -255,6 +263,7 @@
       </div>
       <div class="sendPanel">
         <button (click)="clickSend()"
+                [attr.aria-label]="ss.msgAriaPlay"
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="ss.activeCfgCount===0"
                 mat-fab>

@@ -59,18 +59,20 @@ export class GlobalsData extends Settings {
   glucDir = 360;
   glucTimer: any;
   glucRunning = false;
-  currentGlucVisible = true;
   currentGlucCounter = 0;
   targetBottom = Settings.stdLow;
   targetTop = Settings.stdHigh;
   currentGlucSrc: EntryData;
   currentChanges: { [key: string]: WatchChangeData };
   lastGlucSrc: EntryData;
+  currentGlucPast: number;
   currentGlucDiff: string;
   currentGlucTime: string;
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
   public onPeriodChange: Observable<DatepickerPeriod>;
   maxLogEntries = 20;
+  pdfWarnings: string[] = [];
+  deviceForShortcut: string = null;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
@@ -156,6 +158,10 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  get currentGlucValid(): boolean {
+    return this.currentGlucPast < 14;
   }
 
   _currPeriodShift: PeriodShift;
@@ -379,6 +385,10 @@ export class GlobalsData extends Settings {
     ];
   }
 
+  get basalPrecision(): number {
+    return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
+  }
+
   // get pdfControlMaxSize(): number {
   //   return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
   // }
@@ -400,10 +410,6 @@ export class GlobalsData extends Settings {
   //   value = Math.min(value, Settings.PDFUNLIMITED);
   //   this._pdfCreationMaxSize = value;
   // }
-
-  get basalPrecision(): number {
-    return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
-  }
 
   get basalPrecisionValues(): number[] {
     return [null, 0, 1, 2, 3];
@@ -594,6 +600,11 @@ export class GlobalsData extends Settings {
         return 0.0;
       }
     }
+  }
+
+  watchListForGroup(id: string): WatchElement[] {
+    this._watchList ??= [];
+    return this._watchList.filter(wl => (wl.groupId ?? 'center') === id);
   }
 
   isMGDL(status: StatusData): boolean {

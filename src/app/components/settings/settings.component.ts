@@ -14,6 +14,8 @@ import {NightscoutService} from '@/_services/nightscout.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
+import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
+import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 
 @Component({
   selector: 'app-settings',
@@ -24,6 +26,8 @@ export class SettingsComponent implements OnInit {
   confirmIdx = 0;
   currApiUrlIdx = -1;
   showPwd = -1;
+  showLUPwd = -1;
+  showSecret = -1;
   calcDate = GlobalsData.now;
   msgCalcDayTitle = '';
   listProfileMaxCount: string[];
@@ -36,9 +40,15 @@ export class SettingsComponent implements OnInit {
               public ps: ProgressService,
               public ss: SessionService,
               public ns: NightscoutService,
-              public ms: MessageService) {
+              public ms: MessageService,
+              private llu: LibreLinkUpService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
+    if (GLOBALS.isLocal) {
+      llu.nightScoutHttpHeaders().then(_value => {
+        llu.execute();
+      });
+    }
   }
 
   get globals(): GlobalsData {
@@ -65,6 +75,18 @@ export class SettingsComponent implements OnInit {
     return $localize`Zugriffsschlüssel`;
   }
 
+  get msgLinkupUsername(): string {
+    return $localize`Username für Zugriff auf LibreLinkUp`;
+  }
+
+  get msgLinkupPassword(): string {
+    return $localize`Passwort für Zugriff auf LibreLinkUp`;
+  }
+
+  get msgLinkupRegion(): string {
+    return $localize`Region bei Zugriff auf LibreLinkUp`;
+  }
+
   get mayAddUser(): boolean {
     if (GLOBALS.userList?.length > 0) {
       return GLOBALS.userList?.[GLOBALS.userList.length - 1]?.apiUrl(null, '', {noApi: true}) == null;
@@ -88,6 +110,18 @@ export class SettingsComponent implements OnInit {
     return $localize`Ermittle letzten Tag mit Daten`;
   }
 
+  get infoLibreLinkUp(): string {
+    return $localize`Die Konfiguration von LibreLinkUp ermöglicht es Nightwatch, die Werte, die
+    über die Libre-App von Abbott vom Sensor empfangen werden, an Nightscout zu übermitteln. Um
+    das zu tun, ist es notwendig, dass Nightscout Reporter auch das API-Secret der Nightscout
+    Instanz kennt, weshalb man dieses hier hinterlegen muss. Die übrigen Einstellungen in diesem Bereich
+    dienen dazu, die Daten von LibreLinkUp zu empfangen.`;
+  }
+
+  get msgApiSecret(): string {
+    return $localize`API-Secret für Nightscout`;
+  }
+
   get lblProfileMax(): string {
     return $localize`Die Profiltabelle sollte normalerweise nur Daten zu den verwendeten
   Profilen beinhalten. iOS Loop verwendet diese Tabelle aber dazu, um dort eigene Einstellungen zu speichern
@@ -95,6 +129,18 @@ export class SettingsComponent implements OnInit {
   die API dann nicht mehr korrekt abgefragt werden. Deswegen gibt es hier die Möglichkeit, die Anzahl an
   Datensätzen einzuschränken, die aus dieser Tabelle geholt werden. Das ist so lange notwendig, wie
   iOS Loop oder andere Uploader diese Tabelle falsch befüllen.<br><br>Maximale Anzahl an Profildatensätzen:`;
+  }
+
+  get msgLinkupUsernameHint(): string {
+    return $localize`:@@msgLinkupUsernameHint:Diese Usernamen / Passwort Kombination ermöglicht es, Daten von LibreLinkUp zu erhalten.`;
+  }
+
+  get msgLinkupRegionHint(): string {
+    return $localize`:@@msgLinkupRegionHint:Hier muss die Region für LibreLinkUp angegeben werden.`;
+  }
+
+  get regionList(): string[] {
+    return Object.keys(LLU_API_ENDPOINTS);
   }
 
   fillSelects(): void {
@@ -107,6 +153,18 @@ export class SettingsComponent implements OnInit {
   msgAccessTokenHint(isVisible: boolean): string {
     return isVisible
       ? $localize`:@@msgAccessTokenHint:Der Zugriffsschlüssel wird nur benötigt, wenn der Zugriff in Nightscout über AUTH_DEFAULT_ROLES eingeschränkt wurde`
+      : '';
+  }
+
+  msgApiSecretHint(isVisible: boolean): string {
+    return isVisible
+      ? $localize`:@@msgApiSecretHint:Das API-Secret muss nur erfasst werden, wenn die LibreLinkUp-Funktionaliät benutzt werden soll.`
+      : '';
+  }
+
+  warnApiSecretHint(isVisible: boolean): string {
+    return isVisible
+      ? $localize`Dieses Passwort ermöglicht es, Daten in die Nightscout Instanz zu schreiben. Bitte auf keinen Fall an andere weitergeben!`
       : '';
   }
 
@@ -299,10 +357,6 @@ export class SettingsComponent implements OnInit {
     errUserInvalid = null;
   }
   */
-  navigate(url: string): void {
-    window.open(url, '_blank');
-  }
-
   ngOnInit(): void {
   }
 

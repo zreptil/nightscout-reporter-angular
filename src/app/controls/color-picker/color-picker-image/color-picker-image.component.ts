@@ -106,13 +106,10 @@ export class ColorPickerImageComponent extends ColorPickerBaseComponent implemen
   }
 
   mousePos(event: MouseEvent): any {
-    const ret = {
-      x: event.clientX,
-      y: event.clientY
+    return {
+      x: event.offsetX,
+      y: event.offsetY
     };
-    ret.x -= this.canvas.offsetLeft;
-    ret.y -= this.canvas.offsetTop;
-    return ret;
   }
 
   getPixelAt(x: number, y: number): number[] {

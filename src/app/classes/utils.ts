@@ -408,4 +408,21 @@ export class Utils {
         other: $localize` ${Math.floor(hours)} Stunden`
       })], ' ');
   }
+
+  static async sha1(src: string) {
+    const encoder = new TextEncoder();
+    let bytes = encoder.encode(src);
+    const digest = await window.crypto.subtle.digest('SHA-1', bytes);
+    const decoded = String.fromCharCode(...new Uint8Array(digest));
+    bytes = Uint8Array.from([...decoded].map(ch => ch.charCodeAt(0)));
+    let ret = '';
+    for (const byte of bytes) {
+      let c = byte.toString(16);
+      if (c.length < 2) {
+        c = `0${c}`;
+      }
+      ret += c;
+    }
+    return ret;
+  }
 }

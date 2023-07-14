@@ -1,15 +1,18 @@
 import {CrowdinData} from '@/_model/nightscout/crowdin-data';
 
 export class LangData {
-  constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData, langIdx: number) {
+  constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData, langIdx: number, langCode?: string) {
     if (crowdin != null) {
       crowdin.langName = name;
       crowdin.langIdx = langIdx;
-      const parts = code.toLowerCase().split('-');
-      if (parts[0] === parts[1]) {
-        crowdin.langCode = parts[0];
-      } else {
-        crowdin.langCode = `${parts[0]}${parts[1]}`;
+      crowdin.langCode = langCode;
+      if (langCode == null) {
+        const parts = code.toLowerCase().split('-');
+        if (parts[0] === parts[1]) {
+          crowdin.langCode = parts[0];
+        } else {
+          crowdin.langCode = `${parts[0]}${parts[1]}`;
+        }
       }
     }
   }

@@ -8,7 +8,8 @@
 </div>
 <div [style]="langStyle" class="langPanel">
   <div frame>
-    <div *ngFor="let item of globals.languageList; let idx = index" class="btnLanguage">
+    <div *ngFor="let item of globals.languageList; let idx = index" [ngStyle]="{zIndex:1000-idx}"
+         class="btnLanguage">
       <button (click)="togglePanels(item)" [class]="ss.languageClass(item)" mat-icon-button>
         <img alt="language image" class="language" src="{{item.imgPath}}">
       </button>

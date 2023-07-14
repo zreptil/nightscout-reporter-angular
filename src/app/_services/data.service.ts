@@ -134,7 +134,14 @@ export class DataService {
     });
   }
 
-  async request(url: string, params?: { method?: string, options?: any, body?: any, showError?: boolean, asJson?: boolean, timeout?: number }) {
+  async request(url: string, params?: {
+    method?: string,
+    options?: any,
+    body?: any,
+    showError?: boolean,
+    asJson?: boolean,
+    timeout?: number
+  }) {
     params ??= {};
     params.method ??= 'get';
     params.showError ??= true;
@@ -578,49 +585,47 @@ export class DataService {
         GLOBALS.targetTop = status.settings.bgTargetTop;
       }
     }
-    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=2'});
+    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=20'});
     // Log.debug(`{time} waiting for ${url}`);
-    let src = await this.requestJson(url);
+    let src: any[] = await this.requestJson(url);
     // Log.debug(`{time} returned`);
     if (src != null) {
-      if (src.length != 2) {
+      src.sort((a, b) => {
+        return Utils.compare(b.date, a.date);
+      });
+      if (src.length != 20) {
         GLOBALS.currentGlucSrc = null;
         GLOBALS.lastGlucSrc = null;
         GLOBALS.currentGlucDiff = '';
         GLOBALS.glucDir = 360;
       } else {
         try {
-          let eNow = EntryData.fromJson(src[0]);
-          let ePrev = EntryData.fromJson(src[1]);
-          if (eNow.device !== ePrev.device) {
-            url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=10'});
-            src = await this.requestJson(url);
-            eNow = EntryData.fromJson(src[0]);
-            ePrev = null;
-            for (let i = 1; i < src.length && ePrev == null; i++) {
-              const check = EntryData.fromJson(src[i]);
-              if (check.device === eNow.device) {
-                ePrev = check;
-              }
+          let eLast = EntryData.fromJson(src[0]);
+          let ePrev: EntryData = null;
+          for (let i = 1; i < src.length && ePrev == null; i++) {
+            const check = EntryData.fromJson(src[i]);
+            if (check.device === eLast.device) {
+              ePrev = check;
             }
           }
           if (ePrev == null) {
-            ePrev = eNow;
+            ePrev = eLast;
           }
-          const span = Math.max(Utils.differenceInMinutes(eNow.time, ePrev.time), 1);
+          const span = Math.max(Utils.differenceInMinutes(eLast.time, ePrev.time), 1);
           GLOBALS.glucDir = 360;
           GLOBALS.currentGlucDiff = '';
           GLOBALS.currentGlucTime = '';
           if (span > 15) {
             return GLOBALS.currentGluc;
           }
-          const time = Utils.differenceInMinutes(GlobalsData.now, eNow.time);
-          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(time);
-
-          GLOBALS.currentGlucSrc = eNow;
-          GLOBALS.lastGlucSrc = ePrev;
-          const diff = eNow.gluc - ePrev.gluc;
-          GLOBALS.currentGlucDiff = `${eNow.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
+          GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
+          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(GLOBALS.currentGlucPast);
+          if (GLOBALS.currentGlucValid || GLOBALS.currentGlucSrc == null) {
+            GLOBALS.currentGlucSrc = eLast;
+            GLOBALS.lastGlucSrc = ePrev;
+          }
+          const diff = eLast.gluc - ePrev.gluc;
+          GLOBALS.currentGlucDiff = `${eLast.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
           const limit = Math.floor(10 * span);
           if (diff > limit) {
             GLOBALS.glucDir = -90;
@@ -679,9 +684,9 @@ export class DataService {
     }
     GLOBALS.currentChanges = changes;
 
-    if (GLOBALS.currentGlucVisible || params.force) {
+    if (params.force) {
       let milliseconds = params.timeout * 1000;
-      //  calculate the milliseconds to the next full part of the minute for the timer
+      // calculate the milliseconds to the next full part of the minute for the timer
       // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
       // this is done for that the display of the time will match the current
       // time when entering a new minute

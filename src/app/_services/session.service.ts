@@ -108,6 +108,10 @@ export class SessionService {
     });
   }
 
+  public get msgAriaPlay(): string {
+    return $localize`${this.activeCfgCount} erzeugen`;
+  }
+
   get mayDebug(): boolean {
     return Log.mayDebug;
   }

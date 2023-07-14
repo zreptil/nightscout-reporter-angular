@@ -9,6 +9,105 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.0)">
+      <span i18n="version">Version</span><span i18n="v410">4.1.0 - 15.07.2023</span></h2>
+    <ul [class]="classFor(41.0)">
+      <li class="added" i18n="v410a1">
+        Nach dem Laden der Daten wird überprüft, ob es Datensätze gibt, die von verschiedenen Geräten
+        hochgeladen wurden. Wenn das der Fall ist, wird ein Dialog angezeigt, in dem das gewünschte
+        Gerät für die Auswertung ausgewählt werden muss. Es gibt auch die Auswahl "Alle", mit der
+        dann die Werte wie bisher auch gesammelt angezeigt werden. Wenn diese Auswahl getroffen wird,
+        dann wird auf jeder Seite rechts oben ein Warnhinweis ausgegeben, der auf diesen Umstand
+        hinweist.
+      </li>
+      <li class="added">
+        <span i18n>Beim Aufruf mit einem shortcut-Parameter wurde ein neuer Parameter hinzugefügt, der
+        es ermöglicht ein Gerät anzugeben, für das die Auswertung erfolgen soll. Wenn keines
+        angegeben wird, dann wird automatisch die Auswahl "Alle" vorgenommen. Der Aufruf mit
+        allen Parametern sieht dann so aus:</span>
+        <br><br>
+        {{originUrl}}/shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
+        <br><br>
+        <b>x</b>: <span i18n>der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span><br>
+        <b>u</b>: <span i18n>der Name des Benutzers, für den das PDF erzeugt werden soll.
+        Wenn diese Angabe nicht vorhanden ist, wird der zuletzt geöffnete Bentzer
+        verwendet.</span><br>
+        <b>s</b>: <span i18n>die Anzahl an Monaten, die der gespeicherte Zeitraum in die Vergangenheit
+        verschoben wird.</span><br>
+        <b>d</b>: <span i18n>die Bezeichnung des Gerätes, für das die Auswertung erfolgen soll. Wenn diese
+        Angabe vorhanden ist und kein Eintrag diesen Text beinhaltet, dann werden alle Einträge
+        ausgegeben. Gleiches gilt, wenn diese Angabe nicht vorhanden ist.</span><br>
+        <br><span i18n>Sämtliche Angaben werden ohne Beachtung der Goss/Klein-Schreibung berücksichtigt.</span>
+      </li>
+      <li class="added" i18n="v410a4">
+        Wenn die Notizen in hebräisch erfasst werden, werden sie nun auch korrekt dargestellt. Es gibt
+        da bei mehrzeiligen Kommentaren das Problem, dass die Reihenfolge der Zeilen umgekehrt ist,
+        was durch Kommata im Text korrigert werden kann. Also statt:
+        <br><br>
+        זהו טקסט נפלא עם יותר מדי מילים
+        <br><br>
+        sollte es so geschrieben werden:
+        <br><br>
+        זה טקסט נפלא, עם יותר מדי מילים
+        <br><br>
+        Das sorgt dann dafür, dass im PDF zwei Zeilen in der richtigen Reihenfolge erscheinen.
+        Nightscout Reporter hat bislang keine generelle Unterstützung für Schriften, die von
+        rechts nach links geschrieben werden. Da sich bisher auch noch niemand gemeldet hat,
+        der so etwas gerne hätte und die Übersetzung der Texte in Nightscout Reporter übernehmen
+        würde, wird es aktuell bei dieser Sonderlösung für hebräische Notizen bleiben.
+      </li>
+      <li class="changed" i18n="v410c1">
+        Der Aufruf von Shortcuts und Night Watch wurde etwas abgeändert. Statt eines #-Zeichens
+        wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt
+        <br><br>
+        {{originUrl}}#watch
+        <br><br>
+        wird jetzt Folgendes verwendet:
+        <br><br>
+        {{originUrl}}/watch
+        <br><br>
+        Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones
+        stabiler, wenn man die Seiten neu lädt.
+      </li>
+      <li class="changed" i18n="v410c2">
+        Die Anzeige von Night Watch wurde korrigiert, damit sie bei Werten, die zu lange zurück
+        liegen grau dargestellt wird. So sieht man auf einen Blick, ob der Wert zur Betrachtung
+        der aktuellen Blutzuckerlage herangezogen werden sollte oder nicht. "Zu lange zurück"
+        heisst in diesem Fall länger als 14 Minuten.
+      </li>
+      <li class="changed" i18n="v410c3">
+        Da mit Tschechisch eine neue Sprache hinzugekommen ist (viele Dank an Lukáš Trčka, der diese
+        Übersetzung übernimmt), wurde das Sprachmenü, das über die Eule links unten zu erreichen ist,
+        mehrspaltig umgestaltet.
+      </li>
+      <li class="removed" i18n="v410r1">
+        Der Link zur Facebookseite wurde aus dem Menü entfernt, da die Facebookseite nur der allgemeinen
+        Information über eine neue Version dient und dort keine Informationen zu finden sind, die im
+        Programm nicht vorhanden sind. Ausserdem ist der Entwickler unfähig, die Facebook-Apps so zu
+        konfigurieren, dass sie ihm Benachrichtigungen über Kontaktaufnahmen zuschicken. Vielleicht ist
+        auch Facebook generell so schlecht, dass das nicht möglich ist, ohne mit unwichtigen Benachrichtigungen
+        zugemüllt zu werden. Deswegen haben in der Vergangenheit einige Benutzer recht lange auf eine
+        Nachricht warten müssen. Daher wurde Folgendes hinzugefügt:
+      </li>
+      <li class="added" i18n="v410a3">
+        Im Hauptmenü wurde der Punkt <b>Feedback</b> hinzugefügt. Damit wird das für Mails eingestellte
+        Programm im System gestartet und eine Mail zum Versand an den Entwickler vorbereitet. Die Mail
+        kann dann beliebig editiert werden, um dort zu beschreiben, was dem Entwickler mitgeteilt
+        werden soll. In der Mail wird auch die URL zur Nightscout Instanz eingetragen, da diese
+        Information in den meisten Fällen sehr nützlich ist, um speziellen Problemen auf den Grund
+        gehen zu können. Diese URL kann aber auch vor dem Versand aus der Mail gelöscht werden,
+        falls sie für die Nachvollziehbarkeit des Problems nicht relevant ist.
+      </li>
+    </ul>
+    <h2 (click)="click(40.4)">
+      <span i18n="version">Version</span><span i18n="v404">4.0.4 - 07.04.2023</span></h2>
+    <ul [class]="classFor(40.4)">
+      <li class="fixed" i18n="v404f1">
+        Der Aufruf mit einem shortcut-Parameter konnte einen falschen Zeitraum verwenden. Das
+        wurde behoben. Der gespeicherte Zeitraum wird nun auch bei automatischer Erstellung der
+        PDFs korrekt ausgewertet.
+      </li>
+    </ul>
     <h2 (click)="click(40.3)">
       <span i18n="version">Version</span><span i18n="v403">4.0.3 - 29.01.2023</span></h2>
     <ul [class]="classFor(40.3)">
@@ -25,19 +124,19 @@
         schreiben und lesen zu dürfen. Wenn die Verbindung zu Dropbox nicht mehr erfolgen soll,
         dann muss einfach nur der Menüpunkt im Hauptmenü erneut angeklickt werden.
       </li>
-      <li class="added" i18n="v403a2">
-        Es ist jetzt möglich, mit Angabe eines Shortcuts in der Url direkt ein PDF erzeugen zu lassen,
+      <li class="added">
+        <span i18n>Es ist jetzt möglich, mit Angabe eines Shortcuts in der Url direkt ein PDF erzeugen zu lassen,
         das auf den Einstellungen in diesem Shortcut basiert. Die Url muss dabei folgendermassen aufgebaut
-        sein:
+        sein:</span>
         <br><br>
         {{originUrl}}#shortcut?name=x&user=u&shift=s
-        <br><br>
-        Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.<br>
-        Die Angabe von user ist optional. u ist dabei der Name des Benutzers, für den das PDF
+        <br>
+        <br><span i18n>Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span>
+        <br><span i18n>Die Angabe von user ist optional. u ist dabei der Name des Benutzers, für den das PDF
         erzeugt werden soll. Wenn diese Angabe nicht vorhanden ist, wird der zuletzt geöffnete Bentzer
-        verwendet.<br>
-        Die Angabe von shift ist ebenfalls optional. s ist dabei die Anzahl an Monaten, die der
-        gespeicherte Zeitraum in die Vergangenheit verschoben wird.
+        verwendet.</span>
+        <br><span i18n>Die Angabe von shift ist ebenfalls optional. s ist dabei die Anzahl an Monaten, die der
+        gespeicherte Zeitraum in die Vergangenheit verschoben wird.</span>
       </li>
       <li class="changed" i18n="v403c1">
         Das Icon, mit dem man das Menü öffnet zeigt nun das Logo des Dienstes, der zur Synchronisation
