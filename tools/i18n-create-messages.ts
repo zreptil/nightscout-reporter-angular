@@ -78,13 +78,17 @@ function getPath(dir: string, file?: string): string {
 function parseTranslationsForLocalize(xml: string): Promise<Record<MessageId, TargetMessage>> {
   return xliff.xliff12ToJs(xml).then((parserResult: any) => {
     const xliffContent: any = parserResult.resources['ng2.template'];
-//    console.log('xliff', xliffContent);
+    const src = parserResult.sourceLanguage;
+    const dst = parserResult.targetLanguage;
+    // console.log('xliff', src, dst, JSON.stringify(parserResult).substring(0, 1000));
     return Object.keys(xliffContent)
       .reduce((result: Record<MessageId, TargetMessage>, current: string) => {
         let elem = xliffContent[current].target;
         if (elem == null) {
-          console.log('Nicht übersetzbar:', xliffContent[current].source)
           elem = xliffContent[current].source;
+          if (elem != null && dst != null) {
+            console.log(`Nicht übersetzt von ${src} nach ${dst}:`, xliffContent[current].source)
+          }
         }
         if (typeof elem === 'string') {
           result[current] = elem;
