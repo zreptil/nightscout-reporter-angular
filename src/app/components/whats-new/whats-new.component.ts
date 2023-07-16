@@ -8,7 +8,7 @@ import {GLOBALS} from '@/_model/globals-data';
 })
 export class WhatsNewComponent implements AfterViewInit {
 
-  checkId = +GLOBALS.version.replace('.', '');
+  checkId = +GLOBALS.version.replace(/[.-]/g, '');
 
   constructor() {
   }

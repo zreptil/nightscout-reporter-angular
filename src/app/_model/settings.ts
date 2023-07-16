@@ -26,8 +26,6 @@ export class Settings {
   static stdVeryHigh: number = 250;
   static PDFUNLIMITED: number = 4000000;
   static PDFDIVIDER: number = 100000;
-
-  version = '4.1.0';
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
@@ -38,9 +36,7 @@ export class Settings {
     standard: Settings.msgThemeStandard,
     xmas: Settings.msgThemeXmas
   }
-  // for the cache.
   // images were retrieved using https://findicons.com/files/icons/2758/flag_icons/32/*.png
-  subVersion = '1';
   languageList: LangData[] = [
     new LangData('de-DE', `Deutsch`, 'de', null, ''),
     new LangData('en-GB', `English (GB)`, 'gb', CrowdinData.factoryGerman(), 'en-GB'),
@@ -56,8 +52,9 @@ export class Settings {
     new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 'ru'),
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
+  // subVersion is added to version to have a unique version number without changing the current version
+  private _subVersion = '2';
 
-// <img alt="fr proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=fr&style=flat&logo=crowdin&query=%24.progress[?(@.data.languageId==%27fr%27)].data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-13600041-555863.json" ></crowdin-copy-button>
   static get hastiod(): boolean {
     return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;
   }
@@ -86,11 +83,15 @@ export class Settings {
     return $localize`Beide`;
   }
 
+  private _version = '4.1.0';
+
+  get version(): string {
+    return `${this._version}-${this._subVersion}`;
+  }
+
   get lblGlucUnits(): string {
     return $localize`Einheit der Glukosemessung`;
   }
-
-  // subversion is used nowhere. It is just there to trigger another signature
 
   get themeListKeys(): string[] {
     return Object.keys(this.themeList);
