@@ -1,7 +1,9 @@
+import {GLOBALS} from '@/_model/globals-data';
+
 export class CrowdinData {
   public langCode: string;
   public langName: string;
-  public langIdx: number;
+  public badgeCode: string;
 
   constructor(public project: string,
               public fileId: number,
@@ -21,9 +23,18 @@ export class CrowdinData {
     return `https://badges.crowdin.net/${this.project}/localized.svg`;
   }
 
+// <img alt="fr proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&
+// label=fr&
+// style=flat&logo=crowdin&
+// query=%24.progress[?(@.data.languageId==%27fr%27)].data.approvalProgress&
+// url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-13600041-555863.json" ></crowdin-copy-button>
+
   get languageBadgeUrl(): string {
-    return `https://img.shields.io/badge/dynamic/json?color=rgb(0,128,0)&label=${this.langName}`
-      + `&style=plastic&logo=crowdin&query=%24.progress.${this.langIdx}.data.approvalProgress`
+    return 'https://img.shields.io/badge/dynamic/json?color='
+      + (GLOBALS.isLocal ? 'blue' : 'rgb(0,128,0)')
+      + `&label=${this.langName}`
+      + `&style=flat&logo=crowdin&query=%24.progress[?(@.data.languageId==%27${this.badgeCode}%27)].data.`
+      + (GLOBALS.isLocal ? 'approvalProgress' : 'translationProgress')
       + `&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-${this.statsCode}.json`;
   }
 

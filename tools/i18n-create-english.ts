@@ -1,7 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
+
 const extract = require('extract-zip');
+
 async function main() {
   try {
     const zipfile = getPath(`${os.homedir()}/Downloads/nightrep (translations).zip`);
@@ -10,8 +12,8 @@ async function main() {
     console.log('converting english to source...');
     const file = `../temp/en-GB/messages.en-GB.xliff`;
     let content = fs.readFileSync(getPath(file)).toString();
-    content = content.replace(/<source[^>]*>(.*)<\/source>/g, '');
-    content = content.replace(/<target[^>]*>(.*)<\/target>/g, '<source>$1</source>');
+    content = content.replace(/<source[^>]*>(.|\n)*?<\/source>/g, '');
+    content = content.replace(/<target[^>]*>((.|\n)*?)<\/target>/g, '<source>$1</source>');
     content = content.replace(/source-language="de"/, 'source-language="en-GB"');
     content = content.replace(/target-language="en-GB"/, '');
     content = content.replace(/\n^\s+$/gm, '');

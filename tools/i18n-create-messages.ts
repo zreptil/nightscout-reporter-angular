@@ -21,7 +21,11 @@ async function main() {
     // zipfile = getPath('../nightrep (english) (translations).zip');
     console.log('extracting', zipfile, '...');
     await extract(zipfile, {dir: getPath('../temp')});
-    createJson(['@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr/fr-FR', 'ja/ja-JP', 'nl/nl-NL', 'no/no-NO', 'pl/pl-PL', 'pt-PT', 'sk/sk-SK', 'ru/ru-RU', 'cs/cs-CZ'], []);
+    createJson([
+      '@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr/fr-FR',
+      'ja/ja-JP', 'nl/nl-NL', 'no/no-NO', 'pl/pl-PL',
+      'pt-PT', 'sk/sk-SK', 'ru/ru-RU', 'cs/cs-CZ'
+    ], []);
   } catch (ex) {
     console.error('error when creating messages', ex);
   }
@@ -79,6 +83,7 @@ function parseTranslationsForLocalize(xml: string): Promise<Record<MessageId, Ta
       .reduce((result: Record<MessageId, TargetMessage>, current: string) => {
         let elem = xliffContent[current].target;
         if (elem == null) {
+          console.log('Nicht übersetzbar:', xliffContent[current].source)
           elem = xliffContent[current].source;
         }
         if (typeof elem === 'string') {

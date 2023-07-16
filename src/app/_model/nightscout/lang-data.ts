@@ -1,10 +1,10 @@
 import {CrowdinData} from '@/_model/nightscout/crowdin-data';
 
 export class LangData {
-  constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData, langIdx: number, langCode?: string) {
+  constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData, badgeCode: string, langCode?: string) {
     if (crowdin != null) {
       crowdin.langName = name;
-      crowdin.langIdx = langIdx;
+      crowdin.badgeCode = badgeCode;
       crowdin.langCode = langCode;
       if (langCode == null) {
         const parts = code.toLowerCase().split('-');

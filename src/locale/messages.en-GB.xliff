@@ -542,34 +542,28 @@
         <source>CV [{$PH}%]</source>
       </trans-unit>
       <trans-unit id="msgHYPO" datatype="html" approved="yes">
-        <source>Intensität HYPO
-[<x id="PH" equiv-text="unit"/> x min²]</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">197</context>
         </context-group>
-        <target state="final">Intensität HYPO
-[{$PH} x min²]</target>
+        <source>Intensity HYPO
+[<x id="PH" equiv-text="unit"/> x min²]</source>
       </trans-unit>
       <trans-unit id="msgHYPER" datatype="html" approved="yes">
-        <source>Intensität HYPER
-[<x id="PH" equiv-text="unit"/> x min²]</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">204</context>
         </context-group>
-        <target state="final">Intensity HYPER
-[{$PH} x min²]</target>
+        <source>Intensity HYPER
+[<x id="PH" equiv-text="unit"/> x min²]</source>
       </trans-unit>
       <trans-unit id="msgMEAN" datatype="html" approved="yes">
-        <source>Mittlere Glukose
-[<x id="PH" equiv-text="unit"/>]</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">211</context>
         </context-group>
-        <target state="final">Average glucose
-[{$PH}]</target>
+        <source>Average glucose
+[<x id="PH" equiv-text="unit"/>]</source>
       </trans-unit>
       <trans-unit id="msgTORInfo" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -666,8 +660,6 @@
         <source>there was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds from <x id="PH_1" equiv-text="url"/></source>
       </trans-unit>
       <trans-unit id="7716816989054584047" datatype="html" approved="yes">
-        <source>Beim Auslesen der Profile ist ein Fehler aufgetreten. Möglicherweise sind zu viele Daten in der Profiltabelle (wird z.B. von iOS Loop verursacht).
-Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildatensätzen zu verringern.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
           <context context-type="linenumber">39,40</context>
@@ -837,9 +829,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Show PDF</source>
       </trans-unit>
       <trans-unit id="6530668891861059555" datatype="html" approved="yes">
-        <source>Fehler beim Laden der Daten:
-<x id="PH" equiv-text="error"/>
-<x id="PH_1" equiv-text="stacktrace"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/pdf.service.ts</context>
           <context context-type="linenumber">58</context>
@@ -910,10 +899,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Dropbox</source>
       </trans-unit>
       <trans-unit id="2102256811886373951" datatype="html" approved="yes">
-        <source>Für die Verbindung mit <x id="PH" equiv-text="serviceName"/> ist eine Bestätigung erforderlich, dass Nightscout Reporter die
-Daten von <x id="PH_1" equiv-text="serviceName"/> lesen und schreiben darf. Diese Bestätigung wird mit speziellen Dialogen von <x id="PH_2" equiv-text="serviceName"/>
-angefordert. Was dort alles bestätigt werden muss, entzieht sich der Kontrolle von Nightscout Reporter.
-Soll der Bestätigungsablauf gestartet werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.ts</context>
           <context context-type="linenumber">77,80</context>
@@ -1603,11 +1588,6 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Searching last day with data</source>
       </trans-unit>
       <trans-unit id="4191173912022256463" datatype="html" approved="yes">
-        <source>Die Konfiguration von LibreLinkUp ermöglicht es Nightwatch, die Werte, die
-    über die Libre-App von Abbott vom Sensor empfangen werden, an Nightscout zu übermitteln. Um
-    das zu tun, ist es notwendig, dass Nightscout Reporter auch das API-Secret der Nightscout
-    Instanz kennt, weshalb man dieses hier hinterlegen muss. Die übrigen Einstellungen in diesem Bereich
-    dienen dazu, die Daten von LibreLinkUp zu empfangen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">114,118</context>
@@ -1622,19 +1602,13 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>API-Secret for Nightscout</source>
       </trans-unit>
       <trans-unit id="4562561451144140468" datatype="html" approved="yes">
-        <source>Die Profiltabelle sollte normalerweise nur Daten zu den verwendeten
-  Profilen beinhalten. iOS Loop verwendet diese Tabelle aber dazu, um dort eigene Einstellungen zu speichern
-  und tut dies bei einigen Benutzern exzessiv. Ab einer bestimmten Datenmenge kann die Profiltabelle über
-  die API dann nicht mehr korrekt abgefragt werden. Deswegen gibt es hier die Möglichkeit, die Anzahl an
-  Datensätzen einzuschränken, die aus dieser Tabelle geholt werden. Das ist so lange notwendig, wie
-  iOS Loop oder andere Uploader diese Tabelle falsch befüllen.&lt;br&gt;&lt;br&gt;Maximale Anzahl an Profildatensätzen:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">126,131</context>
         </context-group>
-        <target state="final">The profile table should normally only contain data on the profiles used. iOS Loop uses this table to save its own settings and does this excessively at some users. Above a certain amount of data, the profile table can then no longer be queried correctly via the API. This is why there is this option of restricting the number of data records that are fetched from this table. This is necessary as long as iOS Loop or other uploaders fill this table incorrectly.
+        <source>The profile table should normally only contain data on the profiles used. iOS Loop uses this table to save its own settings and does this excessively at some users. Above a certain amount of data, the profile table can then no longer be queried correctly via the API. This is why there is this option of restricting the number of data records that are fetched from this table. This is necessary as long as iOS Loop or other uploaders fill this table incorrectly.
 
-Maximum number of profile datasets:</target>
+Maximum number of profile datasets:</source>
       </trans-unit>
       <trans-unit id="msgLinkupUsernameHint" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -1778,13 +1752,6 @@ Maximum number of profile datasets:</target>
         <source>Edit shortcut</source>
       </trans-unit>
       <trans-unit id="4416290763660062288" datatype="html">
-        <source/>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/shortcut-edit/shortcut-edit.component.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2014733470790569227" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut-edit/shortcut-edit.component.ts</context>
           <context context-type="linenumber">79</context>
@@ -1866,14 +1833,12 @@ Maximum number of profile datasets:</target>
         <source>The shortcut named <x id="INTERPOLATION" equiv-text="{{env.appParams.name}}"/> does not exist.</source>
       </trans-unit>
       <trans-unit id="2293879455278781449" datatype="html" approved="yes">
-        <source> Führe die PDF-Erstellung für Shortcut &quot;<x id="INTERPOLATION" equiv-text="{{env.appParams.name}}"/>&quot; aus.
-</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/shortcut/shortcut.component.html</context>
           <context context-type="linenumber">6,8</context>
         </context-group>
-        <target state="final"> Executing PDF creation for shortcut "<x id="INTERPOLATION" equiv-text="{{env.appParams.name}}"/>".
-</target>
+        <source> Executing PDF creation for shortcut "<x id="INTERPOLATION" equiv-text="{{env.appParams.name}}"/>".
+</source>
       </trans-unit>
       <trans-unit id="604259062633928535" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -2459,8 +2424,8 @@ Maximum number of profile datasets:</target>
           <context context-type="linenumber">59,71</context>
         </context-group>
         <note priority="1" from="description">v410c1</note>
-        <target state="final"> The start with shortcuts and Night Watch has been slightly modified. Instead of a # character, the call is now executed using the corresponding specification in the path. So instead of <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>#watch <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> the following is used: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>/watch 
-<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> With that, the use as installed apps is more stable on Windows and smartphones when you refresh the pages. </target>
+        <source> The start with shortcuts and Night Watch has been slightly modified. Instead of a # character, the call is now executed using the corresponding specification in the path. So instead of <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>#watch <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> the following is used: <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> <x id="INTERPOLATION" equiv-text="{{originUrl}}"/>/watch 
+<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> With that, the use as installed apps is more stable on Windows and smartphones when you refresh the pages. </source>
       </trans-unit>
       <trans-unit id="906220988767368582" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -5932,8 +5897,6 @@ Maximum number of profile datasets:</target>
         <source>Basal</source>
       </trans-unit>
       <trans-unit id="4370541832116997140" datatype="html" approved="yes">
-        <source>Basalrate
-IE / Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">724</context>
@@ -5969,8 +5932,6 @@ IE / Stunde</source>
         <source>Sum</source>
       </trans-unit>
       <trans-unit id="5716956580689550728" datatype="html" approved="yes">
-        <source>Uhr-
-zeit</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">752</context>
@@ -6006,14 +5967,12 @@ zeit</source>
         <source>Note</source>
       </trans-unit>
       <trans-unit id="7814380740217085349" datatype="html" approved="yes">
-        <source>Anpas-
-sung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">776</context>
         </context-group>
-        <target state="final">Adjust-
-ment</target>
+        <source>Adjust-
+ment</source>
       </trans-unit>
       <trans-unit id="3991336875625498115" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -6107,8 +6066,6 @@ ment</target>
         <source>Avg. ISF/Hour</source>
       </trans-unit>
       <trans-unit id="4091766776237352490" datatype="html" approved="yes">
-        <source>Insulin Kohlenhydrate Verhältnis (ICR)
-X g Kohlenhydrate für 1 IE</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">836</context>
@@ -6165,8 +6122,6 @@ X g Kohlenhydrate für 1 IE</source>
         <source>Distribution</source>
       </trans-unit>
       <trans-unit id="6054305971182360492" datatype="html" approved="yes">
-        <source>Mess-
-werte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">872</context>
@@ -6195,8 +6150,6 @@ werte</source>
         <source>U</source>
       </trans-unit>
       <trans-unit id="954997609648411319" datatype="html" approved="yes">
-        <source>Mittel-
-wert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">892</context>
@@ -6204,8 +6157,6 @@ wert</source>
         <source>Average</source>
       </trans-unit>
       <trans-unit id="7612401945163585274" datatype="html" approved="yes">
-        <source>Std.
-Abw.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">896</context>
@@ -6213,8 +6164,6 @@ Abw.</source>
         <source>SDev</source>
       </trans-unit>
       <trans-unit id="3085022192590638473" datatype="html" approved="yes">
-        <source>VarK
-in %</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">900</context>
@@ -6650,8 +6599,6 @@ in %</source>
         <source>High{$PH}</source>
       </trans-unit>
       <trans-unit id="2819034921980842641" datatype="html" approved="yes">
-        <source>Insulin Sensitivitäts Faktoren (ISF)
-1 IE senkt BG um X <x id="PH" equiv-text="unit"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">1252</context>
@@ -6659,8 +6606,6 @@ in %</source>
         <source>Insulin Sensitivity Factors (ISF) 1 IU reduces BG by X {$PH}</source>
       </trans-unit>
       <trans-unit id="4415704711981908542" datatype="html" approved="yes">
-        <source>Glukose-Zielbereich
-<x id="PH" equiv-text="unit"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">1256</context>
@@ -6784,11 +6729,6 @@ in %</source>
         <source>Use profile "{$PH}"</source>
       </trans-unit>
       <trans-unit id="2206933345783710470" datatype="html" approved="yes">
-        <source>Das Profil mit dem Namen &quot;<x id="PH" equiv-text="name"/>&quot; wurde nicht gefunden.
-        Das muss im Profileditor auf der Nightscout Seite eingerichtet werden. Dort muss ein Profil eingerichtet werden,
-        das den Namen &quot;<x id="PH_1" equiv-text="name"/>&quot; hat, um dieses Formular erzeugen zu können. Mit dem Link unten wird
-        der Profileditor aufgerufen. Unter Umständen muss dort dann noch ganz unten auf der Seite die
-        Authentifizierung durchgeführt werden, um die Werte ändern zu können.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/base-profile.ts</context>
           <context context-type="linenumber">55,59</context>
@@ -6817,14 +6757,12 @@ in %</source>
         <source>{$PH} {$PH_1} =&gt; {$PH_2}</source>
       </trans-unit>
       <trans-unit id="8631237271457674766" datatype="html" approved="yes">
-        <source>Es konnten keine Profile geladen werden. Es kann sein, dass die Profiltabelle zu viele Einträge beinhaltet.
-          In diesem Falle kann es helfen, wenn in den Einstellungen die &quot;Maximale Anzahl an Profildatensätzen&quot; herabgesetzt wird.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/base-profile.ts</context>
           <context context-type="linenumber">188,189</context>
         </context-group>
-        <target state="final">No profiles could be loaded. It may be that the profile table contains too many entries.
-           In this case, it can help if the "Maximum number of profile data records" is reduced in the settings.</target>
+        <source>No profiles could be loaded. It may be that the profile table contains too many entries.
+           In this case, it can help if the "Maximum number of profile data records" is reduced in the settings.</source>
       </trans-unit>
       <trans-unit id="5376868385293925547" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -6862,36 +6800,16 @@ in %</source>
         <source>from <x id="PH" equiv-text="GLOBALS.fmtTime(time, {withUnit: true})"/>: <x id="PH_1" equiv-text="GLOBALS.fmtBasal(old.value)"/> =&gt; <x id="PH_2" equiv-text="GLOBALS.fmtBasal(entry.value)"/></source>
       </trans-unit>
       <trans-unit id="help-analysis" datatype="html" approved="yes">
-        <source>
-  Dieses Formular zeigt die Auswertung der Werte des ausgewählten
-  Zeitraums. Dabei wird auch der durchscnittliche Verbrauch an Materialien
-  rechnerisch ermittelt und angezeigt. Dieses Formular beinhaltet die meisten
-  Informationen, die Diabetologen gerne wissen wollen.
-
-  Der HbA1c wird rechnerisch aus den vorhandenen Daten ermittelt und weicht
-  normalerweise nicht unerheblich von dem tatsächlich gemessenen Wert ab. Der
-  Wert, der aus der Blutprobe ermittelt wird, gibt die tatsächliche Bindung
-  von Glukose im Blut wieder. Da diese von zusätzlichen Faktoren abhängig ist
-  und nicht nur von den hier verwendeten Messdaten, ergeben sich Unterschiede
-  zum errechneten Wert. Vor allem, wenn es sich bei den gemessenen Werten nicht
-  um Blutzucker, sondern um Gewebszucker handelt, wie er von CGM-Systemen
-  verwendet wird.
-
-  Trotzdem ist dieser Wert ein grober Anhaltspunkt für die Qualität der
-  Glukoseeinstellung und wird in der vom Labor ermittelten Form gerne von
-  Diabetologen als Richtwert verwendet, weshalb er hier angezeigt wird. Er wird
-  aber in schwächerer Schrift ausgegeben, damit seine zweifelhafte Natur auch
-  erkennbar ist.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-analysis.ts</context>
           <context context-type="linenumber">13,32</context>
         </context-group>
         <note priority="1" from="description">help for analysis</note>
-        <target state="final">This form shows the evaluation of the values ​​of the selected Period. The average consumption of materials is calculated and displayed. This form contains most of the information that diabetologists would like to know.
+        <source>This form shows the evaluation of the values ​​of the selected Period. The average consumption of materials is calculated and displayed. This form contains most of the information that diabetologists would like to know.
 
 The A1C is calculated from the available data and normally deviates not insignificantly from the actually measured value. The value that is determined from the blood sample shows the actual binding of glucose in the blood. Since this depends on additional factors and not only on the measurement data used here, there are differences to the calculated value. Especially when the measured values ​​are not blood sugar but tissue sugar, as used by CGM systems.
 
-Nevertheless, this value is a rough guide to the quality of the Glucose setting and in the form determined by the laboratory is often used by diabetologists as a guide value, which is why it is displayed here. But it is issued in a weaker font so that its dubious nature can also be recognized.</target>
+Nevertheless, this value is a rough guide to the quality of the Glucose setting and in the form determined by the laboratory is often used by diabetologists as a guide value, which is why it is displayed here. But it is issued in a weaker font so that its dubious nature can also be recognized.</source>
       </trans-unit>
       <trans-unit id="7363002699976597223" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -6957,19 +6875,14 @@ Nevertheless, this value is a rough guide to the quality of the Glucose setting 
         <source>Hypos (&lt; {$PH})</source>
       </trans-unit>
       <trans-unit id="help-basal" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt die Basalrate, die im Profil eingestellt ist in graphischer Form an.
-Es werden normalerweise alle Basalraten des ausgewählten Zeitraums ausgegeben. Wenn sich in dem Zeitraum
-die Basalrate geändert hat, wird eine neue Seite erzeugt.
-
-Es gibt aber eine Option, welche nur die letzte Basalrate des Zeitraums ausgibt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-basalrate.ts</context>
           <context context-type="linenumber">12,16</context>
         </context-group>
         <note priority="1" from="description">help for basal</note>
-        <target state="final">This form shows the basal rate set in the profile in graphic form. Usually all basal rates for the selected period are displayed. If the basal rate has changed in the period, a new page is created.
+        <source>This form shows the basal rate set in the profile in graphic form. Usually all basal rates for the selected period are displayed. If the basal rate has changed in the period, a new page is created.
 
-However, there is an option that only outputs the last basal rate of the period.</target>
+However, there is an option that only outputs the last basal rate of the period.</source>
       </trans-unit>
       <trans-unit id="8295900363681132228" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -6979,21 +6892,14 @@ However, there is an option that only outputs the last basal rate of the period.
         <source>Show only last basalrate</source>
       </trans-unit>
       <trans-unit id="help-cgp" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt das Comprehensive Glucose Pentagon an, welches die Qualität der
-Glukoseeinstellung in einer schnell zu erfassenden Weise darstellt. Es wird für den ausgewählten Zeitraum angezeigt
-wie lange der Glukosewert im Schnitt während des Tages ausserhalb des Zielbereichs war, wie hoch die Intensität
-der Überzuckerungen und der Unterzuckerungen war, wie hoch der Mittelwert war und wie hoch die Variabilität der
-Werte war.
-
-Diese Grafik kann auch bei @05@ und @08@ ausgegeben werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-cgp.ts</context>
           <context context-type="linenumber">28,34</context>
         </context-group>
         <note priority="1" from="description">help for print-cgp</note>
-        <target state="final">This form displays the Comprehensive Glucose Pentagon, which represents the quality of the glucose control in a readily understood manner. For the selected period it shows how long the average glucose value was outside the target range during the day, how high the intensity of the hyperglycemia and hypoglycemia was, how high the mean value was and how high the variability of the values was.
+        <source>This form displays the Comprehensive Glucose Pentagon, which represents the quality of the glucose control in a readily understood manner. For the selected period it shows how long the average glucose value was outside the target range during the day, how high the intensity of the hyperglycemia and hypoglycemia was, how high the mean value was and how high the variability of the values was.
 
-This graphic can also be output at @05@ and @08@.</target>
+This graphic can also be output at @05@ and @08@.</source>
       </trans-unit>
       <trans-unit id="3707056548214150537" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7046,17 +6952,14 @@ This graphic can also be output at @05@ and @08@.</target>
         <source>CGP</source>
       </trans-unit>
       <trans-unit id="help-daily-analysis" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt eine Übersicht für einen Tag. Hier
-  werden die Tagesgrafik, die Basalrate, die Basalratenanpassungen, Insulin On
-  Board und Carbs On Board angezeigt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-analysis.ts</context>
           <context context-type="linenumber">13,15</context>
         </context-group>
         <note priority="1" from="description">help for dailyanalysis</note>
-        <target state="final">This form shows an overview for one day. Here
+        <source>This form shows an overview for one day. Here
    the daily graph, the basal rate, the basal rate adjustments, Insulin On
-   Board and Carbs On Board displayed.</target>
+   Board and Carbs On Board displayed.</source>
       </trans-unit>
       <trans-unit id="261350535439168292" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7066,26 +6969,14 @@ This graphic can also be output at @05@ and @08@.</target>
         <source>Day Analysis</source>
       </trans-unit>
       <trans-unit id="help-daygluc" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt den Trend der Glukosewerte über den Tag hinweg
-an. Dabei wird in der Spalte Trend immer angezeigt, um wieviel Prozent sich
-der Wert von einer vollen Stunde zur nächsten verändert hat. Dieser Trend ist
-ganz hilfreich, wenn man bei einem Basalratentest erkennen will, wie sich der
-Glukosewert nur anhand der Basalrate entwickelt. Es kann auch eine Spalte für
-die Boluswerte und die Kohlenhydrate angezeigt werden. Diese sollten aber bei
-einem Basalratentest natürlich leer sein. Ebenso muss ein eventuell
-vorhandener Loop im Zeitraum des Tests abgeschaltet sein. Es geht dabei nur
-um den Diabetiker und seine Basalrate.\nEs wird auch eine Spalte mit der
-Basalrate angezeigt, wenn die Option &apos;Alle Werte für einen Tag anzeigen&apos;
-nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
-(und auch der Sinn), diese darzustellen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-gluc.ts</context>
           <context context-type="linenumber">10,21</context>
         </context-group>
         <note priority="1" from="description">help for daygluc</note>
-        <target state="final">This form shows the trend in glucose levels over the day. The Trend column always shows the percentage by which the value has changed from one full hour to the next. This trend is very helpful if you want to see in a basal rate test how the glucose value is developing based on the basal rate alone. A column for bolus values and carbohydrates can also be displayed. However, these should of course be empty in a basal rate test. Any existing loop must also be switched off during the test. It's all about the diabetic and his basal rate.
+        <source>This form shows the trend in glucose levels over the day. The Trend column always shows the percentage by which the value has changed from one full hour to the next. This trend is very helpful if you want to see in a basal rate test how the glucose value is developing based on the basal rate alone. A column for bolus values and carbohydrates can also be displayed. However, these should of course be empty in a basal rate test. Any existing loop must also be switched off during the test. It's all about the diabetic and his basal rate.
 
-A column with the basal rate is also displayed if the option "Show all values for a day" is not checked. If the option has been marked, then there is no space (and also the sense) to display it.</target>
+A column with the basal rate is also displayed if the option "Show all values for a day" is not checked. If the option has been marked, then there is no space (and also the sense) to display it.</source>
       </trans-unit>
       <trans-unit id="7094314932127907936" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7117,30 +7008,16 @@ A column with the basal rate is also displayed if the option "Show all values fo
         <source>The basal rate has been valid since {time} and does not include any temporary changes.</source>
       </trans-unit>
       <trans-unit id="help-daygraph" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt den Verlauf der Glukosekurve für einen Tag. Pro Tag im ausgewählten
-Zeitraum wird eine Seite erzeugt. Es gibt sehr viele Optionen, mit denen dieses Formular angepasst werden kann.
-Die Optionen, die auf einen Loop hinweisen sind andersfarbig markiert, um sie schneller identifizieren zu
-können. Die Optionen COB und IOB verlangsamen die Ausgabe teilweise erheblich, weshalb man diese nur dann
-verwenden sollte, wenn sie wirklich von Interesse sind.
-
-Unter der Grafik kann die Basalrate angezeigt werden. Ein laufender Loop wird diese immer wieder hoch und runter
-setzen. Deshalb kann man sowohl die tatsächliche Basalrate als auch die im Profil eingestellte Basalrate
-anzeigen lassen. Für die Basalrate gibt es noch die Formulare @09@, @11@ und @02@, auf denen man sie genauer
-analysieren kann. Man kann auch das @10@ für den Tag erzeugen lassen. Das wird dann auf einer neuen Seite ausgegeben.
-
-Dieses Formular ist eines der seitenintensivsten Formulare in Nightscout Reporter. Deshalb gibt es hier
-die Möglichkeit, mehrere Tagesgrafiken auf einer Seite ausgeben zu lassen. Darunter leidet natürlich die Lesbarkeit,
-aber für einen Überblick über den Verlauf ist das ganz nützlich.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-graphic.ts</context>
           <context context-type="linenumber">47,60</context>
         </context-group>
         <note priority="1" from="description">help for daygraph</note>
-        <target state="final">This form shows the the glucose curve for one day. One page is generated per day in the selected period. There are many options that can be used to customize this form. The options that indicate a loop are marked in a different color so that they can be identified very easy. The options COB and IOB sometimes slow down the output considerably, which is why you should only use them if you are really interested in it.
+        <source>This form shows the the glucose curve for one day. One page is generated per day in the selected period. There are many options that can be used to customize this form. The options that indicate a loop are marked in a different color so that they can be identified very easy. The options COB and IOB sometimes slow down the output considerably, which is why you should only use them if you are really interested in it.
 
 The basal rate can be displayed below the graphic. A running loop will raise and lower this over and over again. This is why you can display both the actual basal rate and the basal rate set in the profile. For the basal rate there are the forms @09@, @11@ and @02@, on which you can analyze it more precisely. You can also have the @10@ generated for the day. This is then printed on a new page.
 
-This form is one of the most page-intensive forms in Nightscout Reporter. This is why there is the option of displaying several daily graphics on one page. Of course, legibility suffers from this, but it is very useful for an overview of the progress.</target>
+This form is one of the most page-intensive forms in Nightscout Reporter. This is why there is the option of displaying several daily graphics on one page. Of course, legibility suffers from this, but it is very useful for an overview of the progress.</source>
       </trans-unit>
       <trans-unit id="6914057216791490720" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7402,12 +7279,6 @@ This form is one of the most page-intensive forms in Nightscout Reporter. This i
         <source>Blood values</source>
       </trans-unit>
       <trans-unit id="help-dayhours" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt eine Übersicht über die
-Stunden der Tage des ausgewählten Zeitraums an. Die angezeigten Werte sind die
-Mittelwerte der innerhalb der entsprechenden Stunde gemessenen Werte. Sie
-werden anhand des ausgewählten Zielbereichs eingefärbt. In den Formularoptionen
-kann man die Startstunde festlegen. Die Datumsspalte befindet sich immer links
-von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-hours.ts</context>
           <context context-type="linenumber">12,17</context>
@@ -7437,10 +7308,6 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.</source>
         <source>Dayhours</source>
       </trans-unit>
       <trans-unit id="help-daylog" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt die Daten in tabellarischer Form an. Es kann abhängig von den
-ausgewählten Optionen sehr viele Seiten umfassen. Es ist vor allem dafür sinnvoll, um bestimmte Daten aufzufinden.
-Zum Beispiel kann man damit ermitteln, wann Katheterwechsel vorgenommen wurden, wieviele Datensätze als doppelt
-erkannt wurden oder wo Notizen erfasst wurden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-log.ts</context>
           <context context-type="linenumber">24,27</context>
@@ -7666,26 +7533,15 @@ erkannt wurden oder wo Notizen erfasst wurden.</source>
         <source>temp. Override for {$PH} min, Reason: {$PH_1}, Targetrange: {$PH_2}, Scale: {$PH_3}%</source>
       </trans-unit>
       <trans-unit id="help-dayprofile" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt die tatsächliche Basalrate, die während des Tages gelaufen ist unter
-Berücksichtigung aller temporären Basalratenanpassungen. Zusätzlich kann noch die im Profil hinterlegte
-Basalrate angezeigt werden. Die Basalrate kann als Wert, als prozentuale Änderung in Bezug auf die Profilbasalrate
-oder mit beidem angezeigt werden. Die Summenspalte zeigt die bis zur entsprechenden Uhrzeit abgegebene Basalrate
-an. Es ist auch möglich, die Uhrzeit mit Sekunden anzeigen zu lassen. Damit kann man die angezeigten Werte
-rechnerisch überprüfen.
-
-Wenn die Basalrate aus dem Profil angezeigt wird, wird das Maximum für die Darstellung der Balken anhand des
-maximalen Wertes der Profilbasalrate ermittelt. Dadurch werden bei Werten über 100% des Maximalwerts der
-Profilbasalrate die Balken über die Spalte hinaus verlängert. Es gibt aber eine Option, um diese Balken abzuschneiden
-und als Pfeile darstellen zu lassen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-profile.ts</context>
           <context context-type="linenumber">11,21</context>
         </context-group>
         <note priority="1" from="description">help for dayprofile</note>
-        <target state="final">This form shows the actual basal rate that has run during the day, taking into account any temporary basal rate adjustments. The basal rate stored in the profile can also be displayed. The basal rate can be displayed as a value, as a percentage change in relation to the profile basal rate, or both. The total column shows the basal rate delivered up to the corresponding time. It is also possible to display the time with seconds. This can be used to mathematically check the displayed values.
+        <source>This form shows the actual basal rate that has run during the day, taking into account any temporary basal rate adjustments. The basal rate stored in the profile can also be displayed. The basal rate can be displayed as a value, as a percentage change in relation to the profile basal rate, or both. The total column shows the basal rate delivered up to the corresponding time. It is also possible to display the time with seconds. This can be used to mathematically check the displayed values.
 
 If the basal rate is displayed from the profile, the maximum for the display of the bars is determined using the maximum value of the profile basal rate. As a result, the bars are extended beyond the column for values above 100% of the maximum value of the profile basal rate. But there is an option to cut off these bars
-and to show them as arrows.</target>
+and to show them as arrows.</source>
       </trans-unit>
       <trans-unit id="8124451201840566994" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7751,10 +7607,6 @@ and to show them as arrows.</target>
         <source>Daily Profile</source>
       </trans-unit>
       <trans-unit id="help-daystats" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt die statistischen Werte für die Tage des ausgewählten Zeitraums
-an. Für jeden Tag wird eine Zeile erzeugt. Die Spalten kann man teilweise konfigurieren. Auch hier wird der geschätzte
-HbA1c ausgegeben. Dieser hat wie auch im Formular @01@ nur sehr wenig Aussagekraft, weshalb er auch hier nur mit
-schwächerer Schrift angezeigt wird.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-daily-statistics.ts</context>
           <context context-type="linenumber">12,15</context>
@@ -7840,8 +7692,6 @@ schwächerer Schrift angezeigt wird.</source>
         <source>Show TDD</source>
       </trans-unit>
       <trans-unit id="help-glucdist" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt die Verteilung der Glukosewerte
-im ausgewählten Zeitraum an.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-gluc-distribution.ts</context>
           <context context-type="linenumber">18,19</context>
@@ -7871,20 +7721,14 @@ im ausgewählten Zeitraum an.</source>
         <source>Distribution of glucose values</source>
       </trans-unit>
       <trans-unit id="help-percentile" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt an, wie sich die Glukosewerte im ausgewählten Zeitraum über den Tag
-verteilen. Diese Verteilung kann graphisch und tabellarisch ausgegeben werden.
-
-In der Grafik sind die Bereiche für bestimmte Abweichungen farblich markiert. Die Linie zeigt den Medianwert
-an. In der Tabelle kann man diese Werte nachlesen. Wenn die Basalrate mit ausgegeben wird, dann ist das die
-Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-percentile.ts</context>
           <context context-type="linenumber">51,56</context>
         </context-group>
         <note priority="1" from="description">help for percentile</note>
-        <target state="final">This form shows how the glucose values are distributed over the day in the selected period. This distribution can be output graphically and in tabular form.
+        <source>This form shows how the glucose values are distributed over the day in the selected period. This distribution can be output graphically and in tabular form.
 
-In the graphic, the areas for certain deviations are color-coded. The line shows the median value. You can look up the values in the table. If the basal rate is also displayed, then this is the basal rate that was active at the beginning of the selected period.</target>
+In the graphic, the areas for certain deviations are color-coded. The line shows the median value. You can look up the values in the table. If the basal rate is also displayed, then this is the basal rate that was active at the beginning of the selected period.</source>
       </trans-unit>
       <trans-unit id="7173379012655254518" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7957,20 +7801,14 @@ In the graphic, the areas for certain deviations are color-coded. The line shows
         <source>This basalrate was active on {$PH}.</source>
       </trans-unit>
       <trans-unit id="help-profile" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt das Profil an. Es werden normalerweise alle Profile des ausgewählten
-Zeitraums ausgegeben. Wenn sich in dem Zeitraum das Profil geändert hat, wird ein neues Blatt erzeugt.
-
-Es gibt aber eine Option, welche nur das letzte Profil des Zeitraums ausgibt. Ausserdem gibt es eine Option,
-mit der gleiche Zeilen zusammengefasst werden. Das führt zu einem kürzeren Profil, wenn mehrere Zeiten nacheinander
-die gleichen Werte beinhalten.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-profile.ts</context>
           <context context-type="linenumber">12,17</context>
         </context-group>
         <note priority="1" from="description">help for profile</note>
-        <target state="final">This form shows the profile. Usually all profiles of the selected period are shown. If the profile has changed during this period, a new sheet is created.
+        <source>This form shows the profile. Usually all profiles of the selected period are shown. If the profile has changed during this period, a new sheet is created.
 
-However, there is an option that only outputs the last profile of the period. There is also an option to combine lines with same values. This leads to a shorter profile if several times in succession contain the same values.</target>
+However, there is an option that only outputs the last profile of the period. There is also an option to combine lines with same values. This leads to a shorter profile if several times in succession contain the same values.</source>
       </trans-unit>
       <trans-unit id="2310164324833522712" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7994,14 +7832,6 @@ However, there is an option that only outputs the last profile of the period. Th
         <source>Profile</source>
       </trans-unit>
       <trans-unit id="help-test" datatype="html">
-        <source/>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forms/nightscout/print-test.ts</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="description">help for test</note>
-      </trans-unit>
-      <trans-unit id="8948468163957841026" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-test.ts</context>
           <context context-type="linenumber">48</context>
@@ -8016,14 +7846,6 @@ However, there is an option that only outputs the last profile of the period. Th
         <source>Datasets</source>
       </trans-unit>
       <trans-unit id="help-userdata" datatype="html">
-        <source/>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/forms/nightscout/print-user-data.ts</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <note priority="1" from="description">help for userdata</note>
-      </trans-unit>
-      <trans-unit id="3199060363153469069" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-user-data.ts</context>
           <context context-type="linenumber">23</context>
@@ -8059,10 +7881,6 @@ However, there is an option that only outputs the last profile of the period. Th
         <source>Show all users</source>
       </trans-unit>
       <trans-unit id="help-weekgraph" datatype="html" approved="yes">
-        <source>Dieses Formular zeigt den Verlauf der Glukosekurve über eine Woche hinweg an. Der Zeitraum wird
-dazu in Wochenabschnitte aufgeteilt und jede Woche wird auf einer eigenen Seite ausgegeben. Die Wochen werden
-farblich markiert, so dass man sie gut unterscheiden kann. Zusätzlich kann noch das @10@ für die jeweilige
-Woche erzeugt werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-weekly-graphic.ts</context>
           <context context-type="linenumber">16,19</context>

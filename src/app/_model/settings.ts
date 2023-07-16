@@ -42,21 +42,22 @@ export class Settings {
   // images were retrieved using https://findicons.com/files/icons/2758/flag_icons/32/*.png
   subVersion = '1';
   languageList: LangData[] = [
-    new LangData('de-DE', `Deutsch`, 'de', null, 0),
-    new LangData('en-GB', `English (GB)`, 'gb', CrowdinData.factoryGerman(), 0),
-    new LangData('en-US', `English (USA)`, 'us', CrowdinData.factoryGerman(), 1),
-    new LangData('sk-SK', `Slovenský`, 'sk', CrowdinData.factoryGerman(), 3),
-    new LangData('es-ES', `Español`, 'es', CrowdinData.factoryGerman(), 2),
-    new LangData('pl-PL', `Polski`, 'pl', CrowdinData.factoryEnglish(), 4),
-    new LangData('ja-JP', `日本の`, 'jp', CrowdinData.factoryEnglish(), 1),
-    new LangData('fr-FR', `Français`, 'fr', CrowdinData.factoryEnglish(), 0),
-    new LangData('pt-PT', `Português`, 'pt', CrowdinData.factoryEnglish(), 5),
-    new LangData('nl-NL', `Dansk`, 'nl', CrowdinData.factoryEnglish(), 2),
-    new LangData('no-NO', `Norsk`, 'no', CrowdinData.factoryEnglish(), 3),
-    new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 6),
-    new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 7, 'cs'),
+    new LangData('de-DE', `Deutsch`, 'de', null, ''),
+    new LangData('en-GB', `English (GB)`, 'gb', CrowdinData.factoryGerman(), 'en-GB'),
+    new LangData('en-US', `English (USA)`, 'us', CrowdinData.factoryGerman(), 'en-US'),
+    new LangData('sk-SK', `Slovenský`, 'sk', CrowdinData.factoryGerman(), 'sk'),
+    new LangData('es-ES', `Español`, 'es', CrowdinData.factoryGerman(), 'es-ES'),
+    new LangData('pl-PL', `Polski`, 'pl', CrowdinData.factoryEnglish(), 'pl'),
+    new LangData('ja-JP', `日本の`, 'jp', CrowdinData.factoryEnglish(), 'ja'),
+    new LangData('fr-FR', `Français`, 'fr', CrowdinData.factoryEnglish(), 'fr'),
+    new LangData('pt-PT', `Português`, 'pt', CrowdinData.factoryEnglish(), 'pt-PT'),
+    new LangData('nl-NL', `Dansk`, 'nl', CrowdinData.factoryEnglish(), 'nl'),
+    new LangData('no-NO', `Norsk`, 'no', CrowdinData.factoryEnglish(), 'no'),
+    new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 'ru'),
+    new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
 
+// <img alt="fr proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=fr&style=flat&logo=crowdin&query=%24.progress[?(@.data.languageId==%27fr%27)].data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-13600041-555863.json" ></crowdin-copy-button>
   static get hastiod(): boolean {
     return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;
   }
