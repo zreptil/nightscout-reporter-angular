@@ -89,6 +89,10 @@ export class Settings {
     return `${this._version}-${this._subVersion}`;
   }
 
+  get displayVersion(): string {
+    return this._version;
+  }
+
   get lblGlucUnits(): string {
     return $localize`Einheit der Glukosemessung`;
   }

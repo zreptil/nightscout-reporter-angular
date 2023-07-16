@@ -1457,7 +1457,7 @@ export abstract class BasePrint extends FormConfig {
     if (!GLOBALS.ppHideNightscoutInPDF) {
       stack.push({
         relativePosition: {x: this.cm(this.xframe), y: this.cm(2.5)},
-        text: `nightscout reporter ${GLOBALS.version}`,
+        text: `nightscout reporter ${GLOBALS.displayVersion}`,
         fontSize: this.fs(8),
         color: this.colSubTitle,
       });
