@@ -9,6 +9,14 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.1)">
+      <span i18n="version">Version</span><span i18n="v411">4.1.1 - 16.07.2023</span></h2>
+    <ul [class]="classFor(41.1)">
+      <li class="fixed" i18n="v411f1">
+        Wenn es in einer Shortcutdefinition kopierte Formulare gibt, werden diese nun auch
+        ausgegeben, wenn das PDF über den Aufruf mit den URL-Parametern erzeugt wird.
+      </li>
+    </ul>
     <h2 (click)="click(41.0)">
       <span i18n="version">Version</span><span i18n="v410">4.1.0 - 15.07.2023</span></h2>
     <ul [class]="classFor(41.0)">
