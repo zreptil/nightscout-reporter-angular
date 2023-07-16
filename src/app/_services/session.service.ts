@@ -372,4 +372,18 @@ export class SessionService {
       this.ds._initAfterLoad();
     }
   }
+
+  addCopiedForms(): void {
+    for (let i = 0; i < GLOBALS.pdfOrder.length; i += 3) {
+      const idx = GLOBALS.pdfOrder.substring(i, i + 3);
+      const cfg = GLOBALS.listConfig.find((e) => e.idx === idx);
+      if (cfg == null) {
+        const form = this.formFromId(idx.substring(0, 2), idx.substring(2));
+        if (form != null) {
+          const newCfg = new FormConfig(form, false);
+          GLOBALS.listConfig.push(newCfg);
+        }
+      }
+    }
+  }
 }

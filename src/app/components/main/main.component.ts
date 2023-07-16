@@ -3,7 +3,6 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ThemeService} from '@/_services/theme.service';
 import {DataService} from '@/_services/data.service';
 import {PdfService} from '@/_services/pdf.service';
-import {FormConfig} from '@/forms/form-config';
 import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
 import {ProgressService} from '@/_services/progress.service';
@@ -278,17 +277,7 @@ export class MainComponent implements OnInit {
   }
 
   afterLoad(): void {
-    for (let i = 0; i < GLOBALS.pdfOrder.length; i += 3) {
-      const idx = GLOBALS.pdfOrder.substring(i, i + 3);
-      const cfg = GLOBALS.listConfig.find((e) => e.idx === idx);
-      if (cfg == null) {
-        const form = this.ss.formFromId(idx.substring(0, 2), idx.substring(2));
-        if (form != null) {
-          const newCfg = new FormConfig(form, false);
-          GLOBALS.listConfig.push(newCfg);
-        }
-      }
-    }
+    this.ss.addCopiedForms();
     GLOBALS.listConfigOrg = [];
     Utils.pushAll(GLOBALS.listConfigOrg, GLOBALS.listConfig);
     this.ss.checkPrint();

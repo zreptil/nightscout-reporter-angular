@@ -1554,7 +1554,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       temp.push(entry);
     }
     if (useProfile) {
-      temp.sort((a, b) => Utils.compareDate(a.time(day.date, useProfile), b.time(day.date, useProfile)));
+      temp.sort((a, b) =>
+        Utils.compareDate(a.time(day.date, useProfile), b.time(day.date, useProfile))
+      );
 
       if (Utils.isEmpty(temp)) {
         temp.push(new ProfileEntryData(new ProfileTimezone(GlobalsData.refTimezone)));
@@ -1569,12 +1571,18 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       areaPoints.push({x: this.cm(this.basalX(new Date(0, 1, 1, 0, 0))), y: this.cm(this.basalY(0.0))});
     }
     for (const entry of temp) {
-      const x = this.basalX(entry.time(day.date, useProfile));
-      const y = this.basalY(entry.value); //basalY(entry.adjustedValue(entry.value));
-      if (lastY >= 0) {
-        areaPoints.push({x: this.cm(x), y: this.cm(lastY)});
+      const time = entry.time(day.date, useProfile);
+      let x = this.basalX(time);
+      if (Utils.isBefore(time, day.date)) {
+        x -= this.basalWidth;
       }
-      areaPoints.push({x: this.cm(x), y: this.cm(y)});
+      const y = this.basalY(entry.value); //basalY(entry.adjustedValue(entry.value));
+      if (x >= 0) {
+        if (lastY >= 0) {
+          areaPoints.push({x: this.cm(x), y: this.cm(lastY)});
+        }
+        areaPoints.push({x: this.cm(x), y: this.cm(y)});
+      }
       lastY = y;
     }
     if (lastY >= 0) {

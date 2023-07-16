@@ -29,6 +29,7 @@ export class ShortcutComponent implements OnInit {
   }
 
   afterLoadDevice(): void {
+    this.ss.addCopiedForms();
     GLOBALS.avoidSaveAndLoad = true;
     if (this.env.appParams.user != null) {
       const idx = GLOBALS.userList.findIndex(u => u.name.toLowerCase() === this.env.appParams.user.toLowerCase());
