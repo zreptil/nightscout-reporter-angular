@@ -19,6 +19,10 @@
   color: var(--localFore);
 }
 
+.tile.pinned:not(.tilechecked) {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 .tile {
   position: relative;
   display: flex;
@@ -57,10 +61,14 @@
     overflow-wrap: anywhere;
   }
 
-  [settings] {
+  [settings], [pin] {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .pinned {
+    color: var(--userPinFore);
   }
 
   [index] {

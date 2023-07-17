@@ -53,7 +53,7 @@ export class Settings {
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
   // subVersion is added to version to have a unique version number without changing the current version
-  private _subVersion = '2';
+  private _subVersion = '3';
 
   static get hastiod(): boolean {
     return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;

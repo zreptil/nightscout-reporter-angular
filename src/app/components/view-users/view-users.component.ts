@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
+import {UserData} from '@/_model/nightscout/user-data';
 
 @Component({
   selector: 'app-view-users',
@@ -33,6 +34,9 @@ export class ViewUsersComponent {
     if (idx === GLOBALS.userIdx) {
       ret.push('tilechecked');
     }
+    if (GLOBALS.userList[idx].isPinned) {
+      ret.push('pinned');
+    }
     return ret;
   }
 
@@ -44,5 +48,27 @@ export class ViewUsersComponent {
   clickSettings(evt: MouseEvent) {
     evt.stopPropagation();
     this.ss.showSettings();
+  }
+
+  clickPin(evt: MouseEvent, user: UserData) {
+    evt.stopPropagation();
+    user.isPinned = !user.isPinned;
+    GLOBALS.sortUserList();
+    this.ds.save();
+  }
+
+  iconForPin(user: UserData): string {
+    if (user.isPinned) {
+      return 'star';
+    }
+    return 'star_border';
+  }
+
+  classForPin(user: UserData): string[] {
+    const ret = [];
+    if (user.isPinned) {
+      ret.push('pinned');
+    }
+    return ret;
   }
 }

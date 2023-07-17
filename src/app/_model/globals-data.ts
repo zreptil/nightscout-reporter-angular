@@ -908,7 +908,12 @@ export class GlobalsData extends Settings {
 
   sortUserList() {
     const user = this.user;
-    this.userList.sort((a, b) => Utils.compare(a.display.toLowerCase(), b.display.toLowerCase()));
+    this.userList.sort((a, b) => {
+      if (a.isPinned === b.isPinned) {
+        return Utils.compare(a.display.toLowerCase(), b.display.toLowerCase());
+      }
+      return Utils.compare(b.isPinned, a.isPinned);
+    });
     this.userIdx = this.userList.findIndex(u => u.display === user.display);
   }
 }

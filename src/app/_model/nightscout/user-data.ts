@@ -11,6 +11,7 @@ import {Settings} from '@/_model/settings';
 export class UserData {
   name = '';
   birthDate = '';
+  isPinned = false;
   listApiUrl: UrlData[] = [];
   customData: { [key: string]: string } = {};
   formParams: any = {};
@@ -54,6 +55,7 @@ export class UserData {
       + `,"ac":"${this.adjustCalc?.toString() ?? 5.0}"`
       + `,"al":"${this.adjustLab?.toString() ?? 5.0}"`
       + `,"at":${this.adjustTarget ? 'true' : 'false'}`
+      + `,"p":${this.isPinned ? 'true' : 'false'}`
       + `}`;
   }
 
@@ -111,6 +113,7 @@ export class UserData {
       ret.adjustCalc = JsonData.toNumber(json.ac, 5.0);
       ret.adjustLab = JsonData.toNumber(json.al, 5.0);
       ret.adjustTarget = JsonData.toBool(json.at ?? false);
+      ret.isPinned = JsonData.toBool(json.p ?? false);
       ret.adjustLoaded = ret.adjustCheck;
       ret.formParams = json.f;
       if (ret.formParams != null && typeof ret.formParams['analysis'] === 'boolean') {
