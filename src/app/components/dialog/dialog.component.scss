@@ -11,3 +11,9 @@
 .mat-mdc-button:not(:disabled) {
   color: var(--fore);
 }
+
+::ng-deep a, a:visited {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}

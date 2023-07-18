@@ -35,6 +35,21 @@ export class UserData {
     this.listApiUrl.push(new UrlData());
   }
 
+  get iconForPin(): string {
+    if (this.isPinned) {
+      return 'star';
+    }
+    return 'star_border';
+  }
+
+  get classForPin(): string[] {
+    const ret = [];
+    if (this.isPinned) {
+      ret.push('pinned');
+    }
+    return ret;
+  }
+
   // retrieve the data as a json-encoded-string
   get asJsonString(): string {
     this.listApiUrl.sort((a, b) => Utils.compareDate(a.endDate, b.endDate));
