@@ -56,19 +56,4 @@ export class ViewUsersComponent {
     GLOBALS.sortUserList();
     this.ds.save();
   }
-
-  iconForPin(user: UserData): string {
-    if (user.isPinned) {
-      return 'star';
-    }
-    return 'star_border';
-  }
-
-  classForPin(user: UserData): string[] {
-    const ret = [];
-    if (user.isPinned) {
-      ret.push('pinned');
-    }
-    return ret;
-  }
 }
