@@ -38,7 +38,8 @@
   justify-content: center;
   flex: 1;
   min-width: 20%;
-  max-height: 80%;
+  max-width: 20%;
+  max-height: 5em;
 
   [row] {
     display: flex;
@@ -59,6 +60,8 @@
     justify-content: center;
     opacity: 0.7;
     overflow-wrap: anywhere;
+    max-height: 5em;
+    overflow-y: hidden;
   }
 
   [settings], [pin] {
