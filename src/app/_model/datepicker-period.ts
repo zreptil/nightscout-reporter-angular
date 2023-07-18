@@ -9,7 +9,7 @@ export class DatepickerPeriod {
   static dowShortNames = $localize`Mo|Di|Mi|Do|Fr|Sa|So`.split('|');
   static shiftNames = $localize`Bis heute|Bis gestern|Bis Wochenende`.split('|');
   emptyReason: string;
-  firstDayOfWeek = 1;
+  firstDayOfWeek = 7;
   end: Date;
   entryKey: string;
   minDate: Date;
@@ -229,12 +229,12 @@ export class DatepickerPeriod {
       this.start = null;
       this.end = null;
       this.entryKey = null;
-      this.firstDayOfWeek = 1;
+      this.firstDayOfWeek = 7;
       if (parts.length >= 4) {
         this.start = Utils.parseDate(parts[0]);
         this.end = Utils.parseDate(parts[1]);
         this.entryKey = parts[2] === '' || parts[2] === 'null' ? null : parts[2];
-        this.firstDayOfWeek = parseInt(parts[3]) ?? 0;
+        this.firstDayOfWeek = parseInt(parts[3]) ?? 7;
       }
       for (let i = 0; i < 7; i++) {
         this.activateDow(i, true);
