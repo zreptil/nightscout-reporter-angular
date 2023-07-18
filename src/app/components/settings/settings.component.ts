@@ -405,7 +405,6 @@ export class SettingsComponent implements OnInit {
         title: $localize`Soll gespeichert werden?`,
         buttons: buttons
       }, ret.msg, false, new DialogParams({theme: 'settings'}))
-        //        this.ms.confirm($localize`${ret}<br><br>Soll gespeichert werden, obwohl die URL nicht erreichbar ist?`, 'settings')
         .subscribe(result => {
           switch (result.btn) {
             case DialogResultButton.yes:

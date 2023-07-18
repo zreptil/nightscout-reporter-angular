@@ -296,7 +296,7 @@ export class GlobalsData extends Settings {
   }
 
   get msgUrlFailureSuffix(): string {
-    return $localize`<br><br>Wenn diese URL geschützt ist (AUTH_DEFAULT_ROLES steht nicht auf "readable"), muss ausserdem der Zugriffsschlüssel korrekt definiert sein. Diesen erreicht man über "Administrator-Werkzeuge" auf der persönlichen Nightscout Seite.`;
+    return $localize`<br><br>Wenn diese URL geschützt ist (AUTH_DEFAULT_ROLES steht nicht auf "admin" oder "readable"), muss ausserdem der Zugriffsschlüssel korrekt definiert sein. Diesen erreicht man über "Administrator-Werkzeuge" auf der persönlichen Nightscout Seite.<br><br>Weitere Informationen zu den AUTH_DEFAULT_ROLES gibt es <a href="https://nightscout.github.io/nightscout/security/#how-to-turn-off-unauthorized-access" target="_blank">hier</a>.`;
   }
 
   _period: DatepickerPeriod = new DatepickerPeriod();
