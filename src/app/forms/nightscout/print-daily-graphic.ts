@@ -513,6 +513,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     for (const entry of day.bloody) {
       this.glucMax = Math.max(entry.gluc, this.glucMax);
     }
+
     this.profMax = -1000.0;
     if (this.showBasalProfile) {
       for (const entry of day.basalData.store.listBasal) {

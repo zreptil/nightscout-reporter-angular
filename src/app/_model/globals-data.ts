@@ -348,7 +348,9 @@ export class GlobalsData extends Settings {
   }
 
   get glucMaxValue(): number {
-    return this.glucValueFromData(this.glucMaxValues[this.ppGlucMaxIdx ?? 0]);
+    return (this.ppGlucMaxIdx ?? 0) == 0
+      ? null
+      : this.glucValueFromData(this.glucMaxValues[this.ppGlucMaxIdx]);
   }
 
   get glucMaxValues(): number[] {
