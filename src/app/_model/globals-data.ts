@@ -793,7 +793,7 @@ export class GlobalsData extends Settings {
     if (dt == null) {
       return date;
     }
-    let ret = GLOBALS.fmtDateForDisplay.transform(dt);
+    let ret = Utils.fmtDate(dt);
     if (params.withShortWeekday) {
       ret = `${DatepickerPeriod.dowShortName(new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()))}, ${ret}`;
     }
