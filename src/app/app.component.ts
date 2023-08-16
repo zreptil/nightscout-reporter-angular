@@ -68,17 +68,10 @@ export class AppComponent {
     // remove oauth2 from localStorage, since this can prevent
     // dropbox sync from working
     localStorage.removeItem('oauth2');
-
-    window.addEventListener('resize', this.onResize);
-    this.onResize();
   }
 
   get globals() {
     return GLOBALS;
-  }
-
-  onResize() {
-    document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
   }
 
   msgOauth2Workflow(serviceName: string): string {

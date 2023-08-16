@@ -14,10 +14,16 @@ export class ThemeService {
 
   constructor(public ds: DataService,
               public ms: MaterialColorService) {
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
   }
 
   get isWatch(): boolean {
     return window.location.href.indexOf('watch') > 0;
+  }
+
+  onResize() {
+    document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
   }
 
   async setTheme(name: string) {
