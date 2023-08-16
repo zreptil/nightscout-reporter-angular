@@ -20,11 +20,11 @@ html, body {
 
 body {
   --doc-height: 100vh;
+  border: 10px solid red;
   display: flex;
   flex-flow: column;
-  width: 100vw;
+  width: 95vw;
   height: var(--doc-height);
-  overflow-y: scroll;
   margin: 0;
   padding: 0;
   align-items: center;
