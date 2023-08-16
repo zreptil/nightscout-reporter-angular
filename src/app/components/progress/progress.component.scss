@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: var(--doc-height);
 
   // border: 5px solid red;
   background-color: rgba(0, 0, 0, 0.5);

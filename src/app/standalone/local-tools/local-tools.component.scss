@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   flex: 1;
-  height: 100vh;
+  height: var(--doc-height);
   width: 100vw;
 
   mat-tab-group {

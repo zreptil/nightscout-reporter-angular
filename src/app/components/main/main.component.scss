@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   width: 100vw;
-  height: 100vh;
+  height: var(--doc-height);
 
   .mat-form-field-wrapper {
     border: 10px solid red;
@@ -69,7 +69,7 @@
 mat-drawer-container {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: var(--doc-height);
   background-color: var(--mainBodyBack);
   color: var(--mainBodyFore);
 
