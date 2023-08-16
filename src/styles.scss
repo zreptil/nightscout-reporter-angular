@@ -20,10 +20,9 @@ html, body {
 
 body {
   --doc-height: 100vh;
-  border: 10px solid red;
   display: flex;
   flex-flow: column;
-  width: 95vw;
+  width: 100vw;
   height: var(--doc-height);
   margin: 0;
   padding: 0;

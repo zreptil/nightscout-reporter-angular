@@ -69,13 +69,16 @@ export class AppComponent {
     // dropbox sync from working
     localStorage.removeItem('oauth2');
 
-    window.addEventListener('resize', () => {
-      document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
-    });
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
   }
 
   get globals() {
     return GLOBALS;
+  }
+
+  onResize() {
+    document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
   }
 
   msgOauth2Workflow(serviceName: string): string {
