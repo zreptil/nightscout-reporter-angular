@@ -21,7 +21,8 @@ export class AppComponent {
               ds: DataService,
               ss: SessionService,
               ms: MessageService,
-              dbs: DropboxService
+              dbs: DropboxService,
+              // gots: GoogleOneTapService
   ) {
     LogService.cr = cr;
     dbs.startOauth2Workflow = () => {
@@ -67,6 +68,10 @@ export class AppComponent {
     // remove oauth2 from localStorage, since this can prevent
     // dropbox sync from working
     localStorage.removeItem('oauth2');
+
+    window.addEventListener('resize', () => {
+      document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
+    });
   }
 
   get globals() {
