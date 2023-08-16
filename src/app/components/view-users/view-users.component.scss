@@ -45,6 +45,13 @@
     display: flex;
     flex-flow: column;
     width: 100%;
+    max-height: 100%;
+  }
+
+  @media (max-width: 500px) {
+    [row] {
+      font-size: 70%;
+    }
   }
 
   [name] {
