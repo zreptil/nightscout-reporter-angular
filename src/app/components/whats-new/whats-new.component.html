@@ -9,6 +9,15 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.2)">
+      <span i18n="version">Version</span><span i18n="v412">4.1.2 - 16.08.2023</span></h2>
+    <ul [class]="classFor(41.2)">
+      <li class="fixed" i18n="v412f1">
+        Die Anzeige auf Handys mit aktueller Android Version wurde korrigiert, damit die
+        untere Leiste mit dem Eulen-Menü und dem Ausführungs-Button möglichst immer
+        sichtbar ist.
+      </li>
+    </ul>
     <h2 (click)="click(41.1)">
       <span i18n="version">Version</span><span i18n="v411">4.1.1 - 17.07.2023</span></h2>
     <ul [class]="classFor(41.1)">
