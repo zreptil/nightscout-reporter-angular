@@ -615,7 +615,9 @@ export class DataService {
           GLOBALS.glucDir = 360;
           GLOBALS.currentGlucDiff = '';
           GLOBALS.currentGlucTime = '';
-          if (span > 15) {
+          // const chk = new Date().getHours() * 100 + new Date().getMinutes();
+          if (span > 15) { // || (chk >= 1917 && chk <= 1921)) {
+            this.refreshCurrentTimer(params);
             return GLOBALS.currentGluc;
           }
           GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
@@ -685,20 +687,24 @@ export class DataService {
     GLOBALS.currentChanges = changes;
 
     if (params.force) {
-      let milliseconds = params.timeout * 1000;
-      // calculate the milliseconds to the next full part of the minute for the timer
-      // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
-      // this is done for that the display of the time will match the current
-      // time when entering a new minute
-      const milliNow = GlobalsData.now.getSeconds() * 1000 + GlobalsData.now.getMilliseconds();
-      const part = Math.floor(milliNow / milliseconds);
-      milliseconds = (part + 1) * milliseconds - milliNow;
-      // Log.debug(`{time} initiating timer ${milliseconds}`);
-      GLOBALS.glucTimer = setTimeout(() => this.getCurrentGluc(params), milliseconds);
+      this.refreshCurrentTimer(params);
     }
+    return ret;
+  }
+
+  refreshCurrentTimer(params: { force?: boolean, timeout?: number }): void {
+    let milliseconds = params.timeout * 1000;
+    // calculate the milliseconds to the next full part of the minute for the timer
+    // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
+    // this is done for that the display of the time will match the current
+    // time when entering a new minute
+    const milliNow = GlobalsData.now.getSeconds() * 1000 + GlobalsData.now.getMilliseconds();
+    const part = Math.floor(milliNow / milliseconds);
+    milliseconds = (part + 1) * milliseconds - milliNow;
+    // Log.debug(`{time} initiating timer ${milliseconds}`);
+    GLOBALS.glucTimer = setTimeout(() => this.getCurrentGluc(params), milliseconds);
     // Log.debug(`{time} resetting glucRunning`);
     GLOBALS.glucRunning = false;
-    return ret;
   }
 
   saveShortcuts(): void {
