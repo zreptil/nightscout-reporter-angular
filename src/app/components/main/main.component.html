@@ -9,7 +9,7 @@
       <div class="menu-controls">
         <button (click)="ss.showPopup('welcome')" class="iconButton">
           <mat-icon>home</mat-icon>
-          <div i18n="title of welcome screen">Willkommen</div>
+          <span i18n="title of welcome screen">Willkommen</span>
         </button>
         <!-- facebook is not the best choice for contact, so i removed it.
          lets see, what the community thinks, maybe it needs to be reenabled
@@ -31,11 +31,11 @@
         -->
         <button (click)="clickMenuButton('feedback')" class="iconButton">
           <mat-icon>feedback</mat-icon>
-          <div i18n="title of feedback">Feedback</div>
+          <span i18n="title of feedback">Feedback</span>
         </button>
         <button (click)="ss.showSettings()" class="iconButton">
           <mat-icon>settings</mat-icon>
-          <div i18n="title of settings">Einstellungen</div>
+          <span i18n="title of settings">Einstellungen</span>
         </button>
         <!--
         globals.viewType wird aktuell nicht ausgewertet. Es gibt zunächst nur den
@@ -73,33 +73,33 @@
                         -->
         <button (click)="ss.showPopup('whatsnew')" class="iconButton">
           <mat-icon>new_releases</mat-icon>
-          <div i18n="title of whatsnew screen">Was bisher geschah...</div>
+          <span i18n="title of whatsnew screen">Was bisher geschah...</span>
         </button>
       </div>
       <div class="menu-links">
         <button (click)="clickMenuButton('nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
-          <div i18n="title of nightscout page">Nightscout Seite</div>
+          <span i18n="title of nightscout page">Nightscout Seite</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user?.reportUrl != null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
-          <div i18n="title of nightscout reports">Nightscout Berichte</div>
+          <span i18n="title of nightscout reports">Nightscout Berichte</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <button (click)="clickMenuButton('nswatch')" class="iconButton">
           <img alt="nightscout white" src="assets/img/night-watch-white.png">
-          <div i18n="title of night-watch">Night-Watch</div>
+          <span i18n="title of night-watch">Night-Watch</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <button (click)="clickMenuButton('local-tools')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
-          <div i18n="title of local tools">Local Tools</div>
+          <span i18n="title of local tools">Local Tools</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <button (click)="clickMenuButton('googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
-          <div i18n="title of local tools">Google Cloud Setup</div>
+          <span i18n="title of local tools">Google Cloud Setup</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-legal">
@@ -130,10 +130,10 @@
       <div class="content">
         <div *ngFor="let item of globals.shortcutList; let idx = index" [class]="shortcutClass(item)">
           <button (click)="ss.activateShortcut(idx)">
-            <div content>
+            <span content>
               <mat-icon>{{item.icon}}</mat-icon>
-              <div text>{{item.name}}</div>
-            </div>
+              <span text>{{item.name}}</span>
+            </span>
           </button>
           <button (click)="editShortcut(idx)">
             <mat-icon small>edit</mat-icon>
@@ -141,10 +141,10 @@
         </div>
         <div class="shortcut">
           <button (click)="editShortcut(-1)" class="add">
-            <div content>
+            <span content>
               <mat-icon>add</mat-icon>
-              <div text>{{msgAddText}}</div>
-            </div>
+              <span text>{{msgAddText}}</span>
+            </span>
           </button>
         </div>
       </div>
@@ -189,8 +189,8 @@
               <span class="appTitle">{{globals.appTitle}}</span>
               <span *ngIf="globals.isBeta" class="toolbar-button betaTitle">BETA</span>
               <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="toolbar-button localTitle" mat-button>
-                <div *ngIf="globals.isLocal">Lokal</div>
-                <div *ngIf="!globals.isLocal">Vorschau</div>
+                <span *ngIf="globals.isLocal">Lokal</span>
+                <span *ngIf="!globals.isLocal">Vorschau</span>
               </button>
             </div>
             <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{globals.displayVersion}}</button>
@@ -247,13 +247,18 @@
     </div>
     <div *ngIf="hasFooterBar" class="footer">
       <app-owl-menu></app-owl-menu>
+      <button (click)="clickAddUser()"
+              *ngIf="globals.viewType === 'users'"
+              mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
       <button (click)="clickSend()"
               *ngIf="globals.viewType === 'tile'"
               [attr.aria-label]="ss.msgAriaPlay"
               [class]="sendClass(0,sendIcon)"
               [disabled]="ss.activeCfgCount===0"
               mat-fab>
-        <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
+        <span *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</span>
         <mat-icon>{{createIcon}}</mat-icon>
       </button>
     </div>
@@ -267,7 +272,7 @@
                 [class]="sendClass(0,sendIcon)"
                 [disabled]="ss.activeCfgCount===0"
                 mat-fab>
-          <div *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</div>
+          <span *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</span>
           <mat-icon>{{createIcon}}</mat-icon>
         </button>
       </div>

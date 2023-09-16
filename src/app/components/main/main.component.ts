@@ -411,4 +411,9 @@ export class MainComponent implements OnInit {
     GLOBALS.viewType = GLOBALS.viewType === 'users' ? 'tile' : 'users';
     this.ds.save();
   }
+
+  clickAddUser() {
+    this.ss.showSettings(() => {
+    }, {cmd: 'addUser'});
+  }
 }

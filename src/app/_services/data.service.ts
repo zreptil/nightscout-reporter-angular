@@ -429,7 +429,7 @@ export class DataService {
   reload(): void {
     if (location.href != location.origin) {
       console.error('jetzt wird neu geladen');
-      location.href = location.origin;
+      location.href = location.origin + location.pathname;
     } else {
       console.error('Jetzt guck nach, was los ist!');
       location.reload();

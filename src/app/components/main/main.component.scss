@@ -393,6 +393,10 @@ mat-drawer-container {
       justify-content: space-between;
       padding: 0.1em;
       border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+      [mat-icon-button] {
+        align-self: center;
+      }
     }
 
     app-owl-menu {
@@ -428,7 +432,7 @@ mat-drawer-container {
       align-items: center;
       gap: 0.5em;
 
-      div {
+      span {
         font-weight: bold;
         font-size: 200%;
         color: var(--sendCountFore);

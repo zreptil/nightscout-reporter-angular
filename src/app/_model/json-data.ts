@@ -29,7 +29,11 @@ export class JsonData {
 
   static ensureJson(json: any): any {
     if (typeof json === 'string') {
-      json = JSON.parse(json);
+      try {
+        json = JSON.parse(json);
+      } catch (ex) {
+        console.error('Fehler beim Parsing von', json);
+      }
     }
     return json;
   }
