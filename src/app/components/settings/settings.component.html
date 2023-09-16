@@ -3,7 +3,7 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
-      <div i18n="title for settings dialog">Einstellungen</div>
+      <span i18n="title for settings dialog">Einstellungen</span>
     </h1>
     <div>
       <button *ngIf="ss.isEmpty(ps.text)"
@@ -204,9 +204,9 @@
         <div *ngIf="globals.isBeta" class="sub">
           <button (click)="ds.copyFromOtherStorage()" mat-button>
             <mat-icon>file_copy</mat-icon>
-            <div i18n="buttonlabel for copy of settings to beta version">
+            <span i18n="buttonlabel for copy of settings to beta version">
               Einstellungen von Release-Version übernehmen
-            </div>
+            </span>
           </button>
         </div>
         <app-gluc-adjust></app-gluc-adjust>
@@ -218,16 +218,16 @@
     <div>
       <button (click)="clickExport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
         <mat-icon>cloud_download</mat-icon>
-        <div i18n="buttonlabel for exporting data">Exportieren</div>
+        <span i18n="buttonlabel for exporting data">Exportieren</span>
       </button>
       <button (click)="clickImport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
         <mat-icon>cloud_upload</mat-icon>
-        <div i18n="buttonlabel for importing data">Importieren</div>
+        <span i18n="buttonlabel for importing data">Importieren</span>
       </button>
     </div>
     <button (click)="clickSave()" *ngIf="ss.isEmpty(ps.text)" mat-button>
       <mat-icon>save</mat-icon>
-      <div i18n="buttonlabel for saving data">Speichern</div>
+      <span i18n="buttonlabel for saving data">Speichern</span>
     </button>
     <!-- Import / Export Controls -->
     <input #fileSelect (change)="fileSelected($event)" type="file">

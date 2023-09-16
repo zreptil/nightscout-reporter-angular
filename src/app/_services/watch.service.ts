@@ -27,4 +27,9 @@ export class WatchService {
     return GLOBALS.watchList?.findIndex((e) => e.selected) ?? -1;
   }
 
+  clearSelected(): void {
+    GLOBALS.watchList.forEach(e => {
+      e.selected = false;
+    });
+  }
 }

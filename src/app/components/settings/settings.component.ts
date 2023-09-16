@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {saveAs} from 'file-saver';
 import {ProgressService} from '@/_services/progress.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
@@ -11,7 +11,7 @@ import {DateAdapter} from '@angular/material/core';
 import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {NightscoutService} from '@/_services/nightscout.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
@@ -35,6 +35,7 @@ export class SettingsComponent implements OnInit {
   fileSelect: ElementRef<HTMLInputElement>;
 
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,
+              @Inject(MAT_DIALOG_DATA) public dlgData: { cmd: string },
               private da: DateAdapter<any>,
               public ds: DataService,
               public ps: ProgressService,
@@ -358,6 +359,11 @@ export class SettingsComponent implements OnInit {
   }
   */
   ngOnInit(): void {
+    switch (this.dlgData?.cmd) {
+      case 'addUser':
+        setTimeout(() => this.addUser(), 1);
+        break;
+    }
   }
 
   msgCheckUser(url: string): string {

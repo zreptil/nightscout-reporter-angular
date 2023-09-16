@@ -53,7 +53,7 @@ export class Settings {
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
   // subVersion is added to version to have a unique version number without changing the current version
-  private _subVersion = '2';
+  private _subVersion = '1';
 
   static get hastiod(): boolean {
     return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;
@@ -83,7 +83,7 @@ export class Settings {
     return $localize`Beide`;
   }
 
-  private _version = '4.1.2';
+  private _version = '4.1.3';
 
   get version(): string {
     return `${this._version}-${this._subVersion}`;

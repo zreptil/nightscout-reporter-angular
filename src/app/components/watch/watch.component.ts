@@ -177,11 +177,11 @@ export class WatchComponent implements OnInit {
 
   clickSettings(evt: MouseEvent) {
     evt.stopPropagation();
-    this.showSettings();
+    this.currPage = 'users';
   }
 
   async showSettings() {
-    this.ss.showSettings.bind(this.ss)(this.showSettings);
+    this.ss.showSettings.bind(this.ss)();
   }
 
   clickSmaller(evt: MouseEvent) {
@@ -362,5 +362,11 @@ export class WatchComponent implements OnInit {
       br: 'center'
     };
     this.ws.selected.groupId = ids[this.ws.selected.groupId] ?? 'tl';
+  }
+
+  clickBack(evt: MouseEvent) {
+    evt.stopPropagation();
+    this.ws.clearSelected();
+    this.currPage = '';
   }
 }

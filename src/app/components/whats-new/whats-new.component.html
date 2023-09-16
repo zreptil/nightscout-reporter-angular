@@ -9,6 +9,19 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.3)">
+      <span i18n="version">Version</span><span i18n="v413">4.1.3 - 16.09.2023</span></h2>
+    <ul [class]="classFor(41.3)">
+      <li class="added" i18n="v413a1">
+        In der Benutzerliste kann jetzt mit dem Button rechts unterhalb der Liste ein
+        Benutzer angelegt werden.
+      </li>
+      <li class="added" i18n="v413a2">
+        In NightWatch wird mit dem Button für die Einstellungen jetzt die Benutzerliste
+        aufgerufen. Ausserdem gibt es dort im Editiermodus jetzt auch das Eulen-Menü,
+        damit man die Sprache umschalten kann.
+      </li>
+    </ul>
     <h2 (click)="click(41.2)">
       <span i18n="version">Version</span><span i18n="v412">4.1.2 - 16.08.2023</span></h2>
     <ul [class]="classFor(41.2)">

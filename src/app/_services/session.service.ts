@@ -160,10 +160,10 @@ export class SessionService {
     window.open(`https://www.youtube.com/watch?v=${videos[id]}`);
   }
 
-  showSettings(afterPopup?: () => void): void {
+  showSettings(afterPopup?: () => void, data?: any): void {
     const sharedOrg = GLOBALS.asSharedString;
     const deviceOrg = GLOBALS.asDeviceString;
-    this.showPopup('settings').subscribe((result: DialogResult) => {
+    this.showPopup('settings', data).subscribe((result: DialogResult) => {
       switch (result.btn) {
         case DialogResultButton.ok:
           this.ds.save({skipReload: true});

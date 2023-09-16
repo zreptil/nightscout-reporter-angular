@@ -6,6 +6,24 @@
   background-color: var(--settingsBodyFore);
 }
 
+.users {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: var(--doc-height);
+  background: black;
+
+  button {
+    min-height: 3em;
+    background-color: var(--settingsBodyBack);
+    color: var(--settingsBodyFore);
+  }
+
+  .scrollable {
+    overflow: auto;
+  }
+}
+
 .root {
   display: flex;
   flex-flow: column;
@@ -84,3 +102,22 @@
     text-transform: none;
   }
 }
+
+@media (max-width: 1080px) {
+  .owlPanel {
+    display: flex;
+    align-items: flex-start;
+    width: 100vw;
+    background: var(--settingsBodyBack);
+    color: black;
+  }
+}
+
+@media (min-width: 1080px) {
+  .owlPanel {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}
+
