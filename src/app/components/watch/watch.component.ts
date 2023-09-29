@@ -93,6 +93,7 @@ export class WatchComponent implements OnInit {
   get types(): any {
     return {
       nl: this.msgNL,
+      space: this.msgSPACE,
       gluc: this.msgGLUC,
       unit: this.msgUNIT,
       time: this.msgTIME,
@@ -103,7 +104,6 @@ export class WatchComponent implements OnInit {
       target: this.msgTARGET,
       factor: this.msgFACTOR,
       glucorg: this.msgGLUCORG,
-      space: this.msgSPACE,
       change_sensor: this.msgChangeSensor,
       change_katheter: this.msgChangeKatheter,
       change_ampulle: this.msgChangeAmpulle,
@@ -230,10 +230,11 @@ export class WatchComponent implements OnInit {
     } else {
       idx++;
     }
+    const groupId = GLOBALS.watchList[this.ws.selectedIndex]?.groupId ?? 0;
     for (const entry of GLOBALS.watchList) {
       entry.selected = false;
     }
-    const elem = WatchElement.fromJson({type: 'space', selected: true});
+    const elem = WatchElement.fromJson({t: 'space', selected: true, g: groupId});
     GLOBALS.watchList.splice(idx, 0, elem);
   }
 

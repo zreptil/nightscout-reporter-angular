@@ -28,50 +28,50 @@ export class WatchGroupComponent {
 
   get maxGluc(): number {
     return Math.max(
-      Settings.stdHigh ?? 0,
-      GLOBALS.targetTop ?? 0,
-      GLOBALS.currentGlucValue ?? 0,
-      (GLOBALS.lastGlucValue ?? 0) + 5
+      GLOBALS.glucValueFromData(Settings.stdHigh ?? 0),
+      GLOBALS.glucValueFromData(GLOBALS.targetTop ?? 0),
+      this.currentGluc,
+      this.lastGluc + GLOBALS.glucValueFromData(5)
     );
   }
 
   get styleTargetLow(): any {
-    return {width: `calc(100%*${GLOBALS.targetBottom}/${this.maxGluc})`};
+    return {width: `calc(100%*${GLOBALS.glucValueFromData(GLOBALS.targetBottom)}/${this.maxGluc})`};
   }
 
   get styleTargetNorm(): any {
-    return {width: `calc(100%*${GLOBALS.targetTop - GLOBALS.targetBottom}/${this.maxGluc})`};
+    return {width: `calc(100%*${GLOBALS.glucValueFromData(GLOBALS.targetTop - GLOBALS.targetBottom)}/${this.maxGluc})`};
   }
 
   get styleTargetHigh(): any {
-    return {width: `calc(100%*${this.maxGluc - GLOBALS.targetTop}/${this.maxGluc})`};
+    return {width: `calc(100%*${this.maxGluc - GLOBALS.glucValueFromData(GLOBALS.targetTop)}/${this.maxGluc})`};
   }
 
   get styleCurrentGluc(): any {
-    return {left: `calc(100%*${GLOBALS.currentGlucValue ?? 0}/${this.maxGluc})`};
+    return {left: `calc(100%*${this.currentGluc}/${this.maxGluc})`};
   }
 
   get styleLastGluc(): any {
-    return {left: `calc(100%*${GLOBALS.lastGlucValue ?? 0}/${this.maxGluc})`};
+    return {left: `calc(100%*${this.lastGluc}/${this.maxGluc})`};
   }
 
   get styleArrowTip(): any {
-    if ((GLOBALS.currentGlucValue ?? 0) === (GLOBALS.lastGlucValue ?? 0)) {
+    if (this.currentGluc === this.lastGluc) {
       return {display: 'none'};
     }
-    const x = (GLOBALS.currentGlucValue ?? 0) / this.maxGluc;
-    if ((GLOBALS.currentGlucValue ?? 0) < (GLOBALS.lastGlucValue ?? 0)) {
+    const x = this.currentGluc / this.maxGluc;
+    if (this.currentGluc < this.lastGluc) {
       return {transform: 'rotate(135deg)', left: `calc(100%*${x} + 2px)`};
     }
     return {transform: 'rotate(-45deg)', left: `calc(100%*${x} - 12px)`};
   }
 
   get styleArrowTrack(): any {
-    const len = (GLOBALS.currentGlucValue ?? 0) - (GLOBALS.lastGlucValue ?? 0);
-    if ((GLOBALS.currentGlucValue ?? 0) < (GLOBALS.lastGlucValue ?? 0)) {
-      return {left: `calc(100%*${GLOBALS.currentGlucValue ?? 0}/${this.maxGluc})`, width: `calc(100%*${-len}/${this.maxGluc})`};
+    const len = this.currentGluc - this.lastGluc;
+    if (this.currentGluc < this.lastGluc) {
+      return {left: `calc(100%*${this.currentGluc}/${this.maxGluc})`, width: `calc(100%*${-len}/${this.maxGluc})`};
     }
-    return {left: `calc(100%*${GLOBALS.lastGlucValue ?? 0}/${this.maxGluc})`, width: `calc(100%*${len}/${this.maxGluc})`};
+    return {left: `calc(100%*${this.lastGluc}/${this.maxGluc})`, width: `calc(100%*${len}/${this.maxGluc})`};
   }
 
   get classForRoot(): string [] {
@@ -82,10 +82,18 @@ export class WatchGroupComponent {
     return ret;
   }
 
+  get currentGluc(): number {
+    return GLOBALS.currentGlucValue ?? 0;
+  }
+
+  get lastGluc(): number {
+    return GLOBALS.lastGlucValue ?? 0;
+  }
+
   get classForGroup(): string[] {
     const ret = [];
     const prefix = GLOBALS.isWatchColor ? 'color-' : 'dark-';
-    ret.push(`${prefix}${this.colForGluc(GLOBALS.currentGlucValue)}`);
+    ret.push(`${prefix}${this.colForGluc(this.currentGluc)}`);
     return ret;
   }
 
@@ -93,9 +101,9 @@ export class WatchGroupComponent {
     if (gluc == null || !GLOBALS.currentGlucValid) {
       return 'unknown';
     }
-    if (gluc < GLOBALS.targetBottom) {
+    if (gluc < GLOBALS.glucValueFromData(GLOBALS.targetBottom)) {
       return 'low';
-    } else if (gluc > GLOBALS.targetTop) {
+    } else if (gluc > GLOBALS.glucValueFromData(GLOBALS.targetTop)) {
       return 'high';
     }
     return 'norm';

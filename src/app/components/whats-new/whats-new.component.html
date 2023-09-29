@@ -9,6 +9,16 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.4)">
+      <span i18n="version">Version</span><span i18n="v414">4.1.4 - 29.09.2023</span></h2>
+    <ul [class]="classFor(41.4)">
+      <li class="added" i18n="v414a1">
+        In NightWatch kann man jetzt in den Watch Einstellungen auch die Glukose Einheiten umstellen.
+      </li>
+      <li class="fixed" i18n="v414f1">
+        In NightWatch wird die Skala jetzt auch bei Auswahl von mmol/L korrekt befüllt.
+      </li>
+    </ul>
     <h2 (click)="click(41.3)">
       <span i18n="version">Version</span><span i18n="v413">4.1.3 - 16.09.2023</span></h2>
     <ul [class]="classFor(41.3)">

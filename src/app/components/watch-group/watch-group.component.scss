@@ -1,47 +1,42 @@
+.groupRoot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 1em;
+}
+
 .center {
-  width: 100%;
+  flex-flow: wrap;
+  width: 100vw;
   height: var(--doc-height);
   align-items: center;
 }
 
-.tl {
+.tl, .tr, .bl, .br {
   background: transparent;
   position: absolute;
+  max-width: 50vw;
+  flex-flow: column;
+}
+
+.tl {
   top: 0;
   left: 0;
-  width: 50vw;
 }
 
 .tr {
-  background: transparent;
-  position: absolute;
   top: 0;
   right: 0;
-  width: 50vw;
 }
 
 .bl {
-  background: transparent;
-  position: absolute;
   bottom: 0;
   left: 0;
-  width: 50vw;
 }
 
 .br {
-  background: transparent;
-  position: absolute;
   bottom: 0;
   right: 0;
-  width: 50vw;
-}
-
-.groupRoot {
-  display: flex;
-  flex-flow: wrap;
-  align-items: center;
-  justify-content: center;
-  column-gap: 1em;
 }
 
 .low {

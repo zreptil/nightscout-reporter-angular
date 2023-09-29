@@ -31,4 +31,7 @@ export class WatchSettingsComponent {
     this.dlgRef.close({btn: DialogResultButton.ok});
   }
 
+  changeGlucUnits(value: number) {
+    GLOBALS.glucMGDLIdx = value;
+  }
 }

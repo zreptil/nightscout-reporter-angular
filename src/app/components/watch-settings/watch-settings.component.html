@@ -3,7 +3,7 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
-      <div i18n="title for watch settings dialog">Watch Einstellungen</div>
+      <span i18n="title for watch settings dialog">Watch Einstellungen</span>
     </h1>
     <div>
       <button [mat-dialog-close]="{btn:2}"
@@ -22,6 +22,17 @@
       </div>
     </div>
     <div class="sub">
+      <mat-form-field>
+        <mat-label>{{globals.lblGlucUnits}}</mat-label>
+        <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
+          <mat-option (click)="changeGlucUnits(idx)"
+                      *ngFor="let item of globals.listGlucUnits; let idx=index"
+                      [value]="idx"
+                      class="selectItem">
+            <div class="itemTitle">{{item}}</div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
@@ -29,7 +40,7 @@
     <div></div>
     <button (click)="clickSave()" mat-button>
       <mat-icon>save</mat-icon>
-      <div i18n="buttonlabel for saving data">Speichern</div>
+      <span i18n="buttonlabel for saving data">Speichern</span>
     </button>
   </div>
 </div>

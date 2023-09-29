@@ -27,9 +27,9 @@
     </app-watch-entry>
     <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'target')" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
       <div class="target">
-        <div [ngStyle]="styleTargetLow" class="low">{{globals.targetBottom}}</div>
+        <div [ngStyle]="styleTargetLow" class="low">{{globals.glucFromData(globals.targetBottom)}}</div>
         <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
-        <div [ngStyle]="styleTargetHigh" class="high">{{globals.targetTop}}</div>
+        <div [ngStyle]="styleTargetHigh" class="high">{{globals.glucFromData(globals.targetTop)}}</div>
         <div [ngStyle]="styleLastGluc" class="marker last"></div>
         <div [ngStyle]="styleCurrentGluc" class="marker"></div>
         <div [ngStyle]="styleArrowTrack" class="arrowtrack"></div>
