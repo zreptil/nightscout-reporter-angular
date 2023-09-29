@@ -3,7 +3,7 @@
     <app-view-users></app-view-users>
   </div>
   <button (click)="clickBack($event)" mat-button>
-    <mat-icon>history</mat-icon>
+    <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
 <div (click)="clickBackground()" *ngIf="currPage===''" class="root">
@@ -66,9 +66,11 @@
           <mat-icon *ngIf="!globals.isDebug">bug_report</mat-icon>
           <mat-icon *ngIf="globals.isDebug">pest_control</mat-icon>
         </button>
-        <button (click)="clickGroup($event)" mat-button>
-          <mat-icon>add</mat-icon>
-        </button>
+        <div *ngIf="globals.isLocal" class="is-local">
+          <button (click)="clickGroup($event)" mat-button>
+            <mat-icon>group</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
     <div class="owlPanel">
