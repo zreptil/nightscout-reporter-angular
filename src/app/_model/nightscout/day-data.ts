@@ -506,11 +506,13 @@ export class DayData {
     for (const t of list) {
 //      if (!isSameDay_(t.createdAt, time) || t.createdAt.millisecondsSinceEpoch > check) continue;
       if (t.createdAt.getTime() < check) {
+        // die Treatments ignorieren, deren Wirksamkeit auf jeden Fall zum Zeitpunkt "time" abgelaufen ist
         continue;
-      } // die Treatments, deren Wirksamkeit auf jeden Fall zum Zeitpunkt "time" abgelaufen ist, ignorieren
+      }
       if (t.createdAt.getTime() > time.getTime()) {
+        // die Treatments, die zum Zeitpunkt "time" noch gar nicht drin sind, ignorieren
         continue;
-      } // die Treatments, die zum Zeitpunkt "time" noch gar nicht drin sind, ignorieren
+      }
       const tIOB = t.calcIOB(profile, time);
       if (tIOB != null && tIOB.iob != null) {
         if (tIOB.iob != 0) {
