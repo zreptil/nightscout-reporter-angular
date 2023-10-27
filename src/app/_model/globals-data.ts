@@ -433,13 +433,6 @@ export class GlobalsData extends Settings {
     if (shortcuts.length > 1) {
       shortcuts = shortcuts.substring(1);
     }
-    let watchEntries = '';
-    for (let i = 0; i < this.watchList.length; i++) {
-      watchEntries = `${watchEntries},${this.watchList[i].asJsonString}`;
-    }
-    if (watchEntries.length > 1) {
-      watchEntries = watchEntries.substring(1);
-    }
     const timestamp = GlobalsData.now.getTime();
     return '{'
       + `"s1":"${this.version}"`
@@ -455,11 +448,16 @@ export class GlobalsData extends Settings {
       + `,"s13":${this.showAllTileParams}`
       + `,"s2":[${users}]`
       + `,"s3":[${shortcuts}]`
-      + `,"s14":[${watchEntries}]`
       + `}`;
   }
 
   get asDeviceString(): string {
+    const temp = [];
+    for (let i = 0; i < this.watchList.length; i++) {
+      temp.push(`${this.watchList[i].asJsonString}`);
+    }
+    const watchEntries = Utils.join(temp, ',');
+
     return '{'
       + `"d1":"${this.ppHideNightscoutInPDF ? 'true' : 'false'}"`
       + `,"d2":"${this.ppShowUrlInPDF ? 'true' : 'false'}"`
@@ -476,6 +474,7 @@ export class GlobalsData extends Settings {
       + `,"d13":"${this.ppPdfDownload ? 'true' : 'false'}"`
       + `,"d14":"${this.isWatchColor ? 'true' : 'false'}"`
       + `,"d15":"${this.ppSkipSensorChange?.toString() ?? 0}"`
+      + `,"d16":[${watchEntries}]`
       + '}';
   }
 

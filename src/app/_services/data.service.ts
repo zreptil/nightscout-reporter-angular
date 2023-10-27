@@ -305,6 +305,26 @@ export class DataService {
       GLOBALS.ppPdfDownload = JsonData.toBool(json.d13);
       GLOBALS.isWatchColor = JsonData.toBool(json.d14);
       GLOBALS.ppSkipSensorChange = JsonData.toNumber(json.d15);
+      // TODO: remove list check after version 4.1.7
+      if (Utils.isEmpty(GLOBALS.watchList) && !Utils.isEmpty(json.d16)) {
+        let watchEntries = json.d16;
+        GLOBALS.watchList = [];
+        if (Utils.isEmpty(watchEntries)) {
+          watchEntries = [
+            {t: 'time', s: 3, b: true},
+            {t: 'nl', s: 1},
+            {t: 'gluc', s: 5, b: true},
+            {t: 'arrow', s: 3},
+            {t: 'target', s: 1},
+            {t: 'lasttime', s: 1}
+          ];
+        }
+        if (watchEntries != null) {
+          for (const entry of watchEntries) {
+            GLOBALS.watchList.push(WatchElement.fromJson(entry));
+          }
+        }
+      }
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }
@@ -353,7 +373,6 @@ export class DataService {
       GLOBALS.timestamp = JsonData.toNumber(json.s11);
       GLOBALS.tileShowImage = JsonData.toBool(json.s12, true);
       GLOBALS.showAllTileParams = JsonData.toBool(json.s13);
-      let watchEntries = json.s14;
       GLOBALS.userListLoaded = false;
       GLOBALS.userList = [];
       if (users != null) {
@@ -396,26 +415,21 @@ export class DataService {
         }
       }
       // get watch entries if available
-      GLOBALS.watchList = [];
-      if (Utils.isEmpty(watchEntries)) {
-        watchEntries = [
-          {t: 'time', s: 3, b: true},
-          {t: 'nl', s: 1},
-          {t: 'gluc', s: 5, b: true},
-          {t: 'arrow', s: 3},
-          {t: 'target', s: 1},
-          {t: 'lasttime', s: 1}
-        ];
-      }
-      if (watchEntries != null) {
-        try {
-          for (const entry of watchEntries) {
-            GLOBALS.watchList.push(WatchElement.fromJson(entry));
+      // TODO: remove in version 4.1.7 or later (changed to device setting in 4.1.5)
+      if (!Utils.isEmpty(json.s14)) {
+        let watchEntries = json.s14;
+        GLOBALS.watchList = [];
+        if (watchEntries != null) {
+          try {
+            for (const entry of watchEntries) {
+              GLOBALS.watchList.push(WatchElement.fromJson(entry));
+            }
+          } catch (ex) {
+            Log.devError(ex, `Fehler bei DataService.fromSharedJson (watchEntries)`);
           }
-        } catch (ex) {
-          Log.devError(ex, `Fehler bei DataService.fromSharedJson (watchEntries)`);
         }
       }
+      // TODO: end of remove
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromSharedJson`);
     }

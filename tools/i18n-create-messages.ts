@@ -13,19 +13,24 @@ const outFile = '../src/assets/messages.json';
 
 async function main() {
   try {
-    let zipfile = getPath(`${os.homedir()}/Downloads/nightrep (translations).zip`);
-    // let zipfile = getPath('../nightrep (translations).zip');
-    console.log('extracting', zipfile, '...');
-    await extract(zipfile, {dir: getPath('../temp')});
-    zipfile = getPath(`${os.homedir()}/Downloads/nightrep (english) (translations).zip`);
-    // zipfile = getPath('../nightrep (english) (translations).zip');
-    console.log('extracting', zipfile, '...');
-    await extract(zipfile, {dir: getPath('../temp')});
+    const filenames = ['nightrep (translations)', 'nightrep (english) (translations)'];
+    for (const filename of filenames) {
+      let zipfile = getPath(`${os.homedir()}/Downloads/${filenames[0]}.zip`);
+      console.log('extracting', zipfile, '...');
+      await extract(zipfile, {dir: getPath('../temp')});
+    }
     createJson([
       '@de-DE', 'en-GB', 'en-US', 'es-ES', 'fr/fr-FR',
       'ja/ja-JP', 'nl/nl-NL', 'no/no-NO', 'pl/pl-PL',
       'pt-PT', 'sk/sk-SK', 'ru/ru-RU', 'cs/cs-CZ'
     ], []);
+    for (const filename of filenames) {
+      fs.rename(
+        `${os.homedir()}/Downloads/${filename}.zip`,
+        `${getPath('../temp')}/${filename}.last.zip`,
+        () => {
+        });
+    }
   } catch (ex) {
     console.error('error when creating messages', ex);
   }

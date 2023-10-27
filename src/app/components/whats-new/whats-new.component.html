@@ -9,6 +9,14 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(41.5)">
+      <span i18n="version">Version</span><span i18n="v414">4.1.5 - 27.10.2023</span></h2>
+    <ul [class]="classFor(41.5)">
+      <li class="changed" i18n="v415c1">
+        Die Einstellungen für NightWatch wurden in die Geräteeinstellungen verschoben, damit
+        man NightWatch auf unterschiedlichen Geräten der jeweiligen Umgebung anpassen kann.
+      </li>
+    </ul>
     <h2 (click)="click(41.4)">
       <span i18n="version">Version</span><span i18n="v414">4.1.4 - 29.09.2023</span></h2>
     <ul [class]="classFor(41.4)">

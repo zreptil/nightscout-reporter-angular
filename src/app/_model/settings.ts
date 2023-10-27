@@ -83,7 +83,7 @@ export class Settings {
     return $localize`Beide`;
   }
 
-  private _version = '4.1.4';
+  private _version = '4.1.5';
 
   get version(): string {
     return `${this._version}-${this._subVersion}`;
