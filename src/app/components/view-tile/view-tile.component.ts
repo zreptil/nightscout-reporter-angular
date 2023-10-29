@@ -131,6 +131,7 @@ export class ViewTileComponent implements OnInit {
     GLOBALS.listConfig.splice(srcIdx, 1);
     GLOBALS.listConfig.splice(srcIdx < dstIdx ? dstIdx - 1 : dstIdx, 0, cfg);
     this.dragIdx = null;
+    this.ds.savePdfOrder(true);
   }
 
   mouseover(evt: MouseEvent) {

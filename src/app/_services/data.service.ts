@@ -116,7 +116,7 @@ export class DataService {
     this.savePdfOrder();
   }
 
-  savePdfOrder(): void {
+  savePdfOrder(updateSync = false): void {
     if (Utils.isEmpty(GLOBALS.listConfig)) {
       return;
     }
@@ -125,7 +125,7 @@ export class DataService {
       idList.push(cfg.idx);
     }
     GLOBALS._pdfOrder = Utils.join(idList, '');
-    this.save({updateSync: false, skipReload: true});
+    this.save({updateSync: updateSync, skipReload: true});
   }
 
   async requestJson(url: string, params?: { method?: string, options?: any, body?: any, showError?: boolean, asJson?: boolean, timeout?: number }) {
