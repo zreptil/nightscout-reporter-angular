@@ -74,7 +74,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
   }
 
   checkCfg(cfg: FormConfig): boolean {
-    return cfg.checked && (!cfg.form.isDebugOnly || GLOBALS.isDebug) && (!cfg.form.isLocalOnly || GLOBALS.isLocal);
+    return cfg.checked
+      && (!cfg.form.isDebugOnly || GLOBALS.isDebug)
+      && (!cfg.form.isLocalOnly || GLOBALS.isLocal);
   }
 
   async loadData(isForThumbs: boolean) {

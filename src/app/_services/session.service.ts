@@ -46,6 +46,8 @@ import {FormParamsDialogComponent} from '@/components/form-params-dialog/form-pa
 import {ThemeService} from '@/_services/theme.service';
 import {WatchSettingsComponent} from '@/components/watch-settings/watch-settings.component';
 import {MessageService} from '@/_services/message.service';
+import {PrintTDD} from '@/forms/nightscout/print-tdd';
+import {PrintTemplate} from '@/forms/nightscout/print-template';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -79,7 +81,8 @@ export class SessionService {
     new PrintDailyGluc(this.pdf),
     new PrintDailyHours(this.pdf),
     new PrintUserData(this.pdf, this.ds),
-    new PrintGlucDistribution(this.pdf)
+    new PrintGlucDistribution(this.pdf),
+    new PrintTDD(this.pdf)
   ];
   reloadUserImg = true;
   private dlgList: { [key: string]: ComponentType<any> } = {
@@ -211,6 +214,10 @@ export class SessionService {
       return new PrintUserData(this.pdf, this.ds, suffix);
     } else if (id === '15' || id === 'glucdist') {
       return new PrintGlucDistribution(this.pdf, suffix);
+    } else if (id === '16' || id === 'tdd') {
+      return new PrintTDD(this.pdf, suffix);
+    } else if (id === '17' || id === 'template') {
+      return new PrintTemplate(this.pdf, suffix);
     }
     Log.todo('In StartComponent.formFromId fehlen noch Formulare');
     return null;
