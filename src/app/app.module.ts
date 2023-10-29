@@ -44,11 +44,13 @@ import {ShortcutComponent} from './components/shortcut/shortcut.component';
 import {WatchSettingsComponent} from './components/watch-settings/watch-settings.component';
 import {WatchGroupComponent} from './components/watch-group/watch-group.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { InfoButtonComponent } from './controls/info-button/info-button.component';
+import {InfoButtonComponent} from './controls/info-button/info-button.component';
+import {HideMissingImageDirective} from '@/_directives/hide-missing-image.directive';
 
 @NgModule({
   declarations: [
     AutofocusDirective,
+    HideMissingImageDirective,
     AppComponent,
     DialogComponent,
     ColorPickerComponent,
