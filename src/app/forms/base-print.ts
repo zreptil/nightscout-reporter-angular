@@ -2288,7 +2288,6 @@ export abstract class BasePrint extends FormConfig {
         let y = day.iob(this.repData, time, day.prevDay).iob;
         maxIob = Math.max(maxIob, y);
         minIob = Math.min(minIob, y);
-        console.log('iob', x, y, time);
         ptsIob.push({x: this.cm(x), y: y});
         y = day.cob(this.repData, time, day.prevDay).cob;
         maxCob = Math.max(maxCob, y);

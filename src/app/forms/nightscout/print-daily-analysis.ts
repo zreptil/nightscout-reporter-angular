@@ -607,7 +607,6 @@ export class PrintDailyAnalysis extends BaseDaily {
     ]);
   }
 
-
   getBasalGraph(top: number, day: DayData, useProfile: boolean, xo: number, yo: number): any {
     let data: ProfileEntryData[];
     let color: string;
