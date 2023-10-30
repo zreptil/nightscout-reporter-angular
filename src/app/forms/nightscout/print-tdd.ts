@@ -40,7 +40,7 @@ export class PrintTDD extends BasePrint {
   }
 
   override get estimatePageCount(): any {
-    return {count: 1, isEstimated: true};
+    return {count: 1, isEstimated: false};
   }
 
   override fillPages(pages: PageData[]): void {
