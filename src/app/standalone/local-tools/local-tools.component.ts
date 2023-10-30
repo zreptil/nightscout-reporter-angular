@@ -437,7 +437,7 @@ export class LocalToolsComponent implements OnInit {
     this.colorstyle = Utils.join(ret, '\n');
   }
 
-  async clickCreateThumbs(lang: LangData) {
+  async clickCreateThumbs(lang?: LangData) {
     this.ds.loadWebData();
     await this.ts.setTheme(GLOBALS.theme);
     GLOBALS.listConfig = [];
@@ -447,7 +447,13 @@ export class LocalToolsComponent implements OnInit {
     }
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
     await this.ds.loadSettingsJson().then((_) => {
-      this.pdf.createThumbs(lang);
+      if (lang == null) {
+        for (lang of GLOBALS.languageList) {
+          this.pdf.createThumbs(lang);
+        }
+      } else {
+        this.pdf.createThumbs(lang);
+      }
     });
   }
 }

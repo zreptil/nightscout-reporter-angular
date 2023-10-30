@@ -5,6 +5,9 @@
         <img [src]="lang.imgPath" alt="language image">
         <div>{{lang.code}}</div>
       </button>
+      <button (click)="clickCreateThumbs()" mat-raised-button>
+        <div>Alle</div>
+      </button>
     </div>
     <div class="pdfimg" id="pdfimg"></div>
   </mat-tab>

@@ -72,6 +72,7 @@ export class PdfToolService {
             , {i: 21, n: 'dayhours'}
             , {i: 22, n: 'userdata'}
             , {i: 23, n: 'glucdist'}
+            , {i: 24, n: 'tdd'}
           ];
           this._remaining = pageDefs.length + 3;
           for (const item of pageDefs) {

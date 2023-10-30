@@ -955,6 +955,10 @@ export abstract class BasePrint extends FormConfig {
     return ['nightscout-pale', 'nightscout'];
   }
 
+  get msgBasalInsulin(): string {
+    return $localize`Basal Insulin`;
+  }
+
   static msgTimeOfDay24(time: string): string {
     return $localize`${time} Uhr`;
   }
@@ -1132,8 +1136,9 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Basalrate aus dem Profil (${value})`;
   }
 
-  msgLegendTDD(value: string): string {
-    return $localize`Gesamtinsulin (${value})`;
+  msgLegendTDD(value?: string): string {
+    const ret = $localize`Gesamtinsulin`;
+    return value != null ? `${ret} (${value})` : ret;
   }
 
   msgKH(value: any): string {
