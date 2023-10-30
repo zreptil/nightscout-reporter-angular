@@ -2376,13 +2376,13 @@ Maximum number of profile datasets:</source>
         <note priority="1" from="description">version</note>
         <source>Version</source>
       </trans-unit>
-      <trans-unit id="5322926174816321290" datatype="html" approved="yes">
+      <trans-unit id="5278625383367460216" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
         <note priority="1" from="description">v414</note>
-        <source>4.1.5 - 27/10/2023</source>
+        <source>4.1.5 - 30/10/2023</source>
       </trans-unit>
       <trans-unit id="230214460264611608" datatype="html" approved="yes">
         <context-group purpose="location">
