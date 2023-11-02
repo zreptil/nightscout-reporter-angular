@@ -212,7 +212,7 @@ export class TreatmentData extends JsonData {
       ret._rate /= 100;
     }
     ret.createdAt = JsonData.toDate(json.created_at);
-    ret.enteredBy = JsonData.toText(json.enteredBy);
+    ret.enteredBy = JsonData.getUploadSource(json);
     ret.NSClientId = JsonData.toText(json.NSCLIENT_ID);
     ret._carbs = JsonData.toNumber(json.carbs);
     ret.insulin = JsonData.toNumber(json.insulin);

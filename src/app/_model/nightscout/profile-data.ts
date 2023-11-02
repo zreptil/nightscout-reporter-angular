@@ -58,7 +58,7 @@ export class ProfileData extends JsonData {
       return ret;
     }
     ret.id = json.int;
-    ret.enteredBy = JsonData.toText(json.enteredBy);
+    ret.enteredBy = JsonData.getUploadSource(json);
     ret.defaultProfile = json.defaultProfile;
     ret.startDate = JsonData.toDate(json.startDate);
     const timeshift = JsonData.toNumber(json.timeshift);

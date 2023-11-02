@@ -7,6 +7,18 @@
     --accentBack: var(--settingsHeaderBack);
     --accentFore: var(--settingsHeaderFore);
   }
+
+  ::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  ::ng-deep .mdc-text-field .mdc-text-field__input {
+    caret-color: black;
+  }
+
+  ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
+    border-bottom-color: rgba(0, 0, 0, 0.9);
+  }
 }
 
 ::ng-deep .mat-select-panel.settings {
@@ -97,6 +109,7 @@ mat-slider {
   flex-flow: column;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 1em;
+  margin: 0.5em 0;
 
   .row {
     display: flex;
@@ -225,7 +238,8 @@ div[header] {
 
 .error {
   color: var(--settingsError);
-  padding-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.2em;
 }
 
 .progress {
@@ -339,4 +353,3 @@ mat-fab.is-local, div.is-local, mat-button.is-local {
 #importData {
   display: none;
 }
-

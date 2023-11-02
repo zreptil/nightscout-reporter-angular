@@ -1238,7 +1238,7 @@ export abstract class BasePrint extends FormConfig {
   msgCount(count: number): string {
     return Utils.plural(count, {
       0: $localize`Kein Wert`,
-      one: $localize`1 Wert`,
+      1: $localize`1 Wert`,
       other: $localize`${count} Werte`
     });
   }

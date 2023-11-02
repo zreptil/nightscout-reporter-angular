@@ -74,7 +74,7 @@ export class DatepickerComponent implements OnInit {
     return this.showInfo ? `${cls} infoarea showinfo` : `${cls} infoarea`;
   }
 
-  onClick() {
+  showDatePicker() {
     this.data.period = GLOBALS.period;
     this.data.loadedPeriod = this.data.period.toString();
     this.data.month = GlobalsData.now;

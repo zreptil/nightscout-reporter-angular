@@ -13,6 +13,7 @@ export class UrlData {
   linkupUsername: string;
   linkupPassword: string;
   linkupRegion: string;
+  linkupPatientId: string;
 
   constructor() {
   }
@@ -26,7 +27,8 @@ export class UrlData {
       as: this.apiSecret,
       lun: this.linkupUsername,
       lup: this.linkupPassword,
-      lur: this.linkupRegion
+      lur: this.linkupRegion,
+      lupid: this.linkupPatientId
     };
   }
 
@@ -76,6 +78,7 @@ export class UrlData {
       ret.linkupUsername = JsonData.toText(json.lun);
       ret.linkupPassword = JsonData.toText(json.lup);
       ret.linkupRegion = JsonData.toText(json.lur) ?? 'DE';
+      ret.linkupPatientId = JsonData.toText(json.lupid);
     } catch (ex) {
       Log.devError(ex, `Fehler bei UrlData.fromJson`);
     }

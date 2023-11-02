@@ -2,6 +2,16 @@
   position: relative;
 }
 
+::ng-deep.libre_linkup {
+  font-size: inherit;
+  width: inherit;
+  height: inherit;
+
+  &.running {
+    color: rgba(0, 255, 0, 1);
+  }
+}
+
 div[content] {
   display: flex;
   align-items: center;

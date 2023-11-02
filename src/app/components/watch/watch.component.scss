@@ -101,6 +101,10 @@
   material-button {
     text-transform: none;
   }
+
+  .mat-mdc-button > .mat-icon {
+    margin-right: initial;
+  }
 }
 
 @media (max-width: 1080px) {

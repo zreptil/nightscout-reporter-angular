@@ -6,23 +6,46 @@ import {UrlData} from '@/_model/nightscout/url-data';
 import {AuthTicket} from '@/_model/libre-link-up/interfaces/librelink/common';
 import {Utils} from '@/classes/utils';
 import {Log} from '@/_services/log.service';
-import {DataService} from '@/_services/data.service';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {LibreLinkUpHttpHeaders} from '@/_model/libre-link-up/interfaces/http-headers';
+import {GraphData} from '@/_model/libre-link-up/interfaces/librelink/graph-response';
+import {Entry} from '@/_model/libre-link-up/interfaces/nightscout/entry';
+import {NIGHTSCOUT_TREND_ARROWS} from '@/_model/libre-link-up/constants/nightscout-trend-arrows';
+
+// https://libreview-unofficial.stoplight.io/docs/libreview-unofficial/8i2x0tc4qumh2-authentication
 
 @Injectable({
   providedIn: 'root'
 })
 export class LibreLinkUpService {
-
   authTicket: AuthTicket;
-  userAgent = 'LibreLink Up Uploader NR';
-  version = '4.7.0';
-  product = 'llu.ios';
+  userAgent = 'nightscout-reporter-librelinkup';
+  version = '4.7';
+  product = 'llu.android';
+  updateGluc: () => void;
+  private _timeoutHandler: any;
+  private _nightscoutApiSecret: string;
 
-  constructor(public http: HttpClient,
-              public ds: DataService) {
+  constructor(public http: HttpClient) {
     this.deleteAuthTicket();
+  }
+
+  private _isRunning: boolean;
+
+  get isRunning(): boolean {
+    return this._isRunning;
+  }
+
+  set isRunning(value: boolean) {
+    this._isRunning = value;
+    GLOBALS.lluAutoExec = false;
+    if (value) {
+      this.executeOnce();
+      this.startScheduler();
+    } else {
+      clearTimeout(this._timeoutHandler);
+      this._timeoutHandler = null;
+    }
   }
 
   get user(): UserData {
@@ -34,20 +57,19 @@ export class LibreLinkUpService {
   }
 
   get libreLinkUpUrl(): string {
-    return LLU_API_ENDPOINTS[this.url.linkupRegion] ?? LLU_API_ENDPOINTS['EU'];
+    return `https://corg.zreptil.de/index.php?url=${LLU_API_ENDPOINTS[this.url.linkupRegion] ?? LLU_API_ENDPOINTS['EU']}`;
   }
 
   get libreLinkUpHttpHeaders(): any {
     return {
-      'User-Agent': this.userAgent,
-      'Content-Type': 'application/json',
-      'version': this.version,
-      'product': this.product,
-      acceptEncoding: 'gzip, deflate, br',
-      'Connection': 'keep-alive',
+      accept: 'application/json',
+      contentType: 'application/json',
+      version: this.version,
+      product: this.product,
+      // connection: 'keep-alive',
       pragma: 'no-cache',
-      'Cache-Control': 'no-cache'
-      // 'Authentication': undefined
+      cacheControl: 'no-cache',
+      // acceptEncoding: 'gzip, deflate, br',
     };
   }
 
@@ -58,6 +80,14 @@ export class LibreLinkUpService {
     return authenticatedHttpHeaders;
   }
 
+  get nightscoutHttpHeaders(): any {
+    return {
+      'api-secret': this._nightscoutApiSecret,
+      userAgent: this.userAgent,
+      contentType: 'application/json'
+    };
+  }
+
   private get authenticationToken(): string | null {
     if (this.authTicket?.token == null) {
       Log.warn('LLU: no authTicket.token');
@@ -66,79 +96,319 @@ export class LibreLinkUpService {
     return this.authTicket?.token;
   }
 
-  async nightScoutHttpHeaders() {
-    const apiSecret = await Utils.sha1(this.url.apiSecret);
-    return {
-      apiSecret: apiSecret,
-      userAgent: this.userAgent,
-      contentType: 'application/json'
+  startScheduler(): void {
+    let timeout = GLOBALS.lluTimeout ?? 5;
+    if (timeout < 1) {
+      timeout = 1;
     }
+    this.initNightScoutHttpHeaders().then(_value => {
+      this._timeoutHandler = setTimeout(() => {
+        this.execute();
+        this.startScheduler();
+      }, timeout * 60000);
+    });
   }
 
-  async login(): Promise<AuthTicket | null> {
+  async initNightScoutHttpHeaders() {
+    this._nightscoutApiSecret = await Utils.sha1(this.url.apiSecret);
+  }
+
+  login(callback: (result: AuthTicket) => void, retry = true): void {
     try {
-      const url = `https://corg.zreptil.de/index.php?url=https://${this.libreLinkUpUrl}/llu/auth/login`;
-      let header: string[] = [];
-      for (const key of Object.keys(this.libreLinkUpHttpHeaders)) {
-        header.push(`${key}: ${this.libreLinkUpHttpHeaders[key]}`);
-      }
+      const url = `${this.libreLinkUpUrl}/llu/auth/login`;
       const body = {
         email: this.url.linkupUsername,
         password: this.url.linkupPassword,
-        header: Utils.join(header, `;`)
       };
       const req = new HttpRequest('POST', url, body, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        }),
-        responseType: 'text'
+        headers: new HttpHeaders(this.libreLinkUpHttpHeaders)
       });
-
-      this.http.request(req).subscribe(response => {
-        console.log('Request-Response', req, response);
-      });
-
-      return null;
-
-      // const response: any = await firstValueFrom(this.http.request(req));
-      // console.log('Hab was', response);
-      // try {
-      //   if (response?.data?.status !== 0) {
-      //     Log.error(`LLU - Non-zero status code: ${JSON.stringify(response.data)}`)
-      //     return null;
-      //   }
-      //   if (response?.data?.data?.redirect === true && response?.data?.data?.region) {
-      //     const correctRegion = response.data.data.region.toUpperCase();
-      //     Log.error(
-      //       `LLU - Logged in to the wrong region. Switch to '${correctRegion}' region.`
-      //     );
-      //     return null;
-      //   }
-      //   Log.info('LLU: Logged in to LibreLink Up');
-      //   return response?.data?.data?.authTicket;
-      // } catch (err) {
-      //   Log.error('LLU: Invalid authentication token. Please check your LibreLink Up credentials', err);
-      //   return null;
-      // }
+      let ret: any;
+      this.http.request(req).subscribe({
+          next: (response: any) => {
+            ret = response?.body;
+          }, error: (error: any) => {
+            Log.error($localize`LLU: Fehler beim Login`, error);
+            callback(null);
+          },
+          complete: () => {
+            if (ret?.data?.redirect && ret?.data?.region != null) {
+              this.url.linkupRegion = ret?.data?.region.toUpperCase();
+              if (retry) {
+                this.login(callback, false);
+              } else {
+                callback(null);
+              }
+              return;
+            }
+            console.log(ret);
+            callback(ret?.data?.authTicket);
+          }
+        }
+      );
     } catch (error) {
-      Log.error('LLU: Invalid credentials', error);
-      return null;
+      Log.error($localize`LLU: Login war nicht möglich`, error);
+      callback(null);
     }
   }
 
-  public async execute() {
-    if (!this.hasValidAuthentication()) {
-      Log.info('LLU: renew token');
+  public executeOnce(): void {
+    this.initNightScoutHttpHeaders().then(_value => {
+      this.execute();
+    });
+  }
+
+  getGlucoseMeasurements(callback: (result: GraphData) => void): void {
+    try {
+      Log.debug($localize`LLU: hole Glukosedaten`);
+      this.getPatientId((result: string) => {
+        if (result == null) {
+          callback(null);
+          return;
+        }
+        const url = `${this.libreLinkUpUrl}/llu/connections/${result}/graph`;
+        const req = new HttpRequest('GET', url, null, {
+          headers: new HttpHeaders(this.lluAuthHeaders)
+        });
+        let ret: any;
+        this.http.request(req).subscribe({
+          next: (result: any) => {
+            ret = result?.body?.data;
+          }, error: (error) => {
+            Log.error($localize`LLU: Fehler beim Ermitteln der Glukosedaten`, error);
+            callback(null);
+          }, complete: () => {
+            callback(ret as GraphData);
+          }
+        });
+      });
+    } catch (error) {
+      Log.error($localize`LLU: Fehler beim Ermitteln der Glukosedaten`, error);
       this.deleteAuthTicket();
-      const authTicket = await this.login();
-      if (authTicket == null) {
-        Log.error('LLU - No AuthTicket received. Please check your credentials.');
-        this.deleteAuthTicket();
-        return;
-      }
-      this.authTicket = authTicket;
-      console.log('HURRA, wir haben eins!!!', authTicket);
+      callback(null);
     }
+  }
+
+  getPatientId(callback: (result: string) => void): void {
+    try {
+      const url = `${this.libreLinkUpUrl}/llu/connections`;
+      const req = new HttpRequest('GET', url, null, {
+        headers: new HttpHeaders(this.lluAuthHeaders)
+      });
+      let ret: any;
+      this.http.request(req).subscribe({
+          next: (response: any) => {
+            ret = response?.body?.data;
+          },
+          error: (_error: any) => {
+          },
+          complete: () => {
+            const list = ret ?? [];
+            if (list.length === 0) {
+              Log.error($localize`LLU: Patientendaten konnte nicht ermittelt werden`);
+              callback(null);
+              return;
+            }
+
+            let found = list[0];
+            if (list.length > 1) {
+              found = list.find((e: any) => e.patiendId === this.url.linkupPatientId);
+            }
+
+            if (found != null) {
+              callback(found.patientId);
+              return
+            }
+
+            if (Utils.isEmpty(this.url.linkupPatientId)) {
+              Log.error($localize`LLU: Es wurde keine Patienten-Id angegeben.`);
+            } else {
+              Log.error($localize`LLU: Die angegebene Patienten-Id wurde nicht gefunden.`);
+            }
+
+            callback(null);
+          }
+        }
+      );
+    } catch (error) {
+      Log.error($localize`LLU: Fehler bei Ermittlung der Patientendaten`, error);
+      this.deleteAuthTicket();
+      callback(null);
+    }
+  }
+
+  mapTrendArrow(value: number): string {
+    switch (value) {
+      case 1:
+        return NIGHTSCOUT_TREND_ARROWS.singleDown;
+      case 2:
+        return NIGHTSCOUT_TREND_ARROWS.fortyFiveDown;
+      case 3:
+        return NIGHTSCOUT_TREND_ARROWS.flat;
+      case 4:
+        return NIGHTSCOUT_TREND_ARROWS.fortyFiveUp;
+      case 5:
+        return NIGHTSCOUT_TREND_ARROWS.singleUp;
+      default:
+        return NIGHTSCOUT_TREND_ARROWS.notComputable;
+    }
+  }
+
+  lastEntryDate(callback: (result: Date) => void): void {
+    const url = this.user.apiUrl(null, 'entries.json', {params: 'count=1'});
+    const req = new HttpRequest('GET', url, null, {
+//      headers: new HttpHeaders(this.nightscoutHttpHeaders)
+    });
+    let ret: any;
+    this.http.request(req).subscribe({
+      next: (response: any) => {
+        ret = response?.body;
+      }, error: (_error: any) => {
+
+      }, complete: () => {
+        console.log('lastEntryDate', ret?.[0]);
+        if (ret?.[0] != null) {
+          ret = new Date(ret[0].dateString);
+        } else {
+          ret = null;
+        }
+        callback(ret);
+      }
+    });
+  }
+
+  createFormattedMeasurements(data: GraphData, callback: (result: Entry[]) => void): void {
+    const ret: Entry[] = [];
+    const glucoseMeasurement = data.connection.glucoseMeasurement;
+    console.log('glucoseMeasurement', glucoseMeasurement);
+    const measurementDate = Utils.utcDateFromString(glucoseMeasurement.FactoryTimestamp);
+    console.log('measurementDate', measurementDate);
+    this.lastEntryDate((nsLastDate: Date) => {
+      if (nsLastDate == null) {
+        nsLastDate = new Date();
+        nsLastDate.setFullYear(nsLastDate.getFullYear() - 1);
+      }
+      console.log('nsLastDate', nsLastDate);
+      // Add the most recent measurement first
+      if (measurementDate > nsLastDate) {
+        ret.push({
+          'type': 'sgv',
+          'device': this.userAgent,
+          'dateString': measurementDate.toISOString(),
+          'date': measurementDate.getTime(),
+          'direction': this.mapTrendArrow(glucoseMeasurement.TrendArrow),
+          'sgv': glucoseMeasurement.ValueInMgPerDl
+        });
+      }
+      console.log('data.graphData', data.graphData);
+      for (const entry of data.graphData) {
+        const entryDate = Utils.utcDateFromString(entry.FactoryTimestamp);
+        if (entryDate > nsLastDate) {
+          ret.push({
+            'type': 'sgv',
+            'device': this.userAgent,
+            'dateString': entryDate.toISOString(),
+            'date': entryDate.getTime(),
+            'sgv': entry.ValueInMgPerDl
+          });
+        }
+      }
+      callback(ret);
+    });
+  }
+
+  uploadToNightScout(data: GraphData): void {
+    Log.debug($localize`LLU: verarbeite ${data.graphData.length} Glukosedaten`);
+    this.createFormattedMeasurements(data, (entries: Entry[]) => {
+      if (entries?.length > 0) {
+        try {
+          const url = this.user.apiUrl(null, 'entries');
+          const req = new HttpRequest('POST',
+            `https://corg.zreptil.de/index.php?url=${url}`,
+            entries,
+            {
+              headers: new HttpHeaders(this.nightscoutHttpHeaders)
+            });
+          this.http.request(req).subscribe({
+            next: (_response) => {
+              // console.log('response', response);
+            }, error: (error: any) => {
+              Log.error($localize`LLU: Upload auf Nightscout fehlgeschlagen - ${error.message}`);
+            }, complete: () => {
+              const info = Utils.plural(entries.length, {
+                1: $localize`einem Eintrag`,
+                other: $localize`${entries.length} Einträgen`
+              });
+              Log.debug($localize`LLU: Upload von ${info} auf Nightscout erfolgreich`);
+              this.updateGluc?.();
+            }
+          });
+        } catch (ex: any) {
+          // console.error('Mist2', ex);
+          Log.error($localize`LLU: Upload auf Nightscout fehlgeschlagen - ${ex.message}`);
+        }
+      } else {
+        Log.debug($localize`LLU: Keine Daten für den Upload vorhanden`);
+      }
+    });
+    /*
+
+      if (formattedMeasurements.length > 0)
+      {
+          logger.info("Trying to upload " + formattedMeasurements.length + " glucose measurement items to Nightscout");
+          try
+          {
+              const url = getNightscoutUrl() + "/api/v1/entries"
+              const response = await axios.post(
+                  url,
+                  formattedMeasurements,
+                  {
+                      headers: nightScoutHttpHeaders
+                  });
+              if (response.status !== 200)
+              {
+                  logger.error("Upload to NightScout failed ", response.statusText);
+              }
+              else
+              {
+                  logger.info("Upload of " + formattedMeasurements.length + " measurements to Nightscout succeeded");
+              }
+          } catch (error)
+          {
+              logger.error("Upload to NightScout failed ", error);
+          }
+      }
+      else
+      {
+          logger.info("No new measurements to upload");
+      }
+  */
+  }
+
+  private execute(): void {
+    if (!this.hasValidAuthentication()) {
+      Log.debug($localize`LLU: hole neues Token`);
+      this.deleteAuthTicket();
+      this.login((result: AuthTicket) => {
+        if (result == null) {
+          Log.error($localize`LLU: Zugriff auf LibreLink Up verweigert - Bitte Konfiguration überprüfen`);
+          this.deleteAuthTicket();
+          return;
+        }
+        this.authTicket = result;
+        this.executeInternal();
+      });
+    } else {
+      this.executeInternal();
+    }
+  }
+
+  private executeInternal(): void {
+    this.getGlucoseMeasurements((result: GraphData) => {
+      if (result != null) {
+        this.uploadToNightScout(result);
+      }
+    });
   }
 
   private deleteAuthTicket(): void {
@@ -151,7 +421,7 @@ export class LibreLinkUpService {
       return currentDate < this.authTicket.expires;
     }
 
-    Log.info('LLU: no authTicket.expires');
+    Log.debug($localize`LLU: Authentifizierung des Zugriffs ist fehlgeschlagen`);
     return false;
   }
 }

@@ -63,9 +63,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
   msgTooMuchProfiles(maxCount: number, count: number, text: string): string {
     return this.msgTooMuchProfilesPrefix(maxCount) +
       Utils.plural(count, {
-        zero: '',
-        one: $localize`Der Uploader "${text}" hat die Datensätze angelegt.`,
-        other: $localize`Folgende Uploader haben die Datensätze angelegt: ${text}`
+        0: '',
+        1: $localize`Der Uploader "${text}" hat die Datensätze angelegt.`,
+        other: Utils.isEmpty(text)
+          ? $localize`Die Uploader konnten nicht ermittelt werden`
+          : $localize`Folgende Uploader haben die Datensätze angelegt: ${text}`
       },);
   }
 
@@ -222,6 +224,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     for (const urlData of list) {
       // Mit dieser Abfrage kann man Daten filtern (nirgends dokumentiert, funktioniert auch nicht immer)
       // https://xxx/api/v1/profiles.json?find[startDate][$gt]=2018-01-01T11:30:17.694Z
+      //const date = new Date(begDate.getFullYear(), begDate.getMonth() - 1, 1);
+      //const month = `${date.getMonth() + 1}`.padStart(2, '0');
+      //const urlParams = `find[startDate][$gte]=${date.getFullYear()}-${month}-01T00:00:00.000Z&count=${maxCount}`;
+      // url = urlData.fullUrl('profile.json', urlParams);
       url = urlData.fullUrl('profile.json', `count=${maxCount}`);
       content = await this.ds.requestJson(url);
       while (content == null && data.user.profileMaxIdx < GLOBALS.profileMaxCounts.length - 1) {
@@ -246,7 +252,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             try {
               const profile = ProfileData.fromJson(entry, true);
               data.profiles.push(profile);
-              if (uploaders.indexOf(profile.enteredBy) < 0) {
+              if (profile.enteredBy != null && uploaders.indexOf(profile.enteredBy) < 0) {
                 uploaders.push(profile.enteredBy);
               }
             } catch (ex) {
@@ -258,6 +264,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
         const check = Utils.addDateDays(new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999), -1);
         if (src.length === maxCount && Utils.isAfter(Utils.last(data.profiles).startDate, check)) {
+          console.log(maxCount, uploaders);
           Log.warn(this.msgTooMuchProfiles(maxCount, uploaders.length, uploaders.join(', ')));
         }
 

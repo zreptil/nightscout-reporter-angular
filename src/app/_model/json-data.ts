@@ -141,6 +141,19 @@ export class JsonData {
     return ret;
   }
 
+  /**
+   * recognizes the uploader in the json-object.
+   * currently there are two known attributes:
+   * enteredby - written in treatments according to the api-documentation
+   * app - written by unknown uploader
+   * @param json object to analyse
+   */
+  static getUploadSource(json: any): string {
+    let ret = JsonData.toText(json.enteredBy, null);
+    ret ??= JsonData.toText(json.app, null);
+    return ret;
+  }
+
   keys(o: {}): string[] {
     return Object.keys(o ?? {});
   }

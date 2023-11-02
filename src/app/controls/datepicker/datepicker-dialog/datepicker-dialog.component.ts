@@ -92,6 +92,7 @@ export class DatepickerDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data.month = this.data.period.start;
   }
 
   revertData() {

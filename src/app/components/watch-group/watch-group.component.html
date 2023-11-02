@@ -48,5 +48,14 @@
       </svg>
       <div class="centered">{{globals.currentGlucDiff}}</div>
     </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='libre_linkup'" [element]="entry" [isEditMode]="ws.isEditMode">
+      <ng-container *ngIf="globals.lluAutoExec">
+        <mat-icon class="libre_linkup">cloud_sync</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="!globals.lluAutoExec">
+        <mat-icon *ngIf="!lls.isRunning" class="libre_linkup">schedule_send</mat-icon>
+        <mat-icon *ngIf="lls.isRunning" class="libre_linkup">cloud_upload</mat-icon>
+      </ng-container>
+    </app-watch-entry>
   </ng-container>
 </div>

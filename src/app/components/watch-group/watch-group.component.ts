@@ -6,6 +6,7 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {WatchElement} from '@/_model/watch-element';
 import {Settings} from '@/_model/settings';
 import {WatchService} from '@/_services/watch.service';
+import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 
 @Component({
   selector: 'app-watch-group',
@@ -19,7 +20,16 @@ export class WatchGroupComponent {
   constructor(public ds: DataService,
               public ts: ThemeService,
               public ss: SessionService,
-              public ws: WatchService) {
+              public ws: WatchService,
+              public lls: LibreLinkUpService) {
+  }
+
+  get classForLLU(): string[] {
+    const ret: string[] = ['libre_linkup'];
+    if (this.lls.isRunning) {
+      ret.push('running');
+    }
+    return ret;
   }
 
   get globals(): GlobalsData {
@@ -111,6 +121,11 @@ export class WatchGroupComponent {
 
   onClick(element: WatchElement) {
     const value = !element.selected;
+    if (element.type === 'libre_linkup' && !this.ws.isEditMode) {
+      this.lls.isRunning = (!this.lls.isRunning && !GLOBALS.lluAutoExec);
+      return;
+    }
+    this.lls.isRunning = false;
     for (const entry of GLOBALS.watchList) {
       entry.selected = false;
     }

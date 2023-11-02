@@ -47,20 +47,6 @@ export class ListData {
     return this.entries.filter((entry) => entry.isGlucInvalid).length;
   }
 
-  get medianGluc(): number {
-    const list = [];
-    for (const entry of this.entries) {
-      if (!entry.isGlucInvalid) {
-        list.push(entry.gluc);
-      }
-    }
-    if (list.length % 2 === 0) {
-      return (list[Math.floor(list.length / 2)] + list[Math.floor(list.length / 2 + 1)]) / 2;
-    } else {
-      return list[Math.floor((list.length + 1) / 2)];
-    }
-  }
-
   get avgGluc(): number {
     let ret = 0.0;
     let count = 0;
@@ -191,6 +177,7 @@ export class ListData {
       this.stat[key].varianz /= this.stat[key].values.length;
     }
   }
+
   extractData(data: ReportData): void {
     this.catheterCount = 0;
     this.ampulleCount = 0;

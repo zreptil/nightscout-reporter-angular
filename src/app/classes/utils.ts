@@ -123,6 +123,11 @@ export class Utils {
     return ret;
   }
 
+  static nowTime(): string {
+    const now = new Date();
+    return this.fmtTime(now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds());
+  }
+
   static fmtTime(time: number): string {
     if (isNaN(time)) {
       time = 0;
@@ -424,5 +429,11 @@ export class Utils {
       ret += c;
     }
     return ret;
+  }
+
+  static utcDateFromString(timestamp: string): Date {
+    const utcDate = new Date(timestamp);
+    utcDate.setTime(utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000);
+    return utcDate;
   }
 }

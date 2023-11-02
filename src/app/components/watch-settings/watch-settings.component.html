@@ -33,6 +33,28 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div class="subinfo">{{maxGlucAgeLabel}}</div>
+      <div class="subinfo">
+        <mat-button-toggle-group [(ngModel)]="globals.maxGlucAge">
+          <mat-button-toggle *ngFor="let btn of [2,3,4,5,10,15]" [value]="+btn">
+            {{btn}} {{msgMinute(btn)}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <div class="sub">
+      <div class="subtitle" i18n="label of area for watch settings - automation">Automatisierung</div>
+      <div class="subinfo">{{lluTimeoutLabel}}</div>
+      <div class="subinfo">
+        <mat-button-toggle-group [(ngModel)]="globals.lluTimeout">
+          <mat-button-toggle *ngFor="let btn of [1,2,3,4,5]" [value]="+btn">
+            {{btn}} {{msgMinute(btn)}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="functions">
+        <mat-slide-toggle [(ngModel)]="globals.lluAutoExec">{{lluAutoExecLabel}}</mat-slide-toggle>
+      </div>
     </div>
   </div>
 

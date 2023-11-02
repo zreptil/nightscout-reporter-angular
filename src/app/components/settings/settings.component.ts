@@ -15,7 +15,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
-import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 
 @Component({
   selector: 'app-settings',
@@ -41,15 +40,9 @@ export class SettingsComponent implements OnInit {
               public ps: ProgressService,
               public ss: SessionService,
               public ns: NightscoutService,
-              public ms: MessageService,
-              private llu: LibreLinkUpService) {
+              public ms: MessageService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
-    if (GLOBALS.isLocal) {
-      llu.nightScoutHttpHeaders().then(_value => {
-        llu.execute();
-      });
-    }
   }
 
   get globals(): GlobalsData {
@@ -77,11 +70,15 @@ export class SettingsComponent implements OnInit {
   }
 
   get msgLinkupUsername(): string {
-    return $localize`Username für Zugriff auf LibreLinkUp`;
+    return $localize`Username`;
   }
 
   get msgLinkupPassword(): string {
-    return $localize`Passwort für Zugriff auf LibreLinkUp`;
+    return $localize`Passwort`;
+  }
+
+  get msgLinkupPatientId(): string {
+    return $localize`Patienten Id`;
   }
 
   get msgLinkupRegion(): string {
@@ -134,6 +131,10 @@ export class SettingsComponent implements OnInit {
 
   get msgLinkupUsernameHint(): string {
     return $localize`:@@msgLinkupUsernameHint:Diese Usernamen / Passwort Kombination ermöglicht es, Daten von LibreLinkUp zu erhalten.`;
+  }
+
+  get msgLinkupPatientIdHint(): string {
+    return $localize`:@@msgLinkupPatientIdHint:Diese Patienten Id wird verwendet, um Daten von LibreLinkUp zu erhalten. Sie wird nur benötigt, wenn dort mehrere Verbindungen vorhanden sind.`;
   }
 
   get msgLinkupRegionHint(): string {

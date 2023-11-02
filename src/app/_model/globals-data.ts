@@ -54,6 +54,7 @@ export class GlobalsData extends Settings {
   basalPrecisionAuto = 1;
   ppBasalPrecisionIdx = 0;
   isWatchColor = true;
+  maxGlucAge = 14;
   timestamp = 0;
   userListLoaded = false;
   glucDir = 360;
@@ -73,6 +74,9 @@ export class GlobalsData extends Settings {
   maxLogEntries = 20;
   pdfWarnings: string[] = [];
   deviceForShortcut: string = null;
+  // settings for librelinkup
+  lluTimeout = 5;
+  lluAutoExec = false;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
@@ -161,7 +165,7 @@ export class GlobalsData extends Settings {
   }
 
   get currentGlucValid(): boolean {
-    return this.currentGlucPast < 14;
+    return this.currentGlucPast < GLOBALS.maxGlucAge;
   }
 
   _currPeriodShift: PeriodShift;
@@ -358,7 +362,7 @@ export class GlobalsData extends Settings {
   }
 
   get profileMaxCounts(): number[] {
-    return [100000, 2000, 1000, 500, 250, 100, 50, 10];
+    return [1000000, 2000, 1000, 500, 250, 100, 50, 10];
   }
 
   get glucMGDL(): boolean {
@@ -475,6 +479,8 @@ export class GlobalsData extends Settings {
       + `,"d14":"${this.isWatchColor ? 'true' : 'false'}"`
       + `,"d15":"${this.ppSkipSensorChange?.toString() ?? 0}"`
       + `,"d16":[${watchEntries}]`
+      + `,"d17":"${this.lluTimeout}"`
+      + `,"d18":"${this.maxGlucAge}"`
       + '}';
   }
 

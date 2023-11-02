@@ -49,7 +49,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         $localize`1 Stunde`
       ]
     }),
-    new ParamInfo(1, PrintDailyLog.msgParam10, {boolValue: true}),
+    new ParamInfo(1, PrintDailyLog.msgParam10, {boolValue: true, subParams: [new ParamInfo(0, PrintDailyLog.msgParam18, {boolValue: false})]}),
     new ParamInfo(6, PrintDailyLog.msgParam11, {boolValue: true, subParams: [new ParamInfo(0, PrintDailyLog.msgParam12, {boolValue: true})]}),
     new ParamInfo(7, PrintDailyLog.msgParam13, {boolValue: true}),
     new ParamInfo(12, PrintDailyLog.msgParam16, {boolValue: false, subParams: [new ParamInfo(0, PrintDailyLog.msgParam17, {boolValue: false})]}),
@@ -65,6 +65,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   showIESource: boolean;
   showTempTargets: boolean;
   showGluc: boolean;
+  showGlucSource: boolean;
   showChanges: boolean;
   showChangesColumn: boolean;
   showCalibration: boolean;
@@ -162,6 +163,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     return $localize`Nur mehrfache Datensätze anzeigen`;
   }
 
+  static get msgParam18(): string {
+    return $localize`Quelle des Wertes`;
+  }
+
   static get msgMultipleNotFound(): string {
     return $localize`Es gibt keine mehrfachen Datensätze.`;
   }
@@ -254,6 +259,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     }
 
     this.showGluc = this.params[8].boolValue;
+    this.showGlucSource = this.params[8].subParams[0].boolValue;
     this.showChanges = this.params[9].boolValue;
     this.showChangesColumn = this.params[9].subParams[0].boolValue;
     this.showCalibration = this.params[10].boolValue;
@@ -421,6 +427,9 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
 
   fillRow(time: Date, src: ReportData, day: DayData, row: any,
           glucEntry: EntryData, list: string[], flags: Flags, style: string): string[] {
+    if (this.showGlucSource) {
+      list.splice(0, 0, `Quelle: ${glucEntry.device}`);
+    }
     if (!Utils.isEmpty(list)) {
       const oldY = this._y;
       const size = this.fs(10);

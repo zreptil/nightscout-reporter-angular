@@ -82,6 +82,7 @@ export class Log {
   static addLine(id: string, line: any): void {
     const list = LogService.instance.msg[id];
     if (list != null && (id === 'debug' || !Log.isInList(line, list))) {
+      line = `${Utils.nowTime()} ${line}`;
       list.splice(0, 0, line);
       // if not in debug mode, then limit the length of the log entries per list
       // to GLOBALS.maxLogEntries so that the app will not suffer from running

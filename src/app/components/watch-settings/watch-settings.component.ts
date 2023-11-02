@@ -4,6 +4,8 @@ import {DialogResultButton} from '@/_model/dialog-data';
 import {MatDialogRef} from '@angular/material/dialog';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ColorData} from '@/_model/color-data';
+import {WatchService} from '@/_services/watch.service';
+import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-watch-settings',
@@ -15,7 +17,8 @@ export class WatchSettingsComponent {
   savedColors: ColorData[] = [];
 
   constructor(private dlgRef: MatDialogRef<WatchSettingsComponent>,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public ws: WatchService) {
 
   }
 
@@ -23,15 +26,35 @@ export class WatchSettingsComponent {
     return GLOBALS.isWatchColor ? $localize`Farbig` : $localize`Dunkel`;
   }
 
+  get lluAutoExecLabel(): string {
+    return $localize`LibreLinkUp aufrufen, wenn der Glukosewert veraltet ist`;
+  }
+
+  get maxGlucAgeLabel(): string {
+    return $localize`Zeit, nach der der Glukosewert als veraltet interpretiert wird`;
+  }
+
+  get lluTimeoutLabel(): string {
+    return $localize`Intervall zwischen den Übertragungen der Daten von LibreLinkUp nach Nightscout`;
+  }
+
   get globals(): GlobalsData {
     return GLOBALS;
   }
 
   clickSave() {
+    this.ws.clearSelected();
     this.dlgRef.close({btn: DialogResultButton.ok});
   }
 
   changeGlucUnits(value: number) {
     GLOBALS.glucMGDLIdx = value;
+  }
+
+  msgMinute(value: number) {
+    return Utils.plural(value, {
+      1: $localize`Minute`,
+      other: $localize`Minuten`
+    });
   }
 }

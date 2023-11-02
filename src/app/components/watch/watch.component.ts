@@ -90,6 +90,10 @@ export class WatchComponent implements OnInit {
     return $localize`Batterie-Wechsel`;
   }
 
+  get msgLibreLinkUp(): string {
+    return $localize`Libre LinkUp`;
+  }
+
   get types(): any {
     return {
       nl: this.msgNL,
@@ -107,7 +111,8 @@ export class WatchComponent implements OnInit {
       change_sensor: this.msgChangeSensor,
       change_katheter: this.msgChangeKatheter,
       change_ampulle: this.msgChangeAmpulle,
-      change_battery: this.msgChangeBattery
+      change_battery: this.msgChangeBattery,
+      libre_linkup: this.msgLibreLinkUp
     };
   }
 

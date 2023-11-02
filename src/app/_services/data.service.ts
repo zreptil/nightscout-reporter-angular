@@ -21,6 +21,7 @@ import {LanguageService} from '@/_services/language.service';
 import {EnvironmentService} from '@/_services/environment.service';
 import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DropboxService} from '@/_services/sync/dropbox.service';
+import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -44,8 +45,12 @@ export class DataService {
               public ls: LanguageService,
               // public gds: GoogleDriveService,
               public env: EnvironmentService,
-              public dbs: DropboxService
+              public dbs: DropboxService,
+              public llu: LibreLinkUpService
   ) {
+    this.llu.updateGluc = () => {
+      this.getCurrentGluc.bind(this)({force: true});
+    };
     // http.head('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').subscribe({
     //   next: data => {
     //     this.hasAdBlock = false;
@@ -325,6 +330,9 @@ export class DataService {
           }
         }
       }
+      GLOBALS.lluTimeout = JsonData.toNumber(json.d17, 5);
+      GLOBALS.lluTimeout = Math.max(Math.min(GLOBALS.lluTimeout, 5), 1);
+      GLOBALS.maxGlucAge = JsonData.toNumber(json.d18, 15);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }
@@ -569,7 +577,6 @@ export class DataService {
     params ??= {};
     params.force ??= false;
     params.timeout ??= 60;
-    let ret = '';
     if (GLOBALS.glucTimer != null) {
       clearTimeout(GLOBALS.glucTimer);
       GLOBALS.glucTimer = null;
@@ -581,11 +588,11 @@ export class DataService {
 
     if (GLOBALS.glucRunning) {
       // Log.debug('{time} glucRunning!');
-      return '';
+      return;
     }
 
     if (!params.force && !GLOBALS.showCurrentGluc) {
-      return '';
+      return;
     }
     GLOBALS.glucRunning = true;
     let url = GLOBALS.user.apiUrl(null, 'status.json');
@@ -632,7 +639,7 @@ export class DataService {
           // const chk = new Date().getHours() * 100 + new Date().getMinutes();
           if (span > 15) { // || (chk >= 1917 && chk <= 1921)) {
             this.refreshCurrentTimer(params);
-            return GLOBALS.currentGluc;
+            return;
           }
           GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
           GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(GLOBALS.currentGlucPast);
@@ -640,6 +647,9 @@ export class DataService {
             GLOBALS.currentGlucSrc = eLast;
             GLOBALS.lastGlucSrc = ePrev;
           }
+          // console.log('----------------------------');
+          // console.log('Lokal', GlobalsData.now);
+          // console.log('Server', eLast.time);
           const diff = eLast.gluc - ePrev.gluc;
           GLOBALS.currentGlucDiff = `${eLast.gluc > ePrev.gluc ? '+' : ''}${GLOBALS.fmtNumber(diff / span / GLOBALS.glucFactor, GLOBALS.glucPrecision)}`;
           const limit = Math.floor(10 * span);
@@ -703,10 +713,12 @@ export class DataService {
     if (params.force) {
       this.refreshCurrentTimer(params);
     }
-    return ret;
   }
 
   refreshCurrentTimer(params: { force?: boolean, timeout?: number }): void {
+    if (GLOBALS.lluAutoExec && !GLOBALS.currentGlucValid) {
+      this.llu.executeOnce();
+    }
     let milliseconds = params.timeout * 1000;
     // calculate the milliseconds to the next full part of the minute for the timer
     // (e.g. now is 10:37:27 and timeout is 30, will result in 3000 milliseconds
