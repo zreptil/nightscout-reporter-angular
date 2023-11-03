@@ -496,7 +496,7 @@ export class GlobalsData extends Settings {
   }
 
   get currentGlucDir(): string {
-    return this.glucDir < 360 ? `translate(0,2px)rotate(${this.glucDir}deg)` : null;
+    return this.glucDir < 360 ? `rotate(${this.glucDir}deg)` : null;
   }
 
   get currentGluc(): string {

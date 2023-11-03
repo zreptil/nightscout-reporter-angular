@@ -37,6 +37,17 @@
       </div>
     </app-watch-entry>
     <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
+      <svg [style.transform]="globals.currentGlucDir" class="arrow" fill="#000000" viewBox="0 0 45.513 45.512" width="300px">
+        <g>
+          <path d="M44.275,19.739L30.211,5.675c-0.909-0.909-2.275-1.18-3.463-0.687c-1.188,0.493-1.959,1.654-1.956,2.938l0.015,5.903
+		l-21.64,0.054C1.414,13.887-0.004,15.312,0,17.065l0.028,11.522c0.002,0.842,0.338,1.648,0.935,2.242s1.405,0.927,2.247,0.925
+		l21.64-0.054l0.014,5.899c0.004,1.286,0.781,2.442,1.971,2.931c1.189,0.487,2.557,0.21,3.46-0.703L44.29,25.694
+		C45.926,24.043,45.92,21.381,44.275,19.739z"/>
+        </g>
+      </svg>
+      <div class="centered">{{globals.currentGlucDiff}}</div>
+    </app-watch-entry>
+    <!-- app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
       <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
            xmlns="http://www.w3.org/2000/svg">
         <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
@@ -47,7 +58,7 @@
         </g>
       </svg>
       <div class="centered">{{globals.currentGlucDiff}}</div>
-    </app-watch-entry>
+    </app-watch-entry -->
     <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='llu_autoexec'" [element]="entry" [isEditMode]="ws.isEditMode">
       <mat-icon *ngIf="globals.lluAutoExec" class="libre_linkup">visibility</mat-icon>
       <mat-icon *ngIf="!globals.lluAutoExec" class="libre_linkup">visibility_off</mat-icon>
