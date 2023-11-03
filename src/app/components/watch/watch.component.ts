@@ -14,7 +14,6 @@ import {WatchService} from '@/_services/watch.service';
   styleUrls: ['./watch.component.scss']
 })
 export class WatchComponent implements OnInit {
-  currPage = '';
 
   constructor(public ds: DataService,
               public ts: ThemeService,
@@ -90,8 +89,12 @@ export class WatchComponent implements OnInit {
     return $localize`Batterie-Wechsel`;
   }
 
-  get msgLibreLinkUp(): string {
-    return $localize`Libre LinkUp`;
+  get msgLLUSchedule(): string {
+    return $localize`LLU Exec`;
+  }
+
+  get msgLLUAutoExec(): string {
+    return $localize`LLU Autoexec`;
   }
 
   get types(): any {
@@ -112,7 +115,8 @@ export class WatchComponent implements OnInit {
       change_katheter: this.msgChangeKatheter,
       change_ampulle: this.msgChangeAmpulle,
       change_battery: this.msgChangeBattery,
-      libre_linkup: this.msgLibreLinkUp
+      llu_schedule: this.msgLLUSchedule,
+      llu_autoexec: this.msgLLUAutoExec
     };
   }
 
@@ -182,7 +186,7 @@ export class WatchComponent implements OnInit {
 
   clickSettings(evt: MouseEvent) {
     evt.stopPropagation();
-    this.currPage = 'users';
+    GLOBALS.nwCurrPage = 'users';
   }
 
   async showSettings() {
@@ -373,6 +377,6 @@ export class WatchComponent implements OnInit {
   clickBack(evt: MouseEvent) {
     evt.stopPropagation();
     this.ws.clearSelected();
-    this.currPage = '';
+    GLOBALS.nwCurrPage = '';
   }
 }

@@ -119,10 +119,28 @@ export class WatchGroupComponent {
     return 'norm';
   }
 
+  configureLLU(): void {
+    GLOBALS.nwCurrPage = 'users';
+    this.ss.showSettings();
+  }
+
   onClick(element: WatchElement) {
     const value = !element.selected;
-    if (element.type === 'libre_linkup' && !this.ws.isEditMode) {
-      this.lls.isRunning = (!this.lls.isRunning && !GLOBALS.lluAutoExec);
+    if (element.type === 'llu_schedule' && !this.ws.isEditMode) {
+      if (GLOBALS.isLLUPossible) {
+        this.lls.isRunning = !this.lls.isRunning;
+      } else {
+        this.configureLLU();
+      }
+      return;
+    }
+    if (element.type === 'llu_autoexec' && !this.ws.isEditMode) {
+      if (GLOBALS.isLLUPossible) {
+        GLOBALS.lluAutoExec = !GLOBALS.lluAutoExec;
+        this.ds.saveDeviceData();
+      } else {
+        this.configureLLU();
+      }
       return;
     }
     this.lls.isRunning = false;

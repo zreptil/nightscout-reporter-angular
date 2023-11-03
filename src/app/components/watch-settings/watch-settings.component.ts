@@ -35,7 +35,7 @@ export class WatchSettingsComponent {
   }
 
   get lluTimeoutLabel(): string {
-    return $localize`Intervall zwischen den Übertragungen der Daten von LibreLinkUp nach Nightscout`;
+    return $localize`Intervall zwischen den periodischen Übertragungen der Daten von LibreLinkUp nach Nightscout`;
   }
 
   get globals(): GlobalsData {

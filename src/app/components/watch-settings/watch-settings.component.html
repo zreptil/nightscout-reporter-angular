@@ -44,6 +44,10 @@
     </div>
     <div class="sub">
       <div class="subtitle" i18n="label of area for watch settings - automation">Automatisierung</div>
+      <div class="functions">
+        <mat-slide-toggle [(ngModel)]="globals.lluAutoExec">{{lluAutoExecLabel}}</mat-slide-toggle>
+      </div>
+      <br>
       <div class="subinfo">{{lluTimeoutLabel}}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.lluTimeout">
@@ -51,9 +55,6 @@
             {{btn}} {{msgMinute(btn)}}
           </mat-button-toggle>
         </mat-button-toggle-group>
-      </div>
-      <div class="functions">
-        <mat-slide-toggle [(ngModel)]="globals.lluAutoExec">{{lluAutoExecLabel}}</mat-slide-toggle>
       </div>
     </div>
   </div>

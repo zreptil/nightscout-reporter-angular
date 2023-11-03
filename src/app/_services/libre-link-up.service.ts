@@ -38,7 +38,6 @@ export class LibreLinkUpService {
 
   set isRunning(value: boolean) {
     this._isRunning = value;
-    GLOBALS.lluAutoExec = false;
     if (value) {
       this.executeOnce();
       this.startScheduler();
@@ -280,9 +279,9 @@ export class LibreLinkUpService {
   createFormattedMeasurements(data: GraphData, callback: (result: Entry[]) => void): void {
     const ret: Entry[] = [];
     const glucoseMeasurement = data.connection.glucoseMeasurement;
-    console.log('glucoseMeasurement', glucoseMeasurement);
+    // console.log('glucoseMeasurement', glucoseMeasurement);
     const measurementDate = Utils.utcDateFromString(glucoseMeasurement.FactoryTimestamp);
-    console.log('measurementDate', measurementDate);
+    // console.log('measurementDate', measurementDate);
     this.lastEntryDate((nsLastDate: Date) => {
       if (nsLastDate == null) {
         nsLastDate = new Date();
@@ -300,7 +299,7 @@ export class LibreLinkUpService {
           'sgv': glucoseMeasurement.ValueInMgPerDl
         });
       }
-      console.log('data.graphData', data.graphData);
+      // console.log('data.graphData', data.graphData);
       for (const entry of data.graphData) {
         const entryDate = Utils.utcDateFromString(entry.FactoryTimestamp);
         if (entryDate > nsLastDate) {

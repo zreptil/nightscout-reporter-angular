@@ -52,6 +52,20 @@ li {
   padding-left: 2.0em;
   position: relative;
   text-align: justify;
+
+  div[row] {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+  }
+
+  mat-icon {
+    --v: 24px;
+    font-size: 1em;
+    height: var(--v);
+    width: var(--v);
+    min-width: var(--v);
+  }
 }
 
 li:not(first-child) {

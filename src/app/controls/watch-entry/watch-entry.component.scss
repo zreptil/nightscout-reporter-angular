@@ -10,6 +10,11 @@
   &.running {
     color: rgba(0, 255, 0, 1);
   }
+
+  &.samePos {
+    position: absolute;
+    color: red;
+  }
 }
 
 div[content] {

@@ -183,6 +183,10 @@ export class DataService {
     return params.asJson ? response.body : response;
   }
 
+  saveDeviceData(): void {
+    this.ss.writeCrypt(Settings.DeviceData, GLOBALS.asDeviceString);
+  }
+
   saveWebData(): void {
     const data = {
       w0: GLOBALS.version,
@@ -331,12 +335,13 @@ export class DataService {
         }
       }
       GLOBALS.lluTimeout = JsonData.toNumber(json.d17, 5);
-      GLOBALS.lluTimeout = Math.max(Math.min(GLOBALS.lluTimeout, 5), 1);
       GLOBALS.maxGlucAge = JsonData.toNumber(json.d18, 15);
+      GLOBALS.lluAutoExec = JsonData.toBool(json.d19);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }
     try {
+      GLOBALS.lluTimeout = Math.max(Math.min(GLOBALS.lluTimeout ?? 5, 5), 1);
       this.onAfterLoadDevice?.();
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson (onAfterLoadDevice)`);
@@ -495,7 +500,7 @@ export class DataService {
 
     this.saveWebData();
     this.ss.writeCrypt(Settings.SharedData, GLOBALS.asSharedString);
-    this.ss.writeCrypt(Settings.DeviceData, GLOBALS.asDeviceString);
+    this.saveDeviceData();
 
     const doReload = (GLOBALS.language.code !== oldLang && GLOBALS.language.code !== null) && !params.skipReload;
     if (this.syncType !== oauth2SyncType.none && params.updateSync) {

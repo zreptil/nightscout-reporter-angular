@@ -1,4 +1,4 @@
-<div *ngIf="currPage==='users'" class="users">
+<div *ngIf="globals.nwCurrPage==='users'" class="users">
   <div class="scrollable">
     <app-view-users></app-view-users>
   </div>
@@ -6,7 +6,7 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
-<div (click)="clickBackground()" *ngIf="currPage===''" class="root">
+<div (click)="clickBackground()" *ngIf="globals.nwCurrPage===''" class="root">
   <div content>
     <app-watch-group groupId="tl"></app-watch-group>
     <app-watch-group groupId="tr"></app-watch-group>

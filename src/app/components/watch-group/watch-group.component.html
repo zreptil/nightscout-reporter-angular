@@ -48,14 +48,15 @@
       </svg>
       <div class="centered">{{globals.currentGlucDiff}}</div>
     </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='libre_linkup'" [element]="entry" [isEditMode]="ws.isEditMode">
-      <ng-container *ngIf="globals.lluAutoExec">
-        <mat-icon class="libre_linkup">cloud_sync</mat-icon>
-      </ng-container>
-      <ng-container *ngIf="!globals.lluAutoExec">
-        <mat-icon *ngIf="!lls.isRunning" class="libre_linkup">schedule_send</mat-icon>
-        <mat-icon *ngIf="lls.isRunning" class="libre_linkup">cloud_upload</mat-icon>
-      </ng-container>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='llu_autoexec'" [element]="entry" [isEditMode]="ws.isEditMode">
+      <mat-icon *ngIf="globals.lluAutoExec" class="libre_linkup">visibility</mat-icon>
+      <mat-icon *ngIf="!globals.lluAutoExec" class="libre_linkup">visibility_off</mat-icon>
+      <mat-icon *ngIf="!globals.isLLUPossible" class="libre_linkup samePos">close</mat-icon>
+    </app-watch-entry>
+    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='llu_schedule'" [element]="entry" [isEditMode]="ws.isEditMode">
+      <mat-icon *ngIf="!lls.isRunning" class="libre_linkup">schedule_send</mat-icon>
+      <mat-icon *ngIf="lls.isRunning" class="libre_linkup">cancel_schedule_send</mat-icon>
+      <mat-icon *ngIf="!globals.isLLUPossible" class="libre_linkup samePos">close</mat-icon>
     </app-watch-entry>
   </ng-container>
 </div>

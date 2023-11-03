@@ -17,6 +17,8 @@
     .mat-button-toggle-group {
       border: none;
       border-radius: 0;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     .mat-button-toggle-appearance-standard {

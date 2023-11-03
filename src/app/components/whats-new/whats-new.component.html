@@ -10,39 +10,59 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(42.0)">
-      <span i18n="version">Version</span><span i18n="v414">4.2.0 - 02.11.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v420">4.2.0 - 03.11.2023</span></h2>
     <ul [class]="classFor(42.0)">
       <li class="added" i18n="v420a1">
-        Es ist nun möglich, über NightWatch die Daten von LibreLinkUp zu Nightscout hochladen
+        Es ist nun möglich, über NightWatch die Daten von LibreLinkUp nach Nightscout übertragen
         zu lassen. Dazu müssen in den Einstellungen im Abschnitt <b>LibreLinkUp</b> die entsprechenden
         Angaben befüllt werden. Dabei ist es nun auch notwendig, das API-Secret von Nightscout zu
         erfassen, da die von LibreLinkUp ermittelten Daten in Nightscout gespeichert werden müssen.
       </li>
       <li class="added" i18n="v420a2">
-        In NightWatch gibt es neue Einstellungen. Diese erreicht man dort über das Icon
-        <mat-icon>tune</mat-icon>
-        Dort kann man festlegen, nach wieviel Minuten der angezeigte Glukosewert als veraltet
-        angesehen wird. Bisher waren das 14 Minuten. Wenn der Glukosewert älter als dort angegeben
-        ist, wird der Hintergrund farblos. Bei Automatisierung kann man angeben, wie oft die Daten
-        periodisch von LibreLinkUp nach Nightscout übertragen werden. Ausserdem kann dort festgelegt
-        werden, dass bei einem veralteten Glukosewert automatisch die Übertragung der Daten von
-        LibreLinkUp nach Nightscout erfolgen soll.
+        In NightWatch gibt es neue Einstellungen. Dort kann man festlegen, nach wieviel Minuten der
+        angezeigte Glukosewert als veraltet angesehen wird. Bisher waren das 14 Minuten. Wenn der
+        Glukosewert älter als dort angegeben ist, wird der Hintergrund farblos. Bei
+        <b>Automatisierung</b> kann man angeben, wie oft die Daten periodisch von LibreLinkUp
+        nach Nightscout übertragen werden. Ausserdem kann dort festgelegt werden, dass bei
+        einem veralteten Glukosewert automatisch die Übertragung der Daten von LibreLinkUp nach
+        Nightscout erfolgen soll.
       </li>
       <li class="added" i18n="v420a3">
-        In NightWatch gibt es ein neues Element namens <b>Libre LinkUp</b>. Das kann so wie
-        alle anderen Elemente platziert werden. Anders als die anderen Elemente wird beim Anklicken
-        dieses Elements eine Aktion ausgeführt. Folgende Aktionen sind abhängig vom Icon möglich:
-        <br>
-        <mat-icon>schedule_send</mat-icon>
-        Aktuell keine Übertragung der Glukosewerte nach Nightscout. Anklicken startet die periodische
-        Speicherung der Daten von LibreLinkUp in Nightscout.
-        <br>
-        <mat-icon>cloud_upload</mat-icon>
-        Die periodische Speicherung läuft. Anklicken beendet die Speicherung.
-        <br>
-        <mat-icon>cloud_sync</mat-icon>
-        Es wurde die automatische Übertragung der Daten bei veraltetem Glukosewert aktiviert.
-        Anklicken beendet diesen Modus.
+        In NightWatch gibt es eine neue Art von Elementen. Diese können so wie alle anderen
+        Elemente platziert werden. Aber anders als die anderen Elemente wird bei diesen beim
+        Anklicken eine Aktion ausgeführt und nicht in den Edit-Modus gewechselt. Wenn diese
+        Elemente durchgestrichen sind, dann fehlt die Konfiguration für die Funktionalität
+        dieser Elemente. Beim Anklicken wird dann die entsprechende Konfiguration ermöglicht.
+      </li>
+      <li class="added">
+          <span i18n>Neues Element <b>LLU Exec</b> in NightWatch. Dieses Element startet oder stoppt die
+          periodische Übertragung der Glukosewerte von LibreLinkUp nach Nightscout. Die Icons
+          haben dabei folgende Bedeutung:</span>
+        <div row>
+          <mat-icon>schedule_send</mat-icon>
+          <span i18n>Aktuell keine Übertragung der Glukosewerte nach Nightscout.
+            Anklicken startet die periodische Übertragung der Daten von LibreLinkUp
+            nach Nightscout.</span>
+        </div>
+        <div row>
+          <mat-icon>cancel_schedule_send</mat-icon>
+          <span i18n>Die periodische Übertragung läuft. Anklicken beendet diese.</span>
+        </div>
+      </li>
+      <li class="added">
+          <span i18n>Neues Element <b>LLU Autoexec</b> in NightWatch. Dieses Element startet oder stoppt die
+          automatische Übertragung der Glukosewerte von LibreLinkUp nach Nightscout, wenn
+          der Glukosewert veraltet ist. Die Icons haben dabei folgende Bedeutung:</span>
+        <div row>
+          <mat-icon>visibility</mat-icon>
+          <span i18n>Wenn der Glukosewert veraltet ist, dann wird automatisch die Übertragung
+          der Glukosewerte von LibreLinkUp nach Nightscout ausgeführt.</span>
+        </div>
+        <div row>
+          <mat-icon>visibility_off</mat-icon>
+          <span i18n>Die automatische Übertragung der Glukosewerte von LibreLinkUp nach
+          Nightscout ist deaktiviert.</span>
+        </div>
       </li>
       <li class="added" i18n="v420a4">
         Im Formular Protokoll kann nun auch die Herkunft des Glukosewertes ausgegeben werden.

@@ -77,6 +77,8 @@ export class GlobalsData extends Settings {
   // settings for librelinkup
   lluTimeout = 5;
   lluAutoExec = false;
+  nwCurrPage = '';
+
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
@@ -162,6 +164,14 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  get isLLUPossible(): boolean {
+    const url = this.user?.urlDataFor(null);
+    return !Utils.isEmpty(url?.linkupRegion)
+      && !Utils.isEmpty(url?.linkupUsername)
+      && !Utils.isEmpty(url?.linkupPassword)
+      && !Utils.isEmpty(url?.apiSecret);
   }
 
   get currentGlucValid(): boolean {
@@ -481,6 +491,7 @@ export class GlobalsData extends Settings {
       + `,"d16":[${watchEntries}]`
       + `,"d17":"${this.lluTimeout}"`
       + `,"d18":"${this.maxGlucAge}"`
+      + `,"d19":"${this.lluAutoExec ? 'true' : 'false'}"`
       + '}';
   }
 
