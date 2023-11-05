@@ -150,7 +150,7 @@ export class JsonData {
    */
   static getUploadSource(json: any): string {
     let ret = JsonData.toText(json.enteredBy, null);
-    ret ??= JsonData.toText(json.app, null);
+    ret ??= JsonData.toText(json.app, '');
     return ret;
   }
 

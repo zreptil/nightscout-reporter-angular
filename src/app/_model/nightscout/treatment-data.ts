@@ -78,7 +78,7 @@ export class TreatmentData extends JsonData {
 
   get from(): Uploader {
     if (this._from === Uploader.Unknown) {
-      const check = this.enteredBy.toLowerCase() ?? '';
+      const check = this.enteredBy?.toLowerCase() ?? '';
       if (check === 'openaps') {
         this._from = Uploader.OpenAPS;
       } else if (check === 'tidepool') {
