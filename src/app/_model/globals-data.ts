@@ -29,7 +29,6 @@ export class GlobalsData extends Settings {
   currShortcutIdx: number;
   hasMGDL = false;
   showAllTileParams = false;
-  showCurrentGluc = false;
   showInfo = false;
   tileShowImage = true;
   isDataSmoothing = true;
@@ -453,7 +452,7 @@ export class GlobalsData extends Settings {
       + `,"s4":${this.userIdx ?? 0}`
       + `,"s5":${this.glucMGDLIdx ?? 0}`
       // + `,"s6":"${this.language.code ?? 'de_DE'}"`
-      + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
+      // + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
       + `,"s8":"${this.period?.toString()}"`
       + `,"s9":"${this._pdfOrder}"`
       + `,"s10":"${this._viewType}"`

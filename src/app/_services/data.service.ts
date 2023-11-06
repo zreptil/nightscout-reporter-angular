@@ -379,7 +379,7 @@ export class DataService {
       // if (idx >= 0) {
       //   GLOBALS.language = GLOBALS.languageList[idx];
       // }
-      GLOBALS.showCurrentGluc = JsonData.toBool(json.s7);
+      // GLOBALS.showCurrentGluc = JsonData.toBool(json.s7);
       GLOBALS.period = new DatepickerPeriod(JsonData.toText(json.s8));
       GLOBALS._pdfOrder = JsonData.toText(json.s9);
       GLOBALS.viewType = JsonData.toText(json.s10);
@@ -596,9 +596,6 @@ export class DataService {
       return;
     }
 
-    if (!params.force && !GLOBALS.showCurrentGluc) {
-      return;
-    }
     GLOBALS.glucRunning = true;
     let url = GLOBALS.user.apiUrl(null, 'status.json');
     let status: StatusData = null;
@@ -718,6 +715,7 @@ export class DataService {
     if (params.force) {
       this.refreshCurrentTimer(params);
     }
+    GLOBALS.glucRunning = false;
   }
 
   refreshCurrentTimer(params: { force?: boolean, timeout?: number }): void {

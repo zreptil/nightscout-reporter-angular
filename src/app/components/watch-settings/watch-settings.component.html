@@ -36,7 +36,7 @@
       <div class="subinfo">{{maxGlucAgeLabel}}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.maxGlucAge">
-          <mat-button-toggle *ngFor="let btn of [2,3,4,5,10,15]" [value]="+btn">
+          <mat-button-toggle *ngFor="let btn of [2,3,4,5,6,7,8,9,10,15]" [value]="+btn">
             {{btn}} {{msgMinute(btn)}}
           </mat-button-toggle>
         </mat-button-toggle-group>
