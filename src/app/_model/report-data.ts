@@ -33,6 +33,15 @@ export class ReportData {
         : this.ns;
   }
 
+  deviceColor(key: string): string {
+    const colors = ['#000', '#444', '#666', '#888'];
+    const idx = this.deviceList.indexOf(key.toLowerCase());
+    if (idx < 0) {
+      return colors[0];
+    }
+    return colors[idx % colors.length];
+  }
+
   isInPeriod(check: Date): boolean {
     if (Utils.isBefore(check, new Date(this.begDate.getFullYear(), this.begDate.getMonth(), this.begDate.getDate()))) {
       return false;

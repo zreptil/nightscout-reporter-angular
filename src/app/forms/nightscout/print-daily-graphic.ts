@@ -437,8 +437,8 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     this.subtitle = null;
   }
 
-  glucLine(points: any): any {
-    return {type: 'polyline', lineWidth: this.cm(this.lw), closePath: false, lineColor: this.colValue, points: points};
+  glucLine(points: any, color: string): any {
+    return {type: 'polyline', lineWidth: this.cm(this.lw), closePath: false, lineColor: color, points: points};
   }
 
   getPage(day: DayData): PageData {
@@ -547,7 +547,11 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     };
     const horzLegend: any = {stack: []};
     const vertLegend: any = {stack: []};
-    const graphGluc: any = {
+    const graphBloody: any = {
+      relativePosition: {x: this.cm(xo), y: this.cm(yo)},
+      canvas: []
+    };
+    const graphNotes: any = {
       relativePosition: {x: this.cm(xo), y: this.cm(yo)},
       canvas: []
     };
@@ -605,7 +609,6 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     const horzStack: any[] = horzLegend.stack;
     const vertStack: any[] = vertLegend.stack;
     // noinspection JSMismatchedCollectionQueryUpdate
-    const graphGlucCvs: any[] = graphGluc.canvas;
     const grid = this.drawGraphicGrid(this.glucMax, this.graphHeight, this.graphWidth, vertCvs, horzCvs, horzStack, vertStack,
       {graphBottom: this.graphBottom});
     if (grid.lineHeight == 0) {
@@ -625,7 +628,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       const x = this.glucX(entry.time);
       let y = this.glucY(entry.mbg);
       y = this.glucY(entry.mbg);
-      graphGlucCvs.push({type: 'rect', x: this.cm(x), y: this.cm(y), w: this.cm(0.1), h: this.cm(0.1), color: this.colBloodValues});
+      graphBloody.canvas.push({type: 'rect', x: this.cm(x), y: this.cm(y), w: this.cm(0.1), h: this.cm(0.1), color: this.colBloodValues});
       hasBloody = true;
     }
 
@@ -633,31 +636,43 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       if (t.isBloody) {
         const x = this.glucX(t.createdAt);
         const y = this.glucY(GLOBALS.glucFactor * t.glucose);
-        graphGlucCvs.push({type: 'rect', x: this.cm(x), y: this.cm(y), w: this.cm(0.1), h: this.cm(0.1), color: this.colBloodValues});
+        graphBloody.canvas.push({type: 'rect', x: this.cm(x), y: this.cm(y), w: this.cm(0.1), h: this.cm(0.1), color: this.colBloodValues});
         hasBloody = true;
       }
     }
 
-    let points: any = [];
-    let last: EntryData = null;
-    for (const entry of day.entries) {
-      const x = this.glucX(entry.time);
-      const y = this.glucY(entry.gluc);
-      if (entry.gluc < 0) {
-        if (last != null && last.gluc >= 0) {
-          graphGlucCvs.push(this.glucLine(points));
-          points = [];
+    const graphGluc: any[] = [];
+    for (const key of this.repData.deviceList) {
+      const entryList = Utils.deviceEntries(day.entries, key);
+      if (entryList.length > 0) {
+        const color = this.repData.deviceColor(key);
+        const graph: any = {
+          relativePosition: {x: this.cm(xo), y: this.cm(yo)},
+          canvas: []
+        };
+        let points: any = [];
+        let last: EntryData = null;
+        for (const entry of entryList) {
+          const x = this.glucX(entry.time);
+          const y = this.glucY(entry.gluc);
+          if (entry.gluc < 0) {
+            if (last != null && last.gluc >= 0) {
+              graph.canvas.push(this.glucLine(points, color));
+              points = [];
+            }
+          } else {
+            points.push({x: this.cm(x), y: this.cm(y)});
+          }
+          last = entry;
         }
-      } else {
-        points.push({x: this.cm(x), y: this.cm(y)});
+        graph.canvas.push(this.glucLine(points, color));
+        graphGluc.push(graph);
       }
-      last = entry;
     }
-    graphGlucCvs.push(this.glucLine(points));
+
     let hasLowGluc = false;
     let hasNormGluc = false;
     let hasHighGluc = false;
-
     if (this.showGlucTable) {
       for (let i = 0; i < 48; i++) {
         const hours = Math.floor(i / 2);
@@ -983,7 +998,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
               top = this.glucY(e.gluc);
             }
           }
-          graphGlucCvs.push({
+          graphNotes.canvas.push({
             type: 'line',
             x1: this.cm(x),
             y1: this.cm(top),
@@ -1001,7 +1016,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           });
           if (t.duration > 0) {
             x = this.glucX(Utils.addTimeSeconds(t.createdAt, t.duration));
-            graphGlucCvs.push({
+            graphNotes.canvas.push({
               type: 'line',
               x1: this.cm(x),
               y1: this.cm(this.graphBottom + 0.35),
@@ -1196,7 +1211,11 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     let infoTable: any = {};
 
     if (this.showLegend) {
-      this.addLegendEntry(legend, this.colValue, this.msgGlucosekurve, {isArea: false});
+      for (const key of this.repData.deviceList) {
+        if (Utils.deviceEntries(day.entries, key).length > 0) {
+          this.addLegendEntry(legend, this.repData.deviceColor(key), this.msgGlucosekurve(key), {isArea: false});
+        }
+      }
       if (hasBloody) {
         this.addLegendEntry(legend, this.colBloodValues, this.msgBloody,
           {
@@ -1454,7 +1473,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       horzLines,
       limitLines,
       pictures,
-      graphGluc,
+      ...graphGluc,
+      graphNotes,
+      graphBloody,
       graphInsulin,
       graphCarbs,
       glucTable,

@@ -561,10 +561,6 @@ export abstract class BasePrint extends FormConfig {
     return $localize`:@@msgUntil:bis`;
   }
 
-  get msgGlucosekurve(): string {
-    return Utils.isEmpty(this.repData.deviceList) ? $localize`:@@msgGlucosekurve:Glukosekurve` : this.repData.deviceList[0];
-  };
-
   get msgAdjustGlucHint(): string {
     if (Settings.adjustFactor > 1) {
       return this._msgRaiseGlucHint(GLOBALS.fmtNumber((Settings.adjustFactor - 1) * 100, 2));
@@ -974,6 +970,10 @@ export abstract class BasePrint extends FormConfig {
   static msgCalibration(scale: string, intercept: string, slope: string): string {
     return $localize`Kalibrierung (scale ${scale} / intercept ${intercept} / slope ${slope})`;
   }
+
+  msgGlucosekurve(key: string): string {
+    return key === 'all' ? $localize`:@@msgGlucosekurve:Glukosekurve` : key;
+  };
 
   mm(pt: number): number {
     return pt / 0.35277;

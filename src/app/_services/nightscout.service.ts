@@ -614,18 +614,24 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           chips: []
         };
         for (const device of this.reportData.deviceList) {
-          dlg.chips.push({title: device, selected: true});
+          dlg.chips.push({title: device, selected: false});
         }
         this.ps.isPaused = true;
-        const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte die Geräte auswählen, deren Daten ausgewertet werden sollen.`;
+        const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte die Geräte auswählen, deren Daten ausgewertet werden sollen. Wenn keine Geräte ausgewählt werden, werden die Daten zusammengefasst.`;
         const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
         this.ps.isPaused = false;
         deviceFilter = result.data.chips?.map((e: string) => e.toLowerCase()) ?? [];
+        console.log(deviceFilter);
+        if (Utils.isEmpty(deviceFilter)) {
+          console.log('Auf gehts!');
+          deviceFilter = ['all'];
+          this.reportData.deviceList = ['all'];
+        }
       }
-      if (deviceFilter.length > 1) {
+      if (deviceFilter.length > 1 || deviceFilter[0] === 'all') {
         GLOBALS.pdfWarnings.push($localize`Die Glukosewerte stammen aus verschiedenen Quellen`);
       }
-      if (deviceFilter.length >= 1) {
+      if (deviceFilter.length >= 1 && deviceFilter[0] !== 'all') {
         const hasDevice = (device: string) => {
           return device == null || deviceFilter.indexOf(device.toLowerCase()) >= 0;
         };
@@ -680,55 +686,61 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     // Create an array with EntryData every [diffTime] minutes
     const entryList: EntryData[] = [];
     if (!Utils.isEmpty(data.ns.entries)) {
-      let target = new Date(data.ns.entries[0].time.getFullYear(), data.ns.entries[0].time.getMonth(), data.ns.entries[0].time.getDate());
-      let prev = data.ns.entries[0];
-      const t = new Date(prev.time.getFullYear(), prev.time.getMonth(), prev.time.getDate());
-      prev = new EntryData();
-      prev.time = t;
-      let next = new EntryData();
-      next.time = target;
-      // distribute entries
-      this.ps.value = 0;
-      this.ps.max = data.ns?.entries?.length + 9
-      this.ps.text = $localize`Bereinige Daten...`;
-      for (const entry of data.ns.entries) {
-        if (!this.ps.next()) {
-          return data;
-        }
-        if (entry.isInvalid) {
+      for (const key of this.reportData.deviceList) {
+        const entrySrcList = Utils.deviceEntries(data.ns.entries, key);
+        if (entrySrcList.length === 0) {
           continue;
         }
-        const current = new Date(entry.time.getFullYear(), entry.time.getMonth(), entry.time.getDate(), entry.time.getHours(), entry.time.getMinutes());
-        if (Utils.isSameMoment(current, target)) {
-          prev = entry;
-          prev.time = current;
-          entry.isCopy = true;
-          entryList.push(entry);
-          target = Utils.addTimeMinutes(target, diffTime);
-        } else if (Utils.isBefore(current, target)) {
-          next.slice(entry, next, 0.5);
-        } else {
-          next = entry.copy;
-          const max = Utils.differenceInMinutes(current, prev.time);
-          while (Utils.isAfter(current, target) || Utils.isSameMoment(current, target)) {
-            const factor = max === 0 ? 0 : Utils.differenceInMinutes(target, prev.time) / max;
-            next = next.copy;
-            if (max >= minGapKeep || this.isAfterSensorChange(entry, listSensorChanges)) {
-              next.isGap = true;
-            }
-            next.time = target;
-            if (Utils.isSameMoment(current, target)) {
-              next.isCopy = true;
-              next.slice(entry, entry, 1.0);
-            } else {
-              next.slice(prev, entry, factor);
-            }
-            entryList.push(next);
-            target = Utils.addTimeMinutes(target, diffTime);
+        let target = new Date(entrySrcList[0].time.getFullYear(), entrySrcList[0].time.getMonth(), entrySrcList[0].time.getDate());
+        let prev = entrySrcList[0];
+        const t = new Date(prev.time.getFullYear(), prev.time.getMonth(), prev.time.getDate());
+        prev = new EntryData();
+        prev.time = t;
+        let next = new EntryData();
+        next.time = target;
+        // distribute entries
+        this.ps.value = 0;
+        this.ps.max = entrySrcList?.length + 9
+        this.ps.text = $localize`Bereinige Daten...`;
+        for (const entry of entrySrcList) {
+          if (!this.ps.next()) {
+            return data;
           }
-          prev = entry;
-          prev.time = current;
-          next = entry;
+          if (entry.isInvalid) {
+            continue;
+          }
+          const current = new Date(entry.time.getFullYear(), entry.time.getMonth(), entry.time.getDate(), entry.time.getHours(), entry.time.getMinutes());
+          if (Utils.isSameMoment(current, target)) {
+            prev = entry;
+            prev.time = current;
+            entry.isCopy = true;
+            entryList.push(entry);
+            target = Utils.addTimeMinutes(target, diffTime);
+          } else if (Utils.isBefore(current, target)) {
+            next.slice(entry, next, 0.5);
+          } else {
+            next = entry.copy;
+            const max = Utils.differenceInMinutes(current, prev.time);
+            while (Utils.isAfter(current, target) || Utils.isSameMoment(current, target)) {
+              const factor = max === 0 ? 0 : Utils.differenceInMinutes(target, prev.time) / max;
+              next = next.copy;
+              if (max >= minGapKeep || this.isAfterSensorChange(entry, listSensorChanges)) {
+                next.isGap = true;
+              }
+              next.time = target;
+              if (Utils.isSameMoment(current, target)) {
+                next.isCopy = true;
+                next.slice(entry, entry, 1.0);
+              } else {
+                next.slice(prev, entry, factor);
+              }
+              entryList.push(next);
+              target = Utils.addTimeMinutes(target, diffTime);
+            }
+            prev = entry;
+            prev.time = current;
+            next = entry;
+          }
         }
       }
     }

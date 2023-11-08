@@ -1,4 +1,5 @@
 import {Log} from '@/_services/log.service';
+import {EntryData} from '@/_model/nightscout/entry-data';
 
 export class Utils {
   static replace(text: string, src: string | string[], dst: string | string[]): string {
@@ -435,5 +436,12 @@ export class Utils {
     const utcDate = new Date(timestamp);
     utcDate.setTime(utcDate.getTime() - utcDate.getTimezoneOffset() * 60 * 1000);
     return utcDate;
+  }
+
+  static deviceEntries(entries: EntryData[], key: string): EntryData[] {
+    if (key.toLowerCase() === 'all') {
+      return entries ?? [];
+    }
+    return entries.filter(e => e.device.toLowerCase() === key.toLowerCase()) ?? [];
   }
 }

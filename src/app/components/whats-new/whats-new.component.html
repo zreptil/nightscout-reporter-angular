@@ -9,6 +9,22 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(42.1)">
+      <span i18n="version">Version</span><span i18n="v421">4.2.1 - 08.11.2023</span></h2>
+    <ul [class]="classFor(42.1)">
+      <li class="changed" i18n="v421a1">
+        Die Verarbeitung mehrerer Quellen für Glukosedaten wurde überarbeitet. Wenn beim
+        Laden der Daten festgestellt wird, dass mehrere Quellen für Glukosedaten vorliegen,
+        dann wird vor dem Erstellen des PDF ein Dialog angezeigt, in dem man entscheiden
+        kann, wie damit verfahren werden soll. Man kann dort die Glukosequellen auswählen,
+        die angezeigt werden sollen. Die Auswahl hat dann zur Folge, dass in verschiedenen
+        Formularen die Ausgabe der Glukosedaten auf diese Auswahl eingeschränkt wird. In
+        der Tagesgrafik werden diese Glukosedaten dann in leicht unterschiedlichen Farben
+        mit entsprechender Legende ausgegeben. Wenn keine Quelle ausgewählt wird, dann
+        werden so wie bisher alle Glukosedaten zusammen mit entsprechendem Hinweis oben
+        auf jedem Formular ausgegeben.
+      </li>
+    </ul>
     <h2 (click)="click(42.0)">
       <span i18n="version">Version</span><span i18n="v420">4.2.0 - 03.11.2023</span></h2>
     <ul [class]="classFor(42.0)">
