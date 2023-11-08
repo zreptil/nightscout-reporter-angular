@@ -14,6 +14,11 @@
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
+    <mat-chip-listbox *ngIf="data.chips != null" [(ngModel)]="chipsResult" multiple>
+      <ng-container *ngFor="let btn of data.chips; let idx = index">
+        <mat-chip-option [selected]="btn.selected">{{btn.title}}</mat-chip-option>
+      </ng-container>
+    </mat-chip-listbox>
   </div>
   <div [style]="customStyle('Header')" align="end" class="type{{data?.type}}" mat-dialog-actions>
     <ng-container *ngFor="let btn of data.buttons; let idx = index">

@@ -12,6 +12,7 @@ import {Utils} from '@/classes/utils';
 export class DialogComponent implements OnInit, AfterViewChecked {
   readData: any;
   mayFireValueChanges = false;
+  chipsResult: string[] = [];
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -74,6 +75,13 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    const result = [];
+    for (const chip of this.data?.chips ?? []) {
+      if (chip.selected) {
+        result.push(chip.title);
+      }
+    }
+    this.chipsResult = result;
   }
 
   clickClose(): void {
@@ -86,6 +94,9 @@ export class DialogComponent implements OnInit, AfterViewChecked {
 
   closeDialog(btn: IDialogButton): any {
     btn.result.data = this.readData;
+    if (this.data.chips != null) {
+      btn.result.data = {btn: this.readData, chips: this.chipsResult};
+    }
     this.dialogRef.close(btn.result);
   }
 

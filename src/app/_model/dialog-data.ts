@@ -42,16 +42,23 @@ export interface IDialogButton {
   focus?: boolean;
 }
 
+export interface IDialogChip {
+  title: string;
+  selected: boolean;
+}
+
 export interface IDialogDef {
   type: DialogType;
   title: string;
   buttons: IDialogButton[];
+  chips?: IDialogChip[];
 }
 
 export class DialogData {
   result: DialogResult;
   title: string | string[];
   buttons: IDialogButton[];
+  chips: IDialogChip[];
   private defs = new Map<DialogType, IDialogDef>([
     [DialogType.info, {
       type: DialogType.info,
@@ -103,10 +110,12 @@ export class DialogData {
               public ownButtons?: IDialogButton[]) {
     if (typeof type === 'number') {
       this.buttons = this.defs.get(type).buttons;
+      this.chips = this.defs.get(type).chips;
       this.title = this.defs.get(type).title;
       this.type = this.defs.get(type).type;
     } else {
       this.buttons = type.buttons;
+      this.chips = type.chips;
       this.title = type.title;
       this.type = type.type;
     }

@@ -637,14 +637,13 @@ export class DataService {
           const span = Math.max(Utils.differenceInMinutes(eLast.time, ePrev.time), 1);
           GLOBALS.glucDir = 360;
           GLOBALS.currentGlucDiff = '';
-          GLOBALS.currentGlucTime = '';
+          GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
+          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(GLOBALS.currentGlucPast);
           // const chk = new Date().getHours() * 100 + new Date().getMinutes();
-          if (span > 15) { // || (chk >= 1917 && chk <= 1921)) {
+          if (span > 15) {// || (chk >= 2100 && chk <= 2105)) {
             this.refreshCurrentTimer(params);
             return;
           }
-          GLOBALS.currentGlucPast = Utils.differenceInMinutes(GlobalsData.now, eLast.time);
-          GLOBALS.currentGlucTime = GLOBALS.msgGlucTime(GLOBALS.currentGlucPast);
           if (GLOBALS.currentGlucValid || GLOBALS.currentGlucSrc == null) {
             GLOBALS.currentGlucSrc = eLast;
             GLOBALS.lastGlucSrc = ePrev;

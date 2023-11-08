@@ -265,7 +265,7 @@ export class LibreLinkUpService {
       }, error: (_error: any) => {
 
       }, complete: () => {
-        console.log('lastEntryDate', ret?.[0]);
+        console.log('llu-lastEntryDate', ret?.[0]);
         if (ret?.[0] != null) {
           ret = new Date(ret[0].dateString);
         } else {
@@ -287,7 +287,7 @@ export class LibreLinkUpService {
         nsLastDate = new Date();
         nsLastDate.setFullYear(nsLastDate.getFullYear() - 1);
       }
-      console.log('nsLastDate', nsLastDate);
+      // console.log('nsLastDate', nsLastDate);
       // Add the most recent measurement first
       if (measurementDate > nsLastDate) {
         ret.push({

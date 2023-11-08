@@ -126,7 +126,9 @@ export class DayData {
             }
             temp.value = last.orgValue;
             temp.orgValue = last.orgValue;
-            this._profile.splice(i + 1, 0, temp);
+            if (temp.value != null || temp.orgValue != null) {
+              this._profile.splice(i + 1, 0, temp);
+            }
           }
         } else if (i === this._profile.length - 1 &&
           Utils.isBefore(endTime, new Date(lastTime.getFullYear(), lastTime.getMonth(), lastTime.getDate(), 23, 59, 59))) {

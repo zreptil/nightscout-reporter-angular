@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   exports: [
@@ -51,7 +52,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
-    // MatChipsModule,
+    MatChipsModule,
     MatStepperModule,
     MatDatepickerModule,
     MatDividerModule,

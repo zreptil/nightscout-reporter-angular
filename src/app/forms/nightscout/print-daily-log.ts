@@ -427,7 +427,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
 
   fillRow(time: Date, src: ReportData, day: DayData, row: any,
           glucEntry: EntryData, list: string[], flags: Flags, style: string): string[] {
-    if (this.showGlucSource) {
+    if (glucEntry != null && this.showGlucSource) {
       list.splice(0, 0, `Quelle: ${glucEntry.device}`);
     }
     if (!Utils.isEmpty(list)) {

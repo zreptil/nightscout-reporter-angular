@@ -18,7 +18,7 @@ import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {ActivityData} from '@/_model/nightscout/activity-data';
 import {ThemeService} from '@/_services/theme.service';
-import {DialogType, IDialogDef} from '@/_model/dialog-data';
+import {DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {firstValueFrom} from 'rxjs';
 
@@ -443,6 +443,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     this.ps.max = Utils.differenceInDays(endDate, begDate)
     const info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
     this.ps.info = $localize`${info} für ${GLOBALS.user.name}`;
+    this.reportData.deviceList = [];
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
@@ -461,7 +462,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         let src = await this.ds.requestJson(url);
         if (src != null) {
           Log.displayLink(`e${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
-          this.reportData.deviceList = [];
           this.reportData.mustReload = false;
           for (const entry of src) {
             try {
@@ -599,35 +599,46 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
     if (this.reportData.deviceList.length > 1) {
+      let deviceFilter: string[];
       if (GLOBALS.avoidSaveAndLoad) {
         if (this.reportData.deviceList.find(dl => dl.toLowerCase() === GLOBALS.deviceForShortcut.toLowerCase()) != null) {
-          this.reportData.device = GLOBALS.deviceForShortcut;
+          deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.toLowerCase()) ?? [];
         } else {
-          this.reportData.device = null;
+          deviceFilter = this.reportData.deviceList.map(e => e.toLowerCase());
         }
       } else {
         const dlg: IDialogDef = {
           type: DialogType.confirm,
           title: $localize`Bitte wählen`,
-          buttons: [{title: $localize`Alle`, result: {btn: null}}]
+          buttons: [{title: $localize`Ok`, result: {btn: DialogResultButton.ok}}],
+          chips: []
         };
         for (const device of this.reportData.deviceList) {
-          dlg.buttons.push({title: device, result: {btn: device}});
+          dlg.chips.push({title: device, selected: true});
         }
         this.ps.isPaused = true;
-        const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte den Button für das Gerät betätigen, dessen Daten ausgewertet werden sollen.`;
+        const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte die Geräte auswählen, deren Daten ausgewertet werden sollen.`;
         const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
         this.ps.isPaused = false;
-        this.reportData.device = result.btn;
+        deviceFilter = result.data.chips?.map((e: string) => e.toLowerCase()) ?? [];
       }
-      if (this.reportData.device == null) {
+      if (deviceFilter.length > 1) {
         GLOBALS.pdfWarnings.push($localize`Die Glukosewerte stammen aus verschiedenen Quellen`);
-      } else {
-        const check = this.reportData.device.toLowerCase();
-        data.ns.entries = data.ns.entries.filter(e => e.device.toLowerCase() === check);
-        data.ns.bloody = data.ns.bloody.filter(e => e.device.toLowerCase() === check);
-        data.ns.remaining = data.ns.remaining.filter(e => e.device.toLowerCase() === check);
       }
+      if (deviceFilter.length >= 1) {
+        const hasDevice = (device: string) => {
+          return device == null || deviceFilter.indexOf(device.toLowerCase()) >= 0;
+        };
+        data.ns.entries = data.ns.entries.filter(e => hasDevice(e.device));
+        data.ns.bloody = data.ns.bloody.filter(e => hasDevice(e.device));
+        data.ns.remaining = data.ns.remaining.filter(e => hasDevice(e.device));
+      }
+      // else {
+      //   const check = this.reportData.device.toLowerCase();
+      //   data.ns.entries = data.ns.entries.filter(e => e.device.toLowerCase() === check);
+      //   data.ns.bloody = data.ns.bloody.filter(e => e.device.toLowerCase() === check);
+      //   data.ns.remaining = data.ns.remaining.filter(e => e.device.toLowerCase() === check);
+      // }
       this.reportData.mustReload = true;
     }
 

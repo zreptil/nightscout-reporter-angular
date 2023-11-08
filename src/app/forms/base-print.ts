@@ -551,8 +551,8 @@ export abstract class BasePrint extends FormConfig {
 
   get msgMedian(): string {
     let ret = $localize`:@@msgMedian:Median`;
-    if (!Utils.isEmpty(this.repData.device)) {
-      ret += ' ' + this.repData.device;
+    if (!Utils.isEmpty(this.repData.deviceList)) {
+      ret += ' ' + this.repData.deviceList[0];
     }
     return ret;
   }
@@ -562,7 +562,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get msgGlucosekurve(): string {
-    return Utils.isEmpty(this.repData.device) ? $localize`:@@msgGlucosekurve:Glukosekurve` : this.repData.device;
+    return Utils.isEmpty(this.repData.deviceList) ? $localize`:@@msgGlucosekurve:Glukosekurve` : this.repData.deviceList[0];
   };
 
   get msgAdjustGlucHint(): string {
