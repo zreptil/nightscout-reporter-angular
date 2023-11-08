@@ -601,11 +601,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     if (this.reportData.deviceList.length > 1) {
       let deviceFilter: string[];
       if (GLOBALS.avoidSaveAndLoad) {
-        if (this.reportData.deviceList.find(dl => dl.toLowerCase() === GLOBALS.deviceForShortcut.toLowerCase()) != null) {
-          deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.toLowerCase()) ?? [];
-        } else {
-          deviceFilter = this.reportData.deviceList.map(e => e.toLowerCase());
-        }
+        deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.toLowerCase()) ?? ['all'];
       } else {
         const dlg: IDialogDef = {
           type: DialogType.confirm,
