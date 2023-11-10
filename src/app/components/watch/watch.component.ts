@@ -7,6 +7,7 @@ import {DataService} from '@/_services/data.service';
 import {ThemeService} from '@/_services/theme.service';
 import {SessionService} from '@/_services/session.service';
 import {WatchService} from '@/_services/watch.service';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-watch',
@@ -177,6 +178,7 @@ export class WatchComponent implements OnInit {
     await this.ts.setTheme(GLOBALS.theme);
     await this.ds.loadSettingsJson().then((_) => {
       if (GLOBALS.isConfigured) {
+        GLOBALS.glucRunning = false;
         this.ds.getCurrentGluc({force: true, timeout: 30});
       } else {
         this.showSettings();
@@ -338,9 +340,14 @@ export class WatchComponent implements OnInit {
 
   clickWatchSettings(evt: MouseEvent) {
     evt.stopPropagation();
-    this.ss.showPopup('watchsettings');
+    this.ss.showPopup('watchsettings').subscribe(result => {
+      switch (result?.btn) {
+        case DialogResultButton.ok:
+          this.ds.save({skipReload: true});
+          break;
+      }
+    });
     // GLOBALS.isWatchColor = !GLOBALS.isWatchColor;
-    this.ds.save({skipReload: true});
   }
 
   // settingsResult(evt: any) {

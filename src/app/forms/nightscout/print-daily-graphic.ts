@@ -437,8 +437,8 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     this.subtitle = null;
   }
 
-  glucLine(points: any, color: string): any {
-    return {type: 'polyline', lineWidth: this.cm(this.lw), closePath: false, lineColor: color, points: points};
+  glucLine(points: any, lineCfg: any): any {
+    return {type: 'polyline', lineWidth: this.cm(lineCfg.lw), closePath: false, lineColor: lineCfg.color, points: points};
   }
 
   getPage(day: DayData): PageData {
@@ -645,7 +645,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     for (const key of this.repData.deviceList) {
       const entryList = Utils.deviceEntries(day.entries, key);
       if (entryList.length > 0) {
-        const color = this.repData.deviceColor(key);
+        const lineCfg = this.repData.deviceLineConfig(key);
         const graph: any = {
           relativePosition: {x: this.cm(xo), y: this.cm(yo)},
           canvas: []
@@ -657,7 +657,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           const y = this.glucY(entry.gluc);
           if (entry.gluc < 0) {
             if (last != null && last.gluc >= 0) {
-              graph.canvas.push(this.glucLine(points, color));
+              graph.canvas.push(this.glucLine(points, lineCfg));
               points = [];
             }
           } else {
@@ -665,7 +665,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           }
           last = entry;
         }
-        graph.canvas.push(this.glucLine(points, color));
+        graph.canvas.push(this.glucLine(points, lineCfg));
         graphGluc.push(graph);
       }
     }
@@ -1213,7 +1213,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     if (this.showLegend) {
       for (const key of this.repData.deviceList) {
         if (Utils.deviceEntries(day.entries, key).length > 0) {
-          this.addLegendEntry(legend, this.repData.deviceColor(key), this.msgGlucosekurve(key), {isArea: false});
+          const cfg = this.repData.deviceLineConfig(key);
+          this.addLegendEntry(legend, cfg.color, this.msgGlucosekurve(key),
+            {isArea: false, lineWidth: cfg.lw});
         }
       }
       if (hasBloody) {
@@ -1473,7 +1475,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       horzLines,
       limitLines,
       pictures,
-      ...graphGluc,
+      ...graphGluc.reverse(),
       graphNotes,
       graphBloody,
       graphInsulin,

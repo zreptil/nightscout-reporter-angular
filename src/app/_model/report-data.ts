@@ -33,13 +33,15 @@ export class ReportData {
         : this.ns;
   }
 
-  deviceColor(key: string): string {
-    const colors = ['#000', '#444', '#666', '#888'];
+  deviceLineConfig(key: string): any {
+//    const colors = ['#000', '#444', '#666', '#888'];
+    const colors = ['#000', '#648fff', '#785ef0', '#dc267f', '#fe6100', '#ffb000'];
+    const lw = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08];
     const idx = this.deviceList.indexOf(key.toLowerCase());
     if (idx < 0) {
-      return colors[0];
+      return {color: colors[0], lw: lw[0]};
     }
-    return colors[idx % colors.length];
+    return {color: colors[idx % colors.length], lw: lw[idx % lw.length]};
   }
 
   isInPeriod(check: Date): boolean {
