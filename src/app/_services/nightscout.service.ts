@@ -619,7 +619,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         deviceFilter = result.data.chips?.map((e: string) => e.toLowerCase()) ?? [];
         console.log(deviceFilter);
         if (Utils.isEmpty(deviceFilter)) {
-          console.log('Auf gehts!');
           deviceFilter = ['all'];
           this.reportData.deviceList = ['all'];
         }
