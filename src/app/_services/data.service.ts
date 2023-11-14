@@ -83,6 +83,17 @@ export class DataService {
     }
   }
 
+  get defaultWatchEntries(): any[] {
+    return [
+      {t: 'time', s: 3, b: true},
+      {t: 'nl', s: 1},
+      {t: 'gluc', s: 5, b: true},
+      {t: 'arrow', s: 3},
+      {t: 'target', s: 1},
+      {t: 'lasttime', s: 1}
+    ];
+  }
+
   setPdfOrder(value: string): void {
     GLOBALS._pdfOrder = value;
     this.sortConfigs();
@@ -319,14 +330,7 @@ export class DataService {
         let watchEntries = json.d16;
         GLOBALS.watchList = [];
         if (Utils.isEmpty(watchEntries)) {
-          watchEntries = [
-            {t: 'time', s: 3, b: true},
-            {t: 'nl', s: 1},
-            {t: 'gluc', s: 5, b: true},
-            {t: 'arrow', s: 3},
-            {t: 'target', s: 1},
-            {t: 'lasttime', s: 1}
-          ];
+          watchEntries = this.defaultWatchEntries;
         }
         if (watchEntries != null) {
           for (const entry of watchEntries) {

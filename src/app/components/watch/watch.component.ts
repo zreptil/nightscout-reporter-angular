@@ -8,6 +8,7 @@ import {ThemeService} from '@/_services/theme.service';
 import {SessionService} from '@/_services/session.service';
 import {WatchService} from '@/_services/watch.service';
 import {DialogResultButton} from '@/_model/dialog-data';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-watch',
@@ -19,7 +20,8 @@ export class WatchComponent implements OnInit {
   constructor(public ds: DataService,
               public ts: ThemeService,
               public ss: SessionService,
-              public ws: WatchService) {
+              public ws: WatchService,
+              public ms: MessageService) {
   }
 
   get globals(): GlobalsData {
@@ -336,6 +338,23 @@ export class WatchComponent implements OnInit {
       entry.selected = false;
     }
     this.ds.save({skipReload: true});
+  }
+
+  clickReset(evt: MouseEvent) {
+    evt.stopPropagation();
+    this.ms.confirm($localize`Hiermit wird NightWatch auf die Voreinstellungen zurückgesetzt. Soll das ausgeführt werden?`)
+      .subscribe(result => {
+        if (result.btn === DialogResultButton.yes) {
+          const list = [];
+          for (const entry of this.ds.defaultWatchEntries) {
+            list.push(WatchElement.fromJson(entry));
+          }
+          GLOBALS.isWatchColor = true;
+          GLOBALS.watchList = list;
+          this.ws.clearSelected();
+          this.ds.save({skipReload: true});
+        }
+      });
   }
 
   clickWatchSettings(evt: MouseEvent) {
