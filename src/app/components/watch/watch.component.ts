@@ -241,7 +241,7 @@ export class WatchComponent implements OnInit {
     } else {
       idx++;
     }
-    const groupId = GLOBALS.watchList[this.ws.selectedIndex]?.groupId ?? 0;
+    const groupId = GLOBALS.watchList[this.ws.selectedIndex]?.groupId ?? 'center';
     for (const entry of GLOBALS.watchList) {
       entry.selected = false;
     }
