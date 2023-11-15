@@ -7,7 +7,7 @@ import {Utils} from '@/classes/utils';
 import {SessionService} from '@/_services/session.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {saveAs} from 'file-saver';
-import {PdfToolService} from '@/_services/pdf-tool.service';
+import {PdfToolService} from '@/standalone/_services/pdf-tool.service';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
 import {MaterialModule} from '@/material.module';
@@ -16,6 +16,8 @@ import {FormsModule} from '@angular/forms';
 import {LogComponent} from '@/components/log/log.component';
 import {ProgressComponent} from '@/components/progress/progress.component';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
+import {ProgressService} from '@/_services/progress.service';
+import {Subscriber} from 'rxjs';
 
 @Component({
   imports: [
@@ -39,22 +41,101 @@ export class LocalToolsComponent implements OnInit {
   xlfJSON: any;
   code: string;
   colorstyle: string;
+  webWorkerOutput: any;
+
+  // get messagesJSON(): any {
+  //   return this.messages?.[0].data;
+  // }
+  backwork: string;
+  subi: Subscriber<any>;
 
   constructor(public ds: DataService,
               public ms: MaterialColorService,
               public ss: SessionService,
               public pdf: PdfToolService,
-              public ts: ThemeService) {
+              public ts: ThemeService,
+              public ps: ProgressService) {
     this.extractColorJson();
   }
-
-  // get messagesJSON(): any {
-  //   return this.messages?.[0].data;
-  // }
 
   get globals(): GlobalsData {
     return GLOBALS;
   }
+
+//   async clickLanguage_old(lang: LangData) {
+//     const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
+//     const url = `assets/old-dart/${filename}`;
+//     console.log(url);
+//     this.intlARB = await this.ds.request(url, {asJson: true});
+//     console.log(lang.code, this.intlARB);
+//     Log.clear();
+//     GLOBALS.isDebug = true;
+//     for (const key of Object.keys(this.messagesJSON)) {
+//       const parts = this.messagesJSON[key].trim().split('\n');
+//       if (this.intlARB[key] != null) {
+//         const trans = this.intlARB[key];
+//         Log.info(`${key} ${trans}`);
+//         continue;
+//       }
+//       const cvtKey = Utils.join(parts, '\\n', text => {
+//         return text?.trim().replace(/<br>/g, '\n');
+//       });
+//       const trans = this.intlARB[cvtKey];
+//       if (key === 'help-cgp') {
+//         console.log(key, cvtKey, trans);
+//       }
+//       if (trans == null) {
+//         const src = this.xlfJSON.file.body['trans-unit'] ?? [];
+//         let entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
+//         let showError = true;
+//         if (entry == null) {
+//           let check = this.messagesJSON[key];
+// //            .replace(/</g, '&lt;');
+// //          check = check.replace(/>/g, '&gt;');
+//           entry = src.find((e: any) => e['source'] === check);
+//           if (entry != null) {
+//             const keyList = Object.keys(this.intlARB);
+//             let found: string = null;
+//             for (let i = 0; i < keyList.length && found == null; i++) {
+//               if (keyList[i] === entry.source) {
+//                 found = keyList[i];
+//               }
+//             }
+//             if (found != null) {
+//               const id = found;
+//               console.log('nix', check, id, entry);
+//               if (this.intlARB[id] != null) {
+//                 Log.warn(`${id} => ${this.intlARB[id]}`);
+//                 showError = false;
+//               }
+//             }
+//           }
+//           entry = null;
+//         }
+//         if (entry != null) {
+//           const keyList = Object.keys(this.intlARB);
+//           let found: string = null;
+//           for (let i = 0; i < keyList.length && found == null; i++) {
+//             if (this.intlARB[keyList[i]].description === entry.note?.['#text']) {
+//               found = keyList[i];
+//             }
+//           }
+//           if (found != null) {
+//             const id = found.substring(1);
+//             if (this.intlARB[id] != null) {
+//               Log.warn(`${key} => ${this.intlARB[id]}`);
+//               showError = false;
+//             }
+//           }
+//         }
+//         if (showError) {
+//           Log.error(`${key} ${this.messagesJSON[key]}`);
+//         }
+//       } else {
+//         Log.info(`${key} ${trans}`);
+//       }
+//     }
+//   }
 
   async ngOnInit() {
     let url = `assets/messages.json`;
@@ -305,81 +386,6 @@ export class LocalToolsComponent implements OnInit {
     }[key];
   }
 
-//   async clickLanguage_old(lang: LangData) {
-//     const filename = `intl_${lang.code.replace(/-/g, '_')}.arb`;
-//     const url = `assets/old-dart/${filename}`;
-//     console.log(url);
-//     this.intlARB = await this.ds.request(url, {asJson: true});
-//     console.log(lang.code, this.intlARB);
-//     Log.clear();
-//     GLOBALS.isDebug = true;
-//     for (const key of Object.keys(this.messagesJSON)) {
-//       const parts = this.messagesJSON[key].trim().split('\n');
-//       if (this.intlARB[key] != null) {
-//         const trans = this.intlARB[key];
-//         Log.info(`${key} ${trans}`);
-//         continue;
-//       }
-//       const cvtKey = Utils.join(parts, '\\n', text => {
-//         return text?.trim().replace(/<br>/g, '\n');
-//       });
-//       const trans = this.intlARB[cvtKey];
-//       if (key === 'help-cgp') {
-//         console.log(key, cvtKey, trans);
-//       }
-//       if (trans == null) {
-//         const src = this.xlfJSON.file.body['trans-unit'] ?? [];
-//         let entry = src.find((e: any) => e['@id'] === key && e.note?.['@from'] === 'description');
-//         let showError = true;
-//         if (entry == null) {
-//           let check = this.messagesJSON[key];
-// //            .replace(/</g, '&lt;');
-// //          check = check.replace(/>/g, '&gt;');
-//           entry = src.find((e: any) => e['source'] === check);
-//           if (entry != null) {
-//             const keyList = Object.keys(this.intlARB);
-//             let found: string = null;
-//             for (let i = 0; i < keyList.length && found == null; i++) {
-//               if (keyList[i] === entry.source) {
-//                 found = keyList[i];
-//               }
-//             }
-//             if (found != null) {
-//               const id = found;
-//               console.log('nix', check, id, entry);
-//               if (this.intlARB[id] != null) {
-//                 Log.warn(`${id} => ${this.intlARB[id]}`);
-//                 showError = false;
-//               }
-//             }
-//           }
-//           entry = null;
-//         }
-//         if (entry != null) {
-//           const keyList = Object.keys(this.intlARB);
-//           let found: string = null;
-//           for (let i = 0; i < keyList.length && found == null; i++) {
-//             if (this.intlARB[keyList[i]].description === entry.note?.['#text']) {
-//               found = keyList[i];
-//             }
-//           }
-//           if (found != null) {
-//             const id = found.substring(1);
-//             if (this.intlARB[id] != null) {
-//               Log.warn(`${key} => ${this.intlARB[id]}`);
-//               showError = false;
-//             }
-//           }
-//         }
-//         if (showError) {
-//           Log.error(`${key} ${this.messagesJSON[key]}`);
-//         }
-//       } else {
-//         Log.info(`${key} ${trans}`);
-//       }
-//     }
-//   }
-
   cvt4XML(src: string): string {
     src = src.replace(/&/g, '&amp;');
     src = src.replace(/</g, '&lt;');
@@ -455,5 +461,63 @@ export class LocalToolsComponent implements OnInit {
         this.pdf.createThumbs(lang);
       }
     });
+  }
+
+  doFibonacci(num: number, level: number): number {
+    if (num <= 2 || level > 30) {
+      return 1;
+    } else {
+      this.ps.data.text = `Bin bei ${num} auf Level ${level}`;
+      this.subi?.next({num: num, level: level});
+      return this.doFibonacci(num - 1, level + 1) + this.doFibonacci(num - 2, level + 1);
+    }
+  }
+
+  showProgress(): void {
+    if (this.ps.data.text != null) {
+      this.backwork = this.ps.data.text;
+      console.log(this.backwork);
+      setTimeout(() => {
+        this.showProgress();
+      }, 1000);
+    }
+  }
+
+  clickBackWork() {
+    // const data = new ProgressData();
+    // this.ps.data.value = 0;
+    // this.ps.data.max = 100;
+    this.ps.data.text = 'Jetzt gehts los';
+    setTimeout(() => {
+      this.showProgress();
+    }, 1000);
+    const result = this.doFibonacci(50, 0);
+    // this.backwork = `Ergebnis ${result}`;
+    this.ps.data.text = null;
+    console.log('Habe fertig', result);
+    // setTimeout(() => {
+    //   const obi = new Observable<any>(subscriber => {
+    //     this.subi = subscriber;
+    //     const result = this.doFibonacci(50, 0);
+    //     this.backwork = `Ergebnis ${result}`;
+    //     console.log('Habe fertig', result);
+    //     this.subi.complete();
+    //   });
+    //
+    //   obi.subscribe({
+    //     next: data => {
+    //       this.backwork = `${data.value} im Kaninchenbau ${data.level}`;
+    //       // console.log(data.num, data.level);
+    //     },
+    //     error: error => {
+    //     },
+    //     complete: () => {
+    //       // this.ps.data.text = null;
+    //       this.subi?.unsubscribe();
+    //       this.subi = null;
+    //       console.log('Ende');
+    //     }
+    //   })
+    // }, 1000);
   }
 }

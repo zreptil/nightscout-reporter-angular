@@ -168,9 +168,10 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
     totalDay.basalData.targetLow = 1000;
     // ignore: unused_local_variable
     let totalDays = 0;
+    const deviceKey = 'all';
     for (const day of this.repData.data.days) {
       day.init();
-      if (day.entryCountValid == 0) {
+      if (day.entryCountValid(deviceKey) == 0) {
         continue;
       }
       totalDays++;
@@ -183,7 +184,7 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
         Math.min(totalDay.basalData.targetLow, day.basalData.targetLow);
       const row: any[] = [];
       this.fillRow(row, f, this.fmtDate(day.date, {withShortWeekday: true}), day, 'row');
-      const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate()));
+      const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate())).profile;
       if (prevProfile == null ||
         profile.targetLow != prevProfile.targetLow ||
         profile.targetHigh != prevProfile.targetHigh) {

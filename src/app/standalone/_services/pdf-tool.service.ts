@@ -42,7 +42,7 @@ export class PdfToolService {
   }
 
   private createThumb(pdf: TCreatedPdf): void {
-    const PDFJS = require('../../assets/scripts/pdf.js');
+    const PDFJS = require('../../../assets/scripts/pdf.js');
     // require('../../assets/scripts/pdf.worker.js');
     this._remaining = 1;
     try {

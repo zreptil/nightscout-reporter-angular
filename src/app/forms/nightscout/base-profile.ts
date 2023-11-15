@@ -6,7 +6,7 @@ import {ReportData} from '@/_model/report-data';
 import {Utils} from '@/classes/utils';
 import {PageData} from '@/_model/page-data';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
+import {ProfileGlucData, ProfileParams} from '@/_model/nightscout/profile-gluc-data';
 import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DayData} from '@/_model/nightscout/day-data';
 
@@ -166,7 +166,9 @@ export abstract class BaseProfile extends BasePrint {
 
       lastIdx = pageList.length;
       for (let p = 0; !done; p++) {
-        const data = this.repData.profile(profiles[i].startDate, null, false);
+        const params = new ProfileParams();
+        params.doMix = false;
+        const data = this.repData.profile(profiles[i].startDate, params).profile;
         const page = this.getPage(p, data, calc);
         done = page == null;
         if (!done) {
@@ -209,8 +211,8 @@ export abstract class BaseProfile extends BasePrint {
 
   getProfileSwitch(src: ReportData, day: DayData, t: TreatmentData, showDetails: boolean): string {
     const ret: string[] = [];
-    const before = src.profile(Utils.addDateDays(t.createdAt, -1));
-    const current = src.profile(t.createdAt);
+    const before = src.profile(Utils.addDateDays(t.createdAt, -1)).profile;
+    const current = src.profile(t.createdAt).profile;
     if (t.duration > 0) {
       ret.push(this.msgProfileSwitchDuration(before.store.name, current.store.name, Math.floor(t.duration / 60)));
     } else {

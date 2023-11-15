@@ -18,9 +18,14 @@ import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {ActivityData} from '@/_model/nightscout/activity-data';
 import {ThemeService} from '@/_services/theme.service';
-import {DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
+import {DialogParams, DialogResultButton, DialogType, IDialogDef} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {firstValueFrom} from 'rxjs';
+import {ProfileParams} from '@/_model/nightscout/profile-gluc-data';
+import {DayData} from '@/_model/nightscout/day-data';
+import {ListData} from '@/_model/nightscout/list-data';
+import {StatisticData} from '@/_model/nightscout/statistic-data';
+import {Settings} from '@/_model/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +88,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
   async loadData(isForThumbs: boolean) {
     Log.clear();
-    GLOBALS.pdfWarnings = [];
+    GLOBALS.pdfWarnings.init();
     this.ps.init({
       progressPanelBack: this.ts.currTheme.outputparamsHeaderBack,
       progressPanelFore: this.ts.currTheme.outputparamsHeaderFore,
@@ -110,8 +115,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       this.ps.text = this.msgPreparingPDF;
       this.ps.max = 1;
       this.ps.value = 0;
-      this.reportData.calc.calcStatistics(this.reportData);
-      this.reportData.ns.calcStatistics(this.reportData);
+      this.calcStatistics(this.reportData, this.reportData.calc);
+      this.calcStatistics(this.reportData, this.reportData.ns);
       this.reportData.isValid = true;
       return this.reportData;
     }
@@ -264,7 +269,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
         const check = Utils.addDateDays(new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999), -1);
         if (src.length === maxCount && Utils.isAfter(Utils.last(data.profiles).startDate, check)) {
-          console.log(maxCount, uploaders);
           Log.warn(this.msgTooMuchProfiles(maxCount, uploaders.length, uploaders.join(', ')));
         }
 
@@ -359,7 +363,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
                 store = prof.store[key];
               }
             }
-            parts.push(`"store":{"${entry.profile}":${entry.profileJson}},"startDate":"${entry.created_at}"`);
+            parts.push(`"store":{"${entry.profile}":${store ?? entry.profileJson}},"startDate":"${entry.created_at}"`);
             parts.push(`"mills":"0","units":"mg/dl"`);
             parts.push(`"percentage":"${entry.percentage}"`);
             parts.push(`"duration":"${entry.duration}"`);
@@ -367,9 +371,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             parts.push(`"created_at":"${entry.created_at}"}`);
 
             data.profiles.push(ProfileData.fromJson(JSON.parse(parts.join(','))));
-            if (store != null) {
-              Utils.last(data.profiles).store[entry.profile] = store;
-            }
+            // if (store != null) {
+            //   Utils.last(data.profiles).store[entry.profile] = store;
+            // }
           }
         } catch (ex) {
           Log.devError(ex, this.msgProfileError);
@@ -449,7 +453,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
         const beg = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 0, 0, 0, 0);
         const end = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999);
-        const profile = data.profile(beg);
+        const params = new ProfileParams();
+        params.skipCache = true;
+        const profile = data.profile(beg).profile;
         const profileBeg = Utils.addTimeHours(beg, -profile.store.timezone.localDiff);
         const profileEnd = Utils.addTimeHours(end, -profile.store.timezone.localDiff);
 
@@ -479,7 +485,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
               }
 
               const device = e.device ?? '';
-              if (this.reportData.deviceList.find(d => d.toLowerCase() === device.toLowerCase()) == null) {
+              if (!this.reportData.deviceList.some(d => d === device)) {
                 this.reportData.deviceList.push(device);
               }
             } catch (ex) {
@@ -488,7 +494,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             }
           }
         }
-
         if (data.lastTempBasal == null) {
           // find last temp basal of treatments of day before current day.
           url = data.user.apiUrl(urlDate, 'treatments.json',
@@ -598,10 +603,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
+    this.reportData.deviceFilter = this.reportData.deviceList;
     if (this.reportData.deviceList.length > 1) {
-      let deviceFilter: string[];
       if (GLOBALS.avoidSaveAndLoad) {
-        deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.toLowerCase()) ?? ['all'];
+        this.reportData.deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.trim()) ?? ['all'];
       } else {
         const dlg: IDialogDef = {
           type: DialogType.confirm,
@@ -616,23 +621,19 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         const title = $localize`Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte die Geräte auswählen, deren Daten ausgewertet werden sollen. Wenn keine Geräte ausgewählt werden, werden die Daten zusammengefasst.`;
         const result = await firstValueFrom(this.ms.showDialog(dlg, title, true));
         this.ps.isPaused = false;
-        deviceFilter = result.data.chips?.map((e: string) => e.toLowerCase()) ?? [];
-        console.log(deviceFilter);
-        if (Utils.isEmpty(deviceFilter)) {
-          deviceFilter = ['all'];
+        this.reportData.deviceFilter = result.data.chips ?? [];
+        if (Utils.isEmpty(this.reportData.deviceFilter)) {
+          this.reportData.deviceFilter = ['all'];
           this.reportData.deviceList = ['all'];
         }
       }
-      if (deviceFilter.length > 1 || deviceFilter[0] === 'all') {
-        GLOBALS.pdfWarnings.push($localize`Die Glukosewerte stammen aus verschiedenen Quellen`);
+      if (this.reportData.deviceFilter.length > 1 || this.reportData.deviceFilter[0] === 'all') {
+        GLOBALS.pdfWarnings.showGlucSources = true;
       }
-      if (deviceFilter.length >= 1 && deviceFilter[0] !== 'all') {
-        const hasDevice = (device: string) => {
-          return device == null || deviceFilter.indexOf(device.toLowerCase()) >= 0;
-        };
-        data.ns.entries = data.ns.entries.filter(e => hasDevice(e.device));
-        data.ns.bloody = data.ns.bloody.filter(e => hasDevice(e.device));
-        data.ns.remaining = data.ns.remaining.filter(e => hasDevice(e.device));
+      if (this.reportData.deviceFilter.length >= 1 && this.reportData.deviceFilter[0] !== 'all') {
+        data.ns.entries = data.ns.entries.filter(e => Utils.containsDevice(this.reportData.deviceFilter, e));
+        data.ns.bloody = data.ns.bloody.filter(e => Utils.containsDevice(this.reportData.deviceFilter, e));
+        data.ns.remaining = data.ns.remaining.filter(e => Utils.containsDevice(this.reportData.deviceFilter, e));
       }
       // else {
       //   const check = this.reportData.device.toLowerCase();
@@ -681,8 +682,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     // Create an array with EntryData every [diffTime] minutes
     const entryList: EntryData[] = [];
     if (!Utils.isEmpty(data.ns.entries)) {
+      let count = 0;
       for (const key of this.reportData.deviceList) {
         const entrySrcList = Utils.deviceEntries(data.ns.entries, key);
+        count += entrySrcList.length;
         if (entrySrcList.length === 0) {
           continue;
         }
@@ -695,9 +698,12 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         next.time = target;
         // distribute entries
         this.ps.value = 0;
-        this.ps.max = entrySrcList?.length + 9
-        this.ps.text = $localize`Bereinige Daten...`;
+        this.ps.max = (entrySrcList?.length ?? 0) + 1;
+        this.ps.text = $localize`Verarbeite Daten...`;
         for (const entry of entrySrcList) {
+          if (this.ps.value % 10 === 0) {
+            await this.ds.refreshUI();
+          }
           if (!this.ps.next()) {
             return data;
           }
@@ -748,19 +754,52 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.calc.devicestatusList = data.ns.devicestatusList;
     data.calc.activityList = data.ns.activityList;
 
-    if (!this.ps.next()) {
-      return data;
+    const date = new Date(this.reportData.begDate.getFullYear(), this.reportData.begDate.getMonth(), this.reportData.begDate.getDate());
+    let params = new ProfileParams();
+    params.skipCache = true;
+    params = this.reportData.profile(date, params);
+    this.reportData.profiles.splice(0, params.lastIdx - 1);
+    const msg = this.timeConsumingParts(data);
+    let doFinalize = true;
+    if (GLOBALS.ppShowDurationWarning && msg.length > 0) {
+      const list = msg.map(t => `- ${t}`);
+      list.splice(0, 0, $localize`Die Erstellung wird aus folgenden Gründen länger dauern:`);
+      list.push($localize`Soll die Erstellung fortgesetzt werden?`);
+      this.ps.isPaused = true;
+      const result = await firstValueFrom(this.ms.warn(list, new DialogParams({
+        beforeClose: () => {
+          this.ps.isPaused = false;
+        }
+      })));
+      if (result.btn === DialogResultButton.no) {
+        doFinalize = false;
+      }
     }
-    data.calc.extractData(data);
-    if (!this.ps.next()) {
-      return data;
+    if (doFinalize) {
+      await this.extractData(data, data.data);
+//    await firstValueFrom(this.extractData(data, data.calc));
+//    await firstValueFrom(this.extractData(data, data.ns));
+      if (!this.ps.data.isStopped) {
+        data.isValid = true;
+      }
+    } else {
+      this.ps.text = null;
     }
-    data.ns.extractData(data);
-    if (!this.ps.next()) {
-      return data;
-    }
-    data.isValid = true;
     return data;
+  }
+
+  timeConsumingParts(data: ReportData): string[] {
+    const ret: string[] = [];
+    const max = 50;
+    if (data.profiles.length >= max) {
+      ret.push($localize`mehr als ${max} Profilwechsel (${data.profiles.length})`);
+    }
+    for (const cfg of GLOBALS.listConfig) {
+      if (this.checkCfg(cfg)) {
+        cfg.form.getTimeConsumingParts(data, ret);
+      }
+    }
+    return ret;
   }
 
   isAfterSensorChange(entry: EntryData, listSensorChanges: TreatmentData[]): boolean {
@@ -775,5 +814,286 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       return false;
     }) != null;
+  }
+
+  async extractData(data: ReportData, list: ListData) {
+    list.catheterCount = 0;
+    list.ampulleCount = 0;
+    list.sensorCount = 0;
+    list.khCount = 0.0;
+    list.khAdjust = 0.0;
+    list.khAdjustCount = 0;
+    list.ieBolusSum = 0.0;
+    list.ieMicroBolusSum = 0.0;
+    const allEntries: EntryData[] = [];
+    Utils.pushAll(allEntries, list.entries);
+    Utils.pushAll(allEntries, list.bloody);
+    Utils.pushAll(allEntries, list.remaining);
+    allEntries.sort((a, b) => Utils.compareDate(a.time, b.time));
+    if (Utils.isEmpty(allEntries)) {
+      return;
+    }
+
+    let lastDay: Date = null;
+    list.days = [];
+    let params = new ProfileParams();
+    this.ps.value = 0;
+    this.ps.max = allEntries.length + 1;
+    this.ps.text = 'Analysiere Daten...';
+    for (const entry of allEntries) {
+      if (this.ps.value % 100 === 0) {
+        await this.ds.refreshUI();
+      }
+      if (!this.ps.next() || entry.isInvalidOrGluc0) {
+        continue;
+      }
+      data.profile(entry.time, params);
+      const glucData = params.profile;
+      if (lastDay == null || entry.time.getDate() != lastDay.getDate()) {
+        list.days.push(new DayData(entry.time, glucData));
+        lastDay = entry.time;
+      }
+      if (entry.type === 'mbg') {
+        Utils.last(list.days).bloody.push(entry);
+      } else {
+        Utils.last(list.days).entries.push(entry);
+      }
+    }
+
+    const check = new Date(list.days[0].date.getFullYear(), list.days[0].date.getMonth(), list.days[0].date.getDate() + 1);
+    list.entries = list.entries.filter((e) => !Utils.isBefore(e.time, check));
+    list.bloody = list.bloody.filter((e) => !Utils.isBefore(e.time, check));
+    list.remaining = list.remaining.filter((e) => !Utils.isBefore(e.time, check));
+
+    list.khCount = 0.0;
+    list.ieBolusSum = 0.0;
+    list.catheterCount = 0;
+    list.ampulleCount = 0;
+    list.sensorCount = 0;
+    let eCarbs = 0.0;
+    let delay = 0;
+    list.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+
+    if (Utils.isEmpty(list.addList)) {
+      let lastIdx = -1;
+      for (let i = 0; i < list.treatments.length; i++) {
+        const t1 = list.treatments[i];
+        if (!t1.isTempBasal) {
+          continue;
+        }
+        const t = lastIdx === -1 ? data.lastTempBasal : list.treatments[lastIdx];
+        if (t == null) {
+          continue;
+        }
+        lastIdx = i;
+
+        const duration = Utils.differenceInSeconds(t1.createdAt, t.createdAt);
+        // if duration of current treatment is longer than the difference between
+        // next treatment and current treatment then cut the duration of current
+        // treatment to the difference
+        if (duration < t.duration) {
+          t.duration = duration;
+        }
+
+        // if next treatment is in the next day, cut current duration so that the
+        // end is at end of the day and insert a new treatment with the duration
+        // up to the next treatment
+        const date = Utils.addDateDays(t.createdAt, 1);
+        if (date.getDate() === t1.createdAt.getDate() && date.getMonth() === t1.createdAt.getMonth() && date.getFullYear() === t1.createdAt.getFullYear()) {
+          const newTreat = t.copy;
+          newTreat.createdAt = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0);
+          const duration = 86399 - t.timeForCalc;
+          newTreat.duration -= duration;
+          if (newTreat.duration > 0) {
+            t.duration = duration;
+            list.addList.push(newTreat);
+          }
+        }
+      }
+      if (!Utils.isEmpty(list.addList)) {
+        Utils.pushAll(list.treatments, list.addList);
+        list.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+      }
+    }
+
+    for (let i = 0; i < list.treatments.length; i++) {
+      const t = list.treatments[i];
+      const type = t.eventType.toLowerCase();
+      if (t.isSiteChange) {
+        list.catheterCount++;
+      }
+      if (t.isInsulinChange) {
+        list.ampulleCount++;
+      }
+      if (t.isSensorChange) {
+        list.sensorCount++;
+      }
+      if (type === 'note' && t.notes.toLowerCase().startsWith('ecarb')) {
+        Log.todo('ListData.extractData muss noch überprüft werden', 'Ausgewerteter Wert:', t.notes);
+        // const rex = /[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*)[^0-9\-]*(-*\d*).*/g;
+        const rex = /[^0-9\-]*(?<eCarbs>-*\d*)[^0-9\-]*(?<egal>-*\d*)[^0-9\-]*(?<delay>-*\d*).*/;
+        const matches = t.notes.match(rex);
+        if (matches?.groups != null) {
+          eCarbs = Utils.parseNumber(matches.groups['eCarbs']) ?? 0;
+          delay = Utils.parseNumber(matches.groups['delay']) ?? 0;
+          if (delay < 0) {
+            for (let j = i - 1; j >= 0 && eCarbs > 0.0; j--) {
+              const t1 = list.treatments[j];
+              if (t1.isMealBolus && t1.carbs < 10.0) {
+                eCarbs -= t1.carbs;
+                t1.isECarb = true;
+              }
+            }
+          }
+        }
+      }
+
+      if (t.isMealBolus && eCarbs != null && eCarbs > 0.0 && t.carbs < 10.0) {
+        eCarbs -= t.carbs;
+        t.isECarb = true;
+      }
+
+      const idx = list.days.findIndex((d) => d.isSameDay(JsonData.toLocal(t.createdAt)));
+      if (idx >= 0) {
+        list.days[idx].treatments.push(t);
+      }
+
+      if (!data.isInPeriod(t.createdAt)) {
+        continue;
+      }
+
+      list.khCount += t.carbs;
+      list.ieBolusSum += t.bolusInsulin;
+      list.ieMicroBolusSum += t.microbolus; // / 3600 * t.duration;
+    }
+    list.ieBasalSumDaily = 0.0;
+    list.ieBasalSumStore = 0.0;
+    for (let i = 1; i < list.days.length; i++) {
+      const day = list.days[i];
+      day.prevDay = i > 0 ? list.days[i - 1] : null;
+      day.init((i < list.days.length - 1 ? list.days[i + 1] : null));
+
+      list.ieBasalSumStore += day.ieBasalSum(true);
+      list.ieBasalSumDaily += day.ieBasalSum(false);
+      day.devicestatusList = [];
+      Utils.pushAll(day.devicestatusList, list.devicestatusList.filter((ds) => day.isSameDay(JsonData.toLocal(ds.createdAt))));
+      day.activityList = [];
+      Utils.pushAll(day.activityList, list.activityList.filter((ac) => day.isSameDay(JsonData.toLocal(ac.createdAt))));
+    }
+    // the last day before the period was added at the beginning.
+    // Now it has to be removed.
+    if (!Utils.isEmpty(list.days) && Utils.isBefore(list.days[0].date, data.begDate)) {
+      list.days.splice(0, 1);
+    }
+
+    // injectionList = InsulinInjectionList();
+    // for (const day of days) {
+    //   for (const t of day.treatments) {
+    //     if (t.multipleInsulin != null) {
+    //       injectionList = injectionList.add2List(t.multipleInsulin);
+    //     }
+    //   }
+    // }
+    this.calcStatistics(data, list);
+  }
+
+  calcStatistics(data: ReportData, list: ListData): void {
+    list.stat = {
+      low: new StatisticData(0, 0),
+      norm: new StatisticData(0, 0),
+      high: new StatisticData(0, 0),
+      stdLow: new StatisticData(1, Settings.stdLow),
+      stdNorm: new StatisticData(Settings.stdLow, Settings.stdHigh),
+      stdHigh: new StatisticData(Settings.stdHigh, 9999),
+      stdVeryHigh: new StatisticData(Settings.stdVeryHigh, 9999),
+      stdNormHigh: new StatisticData(Settings.stdHigh, Settings.stdVeryHigh),
+      stdNormLow: new StatisticData(Settings.stdVeryLow, Settings.stdLow),
+      stdVeryLow: new StatisticData(0, Settings.stdVeryLow),
+    };
+    list.min = 999999.0;
+    list.max = -1.0;
+    let last: EntryData = null;
+    // calculation of gvi and rms based on
+    // https://github.com/nightscout/cgm-remote-monitor/blob/master/lib/report_plugins/glucosedistribution.js#L150
+    list.gvi = 0.0;
+    list.gviIdeal = 0.0;
+    list.gviTotal = 0.0;
+    let glucTotal = 0.0;
+    let rmsTotal = 0.0;
+    let firstGluc: number = null;
+    let lastGluc: number = null;
+    let usedRecords = 0;
+    list.validCount = 0;
+
+    for (const day of list.days) {
+      for (const entry of day.entries) {
+        const params = data.profile(entry.time);
+        const glucData = params.profile;
+        list.stat['low'].max = glucData.targetLow; // - 0.0001;
+        list.stat['norm'].min = glucData.targetLow;
+        list.stat['norm'].max = glucData.targetHigh; // + 0.0001;
+        list.stat['high'].min = glucData.targetHigh;
+        list.stat['high'].max = 9999.9999;
+        // noinspection PointlessBooleanExpressionJS
+        if (glucData != null) {
+          const gluc = entry.gluc;
+          if (gluc > 0) {
+            list.validCount++;
+            for (const key of Object.keys(list.stat)) {
+              // if (gluc >= stat[key].min && gluc < stat[key].max)
+              if (JsonData.isNorm(gluc, list.stat[key].min, list.stat[key].max)) {
+                list.stat[key].add(entry, gluc);
+              }
+            }
+            if (gluc < list.min) {
+              list.min = entry.gluc;
+            }
+            if (gluc > list.max) {
+              list.max = entry.gluc;
+            }
+          }
+        }
+
+        firstGluc ??= entry.gluc;
+        lastGluc = entry.gluc;
+        if (last == null) {
+          glucTotal += entry.gluc;
+        } else {
+          const timeDelta = Utils.differenceInMilliseconds(entry.time, last.time);
+          if (timeDelta <= 6 * 60000 && entry.gluc > 0 && last.gluc > 0) {
+            usedRecords++;
+            const delta = entry.gluc - last.gluc;
+//          deltaTotal += delta;
+//          total += delta;
+//          if (delta >= t1)t1Count++;
+//          if (delta >= t2)t2Count++;
+            list.gviTotal += Math.sqrt(25 + Math.pow(delta, 2));
+            glucTotal += entry.gluc;
+            if (entry.gluc < glucData.targetLow) {
+              rmsTotal += Math.pow(glucData.targetLow - entry.gluc, 2);
+            }
+            if (entry.gluc > glucData.targetHigh) {
+              rmsTotal += Math.pow(entry.gluc - glucData.targetHigh, 2);
+            }
+          }
+        }
+        last = entry;
+      }
+    }
+
+    let gviDelta = lastGluc - firstGluc;
+    list.gviIdeal = Math.sqrt(Math.pow(usedRecords * 5, 2) + Math.pow(gviDelta, 2));
+    list.gvi = list.gviIdeal != 0 ? list.gviTotal / list.gviIdeal : 0.0;
+    list.rms = Math.sqrt(rmsTotal / usedRecords);
+    let tirMultiplier = list.validCount === 0 ? 0.0 : list.stat['stdNorm'].values.length / list.validCount;
+    list.pgs = list.gvi * (glucTotal / usedRecords) * (1.0 - tirMultiplier);
+
+    for (const key of Object.keys(list.stat)) {
+      list.stat[key].varianz = 0.0;
+      for (const v of list.stat[key].values) {
+        list.stat[key].varianz += Math.pow(v - list.stat[key].mid, 2);
+      }
+      list.stat[key].varianz /= list.stat[key].values.length;
+    }
   }
 }

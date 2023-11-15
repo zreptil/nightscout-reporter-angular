@@ -15,6 +15,10 @@ export class MessageService {
   constructor(private dialog: MatDialog) {
   }
 
+  warn(content: string | string[], params?: DialogParams): Observable<DialogResult> {
+    return this.showDialog(DialogType.warning, content, false, params);
+  }
+
   info(content: string | string[], params?: DialogParams): Observable<DialogResult> {
     return this.showDialog(DialogType.info, content, false, params);
   }
@@ -58,6 +62,11 @@ export class MessageService {
         disableClose
       });
       this.dlgRef.disableClose = disableClose;
+      if (params.beforeClose != null) {
+        this.dlgRef.beforeClosed().subscribe(_ => {
+          params.beforeClose();
+        });
+      }
       // this.dlgRef.keydownEvents().subscribe(event => {
       //   if (event.code === 'Escape') {
       //     this.dlgRef.close({btn: DialogResultButton.abort});

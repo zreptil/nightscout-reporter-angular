@@ -166,6 +166,7 @@ schwächerer Schrift angezeigt wird.`;
   }
 
   fillRow(row: any, f: number, firstCol: string[], day: DayData, style: string, countForAverage = 1.0): void {
+    const deviceKey = 'all';
     this.addTableRow(
       true,
       this.cm(2.9),
@@ -189,23 +190,23 @@ schwächerer Schrift angezeigt wird.`;
           color: this.colLow,
           x: this.cm(0),
           y: this.cm(0),
-          w: this.cm(day.lowPrz * f),
+          w: this.cm(day.lowPrz(deviceKey) * f),
           h: this.cm(this.showTDD ? 0.25 : 0.5)
         },
         {
           type: 'rect',
           color: this.colNorm,
-          x: this.cm(day.lowPrz * f),
+          x: this.cm(day.lowPrz(deviceKey) * f),
           y: this.cm(0),
-          w: this.cm(day.normPrz * f),
+          w: this.cm(day.normPrz(deviceKey) * f),
           h: this.cm(this.showTDD ? 0.25 : 0.5)
         },
         {
           type: 'rect',
           color: this.colHigh,
-          x: this.cm((day.lowPrz + day.normPrz) * f),
+          x: this.cm((day.lowPrz(deviceKey) + day.normPrz(deviceKey)) * f),
           y: this.cm(0),
-          w: this.cm(day.highPrz * f),
+          w: this.cm(day.highPrz(deviceKey) * f),
           h: this.cm(this.showTDD ? 0.25 : 0.5)
         },
         this.showTDD
@@ -246,7 +247,7 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'center',
       fillColor: this.colLowBack
     }, {
-      text: `${GLOBALS.fmtNumber(day.lowPrz, 0)} %`,
+      text: `${GLOBALS.fmtNumber(day.lowPrz(deviceKey), 0)} %`,
       style: style,
       alignment: 'right',
       fillColor: style === 'total' ? this.colLowBack : null
@@ -257,7 +258,7 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'center',
       fillColor: this.colNormBack
     }, {
-      text: `${GLOBALS.fmtNumber(day.normPrz, 0)} %`,
+      text: `${GLOBALS.fmtNumber(day.normPrz(deviceKey), 0)} %`,
       style: style,
       alignment: 'right',
       fillColor: style === 'total' ? this.colNormBack : null
@@ -268,7 +269,7 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'center',
       fillColor: this.colHighBack
     }, {
-      text: `${GLOBALS.fmtNumber(day.highPrz, 0)} %`,
+      text: `${GLOBALS.fmtNumber(day.highPrz(deviceKey), 0)} %`,
       style: style,
       alignment: 'right',
       fillColor: style === 'total' ? this.colHighBack : null
@@ -310,7 +311,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.fmtNumber(day.entryCountValid, 0)}`,
+      text: `${GLOBALS.fmtNumber(day.entryCountValid(deviceKey), 0)}`,
       style: style,
       alignment: 'right'
     });
@@ -319,7 +320,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.glucFromData(day.min)}`,
+      text: `${GLOBALS.glucFromData(day.min(deviceKey))}`,
       style: style,
       alignment: 'right'
     });
@@ -328,7 +329,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.glucFromData(day.max)}`,
+      text: `${GLOBALS.glucFromData(day.max(deviceKey))}`,
       style: style,
       alignment: 'right'
     });
@@ -337,7 +338,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.glucFromData(day.mid, 1)}`,
+      text: `${GLOBALS.glucFromData(day.mid(deviceKey), 1)}`,
       style: style,
       alignment: 'right'
     });
@@ -361,7 +362,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.fmtNumber(day.stdAbw(GLOBALS.glucMGDL), 1)}`,
+      text: `${GLOBALS.fmtNumber(day.stdAbw(GLOBALS.glucMGDL, deviceKey), 1)}`,
       style: style,
       alignment: 'right'
     });
@@ -370,7 +371,7 @@ schwächerer Schrift angezeigt wird.`;
       style: 'total',
       alignment: 'center'
     }, {
-      text: `${GLOBALS.fmtNumber(day.varK, 1)}`,
+      text: `${GLOBALS.fmtNumber(day.varK(deviceKey), 1)}`,
       style: style,
       alignment: 'right'
     });
@@ -384,7 +385,7 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'right'
     });
     this.addTableRow(this.showPercentile, this.cm(1.5), row, {
-      text: this.msgMedian,
+      text: this.msgMedian('all'),
       style: 'total',
       alignment: 'center'
     }, {
@@ -407,7 +408,7 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'center',
       color: this.colHbA1c
     }, {
-      text: `${this.hba1c(day.mid)} %`,
+      text: `${this.hba1c(day.mid(deviceKey))} %`,
       style: style,
       alignment: 'right',
       color: this.colHbA1c
@@ -422,7 +423,6 @@ schwächerer Schrift angezeigt wird.`;
     }
     return this.getContent(list, style, alignment);
   }
-
 
   getContent(list: string[], style: string, alignment: string): any {
     if (list.length === 1) {
@@ -499,11 +499,12 @@ schwächerer Schrift angezeigt wird.`;
     let totalDays = 0;
     let _maxTDD = 0.0;
     let _basalSum = 0.0;
+    const deviceKey = 'all';
 
     for (let i = 0; i < this.repData.data.days.length; i++) {
       const day = this.repData.data.days[GLOBALS.ppLatestFirst ? this.repData.data.days.length - 1 - i : i];
       day.init();
-      if (day.entryCountValid == 0) {
+      if (day.entryCountValid(deviceKey) == 0) {
         continue;
       }
       _basalSum += day.ieBasalSum(!this.useDailyBasalrate);
@@ -513,7 +514,7 @@ schwächerer Schrift angezeigt wird.`;
 
     for (let i = 0; i < this.repData.data.days.length; i++) {
       const day = this.repData.data.days[GLOBALS.ppLatestFirst ? this.repData.data.days.length - 1 - i : i];
-      if (day.entryCountValid == 0) {
+      if (day.entryCountValid(deviceKey) == 0) {
         continue;
       }
       totalDays++;
@@ -528,7 +529,7 @@ schwächerer Schrift angezeigt wird.`;
         Math.min(totalDay.basalData.targetLow, day.basalData.targetLow);
       const row: any[] = [];
       this.fillRow(row, f, [this.fmtDate(day.date, {withShortWeekday: true})], day, 'row');
-      const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate()));
+      const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate())).profile;
       if (prevProfile == null ||
         profile.targetLow != prevProfile.targetLow ||
         profile.targetHigh != prevProfile.targetHigh) {

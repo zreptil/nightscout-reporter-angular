@@ -146,6 +146,18 @@ body {
   --infoButtonBack: var(--settingsHeaderBack);
   --infoButtonFore: var(--settingsHeaderFore);
   --userPinFore: rgba(255, 215, 0, 0.7);
+  --warnHeaderBack: #fe6606;
+  --warnHeaderFore: black;
+  --warnBodyBack: #dedc1d;
+  --warnBodyFore: black;
+}
+
+.dialog-box.warning {
+  --mainHeaderBack: var(--warnHeaderBack);
+  --mainHeaderFore: var(--warnHeaderFore);
+  --primaryFore: var(--warnHeaderFore);
+  --mainBodyBack: var(--warnBodyBack);
+  --mainBodyFore: var(--warnBodyFore);
 }
 
 mat-icon[small] {

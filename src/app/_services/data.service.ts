@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import {lastValueFrom, throwError, timeout} from 'rxjs';
+import {lastValueFrom, of, throwError, timeout} from 'rxjs';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
@@ -148,6 +148,17 @@ export class DataService {
     return this.request(url, params).then(response => {
       return response?.body;
     });
+  }
+
+  async refreshUI() {
+    const req = new HttpRequest('get',
+      `${location.origin}/assets/nothing.txt`,
+      null,
+      {responseType: 'text'});
+    await lastValueFrom(this.http.request(req).pipe(timeout({
+      each: 10,
+      with: () => of(null)
+    })));
   }
 
   async request(url: string, params?: {
@@ -341,6 +352,7 @@ export class DataService {
       GLOBALS.lluTimeout = JsonData.toNumber(json.d17, 5);
       GLOBALS.maxGlucAge = JsonData.toNumber(json.d18, 15);
       GLOBALS.lluAutoExec = JsonData.toBool(json.d19);
+      GLOBALS.ppShowDurationWarning = JsonData.toBool(json.d20, true);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }

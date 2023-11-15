@@ -5,6 +5,7 @@ import {GLOBALS} from '@/_model/globals-data';
 import {PageData} from '@/_model/page-data';
 import {DayData} from '@/_model/nightscout/day-data';
 import {Utils} from '@/classes/utils';
+import {ProfileParams} from '@/_model/nightscout/profile-gluc-data';
 
 export class PrintDailyGluc extends BasePrint {
   override help = $localize`:help for daygluc@@help-daygluc:Dieses Formular zeigt den Trend der Glukosewerte über den Tag hinweg
@@ -152,8 +153,10 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
         trendGluc = temp.gluc;
       }
     }
+    const params = new ProfileParams();
+    params.doMix = true;
     const profile = this.repData.profile(
-      new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate()), null, false);
+      new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate()), params).profile;
     if (profile.store.listBasal.length === 0) {
       return null;
     }

@@ -12,8 +12,7 @@ import {ReportData} from '@/_model/report-data';
 import {CalcCOBData} from '@/_model/nightscout/calc-cob-data';
 import {Settings} from '@/_model/settings';
 
-export class DayData {
-  prevDay: DayData;
+export class DeviceData {
   lowCount = 0;
   normCount = 0;
   highCount = 0;
@@ -22,12 +21,38 @@ export class DayData {
   stdHighCount = 0;
   entryCountValid = 0;
   entryCountInvalid = 0;
-  carbCount = 0;
-  carbs = 0;
   min: number;
   max: number;
   mid: number;
   varianz = 0.0;
+
+  constructor() {
+    this.init();
+  }
+
+  init(): void {
+    this.min = 10000.0;
+    this.max = -10000.0;
+    this.mid = 0.0;
+    this.entryCountValid = 0;
+    this.entryCountInvalid = 0;
+    this.normCount = 0;
+    this.highCount = 0;
+    this.lowCount = 0;
+    this.stdNormCount = 0;
+    this.stdHighCount = 0;
+    this.stdLowCount = 0;
+    this.varianz = 0.0;
+  }
+}
+
+type DeviceDataList = { [key: string]: DeviceData; }
+
+export class DayData {
+  prevDay: DayData;
+  deviceData: DeviceDataList = {};
+  carbCount = 0;
+  carbs = 0;
   entries: EntryData[] = [];
   treatments: TreatmentData[] = [];
   devicestatusList: DeviceStatusData[] = [];
@@ -195,26 +220,6 @@ export class DayData {
     return this._profile;
   }
 
-  get minText(): string {
-    return this.min === 10000 ? '' : `${this.min}`;
-  }
-
-  get maxText(): string {
-    return this.max === -10000 ? '' : `${this.max}`;
-  }
-
-  get avgGluc(): number {
-    let ret = 0.0;
-    let count = 0;
-    for (const entry of this.entries) {
-      if (!entry.isGlucInvalid) {
-        ret += entry.gluc;
-        count++;
-      }
-    }
-    return count > 0 ? ret / count : 0.0;
-  }
-
   get avgInsulinPerDay(): any {
     let ret = 0.0;
     let count = 0;
@@ -261,10 +266,6 @@ export class DayData {
       }
     }
     return {'value': dayCount >= 1 ? ret / dayCount : 0.0, 'dbg': dbg};
-  }
-
-  get varK(): number {
-    return (this.mid ?? 0) != 0 ? this.stdAbw(true) / this.mid * 100 : 0;
   }
 
   get avgCarbs(): number {
@@ -321,20 +322,95 @@ export class DayData {
     return ret;
   }
 
-  get lowPrz(): number {
-    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdLowCount : this.lowCount) / this.entryCountValid * 100;
+  avgGluc(deviceKey: string): number {
+    let ret = 0.0;
+    let count = 0;
+    for (const entry of this.entriesFor(deviceKey)) {
+      if (!entry.isGlucInvalid) {
+        ret += entry.gluc;
+        count++;
+      }
+    }
+    return count > 0 ? ret / count : 0.0;
   }
 
-  get normPrz(): number {
-    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdNormCount : this.normCount) / this.entryCountValid * 100;
+  lowPrz(deviceKey: string): number {
+    return this.entryCountValid(deviceKey) === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdLowCount(deviceKey) : this.lowCount(deviceKey)) / this.entryCountValid(deviceKey) * 100;
   }
 
-  get highPrz(): number {
-    return this.entryCountValid === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdHighCount : this.highCount) / this.entryCountValid * 100;
+  normPrz(deviceKey: string): number {
+    return this.entryCountValid(deviceKey) === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdNormCount(deviceKey) : this.normCount(deviceKey)) / this.entryCountValid(deviceKey) * 100;
   }
 
-  stdAbw(isMGDL: boolean): number {
-    let ret = Math.sqrt(this.varianz);
+  highPrz(deviceKey: string): number {
+    return this.entryCountValid(deviceKey) === 0 ? 0 : (GLOBALS.ppStandardLimits ? this.stdHighCount(deviceKey) : this.highCount(deviceKey)) / this.entryCountValid(deviceKey) * 100;
+  }
+
+  minText(deviceKey: string): string {
+    return this.min(deviceKey) === 10000 ? '' : `${this.min(deviceKey)}`;
+  }
+
+  maxText(deviceKey: string): string {
+    return this.max(deviceKey) === -10000 ? '' : `${this.max(deviceKey)}`;
+  }
+
+  varK(deviceKey: string): number {
+    return (this.deviceData[deviceKey]?.mid ?? 0) != 0 ? this.stdAbw(true, deviceKey) / this.deviceData[deviceKey].mid * 100 : 0;
+  }
+
+  entryCountValid(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.entryCountValid ?? 0;
+  }
+
+  lowCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.lowCount ?? 0;
+  }
+
+  normCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.normCount ?? 0;
+  }
+
+  highCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.highCount ?? 0;
+  }
+
+  stdLowCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.stdLowCount ?? 0;
+  }
+
+  stdNormCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.stdNormCount ?? 0;
+  }
+
+  stdHighCount(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.stdHighCount ?? 0;
+  }
+
+  varianz(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.varianz ?? 0;
+  }
+
+  min(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.min ?? 10000;
+  }
+
+  max(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.max ?? -10000;
+  }
+
+  mid(deviceKey: string): number {
+    return this.deviceData[deviceKey]?.mid ?? 0;
+  }
+
+  entriesFor(deviceKey: string): EntryData[] {
+    if (deviceKey === 'all') {
+      return this.entries;
+    }
+    return this.entries.filter(e => Utils.isValidDevice(e, deviceKey));
+  }
+
+  stdAbw(isMGDL: boolean, deviceKey: string): number {
+    let ret = Math.sqrt(this.varianz(deviceKey));
     if (!isMGDL) {
       ret = ret / 18.02;
     }
@@ -377,53 +453,64 @@ export class DayData {
   }
 
   init(nextDay: DayData = null, keepProfile = false): void {
-    this.min = 10000.0;
-    this.max = -10000.0;
-    this.mid = 0.0;
-    this.entryCountValid = 0;
-    this.entryCountInvalid = 0;
-    this.normCount = 0;
-    this.highCount = 0;
-    this.lowCount = 0;
-    this.stdNormCount = 0;
-    this.stdHighCount = 0;
-    this.stdLowCount = 0;
+    this.deviceData = {};
+
     this.carbCount = 0;
     this.carbs = 0;
+    const all = new DeviceData();
+    this.deviceData = {'all': all};
     for (const entry of this.entries) {
+      const dst = this.getDeviceData(entry.device);
       if (!entry.isGlucInvalid) {
-        this.entryCountValid++;
+        all.entryCountValid++;
+        dst.entryCountValid++;
         if (JsonData.isLow(entry.gluc, this.basalData.targetLow)) {
-          this.lowCount++;
+          all.lowCount++;
+          dst.lowCount++;
         } else if (JsonData.isHigh(entry.gluc, this.basalData.targetHigh)) {
-          this.highCount++;
+          all.highCount++;
+          dst.highCount++;
         } else {
-          this.normCount++;
+          all.normCount++;
+          dst.normCount++;
         }
 
         if (JsonData.isLow(entry.gluc, Settings.stdLow)) {
-          this.stdLowCount++;
+          all.stdLowCount++;
+          dst.stdLowCount++;
         } else if (JsonData.isHigh(entry.gluc, Settings.stdHigh)) {
-          this.stdHighCount++;
+          all.stdHighCount++;
+          dst.stdHighCount++;
         } else {
-          this.stdNormCount++;
+          all.stdNormCount++;
+          dst.stdNormCount++;
         }
-        this.mid += entry.gluc;
-        this.min = Math.min(this.min, entry.gluc);
-        this.max = Math.max(this.max, entry.gluc);
+        all.mid += entry.gluc;
+        dst.mid += entry.gluc;
+        all.min = Math.min(all.min, entry.gluc);
+        dst.min = Math.min(dst.min, entry.gluc);
+        all.max = Math.max(all.max, entry.gluc);
+        dst.max = Math.max(dst.max, entry.gluc);
       } else {
-        this.entryCountInvalid++;
+        all.entryCountInvalid++;
+        dst.entryCountInvalid++;
       }
     }
-    this.mid = this.entryCountValid === 0 ? 0 : this.mid / this.entryCountValid;
-    this.varianz = 0.0;
+    for (const key of Object.keys(this.deviceData)) {
+      this.deviceData[key].mid = this.deviceData[key].entryCountValid === 0
+        ? 0
+        : this.deviceData[key].mid / this.deviceData[key].entryCountValid;
+    }
     for (const entry of this.entries) {
+      const dst = this.getDeviceData(entry.device);
       if (!entry.isGlucInvalid) {
-        this.varianz += Math.pow(entry.gluc - this.mid, 2);
+        all.varianz += Math.pow(entry.gluc - all.mid, 2);
+        dst.varianz += Math.pow(entry.gluc - dst.mid, 2);
       }
     }
-    this.varianz /= this.entryCountValid;
-
+    for (const key of Object.keys(this.deviceData)) {
+      this.deviceData[key].varianz /= this.deviceData[key].entryCountValid;
+    }
     for (const t of this.treatments) {
       if (t.carbs > 0) {
         this.carbCount++;
@@ -433,6 +520,13 @@ export class DayData {
     if (!keepProfile) {
       this._profile = null;
     }
+  }
+
+  getDeviceData(deviceKey: string): DeviceData {
+    if (this.deviceData[deviceKey] == null) {
+      this.deviceData[deviceKey] = new DeviceData();
+    }
+    return this.deviceData[deviceKey];
   }
 
   findNearest(eList: EntryData[], tList: TreatmentData[], check: Date,
@@ -488,7 +582,7 @@ export class DayData {
 
 //    const check = time.millisecondsSinceEpoch;
     let check = time.getTime() - GLOBALS.ppMaxInsulinEffectInMS;
-    let profile = data.profile(time);
+    let profile = data.profile(time).profile;
 
     let list: TreatmentData[] = [];
     if (yesterday != null) {
@@ -550,7 +644,7 @@ export class DayData {
     let lastDecayedBy: Date = null;
 
     const check = time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds();
-    let profile = data.profile(time);
+    let profile = data.profile(time).profile;
 
     const list: TreatmentData[] = [];
     if (yesterday != null) {

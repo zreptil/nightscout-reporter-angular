@@ -1,5 +1,7 @@
 <mat-tab-group>
   <mat-tab label="PDF Tools">
+    <button (click)="clickBackWork()" mat-button>Leg los</button>
+    <div>value: {{backwork}}</div>
     <div lang>
       <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-raised-button>
         <img [src]="lang.imgPath" alt="language image">

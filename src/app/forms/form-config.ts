@@ -46,7 +46,7 @@ export class FormConfig {
       if (i >= this.form.params.length) {
         this.form.params.push(src.form.params[i]);
       }
-      this.form.params[i].fill(src.form.params[i], this.form.checkValue);
+      this.form.params[i].fill(src.form.params[i], this.form.checkValue.bind(this.form));
     }
     this.form.extractParams();
   }
@@ -55,7 +55,7 @@ export class FormConfig {
     try {
       this.checked = value.c;
       for (let i = 0; i < value.p.length && i < this.form.params.length; i++) {
-        this.form.params[i].fillFromJson(value['p'][i], this.form.checkValue);
+        this.form.params[i].fillFromJson(value['p'][i], this.form.checkValue.bind(this.form));
       }
       // ignore: empty_catches
     } catch (ex) {

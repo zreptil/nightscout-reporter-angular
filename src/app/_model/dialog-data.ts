@@ -19,8 +19,9 @@ export class DialogParams {
   theme: string;
   icon: string;
   image: string;
+  beforeClose: () => void;
 
-  constructor(init?: { theme?: string, icon?: string, image?: string }) {
+  constructor(init?: { theme?: string, icon?: string, image?: string, beforeClose?: () => void }) {
     init ??= {};
     init.theme ??= 'main';
     for (const key of Object.keys(init)) {
@@ -65,6 +66,15 @@ export class DialogData {
       title: $localize`Information`,
       buttons: [
         {title: $localize`Ok`, result: {btn: DialogResultButton.ok}}
+      ]
+    }
+    ],
+    [DialogType.warning, {
+      type: DialogType.warning,
+      title: $localize`Warnung`,
+      buttons: [
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
       ]
     }
     ],

@@ -3,7 +3,7 @@ import {environment} from '@environments/environment';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 
-if (environment.production) {
+if (environment.isProduction) {
   enableProdMode();
 }
 

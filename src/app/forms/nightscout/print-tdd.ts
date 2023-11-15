@@ -36,6 +36,7 @@ export class PrintTDD extends BasePrint {
   ];
 
   override _isPortrait = false;
+  override hasDevicePages = true;
   graphWidth: number;
   graphHeight: number;
   _colWidth: number;
@@ -55,9 +56,11 @@ export class PrintTDD extends BasePrint {
 
   override fillPages(pages: PageData[]): void {
     const oldLength = pages.length;
-    pages.push(this.getPage());
-    if (this.repData.isForThumbs && pages.length - oldLength > 1) {
-      pages.splice(oldLength + 1, pages.length);
+    for (const deviceKey of this.repData.deviceFilter) {
+      pages.push(this.getPage(deviceKey));
+      if (this.repData.isForThumbs && pages.length - oldLength > 1) {
+        pages.splice(oldLength + 1, pages.length);
+      }
     }
   }
 
@@ -167,7 +170,7 @@ export class PrintTDD extends BasePrint {
     }
   }
 
-  getPage(): PageData {
+  getPage(deviceKey: string): PageData {
     this.titleInfo = this.titleInfoBegEnd();
     const data = this.repData.data;
     const xo = this.xorg;
@@ -240,9 +243,9 @@ export class PrintTDD extends BasePrint {
         const day = data.days[i];
         const x = xo + i * this._colWidth;
         for (const bar of [
-          {y: 0, h: day.lowPrz, c: this.colors.colLow},
-          {y: day.lowPrz, h: day.normPrz, c: this.colors.colNorm},
-          {y: 100 - day.highPrz, h: day.highPrz, c: this.colors.colHigh}
+          {y: 0, h: day.lowPrz(deviceKey), c: this.colors.colLow},
+          {y: day.lowPrz(deviceKey), h: day.normPrz(deviceKey), c: this.colors.colNorm},
+          {y: 100 - day.highPrz(deviceKey), h: day.highPrz(deviceKey), c: this.colors.colHigh}
         ] as any) {
           const h = graphHeight * bar.h / 100;
           const y = graphHeight - (graphHeight * bar.y / 100) - h;

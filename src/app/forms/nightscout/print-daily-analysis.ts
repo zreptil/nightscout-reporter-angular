@@ -402,7 +402,7 @@ export class PrintDailyAnalysis extends BaseDaily {
       }
     }
     const date = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-    const profile = this.repData.profile(date);
+    const profile = this.repData.profile(date).profile;
     const yHigh = this.glucY(Math.min(this.glucMax, this.repData.status.settings.bgTargetTop));
     const yLow = this.glucY(this.repData.status.settings.bgTargetBottom);
     const targetValues: any[] = [];

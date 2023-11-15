@@ -15,6 +15,40 @@ import {StatusData} from '@/_model/nightscout/status-data';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 
+export class PdfWarnings {
+  showGlucSources = false;
+  // noinspection JSUnusedLocalSymbols
+  private msgGlucSources = $localize`Die Glukosewerte stammen aus verschiedenen Quellen`;
+
+  get text(): string[] {
+    const ret: string[] = [];
+    for (const key of this.showKeys) {
+      if ((this as any)[key] === true) {
+        ret.push((this as any)[`msg${key.substring(4)}`]);
+      }
+    }
+    return ret;
+  }
+
+  get showKeys(): string[] {
+    return Object.keys(this).filter(k => k.startsWith('show'));
+  }
+
+  init(): void {
+    for (const key of this.showKeys) {
+      (this as any)[key] = false;
+    }
+  }
+
+  clone(): PdfWarnings {
+    const ret = new PdfWarnings();
+    for (const key of this.showKeys) {
+      (ret as any)[key] = (this as any)[key];
+    }
+    return ret;
+  }
+}
+
 export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
@@ -52,6 +86,7 @@ export class GlobalsData extends Settings {
   isBeta = window.location.href.indexOf('/beta/') >= 0;
   basalPrecisionAuto = 1;
   ppBasalPrecisionIdx = 0;
+  ppShowDurationWarning = true;
   isWatchColor = true;
   maxGlucAge = 14;
   timestamp = 0;
@@ -71,7 +106,7 @@ export class GlobalsData extends Settings {
   listGlucUnits = [GlobalsData.msgUnitMGDL, GlobalsData.msgUnitMMOL, GlobalsData.msgUnitBoth];
   public onPeriodChange: Observable<DatepickerPeriod>;
   maxLogEntries = 20;
-  pdfWarnings: string[] = [];
+  pdfWarnings = new PdfWarnings();
   deviceForShortcut: string = null;
   // settings for librelinkup
   lluTimeout = 5;
@@ -491,6 +526,7 @@ export class GlobalsData extends Settings {
       + `,"d17":"${this.lluTimeout}"`
       + `,"d18":"${this.maxGlucAge}"`
       + `,"d19":"${this.lluAutoExec ? 'true' : 'false'}"`
+      + `,"d20":"${this.ppShowDurationWarning ? 'true' : 'false'}"`
       + '}';
   }
 

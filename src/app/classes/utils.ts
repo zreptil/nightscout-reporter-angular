@@ -164,10 +164,7 @@ export class Utils {
   }
 
   static isToday(date: Date) {
-    const today = new Date();
-    return date?.getFullYear() === today.getFullYear()
-      && date?.getMonth() === today.getMonth()
-      && date?.getDate() === today.getDate();
+    return Utils.isSameDay(date, new Date());
   }
 
   static isTodayOrBefore(date: Date) {
@@ -268,10 +265,21 @@ export class Utils {
     return earlier?.getTime() < later?.getTime();
   }
 
+  static dateAsNumber(date: Date): number {
+    return date?.getFullYear() * 10000 + date?.getMonth() * 100 + date?.getDate();
+  }
+
+  static timeAsNumber(date: Date): number {
+    return date?.getFullYear() * 10000000000
+      + date?.getMonth() * 100000000
+      + date?.getDate() * 1000000
+      + date?.getHours() * 10000
+      + date?.getMinutes() * 100
+      + date?.getSeconds();
+  }
+
   static isSameDay(date1: Date, date2: Date) {
-    return date1?.getFullYear() === date2?.getFullYear()
-      && date1?.getMonth() === date2?.getMonth()
-      && date1?.getDate() === date2?.getDate();
+    return Utils.dateAsNumber(date1) === Utils.dateAsNumber(date2);
   }
 
   static isSameMoment(date1: Date, date2: Date) {
@@ -439,9 +447,17 @@ export class Utils {
   }
 
   static deviceEntries(entries: EntryData[], key: string): EntryData[] {
-    if (key.toLowerCase() === 'all') {
+    if (key === 'all') {
       return entries ?? [];
     }
-    return entries.filter(e => e.device.toLowerCase() === key.toLowerCase()) ?? [];
+    return entries.filter(e => Utils.isValidDevice(e, e.device)) ?? [];
+  }
+
+  static containsDevice(list: string[], entry: EntryData) {
+    return entry.type === 'mbg' || entry.device == null || list.indexOf(entry.device) >= 0;
+  }
+
+  static isValidDevice(entry: EntryData, deviceKey: string): boolean {
+    return deviceKey === 'all' || entry.type === 'mbg' || entry.device == null || entry.device === deviceKey;
   }
 }

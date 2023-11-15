@@ -14,6 +14,7 @@ import {LegendData} from '@/_model/legend-data';
 import {ProfileData} from '@/_model/nightscout/profile-data';
 import {ProfileEntryData} from '@/_model/nightscout/profile-entry-data';
 import {ProfileTimezone} from '@/_model/nightscout/profile-timezone-data';
+import {ProfileParams} from '@/_model/nightscout/profile-gluc-data';
 
 class CollectInfo {
   end: Date;
@@ -311,6 +312,17 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     return false;
   }
 
+  override getTimeConsumingParts(data: ReportData, ret: string[]): void {
+    if (data.dayCount > 5) {
+      if (this.showIOB) {
+        ret.push($localize`${this.title} zeigt IOB an`);
+      }
+      if (this.showCOB) {
+        ret.push($localize`${this.title} zeigt COB an`);
+      }
+    }
+  }
+
   override extractParams(): void {
     this.showPictures = this.params[0].boolValue;
     this.showInsulin = this.params[1].boolValue;
@@ -409,6 +421,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     this.glucTableTop = this.graphHeight;
 
     this.lineWidth = this.cm(0.03);
+    // this.profileParams.lastIdx = 0;
     for (let i = 0; i < data.days.length; i++) {
       const day = data.days[GLOBALS.ppLatestFirst ? data.days.length - 1 - i : i];
       if (GLOBALS.period.isDowActive(Utils.getDow(day.date))) {
@@ -473,7 +486,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     }
     const check = (t.createdAt.getHours() * 60 + t.createdAt.getMinutes()) * 60;
     let ret = 0.0;
-    for (const entry of src.profile(t.createdAt).store.listCarbratio) {
+    for (const entry of src.profile(t.createdAt).profile.store.listCarbratio) {
       if (entry.timeForCalc < check) {
         ret = entry.value != 0 ? t.carbs / entry.value : 0.0;
       }
@@ -1133,7 +1146,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       });
     }
     const date = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-    const profile = src.profile(date, day.treatments);
+    const params = new ProfileParams();
+    params.treatments = day.treatments;
+    const profile = src.profile(date, params).profile;
     const targetValues: any[] = [];
     let lastTarget = -1.0;
     const yHigh = this.glucY(Math.min(this.glucMax, this.targets(this.repData).high));
@@ -1211,12 +1226,17 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     let infoTable: any = {};
 
     if (this.showLegend) {
-      for (const key of this.repData.deviceList) {
-        if (Utils.deviceEntries(day.entries, key).length > 0) {
-          const cfg = this.repData.deviceLineConfig(key);
-          this.addLegendEntry(legend, cfg.color, this.msgGlucosekurve(key),
-            {isArea: false, lineWidth: cfg.lw});
+      if (this.repData.deviceList.length > 1) {
+        for (const key of this.repData.deviceList) {
+          if (Utils.deviceEntries(day.entries, key).length > 0) {
+            const cfg = this.repData.deviceLineConfig(key);
+            this.addLegendEntry(legend, cfg.color, this.msgGlucosekurve(key),
+              {isArea: false, lineWidth: cfg.lw});
+          }
         }
+      } else {
+        this.addLegendEntry(legend, this.colGlucValues, this.msgGlucosekurve('all'),
+          {isArea: false, lineWidth: this.lw});
       }
       if (hasBloody) {
         this.addLegendEntry(legend, this.colBloodValues, this.msgBloody,
@@ -1346,7 +1366,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
       infoBody.push([
         {text: this.msgHbA1C, fontSize: this.fs(10)},
-        {text: `${this.hba1c(day.mid)} %`, color: this.colHbA1c, fontSize: this.fs(10), alignment: 'right'}
+        {text: `${this.hba1c(day.mid('all'))} %`, color: this.colHbA1c, fontSize: this.fs(10), alignment: 'right'}
       ]);
       let prz = day.ieBasalSum(!this.showBasalDay) / (day.ieBasalSum(!this.showBasalDay) + day.ieBolusSum) * 100;
       infoBody.push([
@@ -1512,7 +1532,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       });
       stack.push({
         relativePosition: {x: this.cm(xo + x + 0.1), y: this.cm(yo + y)},
-        text: src.profile(p.startDate).store.name,
+        text: src.profile(p.startDate).profile.store.name,
         fontSize: this.fs(8),
         color: this.colProfileSwitch
       });

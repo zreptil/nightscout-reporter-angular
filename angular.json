@@ -44,12 +44,12 @@
           "defaultConfiguration": "production",
           "options": {
             "allowedCommonJsDependencies": [
-              "file-saver",
-              "https://apis.google.com/js/api.js",
+              "jszip",
               "pdfmake",
-              "fast-sha256",
+              "file-saver",
               "pdfjs-dist",
-              "jszip"
+              "fast-sha256",
+              "https://apis.google.com/js/api.js"
             ],
             "assets": [
               "src/favicon.ico",

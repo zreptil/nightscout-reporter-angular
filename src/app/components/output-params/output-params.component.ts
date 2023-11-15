@@ -133,11 +133,11 @@ export class OutputParamsComponent implements OnInit {
       GLOBALS.ppSkipSensorChange = 0;
       this.skipSensorChange = 0;
     }
-    this.pdf.generatePdf().then(_ => {
+    setTimeout(() => this.pdf.generatePdf().then(_ => {
       if (!this.ns.reportData?.isValid) {
         this.ss.showPopup('outputparams');
       }
-    });
+    }));
   }
 
   onPeriodShortcutClick(_: DatepickerEntry) {

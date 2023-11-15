@@ -141,6 +141,8 @@ export abstract class BasePrint extends FormConfig {
   m0: any[] = [];
   repData: ReportData;
   images: { [key: string]: string } = {};
+  // true if there is a page for every selected device for glucosevalues
+  hasDevicePages = false;
 
   protected constructor(public ps: PdfService) {
     super(null, false);
@@ -549,14 +551,6 @@ export abstract class BasePrint extends FormConfig {
     return $localize`:@@msgInsulinUnit:IE`;
   }
 
-  get msgMedian(): string {
-    let ret = $localize`:@@msgMedian:Median`;
-    if (!Utils.isEmpty(this.repData.deviceList)) {
-      ret += ' ' + this.repData.deviceList[0];
-    }
-    return ret;
-  }
-
   get msgUntil(): string {
     return $localize`:@@msgUntil:bis`;
   }
@@ -955,6 +949,14 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Basal Insulin`;
   }
 
+  get pdfWarnings(): string[] {
+    const ret = GLOBALS.pdfWarnings.clone();
+    if (this.hasDevicePages && this.repData.deviceFilter?.[0] !== 'all') {
+      ret.showGlucSources = false;
+    }
+    return ret.text;
+  }
+
   static msgTimeOfDay24(time: string): string {
     return $localize`${time} Uhr`;
   }
@@ -969,6 +971,17 @@ export abstract class BasePrint extends FormConfig {
 
   static msgCalibration(scale: string, intercept: string, slope: string): string {
     return $localize`Kalibrierung (scale ${scale} / intercept ${intercept} / slope ${slope})`;
+  }
+
+  msgMedian(deviceKey: string): string {
+    let ret = $localize`:@@msgMedian:Median`;
+    if (deviceKey != null && this.repData.deviceList?.[0] !== 'all') {
+      const idx = this.repData.deviceList.indexOf(deviceKey);
+      if (idx >= 0) {
+        ret += ' ' + this.repData.deviceList[idx];
+      }
+    }
+    return ret;
   }
 
   msgGlucosekurve(key: string): string {
@@ -1514,7 +1527,7 @@ export abstract class BasePrint extends FormConfig {
         ]
       });
     }
-    let listWarn: string[ ] = [...GLOBALS.pdfWarnings];
+    let listWarn: string[ ] = [...this.pdfWarnings];
     // listWarn.push('Das ist eine Warnung für alle, die keine Ahnung haben und für alle, die denken, eine Warnung wäre nicht nötig, aber ÜBERRASCHUNG!!!!! Sie ist nötig!!!!');
     if (GlobalsData.user.adjustGluc) {
       listWarn.push(this.msgAdjustGlucHint);
@@ -2403,4 +2416,7 @@ export abstract class BasePrint extends FormConfig {
   //   ret += links.toString();
   //   return ret;
   // }
+
+  getTimeConsumingParts(data: ReportData, ret: string[]): void {
+  }
 }

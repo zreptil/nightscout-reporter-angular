@@ -203,6 +203,7 @@ export class PrintAnalysis extends BasePrint {
   getPage(): PageData {
     this.titleInfo = this.titleInfoBegEnd();
     const data = this.repData.data;
+    const deviceKey = 'all';
 
     const avgGluc = data.avgGluc;
     let glucWarnColor = this.colNorm;
@@ -729,7 +730,7 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infotitle'},
         {text: this.msgStandardDeviation, style: 'infotitle'},
         {
-          text: GLOBALS.fmtNumber(totalDay.stdAbw(GLOBALS.glucMGDL), 1),
+          text: GLOBALS.fmtNumber(totalDay.stdAbw(GLOBALS.glucMGDL, deviceKey), 1),
           style: 'infodata'
         },
         {text: GLOBALS.getGlucInfo().unit, style: 'infounit', colSpan: 2},

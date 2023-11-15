@@ -325,6 +325,7 @@ Diese Grafik kann auch bei @05@ und @08@ ausgegeben werden.`;
   }
 
   calcCGP(dayData: any, scale: number, xm: number, ym: number, showAreaLines: boolean): CGPResult {
+    const deviceKey = 'all';
     const ret = new CGPResult();
     ret.cgp = new PentagonData(GLOBALS.getGlucInfo(), this, {
       xm: xm, ym: ym, scale: scale, showAreaLines: showAreaLines
@@ -360,10 +361,10 @@ Diese Grafik kann auch bei @05@ und @08@ ausgegeben werden.`;
     // let countAll = data.entries.length;
 
     if (dayData instanceof DayData) {
-      ret.mean = dayData.avgGluc;
-      ret.vark = dayData.varK;
-      ret.countValid = dayData.entryCountValid;
-      countTiR = dayData.entries.filter((entry: EntryData) => !entry.isGlucInvalid && entry.gluc >= ret.low && entry.gluc <= ret.high).length;
+      ret.mean = dayData.avgGluc(deviceKey);
+      ret.vark = dayData.varK(deviceKey);
+      ret.countValid = dayData.entryCountValid(deviceKey);
+      countTiR = dayData.entriesFor(deviceKey).filter((entry: EntryData) => !entry.isGlucInvalid && entry.gluc >= ret.low && entry.gluc <= ret.high).length;
       // countAll = dayData.entries.length;
     } else if (Array.isArray(dayData)) {
       ret.countValid = 0;

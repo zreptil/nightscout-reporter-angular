@@ -9,6 +9,20 @@
     </div>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(42.2)">
+      <span i18n="version">Version</span><span i18n="v422">4.2.2 - 15.11.2023</span></h2>
+    <ul [class]="classFor(42.2)">
+      <li class="added">
+        <span i18n>Neues Icon in NightWatch</span>
+        <div row>
+          <mat-icon>lock_reset</mat-icon>
+          <span i18n>
+            Hiermit wird NightWatch nach einer Sicherheitsabfrage auf die Voreinstellungen
+            zurückgesetzt.
+          </span>
+        </div>
+      </li>
+    </ul>
     <h2 (click)="click(42.1)">
       <span i18n="version">Version</span><span i18n="v421">4.2.1 - 08.11.2023</span></h2>
     <ul [class]="classFor(42.1)">

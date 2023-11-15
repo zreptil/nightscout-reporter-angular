@@ -96,6 +96,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   showColMax: boolean;
   showColStdAbw: boolean;
   lineWidth: number;
+  override hasDevicePages = true;
 
   constructor(ps: PdfService, suffix: string = null) {
     super(ps);
@@ -170,7 +171,11 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   }
 
   override get estimatePageCount(): any {
-    return {count: this.showGPD && this.showTable ? 2 : 1, isEstimated: false};
+    const ret: any = {count: this.showGPD && this.showTable ? 2 : 1, isEstimated: true};
+    if (this.repData?.deviceFilter.length > 1 || this.repData?.deviceFilter?.[0] !== 'all') {
+      ret.count = ret.count * (this.repData?.deviceFilter.length ?? 1);
+    }
+    return ret;
   }
 
   static msgBasalInfo1(unit: string): string {
@@ -186,6 +191,9 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   }
 
   override checkValue(param: ParamInfo, value: any): void {
+    if (this.params == null) {
+      return;
+    }
     const list = [4, 5, 6, 7, 8, 9, 10];
     for (const idx of list) {
       const p = this.params[idx];
@@ -231,27 +239,30 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   }
 
   override fillPages(pages: PageData[]): void {
-    this.titleInfo = this.titleInfoBegEnd();
-    if (this.showGPD) {
-      pages.push(this.getPage());
-    }
-    if (this.showTable) {
-      this.getTablePage(pages);
-    }
-    if (GLOBALS.showBothUnits) {
-      GLOBALS.glucMGDLIdx = 1;
+    // const deviceKey = 'all';
+    for (const deviceKey of this.repData.deviceFilter) {
+      this.titleInfo = this.titleInfoBegEnd();
+      let hasData = true;
       if (this.showGPD) {
-        pages.push(this.getPage());
+        hasData = this.getPage(pages, deviceKey);
       }
-      if (this.showTable) {
-        this.getTablePage(pages);
+      if (this.showTable && hasData) {
+        this.getTablePage(pages, deviceKey);
       }
-      GLOBALS.glucMGDLIdx = 2;
+      if (GLOBALS.showBothUnits) {
+        GLOBALS.glucMGDLIdx = 1;
+        if (this.showGPD) {
+          hasData = this.getPage(pages, deviceKey);
+        }
+        if (this.showTable && hasData) {
+          this.getTablePage(pages, deviceKey);
+        }
+        GLOBALS.glucMGDLIdx = 2;
+      }
     }
   }
 
-
-  getPage(): PageData {
+  getPage(pages: PageData[], deviceKey: string): boolean {
     this.isPortrait = this.showBasal;
     // the height of the grid is calculated so that the scale of the graphic looks the same
     // in portrait and landscape mode. formula for portrait is:
@@ -266,7 +277,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     this.lineWidth = this.cm(0.03);
 
     const percList: PercentileData[] = [];
-    for (const entry of data.entries) {
+    for (const entry of data.entriesFor(deviceKey)) {
       if (entry.gluc < 0) {
         continue;
       }
@@ -310,13 +321,15 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       this.glucMax, this.gridHeight, this.gridWidth, vertCvs, horzCvs, horzStack, vertStack,
       {horzfs: this.fs(this.isPortrait ? 6 : 8)});
     if (grid.lineHeight === 0) {
-      return new PageData(this.isPortrait, [
+      pages.push(new PageData(this.isPortrait, [
         this.headerFooter(),
         {
           relativePosition: {x: this.cm(this.xorg), y: this.cm(this.yorg)},
-          text: this.msgMissingData
+          text: this.msgMissingData,
+          pageBreak: '-'
         }
-      ]);
+      ]));
+      return false;
     }
     this.glucMax = grid.gridLines * grid.glucScale;
     const yHigh = this.glucY(this.targets(this.repData).low);
@@ -381,7 +394,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       this.addLegendEntry(percLegend, '#8888ff', this.msgPercentile2575);
     }
     this.addPercentileGraph(percGraph, percList, 50, 50, '#000000');
-    this.addLegendEntry(percLegend, '#000000', this.msgMedian, {isArea: false});
+    this.addLegendEntry(percLegend, '#000000', this.msgMedian(deviceKey), {isArea: false});
     this.addLegendEntry(percLegend, '#00ff00',
       this.msgTargetArea(
         GLOBALS.glucFromData(this.targets(this.repData).low),
@@ -457,20 +470,21 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       });
     }
 
-    const ret = new PageData(this.isPortrait, [
-      this.headerFooter(),
-      profileBasal,
-      vertLegend,
-      vertLines,
-      horzLegend,
-      horzLines,
-      limitLines,
-      percLegend.asOutput,
-      percGraph,
-    ]);
+    pages.push(new PageData(this.isPortrait, [
+        this.headerFooter(),
+        profileBasal,
+        vertLegend,
+        vertLines,
+        horzLegend,
+        horzLines,
+        limitLines,
+        percLegend.asOutput,
+        percGraph
+      ]
+    ));
 
     this._title = null;
-    return ret;
+    return true;
   }
 
   fillDebugRow(type: string, row: any, f1: number, hour: number,
@@ -478,7 +492,10 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     // const firstCol = `${GLOBALS.fmtNumber(hour, 0, 2)}:00`;
     const day = new DayData(
       null,
-      this.repData.profile(new Date(this.repData.begDate.getFullYear(), this.repData.begDate.getMonth(), this.repData.begDate.getDate())));
+      this.repData.profile(new Date(
+        this.repData.begDate.getFullYear(),
+        this.repData.begDate.getMonth(),
+        this.repData.begDate.getDate())).profile);
     Utils.pushAll(day.entries, entryList);
     Utils.pushAll(day.treatments, treatList);
     day.init();
@@ -550,12 +567,14 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   }
 
   fillRow(row: any, f1: number, hour: number, entryList: EntryData[],
-          treatList: TreatmentData[], style: string): void {
+          treatList: TreatmentData[], style: string, deviceKey: string): void {
     const firstCol = `${GLOBALS.fmtNumber(hour, 0, 2)}:00`;
     const day = new DayData(
       null,
       this.repData.profile(new Date(
-        this.repData.begDate.getFullYear(), this.repData.begDate.getMonth(), this.repData.begDate.getDate())));
+        this.repData.begDate.getFullYear(),
+        this.repData.begDate.getMonth(),
+        this.repData.begDate.getDate())).profile);
     Utils.pushAll(day.entries, entryList);
     Utils.pushAll(day.treatments, treatList);
     day.init();
@@ -601,27 +620,27 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         color: this.colLow,
         x: this.cm(0),
         y: this.cm(0),
-        w: this.cm(day.lowPrz * wid),
+        w: this.cm(day.lowPrz(deviceKey) * wid),
         h: this.cm(h)
       },
       {
         type: 'rect',
         color: this.colNorm,
-        x: this.cm(day.lowPrz * wid),
+        x: this.cm(day.lowPrz(deviceKey) * wid),
         y: this.cm(0),
-        w: this.cm(day.normPrz * wid),
+        w: this.cm(day.normPrz(deviceKey) * wid),
         h: this.cm(h),
       },
       {
         type: 'rect',
         color: this.colHigh,
-        x: this.cm((day.lowPrz + day.normPrz) * wid),
+        x: this.cm((day.lowPrz(deviceKey) + day.normPrz(deviceKey)) * wid),
         y: this.cm(0),
-        w: this.cm(day.highPrz * wid),
+        w: this.cm(day.highPrz(deviceKey) * wid),
         h: this.cm(h)
       }
     ];
-    if (day.entryCountValid === 0) {
+    if (day.entryCountValid(deviceKey) === 0) {
       canvas = [];
     }
     this.addTableRow(true, this.cm(wid * 100), row, {
@@ -640,7 +659,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: `${GLOBALS.fmtNumber(day.entryCountValid, 0)}`,
+        text: `${GLOBALS.fmtNumber(day.entryCountValid(deviceKey), 0)}`,
         style: style,
         alignment: 'right',
         fontSize: f
@@ -653,7 +672,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: `${GLOBALS.glucFromData(day.avgGluc, 1)}`,
+        text: `${GLOBALS.glucFromData(day.avgGluc(deviceKey), 1)}`,
         style: style,
         alignment: 'right',
         fontSize: f
@@ -666,7 +685,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: `${GLOBALS.glucFromData(day.minText, 1)}`,
+        text: `${GLOBALS.glucFromData(day.minText(deviceKey), 1)}`,
         style: style,
         alignment: 'right',
         fontSize: f
@@ -698,7 +717,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       fontSize: f
     });
     this.addTableRow(true, this.cm(w), row, {
-      text: this.msgMedian,
+      text: this.msgMedian(deviceKey),
       style: 'total',
       alignment: 'center',
       fontSize: f
@@ -739,7 +758,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: `${GLOBALS.glucFromData(day.maxText, 1)}`,
+        text: `${GLOBALS.glucFromData(day.maxText(deviceKey), 1)}`,
         style: style,
         alignment: 'right',
         fontSize: f
@@ -752,7 +771,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'center',
         fontSize: f
       }, {
-        text: `${GLOBALS.fmtNumber(day.stdAbw(GLOBALS.glucMGDL), 1)}`,
+        text: `${GLOBALS.fmtNumber(day.stdAbw(GLOBALS.glucMGDL, deviceKey), 1)}`,
         style: style,
         alignment: 'right',
         fontSize: f
@@ -789,7 +808,8 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     this.tableHeadFilled = true;
   }
 
-  getTablePage(pages: PageData[]): void {
+  getTablePage(pages: PageData[], deviceKey: string): void {
+    const savePortrait = this.isPortrait;
     this.isPortrait = true;
     let body = [];
     let f = 3.3;
@@ -805,13 +825,13 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       const entryList: EntryData[] = [];
       const treatList: TreatmentData[] = [];
       for (const day of this.repData.data.days) {
-        const entries = day.entries.filter((e) => e.time.getHours() === i);
+        const entries = day.entriesFor(deviceKey).filter((e) => e.time.getHours() === i);
         Utils.pushAll(entryList, entries);
         const treatments = day.treatments.filter((e) => e.createdAt.getHours() === i);
         Utils.pushAll(treatList, treatments);
       }
       let row: any[] = [];
-      this.fillRow(row, f, i, entryList, treatList, 'row');
+      this.fillRow(row, f, i, entryList, treatList, 'row', deviceKey);
 
       if (Utils.isEmpty(body)) {
         body.push(this.tableHeadLine);
@@ -849,11 +869,14 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
 
     this._title = BasePrint.msgHourlyStats;
     this.subtitle = '';
-    const hf = this.headerFooter();
-    const content = [hf, this.getTable(this.tableWidths, body)];
-    pages.push(new PageData(this.isPortrait, content));
+    const table = this.getTable(this.tableWidths, body);
+    table.pageBreak = '-';
+    pages.push(new PageData(this.isPortrait, [
+      this.headerFooter(),
+      table
+    ]));
     this._title = null;
-    this.isPortrait = false;
+    this.isPortrait = savePortrait;
   }
 
   addPercentileGraph(percGraph: any, percList: PercentileData[], low: number,
