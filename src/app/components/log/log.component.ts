@@ -116,10 +116,17 @@ export class LogComponent implements OnInit {
 
   classForLine(line: any): string[] {
     const ret: string[] = [];
-    if (line?._ != null) {
-      ret.push('nobottomline');
+    if (line?.line?._ != null) {
+      ret.push('notopline');
     }
     return ret;
 
+  }
+
+  iconsForLine(line: any): string[] {
+    if (typeof line?.line === 'string' && line.line?.startsWith('icons[')) {
+      return line.line.substring(6).split(']')[0].split(',');
+    }
+    return [];
   }
 }

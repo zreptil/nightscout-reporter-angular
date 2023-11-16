@@ -32,15 +32,23 @@
 
     div {
       word-break: break-all;
+      display: flex;
+      align-items: center;
+
+      mat-icon {
+        display: inline-flex;
+        height: 1em;
+        font-size: 18px;
+      }
     }
 
-    div:not(:last-child) {
-      border-bottom: 1px solid #000;
+    div:not(:first-child) {
+      border-top: 1px solid #000;
     }
 
-    div.nobottomline {
-      border-bottom: none;
-      padding-bottom: 0.2em;
+    div.notopline {
+      border-top: none;
+      padding-top: 0.2em;
     }
   }
 
@@ -59,8 +67,8 @@
   }
 
   [lines] {
-    div:not(:last-child) {
-      border-bottom-color: var(--logInfoFore);
+    div:not(:first-child) {
+      border-top-color: var(--logInfoFore);
     }
   }
 }
@@ -74,8 +82,8 @@
   }
 
   [lines] {
-    div:not(:last-child) {
-      border-bottom-color: var(--logWarnFore);
+    div:not(:first-child) {
+      border-top-color: var(--logWarnFore);
     }
   }
 }
@@ -89,8 +97,8 @@
   }
 
   [lines] {
-    div:not(:last-child) {
-      border-bottom-color: var(--logErrorFore);
+    div:not(:first-child) {
+      border-top-color: var(--logErrorFore);
     }
   }
 }
@@ -105,8 +113,8 @@
   }
 
   [lines] {
-    div:not(:last-child) {
-      border-bottom-color: var(--logTodoBorder);
+    div:not(:first-child) {
+      border-top-color: var(--logTodoBorder);
     }
   }
 }
@@ -121,8 +129,8 @@
   }
 
   [lines] {
-    div:not(:last-child) {
-      border-bottom-color: var(--logDebugFore);
+    div:not(:first-child) {
+      border-top-color: var(--logDebugFore);
     }
   }
 }

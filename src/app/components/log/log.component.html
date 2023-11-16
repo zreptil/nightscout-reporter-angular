@@ -17,7 +17,10 @@
     </button>
     <div lines>
       <ng-container *ngFor="let line of msg[type]">
-        <div [class]="classForLine(line)">{{line | log}}</div>
+        <div [class]="classForLine(line)">
+          <mat-icon *ngFor="let icon of iconsForLine(line)">{{icon}}</mat-icon>
+          {{line | log}}
+        </div>
       </ng-container>
     </div>
   </div>

@@ -12,6 +12,8 @@ export class LinkDef {
 }
 
 export class Log {
+  private static _timer: number;
+
   static get mayDebug(): boolean {
     return LogService.instance.mayDebug;
   }
@@ -48,7 +50,7 @@ export class Log {
 
   static addText(id: string, ...text: any[]): void {
     if (text != null && text.length > 1) {
-      text.forEach((line, idx) => {
+      text.reverse().forEach((line, idx) => {
         // entries that have the format {_: ...} are treated by log.component
         // so that it will remove the line between the current entry and
         // the next entry
@@ -82,8 +84,10 @@ export class Log {
   static addLine(id: string, line: any): void {
     const list = LogService.instance.msg[id];
     if (list != null && (id === 'debug' || !Log.isInList(line, list))) {
-      line = `${Utils.nowTime()} ${line}`;
-      list.splice(0, 0, line);
+      list.splice(0, 0, {
+        time: Utils.nowTime(),
+        line: line
+      });
       // if not in debug mode, then limit the length of the log entries per list
       // to GLOBALS.maxLogEntries so that the app will not suffer from running
       // for a long time without cleaning the log (could be the case, when using
@@ -148,6 +152,29 @@ export class Log {
 
     Log.links.push(new LinkDef(url, title, params.btnClass, params.icon == null ? 'code' : params.icon, params.data));
     // if (params.type != null) this.msg.type = type;
+  }
+
+  static startTimer(msg = 'timer started'): void {
+    Log._timer = new Date().getTime();
+    Log.debug(`icons[hourglass_top]${msg}`);
+  }
+
+  static showTimer(msg = 'timer', icon = 'hourglass_empty'): void {
+    const time = new Date().getTime();
+    const t = time - (Log._timer ?? 0);
+    let h = Math.floor(t / 60000 / 60);
+    let m = Math.floor((t - h * 60 * 60000) / 60000);
+    let s = Math.floor((t - h * 60 * 60000 - m * 60000) / 1000);
+    const text = h > 0
+      ? `${h} Stunden ${m} Minuten ${s} Sekunden`
+      : m > 0
+        ? `${m} Minuten ${s} Sekunden`
+        : `${s} Sekunden`;
+    Log.debug(`icons[${icon}]${msg}`, text);
+  }
+
+  static stopTimer(msg = 'timer stopped'): void {
+    this.showTimer(msg, 'hourglass_bottom');
   }
 }
 

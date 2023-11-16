@@ -1,5 +1,6 @@
 import {Log} from '@/_services/log.service';
 import {EntryData} from '@/_model/nightscout/entry-data';
+import {lastValueFrom, Observable} from 'rxjs';
 
 export class Utils {
   static replace(text: string, src: string | string[], dst: string | string[]): string {
@@ -459,5 +460,20 @@ export class Utils {
 
   static isValidDevice(entry: EntryData, deviceKey: string): boolean {
     return deviceKey === 'all' || entry.type === 'mbg' || entry.device == null || entry.device === deviceKey;
+  }
+
+  /**
+   * method to give the ui time to show changes
+   * usage: await Utils.refreshUI();
+   * can only be run within async methods.
+   */
+  static async refreshUI() {
+    await lastValueFrom(new Observable<any>(sub => {
+      setTimeout(() => {
+        sub.next();
+        sub.complete();
+        sub.unsubscribe();
+      });
+    }));
   }
 }
