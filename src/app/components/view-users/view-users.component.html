@@ -3,15 +3,15 @@
     <div (click)="tileClicked($event,idx)"
          [class]="tileClass(idx)"
          id="tile-{{idx}}">
-      <div (click)="clickPin($event, user)"
-           *ngIf="idx!==globals.userIdx"
-           pin>
-        <mat-icon [class]="user.classForPin">{{user.iconForPin}}</mat-icon>
-      </div>
-      <div (click)="clickDelete($event)"
-           *ngIf="idx===globals.userIdx"
-           settings>
-        <mat-icon [class]="user.classForPin">delete</mat-icon>
+      <div column>
+        <div (click)="clickPin($event, user)" pin>
+          <mat-icon [class]="user.classForPin">{{user.iconForPin}}</mat-icon>
+        </div>
+        <div (click)="clickDelete($event)"
+             *ngIf="idx===globals.userIdx"
+             settings>
+          <mat-icon [class]="user.classForPin">delete</mat-icon>
+        </div>
       </div>
       <div row>
         <div name>{{user.display}}</div>

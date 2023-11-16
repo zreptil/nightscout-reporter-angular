@@ -162,3 +162,8 @@
     flex: 1;
   }
 }
+
+[column] {
+  display: flex;
+  flex-flow: column;
+}

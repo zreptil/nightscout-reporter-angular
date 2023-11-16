@@ -700,7 +700,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         // distribute entries
         this.ps.value = 0;
         this.ps.max = (entrySrcList?.length ?? 0) + 1;
-        if (key === 'all') {
+        if (key === 'all' || this.reportData.deviceList.length === 1) {
           this.ps.text = $localize`Verarbeite Daten...`;
         } else {
           this.ps.text = $localize`Verarbeite Daten für ${key}...`;
