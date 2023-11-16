@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import {lastValueFrom, of, throwError, timeout} from 'rxjs';
+import {lastValueFrom, throwError, timeout} from 'rxjs';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
@@ -148,17 +148,6 @@ export class DataService {
     return this.request(url, params).then(response => {
       return response?.body;
     });
-  }
-
-  async refreshUI() {
-    const req = new HttpRequest('get',
-      `${location.origin}/assets/nothing.txt`,
-      null,
-      {responseType: 'text'});
-    await lastValueFrom(this.http.request(req).pipe(timeout({
-      each: 10,
-      with: () => of(null)
-    })));
   }
 
   async request(url: string, params?: {
@@ -528,9 +517,11 @@ export class DataService {
   }
 
   async _loadFromSync() {
-    const settings = await this.dbs.downloadFile(this.env.settingsFilename);
-    if (settings != null) {
-      this.fromSharedJson(settings);
+    const result = await this.dbs.downloadFile(this.env.settingsFilename);
+    if (result?.name === 'HttpErrorResponse') {
+      this.dbs.disconnect();
+    } else if (result != null) {
+      this.fromSharedJson(result);
     }
   }
 

@@ -76,6 +76,7 @@ export class PdfService {
     this.ps.value = 0;
     this.ps.text = this.msgPreparingPDF;
     const repData = await this.ns.loadData(createThumbs != null);
+    Log.showTimer('loadData done');
     if (!repData?.isValid) {
       console.error('repData ist nicht gültig', repData);
       return;
@@ -390,10 +391,12 @@ export class PdfService {
       Log.displayLink(this.msgShowPDF, `showPdf`, {btnClass: 'action', icon: 'description', data: data});
       Log.displayLink('Playground', `showPlayground`, {btnClass: 'action', icon: 'description', data: data});
       this.ps.clear();
+      Log.stopTimer('pdf generated');
       return;
     }
     this._generatePdf(data, createThumbs).then(_ => {
       this.ps.clear();
+      Log.stopTimer('pdf generated');
     });
   }
 

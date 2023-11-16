@@ -61,9 +61,9 @@ export class DropboxService {
    * to place the accesss_token elsewhere.
    *
    * @param value the value to write to storage
-   * @param isRefreshing if true, then a refrehtoken is being written
+   * @param _isRefreshing if true, then a refrehtoken is being written
    */
-  setCredentialsToStorage(value: string, isRefreshing = false): void {
+  setCredentialsToStorage(value: string, _isRefreshing = false): void {
     localStorage.setItem('oauth2', value);
   }
 
@@ -133,9 +133,20 @@ export class DropboxService {
     });
     let response: any;
     try {
-      response = await lastValueFrom(this.http.request(req));
-      ret = response?.body;
-      this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde von Dropbox heruntergeladen.`);
+      response = await lastValueFrom(this.http.request(req)).catch(
+        (error) => {
+          console.error('error when downloading file from dropbox', error);
+          return error;
+        });
+      switch (response?.status) {
+        case 200:
+          ret = response?.body;
+          this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde von Dropbox heruntergeladen.`);
+          break;
+        default:
+          ret = response;
+          break;
+      }
     } catch (ex) {
       console.error('error when downloading file from Dropbox', ex);
       response = await this.checkRefreshToken(req, ex);

@@ -88,6 +88,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
   async loadData(isForThumbs: boolean) {
     Log.clear();
+    Log.startTimer('load data started');
     GLOBALS.pdfWarnings.init();
     this.ps.init({
       progressPanelBack: this.ts.currTheme.outputparamsHeaderBack,
@@ -699,10 +700,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         // distribute entries
         this.ps.value = 0;
         this.ps.max = (entrySrcList?.length ?? 0) + 1;
-        this.ps.text = $localize`Verarbeite Daten...`;
+        if (key === 'all') {
+          this.ps.text = $localize`Verarbeite Daten...`;
+        } else {
+          this.ps.text = $localize`Verarbeite Daten für ${key}...`;
+        }
         for (const entry of entrySrcList) {
           if (this.ps.value % 10 === 0) {
-            await this.ds.refreshUI();
+            await Utils.refreshUI();
           }
           if (!this.ps.next()) {
             return data;
@@ -842,7 +847,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     this.ps.text = 'Analysiere Daten...';
     for (const entry of allEntries) {
       if (this.ps.value % 100 === 0) {
-        await this.ds.refreshUI();
+        await Utils.refreshUI();
       }
       if (!this.ps.next() || entry.isInvalidOrGluc0) {
         continue;
