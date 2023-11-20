@@ -91,8 +91,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     Log.startTimer('load data started');
     GLOBALS.pdfWarnings.init();
     this.ps.init({
-      progressPanelBack: this.ts.currTheme.outputparamsHeaderBack,
-      progressPanelFore: this.ts.currTheme.outputparamsHeaderFore,
+      progressPanelBack: this.ts.currTheme.outputparamsHeadBack,
+      progressPanelFore: this.ts.currTheme.outputparamsHeadFore,
       progressBarColor: this.ts.currTheme.outputparamsBodyBack
     });
     let beg: Date;
@@ -359,9 +359,21 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             let store: ProfileStoreData;
             if (entry.profileJson == null) {
               let key = entry.profile;
-              const prof = Utils.findLast(data.profiles, ((p) => Utils.isBefore(p.startDate, check) && p.store[key] != null));
+              const prof = Utils.findLast(data.profiles,
+                ((p) => Utils.isBefore(p.startDate, check) && p.store[key] != null));
               if (prof != null) {
                 store = prof.store[key];
+              }
+            } else {
+              // since carbs_hr may not be in the profileJson, this must be extracted
+              // from the original profile if this can be found
+              if (entry.profileJson.indexOf('carbs_hr') < 0) {
+                const key = entry.originalProfileName;
+                const prof = Utils.findLast(data.profiles,
+                  ((p) => Utils.isBefore(p.startDate, check) && p.store[key] != null));
+                if (prof != null) {
+                  entry.profileJson = `{"carbs_hr":${prof.store[key].carbsHr},${entry.profileJson.substring(1)}`;
+                }
               }
             }
             parts.push(`"store":{"${entry.profile}":${store ?? entry.profileJson}},"startDate":"${entry.created_at}"`);
@@ -605,9 +617,11 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
     this.reportData.deviceFilter = this.reportData.deviceList;
+    this.reportData.deviceDataList = this.reportData.deviceList;
     if (this.reportData.deviceList.length > 1) {
       if (GLOBALS.avoidSaveAndLoad) {
         this.reportData.deviceFilter = GLOBALS.deviceForShortcut?.split(',')?.map(e => e.trim()) ?? ['all'];
+        this.reportData.deviceList = this.reportData.deviceFilter;
       } else {
         const dlg: IDialogDef = {
           type: DialogType.confirm,
