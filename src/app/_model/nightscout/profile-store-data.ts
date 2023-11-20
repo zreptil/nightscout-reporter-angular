@@ -38,6 +38,7 @@ export class ProfileStoreData extends JsonData {
     return this._listSum(this.listSens);
   }
 
+  // The carbs in gram that are resorbed per hour
   get carbRatioPerHour(): number {
     return (this.carbsHr ?? 0) > 0 ? this.carbsHr : 12;
   }

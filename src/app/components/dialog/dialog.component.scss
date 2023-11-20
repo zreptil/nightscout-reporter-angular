@@ -1,13 +1,13 @@
 .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
-  --mdc-chip-disabled-label-text-color: var(--primaryFore);
-  --mdc-chip-elevated-container-color: var(--primaryBack);
+  --mdc-chip-disabled-label-text-color: var(--headFore);
+  --mdc-chip-elevated-container-color: var(--headBack);
   --mdc-chip-elevated-disabled-container-color: #3f51b5;
-  --mdc-chip-focus-state-layer-color: var(--primaryFore);
+  --mdc-chip-focus-state-layer-color: var(--headFore);
   --mdc-chip-focus-state-layer-opacity: 0.9;
-  --mdc-chip-label-text-color: var(--primaryFore);
-  --mdc-chip-with-icon-icon-color: var(--primaryFore);
+  --mdc-chip-label-text-color: var(--headFore);
+  --mdc-chip-with-icon-icon-color: var(--headFore);
   --mdc-chip-with-icon-disabled-icon-color: white;
-  --mdc-chip-with-icon-selected-icon-color: var(--primaryFore);
+  --mdc-chip-with-icon-selected-icon-color: var(--headFore);
   --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: white;
   --mdc-chip-with-trailing-icon-trailing-icon-color: white;
 }
@@ -49,3 +49,4 @@
 .dialog-box mat-dialog-container mat-dialog-actions.type0 {
   justify-content: flex-end;
 }
+

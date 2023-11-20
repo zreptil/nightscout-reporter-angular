@@ -1,0 +1,10 @@
+<button (click)="btnOpen($event)" class="colorButton" mat-mini-fab>
+  <mat-icon>palette</mat-icon>
+</button>
+<input #input
+       (change)="colorChange($event)"
+       (input)="colorInput($event)"
+       [(ngModel)]="value" type="color">
+<!--
+<app-color-picker (onDialogEvent)="onColorPicker($event)" [(color)]="colorData"></app-color-picker>
+-->

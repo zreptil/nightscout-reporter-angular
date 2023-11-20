@@ -28,8 +28,8 @@
   display: flex;
   flex-flow: row;
   padding: 0.5em;
-  background: var(--mainBodyBack);
-  color: var(--mainBodyFore);
+  background: var(--bodyBack);
+  color: var(--bodyFore);
   border-radius: 0.5em;
   margin: 0.2em;
   cursor: pointer;
@@ -87,9 +87,9 @@
 }
 
 .tilechecked {
-  background: var(--mainHeaderBack) !important;
-  color: var(--mainHeaderFore) !important;
-  _border: 2px solid var(--mainHeaderBack) !important;
+  background: var(--headBack) !important;
+  color: var(--headFore) !important;
+  _border: 2px solid var(--headBack) !important;
 
   [subtext] {
   }

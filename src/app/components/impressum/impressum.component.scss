@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--legalHeaderBack);
-    --primaryFore: var(--legalHeaderFore);
-    --secondaryBack: var(--legalBodyBack);
-    --secondaryFore: var(--legalBodyFore);
-    --accentBack: var(--legalHeaderBack);
-    --accentFore: var(--legalHeaderFore);
-  }
+  --headBack: var(--legalHeadBack);
+  --headFore: var(--legalHeadFore);
+  --bodyBack: var(--legalBodyBack);
+  --bodyFore: var(--legalBodyFore);
+  --accentBack: var(--legalHeadBack);
+  --accentFore: var(--legalHeadFore);
 }
 
 div[header] {

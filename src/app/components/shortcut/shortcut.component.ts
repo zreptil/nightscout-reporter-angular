@@ -39,7 +39,6 @@ export class ShortcutComponent implements OnInit {
     }
     GLOBALS.deviceForShortcut = this.env.appParams.device;
     const idx = GLOBALS.shortcutList.findIndex(sc => sc.name.toLowerCase() === this.env.appParams?.name?.toLowerCase());
-    console.log(idx, this.env.appParams, GLOBALS.shortcutList);
     if (idx >= 0) {
       this.shortcut = GLOBALS.shortcutList[idx];
       this.ss.activateShortcut(idx);
@@ -66,7 +65,11 @@ export class ShortcutComponent implements OnInit {
       this.pdf.generatePdf(false).then(_ => {
         GLOBALS.avoidSaveAndLoad = false;
         if (!this.ns.reportData?.isValid) {
-          this.ss.showPopup('outputparams');
+          this.ss.showPopup('outputparams').subscribe(result => {
+            if ((result as any) === 'ok') {
+              location.href = location.origin;
+            }
+          });
         }
       });
     }

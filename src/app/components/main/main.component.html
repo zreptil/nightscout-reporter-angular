@@ -153,6 +153,7 @@
   <mat-drawer-content>
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
+        <color-cfg *colorEdit="globals.editColors" color="headBack"></color-cfg>
         <div [class]="classForView('basePanel')">
           <button (click)="clickUser()" class="userName toolbar-button">{{globals.user.display}}</button>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
@@ -191,14 +192,15 @@
               <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="toolbar-button localTitle" mat-button>
                 <span *ngIf="globals.isLocal">Lokal</span>
                 <span *ngIf="!globals.isLocal">Vorschau</span>
+                <color-cfg *colorEdit="globals.editColors" color="localBack"></color-cfg>
               </button>
             </div>
             <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{globals.displayVersion}}</button>
           </div>
         </div>
         <nav class="material-navigation">
-          <button (click)="globals.showInfo=!globals.showInfo" *ngIf="globals.isLocal" class="is-local" mat-icon-button>
-            <mat-icon>help_outline</mat-icon>
+          <button (click)="globals.editColors=!globals.editColors" *ngIf="globals.isLocal" class="is-local" mat-icon-button>
+            <mat-icon>palette</mat-icon>
           </button>
           <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-mini-fab>
             <mat-icon>bug_report</mat-icon>

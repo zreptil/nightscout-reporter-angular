@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--whatsnewHeaderBack);
-    --primaryFore: var(--whatsnewHeaderFore);
-    --secondaryBack: var(--whatsnewBodyBack);
-    --secondaryFore: var(--whatsnewBodyFore);
-    --accentBack: var(--whatsnewHeaderBack);
-    --accentFore: var(--whatsnewHeaderFore);
-  }
+  --headBack: var(--whatsnewHeadBack);
+  --headFore: var(--whatsnewHeadFore);
+  --bodyBack: var(--whatsnewBodyBack);
+  --bodyFore: var(--whatsnewBodyFore);
+  --accentBack: var(--whatsnewHeadBack);
+  --accentFore: var(--whatsnewHeadFore);
 }
 
 h1 {
@@ -17,7 +15,7 @@ h1 {
 a, a:visited, a:active {
   text-decoration: none;
   cursor: pointer;
-  color: var(--primaryBack);
+  color: var(--headBack);
 }
 
 div[header] {
@@ -33,7 +31,7 @@ div[header] {
 [mat-dialog-title] {
   display: flex;
   flex-direction: row;
-  color: var(--primaryFore);
+  color: var(--headFore);
   justify-content: space-between;
   align-items: center;
 
@@ -63,7 +61,7 @@ div[header] {
   flex-wrap: wrap;
 
   button {
-    color: var(--primaryFore);
+    color: var(--headFore);
   }
 
   .left {

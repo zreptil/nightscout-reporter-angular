@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--outputparamsHeaderBack);
-    --primaryFore: var(--outputparamsHeaderFore);
-    --secondaryBack: var(--outputparamsBodyBack);
-    --secondaryFore: var(--outputparamsBodyFore);
-    --accentBack: var(--outputparamsHeaderBack);
-    --accentFore: var(--outputparamsHeaderFore);
-  }
+  --headBack: var(--outputparamsHeadBack);
+  --headFore: var(--outputparamsHeadFore);
+  --bodyBack: var(--outputparamsBodyBack);
+  --bodyFore: var(--outputparamsBodyFore);
+  --accentBack: var(--outputparamsHeadBack);
+  --accentFore: var(--outputparamsHeadFore);
 }
 
 ::ng-deep .mat-select-panel.output-params {
@@ -34,8 +32,8 @@
 }
 
 .selectItem {
-  background-color: var(--outputparamsBodyBack);
-  color: var(--outputparamsBodyFore);
+  background-color: var(--bodyBack);
+  color: var(--bodyFore);
 
   span {
     display: flex;
@@ -73,8 +71,8 @@ div[header] {
   flex-flow: column;
   padding: 1em;
   font-size: 1.2em;
-  background-color: var(--outputparamsBodyBack);
-  color: var(--outputparamsBodyFore);
+  background-color: var(--bodyBack);
+  color: var(--bodyFore);
 }
 
 mat-slider {
@@ -96,8 +94,8 @@ mat-slider {
   }
 
   mat-fab:not([disabled]) {
-    background-color: var(--outputparamsHeaderBack);
-    color: var(--primaryFore);
+    background-color: var(--headBack);
+    color: var(--headFore);
   }
 }
 
@@ -129,8 +127,8 @@ div.line {
 .root {
   padding: 1em;
   font-size: 1.2em;
-  color: var(--outputparamsBodyFore);
-  background-color: var(--outputparamsBodyBack);
+  color: var(--bodyFore);
+  background-color: var(--bodyBack);
 }
 
 .languagePanel {
@@ -142,7 +140,7 @@ div.line {
 .subtitle {
   display: flex;
   flex-flow: row;
-  color: var(--outputparamsHeaderBack);
+  color: var(--headBack);
   font-size: 1.5em;
   padding: 0.5em 0;
   align-items: center;
@@ -162,7 +160,7 @@ div.line {
 div[header] {
   display: flex;
   flex-flow: row;
-  color: var(--outputparamsHeaderFore);
+  color: var(--headFore);
   justify-content: space-between;
   align-items: center;
 
@@ -185,11 +183,11 @@ div[footer] {
 
 material-input {
   ::ng-deep .focused-underline {
-    background: var(--outputparamsHeaderBack);
+    background: var(--headBack);
   }
 
   ::ng-deep .focused.label-text {
-    color: var(--outputparamsHeaderBack);
+    color: var(--headBack);
   }
 }
 
@@ -206,16 +204,16 @@ material-input {
 
 //noinspection CssReplaceWithShorthandSafely
 //.selectButton {
-//  background: var(--outputparamsHeaderBack);
-//  color: var(--outputparamsHeaderFore);
+//  background: var(--headBack);
+//  color: var(--headFore);
 //  padding: 0.2em;
 //  padding-left: 0.4em;
 //  border-radius: 2px;
 //}
 
 material-button[raised] {
-  background-color: var(--outputparamsHeaderBack);
-  color: var(--outputparamsHeaderFore);
+  background-color: var(--headBack);
+  color: var(--headFore);
 }
 
 material-dropdown-select {
@@ -224,7 +222,7 @@ material-dropdown-select {
 
 .selectSelect {
   ::ng-deep material-list {
-    background-color: var(--outputparamsHeaderBack);
+    background-color: var(--headBack);
     padding: 0;
 
     material-select-item {
@@ -233,34 +231,34 @@ material-dropdown-select {
       line-height: initial;
       align-items: flex-start;
       padding: 0.2em 0.5em;
-      color: var(--outputparamsHeaderFore);
+      color: var(--headFore);
 
       div.itemSub {
         font-size: 75%;
       }
 
       .selected-accent {
-        background-color: var(--outputparamsBodyBack);
-        color: var(--outputparamsBodyFore);
+        background-color: var(--bodyBack);
+        color: var(--bodyFore);
       }
     }
 
     material-select-item:hover {
-      background-color: var(--outputparamsBodyBack);
+      background-color: var(--bodyBack);
     }
   }
 }
 
 //.selectItem:hover:not(.mat-option-disabled),
 //.selectItem:focus:not(.mat-option-disabled) {
-//  background-color: var(--outputparamsHeaderBack);
-//  color: var(--outputparamsHeaderFore);
+//  background-color: var(--headBack);
+//  color: var(--headFore);
 //  border-radius: 0.5em;
 //}
 
 //.selectItem.mat-selected:not(.mat-option-disabled,:hover) {
-//  background-color: var(--outputparamsBodyBack);
-//  color: var(--outputparamsBodyFore);
+//  background-color: var(--bodyBack);
+//  color: var(--bodyFore);
 //  border: 2px solid rgba(0, 0, 0, 0.6);
 //}
 

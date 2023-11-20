@@ -47,32 +47,27 @@ body {
   --helpBack: #fff;
   --helpFore: #000;
   --markBorder: 1px solid #000;
-  --mainHeaderBack: #055524;
-  --mainHeaderFore: white;
+  --mainHeadBack: #055524;
+  --mainHeadFore: white;
   --mainBodyBack: #57bb8a;
   --mainBodyFore: black;
-
-  ---primaryBack: #055524;
-  ---primaryFore: white;
-  ---secondaryBack: #57bb8a;
-  ---secondaryFore: black;
   --debugFirst: #220;
   --debugSecond: #550;
   --debugFore: #f4b400;
-  --settingsHeaderBack: #006064;
-  --settingsHeaderFore: #b2ebf2;
+  --settingsHeadBack: #006064;
+  --settingsHeadFore: #b2ebf2;
   --settingsBodyBack: #4dd0e1;
   --settingsBodyFore: black;
   --settingsScrollThumb: #0097a7;
   --settingsError: maroon;
-  --legalHeaderBack: #e65100;
-  --legalHeaderFore: #ffe0b2;
+  --legalHeadBack: #e65100;
+  --legalHeadFore: #ffe0b2;
   --legalBodyBack: #ffb74d;
   --legalBodyFore: black;
   --legalScrollThumb: #f57c00;
   --legalLink: #e65100;
-  --whatsnewHeaderBack: #1c3aa9;
-  --whatsnewHeaderFore: #c6dafc;
+  --whatsnewHeadBack: #1c3aa9;
+  --whatsnewHeadFore: #c6dafc;
   --whatsnewBodyBack: #4285f4;
   --whatsnewBodyFore: black;
   --whatsnewScrollThumb: #3367d6;
@@ -87,23 +82,23 @@ body {
   --sendMarked: #0277bd;
   --googleSignedout: #e06055;
   --loopMarked: rgba(255, 255, 255, 0.4);
-  --outputparamsHeaderBack: #a52714;
-  --outputparamsHeaderFore: #f4c7c3;
+  --outputparamsHeadBack: #a52714;
+  --outputparamsHeadFore: #f4c7c3;
   --outputparamsBodyBack: #e67c73;
   --outputparamsBodyFore: black;
   --printparamsScrollThumb: #c53929;
-  --shortcutHeaderBack: #01579b;
-  --shortcutHeaderFore: #b3e5fc;
+  --shortcutHeadBack: #01579b;
+  --shortcutHeadFore: #b3e5fc;
   --shortcutBodyBack: #4fc3f7;
   --shortcutBodyFore: black;
   --shortcutScrollThumb: #0288d1;
-  --helpHeaderBack: #33691e;
-  --helpHeaderFore: #dcedc8;
+  --helpHeadBack: #33691e;
+  --helpHeadFore: #dcedc8;
   --helpBodyBack: #aed581;
   --helpBodyFore: black;
   --helpScrollThumb: #689f38;
-  --infoHeaderBack: #a52714;
-  --infoHeaderFore: #f4c7c3;
+  --infoHeadBack: #a52714;
+  --infoHeadFore: #f4c7c3;
   --infoBodyBack: #e67c73;
   --infoBodyFore: black;
   --infoWarningColor: #f6bf26;
@@ -118,10 +113,10 @@ body {
   --glucUnknown: #ccc;
   --datepickerBtnEmptyBack: #e67c73;
   --datepickerBtnEmptyFore: black;
-  --datepickerHeaderEmptyBack: #db4437;
-  --datepickerHeaderEmptyFore: white;
-  --datepickerHeaderBack: #006064;
-  --datepickerHeaderFore: white;
+  --datepickerHeadEmptyBack: #db4437;
+  --datepickerHeadEmptyFore: white;
+  --datepickerHeadBack: #006064;
+  --datepickerHeadFore: white;
   --datepickerBodyBack: #00bcd4;
   --datepickerMonthTitleBack: #006064;
   --datepickerMonthTitleFore: white;
@@ -139,23 +134,23 @@ body {
   --datepickerDowInactiveFore: #eda29b;
   --sendCountFore: black;
   --sendCountFrame: white;
-  --feedbackHeaderBack: #383;
-  --feedbackHeaderFore: black;
+  --feedbackHeadBack: #383;
+  --feedbackHeadFore: black;
   --feedbackBodyBack: #afa;
   --feedbackBodyFore: black;
-  --infoButtonBack: var(--settingsHeaderBack);
-  --infoButtonFore: var(--settingsHeaderFore);
+  --infoButtonBack: var(--settingsHeadBack);
+  --infoButtonFore: var(--settingsHeadFore);
   --userPinFore: rgba(255, 215, 0, 0.7);
-  --warnHeaderBack: #fe6606;
-  --warnHeaderFore: black;
+  --warnHeadBack: #fe6606;
+  --warnHeadFore: black;
   --warnBodyBack: #dedc1d;
   --warnBodyFore: black;
 }
 
 .dialog-box.warning {
-  --mainHeaderBack: var(--warnHeaderBack);
-  --mainHeaderFore: var(--warnHeaderFore);
-  --primaryFore: var(--warnHeaderFore);
+  --mainHeadBack: var(--warnHeadBack);
+  --mainHeadFore: var(--warnHeadFore);
+  --headFore: var(--warnHeadFore);
   --mainBodyBack: var(--warnBodyBack);
   --mainBodyFore: var(--warnBodyFore);
 }
@@ -236,6 +231,15 @@ mat-icon[small] {
   }
 }
 
+.dialog-box.confirm {
+  --headBack: var(--legalHeadBack);
+  --headFore: var(--legalHeadFore);
+  --bodyBack: var(--legalBodyBack);
+  --bodyFore: var(--legalBodyFore);
+  --accentBack: var(--legalHeadBack);
+  --accentFore: var(--legalHeadFore);
+}
+
 @media (min-width: 1200px) {
   .dialog-box.confirm {
     max-width: 50% !important;
@@ -301,8 +305,8 @@ mat-icon[small] {
 }
 
 .mat-raised-button {
-  background-color: var(--primaryBack);
-  color: var(--primaryFore);
+  background-color: var(--headBack);
+  color: var(--headFore);
 }
 
 .mat-flat-button, .mat-fab, .mat-mini-fab {
@@ -493,40 +497,29 @@ form.oauth2 {
   input {
     width: 50em;
     border: none;
-    background: var(--primaryBack);
-    color: var(--primaryFore);
+    background: var(--headBack);
+    color: var(--headFore);
     border-radius: 0.5em;
   }
 }
 
-:host {
-  ::ng-deep * {
-    --primaryBack: var(--mainHeaderBack);
-    --primaryFore: var(--mainHeaderFore);
-    --secondaryBack: var(--mainBodyBack);
-    --secondaryFore: var(--mainBodyFore);
-    --accentBack: var(--mainHeaderBack);
-    --accentFore: var(--mainHeaderFore);
-  }
-}
-
 .mat-mdc-slide-toggle {
-  --mdc-switch-disabled-selected-handle-color: var(--primaryBack);
-  --mdc-switch-disabled-unselected-handle-color: var(--primaryBack);
-  --mdc-switch-disabled-selected-track-color: var(--primaryBack);
-  --mdc-switch-disabled-unselected-track-color: var(--primaryBack);
-  --mdc-switch-unselected-focus-state-layer-color: var(--primaryBack);
-  --mdc-switch-unselected-pressed-state-layer-color: var(--primaryBack);
-  --mdc-switch-unselected-hover-state-layer-color: var(--primaryBack);
+  --mdc-switch-disabled-selected-handle-color: var(--headBack);
+  --mdc-switch-disabled-unselected-handle-color: var(--headBack);
+  --mdc-switch-disabled-selected-track-color: var(--headBack);
+  --mdc-switch-disabled-unselected-track-color: var(--headBack);
+  --mdc-switch-unselected-focus-state-layer-color: var(--headBack);
+  --mdc-switch-unselected-pressed-state-layer-color: var(--headBack);
+  --mdc-switch-unselected-hover-state-layer-color: var(--headBack);
   --mdc-switch-unselected-focus-track-color: rgba(255, 255, 255, 0.3);
   --mdc-switch-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
   --mdc-switch-unselected-pressed-track-color: rgba(255, 255, 255, 0.3);
   --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3);
-  --mdc-switch-unselected-focus-handle-color: var(--primaryBack);
-  --mdc-switch-unselected-hover-handle-color: var(--primaryBack);
-  --mdc-switch-unselected-pressed-handle-color: var(--primaryBack);
+  --mdc-switch-unselected-focus-handle-color: var(--headBack);
+  --mdc-switch-unselected-hover-handle-color: var(--headBack);
+  --mdc-switch-unselected-pressed-handle-color: var(--headBack);
   --mdc-switch-handle-surface-color: var(--mdc-theme-surface, #fff);
-  --mdc-switch-unselected-handle-color: var(--primaryBack);
+  --mdc-switch-unselected-handle-color: var(--headBack);
   --mdc-switch-selected-icon-color: #fff;
   --mdc-switch-disabled-selected-icon-color: #fff;
   --mdc-switch-disabled-unselected-icon-color: #fff;
@@ -548,26 +541,26 @@ form.oauth2 {
 }
 
 .mat-mdc-slider.mat-primary {
-  --mdc-slider-handle-color: var(--primaryBack);
-  --mdc-slider-focus-handle-color: var(--primaryBack);
-  --mdc-slider-hover-handle-color: var(--primaryBack);
-  --mdc-slider-active-track-color: var(--primaryBack);
-  --mdc-slider-inactive-track-color: var(--primaryBack);
+  --mdc-slider-handle-color: var(--headBack);
+  --mdc-slider-focus-handle-color: var(--headBack);
+  --mdc-slider-hover-handle-color: var(--headBack);
+  --mdc-slider-active-track-color: var(--headBack);
+  --mdc-slider-inactive-track-color: var(--headBack);
   --mdc-slider-with-tick-marks-active-container-color: #fff;
-  --mdc-slider-with-tick-marks-inactive-container-color: var(--primaryBack);
-  --mat-mdc-slider-ripple-color: var(--primaryBack);
+  --mdc-slider-with-tick-marks-inactive-container-color: var(--headBack);
+  --mat-mdc-slider-ripple-color: var(--headBack);
   --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
   --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
 }
 
 .mat-mdc-checkbox.mat-accent {
   --mdc-checkbox-selected-checkmark-color: rgba(255, 255, 255, 0.8);
-  --mdc-checkbox-selected-focus-icon-color: var(--primaryBack);
-  --mdc-checkbox-selected-hover-icon-color: var(--primaryBack);
-  --mdc-checkbox-selected-icon-color: var(--primaryBack);
-  --mdc-checkbox-selected-pressed-icon-color: var(--primaryBack);
-  --mdc-checkbox-unselected-focus-icon-color: var(--primaryBack);
-  --mdc-checkbox-unselected-hover-icon-color: var(--primaryBack);
+  --mdc-checkbox-selected-focus-icon-color: var(--headBack);
+  --mdc-checkbox-selected-hover-icon-color: var(--headBack);
+  --mdc-checkbox-selected-icon-color: var(--headBack);
+  --mdc-checkbox-selected-pressed-icon-color: var(--headBack);
+  --mdc-checkbox-unselected-focus-icon-color: var(--headBack);
+  --mdc-checkbox-unselected-hover-icon-color: var(--headBack);
   --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
   --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
   --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
@@ -575,14 +568,14 @@ form.oauth2 {
 }
 
 .mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
-  --mdc-fab-container-color: var(--primaryBack);
-  --mdc-fab-icon-color: var(--primaryFore);
-  --mat-mdc-fab-color: var(--primaryFore);
+  --mdc-fab-container-color: var(--headBack);
+  --mdc-fab-icon-color: var(--headFore);
+  --mat-mdc-fab-color: var(--headFore);
 }
 
 .mdc-menu-surface {
-  background-color: var(--secondaryBack);
-  color: var(--secondaryFore);
+  background-color: var(--bodyBack);
+  color: var(--bodyFore);
 }
 
 .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
@@ -597,14 +590,14 @@ form.oauth2 {
   }
 
   .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
-    color: var(--outputparamsHeaderFore);
+    color: var(--outputparamsHeadFore);
   }
 
   .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
-    background-color: var(--outputparamsHeaderBack);
+    background-color: var(--outputparamsHeadBack);
 
     .mdc-list-item__primary-text {
-      color: var(--outputparamsHeaderFore);
+      color: var(--outputparamsHeadFore);
     }
   }
 }
@@ -617,14 +610,14 @@ form.oauth2 {
   }
 
   .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
-    color: var(--settingsHeaderFore);
+    color: var(--settingsHeadFore);
   }
 
   .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
-    background-color: var(--settingsHeaderBack);
+    background-color: var(--settingsHeadBack);
 
     .mdc-list-item__primary-text {
-      color: var(--settingsHeaderFore);
+      color: var(--settingsHeadFore);
     }
   }
 }
@@ -637,20 +630,20 @@ form.oauth2 {
   }
 
   .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after, .mat-primary .mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-minimal::after {
-    color: var(--outputparamsHeaderFore);
+    color: var(--outputparamsHeadFore);
   }
 
   .mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
-    background-color: var(--outputparamsHeaderBack);
+    background-color: var(--outputparamsHeadBack);
 
     .mdc-list-item__primary-text {
-      color: var(--outputparamsHeaderFore);
+      color: var(--outputparamsHeadHeadFore);
     }
   }
 }
 
 .mat-mdc-option {
-  color: var(--secondaryFore);
+  color: var(--bodyFore);
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -659,29 +652,29 @@ form.oauth2 {
 
 .mat-datepicker-content {
   background-color: var(--settingsBodyBack);
-  color: var(--secondaryFore);
+  color: var(--bodyFore);
 }
 
 .mat-calendar-body-selected {
-  background-color: var(--primaryBack);
-  color: var(--primaryFore);
+  background-color: var(--headBack);
+  color: var(--headFore);
 }
 
 .mat-mdc-dialog-container .mdc-dialog__title,
 .mat-mdc-dialog-container .mdc-dialog__actions {
-  color: var(--primaryFore) !important;
+  color: var(--headFore) !important;
 
   button {
-    color: var(--primaryHeaderFore);
+    color: var(--headFore);
   }
 }
 
 .mat-mdc-select-value {
-  color: var(--secondaryFore);
+  color: var(--bodyFore);
 }
 
 .mat-mdc-select-arrow {
-  color: var(--secondaryFore);
+  color: var(--bodyFore);
 }
 
 .mat-form-field-appearance-fill .mat-mdc-select-arrow-wrapper {
@@ -690,18 +683,18 @@ form.oauth2 {
 
 .mat-mdc-dialog-container .mdc-dialog__content,
 .mat-mdc-dialog-container .mdc-dialog__content.root {
-  background-color: var(--secondaryBack);
-  color: var(--secondaryFore);
+  background-color: var(--bodyBack);
+  color: var(--bodyFore);
 }
 
 .dialog-box .cdk-drag {
-  background-color: var(--primaryBack);
-  color: var(--primaryFore);
+  background-color: var(--headBack);
+  color: var(--headFore);
 }
 
 .mdc-button.mat-mdc-raised-button:not(:disabled) {
-  background-color: var(--primaryBack);
-  color: var(--primaryFore);
+  background-color: var(--headBack);
+  color: var(--headFore);
 }
 
 .mat-mdc-dialog-container .mdc-dialog__content {

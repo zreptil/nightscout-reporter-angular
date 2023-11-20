@@ -112,6 +112,7 @@ export class GlobalsData extends Settings {
   lluTimeout = 5;
   lluAutoExec = false;
   nwCurrPage = '';
+  editColors = false;
 
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 

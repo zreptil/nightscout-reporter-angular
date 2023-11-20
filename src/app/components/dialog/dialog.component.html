@@ -1,13 +1,13 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.dialog">
-  <div [style]="customStyle('Header')" cdkDragHandle class="type{{data?.type}}" mat-dialog-title>
+  <div [style]="customStyle('Head')" cdkDragHandle class="type{{data?.type}}" mat-dialog-title>
     <h1>
       <mat-icon *ngIf="showTitleIcon">{{titleIcon}}</mat-icon>
       <img (error)="noImage($event)" *ngIf="showTitleImage" [src]="titleImage" alt="titleimage">
       {{data.title}}
     </h1>
-    <div spacer></div>
+    <div></div>
     <button (click)="clickClose()" *ngIf="!dialogRef.disableClose" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
@@ -20,7 +20,7 @@
       </ng-container>
     </mat-chip-listbox>
   </div>
-  <div [style]="customStyle('Header')" align="end" class="type{{data?.type}}" mat-dialog-actions>
+  <div [style]="customStyle('Head')" align="end" class="type{{data?.type}}" mat-dialog-actions>
     <ng-container *ngFor="let btn of data.buttons; let idx = index">
       <button (click)="closeDialog(btn)" *ngIf="btn.url == null" mat-button>
         <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>

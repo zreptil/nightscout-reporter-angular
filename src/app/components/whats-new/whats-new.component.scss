@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--whatsnewHeaderBack);
-    --primaryFore: var(--whatsnewHeaderFore);
-    --secondaryBack: var(--whatsnewBodyBack);
-    --secondaryFore: var(--whatsnewBodyFore);
-    --accentBack: var(--whatsnewHeaderBack);
-    --accentFore: var(--whatsnewHeaderFore);
-  }
+  --headBack: var(--whatsnewHeadBack);
+  --headFore: var(--whatsnewHeadFore);
+  --bodyBack: var(--whatsnewBodyBack);
+  --bodyFore: var(--whatsnewBodyFore);
+  --accentBack: var(--whatsnewHeadBack);
+  --accentFore: var(--whatsnewHeadFore);
 }
 
 ::ng-deep .dialog-box.whatsnew {

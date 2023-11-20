@@ -1,11 +1,13 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--settingsHeaderBack);
-    --primaryFore: var(--settingsHeaderFore);
-    --secondaryBack: var(--settingsBodyBack);
-    --secondaryFore: var(--settingsBodyFore);
-    --accentBack: var(--settingsHeaderBack);
-    --accentFore: var(--settingsHeaderFore);
+  --headBack: var(--settingsHeadBack);
+  --headFore: var(--settingsHeadFore);
+  --bodyBack: var(--settingsBodyBack);
+  --bodyFore: var(--settingsBodyFore);
+  --accentBack: var(--settingsHeadBack);
+  --accentFore: var(--settingsHeadFore);
+
+  .mat-mdc-dialog-actions:not([align=end]) {
+    justify-content: flex-start;
   }
 }
 

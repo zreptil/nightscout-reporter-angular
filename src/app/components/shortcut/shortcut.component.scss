@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--shortcutHeaderBack);
-    --primaryFore: var(--shortcutHeaderFore);
-    --secondaryBack: var(--shortcutBodyBack);
-    --secondaryFore: var(--shortcutBodyFore);
-    --accentBack: var(--shortcutHeaderBack);
-    --accentFore: var(--shortcutHeaderFore);
-  }
+  --headBack: var(--shortcutHeadBack);
+  --headFore: var(--shortcutHeadFore);
+  --bodyBack: var(--shortcutBodyBack);
+  --bodyFore: var(--shortcutBodyFore);
+  --accentBack: var(--shortcutHeadBack);
+  --accentFore: var(--shortcutHeadFore);
 }
 
 :host {

@@ -23,6 +23,7 @@ export class ReportData {
   isValid = false;
   deviceList: string[] = [];
   deviceFilter: string[] = [];
+  deviceDataList: string[] = [];
   mustReload = false;
 
   constructor(public begDate: Date, public endDate: Date) {

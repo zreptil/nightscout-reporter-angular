@@ -39,13 +39,15 @@ export class PrintAnalysis extends BasePrint {
   showHypoGlucs: boolean;
   useDailyBasalrate: boolean;
   useFineLimits: boolean;
+  showDevices: boolean;
   override params = [
     new ParamInfo(0, PrintAnalysis.msgParam1, {boolValue: true, thumbValue: false}),
     new ParamInfo(1, PrintAnalysis.msgParam2, {boolValue: false}),
     new ParamInfo(2, PrintAnalysis.msgParam3, {boolValue: false}),
     new ParamInfo(3, PrintAnalysis.msgParam4, {boolValue: false}),
     new ParamInfo(4, PrintAnalysis.msgParam5, {boolValue: false}),
-    new ParamInfo(5, BasePrint.msgUseDailyBasalrate, {boolValue: true, isLoopValue: true}),
+    new ParamInfo(6, BasePrint.msgUseDailyBasalrate, {boolValue: true, isLoopValue: true}),
+    new ParamInfo(5, PrintAnalysis.msgParam6, {boolValue: false}),
   ];
 
   constructor(ps: PdfService, suffix: string = null) {
@@ -71,6 +73,10 @@ export class PrintAnalysis extends BasePrint {
 
   static get msgParam5(): string {
     return $localize`Unterzuckerungen anzeigen`;
+  }
+
+  static get msgParam6(): string {
+    return $localize`Verwendete Glukosequellen anzeigen`;
   }
 
   override get title(): string {
@@ -116,6 +122,7 @@ export class PrintAnalysis extends BasePrint {
     this.useFineLimits = this.params[3].boolValue;
     this.showHypoGlucs = this.params[4].boolValue;
     this.useDailyBasalrate = this.params[5].boolValue;
+    this.showDevices = this.params[6].boolValue;
   }
 
   msgHypoTitle(value: string): string {
@@ -282,7 +289,7 @@ export class PrintAnalysis extends BasePrint {
     const ampulleCount = data.ampulleCount > 1
       ? this.msgReservoirDays(Math.round(this.repData.dayCount / data.ampulleCount), txt)
       : '';
-    const tableBody = [
+    const tableBody: any[] = [
       [
         {text: '', style: 'infotitle'},
         {text: this.msgDays, style: 'infotitle'},
@@ -337,6 +344,21 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infounit'},
       ]
     ];
+    if (this.showDevices) {
+      tableBody.push([
+          {text: '', style: 'infotitle'},
+          {text: this.msgReportDevices, style: 'infotitle'},
+          {text: '', style: 'infotitle'},
+          {
+            text: Utils.join(this.repData.deviceDataList, ', '),
+            style: 'infounit',
+            colSpan: 3,
+            margin: [this.cm(0), this.cm(0), this.cm(2), this.cm(0)],
+          },
+          {text: '', style: 'infounit'}
+        ]
+      );
+    }
     const cvsLeft = -0.5;
     const cvsWidth = 0.8;
     if ((this.repData.status.settings.bgTargetBottom != 70 ||

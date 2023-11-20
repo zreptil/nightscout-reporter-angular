@@ -1,0 +1,25 @@
+:host {
+  position: absolute;
+  z-index: 100000;
+  left: 50%;
+  top: 50%;
+}
+
+.colorButton {
+  position: absolute;
+  background: var(--infoButtonBack);
+  color: var(--infoButtonFore);
+  width: 16px;
+  height: 16px;
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+}
+
+input {
+  display: none;
+}

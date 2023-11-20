@@ -1,12 +1,10 @@
 :host {
-  ::ng-deep * {
-    --primaryBack: var(--settingsHeaderBack);
-    --primaryFore: var(--settingsHeaderFore);
-    --secondaryBack: var(--settingsBodyBack);
-    --secondaryFore: var(--settingsBodyFore);
-    --accentBack: var(--settingsHeaderBack);
-    --accentFore: var(--settingsHeaderFore);
-  }
+  --headBack: var(--settingsHeadBack);
+  --headFore: var(--settingsHeadFore);
+  --bodyBack: var(--settingsBodyBack);
+  --bodyFore: var(--settingsBodyFore);
+  --accentBack: var(--settingsHeadBack);
+  --accentFore: var(--settingsHeadFore);
 
   ::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
     color: rgba(0, 0, 0, 0.9);
@@ -19,337 +17,337 @@
   ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
     border-bottom-color: rgba(0, 0, 0, 0.9);
   }
-}
 
-::ng-deep .mat-select-panel.settings {
-  background-color: var(--settingsBodyBack);
-  max-height: initial !important;
-}
+  ::ng-deep .mat-select-panel.settings {
+    background-color: var(--bodyBack);
+    max-height: initial !important;
+  }
 
-input[type=file] {
-  display: none;
-}
+  input[type=file] {
+    display: none;
+  }
 
-mat-slider {
-  width: 100%;
-  margin-left: 2em;
-  margin-right: 2em;
-}
+  mat-slider {
+    width: 100%;
+    margin-left: 2em;
+    margin-right: 2em;
+  }
 
-.themeSelect {
-  ::ng-deep mat-list {
-    background: var(--settingsBodyBack);
-    padding: 0;
+  .themeSelect {
+    ::ng-deep mat-list {
+      background: var(--bodyBack);
+      padding: 0;
 
-    mat-select-item {
-      display: flex;
-      flex-flow: column;
-      line-height: initial;
-      align-items: flex-start;
-      padding: 0.2em 0.5em;
-      color: var(--settingsBodyFore);
+      mat-select-item {
+        display: flex;
+        flex-flow: column;
+        line-height: initial;
+        align-items: flex-start;
+        padding: 0.2em 0.5em;
+        color: var(--bodyFore);
 
-      div.itemSub {
-        font-size: 75%;
+        div.itemSub {
+          font-size: 75%;
+        }
+
+        .selected-accent {
+          background-color: var(--headBack);
+        }
       }
 
-      .selected-accent {
-        background-color: var(--settingsHeaderBack);
+      mat-select-item.selected {
+        background-color: var(--headBack);
+        color: var(--headFore);
       }
     }
-
-    mat-select-item.selected {
-      background-color: var(--settingsHeaderBack);
-      color: var(--settingsHeaderFore);
-    }
-  }
-}
-
-.datepicker-row {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-}
-
-.datepicker-row label {
-  position: absolute;
-  top: -15px;
-  color: rgba(0, 0, 0, 0.541176);
-  font-size: 12px;
-}
-
-.userinfo {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-
-  mat-form-field {
-    flex-shrink: 0;
-    flex-grow: 1;
-  }
-}
-
-.controls {
-  display: flex;
-  justify-content: flex-end;
-  min-width: 7em;
-
-  .label {
-    padding-right: 2em;
   }
 
-  __mat-fab:not([disabled]) {
-    background-color: var(--settingsHeaderBack);
-    color: var(--primaryFore);
+  .datepicker-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
   }
-}
 
-.urlPanel {
-  display: flex;
-  flex-flow: column;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 1em;
-  margin: 0.5em 0;
+  .datepicker-row label {
+    position: absolute;
+    top: -15px;
+    color: rgba(0, 0, 0, 0.541176);
+    font-size: 12px;
+  }
 
-  .row {
+  .userinfo {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
-    padding: 0.5em;
-    flex: 1;
 
-    .formfield {
-      flex: 1;
-    }
-
-    __button:not([disabled]) .urlIcon {
-      color: var(--settingsHeaderBack);
-    }
-
-    .subtitle {
-      font-size: 75%;
-      font-weight: bold;
-    }
-  }
-}
-
-.mat-flat-button.mat-button-disabled,
-.mat-mini-fab.mat-button-disabled {
-  background-color: transparent !important;
-}
-
-[__mat-dialog-title] {
-  background-color: var(--settingsHeaderBack);
-  color: var(--settingsHeaderFore);
-}
-
-[__mat-dialog-content] {
-  color: var(--settingsBodyFore);
-  background-color: var(--settingsBodyBack);
-}
-
-:host {
-  ::ng-deep .mat-checkbox-label {
-    white-space: normal;
-  }
-
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-    color: var(--settingsBodyFore);
-  }
-
-  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
-    color: var(--settingsBodyFore);
-  }
-
-  [select] {
-    ::ng-deep .mat-form-field-underline,
-    ::ng-deep .mat-form-field-subscript-wrapper {
-      display: none
+    mat-form-field {
+      flex-shrink: 0;
+      flex-grow: 1;
     }
   }
 
-  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
-  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
-  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
-    background-color: var(--settingsHeaderBack);
-  }
-
-  [mat-dialog-actions] {
-    background-color: var(--settingsHeaderBack);
-
-    button {
-      color: var(--settingsHeaderFore);
-    }
-  }
-
-  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
-    background-color: var(--settingsHeaderBack);
-
-    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
-      stroke: var(--settingsHeaderFore) !important;
-    }
-  }
-
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: var(--settingsHeaderBack);
-  }
-}
-
-
-.longtext {
-  font-size: 75%;
-}
-
-.functions {
-  margin-left: 1em;
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-}
-
-.languagePanel {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-}
-
-.subtitle {
-  display: flex;
-  flex-flow: row;
-  color: var(--settingsHeaderBack);
-  font-size: 1.5em;
-  padding-bottom: 0.5em;
-  align-items: center;
-  justify-content: space-between;
-}
-
-div[header] {
-  display: flex;
-  flex-flow: row;
-  color: var(--settingsHeaderFore);
-  justify-content: space-between;
-  align-items: center;
-
-  div:nth-child(2) {
+  .controls {
     display: flex;
+    justify-content: flex-end;
+    min-width: 7em;
+
+    .label {
+      padding-right: 2em;
+    }
+
+    __mat-fab:not([disabled]) {
+      background-color: var(--headBack);
+      color: var(--headFore);
+    }
+  }
+
+  .urlPanel {
+    display: flex;
+    flex-flow: column;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 1em;
+    margin: 0.5em 0;
+
+    .row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      padding: 0.5em;
+      flex: 1;
+
+      .formfield {
+        flex: 1;
+      }
+
+      __button:not([disabled]) .urlIcon {
+        color: var(--headBack);
+      }
+
+      .subtitle {
+        font-size: 75%;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .mat-flat-button.mat-button-disabled,
+  .mat-mini-fab.mat-button-disabled {
+    background-color: transparent !important;
+  }
+
+  [__mat-dialog-title] {
+    background-color: var(--headBack);
+    color: var(--headFore);
+  }
+
+  [__mat-dialog-content] {
+    color: var(--bodyFore);
+    background-color: var(--bodyBack);
+  }
+
+  :host {
+    ::ng-deep .mat-checkbox-label {
+      white-space: normal;
+    }
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+      color: var(--bodyFore);
+    }
+
+    ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
+      color: var(--bodyFore);
+    }
+
+    [select] {
+      ::ng-deep .mat-form-field-underline,
+      ::ng-deep .mat-form-field-subscript-wrapper {
+        display: none
+      }
+    }
+
+    ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
+    ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
+    ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
+      background-color: var(--headBack);
+    }
+
+    [mat-dialog-actions] {
+      background-color: var(--headBack);
+
+      button {
+        color: var(--headFore);
+      }
+    }
+
+    ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+      background-color: var(--headBack);
+
+      .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+        stroke: var(--headFore) !important;
+      }
+    }
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+      background-color: var(--headBack);
+    }
+  }
+
+
+  .longtext {
+    font-size: 75%;
+  }
+
+  .functions {
+    margin-left: 1em;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+  }
+
+  .languagePanel {
+    display: flex;
+    flex-flow: row;
     align-items: center;
   }
-}
 
-.error {
-  color: var(--settingsError);
-  padding-top: 0.5em;
-  padding-bottom: 0.2em;
-}
+  .subtitle {
+    display: flex;
+    flex-flow: row;
+    color: var(--headBack);
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.progress {
-  padding: 2em;
-  font-size: 1.2em;
-}
+  div[header] {
+    display: flex;
+    flex-flow: row;
+    color: var(--headFore);
+    justify-content: space-between;
+    align-items: center;
 
-.date {
-  width: 6em;
-}
+    div:nth-child(2) {
+      display: flex;
+      align-items: center;
+    }
+  }
 
-mat-dialog[confirm] {
-  background-color: var(--settingsBodyBack);
-  color: var(--settingsBodyFore);
+  .error {
+    color: var(--settingsError);
+    padding-top: 0.5em;
+    padding-bottom: 0.2em;
+  }
 
-  .content {
-    font-size: 120%;
+  .progress {
     padding: 2em;
-
-    .marked {
-      padding: 1em 0;
-      font-weight: bold;
-    }
+    font-size: 1.2em;
   }
-}
 
-.pdfSliderHead {
-  display: flex;
-  width: 90%;
-  padding: 1em;
-}
+  .date {
+    width: 6em;
+  }
 
-.sub {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  text-align: justify;
-}
+  mat-dialog[confirm] {
+    background-color: var(--bodyBack);
+    color: var(--bodyFore);
 
-.formfield.date {
-  width: 7em;
-}
+    .content {
+      font-size: 120%;
+      padding: 2em;
 
-.formfield {
-  display: flex;
-  flex-flow: column;
-
-  mat-form-field {
-    padding-bottom: 0;
-
-    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-
-    .mat-form-field-underline {
-      bottom: 0;
+      .marked {
+        padding: 1em 0;
+        font-weight: bold;
+      }
     }
   }
 
-  .hint {
-    font-size: 0.8em;
-    line-height: 1em;
-    margin-top: 0.3em;
-    position: initial;
-    color: rgba(0, 0, 0, 0.6);
-  }
-}
-
-.pdfSlider {
-  display: flex;
-  flex-flow: row;
-  width: 90%;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 1em;
-  margin-bottom: 2em;
-
-  > div {
-    width: 5%;
-  }
-}
-
-mat-input {
-  ::ng-deep .focused-underline {
-    background: var(--settingsHeaderBack);
+  .pdfSliderHead {
+    display: flex;
+    width: 90%;
+    padding: 1em;
   }
 
-  ::ng-deep .focused.label-text {
-    color: var(--settingsHeaderBack);
+  .sub {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: justify;
   }
-}
 
-.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
-  background-color: var(--settingsHeaderBack);
-}
+  .formfield.date {
+    width: 7em;
+  }
 
-mat-fab.is-local, div.is-local, mat-button.is-local {
-  background: var(--localBack) !important;
-  color: var(--localFore) !important;
-}
+  .formfield {
+    display: flex;
+    flex-flow: column;
 
-.navControls {
-  display: flex;
-  align-items: center;
-  font-size: 0.7em;
-}
+    mat-form-field {
+      padding-bottom: 0;
 
-#exportForm {
-  display: none;
-}
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
 
-#importData {
-  display: none;
+      .mat-form-field-underline {
+        bottom: 0;
+      }
+    }
+
+    .hint {
+      font-size: 0.8em;
+      line-height: 1em;
+      margin-top: 0.3em;
+      position: initial;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .pdfSlider {
+    display: flex;
+    flex-flow: row;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1em;
+    margin-bottom: 2em;
+
+    > div {
+      width: 5%;
+    }
+  }
+
+  mat-input {
+    ::ng-deep .focused-underline {
+      background: var(--headBack);
+    }
+
+    ::ng-deep .focused.label-text {
+      color: var(--headBack);
+    }
+  }
+
+  .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+    background-color: var(--headBack);
+  }
+
+  mat-fab.is-local, div.is-local, mat-button.is-local {
+    background: var(--localBack) !important;
+    color: var(--localFore) !important;
+  }
+
+  .navControls {
+    display: flex;
+    align-items: center;
+    font-size: 0.7em;
+  }
+
+  #exportForm {
+    display: none;
+  }
+
+  #importData {
+    display: none;
+  }
 }

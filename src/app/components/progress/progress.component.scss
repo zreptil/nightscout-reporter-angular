@@ -15,9 +15,9 @@
 }
 
 [panel] {
-  --panelBack: var(--primaryBack);
-  --panelFore: var(--primaryFore);
-  --bufferColor: var(--secondaryBack);
+  --panelBack: var(--headBack);
+  --panelFore: var(--headFore);
+  --bufferColor: var(--bodyBack);
   display: flex;
   flex-flow: column;
   align-items: center;

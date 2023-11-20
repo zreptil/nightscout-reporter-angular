@@ -16,11 +16,11 @@ mat-expansion-panel {
   border: 2px solid transparent;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background-color: var(--primaryBack);
+  background-color: var(--headBack);
   border-radius: 0.5em;
 
   mat-panel-title {
-    color: var(--primaryFore);
+    color: var(--headFore);
     gap: 0.5em;
   }
 
@@ -40,7 +40,7 @@ mat-expansion-panel {
   }
 
   ::ng-deep div[aria-expanded="true"] {
-    border: 2px solid var(--primaryBack) !important;
+    border: 2px solid var(--headBack) !important;
 
     ::ng-deep .header {
       border: 0;

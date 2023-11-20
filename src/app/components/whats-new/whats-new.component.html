@@ -10,7 +10,7 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(42.2)">
-      <span i18n="version">Version</span><span i18n="v422">4.2.2 - 15.11.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v422">4.2.2 - 16.11.2023</span></h2>
     <ul [class]="classFor(42.2)">
       <li class="added">
         <span i18n>Neues Icon in NightWatch</span>
@@ -21,6 +21,18 @@
             zurückgesetzt.
           </span>
         </div>
+      </li>
+      <li class="added" i18n="v422a2">
+        Auf dem Formular Auswertung kann jetzt auch die Liste der Glukosequellen ausgegeben werden.
+        Es gibt eine entsprechende Option dafür, so dass man das ein- und ausschalten kann.
+      </li>
+      <li class="changed" i18n="v422c1">
+        Der Stern bei den Benutzern in der Benutzerliste ist jetzt immer sichtbar. Das
+        macht es einfacher die Besternung zu ändern.
+      </li>
+      <li class="changed" i18n="v422c2">
+        Die Verarbeitung der Daten bei Erstellung der PDFs wurde überarbeitet. Wenn viele
+        Profile vorhanden sind, sollte die Verarbeitung nun wesentlich schneller erfolgen.
       </li>
     </ul>
     <h2 (click)="click(42.1)">
@@ -105,8 +117,8 @@
     <ul [class]="classFor(41.5)">
       <li class="added" i18n="v415a1">
         Es gibt ein neues Formular namens Zeitraumauswertung. Dieses Formular zeigt Informationen
-        über den gesamten ausgewählten Zeitraum hinweg an. Aktuell kann man dort die Teit im Zielbereich,
-        das tägliche Gesamtinsulin und die täglichen Kohlenhydrate ausgeben lassen.
+        über den gesamten ausgewählten Zeitraum hinweg an. Aktuell kann man dort die Zeit im
+        Zielbereich, das tägliche Gesamtinsulin und die täglichen Kohlenhydrate ausgeben lassen.
       </li>
       <li class="changed" i18n="v415c1">
         Die Einstellungen für NightWatch wurden in die Geräteeinstellungen verschoben, damit

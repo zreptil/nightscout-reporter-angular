@@ -46,6 +46,8 @@ import {WatchGroupComponent} from './components/watch-group/watch-group.componen
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InfoButtonComponent} from './controls/info-button/info-button.component';
 import {HideMissingImageDirective} from '@/_directives/hide-missing-image.directive';
+import {ColorCfgComponent} from '@/controls/color-cfg/color-cfg.component';
+import {ColorEditDirective} from '@/_directives/color-edit.directive';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import {HideMissingImageDirective} from '@/_directives/hide-missing-image.direct
     ShortcutComponent,
     WatchSettingsComponent,
     WatchGroupComponent,
-    InfoButtonComponent
+    InfoButtonComponent,
+    ColorCfgComponent,
+    ColorEditDirective
   ],
   imports: [
     BrowserModule,

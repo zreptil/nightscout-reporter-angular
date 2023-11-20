@@ -646,6 +646,10 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Anzahl Sensorenwechsel`;
   }
 
+  get msgReportDevices(): string {
+    return $localize`Verwendete Glukosequellen`;
+  }
+
   get msgHbA1C(): string {
     return $localize`gesch. HbA1c`;
   }
