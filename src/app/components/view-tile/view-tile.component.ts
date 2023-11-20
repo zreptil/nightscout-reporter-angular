@@ -66,10 +66,6 @@ export class ViewTileComponent implements OnInit {
   }
 
   clickTileMenu(evt: MouseEvent, form: BasePrint) {
-    Log.todo('Idee für FormParams: komplette view auf Params ändern, alle Params der ausgewählten Tiles anzeigen.',
-      'Würde exakt so auch bei der Listenansicht zum Einsatz kommen.'
-    );
-
     this.ss.showPopup('formparamsdialog|settings', form);
     evt.stopPropagation();
   }
