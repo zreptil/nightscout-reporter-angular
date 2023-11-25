@@ -353,10 +353,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
               continue;
             }
             const parts: string[] = [];
+            let store: ProfileStoreData;
             parts.push(`{"_id":"${entry._id}","defaultProfile":"${entry.profile}"`);
             // some uploaders (e.g. Minimed 600-series) don't save profileJson, so we need
             // to find it here
-            let store: ProfileStoreData;
             if (entry.profileJson == null) {
               let key = entry.profile;
               const prof = Utils.findLast(data.profiles,
@@ -376,13 +376,16 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
                 }
               }
             }
-            parts.push(`"store":{"${entry.profile}":${store ?? entry.profileJson}},"startDate":"${entry.created_at}"`);
+            let profile = entry.profileJson;
+            if (store != null) {
+              profile = JSON.stringify(store);
+            }
+            parts.push(`"store":{"${entry.profile}":${profile}},"startDate":"${entry.created_at}"`);
             parts.push(`"mills":"0","units":"mg/dl"`);
             parts.push(`"percentage":"${entry.percentage}"`);
             parts.push(`"duration":"${entry.duration}"`);
             parts.push(`"timeshift":"${entry.timeshift}"`);
             parts.push(`"created_at":"${entry.created_at}"}`);
-
             data.profiles.push(ProfileData.fromJson(JSON.parse(parts.join(','))));
             // if (store != null) {
             //   Utils.last(data.profiles).store[entry.profile] = store;
