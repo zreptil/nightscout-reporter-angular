@@ -121,15 +121,14 @@ export class ColorPickerMixerComponent extends ColorPickerBaseComponent implemen
   clickCanvas(event: MouseEvent) {
     const m = this.mousePos(event);
     const color = this.getColorAtPos(m.x, m.y);
-    console.log(this.data.mixColors.tl, this.data.mixColors.tr, this.data.mixColors.bl, this.data.mixColors.br);
-    console.log(color, m.x, m.y, this.width, this.height);
+    // console.log(this.data.mixColors.tl, this.data.mixColors.tr, this.data.mixColors.bl, this.data.mixColors.br);
+    // console.log(color, m.x, m.y, this.width, this.height);
     if (this.colorList.length < 9) {
       this.colorList.splice(0, 0, {color: color});
     } else {
       this.colorList[0].color = color;
     }
     this.colorWheelXY = {display: 'none'};
-    this.colorClick?.emit(color);
   }
 
   mixValue(v1: number, v2: number): number {

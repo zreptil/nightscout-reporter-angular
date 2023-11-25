@@ -179,8 +179,8 @@
 
   display: flex;
   padding: 0.5em;
-  background: var(--bodyBack);
-  color: var(--bodyFore);
+  background: var(--mainBodyBack);
+  color: var(--mainBodyFore);
   border-radius: 0.5em;
   margin: 0.2em;
   cursor: pointer;
@@ -197,9 +197,9 @@
 }
 
 .tilechecked {
-  background: var(--headBack) !important;
-  color: var(--headFore) !important;
-  _border: 2px solid var(--headBack) !important;
+  background: var(--mainHeadBack) !important;
+  color: var(--mainHeadFore) !important;
+  _border: 2px solid var(--mainHeadBack) !important;
 
   mat-icon {
     color: rgba(255, 255, 255, 0.7);

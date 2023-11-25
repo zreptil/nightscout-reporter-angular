@@ -125,9 +125,9 @@ export class ColorPickerImageComponent extends ColorPickerBaseComponent implemen
     return [R, G, B];
   }
 
-  clickCanvas(event: MouseEvent) {
-    const m = this.mousePos(event);
-    this.colorClick?.emit(new ColorData(this.getPixelAt(m.x, m.y)));
+  clickCanvas(_event: MouseEvent) {
+//    const m = this.mousePos(event);
+//    this.colorSaveClick?.emit(new ColorData(this.getPixelAt(m.x, m.y)));
   }
 
   wheelLens(event: WheelEvent) {

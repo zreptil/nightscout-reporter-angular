@@ -1,0 +1,4 @@
+<color-cfg *ngIf="showColorCfg" [color]="data.color"></color-cfg>
+<button (click)="data.closeAction?.()" [mat-dialog-close]="data.dialogClose" mat-icon-button>
+  <mat-icon>close</mat-icon>
+</button>

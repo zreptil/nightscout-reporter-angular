@@ -3,6 +3,7 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {DataService} from '@/_services/data.service';
 import {SessionService} from '@/_services/session.service';
 import {DropboxService} from '@/_services/sync/dropbox.service';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-welcome',
@@ -10,18 +11,6 @@ import {DropboxService} from '@/_services/sync/dropbox.service';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
-
-  constructor(public ds: DataService,
-              public ss: SessionService,
-              public dbs: DropboxService) {
-  }
-
-  get globals(): GlobalsData {
-    return GLOBALS;
-  }
-
-  ngOnInit(): void {
-  }
 
   /*
     @Output('closeClicked')
@@ -50,6 +39,22 @@ export class WelcomeComponent implements OnInit {
       }
     }
   */
+  closeData: CloseButtonData = {
+    color: 'whatsnewHeadBack'
+  };
+
+  constructor(public ds: DataService,
+              public ss: SessionService,
+              public dbs: DropboxService) {
+  }
+
+  get globals(): GlobalsData {
+    return GLOBALS;
+  }
+
+  ngOnInit(): void {
+  }
+
   clickDebug() {
     this.globals.isDebug = !this.globals.isDebug;
   }

@@ -30,7 +30,7 @@
         </button>
         -->
         <button (click)="clickMenuButton('feedback')" class="iconButton">
-          <mat-icon>feedback</mat-icon>
+          <mat-icon>mail</mat-icon>
           <span i18n="title of feedback">Feedback</span>
         </button>
         <button (click)="ss.showSettings()" class="iconButton">
@@ -153,7 +153,9 @@
   <mat-drawer-content>
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
-        <color-cfg *colorEdit="globals.editColors" color="headBack"></color-cfg>
+        <div style="z-index:10000;position:absolute;left:50%;top:50%;background:red;border:1px solid red">
+          <color-cfg *ngIf="globals.editColors" color="mainHeadBack"></color-cfg>
+        </div>
         <div [class]="classForView('basePanel')">
           <button (click)="clickUser()" class="userName toolbar-button">{{globals.user.display}}</button>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
@@ -192,7 +194,6 @@
               <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="toolbar-button localTitle" mat-button>
                 <span *ngIf="globals.isLocal">Lokal</span>
                 <span *ngIf="!globals.isLocal">Vorschau</span>
-                <color-cfg *colorEdit="globals.editColors" color="localBack"></color-cfg>
               </button>
             </div>
             <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{globals.displayVersion}}</button>

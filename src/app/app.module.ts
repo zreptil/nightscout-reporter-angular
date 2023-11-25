@@ -10,7 +10,7 @@ import {ColorPickerComponent} from '@/controls/color-picker/color-picker.compone
 import {ColorPickerImageComponent} from '@/controls/color-picker/color-picker-image/color-picker-image.component';
 import {ColorPickerMixerComponent} from '@/controls/color-picker/color-picker-mixer/color-picker-mixer.component';
 import {ColorPickerBaseComponent} from '@/controls/color-picker/color-picker-base.component';
-import {ColorPickerRGBComponent} from '@/controls/color-picker/color-picker-rgb/color-picker-rgb.component';
+import {ColorPickerSliderComponent} from '@/controls/color-picker/color-picker-slider/color-picker-slider.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from '@/material.module';
@@ -48,6 +48,8 @@ import {InfoButtonComponent} from './controls/info-button/info-button.component'
 import {HideMissingImageDirective} from '@/_directives/hide-missing-image.directive';
 import {ColorCfgComponent} from '@/controls/color-cfg/color-cfg.component';
 import {ColorEditDirective} from '@/_directives/color-edit.directive';
+import {ColorPickerHslComponent} from '@/controls/color-picker/color-picker-hsl/color-picker-hsl.component';
+import {CloseButtonComponent} from './controls/close-button/close-button.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import {ColorEditDirective} from '@/_directives/color-edit.directive';
     ColorPickerImageComponent,
     ColorPickerMixerComponent,
     ColorPickerBaseComponent,
-    ColorPickerRGBComponent,
+    ColorPickerSliderComponent,
+    ColorPickerHslComponent,
     WhatsNewComponent,
     MainComponent,
     ImpressumComponent,
@@ -88,7 +91,8 @@ import {ColorEditDirective} from '@/_directives/color-edit.directive';
     WatchGroupComponent,
     InfoButtonComponent,
     ColorCfgComponent,
-    ColorEditDirective
+    ColorEditDirective,
+    CloseButtonComponent
   ],
   imports: [
     BrowserModule,

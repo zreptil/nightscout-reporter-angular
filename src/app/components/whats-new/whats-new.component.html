@@ -2,11 +2,7 @@
      cdkDragRootElement=".dialog-box.whatsnew">
   <div cdkDragHandle mat-dialog-title>
     <h1 i18n="title of whatsnew">Was bisher geschah...</h1>
-    <div>
-      <button mat-dialog-close="ok" mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(42.2)">
@@ -24,7 +20,11 @@
       </li>
       <li class="added" i18n="v422a2">
         Auf dem Formular Auswertung kann jetzt auch die Liste der Glukosequellen ausgegeben werden.
-        Es gibt eine entsprechende Option dafür, so dass man das ein- und ausschalten kann.
+        Es gibt eine entsprechende Option dafür, damit man das ein- und ausschalten kann.
+      </li>
+      <li class="fixed" i18n="v422f1">
+        Die Ermittlung der COB erfolgt nun in den meisten Fällen auch dann korrekt, wenn aus den
+        Profil-Switches die benötigte Kohlenhydrat-Resorptions-Rate nicht ermittelt werden kann.
       </li>
       <li class="changed" i18n="v422c1">
         Der Stern bei den Benutzern in der Benutzerliste ist jetzt immer sichtbar. Das

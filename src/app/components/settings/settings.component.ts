@@ -15,6 +15,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-settings',
@@ -32,6 +33,60 @@ export class SettingsComponent implements OnInit {
   listProfileMaxCount: string[];
   @ViewChild('fileSelect')
   fileSelect: ElementRef<HTMLInputElement>;
+  /*
+  @Output('settingsresult')
+  Stream<html.UIEvent> get trigger => _trigger.stream;
+  final _trigger = StreamController<html.UIEvent>.broadcast(sync: true);
+
+  SettingsComponent();
+
+  String progressText;
+
+  void confirmOk() {
+    switch (confirmIdx) {
+      case 1:
+        try {
+          g.userList.removeAt(g.userIdx);
+          g.isConfigured &= g.userList.isNotEmpty;
+          if (!g.isConfigured) {
+            g.saveWebData();
+            fire('ok');
+          }
+          // ignore: empty_catches
+        } catch (e) {}
+        break;
+      case 2:
+        try {
+          g.user.listApiUrl.removeAt(currApiUrlIdx);
+          // ignore: empty_catches
+        } catch (e) {}
+        break;
+    }
+    confirmIdx = 0;
+  }
+
+  void removeUrl(int idx) {}
+
+  String exportData = '';
+
+  String get msgExport => Intl.message('Bitte den Dateinamen für die Speicherung auswählen');
+
+  void fire(String type) {
+    switch (type) {
+      case 'check':
+        checkUser('ok');
+        return;
+      case 'cancel':
+        break;
+    }
+    _trigger.add(html.UIEvent(type, detail: 0));
+    errUserInvalid = null;
+  }
+  */
+  closeData: CloseButtonData = {
+    dialogClose: {btn: 2},
+    color: 'settingsHeadBack'
+  };
 
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,
               @Inject(MAT_DIALOG_DATA) public dlgData: { cmd: string },
@@ -309,56 +364,6 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  /*
-  @Output('settingsresult')
-  Stream<html.UIEvent> get trigger => _trigger.stream;
-  final _trigger = StreamController<html.UIEvent>.broadcast(sync: true);
-
-  SettingsComponent();
-
-  String progressText;
-
-  void confirmOk() {
-    switch (confirmIdx) {
-      case 1:
-        try {
-          g.userList.removeAt(g.userIdx);
-          g.isConfigured &= g.userList.isNotEmpty;
-          if (!g.isConfigured) {
-            g.saveWebData();
-            fire('ok');
-          }
-          // ignore: empty_catches
-        } catch (e) {}
-        break;
-      case 2:
-        try {
-          g.user.listApiUrl.removeAt(currApiUrlIdx);
-          // ignore: empty_catches
-        } catch (e) {}
-        break;
-    }
-    confirmIdx = 0;
-  }
-
-  void removeUrl(int idx) {}
-
-  String exportData = '';
-
-  String get msgExport => Intl.message('Bitte den Dateinamen für die Speicherung auswählen');
-
-  void fire(String type) {
-    switch (type) {
-      case 'check':
-        checkUser('ok');
-        return;
-      case 'cancel':
-        break;
-    }
-    _trigger.add(html.UIEvent(type, detail: 0));
-    errUserInvalid = null;
-  }
-  */
   ngOnInit(): void {
     switch (this.dlgData?.cmd) {
       case 'addUser':

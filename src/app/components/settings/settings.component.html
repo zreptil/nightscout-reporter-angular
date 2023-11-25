@@ -5,13 +5,7 @@
       <mat-icon>settings</mat-icon>
       <span i18n="title for settings dialog">Einstellungen</span>
     </h1>
-    <div>
-      <button *ngIf="ss.isEmpty(ps.text)"
-              [mat-dialog-close]="{btn:2}"
-              mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button *ngIf="ss.isEmpty(ps.data.text)" [data]="closeData"></app-close-button>
   </div>
 
   <div mat-dialog-content>
@@ -222,16 +216,16 @@
 
   <div mat-dialog-actions>
     <div>
-      <button (click)="clickExport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
+      <button (click)="clickExport()" *ngIf="ss.isEmpty(ps.data.text)" mat-button>
         <mat-icon>cloud_download</mat-icon>
         <span i18n="buttonlabel for exporting data">Exportieren</span>
       </button>
-      <button (click)="clickImport()" *ngIf="ss.isEmpty(ps.text)" mat-button>
+      <button (click)="clickImport()" *ngIf="ss.isEmpty(ps.data.text)" mat-button>
         <mat-icon>cloud_upload</mat-icon>
         <span i18n="buttonlabel for importing data">Importieren</span>
       </button>
     </div>
-    <button (click)="clickSave()" *ngIf="ss.isEmpty(ps.text)" mat-button>
+    <button (click)="clickSave()" *ngIf="ss.isEmpty(ps.data.text)" mat-button>
       <mat-icon>save</mat-icon>
       <span i18n="buttonlabel for saving data">Speichern</span>
     </button>

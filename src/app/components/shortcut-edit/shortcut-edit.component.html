@@ -2,11 +2,7 @@
      cdkDragRootElement=".dialog-box.shortcutedit">
   <div cdkDragHandle mat-dialog-title>
     <h1>{{msgTitle}}</h1>
-    <div>
-      <button mat-dialog-close="cancel" mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
 
   <div *ngIf="globals.currShortcut != null" mat-dialog-content>

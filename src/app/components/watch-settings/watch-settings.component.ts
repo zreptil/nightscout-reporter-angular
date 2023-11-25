@@ -6,6 +6,7 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ColorData} from '@/_model/color-data';
 import {WatchService} from '@/_services/watch.service';
 import {Utils} from '@/classes/utils';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-watch-settings',
@@ -15,6 +16,10 @@ import {Utils} from '@/classes/utils';
 export class WatchSettingsComponent {
   colpick: ColorData;
   savedColors: ColorData[] = [];
+  closeData: CloseButtonData = {
+    dialogClose: {btn: 2},
+    color: 'settingsHeadBack'
+  };
 
   constructor(private dlgRef: MatDialogRef<WatchSettingsComponent>,
               public ss: SessionService,

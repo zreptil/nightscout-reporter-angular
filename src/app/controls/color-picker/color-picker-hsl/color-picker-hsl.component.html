@@ -1,0 +1,23 @@
+<div canvas-container>
+  <div #imageBox image>
+    <canvas #canvasImage
+            (mousedown)="mouseDown('cvs', $event)"
+            (mousemove)="mouseMove('cvs', $event)"
+            (mouseout)="mouseUp('cvs', $event)"
+            (mouseup)="mouseUp('cvs', $event)">
+    </canvas>
+    <div [ngStyle]="styleForCanvasPointer" point pointer>
+      <div mark></div>
+    </div>
+  </div>
+</div>
+<div (mousedown)="mouseDown('hue', $event)"
+     (mousemove)="mouseMove('hue', $event)"
+     (mouseout)="mouseUp('hue', $event)"
+     (mouseup)="mouseUp('hue', $event)"
+     rgb>
+  <div [ngStyle]="styleForHuePointer" pointer vert>
+    <div mark></div>
+  </div>
+</div>
+

@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {GLOBALS} from '@/_model/globals-data';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-whats-new',
@@ -9,6 +10,9 @@ import {GLOBALS} from '@/_model/globals-data';
 export class WhatsNewComponent implements AfterViewInit {
 
   checkId = +GLOBALS.version.replace(/[.-]/g, '');
+  closeData: CloseButtonData = {
+    color: 'whatsnewHeadBack'
+  };
 
   constructor() {
   }

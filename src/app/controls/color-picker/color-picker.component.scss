@@ -12,9 +12,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: transparent;
 
     mat-icon {
+      display: flex;
       font-size: 1em;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

@@ -1,12 +1,13 @@
-[mat-dialog-title] {
-  background-color: var(--helpHeadBack);
-  color: var(--helpHeadFore);
+:host {
+  --headBack: var(--helpHeadBack);
+  --headFore: var(--helpHeadFore);
+  --bodyBack: var(--helpBodyBack);
+  --bodyFore: var(--helpBodyFore);
 }
 
 div[header] {
   display: flex;
   flex-direction: row;
-  color: var(--helpHeadFore);
   justify-content: space-between;
   align-items: center;
 }
@@ -15,8 +16,6 @@ div[header] {
   flex: 1;
   padding: 1em;
   font-size: 1.2em;
-  color: var(--helpBodyFore);
-  background-color: var(--helpBodyBack);
   text-align: justify;
 }
 
@@ -30,7 +29,7 @@ h1 {
 a, a:visited, a:active {
   text-decoration: none;
   cursor: pointer;
-  color: var(--helpHeadBack);
+  color: var(--headBack);
 }
 
 material-button {

@@ -8,22 +8,31 @@ import {ColorData} from '@/_model/color-data';
 export class ColorPickerBaseComponent implements AfterViewInit {
   @Input()
   data: ColorDialogData;
-  @Input()
-  color!: ColorData;
   @Output()
   colorChange = new EventEmitter<ColorData>();
   @Output()
-  colorClick = new EventEmitter<ColorData>();
-
-  // Can be used to redirect actions from the parent component
-  // to this component. When parentClick is received the
-  // component looks for a method named parentFiredXXX, where
-  // XXX has to be the same as the paramter received in parentClick.
+  colorSaveClick = new EventEmitter<ColorData>();
   // If this method is available it will be called.
   @Input()
   parentClick: EventEmitter<string>;
 
   constructor() {
+  }
+
+  // Can be used to redirect actions from the parent component
+  // to this component. When parentClick is received the
+  // component looks for a method named parentFiredXXX, where
+  // XXX has to be the same as the paramter received in parentClick.
+
+  _color: ColorData;
+
+  get color(): ColorData {
+    return this._color;
+  }
+
+  @Input()
+  set color(value: ColorData) {
+    this._color = value;
   }
 
   ngAfterViewInit(): void {

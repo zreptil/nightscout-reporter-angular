@@ -6,7 +6,8 @@ import {ColorMix} from '@/_model/color-mix-data';
 
 export interface ColorDialogData {
   imageDataUrl: string;
-  mode: string;
+  mode: 'hsl' | 'image' | 'mixer' | 'slider';
+  modeList: string[];
   onDataChanged: EventEmitter<ColorDialogData>;
   onDialogEvent: EventEmitter<ColorDialogData>;
   color: ColorData;
@@ -30,7 +31,10 @@ export class ColorPickerComponent {
   imageDataUrl: string;
 
   @Input()
-  mode: string;
+  mode: 'hsl' | 'mixer' | 'image' | 'slider';
+
+  @Input()
+  modeList: string;
 
   @Input()
   color: ColorData;
@@ -49,6 +53,8 @@ export class ColorPickerComponent {
 
   @Output()
   onDialogEvent = new EventEmitter<ColorDialogData>();
+  @Input()
+  updateDialogData: (data: any) => void;
 
   constructor(public dialog: MatDialog) {
     this.mixColors = ColorMix.fromJson({})
@@ -64,21 +70,30 @@ export class ColorPickerComponent {
       maxFilesize: this.maxFilesize,
       mixColors: this.mixColors,
       savedColors: this.savedColors ?? [],
+      modeList: ColorPickerDialog.modeList,
       mode: this.mode,
       action: 'open'
     };
+    if (this.modeList != null) {
+      data.modeList = this.modeList.split(',') as any;
+    }
+    if (data.modeList.indexOf(data.mode) < 0) {
+      data.mode = data.modeList[0] ?? 'hsl';
+    }
     this.onDialogEvent?.emit(data);
+    this.updateDialogData?.(data);
     const dlgRef = this.dialog.open(ColorPickerDialog, {
       data: data,
       panelClass: ['dialog-box', 'settings']
     });
     dlgRef.componentInstance.fireMode();
-    dlgRef.afterClosed().subscribe(data => {
-      if (data == null) {
-        data = {};
+    dlgRef.afterClosed().subscribe(response => {
+      if (response == null) {
+        response = {};
       }
-      data.action = 'close';
-      this.onDialogEvent?.emit(data);
+      response.action = 'close';
+      response.color = data.color;
+      this.onDialogEvent?.emit(response);
     });
   }
 }

@@ -330,7 +330,8 @@ export class SessionService {
   }
 
   deleteUser(): void {
-    this.ms.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`, new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
+    this.ms.confirm($localize`Soll der Benutzer ${GLOBALS.user.name} wirklich gelöscht werden?`,
+      new DialogParams({theme: 'settings', icon: 'delete'})).subscribe(result => {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);

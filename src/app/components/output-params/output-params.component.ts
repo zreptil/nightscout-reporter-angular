@@ -9,6 +9,7 @@ import {StatusData} from '@/_model/nightscout/status-data';
 import {PdfService} from '@/_services/pdf.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DatepickerEntry} from '@/_model/datepicker-entry';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-output-params',
@@ -28,6 +29,38 @@ export class OutputParamsComponent implements OnInit {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+  /*
+
+    @Output('printparamsresult')
+    Stream<UIEvent> get trigger => _trigger.stream;
+    final _trigger = StreamController<UIEvent>.broadcast(sync: true);
+
+    List<String> listGlucMaxValues = [msgAutomatic];
+    List<String> listBasalPrecision = [msgBasalPrecisionFromProfile];
+
+    PrintParamsComponent();
+
+    @override
+    Future<Null> ngOnInit() async {
+    }
+
+    void fire(String type) {
+      const detail = 0;
+      // make sure the value uses the correct factor
+      g.user.adjustGluc = g.user.adjustGluc;
+      switch (type) {
+        case 'ok':
+          g.currPeriodShift = periodShift;
+          g.ppGlucMaxIdx = glucMaxIdx;
+          g.ppBasalPrecisionIdx = basalPrecisionIdx;
+          break;
+      }
+      _trigger.add(UIEvent(type, detail: detail));
+    }
+  */
+  closeData: CloseButtonData = {
+    color: 'outputparamsHeadBack'
+  };
 
   constructor(public ns: NightscoutService,
               public ds: DataService,
@@ -93,35 +126,6 @@ export class OutputParamsComponent implements OnInit {
     return $localize`Standard Zielbereich verwenden (${low} ${unit} - ${high} ${unit})`;
   }
 
-  /*
-
-    @Output('printparamsresult')
-    Stream<UIEvent> get trigger => _trigger.stream;
-    final _trigger = StreamController<UIEvent>.broadcast(sync: true);
-
-    List<String> listGlucMaxValues = [msgAutomatic];
-    List<String> listBasalPrecision = [msgBasalPrecisionFromProfile];
-
-    PrintParamsComponent();
-
-    @override
-    Future<Null> ngOnInit() async {
-    }
-
-    void fire(String type) {
-      const detail = 0;
-      // make sure the value uses the correct factor
-      g.user.adjustGluc = g.user.adjustGluc;
-      switch (type) {
-        case 'ok':
-          g.currPeriodShift = periodShift;
-          g.ppGlucMaxIdx = glucMaxIdx;
-          g.ppBasalPrecisionIdx = basalPrecisionIdx;
-          break;
-      }
-      _trigger.add(UIEvent(type, detail: detail));
-    }
-  */
   clickExecute() {
     // make sure the value uses the correct factor
     GLOBALS.user.adjustGluc = GLOBALS.user.adjustGluc;

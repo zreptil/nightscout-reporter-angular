@@ -5,12 +5,7 @@
       <mat-icon>tune</mat-icon>
       Formularparameter
     </h1>
-    <div>
-      <button [mat-dialog-close]="{btn:2}"
-              mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <div *ngIf="!globals.showAllTileParams" [class]="classForList(form, 'formparams')">

@@ -2,6 +2,9 @@
      cdkDragRootElement=".dialog-box.settings">
   <div cdkDragHandle mat-dialog-title>
     <h1>
+      <button (click)="clickMode()" mat-icon-button>
+        <mat-icon>{{modeIcon}}</mat-icon>
+      </button>
       <div i18n>Farbauswahl</div>
     </h1>
     <button (click)="clickClose()" mat-icon-button>
@@ -10,17 +13,17 @@
   </div>
 
   <div mat-dialog-content>
-    <button (click)="clickMode()" mat-icon-button>
-      <mat-icon>{{modeIcon}}</mat-icon>
-    </button>
+    <ng-container *ngIf="data.mode === 'hsl'">
+      <app-color-picker-hsl (colorChange)="fireChange($event)" (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-hsl>
+    </ng-container>
     <ng-container *ngIf="data.mode === 'image'">
-      <app-color-picker-image (colorClick)="currentColorClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-image>
+      <app-color-picker-image (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-image>
     </ng-container>
     <ng-container *ngIf="data.mode === 'mixer'">
-      <app-color-picker-mixer (colorClick)="currentColorClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-mixer>
+      <app-color-picker-mixer (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-mixer>
     </ng-container>
-    <ng-container *ngIf="data.mode === 'rgb'">
-      <app-color-picker-rgb (colorClick)="currentColorClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-rgb>
+    <ng-container *ngIf="data.mode === 'slider'">
+      <app-color-picker-slider (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-slider>
     </ng-container>
   </div>
 
@@ -28,10 +31,12 @@
     <div (click)="colorClick($event, data.color)"
          [ngStyle]="{backgroundColor:data.color.display,marginRight:'1em'}"
          class="color"></div>
-    <div (click)="colorClick($event, color)"
+    <div (click)="colorClick($event, color, idx)"
          *ngFor="let color of savedColors; let idx = index"
          [class]="classForCurrColor(idx)"
-         [ngStyle]="{backgroundColor:color.display}"></div>
+         [ngStyle]="{backgroundColor:color.display}">
+      <mat-icon *ngIf="currColorIdx === idx" [ngStyle]="styleForSaveIcon">save</mat-icon>
+    </div>
     <ng-container *ngIf="data.mode === 'image'">
       <button (click)="fire.emit('File')" mat-icon-button>
         <mat-icon>upload</mat-icon>

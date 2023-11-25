@@ -4,23 +4,29 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
 import {ColorDialogData} from '@/controls/color-picker/color-picker.component';
+import {ColorUtils} from '@/controls/color-picker/color-utils';
 
 @Component({
   templateUrl: './color-picker-dialog.html',
   styleUrls: ['./color-picker-dialog.scss']
 })
 export class ColorPickerDialog {
-  static modeList = ['mixer', 'image', 'rgb'];
+  static modeList: ('hsl' | 'mixer' | 'image' | 'slider')[] = ['hsl', 'mixer', 'image', 'slider'];
+  static iconList: { [key: string]: string } =
+    {
+      hsl: 'palette', mixer: 'blender', image: 'image', slider: 'toggle_on'
+    };
   isActive = false;
 
   fire = new EventEmitter<string>();
 
   constructor(public dialogRef: MatDialogRef<ColorPickerDialog>,
               @Inject(MAT_DIALOG_DATA) public data: ColorDialogData) {
-    if (data.savedColors.length < 1) {
+    if (ColorPickerDialog._savedColors.length < 1) {
       this.savedColors.push(new ColorData([0, 0, 0]));
     }
-    this.currColorIdx = data.savedColors.length - 1;
+    this.currColorIdx = ColorPickerDialog._savedColors.length - 1;
+    this.currentColor = data.color;
   }
 
   get currentColor(): ColorData {
@@ -32,26 +38,27 @@ export class ColorPickerDialog {
   }
 
   get modeIcon(): string {
-    const iconList: { [key: string]: string } = {mixer: 'blender', image: 'image', rgb: 'palette'};
-    if (iconList[this.data.mode] == null) {
+    if (ColorPickerDialog.iconList[this.data.mode] == null) {
       this.data.mode = ColorPickerDialog.modeList[0];
       this.fireMode();
     }
-    return iconList[this.data.mode];
+    return ColorPickerDialog.iconList[this.data.mode];
   }
 
+  static _savedColors: ColorData[] = [];
+
   get savedColors(): ColorData[] {
-    if (this.data.savedColors == null) {
-      this.data.savedColors = [];
+    if (ColorPickerDialog._savedColors == null) {
+      ColorPickerDialog._savedColors = [];
     }
-    if (this.data.savedColors.length < 0) {
-      this.data.savedColors.push(new ColorData([0, 0, 0]));
+    if (ColorPickerDialog._savedColors.length < 0) {
+      ColorPickerDialog._savedColors.push(new ColorData([0, 0, 0]));
     }
-    return this.data.savedColors;
+    return ColorPickerDialog._savedColors;
   }
 
   set savedColors(value: ColorData[]) {
-    this.data.savedColors = value;
+    ColorPickerDialog._savedColors = value;
     if (this.savedColors.length < this.currColorIdx) {
       this.currColorIdx = this.savedColors.length - 1;
     }
@@ -68,33 +75,39 @@ export class ColorPickerDialog {
       value = 0;
     }
     if (value >= this.savedColors.length) {
-      value = this.data.savedColors.length;
-      if (this._currColorIdx < this.data.savedColors.length) {
-        this.data.savedColors.push(this.data.savedColors[this._currColorIdx]);
+      value = ColorPickerDialog._savedColors.length;
+      if (this._currColorIdx < ColorPickerDialog._savedColors.length) {
+        ColorPickerDialog._savedColors.push(ColorPickerDialog._savedColors[this._currColorIdx]);
       } else {
-        this.data.savedColors.push(new ColorData([0, 0, 0]))
+        ColorPickerDialog._savedColors.push(new ColorData([0, 0, 0]))
       }
     }
     this._currColorIdx = value;
   }
 
-  currentColorClick(value: ColorData) {
+  get styleForSaveIcon(): any {
+    return {
+      color: ColorUtils.fontColor(this.currentColor.value)
+    };
+  }
+
+  colorSaveClick(value: ColorData) {
     const idx = this.savedColors.findIndex((c, i) => {
       return c.equals(value) && i !== this.currColorIdx;
     });
     if (idx >= 0) {
       if (this.currColorIdx < this.savedColors.length) {
-        this.data.savedColors.splice(this.currColorIdx, 1);
+        ColorPickerDialog._savedColors.splice(this.currColorIdx, 1);
       }
       this.currColorIdx = idx;
     } else {
-      this.currColorIdx = this.data.savedColors.length;
+      this.currColorIdx = ColorPickerDialog._savedColors.length;
     }
-    while (this.data.savedColors.length > 10) {
-      this.data.savedColors.splice(0, 1);
+    while (ColorPickerDialog._savedColors.length > 10) {
+      ColorPickerDialog._savedColors.splice(0, 1);
     }
-    if (this._currColorIdx >= this.data.savedColors.length) {
-      this._currColorIdx = this.data.savedColors.length - 1;
+    if (this._currColorIdx >= ColorPickerDialog._savedColors.length) {
+      this._currColorIdx = ColorPickerDialog._savedColors.length - 1;
     }
     this.savedColors[this._currColorIdx] = value;
   }
@@ -107,11 +120,17 @@ export class ColorPickerDialog {
     return ret;
   }
 
-  colorClick(event: MouseEvent, color: ColorData) {
+  colorClick(event: MouseEvent, color: ColorData, idx?: number) {
     event.stopPropagation();
-    this.isActive = false;
-    this.data.colorChange?.emit(color);
-    this.dialogRef.close();
+    if (idx == null) {
+      this.currentColor = color;
+    } else if (this.currColorIdx !== idx) {
+      this.isActive = false;
+      this.data.colorChange?.emit(color);
+      this.dialogRef.close();
+    } else {
+      this.colorSaveClick(color);
+    }
   }
 
   clickClose() {
@@ -125,8 +144,13 @@ export class ColorPickerDialog {
     this.data.onDialogEvent?.emit(this.data);
   }
 
+  fireChange(evt: any): void {
+    this.data.action = 'colorChange';
+    this.data.onDialogEvent?.emit({...this.data, color: evt});
+  }
+
   clickMode() {
-    this.data.mode = Utils.nextListItem(this.data.mode, ColorPickerDialog.modeList);
+    this.data.mode = Utils.nextListItem(this.data.mode, this.data.modeList) as any;
     this.fireMode();
     this.data.onDataChanged?.emit(this.data);
   }

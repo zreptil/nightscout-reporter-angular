@@ -2,11 +2,7 @@
      cdkDragRootElement=".dialog-box.outputparams">
   <div cdkDragHandle mat-dialog-title>
     <h1 i18n="title for printparameter dialog">Ausgabe Parameter</h1>
-    <div>
-      <button mat-dialog-close="ok" mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
 
   <div mat-dialog-content>

@@ -7,6 +7,7 @@
   --accentFore: var(--settingsHeadFore);
 
   .mat-mdc-dialog-actions:not([align=end]) {
+    margin: 0 0.5em;
     justify-content: flex-start;
   }
 }
@@ -21,4 +22,11 @@
   width: 1em;
   height: 1em;
   cursor: pointer;
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75%;
+  }
 }

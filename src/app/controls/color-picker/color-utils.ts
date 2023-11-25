@@ -46,9 +46,9 @@ export class ColorUtils {
   static hsl2rgb(hsl: number[]): number[] {
     // arguments: [H,S,L] or H,S,L
     //return [r, g, b];
-    const h = Number(hsl[0]) / 360;
-    const s = Number(hsl[1]) / 100;
-    const l = Number(hsl[2]) / 100;
+    const h = +hsl[0] / 360;
+    const s = +hsl[1] / 100;
+    const l = +hsl[2] / 100;
     let r, g, b;
 
     if (s === 0) {
@@ -231,11 +231,21 @@ export class ColorUtils {
     return ret < 1 ? 1 / ret : ret;
   }
 
-  static getFontColor(rgbRy: number[]): string {
+  static fontColor(rgbRy: number[]): string {
     if (ColorUtils.colorContrast(rgbRy, [255, 255, 255]) > 4.5) {
       return 'white';
     } else {
       return 'black';
     }
+  }
+
+  static getLuminance(rgb: number[]) {
+    for (let i = 0; i < rgb.length; i++) {
+      const channel = rgb[i] / 255;
+      rgb[i] = channel <= 0.03928
+        ? channel / 12.92
+        : ((channel + 0.055) / 1.055) * 2.4;
+    }
+    return parseFloat((0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]).toFixed(3));
   }
 }

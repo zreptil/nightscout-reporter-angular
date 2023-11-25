@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-dsgvo',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsgvoComponent implements OnInit {
 
-  constructor() { }
+  closeData: CloseButtonData = {
+    color: 'legalHeadBack'
+  };
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

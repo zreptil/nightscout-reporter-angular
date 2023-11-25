@@ -5,12 +5,7 @@
       <mat-icon>settings</mat-icon>
       <span i18n="title for watch settings dialog">Watch Einstellungen</span>
     </h1>
-    <div>
-      <button [mat-dialog-close]="{btn:2}"
-              mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
 
   <div mat-dialog-content>

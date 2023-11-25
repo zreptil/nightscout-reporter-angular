@@ -6,6 +6,7 @@ import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {MessageService} from '@/_services/message.service';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-shortcut-edit',
@@ -17,25 +18,6 @@ export class ShortcutEditComponent implements OnInit {
   @Output('shortcuteditresult')
   trigger = new EventEmitter<UIEvent>();
   confirmationIdx = -1;
-
-  constructor(public dialogRef: MatDialogRef<ShortcutEditComponent>,
-              public ss: SessionService,
-              public ds: DataService,
-              public ms: MessageService) {
-  }
-
-  get msgName(): string {
-    return $localize`Bezeichnung`;
-  }
-
-  get globals(): GlobalsData {
-    return GLOBALS;
-  }
-
-  get msgTitle(): string {
-    return GLOBALS.currShortcutIdx < 0 ? $localize`Shortcut anlegen` : $localize`Shortcut ändern`;
-  }
-
   /*
       void fire(String type) {
         const detail = 0;
@@ -66,6 +48,29 @@ export class ShortcutEditComponent implements OnInit {
       }
     }
     */
+  closeData: CloseButtonData = {
+    dialogClose: 'cancel',
+    color: 'shortcutHeadBack'
+  };
+
+  constructor(public dialogRef: MatDialogRef<ShortcutEditComponent>,
+              public ss: SessionService,
+              public ds: DataService,
+              public ms: MessageService) {
+  }
+
+  get msgName(): string {
+    return $localize`Bezeichnung`;
+  }
+
+  get globals(): GlobalsData {
+    return GLOBALS;
+  }
+
+  get msgTitle(): string {
+    return GLOBALS.currShortcutIdx < 0 ? $localize`Shortcut anlegen` : $localize`Shortcut ändern`;
+  }
+
   get formsCount(): number {
     return Object.keys(GLOBALS.currShortcut.forms).length;
   }

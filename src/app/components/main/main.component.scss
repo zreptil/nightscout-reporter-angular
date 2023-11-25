@@ -24,8 +24,8 @@
   }
 
   button {
-    background-color: var(--headBack);
-    color: var(--headFore);
+    background-color: var(--mainHeadBack);
+    color: var(--mainHeadFore);
   }
 
   @media (max-width: 800px) {
@@ -51,14 +51,14 @@
 
 .selectItem:hover:not(.mat-option-disabled),
 .selectItem:focus:not(.mat-option-disabled) {
-  background-color: var(--headBack);
-  color: var(--headFore);
+  background-color: var(--mainHeadBack);
+  color: var(--mainHeadFore);
   border-radius: 0.5em;
 }
 
 .selectItem.mat-selected:not(.mat-option-disabled,:hover) {
-  background-color: var(--bodyBack);
-  color: var(--bodyFore);
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
   border: 2px solid rgba(0, 0, 0, 0.6);
 }
 
@@ -70,15 +70,15 @@ mat-drawer-container {
   display: flex;
   width: 100vw;
   height: var(--doc-height);
-  background-color: var(--bodyBack);
-  color: var(--bodyFore);
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
 
   mat-drawer {
     width: 256px;
     height: calc(100% - 64px);
     margin-top: 64px;
-    background-color: var(--headBack);
-    color: var(--headFore);
+    background-color: var(--mainHeadBack);
+    color: var(--mainHeadFore);
 
     ::ng-deep .mat-drawer-inner-container {
       display: flex;
@@ -89,8 +89,8 @@ mat-drawer-container {
         flex: 1;
         flex-flow: column;
         justify-content: space-between;
-        background-color: var(--headBack);
-        color: var(--headFore);
+        background-color: var(--mainHeadBack);
+        color: var(--mainHeadFore);
         overflow-y: auto;
 
         mat-icon {
@@ -275,8 +275,8 @@ mat-drawer-container {
       }
 
       [mat-flat-button].menu {
-        background-color: var(--headBack);
-        color: var(--headFore);
+        background-color: var(--mainHeadBack);
+        color: var(--mainHeadFore);
       }
 
       [mat-flat-button].shortcuts {
@@ -286,8 +286,8 @@ mat-drawer-container {
     }
 
     .menu-button {
-      background-color: var(--headBack);
-      color: var(--headFore);
+      background-color: var(--mainHeadBack);
+      color: var(--mainHeadFore);
     }
 
     .shortcut-button {
@@ -304,8 +304,8 @@ mat-drawer-container {
     height: 100%;
 
     mat-toolbar {
-      background-color: var(--headBack);
-      color: var(--headFore);
+      background-color: var(--mainHeadBack);
+      color: var(--mainHeadFore);
 
       mat-toolbar-row {
         display: flex;
@@ -451,8 +451,8 @@ mat-drawer-container {
 }
 
 .selectItem {
-  background-color: var(--bodyBack);
-  color: var(--bodyFore);
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
 
   span {
     display: flex;
@@ -491,6 +491,6 @@ mat-drawer-container {
 }
 
 ::ng-deep .mat-select-panel {
-  background-color: var(--bodyBack);
+  background-color: var(--mainBodyBack);
   max-height: 95% !important;
 }

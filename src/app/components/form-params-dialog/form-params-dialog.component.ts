@@ -4,6 +4,7 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BasePrint} from '@/forms/base-print';
 import {ParamInfo} from '@/_model/param-info';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-form-params-dialog',
@@ -11,6 +12,10 @@ import {ParamInfo} from '@/_model/param-info';
   styleUrls: ['./form-params-dialog.component.scss']
 })
 export class FormParamsDialogComponent implements OnInit {
+  closeData: CloseButtonData = {
+    dialogClose: {btn: 2},
+    color: 'settingsHeadBack'
+  };
 
   constructor(public ss: SessionService,
               @Inject(MAT_DIALOG_DATA) public form: BasePrint) {

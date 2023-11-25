@@ -6,9 +6,7 @@
       <h1 i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</h1>
       <p i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</p>
     </div>
-    <button (click)="revertData()" mat-dialog-close="ok" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <div class="editcontrols">

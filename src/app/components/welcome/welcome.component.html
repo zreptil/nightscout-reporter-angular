@@ -13,16 +13,14 @@
         </button>
       </ng-container>
     </div>
-    <div>
+    <div row>
       <button (click)="clickDebug()"
               *ngIf="ss.mayDebug"
               class="debug"
               mat-mini-fab>
         <mat-icon>bug_report</mat-icon>
       </button>
-      <button *ngIf="globals.isConfigured" mat-dialog-close="ok" mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
+      <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
     </div>
   </div>
   <div mat-dialog-content>

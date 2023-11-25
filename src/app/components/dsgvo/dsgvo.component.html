@@ -2,11 +2,7 @@
      cdkDragRootElement=".dialog-box.dsgvo">
   <div cdkDragHandle mat-dialog-title>
     <h1 i18n="title for dataprotection dialog">Datenschutzerklärung</h1>
-    <div>
-      <button mat-dialog-close="ok" mat-icon-button>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div class="root" mat-dialog-content>
     <strong i18n="headline for shorttext for dataprotection">tl;dr</strong>

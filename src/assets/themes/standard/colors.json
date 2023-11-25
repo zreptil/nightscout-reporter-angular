@@ -1,8 +1,8 @@
 {
-  "headBack": "mat-green-900",
-  "headFore": "white",
-  "bodyBack": "mat-green-300",
-  "bodyFore": "black",
+  "mainHeadBack": "mat-green-900",
+  "mainHeadFore": "white",
+  "mainBodyBack": "mat-green-300",
+  "mainBodyFore": "black",
   "debugFirst": "#220",
   "debugSecond": "#550",
   "debugFore": "mat-yellow-500",
@@ -84,5 +84,8 @@
   "datepickerDowInactiveBack": "#db4437",
   "datepickerDowInactiveFore": "#eda29b",
   "sendCountFore": "black",
-  "sendCountFrame": "white"
+  "sendCountFrame": "white",
+  "userPinFore": "rgba(255, 215, 0, 0.7)",
+  "logDebugColor": "255, 255, 0",
+  "logDebugFore": "#000"
 }

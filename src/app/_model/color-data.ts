@@ -16,7 +16,7 @@ export class ColorData extends BaseData {
   }
 
   get fontDisplay(): string {
-    return ColorUtils.getFontColor(this.value);
+    return ColorUtils.fontColor(this.value);
   }
 
   get asJson(): any {
@@ -28,6 +28,21 @@ export class ColorData extends BaseData {
         Utils.pad(this.value[1]?.toString(16) ?? 0) +
         Utils.pad(this.value[2]?.toString(16) ?? 0)
     };
+  }
+
+  static fromString(value: string): ColorData {
+    const ret = new ColorData(null);
+    if (value?.length === 7) {
+      const r = parseInt(value.substring(1, 3), 16);
+      const g = parseInt(value.substring(3, 5), 16);
+      const b = parseInt(value.substring(5), 16);
+      ret.value = [r, g, b];
+    } else if (value?.startsWith('rgb(')) {
+      const parts = value.substring(4, value.length - 1).split(',');
+      console.log(parts, value);
+      ret.value = [+parts[0], +parts[1], +parts[2]];
+    }
+    return ret;
   }
 
   static fromJson(json: any, def?: ColorData): ColorData {
