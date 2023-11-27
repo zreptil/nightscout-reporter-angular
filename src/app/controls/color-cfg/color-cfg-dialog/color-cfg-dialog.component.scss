@@ -1,0 +1,27 @@
+:host {
+  --headBack: var(--settingsHeadBack);
+  --headFore: var(--settingsHeadFore);
+  --bodyBack: var(--settingsBodyBack);
+  --bodyFore: var(--settingsBodyFore);
+}
+
+div[row] {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-start;
+  justify-content: center;
+
+  div {
+    margin: 3px;
+  }
+
+  app-color-picker {
+    ::ng-deep button {
+      border-radius: 0.5em;
+    }
+  }
+
+  [name] {
+    flex: 1;
+  }
+}

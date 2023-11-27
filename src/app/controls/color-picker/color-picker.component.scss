@@ -6,19 +6,42 @@
   --accentBack: var(--settingsHeadBack);
   --accentFore: var(--settingsHeadFore);
 
-  button {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
+  display: flex;
+  flex-flow: row;
+  gap: 2px;
 
-    mat-icon {
+  [panel] {
+    position: relative;
+
+    button {
+      width: 100%;
+      height: 100%;
       display: flex;
-      font-size: 1em;
       align-items: center;
       justify-content: center;
+      background-color: transparent;
+
+      [pattern] {
+        background-image: url(../../../assets/img/checkers.png);
+        background-size: 10px;
+      }
+
+      [back], [pattern] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+      }
+
+      mat-icon {
+        display: flex;
+        font-size: 1em;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
     }
   }
 }

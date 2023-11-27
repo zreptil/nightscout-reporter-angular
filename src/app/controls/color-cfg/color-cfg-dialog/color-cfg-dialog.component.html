@@ -1,0 +1,32 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.colorcfgdialog">
+  <div mat-dialog-title>
+    <div>
+      <h1>{{dialogTitle}}</h1>
+    </div>
+    <app-close-button *ngIf="globals.isConfigured"></app-close-button>
+  </div>
+  <div mat-dialog-content>
+    <div *ngFor="let key of listThemeKeys" row>
+      <div>
+        <app-color-picker (onDialogEvent)="onColorPicker($event)"
+                          [colors]="colorList?.[key]?.colors"
+                          [modeList]="availableColormodes"
+                          [updateDialogData]="updateDialogData.bind(this)"></app-color-picker>
+      </div>
+      <div name>{{colorName(key)}}</div>
+    </div>
+  </div>
+  <div class="controls" mat-dialog-actions>
+    <div class="left">
+    </div>
+    <div class="right">
+      <button (click)="saveTheme()" mat-button>
+        <mat-icon>save</mat-icon>
+      </button>
+      <button (click)="resetTheme()" mat-button>
+        <mat-icon>format_color_reset</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

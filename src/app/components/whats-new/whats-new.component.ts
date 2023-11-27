@@ -11,7 +11,7 @@ export class WhatsNewComponent implements AfterViewInit {
 
   checkId = +GLOBALS.version.replace(/[.-]/g, '');
   closeData: CloseButtonData = {
-    color: 'whatsnewHeadBack'
+    colorKey: 'whatsnew'
   };
 
   constructor() {

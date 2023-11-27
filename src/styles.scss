@@ -18,6 +18,10 @@ html, body {
   overflow: hidden !important;
 }
 
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  --mdc-dialog-container-shape: 8px !important;
+}
+
 body {
   --doc-height: 100vh;
   display: flex;
@@ -238,6 +242,15 @@ mat-icon[small] {
   --bodyFore: var(--legalBodyFore);
   --accentBack: var(--legalHeadBack);
   --accentFore: var(--legalHeadFore);
+}
+
+.dialog-box.info {
+  --headBack: var(--mainHeadBack);
+  --headFore: var(--mainHeadFore);
+  --bodyBack: var(--mainBodyBack);
+  --bodyFore: var(--mainBodyFore);
+  --accentBack: var(--mainHeadBack);
+  --accentFore: var(--mainHeadFore);
 }
 
 @media (min-width: 1200px) {
@@ -753,4 +766,9 @@ form.oauth2 {
   }
 }
 
-
+// make all backdrops transparent except for the first
+// avoids getting background darker when opening a
+// popup on a popup
+.cdk-overlay-dark-backdrop:not(:first-child) {
+  background: transparent;
+}

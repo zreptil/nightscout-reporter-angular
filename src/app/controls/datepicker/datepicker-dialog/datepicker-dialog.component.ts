@@ -16,7 +16,7 @@ export class DatepickerDialogComponent implements OnInit {
 
   closeData: CloseButtonData = {
     closeAction: this.revertData.bind(this),
-    color: 'settingsHeadBack'
+    colorKey: 'settings'
   };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DatepickerData) {

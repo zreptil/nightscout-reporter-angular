@@ -89,18 +89,9 @@ export class ColorUtils {
     const r = +rgb[0];
     const g = +rgb[1];
     const b = +rgb[2];
-    let hexR = r.toString(16);
-    if (hexR.length === 1) {
-      hexR = `0${hexR}`;
-    }
-    let hexG = g.toString(16);
-    if (hexG.length === 1) {
-      hexG = `0${hexG}`;
-    }
-    let hexB = b.toString(16);
-    if (hexB.length === 1) {
-      hexB = `0${hexB}`;
-    }
+    let hexR = Utils.pad(r.toString(16));
+    let hexG = Utils.pad(g.toString(16));
+    let hexB = Utils.pad(b.toString(16));
     return [hexR, hexG, hexB];
   }
 
@@ -204,6 +195,10 @@ export class ColorUtils {
     } else {
       return '#000';
     }
+  }
+
+  static display_rgba(ry: number[], opacity: number): string {
+    return `rgba(${Math.round(ry[0])},${Math.round(ry[1])},${Math.round(ry[2])},${opacity})`;
   }
 
   static display_hsl(ry: number[]): string | false {

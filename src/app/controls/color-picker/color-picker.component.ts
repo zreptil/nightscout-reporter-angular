@@ -14,7 +14,6 @@ export interface ColorDialogData {
   colorChange: EventEmitter<ColorData>;
   maxFilesize: number;
   mixColors: ColorMix;
-  savedColors: ColorData[];
   action: string;
 }
 
@@ -37,7 +36,7 @@ export class ColorPickerComponent {
   modeList: string;
 
   @Input()
-  color: ColorData;
+  colors: ColorData[];
 
   @Output()
   colorChange = new EventEmitter<ColorData>();
@@ -60,16 +59,15 @@ export class ColorPickerComponent {
     this.mixColors = ColorMix.fromJson({})
   }
 
-  clickActivate(_: MouseEvent) {
-    const data = {
+  clickActivate(color: ColorData) {
+    const data: ColorDialogData = {
       imageDataUrl: this.imageDataUrl,
       onDataChanged: this.onDataChanged,
       onDialogEvent: this.onDialogEvent,
-      color: this.color ?? new ColorData([255, 255, 255]),
+      color: color ?? new ColorData([255, 255, 255]),
       colorChange: this.colorChange,
       maxFilesize: this.maxFilesize,
       mixColors: this.mixColors,
-      savedColors: this.savedColors ?? [],
       modeList: ColorPickerDialog.modeList,
       mode: this.mode,
       action: 'open'
@@ -78,7 +76,7 @@ export class ColorPickerComponent {
       data.modeList = this.modeList.split(',') as any;
     }
     if (data.modeList.indexOf(data.mode) < 0) {
-      data.mode = data.modeList[0] ?? 'hsl';
+      data.mode = (data.modeList[0] as any) ?? 'hsl';
     }
     this.onDialogEvent?.emit(data);
     this.updateDialogData?.(data);

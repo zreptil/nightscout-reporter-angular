@@ -38,7 +38,7 @@ export class HelpviewComponent implements OnInit {
     }
   */
   closeData: CloseButtonData = {
-    color: 'helpHeadBack'
+    colorKey: 'help'
   };
 
   constructor(pdf: PdfService, @Inject(MAT_DIALOG_DATA) cfg: FormConfig) {

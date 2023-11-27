@@ -50,7 +50,7 @@ export class ShortcutEditComponent implements OnInit {
     */
   closeData: CloseButtonData = {
     dialogClose: 'cancel',
-    color: 'shortcutHeadBack'
+    colorKey: 'shortcut'
   };
 
   constructor(public dialogRef: MatDialogRef<ShortcutEditComponent>,

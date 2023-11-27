@@ -1,3 +1,3 @@
-<app-color-picker (onDialogEvent)="onColorPicker($event)"
-                  [updateDialogData]="updateDialogData.bind(this)"
-                  modeList="hsl,mixer"></app-color-picker>
+<button (click)="showDialog()" mat-icon-button>
+  <mat-icon>palette</mat-icon>
+</button>

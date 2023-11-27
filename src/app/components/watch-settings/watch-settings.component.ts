@@ -18,7 +18,7 @@ export class WatchSettingsComponent {
   savedColors: ColorData[] = [];
   closeData: CloseButtonData = {
     dialogClose: {btn: 2},
-    color: 'settingsHeadBack'
+    colorKey: 'settings'
   };
 
   constructor(private dlgRef: MatDialogRef<WatchSettingsComponent>,

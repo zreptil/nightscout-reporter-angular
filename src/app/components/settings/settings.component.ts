@@ -85,7 +85,7 @@ export class SettingsComponent implements OnInit {
   */
   closeData: CloseButtonData = {
     dialogClose: {btn: 2},
-    color: 'settingsHeadBack'
+    colorKey: 'settings'
   };
 
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,

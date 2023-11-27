@@ -15,8 +15,18 @@
      (mousemove)="mouseMove('hue', $event)"
      (mouseout)="mouseUp('hue', $event)"
      (mouseup)="mouseUp('hue', $event)"
-     rgb>
+     hsl>
   <div [ngStyle]="styleForHuePointer" pointer vert>
+    <div mark></div>
+  </div>
+</div>
+<div (mousedown)="mouseDown('opc', $event)"
+     (mousemove)="mouseMove('opc', $event)"
+     (mouseout)="mouseUp('opc', $event)"
+     (mouseup)="mouseUp('opc', $event)"
+     [ngStyle]="styleForOpcBack" opc-back>
+  <div opc-fore></div>
+  <div [ngStyle]="styleForOpcPointer" pointer vert>
     <div mark></div>
   </div>
 </div>

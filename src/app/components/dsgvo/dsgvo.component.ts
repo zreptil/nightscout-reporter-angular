@@ -9,7 +9,7 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 export class DsgvoComponent implements OnInit {
 
   closeData: CloseButtonData = {
-    color: 'legalHeadBack'
+    colorKey: 'legal'
   };
 
   constructor() {

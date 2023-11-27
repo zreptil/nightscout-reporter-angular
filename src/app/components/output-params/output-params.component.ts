@@ -59,7 +59,7 @@ export class OutputParamsComponent implements OnInit {
     }
   */
   closeData: CloseButtonData = {
-    color: 'outputparamsHeadBack'
+    colorKey: 'outputparams'
   };
 
   constructor(public ns: NightscoutService,

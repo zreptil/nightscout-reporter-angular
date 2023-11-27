@@ -48,6 +48,7 @@ import {WatchSettingsComponent} from '@/components/watch-settings/watch-settings
 import {MessageService} from '@/_services/message.service';
 import {PrintTDD} from '@/forms/nightscout/print-tdd';
 import {PrintTemplate} from '@/forms/nightscout/print-template';
+import {ColorCfgDialogComponent} from '@/controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -96,7 +97,8 @@ export class SessionService {
     datepickerdialog: DatepickerDialogComponent,
     shortcutedit: ShortcutEditComponent,
     formparamsdialog: FormParamsDialogComponent,
-    watchsettings: WatchSettingsComponent
+    watchsettings: WatchSettingsComponent,
+    colorcfgdialog: ColorCfgDialogComponent
   }
 
   constructor(public ss: StorageService,

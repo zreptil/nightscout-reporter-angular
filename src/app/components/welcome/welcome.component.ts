@@ -40,7 +40,7 @@ export class WelcomeComponent implements OnInit {
     }
   */
   closeData: CloseButtonData = {
-    color: 'whatsnewHeadBack'
+    colorKey: 'whatsnew'
   };
 
   constructor(public ds: DataService,

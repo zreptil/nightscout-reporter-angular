@@ -24,11 +24,16 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
   override baseIdx = '12';
   isFormParam1: boolean;
   override params = [
-    new ParamInfo(1, this.msgParam1, {boolValue: false}),
-    new ParamInfo(2, this.msgParam2, {boolValue: false})
+    new ParamInfo(1, this.msgParam1, {
+      boolValue: false,
+      subParams: [new ParamInfo(1, this.msgParam3, {boolValue: false})]
+    }),
+    new ParamInfo(2, this.msgParam2, {boolValue: false}),
+
   ];
   showAllValues: boolean;
   showBolus: boolean;
+  showOnlyGluc: boolean;
 
   constructor(ps: PdfService, suffix: string = null) {
     super(ps);
@@ -52,6 +57,10 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
     return $localize`Bolusspalte anzeigen`;
   };
 
+  get msgParam3(): string {
+    return $localize`Nur die Glukosewerte anzeigen`;
+  };
+
   override get isPortrait(): boolean {
     return true;
   }
@@ -67,6 +76,7 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
   override extractParams(): void {
     this.showAllValues = this.params[0].boolValue;
     this.showBolus = this.params[1].boolValue;
+    this.showOnlyGluc = this.params[0].subParams[0].boolValue;
   }
 
   msgBasalInfo(time: string): string {
@@ -111,36 +121,52 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
 
     const tables: any[] = [];
 
-    const space = 0.4;
+    let fs = 10;
+    let linesPerPage = 37;
+    let showBolus = this.showBolus;
+    let maxColumns = 2;
+    let msgTime = this.msgTime;
+    if (this.showAllValues && this.showOnlyGluc) {
+      showBolus = false;
+      fs = 8;
+      linesPerPage = 41;
+      maxColumns = 7;
+      msgTime = this.msgTimeShort;
+    }
+
+    const space = (this.showAllValues && this.showOnlyGluc) ? 0 : 0.4;
     const count = this.showAllValues ? day.entries.length : 24;
-    let columns = Math.floor(count / 37) + 1;
-    columns = Math.min(columns, 2);
+    let columns = Math.floor(count / linesPerPage) + 1;
+    columns = Math.min(columns, maxColumns);
 
     let wid = (this.width - 2 * this.xframe) / columns;
     wid -= space * (columns - 1) / columns;
-    const fw = 3.5;
+    let fw = 3.5;
     let colCount = this.showAllValues ? 3 : 4;
-    if (this.showBolus) {
+    if (showBolus) {
       colCount++;
     }
-    const sw = colCount / (1 - 1 / fw);
-    const widths = columns == 1
-      ? [
-        this.cm(wid / fw - 0.34),
-        this.cm(wid / sw - 0.34),
-        this.cm(wid / sw - 0.34),
-        this.cm(wid / sw - 0.34),
-        this.cm(wid / sw - 0.34)
-      ]
-      : [
-        this.cm(wid / fw - 0.34),
-        this.cm(wid / sw - 0.34),
-        this.cm(wid / sw - 0.34),
-        this.cm(wid / sw - 0.34)
-      ];
-
-    if (this.showBolus) {
+    let sw = colCount / (1 - 1 / fw);
+    let widths = [
+      this.cm(wid / fw - 0.34),
+      this.cm(wid / sw - 0.34),
+      this.cm(wid / sw - 0.34),
+      this.cm(wid / sw - 0.34)
+    ];
+    if (columns === 1) {
       widths.push(this.cm(wid / sw - 0.34));
+    }
+
+    if (showBolus) {
+      widths.push(this.cm(wid / sw - 0.34));
+    }
+
+    if (this.showAllValues && this.showOnlyGluc) {
+      wid = (this.width - 2 * this.xframe) / maxColumns;
+      widths = [
+        this.cm(wid * 0.5 - 0.38),
+        this.cm(wid * 0.5 - 0.38)
+      ];
     }
 
     let idx = 0;
@@ -169,18 +195,20 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
     for (const entry of day.entries) {
       if (idx >= tables.length) {
         if (this.showAllValues) {
-          tables.push([
-            [
-              {text: this.msgTime, style: 'total', alignment: 'center'},
-              {
-                text: GLOBALS.getGlucInfo().unit,
-                style: 'total',
-                alignment: 'center'
-              },
-              {text: this.msgTrend, style: 'total', alignment: 'center'},
-              {text: this.msgKHTitle, style: 'total', alignment: 'center'}
-            ]
-          ]);
+          const row: any = [
+            {text: msgTime, style: 'total', alignment: 'center'},
+            {
+              text: GLOBALS.getGlucInfo().unit,
+              style: 'total',
+              alignment: 'center'
+            }
+          ];
+
+          if (!this.showOnlyGluc) {
+            row.push({text: this.msgTrend, style: 'total', alignment: 'center'});
+            row.push({text: this.msgKHTitle, style: 'total', alignment: 'center'});
+          }
+          tables.push([row]);
         } else {
           tables.push([
             [
@@ -196,7 +224,7 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
             ]
           ]);
         }
-        if (this.showBolus) {
+        if (showBolus) {
           Utils.last(Utils.last(tables) as any[]).push({text: this.msgBolus, style: 'total', alignment: 'center'});
         }
       }
@@ -240,13 +268,15 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
           trendColor = this.colTrendNorm;
         }
       }
+      let fillColor = this.colForGlucBack(day, entry.gluc);
       if (entry.gluc <= 0) {
         gluc = '';
         trend = '';
         trendColor = '';
+        fillColor = '';
       }
       if (this.showAllValues) {
-        tables[idx].push([
+        const row: any = [
           {
             text: text,
             alignment: 'center',
@@ -255,11 +285,14 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
           {
             text: gluc,
             alignment: 'center',
-            fillColor: this.colForGlucBack(day, entry.gluc)
-          },
-          {text: trend, alignment: 'right', fillColor: trendColor},
-          {text: carbs > 0 ? this.msgKH(carbs) : '', alignment: 'center'}
-        ]);
+            fillColor: fillColor
+          }
+        ];
+        if (!this.showOnlyGluc) {
+          row.push({text: trend, alignment: 'right', fillColor: trendColor});
+          row.push({text: carbs > 0 ? this.msgKH(carbs) : '', alignment: 'center'});
+        }
+        tables[idx].push(row);
       } else {
         const d = profile.store.listBasal.reverse().find(
           (e) => Utils.isBefore(e.time(day.date), Utils.addTimeSeconds(entry.time, 1))
@@ -301,7 +334,7 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
         ]);
       }
 
-      if (this.showBolus) {
+      if (showBolus) {
         text = bolusSum == null
           ? null
           : `${GLOBALS.fmtNumber(bolusSum, 1)} ${this.msgInsulinUnit}`;
@@ -309,7 +342,7 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
       }
 
       lines++;
-      if (lines > 37) {
+      if (lines > linesPerPage) {
         lines = 0;
         idx++;
       }
@@ -328,18 +361,17 @@ nicht markiert wurde. Wenn die Option markiert wurde, dann fehlt der Platz
           {
             width: this.cm(wid),
             text: this.msgBasalInfo(this.fmtDateTime(profile.store.startDate)),
-            fontSize: this.fs(10)
+            fontSize: this.fs(fs)
           }
         ]
       });
       y += 1.5;
     }
-
     for (const table of tables) {
       ret.push({
         absolutePosition: {x: this.cm(x), y: this.cm(y)},
         margin: [this.cm(0), this.cm(0), this.cm(0), this.cm(wid)],
-        fontSize: this.fs(10),
+        fontSize: this.fs(fs),
         table: {headerRows: 0, widths: widths, body: table}
       });
 

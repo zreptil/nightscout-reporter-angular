@@ -8,7 +8,7 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 })
 export class ImpressumComponent implements OnInit {
   closeData: CloseButtonData = {
-    color: 'legalHeadBack'
+    colorKey: 'legal'
   };
 
   constructor() {

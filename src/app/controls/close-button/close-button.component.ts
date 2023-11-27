@@ -14,7 +14,7 @@ export class CloseButtonComponent {
   data: CloseButtonData = new CloseButtonData();
 
   get showColorCfg(): boolean {
-    return GLOBALS.editColors && !Utils.isEmpty(this.data.color);
+    return GLOBALS.editColors && !Utils.isEmpty(this.data.colorKey);
   }
 
   get globals(): GlobalsData {

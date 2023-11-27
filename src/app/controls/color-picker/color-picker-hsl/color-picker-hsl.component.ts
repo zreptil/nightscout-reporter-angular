@@ -27,6 +27,17 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     super();
   }
 
+  _opacity: number;
+
+  get opacity(): number {
+    return this._opacity;
+  }
+
+  set opacity(value: number) {
+    this._opacity = value;
+    this.calcHSLColor();
+  }
+
   _hue: number;
 
   get hue(): number {
@@ -34,18 +45,18 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   }
 
   set hue(value: number) {
-    this._hue = Math.floor(value);
+    this._hue = value;
     this.calcHSLColor();
   }
 
   _sat: number;
 
   get sat(): number {
-    return Math.floor(this._sat);
+    return this._sat;
   }
 
   set sat(value: number) {
-    this._sat = Math.floor(value);
+    this._sat = value;
   }
 
   _light: number;
@@ -80,6 +91,20 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     };
   }
 
+  get styleForOpcBack(): any {
+    return {
+      '--c': ColorUtils.display_rgb(this._color.value),
+      '--o': this.opacity
+    };
+  }
+
+  get styleForOpcPointer(): any {
+    return {
+      '--c': ColorUtils.fontColor(this._color?.value ?? [255, 255, 255]),
+      left: `${Math.floor(this.opacity * 100)}%`
+    };
+  }
+
   get styleForCanvasPointer(): any {
     const x = this.sat / 100;
     const y = 1 - this.light / 100;
@@ -91,7 +116,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   }
 
   calcHSLColor(): void {
-    this.hslColor = new ColorData(ColorUtils.hsl2rgb([this.hue, 100, 50]));
+    this.hslColor = new ColorData(ColorUtils.hsl2rgb([this.hue, 100, 50]), this._opacity);
   }
 
   override ngAfterViewInit() {
@@ -146,19 +171,24 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       return;
     }
     const m = this.mousePos(evt);
+    const prz = Math.min(m.x / (this.width * 0.99), 1.0);
     switch (type) {
       case 'cvs':
-        this.sat = m.x / this.width * 100;
+        this.sat = prz * 100;
         this.light = 100 - m.y / this.height * 100;
         this._color = this.getColorAtPos(m.x, m.y);
         this.colorChange?.next(this.color);
         break;
       case 'hue':
-        const hue = m.x / this.width;
-        this.hue = hue * 360;
-        this._color = new ColorData(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]));
+        this.hue = prz * 360;
+        this._color = new ColorData(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
         this.colorChange?.next(this.color);
         this.calcHsl();
+        break;
+      case 'opc':
+        this.opacity = prz;
+        this._color = new ColorData(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
+        this.colorChange?.next(this.color);
         break;
     }
   }
@@ -172,11 +202,12 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     this.sat = hsl[1];
     this.light = hsl[2];
     this.hue = hsl[0];
+    this.opacity = this.color.opacity;
     this.paintCanvas();
   }
 
   selectColor(color: ColorData) {
-    return {backgroundColor: ColorUtils.display_rgb(color.value)};
+    return {backgroundColor: ColorUtils.display_rgba(color.value, color.opacity)};
   }
 
   clickColorSelect(color: ColorData) {

@@ -14,7 +14,7 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 export class FormParamsDialogComponent implements OnInit {
   closeData: CloseButtonData = {
     dialogClose: {btn: 2},
-    color: 'settingsHeadBack'
+    colorKey: 'settings'
   };
 
   constructor(public ss: SessionService,

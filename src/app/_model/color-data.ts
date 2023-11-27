@@ -3,8 +3,9 @@ import {BaseData} from '@/_model/base-data';
 import {Utils} from '@/classes/utils';
 
 export class ColorData extends BaseData {
+  icon = 'palette';
 
-  constructor(public value: number[]) {
+  constructor(public value: number[], public opacity = 1.0) {
     super();
     if (!Array.isArray(value)) {
       this.value = [255, 255, 255];
@@ -12,7 +13,7 @@ export class ColorData extends BaseData {
   }
 
   get display(): string {
-    return ColorUtils.display_rgb(this.value);
+    return ColorUtils.display_rgba(this.value, this.opacity);
   }
 
   get fontDisplay(): string {
@@ -37,11 +38,23 @@ export class ColorData extends BaseData {
       const g = parseInt(value.substring(3, 5), 16);
       const b = parseInt(value.substring(5), 16);
       ret.value = [r, g, b];
+    } else if (value?.length === 9) {
+      const r = parseInt(value.substring(1, 3), 16);
+      const g = parseInt(value.substring(3, 5), 16);
+      const b = parseInt(value.substring(5, 7), 16);
+      ret.value = [r, g, b];
+      ret.opacity = parseInt(value.substring(7), 16) / 255;
     } else if (value?.startsWith('rgb(')) {
       const parts = value.substring(4, value.length - 1).split(',');
       console.log(parts, value);
       ret.value = [+parts[0], +parts[1], +parts[2]];
+    } else if (value?.startsWith('rgba(')) {
+      const parts = value.substring(5, value.length - 1).split(',');
+      // console.log(parts, value);
+      ret.value = [+parts[0], +parts[1], +parts[2]];
+      ret.opacity = +parts[3];
     }
+
     return ret;
   }
 
