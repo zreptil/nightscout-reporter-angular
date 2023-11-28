@@ -93,6 +93,7 @@ export class PdfService {
           Log.error(this.msgLoadingDataError);
         }
         GLOBALS.isCreatingPDF = false;
+        this.ps.text = null;
         return;
       }
       // let docLen = 0;
@@ -223,6 +224,7 @@ export class PdfService {
       GLOBALS.isCreatingPDF = false;
       Log.devError(ex, 'Fehler im PdfService');
     } finally {
+      this.ps.text = null;
     }
     /*
         }).catchError((error) {
