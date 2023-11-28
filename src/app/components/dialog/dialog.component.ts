@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
 import {DialogData, DialogParams, DialogResultButton, DialogType, IDialogButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-dialog',
@@ -13,6 +14,11 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   readData: any;
   mayFireValueChanges = false;
   chipsResult: string[] = [];
+  closeData: CloseButtonData = {
+    showClose: !this.dialogRef.disableClose,
+    dialogClose: {btn: DialogResultButton.cancel},
+    colorKey: 'main'
+  };
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -87,14 +93,6 @@ export class DialogComponent implements OnInit, AfterViewChecked {
     this.chipsResult = result;
     if (typeof this.data.content === 'string') {
       this.data.content = Utils.wordify(this.data.content, 60);
-    }
-  }
-
-  clickClose(): void {
-    if (!this.dialogRef.disableClose) {
-      this.dialogRef.close({
-        btn: DialogResultButton.cancel
-      });
     }
   }
 

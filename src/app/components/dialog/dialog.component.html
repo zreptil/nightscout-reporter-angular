@@ -8,9 +8,7 @@
       {{data.title}}
     </h1>
     <div></div>
-    <button (click)="clickClose()" *ngIf="!dialogRef.disableClose" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
+    <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
