@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Inject} from '@angular/core';
 import {ColorData} from '@/_model/color-data';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogResultButton} from '@/_model/dialog-data';
@@ -10,7 +10,7 @@ import {ColorUtils} from '@/controls/color-picker/color-utils';
   templateUrl: './color-picker-dialog.html',
   styleUrls: ['./color-picker-dialog.scss']
 })
-export class ColorPickerDialog {
+export class ColorPickerDialog implements AfterViewInit {
   static modeList: ('hsl' | 'mixer' | 'image' | 'slider')[] = ['hsl', 'mixer', 'image', 'slider'];
   static iconList: { [key: string]: string } =
     {
@@ -19,6 +19,8 @@ export class ColorPickerDialog {
   isActive = false;
 
   fire = new EventEmitter<string>();
+  defColor: ColorData;
+  triggerValue: number[];
 
   constructor(public dialogRef: MatDialogRef<ColorPickerDialog>,
               @Inject(MAT_DIALOG_DATA) public data: ColorDialogData) {
@@ -26,7 +28,6 @@ export class ColorPickerDialog {
       this.savedColors.push(new ColorData([0, 0, 0]));
     }
     this.currColorIdx = ColorPickerDialog._savedColors.length - 1;
-    this.currentColor = data.color;
   }
 
   get currentColor(): ColorData {
@@ -91,6 +92,13 @@ export class ColorPickerDialog {
     };
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.defColor = ColorData.fromString(this.data.color.display);
+    });
+    this.currentColor = this.data.color;
+  }
+
   colorSaveClick(value: ColorData) {
     const idx = this.savedColors.findIndex((c, i) => {
       return c.equals(value) && i !== this.currColorIdx;
@@ -123,7 +131,9 @@ export class ColorPickerDialog {
   colorClick(event: MouseEvent, color: ColorData, idx?: number) {
     event.stopPropagation();
     if (idx == null) {
-      this.currentColor = color;
+      this.triggerValue = [...color.value, color.opacity];
+      // this.currentColor = color; //.update(color.value, color.opacity);
+      this.data.colorChange?.emit(this.currentColor);
     } else if (this.currColorIdx !== idx) {
       this.isActive = false;
       this.data.colorChange?.emit(color);

@@ -4,6 +4,9 @@ import {Utils} from '@/classes/utils';
 
 export class ColorData extends BaseData {
   icon = 'palette';
+  btnForeColor: string;
+  btnBackColor: string;
+  themeKey: string;
 
   constructor(public value: number[], public opacity = 1.0) {
     super();
@@ -62,6 +65,11 @@ export class ColorData extends BaseData {
     const ret = new ColorData(null);
     ret.fillFromJson(json, def);
     return ret;
+  }
+
+  update(value: number[], opacity = this.opacity) {
+    this.value = value;
+    this.opacity = opacity;
   }
 
   equals(check: ColorData): boolean {

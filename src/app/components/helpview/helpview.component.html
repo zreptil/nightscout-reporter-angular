@@ -10,7 +10,7 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
-    <div class="root">
+    <div>
       <ng-container *ngFor="let item of tileHelp[tileHelp.length-1].form.helpStrings;let idx=index">
         <span *ngIf="item.type==='text'" [innerHtml]="item.text"></span>
         <span (click)="onLinkClick(idx)" *ngIf="item.type==='btn'" class="btn">{{item.cfg.form.title}}</span>

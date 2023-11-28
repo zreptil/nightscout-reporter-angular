@@ -23,7 +23,7 @@ export class DialogParams {
 
   constructor(init?: { theme?: string, icon?: string, image?: string, beforeClose?: () => void }) {
     init ??= {};
-    init.theme ??= 'main';
+    init.theme ??= '';
     for (const key of Object.keys(init)) {
       (this as any)[key] = (init as any)[key];
     }

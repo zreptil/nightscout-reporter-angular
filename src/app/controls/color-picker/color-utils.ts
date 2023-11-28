@@ -188,8 +188,8 @@ export class ColorUtils {
     }
   }
 
-  static display_rgb(ry: number[]): string {
-    const rgb = `rgb(${Math.round(ry[0])},${Math.round(ry[1])},${Math.round(ry[2])})`;
+  static display_rgb(value: number[]): string {
+    const rgb = `rgb(${Math.round(value[0])},${Math.round(value[1])},${Math.round(value[2])})`;
     if (ColorUtils.validateRgb(rgb)) {
       return rgb;
     } else {
@@ -197,12 +197,12 @@ export class ColorUtils {
     }
   }
 
-  static display_rgba(ry: number[], opacity: number): string {
-    return `rgba(${Math.round(ry[0])},${Math.round(ry[1])},${Math.round(ry[2])},${opacity})`;
+  static display_rgba(value: number[], opacity: number): string {
+    return `rgba(${Math.round(value[0])},${Math.round(value[1])},${Math.round(value[2])},${opacity})`;
   }
 
-  static display_hsl(ry: number[]): string | false {
-    const hsl = `hsl(${Math.round(ry[0])},${Math.round(ry[1])}%,${Math.round(ry[2])}%)`;
+  static display_hsl(value: number[]): string | false {
+    const hsl = `hsl(${Math.round(value[0])},${Math.round(value[1])}%,${Math.round(value[2])}%)`;
     if (ColorUtils.validateHsl(hsl)) {
       return hsl;
     } else {

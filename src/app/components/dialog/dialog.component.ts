@@ -61,7 +61,10 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   customStyle(key: string): string {
     const ret = [];
     if (this.data.params.theme != null) {
-      const id = `${this.data.params.theme}${key}`;
+      let id = `${this.data.params.theme}${key}`;
+      if (id === key) {
+        id = id.toLowerCase();
+      }
       ret.push(`--back:var(--${id}Back)`);
       ret.push(`--fore:var(--${id}Fore)`);
       ret.push(`background-color:var(--back)`);
@@ -82,6 +85,9 @@ export class DialogComponent implements OnInit, AfterViewChecked {
       }
     }
     this.chipsResult = result;
+    if (typeof this.data.content === 'string') {
+      this.data.content = Utils.wordify(this.data.content, 60);
+    }
   }
 
   clickClose(): void {

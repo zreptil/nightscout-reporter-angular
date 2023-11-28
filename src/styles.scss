@@ -177,8 +177,8 @@ mat-icon[small] {
 
 .dialog-box {
   max-height: 90vh;
-  min-width: 30vw;
-  max-width: 90vw !important;
+  min-width: 30%;
+  // max-width: 90vw !important;
 
   .cdk-drag {
     display: flex;
@@ -255,7 +255,7 @@ mat-icon[small] {
 
 @media (min-width: 1200px) {
   .dialog-box.confirm {
-    max-width: 50% !important;
+    // max-width: 50% !important;
   }
 }
 
@@ -696,8 +696,8 @@ form.oauth2 {
 
 .mat-mdc-dialog-container .mdc-dialog__content,
 .mat-mdc-dialog-container .mdc-dialog__content.root {
-  background-color: var(--bodyBack);
-  color: var(--bodyFore);
+  background-color: var(--bodyBack) !important;
+  color: var(--bodyFore) !important;
 }
 
 .dialog-box .cdk-drag {
@@ -710,9 +710,9 @@ form.oauth2 {
   color: var(--headFore);
 }
 
-.mat-mdc-dialog-container .mdc-dialog__content {
-  color: initial !important;
-}
+//.mat-mdc-dialog-container .mdc-dialog__content {
+//  color: initial !important;
+//}
 
 .mat-mdc-dialog-container, .mat-mdc-dialog-container .mdc-dialog__container, .mat-mdc-dialog-container .mdc-dialog__surface {
   max-height: inherit;

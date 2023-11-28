@@ -1,16 +1,18 @@
 :host {
+  --headBack: var(--datepickerHeadBack);
+  --headFore: var(--datepickerHeadFore);
+  --bodyBack: var(--datepickerBodyBack);
+  --bodyFore: var(--datepickerBodyFore);
+
   .mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
     font-size: 0.8em;
   }
 
   ::ng-deep [mat-dialog-actions] {
-    background-color: var(--datepickerHeadBack);
     display: flex;
     flex-flow: row;
     flex-shrink: 0;
     justify-content: flex-end;
-
-    color: var(--datepickerHeadFore);
   }
 
   [cdkDrag] {
@@ -23,24 +25,22 @@
 }
 
 .shift {
-  padding: 1em 0;
+  padding: 1em 0.5em;
+  margin-right: 0.3em;
 
   white-space: normal;
   line-height: 1.5em;
 }
 
 [mat-dialog-title] {
-  background-color: var(--datepickerHeadBack);
-  color: var(--datepickerHeadFore);
-
   p {
     font-size: 80%;
   }
 }
 
 [mat-dialog-title].empty {
-  background-color: var(--datepickerHeadEmptyBack);
-  color: var(--datepickerHeadEmptyFore);
+  background-color: var(--datepickerHeadEmptyBack) !important;
+  color: var(--datepickerHeadEmptyFore) !important;
 }
 
 [mat-dialog-content] {
@@ -48,8 +48,6 @@
   flex-flow: column;
   padding: 1em;
   font-size: 1.2em;
-  background-color: var(--datepickerBodyBack);
-  color: var(--datepickerBodyFore);
 }
 
 

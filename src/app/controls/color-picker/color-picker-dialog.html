@@ -14,22 +14,36 @@
 
   <div mat-dialog-content>
     <ng-container *ngIf="data.mode === 'hsl'">
-      <app-color-picker-hsl (colorChange)="fireChange($event)" (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-hsl>
+      <app-color-picker-hsl (colorChange)="fireChange($event)"
+                            (colorSaveClick)="colorSaveClick($event)"
+                            [(color)]="currentColor"
+                            [data]="data"
+                            [parentClick]="fire"
+                            [triggerValue]="triggerValue"></app-color-picker-hsl>
     </ng-container>
     <ng-container *ngIf="data.mode === 'image'">
-      <app-color-picker-image (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-image>
+      <app-color-picker-image (colorSaveClick)="colorSaveClick($event)"
+                              [(color)]="currentColor"
+                              [data]="data"
+                              [parentClick]="fire"></app-color-picker-image>
     </ng-container>
     <ng-container *ngIf="data.mode === 'mixer'">
-      <app-color-picker-mixer (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-mixer>
+      <app-color-picker-mixer (colorSaveClick)="colorSaveClick($event)"
+                              [(color)]="currentColor"
+                              [data]="data"
+                              [parentClick]="fire"></app-color-picker-mixer>
     </ng-container>
     <ng-container *ngIf="data.mode === 'slider'">
-      <app-color-picker-slider (colorSaveClick)="colorSaveClick($event)" [(color)]="currentColor" [data]="data" [parentClick]="fire"></app-color-picker-slider>
+      <app-color-picker-slider (colorSaveClick)="colorSaveClick($event)"
+                               [(color)]="currentColor"
+                               [data]="data"
+                               [parentClick]="fire"></app-color-picker-slider>
     </ng-container>
   </div>
 
   <mat-dialog-actions>
-    <div (click)="colorClick($event, data.color)"
-         [ngStyle]="{backgroundColor:data.color.display,marginRight:'1em'}"
+    <div (click)="colorClick($event, defColor)"
+         [ngStyle]="{backgroundColor:defColor?.display,marginRight:'1em'}"
          class="color"></div>
     <div (click)="colorClick($event, color, idx)"
          *ngFor="let color of savedColors; let idx = index"

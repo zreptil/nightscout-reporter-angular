@@ -476,4 +476,20 @@ export class Utils {
       });
     }));
   }
+
+  static wordify(text: string, maxchars: number): string[] {
+    const ret: string[] = [];
+    const words = text.split(' ');
+    let line = '';
+    for (const word of words) {
+      if (line.length + word.length > maxchars) {
+        ret.push(line);
+        line = word;
+      } else {
+        line += ' ' + word;
+      }
+    }
+    ret.push(line);
+    return ret;
+  }
 }

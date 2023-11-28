@@ -20,11 +20,22 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   colorWheelXY: any = {display: 'none'};
   colorWheelPos = 'tl';
   colorWheelAnim: string;
-  hslColor = new ColorData([0, 0, 0]);
   downPos: { [key: string]: any } = {};
+  hueColor: ColorData;
 
   constructor() {
     super();
+  }
+
+  _triggerValue: string;
+
+  @Input()
+  set triggerValue(value: number[]) {
+    if (value?.length === 4) {
+      this.color.update(value, value[3]);
+    }
+    this.calcHsl();
+    this.colorChange?.next(this.color);
   }
 
   _opacity: number;
@@ -35,7 +46,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
 
   set opacity(value: number) {
     this._opacity = value;
-    this.calcHSLColor();
+    this.calcHueColor();
   }
 
   _hue: number;
@@ -46,7 +57,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
 
   set hue(value: number) {
     this._hue = value;
-    this.calcHSLColor();
+    this.calcHueColor();
   }
 
   _sat: number;
@@ -115,8 +126,8 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     };
   }
 
-  calcHSLColor(): void {
-    this.hslColor = new ColorData(ColorUtils.hsl2rgb([this.hue, 100, 50]), this._opacity);
+  calcHueColor(): void {
+    this.hueColor = new ColorData(ColorUtils.hsl2rgb([this.hue, 100, 50]));
   }
 
   override ngAfterViewInit() {
@@ -176,18 +187,18 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       case 'cvs':
         this.sat = prz * 100;
         this.light = 100 - m.y / this.height * 100;
-        this._color = this.getColorAtPos(m.x, m.y);
+        this._color.update(this.getColorAtPos(m.x, m.y).value);
         this.colorChange?.next(this.color);
         break;
       case 'hue':
         this.hue = prz * 360;
-        this._color = new ColorData(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
+        this._color.update(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
         this.colorChange?.next(this.color);
         this.calcHsl();
         break;
       case 'opc':
         this.opacity = prz;
-        this._color = new ColorData(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
+        this._color.update(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
         this.colorChange?.next(this.color);
         break;
     }

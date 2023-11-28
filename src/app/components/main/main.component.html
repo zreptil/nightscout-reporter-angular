@@ -155,6 +155,7 @@
       <mat-toolbar-row>
         <div style="z-index:10000;position:absolute;left:50%;top:50%;background:red;border:1px solid red">
           <color-cfg *ngIf="globals.editColors" colorKey=""></color-cfg>
+          <color-cfg *ngIf="globals.editColors" colorKey="main"></color-cfg>
         </div>
         <div [class]="classForView('basePanel')">
           <button (click)="clickUser()" class="userName toolbar-button">{{globals.user.display}}</button>

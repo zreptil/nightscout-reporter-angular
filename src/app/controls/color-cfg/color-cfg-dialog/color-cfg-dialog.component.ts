@@ -5,7 +5,7 @@ import {ColorUtils} from '@/controls/color-picker/color-utils';
 import {ColorData} from '@/_model/color-data';
 import {ThemeService} from '@/_services/theme.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {saveAs} from 'file-saver';
@@ -21,25 +21,24 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   lastValue: string;
   orgTheme: any;
   availableColormodes = 'hsl,mixer';
-  currColorKey: string;
   // mapping for several strings
   mapping: any = {
-    main: {title: $localize`Hauptseite`},
-    unknown: {title: $localize`Unbekannt`, colors: [{key: ''}]},
-    Head: {
-      title: $localize`Titelbereich`, colors: [
-        {key: 'HeadBack', icon: 'palette'},
-        {key: 'HeadFore', icon: 'text_fields'},
-      ]
-    },
-    Body: {
-      title: $localize`Inhaltsbereich`, colors: [
-        {key: 'BodyBack', icon: 'palette'},
-        {key: 'BodyFore', icon: 'text_fields'},
-      ]
-    },
-    ScrollThumb: {title: $localize`Scrollthumb`, colors: [{key: 'ScrollThumb'}]},
-    Error: {title: $localize`Fehler`, colors: [{key: 'Error'}]},
+    // main: {title: $localize`Hauptseite`},
+    // unknown: {title: $localize`Unbekannt`, colors: [{key: ''}]},
+    // Head: {
+    //   title: $localize`Titelbereich`, colors: [
+    //     {key: 'HeadBack', icon: 'palette'},
+    //     {key: 'HeadFore', icon: 'text_fields'},
+    //   ]
+    // },
+    // Body: {
+    //   title: $localize`Inhaltsbereich`, colors: [
+    //     {key: 'BodyBack', icon: 'palette'},
+    //     {key: 'BodyFore', icon: 'text_fields'},
+    //   ]
+    // },
+    // ScrollThumb: {title: $localize`Scrollthumb`, colors: [{key: 'ScrollThumb'}]},
+    // Error: {title: $localize`Fehler`, colors: [{key: 'Error'}]},
   }
 
   colorList: any = {};
@@ -48,6 +47,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
               private ms: MessageService,
               @Inject(MAT_DIALOG_DATA)
               public dlgData: { colorKey: string },
+              public dlgRef: MatDialogRef<ColorCfgDialogComponent>
   ) {
   }
 
@@ -86,8 +86,10 @@ export class ColorCfgDialogComponent implements AfterViewInit {
           keyList.splice(idx, 1);
           const back = ColorData.fromString(this.ts.currTheme[key]);
           back.icon = 'palette';
+          back.themeKey = key;
           const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
           fore.icon = 'text_fields';
+          fore.themeKey = foreKey;
           this.colorList[subKey] = {
             title: titleKey,
             colors: [back, fore]
@@ -98,24 +100,13 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       if (add) {
         const color = ColorData.fromString(this.ts.currTheme[key]);
         color.icon = 'palette';
+        color.themeKey = key;
         this.colorList[key] = {
           title: key,
           colors: [color]
         };
         ret.push(key);
       }
-      // if (!Utils.isEmpty(this.dlgData.colorKey) && key.startsWith(this.dlgData.colorKey)) {
-      //   if (key.endsWith('HeadBack')) {
-      //     ret.push('Head');
-      //   } else if (key.endsWith('BodyBack')) {
-      //     ret.push('Body');
-      //   } else if (key.endsWith('HeadFore') || key.endsWith('BodyFore')) {
-      //     // HeadFore and BodyFore will be processed with according Back
-      //   } else {
-      //     // ret.push(key);
-      //   }
-      // } else {
-      // }
     }
     this._listThemeKeys = ret;
     return ret;
@@ -129,8 +120,8 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     this.orgTheme = Utils.jsonize(this.ts.currTheme);
   }
 
-  colorChange(_evt: any) {
-    this.ts.currTheme[this.currColorKey] = this.value;
+  colorChange(data: ColorDialogData) {
+    this.ts.currTheme[data.color.themeKey] = this.value;
     // if (this.color.endsWith('Back')) {
     //   this.ts.currTheme[`${this.color.replace(/Back/, 'Fore')}`] =
     //     this.valueFore;
@@ -149,24 +140,24 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   }
 
   onColorPicker(data: ColorDialogData) {
-    console.log(data);
     switch (data.action) {
       case 'open':
+        this.dlgRef.addPanelClass('hidden');
+        this.valueFore = ColorUtils.fontColor(data.color.value);
+        this.value = data.color.display;
+        this.colorChange(data);
+        break;
       case 'colorChange':
         this.valueFore = ColorUtils.fontColor(data.color.value);
-        this.value = `#${ColorUtils.rgb2string(data.color.value)}`;
-        this.colorChange(null);
+        this.value = data.color.display;
+        this.colorChange(data);
         break;
       case 'close':
-        console.log(data);
+        this.dlgRef.removePanelClass('hidden');
         break;
       default:
         break;
     }
-  }
-
-  updateDialogData(data: any): void {
-    data.color = this.color(this.currColorKey);
   }
 
   resetTheme() {
@@ -181,10 +172,6 @@ export class ColorCfgDialogComponent implements AfterViewInit {
             break;
         }
       });
-  }
-
-  color(key: string) {
-    return ColorData.fromString(this.ts.currTheme[key]);
   }
 
   colors(key: string): ColorData[] {

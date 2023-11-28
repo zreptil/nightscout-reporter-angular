@@ -494,3 +494,11 @@ mat-drawer-container {
   background-color: var(--mainBodyBack);
   max-height: 95% !important;
 }
+
+button.send {
+  --mdc-fab-container-shape: 50px;
+
+  ::ng-deep .mat-mdc-button-ripple {
+    border-radius: initial;
+  }
+}

@@ -16,7 +16,7 @@ export class DatepickerDialogComponent implements OnInit {
 
   closeData: CloseButtonData = {
     closeAction: this.revertData.bind(this),
-    colorKey: 'settings'
+    colorKey: 'datepicker'
   };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DatepickerData) {
@@ -102,7 +102,6 @@ export class DatepickerDialogComponent implements OnInit {
   }
 
   revertData() {
-    console.log('HAHA');
     this.data.period.reset(this.data.loadedPeriod);
   }
 

@@ -79,7 +79,7 @@ export class DatepickerComponent implements OnInit {
     this.data.loadedPeriod = this.data.period.toString();
     this.data.month = GlobalsData.now;
     this.ss.showPopup('datepickerdialog', this.data).subscribe(result => {
-      switch (result.btn) {
+      switch (result?.btn) {
         case 'save':
           GLOBALS.period = this.data.period;
           this.periodChange.emit(this.data.period);

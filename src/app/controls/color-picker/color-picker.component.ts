@@ -25,31 +25,20 @@ export interface ColorDialogData {
 export class ColorPickerComponent {
   @Output()
   onDataChanged = new EventEmitter<ColorDialogData>();
-
   @Input()
   imageDataUrl: string;
-
   @Input()
   mode: 'hsl' | 'mixer' | 'image' | 'slider';
-
   @Input()
   modeList: string;
-
-  @Input()
-  colors: ColorData[];
-
   @Output()
   colorChange = new EventEmitter<ColorData>();
-
   @Input()
   maxFilesize = 1000000;
-
   @Input()
   savedColors: ColorData[];
-
   @Input()
   mixColors: ColorMix;
-
   @Output()
   onDialogEvent = new EventEmitter<ColorDialogData>();
   @Input()
@@ -57,6 +46,29 @@ export class ColorPickerComponent {
 
   constructor(public dialog: MatDialog) {
     this.mixColors = ColorMix.fromJson({})
+  }
+
+  _colors: ColorData[];
+
+  get colors(): ColorData[] {
+    return this._colors;
+  }
+
+  @Input()
+  set colors(value: ColorData[]) {
+    for (const c of value) {
+      c.btnBackColor = c.display;
+      c.btnForeColor = c.fontDisplay;
+    }
+    let back = value.find(c => c.icon === 'palette');
+    let fore = value.find(c => c.icon === 'text_fields');
+    if (back != null && fore != null) {
+      back.btnBackColor = back.display;
+      back.btnForeColor = fore.display;
+      fore.btnBackColor = back.display;
+      fore.btnForeColor = fore.display;
+    }
+    this._colors = value;
   }
 
   clickActivate(color: ColorData) {

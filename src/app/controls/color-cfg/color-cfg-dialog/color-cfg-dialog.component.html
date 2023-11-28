@@ -11,8 +11,7 @@
       <div>
         <app-color-picker (onDialogEvent)="onColorPicker($event)"
                           [colors]="colorList?.[key]?.colors"
-                          [modeList]="availableColormodes"
-                          [updateDialogData]="updateDialogData.bind(this)"></app-color-picker>
+                          [modeList]="availableColormodes"></app-color-picker>
       </div>
       <div name>{{colorName(key)}}</div>
     </div>

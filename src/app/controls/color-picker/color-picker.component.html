@@ -1,8 +1,8 @@
 <div *ngFor="let color of colors" panel>
   <button (click)="clickActivate(color)"
-          [ngStyle]="{color: color?.fontDisplay}">
-    <div pattern></div>
-    <div [ngStyle]="{backgroundColor: color?.display}" back></div>
+          [ngStyle]="{color: color?.btnForeColor}">
+    <div checkers></div>
+    <div [ngStyle]="{backgroundColor: color?.btnBackColor}" back></div>
     <mat-icon>{{color?.icon ?? 'palette'}}</mat-icon>
   </button>
 </div>
