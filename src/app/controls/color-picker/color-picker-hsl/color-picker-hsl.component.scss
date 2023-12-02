@@ -3,67 +3,17 @@
   flex-flow: column;
   margin-bottom: 1em;
   gap: 0.5em;
-
-  [canvas-container] {
-    display: flex;
-    flex-flow: column;
-
-    [image] {
-      position: relative;
-      display: flex;
-      flex: 1;
-    }
-
-    flex: 1;
-  }
-
-  [hsl] {
-    width: 100%;
-    height: 20px;
-    background: linear-gradient(90deg,
-      rgb(255, 0, 0),
-      rgb(255, 255, 0),
-      rgb(0, 255, 0),
-      rgb(0, 255, 255),
-      rgb(0, 0, 255),
-      rgb(255, 0, 255),
-      rgb(255, 0, 0)
-    );
-    position: relative;
-  }
-
-  [opc-back] {
-    width: 100%;
-    height: 20px;
-    background-image: url(../../../../assets/img/checkers.png);
-    background-size: 10px;
-    position: relative;
-
-    [opc-fore] {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--c);
-      opacity: var(--o);
-    }
-
-    [pointer] {
-      --c: inherit;
-    }
-  }
+  --ps: 19px;
+  --pf: 5px;
 
   [pointer] {
     --c: black;
     position: absolute;
     pointer-events: none;
     border-radius: 50%;
-    border: 5px solid var(--c);
-    height: 19px;
-    width: 19px;
-    top: -5px;
-    transform: translateX(-50%);
+    border: var(--pf) solid var(--c);
+    height: var(--ps);
+    width: var(--ps);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -88,6 +38,97 @@
     [mark] {
       width: 3px;
       height: 3px;
+    }
+  }
+
+  [hslcontainer] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+
+    [hslwheel] {
+      pointer-events: none;
+      --size: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: conic-gradient(
+          rgb(255, 0, 0),
+          rgb(255, 255, 0),
+          rgb(0, 255, 0),
+          rgb(0, 255, 255),
+          rgb(0, 0, 255),
+          rgb(255, 0, 255),
+          rgb(255, 0, 0)
+      );
+      height: var(--size);
+      width: var(--size);
+      position: relative;
+
+      [inner] {
+        pointer-events: none;
+        display: flex;
+        flex-flow: column;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 80%;
+        width: 80%;
+        border-radius: 50%;
+        background: var(--bodyBack);
+
+        [image] {
+          pointer-events: none;
+          position: relative;
+          display: flex;
+          flex: 1;
+
+          canvas {
+            pointer-events: none;
+          }
+        }
+
+        flex: 1;
+      }
+
+      [pointer-box] {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+        [pointer] {
+          position: absolute;
+        }
+      }
+    }
+  }
+
+  [opc-back] {
+    width: 100%;
+    height: 20px;
+    background-image: url(../../../../assets/img/checkers.png);
+    background-size: 10px;
+    position: relative;
+
+    [opc-fore] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--c);
+      opacity: var(--o);
+    }
+
+    [pointer] {
+      top: -5px;
+      transform: translateX(-50%);
+      --c: inherit;
     }
   }
 }

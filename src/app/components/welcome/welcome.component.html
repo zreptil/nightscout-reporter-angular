@@ -3,7 +3,7 @@
      cdkDragRootElement=".dialog-box.welcome">
   <div mat-dialog-title>
     <div>
-      <h1 i18n="welcome title">Willkommen bei Nightscout Reporter!</h1>
+      <h1>{{globals.titles.welcome}}</h1>
     </div>
     <div *ngIf="!globals.isConfigured" class="langPanel">
       <ng-container *ngFor="let lang of globals.languageList; let idx = index">

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
 @Component({
   selector: 'app-dsgvo',
@@ -13,6 +14,10 @@ export class DsgvoComponent implements OnInit {
   };
 
   constructor() {
+  }
+
+  get globals(): GlobalsData {
+    return GLOBALS;
   }
 
   ngOnInit(): void {

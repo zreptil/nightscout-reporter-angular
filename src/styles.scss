@@ -20,6 +20,10 @@ html, body {
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
   --mdc-dialog-container-shape: 8px !important;
+
+  .subtitle {
+    color: var(--headBack);
+  }
 }
 
 body {
@@ -236,12 +240,12 @@ mat-icon[small] {
 }
 
 .dialog-box.confirm {
-  --headBack: var(--legalHeadBack);
-  --headFore: var(--legalHeadFore);
-  --bodyBack: var(--legalBodyBack);
-  --bodyFore: var(--legalBodyFore);
-  --accentBack: var(--legalHeadBack);
-  --accentFore: var(--legalHeadFore);
+  --headBack: var(--mainHeadBack);
+  --headFore: var(--mainHeadFore);
+  --bodyBack: var(--mainBodyBack);
+  --bodyFore: var(--mainBodyFore);
+  --accentBack: var(--mainHeadBack);
+  --accentFore: var(--mainHeadFore);
 }
 
 .dialog-box.info {
@@ -663,6 +667,10 @@ form.oauth2 {
   background-color: initial;
 }
 
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--bodyFore);
+}
+
 .mat-datepicker-content {
   background-color: var(--settingsBodyBack);
   color: var(--bodyFore);
@@ -698,6 +706,11 @@ form.oauth2 {
 .mat-mdc-dialog-container .mdc-dialog__content.root {
   background-color: var(--bodyBack) !important;
   color: var(--bodyFore) !important;
+  --mdc-theme-text-primary-on-background: var(--bodyFore);
+
+  .mat-mdc-checkbox.mat-accent {
+    --mdc-checkbox-unselected-icon-color: var(--bodyFore);
+  }
 }
 
 .dialog-box .cdk-drag {
@@ -771,4 +784,23 @@ form.oauth2 {
 // popup on a popup
 .cdk-overlay-dark-backdrop:not(:first-child) {
   background: transparent;
+}
+
+svg {
+  --body: var(--owlBody, #080);
+  --brow: var(--owlBrow, #080);
+  --body-left: var(--owlBodyLeft, #080);
+  --body-right: var(--owlBodyRight, #080);
+  --eyearea: var(--owlEyearea, #080);
+  --eyes: var(--owlEyes, #080);
+  --xmas-frame: var(--owlXmasFrame, black);
+  --xmas-fur: var(--owlXmasFur, white);
+  --xmas-fabric: var(--owlXmasFabric, red);
+  --wizard-fabric: var(--owlWizardFabric, #11f);
+  --wizard-star1: var(--owlWizardStar1, #fff);
+  --wizard-star2: var(--owlWizardStar2, #ff0);
+  --reporter-frame: var(--owlReporterFrame, #070);
+  --reporter-fabric: var(--owlReporterFabric, #040);
+  --own-fabric: var(--owlOwnFabric, #040);
+  --own-frame: var(--owlOwnFrame, #070);
 }

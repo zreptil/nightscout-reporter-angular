@@ -87,5 +87,21 @@
   "sendCountFrame": "#fff",
   "userPinFore": "rgba(255, 215, 0, 0.7)",
   "logDebugColor": "255, 255, 0",
-  "logDebugFore": "#000"
+  "logDebugFore": "#000",
+  "owlBody": "#080",
+  "owlBrow": "#080",
+  "owlBodyLeft": "#080",
+  "owlBodyRight": "#080",
+  "owlEyearea": "#080",
+  "owlEyes": "#080",
+  "owlXmasFrame": "#000",
+  "owlXmasFur": "#fff",
+  "owlXmasFabric": "#f00",
+  "owlWizardFabric": "#11f",
+  "owlWizardStar2": "#ff0",
+  "owlWizardStar1": "#fff",
+  "owlReporterFrame": "#070",
+  "owlReporterFabric": "#040",
+  "owlOwnFabric": "#040",
+  "owlOwnFrame": "#070"
 }

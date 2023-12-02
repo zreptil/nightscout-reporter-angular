@@ -492,4 +492,14 @@ export class Utils {
     ret.push(line);
     return ret;
   }
+
+  static limit(value: number, min: number, max: number): number {
+    while (value < min) {
+      value += (max - min);
+    }
+    while (value > max) {
+      value -= (max - min);
+    }
+    return value;
+  }
 }

@@ -495,6 +495,10 @@ mat-drawer-container {
   max-height: 95% !important;
 }
 
+.material-navigation {
+  display: flex;
+}
+
 button.send {
   --mdc-fab-container-shape: 50px;
 

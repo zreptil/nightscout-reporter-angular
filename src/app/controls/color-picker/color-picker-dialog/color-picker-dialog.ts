@@ -16,8 +16,7 @@ export class ColorPickerDialog implements AfterViewInit {
     {
       hsl: 'palette', mixer: 'blender', image: 'image', slider: 'toggle_on'
     };
-  isActive = false;
-
+  static _maxSavedColors = 10;
   fire = new EventEmitter<string>();
   defColor: ColorData;
   triggerValue: number[];
@@ -39,6 +38,10 @@ export class ColorPickerDialog implements AfterViewInit {
   }
 
   get modeIcon(): string {
+    if (this.data.modeIcon != null) {
+      this.fireMode();
+      return this.data.modeIcon;
+    }
     if (ColorPickerDialog.iconList[this.data.mode] == null) {
       this.data.mode = ColorPickerDialog.modeList[0];
       this.fireMode();
@@ -46,12 +49,23 @@ export class ColorPickerDialog implements AfterViewInit {
     return ColorPickerDialog.iconList[this.data.mode];
   }
 
-  static _savedColors: ColorData[] = [];
+  static _savedColors: ColorData[] = [
+    new ColorData([255, 0, 0]),
+    new ColorData([255, 255, 0]),
+    new ColorData([0, 255, 0]),
+    new ColorData([0, 255, 255]),
+    new ColorData([0, 0, 255]),
+    new ColorData([255, 0, 255]),
+    new ColorData([255, 0, 0]),
+    new ColorData([0, 0, 0]),
+    new ColorData([255, 255, 251]),
+  ];
 
   get savedColors(): ColorData[] {
     if (ColorPickerDialog._savedColors == null) {
       ColorPickerDialog._savedColors = [];
     }
+    ColorPickerDialog._savedColors.splice(ColorPickerDialog._maxSavedColors);
     if (ColorPickerDialog._savedColors.length < 0) {
       ColorPickerDialog._savedColors.push(new ColorData([0, 0, 0]));
     }
@@ -92,6 +106,14 @@ export class ColorPickerDialog implements AfterViewInit {
     };
   }
 
+  iconForSave(color: ColorData): string {
+    const idx = this.savedColors.findIndex(c => c.equals(color));
+    if (idx >= 0 && idx < ColorPickerDialog._savedColors.length - 1) {
+      return 'delete';
+    }
+    return 'add';
+  }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.defColor = ColorData.fromString(this.data.color.display);
@@ -99,25 +121,25 @@ export class ColorPickerDialog implements AfterViewInit {
     this.currentColor = this.data.color;
   }
 
-  colorSaveClick(value: ColorData) {
+  colorAddClick(value: ColorData) {
     const idx = this.savedColors.findIndex((c, i) => {
       return c.equals(value) && i !== this.currColorIdx;
     });
     if (idx >= 0) {
       if (this.currColorIdx < this.savedColors.length) {
-        ColorPickerDialog._savedColors.splice(this.currColorIdx, 1);
+        ColorPickerDialog._savedColors.splice(idx, 1);
+        this.currColorIdx = ColorPickerDialog._savedColors.length - 1;
+        return;
       }
-      this.currColorIdx = idx;
-    } else {
-      this.currColorIdx = ColorPickerDialog._savedColors.length;
     }
-    while (ColorPickerDialog._savedColors.length > 10) {
+    this.currColorIdx = ColorPickerDialog._savedColors.length;
+    while (ColorPickerDialog._savedColors.length > ColorPickerDialog._maxSavedColors) {
       ColorPickerDialog._savedColors.splice(0, 1);
     }
     if (this._currColorIdx >= ColorPickerDialog._savedColors.length) {
       this._currColorIdx = ColorPickerDialog._savedColors.length - 1;
     }
-    this.savedColors[this._currColorIdx] = value;
+    this.savedColors[this._currColorIdx] = new ColorData(value.value, value.opacity);
   }
 
   classForCurrColor(idx: number): string[] {
@@ -128,25 +150,20 @@ export class ColorPickerDialog implements AfterViewInit {
     return ret;
   }
 
-  colorClick(event: MouseEvent, color: ColorData, idx?: number) {
-    event.stopPropagation();
-    if (idx == null) {
-      this.triggerValue = [...color.value, color.opacity];
-      // this.currentColor = color; //.update(color.value, color.opacity);
-      this.data.colorChange?.emit(this.currentColor);
-    } else if (this.currColorIdx !== idx) {
-      this.isActive = false;
-      this.data.colorChange?.emit(color);
-      this.dialogRef.close();
-    } else {
-      this.colorSaveClick(color);
-    }
+  resetClick(event: MouseEvent) {
+    event?.stopPropagation();
+    this.triggerValue = [...this.defColor.value, this.defColor.opacity];
+    this.data.colorChange?.emit(this.currentColor);
   }
 
-  clickClose() {
-    this.dialogRef.close({
-      btn: DialogResultButton.cancel
-    });
+  colorClick(event: MouseEvent, color: ColorData, idx: number) {
+    event.stopPropagation();
+    if (this.currColorIdx !== idx) {
+      this.triggerValue = [...color.value, color.opacity];
+      this.data.colorChange?.emit(color);
+    } else {
+      this.colorAddClick(color);
+    }
   }
 
   fireMode(): void {
@@ -163,5 +180,18 @@ export class ColorPickerDialog implements AfterViewInit {
     this.data.mode = Utils.nextListItem(this.data.mode, this.data.modeList) as any;
     this.fireMode();
     this.data.onDataChanged?.emit(this.data);
+  }
+
+  clickClose() {
+    this.resetClick(null);
+    this.dialogRef.close({
+      btn: DialogResultButton.cancel
+    });
+  }
+
+  saveClick() {
+    this.dialogRef.close({
+      btn: DialogResultButton.ok
+    });
   }
 }

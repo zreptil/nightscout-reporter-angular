@@ -41,6 +41,11 @@ export class ColorData extends BaseData {
       const g = parseInt(value.substring(3, 5), 16);
       const b = parseInt(value.substring(5), 16);
       ret.value = [r, g, b];
+    } else if (value?.length === 4) {
+      const r = parseInt(value.substring(1, 2), 16);
+      const g = parseInt(value.substring(2, 3), 16);
+      const b = parseInt(value.substring(3), 16);
+      ret.value = [r * 16 + r, g * 16 + g, b * 16 + b];
     } else if (value?.length === 9) {
       const r = parseInt(value.substring(1, 3), 16);
       const g = parseInt(value.substring(3, 5), 16);
@@ -73,7 +78,7 @@ export class ColorData extends BaseData {
   }
 
   equals(check: ColorData): boolean {
-    return ColorUtils.rgb2value(check?.value) === ColorUtils.rgb2value(this.value);
+    return check.display === this.display;
   }
 
   similar(check: ColorData): boolean {

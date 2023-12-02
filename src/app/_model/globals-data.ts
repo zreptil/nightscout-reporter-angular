@@ -53,6 +53,16 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
+  titles: any = {
+    settings: $localize`Einstellungen`,
+    dsgvo: $localize`Datenschutzerklärung`,
+    formparams: $localize`Formularparameter`,
+    help: $localize`Information`,
+    impressum: $localize`Impressum`,
+    outputparams: $localize`Ausgabe Parameter`,
+    welcome: $localize`Willkommen bei Nightscout Reporter!`,
+    whatsnew: $localize`Was bisher geschah...`
+  };
 
   avoidSaveAndLoad = false;
   userList: UserData[] = [];

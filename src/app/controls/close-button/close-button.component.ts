@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Optional} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {Utils} from '@/classes/utils';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-close-button',
@@ -13,11 +13,26 @@ export class CloseButtonComponent {
   @Input()
   data: CloseButtonData = new CloseButtonData();
 
+  constructor(@Optional() public dialogRef: MatDialogRef<any>) {
+  }
+
   get showColorCfg(): boolean {
-    return GLOBALS.editColors && !Utils.isEmpty(this.data.colorKey);
+    return GLOBALS.editColors && this.data.colorKey != null;
   }
 
   get globals(): GlobalsData {
     return GLOBALS;
+  }
+
+  clickClose() {
+    if (this.data.closeAction != null) {
+      this.data.closeAction?.().subscribe(result => {
+        if (result) {
+          this.dialogRef?.close(this.data.dialogClose);
+        }
+      });
+    } else {
+      this.dialogRef?.close(this.data.dialogClose);
+    }
   }
 }

@@ -3,23 +3,66 @@ import {DataService} from '@/_services/data.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
 import {GLOBALS} from '@/_model/globals-data';
+import * as JSZip from 'jszip';
+import {encode} from 'base64-arraybuffer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
+  static lsThemeName = 'owntheme';
   readonly currTheme: any = {};
-  themeWidth = '13em';
+  themeWidth = `${6 + 2.4 * Object.keys(GLOBALS.themeList).length}em`;
   langHeight = '15em';
 
   constructor(public ds: DataService,
               public ms: MaterialColorService) {
     window.addEventListener('resize', this.onResize);
+    console.log(this.themeWidth);
     this.onResize();
   }
 
   get isWatch(): boolean {
     return window.location.href.indexOf('watch') > 0;
+  }
+
+  restoreTheme(): void {
+    const t = GLOBALS.ownTheme;
+    if (t != null) {
+      const zip = new JSZip();
+      zip.loadAsync(t, {base64: true}).then(packed => {
+        packed.file('t').async('string').then(theme => {
+          const src = JSON.parse(theme);
+          console.log('theme', src);
+          for (const key of Object.keys(src)) {
+            this.currTheme[key] = src[key];
+          }
+          this.assignStyle(document.body.style, this.currTheme);
+          // console.log(JSON.parse(ex));
+        });
+      });
+    }
+  }
+
+  storeTheme(): void {
+    const list = Object.keys(this.currTheme);
+    list.sort();
+    let src: any = {};
+    for (const key of list) {
+      if (this.currTheme[key] != null) {
+        src[key] = this.currTheme[key];
+      }
+    }
+    src = JSON.stringify(src);
+    const zip = new JSZip();
+    zip.file('t', src);
+    zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(blob => {
+      blob.arrayBuffer().then(buffer => {
+        GLOBALS.ownTheme = encode(buffer);
+        this.ds.saveWebData();
+      });
+      // saveAs(content, 'colors.zip');
+    });
   }
 
   onResize() {
@@ -30,7 +73,24 @@ export class ThemeService {
     const suffix = this.isWatch ? '-watch' : '';
     document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
     document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);
-    const theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`);
+    let theme: any;
+    if (name === 'own') {
+      this.restoreTheme();
+      GLOBALS.theme = this.currTheme;
+      this.ds.saveWebData();
+      return;
+    } else {
+      theme = await this.ds.requestJson(`assets/themes/standard/colors.json`);
+      if (name !== 'standard') {
+        const std = theme;
+        theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
+        for (const key of Object.keys(std)) {
+          if (theme[key] == null) {
+            theme[key] = std[key];
+          }
+        }
+      }
+    }
     if (theme == null) {
       return;
     }
@@ -102,5 +162,4 @@ export class ThemeService {
     }
     return ret;
   }
-
 }

@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {DatepickerData} from '../datepicker-month/datepicker-data';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-datepicker-dialog',
@@ -15,7 +16,10 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 export class DatepickerDialogComponent implements OnInit {
 
   closeData: CloseButtonData = {
-    closeAction: this.revertData.bind(this),
+    closeAction: () => {
+      this.revertData.bind(this);
+      return of(true);
+    },
     colorKey: 'datepicker'
   };
 
@@ -101,7 +105,7 @@ export class DatepickerDialogComponent implements OnInit {
     this.data.month = this.data.period.start;
   }
 
-  revertData() {
+  revertData(): void {
     this.data.period.reset(this.data.loadedPeriod);
   }
 

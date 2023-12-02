@@ -13,6 +13,7 @@ import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {DropboxService} from '@/_services/sync/dropbox.service';
 import {MessageService} from '@/_services/message.service';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-main',
@@ -95,6 +96,10 @@ export class MainComponent implements OnInit {
       */
   sendIcon = 'send';
   menuIdx = 0;
+  closeData: CloseButtonData = {
+    showClose: false,
+    colorKey: ''
+  };
 
   constructor(public ts: ThemeService,
               public ds: DataService,

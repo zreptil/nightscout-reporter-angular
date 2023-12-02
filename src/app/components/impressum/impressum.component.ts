@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
 @Component({
   selector: 'app-impressum',
@@ -12,6 +13,10 @@ export class ImpressumComponent implements OnInit {
   };
 
   constructor() {
+  }
+
+  get globals(): GlobalsData {
+    return GLOBALS;
   }
 
   ngOnInit(): void {

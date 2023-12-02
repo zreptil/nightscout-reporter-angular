@@ -79,6 +79,7 @@ export class PdfService {
     Log.showTimer('loadData done');
     if (!repData?.isValid) {
       console.error('repData ist nicht gültig', repData);
+      this.ps.text = null;
       return;
     }
     GLOBALS.isCreatingPDF = true;

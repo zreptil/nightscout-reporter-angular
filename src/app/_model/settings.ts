@@ -34,7 +34,8 @@ export class Settings {
   themeList: any = {
     null: Settings.msgThemeAuto,
     standard: Settings.msgThemeStandard,
-    xmas: Settings.msgThemeXmas
+    xmas: Settings.msgThemeXmas,
+    own: Settings.msgThemeOwn,
   }
   // images were retrieved using https://findicons.com/files/icons/2758/flag_icons/32/*.png
   languageList: LangData[] = [
@@ -52,6 +53,7 @@ export class Settings {
     new LangData('ru-RU', `Русский`, 'ru', CrowdinData.factoryEnglish(), 'ru'),
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
+  ownTheme: any;
   // subVersion is added to version to have a unique version number without changing the current version
   private _subVersion = '1';
 
@@ -69,6 +71,10 @@ export class Settings {
 
   static get msgThemeXmas(): string {
     return $localize`:theme selection - christmas|:Weihnachten`;
+  }
+
+  static get msgThemeOwn(): string {
+    return $localize`:theme selection - own|:Eigenes`;
   }
 
   static get msgUnitMGDL(): string {

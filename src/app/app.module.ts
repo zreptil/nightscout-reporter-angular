@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AutofocusDirective} from '@/_directives/autofocus.directive';
 import {DialogComponent} from '@/components/dialog/dialog.component';
-import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog';
+import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
 import {LogComponent} from '@/components/log/log.component';
 import {ColorPickerComponent} from '@/controls/color-picker/color-picker.component';
 import {ColorPickerImageComponent} from '@/controls/color-picker/color-picker-image/color-picker-image.component';
@@ -50,7 +50,7 @@ import {ColorCfgComponent} from '@/controls/color-cfg/color-cfg.component';
 import {ColorEditDirective} from '@/_directives/color-edit.directive';
 import {ColorPickerHslComponent} from '@/controls/color-picker/color-picker-hsl/color-picker-hsl.component';
 import {CloseButtonComponent} from './controls/close-button/close-button.component';
-import { ColorCfgDialogComponent } from './controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
+import {ColorCfgDialogComponent} from './controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
 
 @NgModule({
   declarations: [

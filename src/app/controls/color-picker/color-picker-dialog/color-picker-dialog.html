@@ -15,26 +15,26 @@
   <div mat-dialog-content>
     <ng-container *ngIf="data.mode === 'hsl'">
       <app-color-picker-hsl (colorChange)="fireChange($event)"
-                            (colorSaveClick)="colorSaveClick($event)"
+                            (colorSaveClick)="colorAddClick($event)"
                             [(color)]="currentColor"
                             [data]="data"
                             [parentClick]="fire"
                             [triggerValue]="triggerValue"></app-color-picker-hsl>
     </ng-container>
     <ng-container *ngIf="data.mode === 'image'">
-      <app-color-picker-image (colorSaveClick)="colorSaveClick($event)"
+      <app-color-picker-image (colorSaveClick)="colorAddClick($event)"
                               [(color)]="currentColor"
                               [data]="data"
                               [parentClick]="fire"></app-color-picker-image>
     </ng-container>
     <ng-container *ngIf="data.mode === 'mixer'">
-      <app-color-picker-mixer (colorSaveClick)="colorSaveClick($event)"
+      <app-color-picker-mixer (colorSaveClick)="colorAddClick($event)"
                               [(color)]="currentColor"
                               [data]="data"
                               [parentClick]="fire"></app-color-picker-mixer>
     </ng-container>
     <ng-container *ngIf="data.mode === 'slider'">
-      <app-color-picker-slider (colorSaveClick)="colorSaveClick($event)"
+      <app-color-picker-slider (colorSaveClick)="colorAddClick($event)"
                                [(color)]="currentColor"
                                [data]="data"
                                [parentClick]="fire"></app-color-picker-slider>
@@ -42,19 +42,28 @@
   </div>
 
   <mat-dialog-actions>
-    <div (click)="colorClick($event, defColor)"
-         [ngStyle]="{backgroundColor:defColor?.display,marginRight:'1em'}"
-         class="color"></div>
-    <div (click)="colorClick($event, color, idx)"
-         *ngFor="let color of savedColors; let idx = index"
-         [class]="classForCurrColor(idx)"
-         [ngStyle]="{backgroundColor:color.display}">
-      <mat-icon *ngIf="currColorIdx === idx" [ngStyle]="styleForSaveIcon">save</mat-icon>
+    <div left>
+      <div (click)="resetClick($event)"
+           [ngStyle]="{backgroundColor:defColor?.display,marginRight:'1em'}"
+           class="color"></div>
+      <div (click)="colorClick($event, color, idx)"
+           *ngFor="let color of savedColors; let idx = index"
+           [class]="classForCurrColor(idx)"
+           [ngStyle]="{backgroundColor:color.display}">
+        <mat-icon *ngIf="currColorIdx === idx" [ngStyle]="styleForSaveIcon">
+          {{iconForSave(color)}}
+        </mat-icon>
+      </div>
     </div>
-    <ng-container *ngIf="data.mode === 'image'">
-      <button (click)="fire.emit('File')" mat-icon-button>
-        <mat-icon>upload</mat-icon>
+    <div right>
+      <ng-container *ngIf="data.mode === 'image'">
+        <button (click)="fire.emit('File')" mat-icon-button>
+          <mat-icon>upload</mat-icon>
+        </button>
+      </ng-container>
+      <button (click)="saveClick()" mat-icon-button>
+        <mat-icon>save</mat-icon>
       </button>
-    </ng-container>
+    </div>
   </mat-dialog-actions>
 </div>

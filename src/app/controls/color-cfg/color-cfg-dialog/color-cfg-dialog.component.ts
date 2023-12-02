@@ -7,8 +7,9 @@ import {ThemeService} from '@/_services/theme.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MessageService} from '@/_services/message.service';
-import {DialogResultButton} from '@/_model/dialog-data';
-import {saveAs} from 'file-saver';
+import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {map, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-color-cfg-dialog',
@@ -58,6 +59,37 @@ export class ColorCfgDialogComponent implements AfterViewInit {
 
   _listThemeKeys: string[];
 
+  closeData: CloseButtonData = {
+    closeAction: (): Observable<boolean> => {
+      let hasChanges = false;
+      for (const key of Object.keys(this.orgTheme)) {
+        if (this.ts.currTheme[key] !== this.orgTheme[key]) {
+          hasChanges = true;
+        }
+      }
+      if (!hasChanges) {
+        return of(true);
+      }
+      return this.ms.confirm($localize`Sollen die Farbänderungen verworfen werden?`,
+        new DialogParams({noClose: true}))
+        .pipe(map(
+          result => {
+            switch (result?.btn) {
+              case DialogResultButton.yes:
+                for (const key of Object.keys(this.orgTheme)) {
+                  this.ts.currTheme[key] = this.orgTheme[key];
+                }
+                this.ts.assignStyle(document.body.style, this.ts.currTheme);
+                this._listThemeKeys = null;
+                return true;
+              default:
+                return false;
+            }
+          }
+        ));
+    }
+  }
+
   get listThemeKeys(): string[] {
     if (this._listThemeKeys != null) {
       return this._listThemeKeys;
@@ -99,6 +131,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       }
       if (add) {
         const color = ColorData.fromString(this.ts.currTheme[key]);
+//        console.log(key, this.ts.currTheme[key], color);
         color.icon = 'palette';
         color.themeKey = key;
         this.colorList[key] = {
@@ -122,6 +155,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
 
   colorChange(data: ColorDialogData) {
     this.ts.currTheme[data.color.themeKey] = this.value;
+    this.ts.assignStyle(document.body.style, this.ts.currTheme);
     // if (this.color.endsWith('Back')) {
     //   this.ts.currTheme[`${this.color.replace(/Back/, 'Fore')}`] =
     //     this.valueFore;
@@ -136,7 +170,6 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     //       Math.min(100, s),
     //       Math.min(100, l)])).display;
     // }
-    this.ts.assignStyle(document.body.style, this.ts.currTheme);
   }
 
   onColorPicker(data: ColorDialogData) {
@@ -153,25 +186,15 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         this.colorChange(data);
         break;
       case 'close':
+        if ((data as any).btn === DialogResultButton.ok) {
+          console.log('habs', data, this.colorList);
+          this._listThemeKeys = null;
+        }
         this.dlgRef.removePanelClass('hidden');
         break;
       default:
         break;
     }
-  }
-
-  resetTheme() {
-    this.ms.confirm($localize`Hiermit werden alle Farben auf den Standard gesetzt. Soll das durchgeführt werden?`)
-      .subscribe(result => {
-        switch (result?.btn) {
-          case DialogResultButton.yes:
-            for (const key of Object.keys(this.orgTheme)) {
-              this.ts.currTheme[key] = this.orgTheme[key];
-            }
-            this.ts.assignStyle(document.body.style, this.ts.currTheme);
-            break;
-        }
-      });
   }
 
   colors(key: string): ColorData[] {
@@ -209,17 +232,34 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     return ret == null ? `(${key})` : `${ret} (${key})`;
   }
 
-  saveTheme() {
-    const list = Object.keys(this.ts.currTheme);
-    list.sort();
-    const output: any = {};
-    for (const key of list) {
-      if (this.ts.currTheme[key] != null) {
-        output[key] = this.ts.currTheme[key];
-      }
-    }
-    // this.ms.info(JSON.stringify(output));
-    saveAs(new Blob([JSON.stringify(output)]), 'colors.json');
+  downloadTheme() {
+    this.ts.storeTheme();
     this.ts.assignStyle(document.body.style, this.ts.currTheme);
+    // const list = Object.keys(this.ts.currTheme);
+    // list.sort();
+    // let output: any = {};
+    // for (const key of list) {
+    //   if (this.ts.currTheme[key] != null) {
+    //     output[key] = this.ts.currTheme[key];
+    //   }
+    // }
+    // output = JSON.stringify(output);
+    // const zip = new JSZip();
+    // zip.file('t', output);
+    // zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(content => {
+    //   content.arrayBuffer().then(c => {
+    //     const t = encode(c);
+    //     zip.loadAsync(t, {base64: true}).then(co => {
+    //       co.file('t').async('string').then(ex => {
+    //         console.log(JSON.parse(ex));
+    //       });
+    //     });
+    //   });
+    //   // saveAs(content, 'colors.zip');
+    // });
+  }
+
+  clickSave() {
+    this.dlgRef.close();
   }
 }

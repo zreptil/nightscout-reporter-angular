@@ -3,7 +3,7 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
-      <span i18n="title for settings dialog">Einstellungen</span>
+      <span>{{globals.titles.settings}}</span>
     </h1>
     <app-close-button *ngIf="ss.isEmpty(ps.data.text)" [data]="closeData"></app-close-button>
   </div>

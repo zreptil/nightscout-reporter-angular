@@ -8,7 +8,7 @@
       {{data.title}}
     </h1>
     <div></div>
-    <app-close-button [data]="closeData"></app-close-button>
+    <app-close-button *ngIf="!data?.params?.noClose" [data]="closeData"></app-close-button>
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>

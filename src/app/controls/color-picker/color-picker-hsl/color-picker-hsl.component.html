@@ -1,28 +1,36 @@
-<div canvas-container>
+<!-- div canvas-container>
   <div #imageBox image>
     <canvas #canvasImage
             (mousedown)="mouseDown('cvs', $event)"
             (mousemove)="mouseMove('cvs', $event)"
-            (mouseout)="mouseUp('cvs', $event)"
             (mouseup)="mouseUp('cvs', $event)">
     </canvas>
     <div [ngStyle]="styleForCanvasPointer" point pointer>
       <div mark></div>
     </div>
   </div>
-</div>
-<div (mousedown)="mouseDown('hue', $event)"
-     (mousemove)="mouseMove('hue', $event)"
+</div -->
+<div #mouseArea
+     (mousedown)="mouseDown('cvs', $event)"
+     (mousemove)="mouseMove(null, $event)"
      (mouseout)="mouseUp('hue', $event)"
-     (mouseup)="mouseUp('hue', $event)"
-     hsl>
-  <div [ngStyle]="styleForHuePointer" pointer vert>
-    <div mark></div>
+     (mouseup)="mouseUp(null, $event)"
+     hslcontainer>
+  <div #hslWheel hslwheel>
+    <div #imageBox inner>
+      <div image>
+        <canvas #canvasHSL></canvas>
+      </div>
+    </div>
+    <div [ngStyle]="styleForHuePointerBox" pointer-box>
+      <div [ngStyle]="styleForHuePointer" pointer>
+        <div mark></div>
+      </div>
+    </div>
   </div>
 </div>
 <div (mousedown)="mouseDown('opc', $event)"
      (mousemove)="mouseMove('opc', $event)"
-     (mouseout)="mouseUp('opc', $event)"
      (mouseup)="mouseUp('opc', $event)"
      [ngStyle]="styleForOpcBack" opc-back>
   <div opc-fore></div>

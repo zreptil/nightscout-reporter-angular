@@ -1,10 +1,17 @@
 <!--suppress HtmlUnknownTarget -->
+<div [innerHTML]="svgCollection"></div>
 <div [style]="themeStyle" class="themePanel">
   <button (click)="ss.donationClick()" class="donation" i18n="title of donate button" mat-flat-button>Spenden</button>
   <button (click)="togglePanels(key)" *ngFor="let key of globals.themeListKeys; let idx = index" class="themelogo" mat-mini-fab>
-    <img *ngIf="key==='null'" alt="wizard logo" class="logo" src="assets/themes/wizard.png">
-    <img *ngIf="key!=='null'" alt="owl logo" class="logo" src="assets/themes/{{key}}/owl.png">
+    <svg *ngIf="key==='null'" style="width:90%;height:90%" viewBox="0 0 219 250">
+      <use href="#owl-wizard"/>
+    </svg>
+    <svg *ngIf="key!=='null'" style="width:90%;height:90%" viewBox="0 0 219 250">
+      <use [attr.href]="owlId(key)"/>
+    </svg>
+    <!-- img *ngIf="key!=='null'" alt="owl logo" class="logo" src="assets/themes/{{key}}/owl.svg" -->
   </button>
+  <app-close-button [data]="closeData"></app-close-button>
 </div>
 <div [style]="langStyle" class="langPanel">
   <div frame>
@@ -20,5 +27,13 @@
   </div>
 </div>
 <button (click)="togglePanels('')" [style]="logoStyle" class="owllogo" mat-fab>
-  <img alt="owl logo" src="assets/themes/{{globals.theme}}/owl.png">
+  <!-- img alt="owl logo" src="assets/themes/{{globals.theme}}/owl.png" -->
+  <!-- img alt="owl logo" owl src="assets/themes/{{globals.theme}}/owl.svg" -->
+  <svg style="width:90%;height:90%" viewBox="0 0 219 250">
+    <use [attr.href]="owlId(globals.theme)"/>
+  </svg>
+  <!--svg style="width:90%;height:90%" viewBox="0 0 230 230">
+    <use href="#Outerbody"/>
+    <use href="#Innerbody"/>
+  </svg -->
 </button>

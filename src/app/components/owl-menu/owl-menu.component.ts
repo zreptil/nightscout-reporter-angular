@@ -4,6 +4,8 @@ import {ThemeService} from '@/_services/theme.service';
 import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
 import {LangData} from '@/_model/nightscout/lang-data';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
 @Component({
   selector: 'app-owl-menu',
@@ -16,10 +18,16 @@ export class OwlMenuComponent implements OnInit {
   langStyle = 'height:0;';
   logoStyle = '';
   themePanelShown = false;
+  svgCollection: SafeHtml;
+  closeData: CloseButtonData = {
+    showClose: false,
+    colorKey: 'owl'
+  };
 
   constructor(public ts: ThemeService,
               public ds: DataService,
-              public ss: SessionService) {
+              public ss: SessionService,
+              public sanitizer: DomSanitizer) {
   }
 
   get globals(): GlobalsData {
@@ -27,6 +35,12 @@ export class OwlMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.svgCollection == null) {
+      this.svgCollection = {};
+      this.ds.request('assets/img/owl.svg', {options: {responseType: 'text'}}).then(result => {
+        this.svgCollection = this.sanitizer.bypassSecurityTrustHtml(result.body);
+      });
+    }
   }
 
   togglePanels(key: string | LangData): void {
@@ -64,5 +78,9 @@ export class OwlMenuComponent implements OnInit {
       }
     }, duration * 1100);
     this.themePanelShown = !this.themePanelShown;
+  }
+
+  owlId(key: string): string {
+    return `#owl-${key}`;
   }
 }

@@ -1,13 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ColorData} from '@/_model/color-data';
 import {MatDialog} from '@angular/material/dialog';
-import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog';
+import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
 import {ColorMix} from '@/_model/color-mix-data';
 
 export interface ColorDialogData {
   imageDataUrl: string;
   mode: 'hsl' | 'image' | 'mixer' | 'slider';
   modeList: string[];
+  modeIcon?: string,
   onDataChanged: EventEmitter<ColorDialogData>;
   onDialogEvent: EventEmitter<ColorDialogData>;
   color: ColorData;
@@ -92,6 +93,7 @@ export class ColorPickerComponent {
     }
     this.onDialogEvent?.emit(data);
     this.updateDialogData?.(data);
+    data.modeIcon = color.icon;
     const dlgRef = this.dialog.open(ColorPickerDialog, {
       data: data,
       panelClass: ['dialog-box', 'settings']

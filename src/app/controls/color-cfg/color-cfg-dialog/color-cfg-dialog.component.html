@@ -4,7 +4,7 @@
     <div>
       <h1>{{dialogTitle}}</h1>
     </div>
-    <app-close-button *ngIf="globals.isConfigured"></app-close-button>
+    <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <div *ngFor="let key of listThemeKeys" row>
@@ -18,13 +18,13 @@
   </div>
   <div class="controls" mat-dialog-actions>
     <div class="left">
+      <button (click)="downloadTheme()" mat-button>
+        <mat-icon>file_download</mat-icon>
+      </button>
     </div>
     <div class="right">
-      <button (click)="saveTheme()" mat-button>
+      <button (click)="clickSave()" mat-button>
         <mat-icon>save</mat-icon>
-      </button>
-      <button (click)="resetTheme()" mat-button>
-        <mat-icon>format_color_reset</mat-icon>
       </button>
     </div>
   </div>

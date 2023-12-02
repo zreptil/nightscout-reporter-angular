@@ -204,7 +204,8 @@ export class DataService {
       w1: GLOBALS.language.code ?? 'de_DE',
       w2: GLOBALS._theme,
       w3: this._syncType,
-      w4: this.oauth2AccessToken
+      w4: this.oauth2AccessToken,
+      w5: GLOBALS.ownTheme
     };
     this.ss.write(Settings.WebData, data);
   }
@@ -217,6 +218,7 @@ export class DataService {
       GLOBALS.theme = JsonData.toText(json.w2, null);
       this._syncType = JsonData.toNumber(json.w3);
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
+      GLOBALS.ownTheme = JsonData.toText(json.w5, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }
@@ -482,6 +484,7 @@ export class DataService {
     let oldWebTheme: string = null;
     let oldSyncType: number = null;
     let oldOauth2: string = null;
+    let oldOwnTheme: string = null;
     try {
       GLOBALS.user.loadParamsFromForms();
       const json = this.ss.read(Settings.WebData);
@@ -489,6 +492,7 @@ export class DataService {
       oldWebTheme = JsonData.toText(json.w2);
       oldSyncType = JsonData.toNumber(json.w3);
       oldOauth2 = JsonData.toText(json.w4, null);
+      oldOwnTheme = JsonData.toText(json.w5, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.save`);
     }
@@ -502,6 +506,7 @@ export class DataService {
     this._syncType = oldSyncType;
     this.oauth2AccessToken = oldOauth2;
     GLOBALS._theme = oldWebTheme;
+    GLOBALS.ownTheme = oldOwnTheme;
 
     this.saveWebData();
     this.ss.writeCrypt(Settings.SharedData, GLOBALS.asSharedString);
