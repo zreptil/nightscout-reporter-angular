@@ -11,13 +11,14 @@
   </div>
 </div -->
 <div #mouseArea
-     (mousedown)="mouseDown('cvs', $event)"
-     (mousemove)="mouseMove(null, $event)"
-     (mouseout)="mouseUp('hue', $event)"
-     (mouseup)="mouseUp(null, $event)"
-     hslcontainer>
-  <div #hslWheel hslwheel>
-    <div #imageBox inner>
+     (dragstart)="false"
+     (mousedown)="mouseDown($event)"
+     (mousemove)="mouseMove($event)"
+     (mouseout)="mouseUp($event)"
+     (mouseup)="mouseUp($event)"
+     container>
+  <div #hslWheel [ngStyle]="styleForHslWheel" hslwheel>
+    <div #imageBox [ngStyle]="styleForHsl" inner>
       <div image>
         <canvas #canvasHSL></canvas>
       </div>
@@ -26,16 +27,28 @@
       <div [ngStyle]="styleForHuePointer" pointer>
         <div mark></div>
       </div>
+      <div [ngStyle]="styleForHslPointer" pointer>
+        <div mark></div>
+      </div>
+    </div>
+  </div>
+  <div #opcBar [ngStyle]="styleForOpcBack" opc-back>
+    <div opc-fore></div>
+    <div [ngStyle]="styleForOpcPointer" pointer vert>
+      <div mark></div>
     </div>
   </div>
 </div>
-<div (mousedown)="mouseDown('opc', $event)"
-     (mousemove)="mouseMove('opc', $event)"
-     (mouseup)="mouseUp('opc', $event)"
-     [ngStyle]="styleForOpcBack" opc-back>
-  <div opc-fore></div>
-  <div [ngStyle]="styleForOpcPointer" pointer vert>
-    <div mark></div>
+<div *ngIf="globals.isDebug" class="debug" info>
+  <div>
+    H: {{floor(hue)}}
+    S: {{floor(sat)}}
+    L: {{floor(light)}}
+  </div>
+  <div>
+    O: {{floor(opacity * 100)}}%
+  </div>
+  <div>
+    #: {{color.display_rgba}}
   </div>
 </div>
-

@@ -1,10 +1,9 @@
 :host {
   display: flex;
   flex-flow: column;
-  margin-bottom: 1em;
   gap: 0.5em;
   --ps: 19px;
-  --pf: 5px;
+  --pf: 3px;
 
   [pointer] {
     --c: black;
@@ -41,9 +40,10 @@
     }
   }
 
-  [hslcontainer] {
+  [container] {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
+    gap: 1em;
     align-items: center;
     justify-content: center;
 
@@ -74,7 +74,6 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
         height: 80%;
         width: 80%;
         border-radius: 50%;
@@ -88,6 +87,7 @@
 
           canvas {
             pointer-events: none;
+            border: 1px solid red;
           }
         }
 
@@ -109,8 +109,10 @@
   }
 
   [opc-back] {
-    width: 100%;
+    pointer-events: none;
+    width: 80%;
     height: 20px;
+    margin-bottom: 10px;
     background-image: url(../../../../assets/img/checkers.png);
     background-size: 10px;
     position: relative;
@@ -126,9 +128,16 @@
     }
 
     [pointer] {
-      top: -5px;
+      top: calc(-0.5 * var(--pf));
       transform: translateX(-50%);
       --c: inherit;
     }
+  }
+
+  [info] {
+    display: flex;
+    flex-flow: row;
+    padding: 0 0.5em;
+    justify-content: space-between;
   }
 }

@@ -197,13 +197,12 @@
           </div>
         </div>
         <nav class="material-navigation">
-          <app-close-button [data]="closeData"></app-close-button>
+          <app-color-picker [colors]="test([[128,0,255]])"
+                            [modeList]=""></app-color-picker>
           <button (click)="globals.editColors=!globals.editColors" *ngIf="globals.isLocal" class="is-local" mat-mini-fab>
             <mat-icon>palette</mat-icon>
           </button>
-          <button (click)="clickDebugTrigger()" *ngIf="ss.mayDebug" class="debug" mat-mini-fab>
-            <mat-icon>bug_report</mat-icon>
-          </button>
+          <app-close-button [data]="closeData"></app-close-button>
           <!--
           <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>
             <img (error)="ss.handleMissingImage($event)"

@@ -5,6 +5,8 @@ import {DialogResultButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
 import {ColorDialogData} from '@/controls/color-picker/color-picker.component';
 import {ColorUtils} from '@/controls/color-picker/color-utils';
+import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {of} from 'rxjs';
 
 @Component({
   templateUrl: './color-picker-dialog.html',
@@ -16,15 +18,24 @@ export class ColorPickerDialog implements AfterViewInit {
     {
       hsl: 'palette', mixer: 'blender', image: 'image', slider: 'toggle_on'
     };
-  static _maxSavedColors = 10;
+  static _maxSavedColors = 12;
   fire = new EventEmitter<string>();
   defColor: ColorData;
   triggerValue: number[];
+  closeData: CloseButtonData = {
+    closeAction: () => {
+      this.clickClose.bind(this);
+      return of(true);
+    }
+  };
 
   constructor(public dialogRef: MatDialogRef<ColorPickerDialog>,
               @Inject(MAT_DIALOG_DATA) public data: ColorDialogData) {
-    if (ColorPickerDialog._savedColors.length < 1) {
+    if (this.savedColors.length < 1) {
       this.savedColors.push(new ColorData([0, 0, 0]));
+    }
+    while (this.savedColors.length > ColorPickerDialog._maxSavedColors) {
+      this.savedColors.splice(0, 1);
     }
     this.currColorIdx = ColorPickerDialog._savedColors.length - 1;
   }
@@ -58,7 +69,11 @@ export class ColorPickerDialog implements AfterViewInit {
     new ColorData([255, 0, 255]),
     new ColorData([255, 0, 0]),
     new ColorData([0, 0, 0]),
-    new ColorData([255, 255, 251]),
+    new ColorData([255, 255, 255]),
+    new ColorData([0xff, 0x77, 0x77]),
+    new ColorData([0x4d, 0, 0]),
+    new ColorData([0xa0, 0xa0, 0xa0]),
+    new ColorData([0, 0, 0]),
   ];
 
   get savedColors(): ColorData[] {

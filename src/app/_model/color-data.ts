@@ -19,6 +19,14 @@ export class ColorData extends BaseData {
     return ColorUtils.display_rgba(this.value, this.opacity);
   }
 
+  get display_rgb(): string {
+    return ColorUtils.rgb2string(this.value);
+  }
+
+  get display_rgba(): string {
+    return ColorUtils.rgb2string([...this.value, Math.floor(this.opacity * 255)]);
+  }
+
   get fontDisplay(): string {
     return ColorUtils.fontColor(this.value);
   }

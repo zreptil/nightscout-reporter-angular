@@ -14,6 +14,7 @@ import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {DropboxService} from '@/_services/sync/dropbox.service';
 import {MessageService} from '@/_services/message.service';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {ColorData} from '@/_model/color-data';
 
 @Component({
   selector: 'app-main',
@@ -21,7 +22,6 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
   /*
         bool dropElement(html.Element drag, html.Element drop) {
           const dragId = drag.getAttribute('id').substring(5);
@@ -170,6 +170,10 @@ export class MainComponent implements OnInit {
 
   get msgDSGVO(): string {
     return $localize`Datenschutzerklärung`;
+  }
+
+  test(value: number[][]): ColorData[] {
+    return [...value.map(v => new ColorData(v))];
   }
 
   shortcutClass(data: ShortcutData): string[] {

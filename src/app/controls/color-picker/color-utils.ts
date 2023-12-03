@@ -40,7 +40,11 @@ export class ColorUtils {
   }
 
   static rgb2string(rgb: number[]): string {
-    return Utils.pad(rgb[0].toString(16)) + Utils.pad(rgb[1].toString(16)) + Utils.pad(rgb[2].toString(16));
+    const ret: string[] = [];
+    for (const value of rgb) {
+      ret.push(Utils.pad(value?.toString(16)));
+    }
+    return Utils.join(ret, '');
   }
 
   static hsl2rgb(hsl: number[]): number[] {
