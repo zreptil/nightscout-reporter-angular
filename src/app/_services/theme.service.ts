@@ -33,7 +33,6 @@ export class ThemeService {
       zip.loadAsync(t, {base64: true}).then(packed => {
         packed.file('t').async('string').then(theme => {
           const src = JSON.parse(theme);
-          console.log('theme', src);
           for (const key of Object.keys(src)) {
             this.currTheme[key] = src[key];
           }
@@ -69,6 +68,15 @@ export class ThemeService {
     document.body.style.setProperty('--doc-height', `${window.innerHeight}px`);
   }
 
+  async updateWithStandardTheme(theme: any) {
+    const std = await this.ds.requestJson(`assets/themes/standard/colors.json`);
+    for (const key of Object.keys(std)) {
+      if (theme[key] == null) {
+        theme[key] = std[key];
+      }
+    }
+  }
+
   async setTheme(name: string) {
     const suffix = this.isWatch ? '-watch' : '';
     document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
@@ -76,19 +84,14 @@ export class ThemeService {
     let theme: any;
     if (name === 'own') {
       this.restoreTheme();
+      await this.updateWithStandardTheme(this.currTheme);
       GLOBALS.theme = this.currTheme;
       this.ds.saveWebData();
       return;
     } else {
-      theme = await this.ds.requestJson(`assets/themes/standard/colors.json`);
+      theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
       if (name !== 'standard') {
-        const std = theme;
-        theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
-        for (const key of Object.keys(std)) {
-          if (theme[key] == null) {
-            theme[key] = std[key];
-          }
-        }
+        await this.updateWithStandardTheme(theme);
       }
     }
     if (theme == null) {

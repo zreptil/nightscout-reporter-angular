@@ -52,7 +52,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     ptw: {x: 0, y: 0}
   };
   // adjustment for direction of colorwheel
-  hslWheelAdjust = 90;
+  hslWheelAdjust = 0;
 
   constructor() {
     super();
@@ -145,8 +145,8 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       '--ps': `${this.hptr.sizeHSL}px`,
       '--pf': `${this.hptr.frameHSL}px`,
       transform: 'translate(-50%, -50%)',
-      left: `${xm - pos.x}px`,
-      top: `${ym - pos.y}px`,
+      left: `${xm + pos.x}px`,
+      top: `${ym + pos.y}px`,
       '--c': ColorUtils.fontColor(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]) ?? [255, 255, 255]),
     };
   }
@@ -159,7 +159,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
 
   get styleForHsl(): any {
     return {
-      transform: `translate(-50%, -50%) rotate(${this.hue + 180}deg)`
+      transform: `translate(-50%, -50%) rotate(${this.hue}deg)`
     };
   }
 
@@ -174,8 +174,15 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       '--ps': `${this.hptr.sizeHUE}px`,
       '--pf': `${this.hptr.frameHUE}px`,
       '--c': ColorUtils.fontColor(ColorUtils.hsl2rgb([this.hue, 100, 50]) ?? [255, 255, 255]),
-      background: this.color.display,
+      background: 'transparent',
       top: `${this.hptr.y}px`
+    };
+  }
+
+  get styleForHuePointerFore(): any {
+    return {
+      background: this.color.display,
+      opacity: this.opacity
     };
   }
 
@@ -228,17 +235,18 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     this.hptr.sizeHSL = 4;
     this.hptr.y = this.hptr.tape / 2 - this.hptr.sizeHUE / 2 - this.hptr.frameHUE;
     const r = this.canvas.width * 0.45;
+    // the coordinates are relative to the middle of the triangle
     this.hptr.pth = {
       x: 0,
-      y: r,
+      y: -r,
     };
     this.hptr.ptb = {
-      x: Math.sin(Math.PI * 2 / 3) * r,
-      y: Math.cos(Math.PI * 2 / 3) * r,
+      x: Math.sin(-Math.PI / 3) * r,
+      y: Math.cos(-Math.PI / 3) * r
     };
     this.hptr.ptw = {
-      x: Math.sin(-Math.PI * 2 / 3) * r,
-      y: Math.cos(-Math.PI * 2 / 3) * r,
+      x: Math.sin(Math.PI / 3) * r,
+      y: Math.cos(Math.PI / 3) * r
     };
 
     this.paintCanvas();
@@ -278,10 +286,10 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     }
   }
 
+  // TODO: should give the exact same position as mousemove - hsl
   calcLightPos(black: Area, white: Area, mid: Area, s: number, l: number): any {
     let ret: any;
     if (l <= 0.5) {
-      const l1 = 0.5 - l;
       ret = {
         x: black.x + (mid.x - black.x) * (l * 2),
         y: black.y + (mid.y - black.y) * (l * 2),
@@ -328,12 +336,6 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     };
   }
 
-  getColorAtPos(x: number, y: number): ColorData {
-    const s = x / this.ctrls.hslWheel.w * 100;
-    const l = 100 - y / this.ctrls.hslWheel.w * 100;
-    return new ColorData(ColorUtils.hsl2rgb([this.hue, s, l]));
-  }
-
   mouseDown(evt: MouseEvent) {
     let type: string;
     const pos = this.mousePos(evt);
@@ -364,6 +366,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     }
     const pos = this.mousePos(evt);
     let x, y, r;
+    let doUpdate = false;
     switch (this.downType) {
       case 'hue':
         x = this.ctrls.hslWheel.x + this.ctrls.hslWheel.w / 2 - pos.x;
@@ -383,30 +386,48 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
         const ym = this.ctx.canvas.height / 2;
         const xmid = this.ctrls.hslWheel.x + this.ctrls.hslWheel.w / 2;
         const ymid = this.ctrls.hslWheel.y + this.ctrls.hslWheel.h / 2;
-        let adjust = (this.hue - 90 - this.hslWheelAdjust) * Math.PI / 180; //-this.hue * Math.PI / 180; //(270 - this.hue) * Math.PI / 180;
+        let adjust = this.hue * Math.PI / 180;//(this.hue - 90 - this.hslWheelAdjust) * Math.PI / 180; //-this.hue * Math.PI / 180; //(270 - this.hue) * Math.PI / 180;
         const p = this.adjustDeg(pos.x, pos.y, xmid, ymid, adjust);
-        const r1 = this.canvas.width * 0.45;
-        const pb = {
-          x: Math.cos(Math.PI * 2 / 3 + adjust) * r1,
-          y: Math.sin(Math.PI * 2 / 3 + adjust) * r1,
-        };
-        const pw = {
-          x: Math.cos(-Math.PI * 2 / 3 + adjust) * r1,
-          y: Math.sin(-Math.PI * 2 / 3 + adjust) * r1,
-        };
-        // const pb = this.adjustDeg(xmid + this.hptr.ptb.x, ymid - this.hptr.ptb.y, xmid, ymid, adjust);
-        // const pw = this.adjustDeg(xmid + this.hptr.ptw.x, ymid - this.hptr.ptw.y, xmid, ymid, adjust);
-        this.markxy(xm - p.x, ym + p.y, 'lime');
-        console.log(pb, xmid, ymid);
-        this.markxy(xm + pb.x, ym + pb.y, 'black');
-        this.markxy(xm + pw.x, ym + pw.y, 'white');
+        p.x = xm - p.x;
+        p.y = ym - p.y;
+        // this.markxy(p.x, p.y, 'lime');
+        let yd = (p.y - (this.hptr.pth.y + ym)) / (this.hptr.ptb.y - this.hptr.pth.y);
+        yd = Math.min(Math.max(1 - yd, 0), 1);
+        const top = this.hptr.pth.y + ym;
+        const bottom = this.hptr.ptb.y + ym;
+        let sat = 1 - (p.y - top) / (bottom - top);
+        sat = Math.min(Math.max(sat, 0), 1);
+        let light = this.light / 100;
+        if (p.x < xm) {
+          const x = this.hptr.pth.x - this.hptr.ptb.x;
+          const right = this.hptr.pth.x + xm;
+          const left = xm - x * (1 - yd);
+          p.x = Math.max(p.x, left);
+          const lmin = 0.5 - Math.min(Math.max((p.y - top) / (bottom - top) * 0.5, 0), 0.5);
+          light = lmin + (p.x - left) / (right - left) * (0.5 - lmin);
+          light = Math.min(Math.max(light, 0), 0.5);
+        } else {
+          const x = this.hptr.ptw.x - this.hptr.pth.x;
+          const right = xm + x * (1 - yd);
+          const left = this.hptr.pth.x + xm;
+          p.x = Math.min(p.x, right);
+          const lmax = 0.5 + Math.min(Math.max((p.y - top) / (bottom - top) * 0.5, 0), 0.5);
+          light = 0.5 + (p.x - left) / (right - left) * (lmax - 0.5);
+          light = Math.min(Math.max(light, 0.5), 1);
+        }
+        this.sat = sat * 100;
+        this.light = light * 100;
+        doUpdate = true;
         break;
       case 'opc':
         x = pos.x - this.ctrls.opcBar.x;
         this.opacity = Math.max(0, Math.min(x / this.ctrls.opcBar.w, 1.0));
-        this._color.update(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
-        this.colorChange?.next(this.color);
+        doUpdate = true;
         break;
+    }
+    if (doUpdate) {
+      this._color.update(ColorUtils.hsl2rgb([this.hue, this.sat, this.light]), this.opacity);
+      this.colorChange?.next(this.color);
     }
   }
 
@@ -415,12 +436,12 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     y = ym - y;
     const r = Math.sqrt(x * x + y * y);
     const deg = Math.atan2(x, y) + adjust;
-    return {x: Math.cos(deg) * r, y: Math.sin(deg) * r};
+    return {x: Math.sin(deg) * r, y: Math.cos(deg) * r};
   }
 
   markxy(x: number, y: number, fill = 'red'): void {
     this.ctx.fillStyle = fill;
-    this.ctx.fillRect(x - 5, y - 5, 10, 10);
+    this.ctx.fillRect(x - 1, y - 1, 3, 3);
   }
 
   mouseUp(_evt: MouseEvent) {

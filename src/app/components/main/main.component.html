@@ -197,7 +197,8 @@
           </div>
         </div>
         <nav class="material-navigation">
-          <app-color-picker [colors]="test([[128,0,255]])"
+          <app-color-picker *ngIf="globals.isLocal"
+                            [colors]="test([[255,0,0]])"
                             [modeList]=""></app-color-picker>
           <button (click)="globals.editColors=!globals.editColors" *ngIf="globals.isLocal" class="is-local" mat-mini-fab>
             <mat-icon>palette</mat-icon>
