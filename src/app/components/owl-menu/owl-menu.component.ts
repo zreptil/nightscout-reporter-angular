@@ -48,6 +48,7 @@ export class OwlMenuComponent implements OnInit {
     let langs = '';
     let ls = '';
     let duration = 1;
+    this.ts.assignStyle(document.body.style, this.ts.currTheme);
     if (this.themePanelShown) {
       this.themeStyle = `animation:owl_hidethemes ${duration}s ease-in-out normal forwards;`;
       this.logoStyle = `animation:owl_hidethemeslogo ${duration}s ease-in-out normal forwards;`;

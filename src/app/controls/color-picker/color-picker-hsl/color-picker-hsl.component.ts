@@ -152,9 +152,13 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   }
 
   get styleForHslWheel(): any {
-    return {
+    const ret: any = {
       transform: `rotate(${this.hslWheelAdjust}deg)`
     };
+    if (this.sat === 0 || this.light === 100 || this.light === 0) {
+      ret.background = ColorUtils.display_rgb(this.color.value);
+    }
+    return ret;
   }
 
   get styleForHsl(): any {
@@ -215,18 +219,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     this.canvas = this.canvasHSL.nativeElement;
     this.canvas.width = imageBox.clientWidth;
     this.canvas.height = imageBox.clientHeight;
-    this.ctrls.mouseArea.x = this.mouseArea.nativeElement.clientLeft;
-    this.ctrls.mouseArea.y = this.mouseArea.nativeElement.clientTop;
-    this.ctrls.mouseArea.w = this.mouseArea.nativeElement.clientWidth;
-    this.ctrls.mouseArea.h = this.mouseArea.nativeElement.clientHeight;
-    this.ctrls.hslWheel.x = this.hslWheel.nativeElement.offsetLeft - this.mouseArea.nativeElement.offsetLeft;
-    this.ctrls.hslWheel.y = this.hslWheel.nativeElement.offsetTop - this.mouseArea.nativeElement.offsetTop;
-    this.ctrls.hslWheel.w = this.hslWheel.nativeElement.clientWidth;
-    this.ctrls.hslWheel.h = this.hslWheel.nativeElement.clientHeight;
-    this.ctrls.opcBar.x = this.opcBar.nativeElement.offsetLeft - this.mouseArea.nativeElement.offsetLeft;
-    this.ctrls.opcBar.y = this.opcBar.nativeElement.offsetTop - this.mouseArea.nativeElement.offsetTop;
-    this.ctrls.opcBar.w = this.opcBar.nativeElement.clientWidth;
-    this.ctrls.opcBar.h = this.opcBar.nativeElement.clientHeight;
+    this.loadCtrls();
     this.ctx = this.canvas.getContext('2d');
     this.hptr.tape = this.ctrls.hslWheel.w / 2 * 0.2;
     this.hptr.frameHUE = 2;
@@ -250,6 +243,21 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     };
 
     this.paintCanvas();
+  }
+
+  loadCtrls(): void {
+    this.ctrls.mouseArea.x = this.mouseArea.nativeElement.clientLeft;
+    this.ctrls.mouseArea.y = this.mouseArea.nativeElement.clientTop;
+    this.ctrls.mouseArea.w = this.mouseArea.nativeElement.clientWidth;
+    this.ctrls.mouseArea.h = this.mouseArea.nativeElement.clientHeight;
+    this.ctrls.hslWheel.x = this.hslWheel.nativeElement.offsetLeft;
+    this.ctrls.hslWheel.y = this.hslWheel.nativeElement.offsetTop;
+    this.ctrls.hslWheel.w = this.hslWheel.nativeElement.clientWidth;
+    this.ctrls.hslWheel.h = this.hslWheel.nativeElement.clientHeight;
+    this.ctrls.opcBar.x = this.opcBar.nativeElement.offsetLeft;
+    this.ctrls.opcBar.y = this.opcBar.nativeElement.offsetTop;
+    this.ctrls.opcBar.w = this.opcBar.nativeElement.clientWidth;
+    this.ctrls.opcBar.h = this.opcBar.nativeElement.clientHeight;
   }
 
   paintCanvas(): void {
@@ -334,9 +342,11 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   mouseDown(evt: MouseEvent) {
     let type: string;
     const pos = this.mousePos(evt);
+    this.loadCtrls();
     const x = this.ctrls.hslWheel.x + this.ctrls.hslWheel.w / 2 - pos.x;
     const y = this.ctrls.hslWheel.y + this.ctrls.hslWheel.h / 2 - pos.y;
     const r = Math.sqrt(x * x + y * y);
+
     if (r > this.ctrls.hslWheel.w / 2 * 0.8 && pos.y <= this.ctrls.hslWheel.h) {
       type = 'hue';
     } else if (r < this.ctrls.hslWheel.w / 2 * 0.8) {
@@ -381,11 +391,13 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
         const ym = this.ctx.canvas.height / 2;
         const xmid = this.ctrls.hslWheel.x + this.ctrls.hslWheel.w / 2;
         const ymid = this.ctrls.hslWheel.y + this.ctrls.hslWheel.h / 2;
-        let adjust = this.hue * Math.PI / 180;//(this.hue - 90 - this.hslWheelAdjust) * Math.PI / 180; //-this.hue * Math.PI / 180; //(270 - this.hue) * Math.PI / 180;
+        let adjust = (this.hue + this.hslWheelAdjust) * Math.PI / 180;
         const p = this.adjustDeg(pos.x, pos.y, xmid, ymid, adjust);
         p.x = xm - p.x;
         p.y = ym - p.y;
         // this.markxy(p.x, p.y, 'lime');
+        // this.markxy(xm, ym, 'red');
+        // this.markxy(xmid, ymid, 'yellow');
         let yd = (p.y - (this.hptr.pth.y + ym)) / (this.hptr.ptb.y - this.hptr.pth.y);
         yd = Math.min(Math.max(1 - yd, 0), 1);
         let sat = ((p.y - ym) - this.hptr.ptb.y) / (this.hptr.pth.y - this.hptr.ptb.y);
@@ -394,22 +406,27 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
         if (p.y < this.hptr.pth.y + ym) {
           light = 0.5;
         } else {
+          let x = xm - p.x;
           if (p.x < xm) {
             const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * sat;
-            light = (xm - p.x - xmin) / 2 / (this.hptr.pth.x - xmin);
-            light = 0.5 - (light - 0.5);
-            if (light < 0) {
+            if (-x < xmin) {
+              x = -xmin;
               light = sat / 2;
               sat = 1;
+            } else {
+              light = (x - xmin) / 2 / (this.hptr.pth.x - xmin);
+              light = 0.5 - (light - 0.5);
             }
             light = Math.min(Math.max(light, 0), 0.5);
           } else {
             const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * sat;
-            light = (xm - p.x - this.hptr.pth.x) / 2 / (xmax - this.hptr.pth.x);
-            light = 0.5 - light;
-            if (light > 1) {
+            if (-x > xmax) {
+              x = -xmax;
               light = 1 - sat / 2;
               sat = 1;
+            } else {
+              light = (xm - p.x - this.hptr.pth.x) / 2 / (xmax - this.hptr.pth.x);
+              light = 0.5 - light;
             }
             light = Math.min(Math.max(light, 0.5), 1);
           }

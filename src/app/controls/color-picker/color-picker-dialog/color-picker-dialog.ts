@@ -67,10 +67,9 @@ export class ColorPickerDialog implements AfterViewInit {
     new ColorData([0, 255, 255]),
     new ColorData([0, 0, 255]),
     new ColorData([255, 0, 255]),
-    new ColorData([255, 0, 0]),
     new ColorData([0, 0, 0]),
     new ColorData([255, 255, 255]),
-    new ColorData([0xff, 0x77, 0x77]),
+    new ColorData([0x87, 0x07, 0x07]),
     new ColorData([0x4d, 0, 0]),
     new ColorData([0xa0, 0xa0, 0xa0]),
     new ColorData([0, 0, 0]),
@@ -113,6 +112,12 @@ export class ColorPickerDialog implements AfterViewInit {
       }
     }
     this._currColorIdx = value;
+  }
+
+  get dialogTitle(): string {
+    let ret;
+    ret = this.currentColor?.themeKey;
+    return ret ?? $localize`Farbauswahl`;
   }
 
   get styleForSaveIcon(): any {

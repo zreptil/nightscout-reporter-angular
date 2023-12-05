@@ -1,15 +1,3 @@
-<!-- div canvas-container>
-  <div #imageBox image>
-    <canvas #canvasImage
-            (mousedown)="mouseDown('cvs', $event)"
-            (mousemove)="mouseMove('cvs', $event)"
-            (mouseup)="mouseUp('cvs', $event)">
-    </canvas>
-    <div [ngStyle]="styleForCanvasPointer" point pointer>
-      <div mark></div>
-    </div>
-  </div>
-</div -->
 <div #mouseArea
      (dragstart)="false"
      (mousedown)="mouseDown($event)"

@@ -109,8 +109,8 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       let add = true;
       if (key.endsWith('Back')) {
         const subKey = key.substring(0, key.length - 4);
-        let titleKey = subKey.replace(/Head/, '');
-        titleKey = titleKey.replace(/Body/, '');
+        let titleKey = subKey; // subKey.replace(/Head/, '');
+        // titleKey = titleKey.replace(/Body/, '');
         const foreKey = subKey + 'Fore';
         const idx = keyList.indexOf(foreKey);
         if (idx >= 0) {
@@ -123,7 +123,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
           fore.icon = 'text_fields';
           fore.themeKey = foreKey;
           this.colorList[subKey] = {
-            title: titleKey,
+            title: this.ts.colorNames[titleKey] ?? `(${titleKey})`,
             colors: [back, fore]
           };
           ret.push(subKey);
@@ -135,7 +135,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         color.icon = 'palette';
         color.themeKey = key;
         this.colorList[key] = {
-          title: key,
+          title: this.ts.colorNames[key] ?? `(${key})`,
           colors: [color]
         };
         ret.push(key);
@@ -229,7 +229,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   colorName(key: string): string {
     // const ret = this.mapEntry(key, true)?.title;
     const ret = this.colorList[key]?.title;
-    return ret == null ? `(${key})` : `${ret} (${key})`;
+    return ret ?? `(${key}) ${this.colorList[key].colors[0]?.themeKey}`;
   }
 
   downloadTheme() {
