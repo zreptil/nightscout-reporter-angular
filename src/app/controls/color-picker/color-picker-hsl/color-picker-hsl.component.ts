@@ -276,6 +276,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     let light, sat;
     if (x <= 0.5) {
       const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * y;
+      ret.x = xmin + (this.hptr.pth.x - xmin) * x * 2;
       // calculate light
       const minLight = y / 2;
       const rangeLight = 0.5 - minLight;
@@ -285,10 +286,10 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       const maxSat = 1;
       const rangeSat = maxSat - minSat;
       sat = 1 - (x * 2) * rangeSat / maxSat;
-      ret.x = xmin + (this.hptr.pth.x - xmin) * x * 2;
     } else {
       const l1 = x - 0.5;
       const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * y;
+      ret.x = this.hptr.pth.x + (xmax - this.hptr.pth.x) * l1 * 2;
       // calculate light
       const maxLight = 0.5 + (1 - y) / 2;
       const rangeLight = maxLight - 0.5;
@@ -298,7 +299,6 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
       const maxSat = 1;
       const rangeSat = maxSat - minSat;
       sat = minSat + (l1 * 2) * rangeSat / maxSat;
-      ret.x = this.hptr.pth.x + (xmax - this.hptr.pth.x) * l1 * 2;
     }
     ret.c = new ColorData(ColorUtils.hsl2rgb([this.hue, sat * 100, light * 100]));
     return ret;
@@ -306,6 +306,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
 
   calcHslPos(s: number, l: number): any {
     const ret = this.calcLightSatPos(l, s);
+    // for 100% saturation the position is at one of the sides of the triangle
     if (s === 1) {
       if (l < 0.5) {
         ret.x = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * l * 2;
@@ -387,27 +388,31 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
         // this.markxy(p.x, p.y, 'lime');
         let yd = (p.y - (this.hptr.pth.y + ym)) / (this.hptr.ptb.y - this.hptr.pth.y);
         yd = Math.min(Math.max(1 - yd, 0), 1);
-        const top = this.hptr.pth.y + ym;
-        const bottom = this.hptr.ptb.y + ym;
-        let sat = 1 - (p.y - top) / (bottom - top);
+        let sat = ((p.y - ym) - this.hptr.ptb.y) / (this.hptr.pth.y - this.hptr.ptb.y);
         sat = Math.min(Math.max(sat, 0), 1);
         let light = this.light / 100;
-        if (p.x < xm) {
-          const x = this.hptr.pth.x - this.hptr.ptb.x;
-          const right = this.hptr.pth.x + xm;
-          const left = xm - x * (1 - yd);
-          p.x = Math.max(p.x, left);
-          const lmin = 0.5 - Math.min(Math.max((p.y - top) / (bottom - top) * 0.5, 0), 0.5);
-          light = lmin + (p.x - left) / (right - left) * (0.5 - lmin);
-          light = Math.min(Math.max(light, 0), 0.5);
+        if (p.y < this.hptr.pth.y + ym) {
+          light = 0.5;
         } else {
-          const x = this.hptr.ptw.x - this.hptr.pth.x;
-          const right = xm + x * (1 - yd);
-          const left = this.hptr.pth.x + xm;
-          p.x = Math.min(p.x, right);
-          const lmax = 0.5 + Math.min(Math.max((p.y - top) / (bottom - top) * 0.5, 0), 0.5);
-          light = 0.5 + (p.x - left) / (right - left) * (lmax - 0.5);
-          light = Math.min(Math.max(light, 0.5), 1);
+          if (p.x < xm) {
+            const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * sat;
+            light = (xm - p.x - xmin) / 2 / (this.hptr.pth.x - xmin);
+            light = 0.5 - (light - 0.5);
+            if (light < 0) {
+              light = sat / 2;
+              sat = 1;
+            }
+            light = Math.min(Math.max(light, 0), 0.5);
+          } else {
+            const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * sat;
+            light = (xm - p.x - this.hptr.pth.x) / 2 / (xmax - this.hptr.pth.x);
+            light = 0.5 - light;
+            if (light > 1) {
+              light = 1 - sat / 2;
+              sat = 1;
+            }
+            light = Math.min(Math.max(light, 0.5), 1);
+          }
         }
         this.sat = sat * 100;
         this.light = light * 100;
