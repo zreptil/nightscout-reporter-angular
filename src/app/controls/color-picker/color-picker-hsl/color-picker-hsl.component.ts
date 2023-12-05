@@ -256,72 +256,66 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     if (this.ctx == null) {
       return;
     }
-    this.ctx.fillStyle = '#fff';
+    this.ctx.fillStyle = '#ffffff20';
     this.ctx.clearRect(0, 0, this.ctrls.hslWheel.w, this.ctrls.hslWheel.w);
     const xm = this.canvas.width / 2;
     const ym = this.canvas.height / 2;
-    const pt_hue = this.hptr.pth;
-    const pt_black = this.hptr.ptb;
-    const pt_white = this.hptr.ptw;
-    const step_x = 0.01;
-    const step_y = 0.01;
-    for (let s = 0; s <= 1; s += step_y) {
-      const ptb = {
-        x: pt_black.x + (pt_hue.x - pt_black.x) * s,
-        y: pt_black.y + (pt_hue.y - pt_black.y) * s
-      };
-      const ptw = {
-        x: pt_white.x + (pt_hue.x - pt_white.x) * s,
-        y: pt_white.y + (pt_hue.y - pt_white.y) * s
-      };
-      const pt_mid = {
-        x: (ptb.x + ptw.x) / 2,
-        y: (ptb.y + ptw.y) / 2,
-        c: new ColorData([128, 128, 128])
-      };
-      for (let l = 0; l <= 1; l += step_x) {
-        const pos = this.calcLightPos(pt_black, pt_white, pt_mid, s, l);
+    const step_y = 1 / (this.hptr.ptw.y - this.hptr.pth.y) * 0.9;
+    const step_x = 0.5 / (this.hptr.ptw.x - this.hptr.pth.x) * 0.9;
+    for (let y = 0; y <= 1; y += step_y) {
+      for (let x = 0; x <= 1; x += step_x) {
+        const pos = this.calcLightSatPos(x, y);
         this.paintxy(xm + pos.x, ym + pos.y, pos.c.display);
       }
     }
   }
 
   // TODO: should give the exact same position as mousemove - hsl
-  calcLightPos(black: Area, white: Area, mid: Area, s: number, l: number): any {
-    let ret: any;
-    if (l <= 0.5) {
-      ret = {
-        x: black.x + (mid.x - black.x) * (l * 2),
-        y: black.y + (mid.y - black.y) * (l * 2),
-        c: new ColorData(ColorUtils.hsl2rgb(
-          [this.hue, s * 100, l * 100]))
-      };
+  calcLightSatPos(x: number, y: number): any {
+    let ret: any = {x: 0, y: this.hptr.ptb.y + (this.hptr.pth.y - this.hptr.ptb.y) * y};
+    let light, sat;
+    if (x <= 0.5) {
+      const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * y;
+      // calculate light
+      const minLight = y / 2;
+      const rangeLight = 0.5 - minLight;
+      light = minLight + x * rangeLight / 0.5;
+      // calculate saturation
+      const minSat = y;
+      const maxSat = 1;
+      const rangeSat = maxSat - minSat;
+      sat = 1 - (x * 2) * rangeSat / maxSat;
+      ret.x = xmin + (this.hptr.pth.x - xmin) * x * 2;
     } else {
-      const l1 = l - 0.5;
-      ret = {
-        x: mid.x + (white.x - mid.x) * l1 * 2,
-        y: mid.y + (white.y - mid.y) * l1 * 2,
-        c: new ColorData(ColorUtils.hsl2rgb(
-          [this.hue, s * 100, l * 100]))
-      };
+      const l1 = x - 0.5;
+      const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * y;
+      // calculate light
+      const maxLight = 0.5 + (1 - y) / 2;
+      const rangeLight = maxLight - 0.5;
+      light = 0.5 + l1 * rangeLight / 0.5;
+      // calculate saturation
+      const minSat = y;
+      const maxSat = 1;
+      const rangeSat = maxSat - minSat;
+      sat = minSat + (l1 * 2) * rangeSat / maxSat;
+      ret.x = this.hptr.pth.x + (xmax - this.hptr.pth.x) * l1 * 2;
     }
+    ret.c = new ColorData(ColorUtils.hsl2rgb([this.hue, sat * 100, light * 100]));
     return ret;
   }
 
   calcHslPos(s: number, l: number): any {
-    const ptb = {
-      x: this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * s,
-      y: this.hptr.ptb.y + (this.hptr.pth.y - this.hptr.ptb.y) * s
-    };
-    const ptw = {
-      x: this.hptr.ptw.x + (this.hptr.pth.x - this.hptr.ptw.x) * s,
-      y: this.hptr.ptw.y + (this.hptr.pth.y - this.hptr.ptw.y) * s
-    };
-    const ptm = {
-      x: (ptb.x + ptw.x) / 2,
-      y: (ptb.y + ptw.y) / 2
-    };
-    return this.calcLightPos(this.hptr.ptb, this.hptr.ptw, ptm, s, l);
+    const ret = this.calcLightSatPos(l, s);
+    if (s === 1) {
+      if (l < 0.5) {
+        ret.x = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * l * 2;
+        ret.y = this.hptr.ptb.y - (this.hptr.ptb.y - this.hptr.pth.y) * l * 2;
+      } else {
+        ret.x = this.hptr.pth.x + (this.hptr.ptw.x - this.hptr.pth.x) * (l - 0.5) * 2;
+        ret.y = this.hptr.pth.y + (this.hptr.ptw.y - this.hptr.pth.y) * (l - 0.5) * 2;
+      }
+    }
+    return ret;
   }
 
   paintxy(x: number, y: number, fill = 'red'): void {
