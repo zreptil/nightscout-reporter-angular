@@ -1,5 +1,5 @@
-<div *ngFor="let color of colors" panel>
-  <button (click)="clickActivate(color)"
+<div *ngFor="let color of colors; let idx = index" panel>
+  <button (click)="clickActivate(idx)"
           [ngStyle]="{color: color?.btnForeColor}">
     <div checkers></div>
     <div [ngStyle]="{backgroundColor: color?.btnBackColor}" back></div>

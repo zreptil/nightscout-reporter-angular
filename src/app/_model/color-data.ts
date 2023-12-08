@@ -7,6 +7,8 @@ export class ColorData extends BaseData {
   btnForeColor: string;
   btnBackColor: string;
   themeKey: string;
+  title: string;
+  subtitle: string;
 
   constructor(public value: number[], public opacity = 1.0) {
     super();

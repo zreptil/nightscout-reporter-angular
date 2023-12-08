@@ -3,7 +3,7 @@
      cdkDragRootElement=".dialog-box.welcome">
   <div mat-dialog-title>
     <div>
-      <h1>{{globals.titles.welcome}}</h1>
+      <h1>{{ globals.titles.welcome }}</h1>
     </div>
     <div *ngIf="!globals.isConfigured" class="langPanel">
       <ng-container *ngFor="let lang of globals.languageList; let idx = index">
@@ -14,12 +14,6 @@
       </ng-container>
     </div>
     <div row>
-      <button (click)="clickDebug()"
-              *ngIf="ss.mayDebug"
-              class="debug"
-              mat-mini-fab>
-        <mat-icon>bug_report</mat-icon>
-      </button>
       <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
     </div>
   </div>

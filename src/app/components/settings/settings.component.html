@@ -3,7 +3,7 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>settings</mat-icon>
-      <span>{{globals.titles.settings}}</span>
+      <span>{{ globals.titles.settings }}</span>
     </h1>
     <app-close-button *ngIf="ss.isEmpty(ps.data.text)" [data]="closeData"></app-close-button>
   </div>
@@ -15,7 +15,7 @@
         <button (click)="globals.userIdx=globals.userIdx-1" [disabled]="globals.userIdx===0" mat-button>
           <mat-icon>chevron_left</mat-icon>
         </button>
-        {{globals.userIdx + 1}} / {{globals.userList?.length ?? 1}}
+        {{ globals.userIdx + 1 }} / {{ globals.userList?.length ?? 1 }}
         <button (click)="globals.userIdx=globals.userIdx+1" [disabled]="globals.userIdx>=(globals.userList?.length ?? 0)-1" mat-button>
           <mat-icon>chevron_right</mat-icon>
         </button>
@@ -24,10 +24,10 @@
     <div class="userinfo">
       <button (click)="globals.user.isPinned=!globals.user.isPinned"
               mat-icon-button>
-        <mat-icon [class]="globals.user.classForPin">{{globals.user.iconForPin}}</mat-icon>
+        <mat-icon [class]="globals.user.classForPin">{{ globals.user.iconForPin }}</mat-icon>
       </button>
       <mat-form-field>
-        <mat-label>{{msgName}}</mat-label>
+        <mat-label>{{ msgName }}</mat-label>
         <input [(ngModel)]="globals.user.name" matInput>
       </mat-form-field>
       <mat-form-field>
@@ -39,7 +39,7 @@
         <input [(ngModel)]="globals.user.diaStartDate" matInput>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>{{msgInsulin}}</mat-label>
+        <mat-label>{{ msgInsulin }}</mat-label>
         <input [(ngModel)]="globals.user.insulin" matInput>
       </mat-form-field>
       <div class="controls">
@@ -57,12 +57,12 @@
       <div class="row">
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgUrlNightscout}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgUrlNightscout }}</mat-label>
             <input [(ngModel)]="item.url" matInput>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint"></div>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgUrlHint}}
+            {{ msgUrlHint }}
           </div>
         </div>
         <button (click)="ss.navigate(item.fullUrl('','', true))" [disabled]="ss.isEmpty(item.url)" mat-button>
@@ -70,25 +70,25 @@
         </button>
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgAccessToken}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgAccessToken }}</mat-label>
             <input [(ngModel)]="item.token" [type]="showPwd!==idx?'password':'text'" matInput>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgAccessTokenHint(idx === globals.user.listApiUrl.length - 1)}}
+            {{ msgAccessTokenHint(idx === globals.user.listApiUrl.length - 1) }}
           </div>
         </div>
         <button (click)="showPwd=(showPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.token)" mat-button>
-          <mat-icon class="urlIcon">{{showPwd !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon class="urlIcon">{{ showPwd !== idx ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <div class="formfield mat-form-field-infix date">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgStartDate}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgStartDate }}</mat-label>
             <input [(ngModel)]="item.startDate" [matDatepicker]="dpStartDate" matInput>
             <mat-datepicker-toggle [for]="dpStartDate" matSuffix></mat-datepicker-toggle>
             <mat-datepicker #dpStartDate></mat-datepicker>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgStartDateHint(idx === globals.user.listApiUrl.length - 1)}}
+            {{ msgStartDateHint(idx === globals.user.listApiUrl.length - 1) }}
           </div>
         </div>
         <button (click)="calculateFirstDay(item)" [disabled]="ss.isEmpty(item.url)" mat-button>
@@ -96,13 +96,13 @@
         </button>
         <div class="formfield mat-form-field-infix date">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgEndDate}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgEndDate }}</mat-label>
             <input [(ngModel)]="item.endDate" [matDatepicker]="dpEndDate" matInput>
             <mat-datepicker-toggle [for]="dpEndDate" matSuffix></mat-datepicker-toggle>
             <mat-datepicker #dpEndDate></mat-datepicker>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgEndDateHint(idx === globals.user.listApiUrl.length - 1)}}
+            {{ msgEndDateHint(idx === globals.user.listApiUrl.length - 1) }}
           </div>
         </div>
       </div>
@@ -113,57 +113,57 @@
       </div>
       <div class="row formfield">
         <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-          {{msgLinkupRegionHint}}
+          {{ msgLinkupRegionHint }}
         </div>
       </div>
       <div class="row">
         <ng-container *ngFor="let region of regionList">
-          <button *ngIf="region === item.linkupRegion" mat-raised-button>{{region}}</button>
-          <button (click)="item.linkupRegion = region" *ngIf="region !== item.linkupRegion" mat-button>{{region}}</button>
+          <button *ngIf="region === item.linkupRegion" mat-raised-button>{{ region }}</button>
+          <button (click)="item.linkupRegion = region" *ngIf="region !== item.linkupRegion" mat-button>{{ region }}</button>
         </ng-container>
       </div>
       <div class="row">
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgLinkupUsername}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgLinkupUsername }}</mat-label>
             <input [(ngModel)]="item.linkupUsername" matInput>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgLinkupUsernameHint}}
+            {{ msgLinkupUsernameHint }}
           </div>
         </div>
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgLinkupPassword}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgLinkupPassword }}</mat-label>
             <input [(ngModel)]="item.linkupPassword" [type]="showLUPwd!==idx?'password':'text'" matInput>
           </mat-form-field>
         </div>
         <button (click)="showLUPwd=(showLUPwd===idx?-1:idx)" [disabled]="ss.isEmpty(item.linkupPassword)" mat-button>
-          <mat-icon class="urlIcon">{{showLUPwd !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon class="urlIcon">{{ showLUPwd !== idx ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label *ngIf="idx===0">{{msgLinkupPatientId}}</mat-label>
+            <mat-label *ngIf="idx===0">{{ msgLinkupPatientId }}</mat-label>
             <input [(ngModel)]="item.linkupPatientId" matInput>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgLinkupPatientIdHint}}
+            {{ msgLinkupPatientIdHint }}
           </div>
         </div>
       </div>
       <div class="row">
         <div class="formfield mat-form-field-infix">
           <mat-form-field>
-            <mat-label>{{msgApiSecret}}</mat-label>
+            <mat-label>{{ msgApiSecret }}</mat-label>
             <input [(ngModel)]="item.apiSecret" [type]="showSecret!==idx?'password':'text'" matInput>
           </mat-form-field>
           <div *ngIf="idx===globals.user.listApiUrl.length-1" class="hint">
-            {{msgApiSecretHint(idx === globals.user.listApiUrl.length - 1)}}
-            <div class="error">{{warnApiSecretHint(idx === globals.user.listApiUrl.length - 1)}}</div>
+            {{ msgApiSecretHint(idx === globals.user.listApiUrl.length - 1) }}
+            <div class="error">{{ warnApiSecretHint(idx === globals.user.listApiUrl.length - 1) }}</div>
           </div>
         </div>
         <button (click)="showSecret=(showSecret===idx?-1:idx)" [disabled]="ss.isEmpty(item.apiSecret)" mat-button>
-          <mat-icon class="urlIcon">{{showSecret !== idx ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon class="urlIcon">{{ showSecret !== idx ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
       </div>
       <div class="controls">
@@ -185,7 +185,7 @@
           <mat-option (onSelectionChange)="globals.user.profileMaxIdx=idx"
                       *ngFor="let item of listProfileMaxCount; let idx=index"
                       [value]="idx">
-            <div class="itemTitle">{{item}}</div>
+            <div class="itemTitle">{{ item }}</div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -196,6 +196,12 @@
         <mat-checkbox [(ngModel)]="globals.tileShowImage" class="chk" i18n="label for checkbox to show images on tiles">
           Auf Kacheln Bilder statt Namen anzeigen
         </mat-checkbox>
+        <div class="row">
+          <mat-checkbox [(ngModel)]="globals.editColors" class="chk" i18n="label for checkbox to toggle colormode">
+            Farben anpassen
+          </mat-checkbox>
+          <color-cfg *ngIf="globals.editColors" colorKey=""></color-cfg>
+        </div>
       </div>
     </div>
     <div class="sub">

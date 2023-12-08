@@ -44,7 +44,7 @@ export class ColorPickerSliderComponent extends ColorPickerBaseComponent impleme
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
-    setTimeout(() => this.color.fillFromJson(this.data.color.asJson), 10);
+    setTimeout(() => this.color.fillFromJson(this.data.colorList[this.data.colorIdx].asJson), 10);
   }
 
   rgbChange() {

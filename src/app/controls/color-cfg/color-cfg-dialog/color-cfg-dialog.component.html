@@ -2,7 +2,7 @@
      cdkDragRootElement=".dialog-box.colorcfgdialog">
   <div mat-dialog-title>
     <div>
-      <h1>{{dialogTitle}}</h1>
+      <h1>{{ dialogTitle }}</h1>
     </div>
     <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
   </div>
@@ -10,16 +10,17 @@
     <div *ngFor="let key of listThemeKeys" row>
       <div>
         <app-color-picker (onDialogEvent)="onColorPicker($event)"
+                          [allColors]="allColors"
                           [colors]="colorList?.[key]?.colors"
                           [modeList]="availableColormodes"></app-color-picker>
       </div>
-      <div name>{{colorName(key)}}</div>
+      <div name>{{ colorName(key) }}</div>
     </div>
   </div>
   <div class="controls" mat-dialog-actions>
     <div class="left">
-      <button (click)="downloadTheme()" mat-button>
-        <mat-icon>file_download</mat-icon>
+      <button (click)="storeTheme()" mat-button>
+        <mat-icon>sd_storage</mat-icon>
       </button>
     </div>
     <div class="right">

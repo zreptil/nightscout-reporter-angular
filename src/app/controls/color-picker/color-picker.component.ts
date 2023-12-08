@@ -3,6 +3,7 @@ import {ColorData} from '@/_model/color-data';
 import {MatDialog} from '@angular/material/dialog';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
 import {ColorMix} from '@/_model/color-mix-data';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 export interface ColorDialogData {
   imageDataUrl: string;
@@ -11,8 +12,9 @@ export interface ColorDialogData {
   modeIcon?: string,
   onDataChanged: EventEmitter<ColorDialogData>;
   onDialogEvent: EventEmitter<ColorDialogData>;
-  color: ColorData;
-  colorChange: EventEmitter<ColorData>;
+  colorIdx: number;
+  colorChange: EventEmitter<ColorDialogData>;
+  colorList: ColorData[];
   maxFilesize: number;
   mixColors: ColorMix;
   action: string;
@@ -33,7 +35,7 @@ export class ColorPickerComponent {
   @Input()
   modeList: string;
   @Output()
-  colorChange = new EventEmitter<ColorData>();
+  colorChange = new EventEmitter<ColorDialogData>();
   @Input()
   maxFilesize = 1000000;
   @Input()
@@ -44,6 +46,7 @@ export class ColorPickerComponent {
   onDialogEvent = new EventEmitter<ColorDialogData>();
   @Input()
   updateDialogData: (data: any) => void;
+  @Input() allColors: ColorData[];
 
   constructor(public dialog: MatDialog) {
     this.mixColors = ColorMix.fromJson({})
@@ -72,19 +75,24 @@ export class ColorPickerComponent {
     this._colors = value;
   }
 
-  clickActivate(color: ColorData) {
+  clickActivate(idx: number) {
     const data: ColorDialogData = {
       imageDataUrl: this.imageDataUrl,
       onDataChanged: this.onDataChanged,
       onDialogEvent: this.onDialogEvent,
-      color: color ?? new ColorData([255, 255, 255]),
+      colorIdx: idx,
       colorChange: this.colorChange,
       maxFilesize: this.maxFilesize,
       mixColors: this.mixColors,
       modeList: ColorPickerDialog.modeList,
       mode: this.mode,
-      action: 'open'
+      action: 'open',
+      colorList: this.colors
     };
+    if (this.allColors != null) {
+      data.colorList = this.allColors;
+      data.colorIdx = this.allColors.findIndex(c => c.themeKey === this.colors[idx].themeKey) ?? 0;
+    }
     if (this.modeList != null) {
       data.modeList = this.modeList.split(',') as any;
     }
@@ -93,19 +101,20 @@ export class ColorPickerComponent {
     }
     this.onDialogEvent?.emit(data);
     this.updateDialogData?.(data);
-    data.modeIcon = color.icon;
+    data.modeIcon = data.colorList[idx]?.icon;
     const dlgRef = this.dialog.open(ColorPickerDialog, {
       data: data,
-      panelClass: ['dialog-box', 'settings']
+      panelClass: ['dialog-box', 'settings'],
+      disableClose: true
     });
     dlgRef.componentInstance.fireMode();
     dlgRef.afterClosed().subscribe(response => {
-      if (response == null) {
-        response = {};
+      if (response?.btn === DialogResultButton.ok) {
+        data.action = 'closeOk';
+      } else {
+        data.action = 'close';
       }
-      response.action = 'close';
-      response.color = data.color;
-      this.onDialogEvent?.emit(response);
+      this.onDialogEvent?.emit(data);
     });
   }
 }

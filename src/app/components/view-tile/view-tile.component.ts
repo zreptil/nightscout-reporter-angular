@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {FormConfig} from '@/forms/form-config';
 import {BasePrint} from '@/forms/base-print';
-import {Log} from '@/_services/log.service';
 import {SessionService} from '@/_services/session.service';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {DataService} from '@/_services/data.service';
@@ -72,12 +71,6 @@ export class ViewTileComponent implements OnInit {
 
   tileClicked(evt: MouseEvent, cfg: FormConfig) {
     if (!cfg.opened) {
-      Log.todo('Checken, ob der auskommentierte Code in ViewTileComponent.expansionPanelClicked noch benötigt wird.',
-        'Das hatte wohl was mit Drag-Drop zu tun.');
-      //   if (evt.currentTarget.attributes['dontclick'] === 'true') {
-      //     evt.currentTarget.removeAttribute('dontclick');
-      //     return;
-      //   }
       cfg.checked = !cfg.checked;
       this.ss.checkPrint();
     }

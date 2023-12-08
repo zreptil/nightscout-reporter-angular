@@ -5,6 +5,10 @@
   --bodyFore: var(--settingsBodyFore);
 }
 
+[mat-dialog-title] {
+  gap: 0.5em;
+}
+
 div[row] {
   display: flex;
   flex-flow: row;

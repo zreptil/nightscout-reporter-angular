@@ -42,8 +42,8 @@
 mat-checkbox.loop {
   ::ng-deep .mdc-checkbox__background {
     border-radius: 50%;
-    outline: 5px solid var(--loopMarked);
-    background-color: var(--loopMarked);
+    outline: 5px solid var(--settingsLoopMarked);
+    background-color: var(--settingsLoopMarked);
   }
 }
 

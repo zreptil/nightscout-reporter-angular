@@ -24,25 +24,28 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   availableColormodes = 'hsl,mixer';
   // mapping for several strings
   mapping: any = {
-    // main: {title: $localize`Hauptseite`},
-    // unknown: {title: $localize`Unbekannt`, colors: [{key: ''}]},
-    // Head: {
-    //   title: $localize`Titelbereich`, colors: [
-    //     {key: 'HeadBack', icon: 'palette'},
-    //     {key: 'HeadFore', icon: 'text_fields'},
-    //   ]
-    // },
-    // Body: {
-    //   title: $localize`Inhaltsbereich`, colors: [
-    //     {key: 'BodyBack', icon: 'palette'},
-    //     {key: 'BodyFore', icon: 'text_fields'},
-    //   ]
-    // },
-    // ScrollThumb: {title: $localize`Scrollthumb`, colors: [{key: 'ScrollThumb'}]},
-    // Error: {title: $localize`Fehler`, colors: [{key: 'Error'}]},
+    owl: {title: $localize`Eule`},
+    datepicker: {title: $localize`Datumsauswahl`},
+    gluc: {title: $localize`Glukosewerte`},
+    google: {title: $localize`Google`},
+    info: {title: $localize`Info`},
+    help: {title: $localize`Hilfe`},
+    legal: {title: $localize`Gesetzliches`},
+    whatsnew: {title: $localize`Was bisher geschah...`},
+    shortcut: {title: $localize`Shortcut`},
+    settings: {title: $localize`Einstellungen`},
+    send: {title: $localize`PDF Button`},
+    log: {title: $localize`Log`, debugOnly: true},
+    local: {title: $localize`Lokal`, debugOnly: true},
+    beta: {title: $localize`Beta`, debugOnly: true},
+    debug: {title: $localize`Debug`, debugOnly: true},
+    outputparams: {title: $localize`Ausgabe Parameter`},
+    main: {title: $localize`Hauptseite`},
+    user: {title: $localize`Benutzer`},
   }
 
   colorList: any = {};
+  allColors: ColorData[] = [];
 
   constructor(private ts: ThemeService,
               private ms: MessageService,
@@ -63,7 +66,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     closeAction: (): Observable<boolean> => {
       let hasChanges = false;
       for (const key of Object.keys(this.orgTheme)) {
-        if (this.ts.currTheme[key] !== this.orgTheme[key]) {
+        const c1 = ColorData.fromString(this.ts.currTheme[key]);
+        const c2 = ColorData.fromString(this.orgTheme[key]);
+        if (c1.display !== c2.display) {
           hasChanges = true;
         }
       }
@@ -96,11 +101,25 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     }
     const ret: string[] = [];
     const skip = ['panelBack', 'panelFore', 'bufferColor'];
+    const additionalKeys: any = {
+      outputparams: ['settingsLoopMarked']
+    };
     const src = {...this.ts.currTheme};
     let keyList = Object.keys(src).sort();
     this.colorList = {};
+    this.allColors = [];
     if (!Utils.isEmpty(this.dlgData.colorKey)) {
-      keyList = keyList.filter(k => k.startsWith(this.dlgData.colorKey));
+      keyList = keyList.filter(k => {
+        if (k.startsWith(this.dlgData.colorKey)) {
+          return true;
+        }
+        for (const check of additionalKeys[this.dlgData.colorKey] ?? []) {
+          if (k.startsWith(check)) {
+            return true;
+          }
+        }
+        return false;
+      });
     }
     for (const key of keyList) {
       if (skip.indexOf(key) >= 0) {
@@ -119,25 +138,33 @@ export class ColorCfgDialogComponent implements AfterViewInit {
           const back = ColorData.fromString(this.ts.currTheme[key]);
           back.icon = 'palette';
           back.themeKey = key;
+          back.title = this.nameForColor(titleKey);
+          back.subtitle = $localize`Hintergrund`;
           const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
           fore.icon = 'text_fields';
           fore.themeKey = foreKey;
+          fore.title = this.nameForColor(titleKey);
+          fore.subtitle = $localize`Text`;
           this.colorList[subKey] = {
-            title: this.ts.colorNames[titleKey] ?? `(${titleKey})`,
+            title: this.nameForColor(titleKey),
             colors: [back, fore]
           };
+          this.allColors.push(back);
+          this.allColors.push(fore);
           ret.push(subKey);
         }
       }
       if (add) {
         const color = ColorData.fromString(this.ts.currTheme[key]);
-//        console.log(key, this.ts.currTheme[key], color);
         color.icon = 'palette';
         color.themeKey = key;
+        color.title = this.nameForColor(key);
+        color.subtitle = '';
         this.colorList[key] = {
-          title: this.ts.colorNames[key] ?? `(${key})`,
+          title: this.nameForColor(key),
           colors: [color]
         };
+        this.allColors.push(color);
         ret.push(key);
       }
     }
@@ -149,12 +176,23 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     return GLOBALS;
   }
 
+  nameForColor(key: string): string {
+    let ret = this.ts.colorNames[key] ?? `(${key})`;
+    const check = new RegExp(/([a-z]*)([A-Z].*)/).exec(key)?.[1];
+    if (check != null && this.mapping[check]?.title != null) {
+      if (Utils.isEmpty(this.dlgData.colorKey)) {
+        ret = `${this.mapping[check]?.title} - ${ret}`;
+      }
+    }
+    return ret;
+  }
+
   ngAfterViewInit(): void {
     this.orgTheme = Utils.jsonize(this.ts.currTheme);
   }
 
   colorChange(data: ColorDialogData) {
-    this.ts.currTheme[data.color.themeKey] = this.value;
+    this.ts.currTheme[data.colorList[data.colorIdx].themeKey] = this.value;
     this.ts.assignStyle(document.body.style, this.ts.currTheme);
     // if (this.color.endsWith('Back')) {
     //   this.ts.currTheme[`${this.color.replace(/Back/, 'Fore')}`] =
@@ -173,23 +211,34 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   }
 
   onColorPicker(data: ColorDialogData) {
+    const color = data.colorList[data.colorIdx];
+    this.allColors = data.colorList;
     switch (data.action) {
       case 'open':
         this.dlgRef.addPanelClass('hidden');
-        this.valueFore = ColorUtils.fontColor(data.color.value);
-        this.value = data.color.display;
+        this.valueFore = ColorUtils.fontColor(color.value);
+        this.value = color.display;
         this.colorChange(data);
         break;
       case 'colorChange':
-        this.valueFore = ColorUtils.fontColor(data.color.value);
-        this.value = data.color.display;
+        this.valueFore = ColorUtils.fontColor(color.value);
+        this.value = color.display;
         this.colorChange(data);
         break;
       case 'close':
-        if ((data as any).btn === DialogResultButton.ok) {
-          console.log('habs', data, this.colorList);
-          this._listThemeKeys = null;
+        for (const key of Object.keys(this.orgTheme)) {
+          this.ts.currTheme[key] = this.orgTheme[key];
         }
+        if (color.themeKey != null) {
+          this.value = this.orgTheme[color.themeKey];
+          this.colorChange(data);
+        }
+        this.dlgRef.removePanelClass('hidden');
+        break;
+      case 'closeOk':
+        console.log('onColorPicker', data);
+        // resets internal list, so that the colors are read again
+        this._listThemeKeys = null;
         this.dlgRef.removePanelClass('hidden');
         break;
       default:
@@ -232,7 +281,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     return ret ?? `(${key}) ${this.colorList[key].colors[0]?.themeKey}`;
   }
 
-  downloadTheme() {
+  storeTheme() {
     this.ts.storeTheme();
     this.ts.assignStyle(document.body.style, this.ts.currTheme);
     // const list = Object.keys(this.ts.currTheme);

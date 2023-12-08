@@ -103,8 +103,8 @@
           <mat-icon small>open_in_new</mat-icon>
         </button>
         <div class="menu-legal">
-          <button (click)="ss.showPopup('impressum')" class="legal" mat-button>{{msgImpressum}}</button>
-          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-button>{{msgDSGVO}}</button>
+          <button (click)="ss.showPopup('impressum')" class="legal" mat-button>{{ msgImpressum }}</button>
+          <button (click)="ss.showPopup('dsgvo')" class="legal" mat-button>{{ msgDSGVO }}</button>
           <!--
                   <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
                     <div *ngIf="g.isDebug" class="toggle-debug">
@@ -131,8 +131,8 @@
         <div *ngFor="let item of globals.shortcutList; let idx = index" [class]="shortcutClass(item)">
           <button (click)="ss.activateShortcut(idx)">
             <span content>
-              <mat-icon>{{item.icon}}</mat-icon>
-              <span text>{{item.name}}</span>
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <span text>{{ item.name }}</span>
             </span>
           </button>
           <button (click)="editShortcut(idx)">
@@ -143,7 +143,7 @@
           <button (click)="editShortcut(-1)" class="add">
             <span content>
               <mat-icon>add</mat-icon>
-              <span text>{{msgAddText}}</span>
+              <span text>{{ msgAddText }}</span>
             </span>
           </button>
         </div>
@@ -154,19 +154,19 @@
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
         <div [class]="classForView('basePanel')">
-          <button (click)="clickUser()" class="userName toolbar-button">{{globals.user.display}}</button>
+          <button (click)="clickUser()" class="userName toolbar-button">{{ globals.user.display }}</button>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
             <mat-form-field>
               <mat-select [(value)]="userIdx">
                 <mat-select-trigger>
-                  {{ss.isEmpty(globals.user.display) ? '' : globals.user.display}}
+                  {{ ss.isEmpty(globals.user.display) ? '' : globals.user.display }}
                 </mat-select-trigger>
                 <mat-option (click)="ss.activateUser(idx)"
                             *ngFor="let item of globals.userList; let idx = index"
                             [class]="userClass(item)"
                             [value]="idx">
-                  <div class="itemTitle">{{ss.isEmpty(item.name) ? item.apiUrl(null, "", {noApi: true}) : item.name}}</div>
-                  <div class="itemSub">{{item.apiUrl(null, "", {noApi: true})}}</div>
+                  <div class="itemTitle">{{ ss.isEmpty(item.name) ? item.apiUrl(null, "", {noApi: true}) : item.name }}</div>
+                  <div class="itemSub">{{ item.apiUrl(null, "", {noApi: true}) }}</div>
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -186,23 +186,17 @@
           </button>
           <div class="title">
             <div>
-              <span class="appTitle">{{globals.appTitle}}</span>
+              <span class="appTitle">{{ globals.appTitle }}</span>
               <span *ngIf="globals.isBeta" class="toolbar-button betaTitle">BETA</span>
               <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="toolbar-button localTitle" mat-button>
                 <span *ngIf="globals.isLocal">Lokal</span>
                 <span *ngIf="!globals.isLocal">Vorschau</span>
               </button>
             </div>
-            <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{globals.displayVersion}}</button>
+            <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{ globals.displayVersion }}</button>
           </div>
         </div>
         <nav class="material-navigation">
-          <app-color-picker *ngIf="globals.isLocal"
-                            [colors]="test([[255,0,0]])"
-                            [modeList]=""></app-color-picker>
-          <button (click)="globals.editColors=!globals.editColors" *ngIf="globals.isLocal" class="is-local" mat-mini-fab>
-            <mat-icon>palette</mat-icon>
-          </button>
           <app-close-button [data]="closeData"></app-close-button>
           <!--
           <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>
@@ -256,11 +250,11 @@
       <button (click)="clickSend()"
               *ngIf="globals.viewType === 'tile'"
               [attr.aria-label]="ss.msgAriaPlay"
-              [class]="sendClass(0,sendIcon)"
+              [class]="sendIcon"
               [disabled]="ss.activeCfgCount===0"
               mat-fab>
-        <span *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</span>
-        <mat-icon>{{createIcon}}</mat-icon>
+        <span *ngIf="ss.activeCfgCount>0">{{ ss.activeCfgCount }}</span>
+        <mat-icon>{{ createIcon }}</mat-icon>
       </button>
     </div>
     <ng-container *ngIf="globals.viewType === 'list'">
@@ -270,11 +264,11 @@
       <div class="sendPanel">
         <button (click)="clickSend()"
                 [attr.aria-label]="ss.msgAriaPlay"
-                [class]="sendClass(0,sendIcon)"
+                [class]="sendIcon"
                 [disabled]="ss.activeCfgCount===0"
                 mat-fab>
-          <span *ngIf="ss.activeCfgCount>0">{{ss.activeCfgCount}}</span>
-          <mat-icon>{{createIcon}}</mat-icon>
+          <span *ngIf="ss.activeCfgCount>0">{{ ss.activeCfgCount }}</span>
+          <mat-icon>{{ createIcon }}</mat-icon>
         </button>
       </div>
     </ng-container>

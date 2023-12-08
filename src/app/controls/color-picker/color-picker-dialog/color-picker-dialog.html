@@ -3,9 +3,12 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <button (click)="clickMode()" mat-icon-button>
-        <mat-icon>{{modeIcon}}</mat-icon>
+        <mat-icon>{{ modeIcon }}</mat-icon>
       </button>
-      <div i18n>{{dialogTitle}}</div>
+      <div title>
+        <div main>{{ title.main }}</div>
+        <div sub>{{ title.sub }}</div>
+      </div>
     </h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
@@ -37,6 +40,12 @@
                                [data]="data"
                                [parentClick]="fire"></app-color-picker-slider>
     </ng-container>
+    <button (click)="clickNextColor(-1)" *ngIf="data.colorList.length > 1" left mat-button nav>
+      <mat-icon>arrow_left</mat-icon>
+    </button>
+    <button (click)="clickNextColor(1)" *ngIf="data.colorList.length > 1" mat-button nav right>
+      <mat-icon>arrow_right</mat-icon>
+    </button>
   </div>
 
   <mat-dialog-actions>
@@ -46,10 +55,10 @@
            class="color"></div>
       <div (click)="colorClick($event, color, idx)"
            *ngFor="let color of savedColors; let idx = index"
-           [class]="classForCurrColor(idx)"
+           [class]="classForSavedColor(idx)"
            [ngStyle]="{backgroundColor:color.display}">
-        <mat-icon *ngIf="currColorIdx === idx" [ngStyle]="styleForSaveIcon">
-          {{iconForSave(color)}}
+        <mat-icon *ngIf="currSavedIdx === idx" [ngStyle]="styleForSaveIcon">
+          {{ iconForSave(color) }}
         </mat-icon>
       </div>
     </div>

@@ -435,8 +435,8 @@ mat-drawer-container {
       span {
         font-weight: bold;
         font-size: 200%;
-        color: var(--sendCountFore);
-        --sc: var(--sendCountFrame);
+        color: var(--mainSendCountFore);
+        --sc: var(--mainSendCountFrame);
         --w: 2px;
         --w-: -2px;
         text-shadow: var(--w) var(--w) 0 var(--sc), var(--w) var(--w-) 0 var(--sc), var(--w-) var(--w) 0 var(--sc), var(--w-) var(--w-) 0 var(--sc), var(--w) 0 0 var(--sc), 0 var(--w) 0 var(--sc), var(--w-) 0 0 var(--sc), 0 var(--w-) 0 var(--sc);

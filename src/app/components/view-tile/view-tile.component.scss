@@ -207,7 +207,7 @@
 }
 
 .tilechecked.is-debug {
-  border-color: var(--debugFore) !important;
+  border-color: var(--logDebugFore) !important;
   background: var(--logDebugBack) !important;
   color: var(--logDebugFore) !important;
 }

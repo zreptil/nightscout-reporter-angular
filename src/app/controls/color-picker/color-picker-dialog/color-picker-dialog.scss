@@ -36,6 +36,55 @@
   }
 }
 
-h1 .mat-mdc-icon-button ::ng-deep .mat-mdc-button-persistent-ripple {
-  display: none;
+[mat-dialog-title] {
+  gap: 0.5em;
+}
+
+h1 {
+  .mat-mdc-icon-button ::ng-deep .mat-mdc-button-persistent-ripple {
+    display: none;
+  }
+
+  [title] {
+    display: flex;
+    flex-flow: column;
+    gap: 0.1em;
+
+    div {
+      padding: 0;
+      margin: 0;
+      line-height: 1em;
+    }
+
+    [main] {
+      font-size: 75%;
+    }
+
+    [sub] {
+      font-size: 50%;
+    }
+  }
+}
+
+[nav] {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 2em;
+  padding: 0;
+  margin: 0;
+  min-width: initial;
+
+  .mat-icon {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+[nav][left] {
+  left: 0;
+}
+
+[nav][right] {
+  right: 0;
 }

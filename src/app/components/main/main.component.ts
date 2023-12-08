@@ -98,7 +98,7 @@ export class MainComponent implements OnInit {
   menuIdx = 0;
   closeData: CloseButtonData = {
     showClose: false,
-    colorKey: ''
+    colorKey: 'main'
   };
 
   constructor(public ts: ThemeService,
@@ -192,16 +192,6 @@ export class MainComponent implements OnInit {
       GLOBALS.currShortcut = new ShortcutData();
     }
     this.ss.showPopup('shortcutedit');
-  }
-
-  sendClass(shift: number, ret: string): string {
-    if (ret !== 'stop' &&
-      this.ns.reportData != null &&
-      GLOBALS.period.shiftStartBy(shift) === this.ns.reportData.begDate &&
-      GLOBALS.period.shiftEndBy(shift) === this.ns.reportData.endDate) {
-      ret = `${ret} sendMarked`;
-    }
-    return ret;
   }
 
   clickSend() {
