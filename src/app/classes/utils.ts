@@ -1,6 +1,7 @@
 import {Log} from '@/_services/log.service';
 import {EntryData} from '@/_model/nightscout/entry-data';
 import {lastValueFrom, Observable} from 'rxjs';
+import {GlobalsData} from '@/_model/globals-data';
 
 export class Utils {
   static replace(text: string, src: string | string[], dst: string | string[]): string {
@@ -67,7 +68,7 @@ export class Utils {
 
   static addDateMonths(date: Date, months: number): Date {
     const ret = new Date();
-    ret.setTime(date.getTime());
+    ret.setTime(date?.getTime() ?? GlobalsData.now.getTime());
     ret.setMonth(ret.getMonth() + months);
     return ret;
   }

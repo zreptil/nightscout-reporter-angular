@@ -75,10 +75,18 @@ button:not([icon]) {
 
 .dow-active {
   background-color: var(--datepickerDowActiveBack);
-  color: var(--datepickerDowActiveFore);
+
+  mat-icon {
+    color: var(--datepickerDowActiveFore);
+    margin: 0;
+  }
 }
 
 .dow-inactive {
   background-color: var(--datepickerDowInactiveBack);
-  color: var(--datepickerDowInactiveFore);
+
+  mat-icon {
+    color: var(--datepickerDowInactiveFore);
+    margin: 0;
+  }
 }

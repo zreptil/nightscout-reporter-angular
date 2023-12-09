@@ -135,4 +135,9 @@ export class DatepickerDialogComponent implements OnInit {
   addMonths(value: number) {
     this.data.month = Utils.addDateMonths(this.data.month, value);
   }
+
+  clickClear() {
+    this.data.period.entryKey = null;
+    this.data.period.start = null;
+  }
 }

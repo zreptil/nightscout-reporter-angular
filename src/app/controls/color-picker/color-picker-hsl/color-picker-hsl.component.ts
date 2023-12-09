@@ -185,7 +185,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
 
   get styleForHuePointerFore(): any {
     return {
-      background: this.color.display,
+      background: this.color.css,
       opacity: this.opacity
     };
   }
@@ -254,10 +254,10 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
     this.ctrls.hslWheel.y = this.hslWheel.nativeElement.offsetTop;
     this.ctrls.hslWheel.w = this.hslWheel.nativeElement.clientWidth;
     this.ctrls.hslWheel.h = this.hslWheel.nativeElement.clientHeight;
-    this.ctrls.opcBar.x = this.opcBar.nativeElement.offsetLeft;
-    this.ctrls.opcBar.y = this.opcBar.nativeElement.offsetTop;
-    this.ctrls.opcBar.w = this.opcBar.nativeElement.clientWidth;
-    this.ctrls.opcBar.h = this.opcBar.nativeElement.clientHeight;
+    this.ctrls.opcBar.x = this.opcBar?.nativeElement?.offsetLeft;
+    this.ctrls.opcBar.y = this.opcBar?.nativeElement?.offsetTop;
+    this.ctrls.opcBar.w = this.opcBar?.nativeElement?.clientWidth;
+    this.ctrls.opcBar.h = this.opcBar?.nativeElement?.clientHeight;
   }
 
   paintCanvas(): void {

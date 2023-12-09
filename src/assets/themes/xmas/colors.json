@@ -1,6 +1,5 @@
 {
   "betaBack": "transparent",
-  "betaFore": "#097138",
   "datepickerBodyBack": "#00bcd4",
   "datepickerBtnEmptyBack": "#e67c73",
   "datepickerBtnEmptyFore": "white",
@@ -23,7 +22,6 @@
   "datepickerMonthTitleBack": "#006064",
   "datepickerMonthTitleFore": "white",
   "debugFirst": "#0091ea",
-  "debugFore": "#f0f4c3",
   "debugSecond": "#64dd17",
   "glucHigh": "#cccc00",
   "glucLow": "#ff6666",

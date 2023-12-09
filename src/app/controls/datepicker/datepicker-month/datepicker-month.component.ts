@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {DayData, MonthData} from '@/controls/datepicker/datepicker-month/datepicker-data';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
+import {GlobalsData} from '@/_model/globals-data';
 
 @Component({
   selector: 'app-datepicker-month',
@@ -33,6 +34,9 @@ export class DatepickerMonthComponent implements OnInit {
   _date: Date;
 
   get date(): Date {
+    if (this._date == null) {
+      this.date = GlobalsData.now;
+    }
     return this._date;
   }
 

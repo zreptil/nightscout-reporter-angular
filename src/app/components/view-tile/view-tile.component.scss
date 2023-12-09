@@ -208,12 +208,12 @@
 
 .tilechecked.is-debug {
   border-color: var(--logDebugFore) !important;
-  background: var(--logDebugBack) !important;
+  background: var(--logDebugColor) !important;
   color: var(--logDebugFore) !important;
 }
 
 .tile.is-debug {
-  background: var(--logDebugBack) !important;
+  background: var(--logDebugColor) !important;
   color: var(--logDebugFore) !important;
 }
 

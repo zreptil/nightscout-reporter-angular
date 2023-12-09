@@ -36,6 +36,8 @@
   p {
     font-size: 80%;
   }
+
+  max-height: 6em;
 }
 
 [mat-dialog-title].empty {
@@ -75,6 +77,21 @@ div[footer] {
 h1 {
   margin-top: 0;
   margin-bottom: 0.5em;
+}
+
+.period-empty {
+  display: flex;
+  flex-flow: column;
+  gap: 0.2em;
+  line-height: 0.8em;
+
+  .title {
+  }
+
+  .info {
+    font-size: 75%;
+    font-weight: normal;
+  }
 }
 
 a, a:visited, a:active {
@@ -155,4 +172,20 @@ material-button.ok {
 .ok.mdc-button {
   display: flex;
   height: inherit;
+}
+
+[row] {
+  display: flex;
+  flex-flow: row;
+
+  .delete {
+    mat-icon {
+      margin: 0;
+    }
+  }
+}
+
+.is-debug {
+  background: var(--logDebugColor) !important;
+  color: var(--logDebugFore) !important;
 }

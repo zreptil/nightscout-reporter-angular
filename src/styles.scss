@@ -47,7 +47,7 @@ body {
   //--logTodoBack: #4040ff;
   //--logTodoFore: #c0c0ff;
   //--logTodoBorder: rgba(255, 255, 255, 0.7);
-  //--logDebugColor: 255, 255, 0;
+  //--logDebugRGB: 255, 255, 0;
   //--logDebugFore: #000;
   //--toolbarBack: rgba(0, 0, 0, 0.3);
   //--toolbarFore: #fff;
@@ -75,7 +75,6 @@ body {
   //--whatsnewLink: rgba(255, 255, 255, 0.6);
   //--localFore: #9c27b0;
   //--localBack: #e1bee7;
-  //--betaFore: #097138;
   //--betaBack: transparent;
   //--settingsLoopMarked: rgba(255, 255, 255, 0.4);
   //--outputparamsHeadBack: #a52714;
@@ -137,7 +136,7 @@ body {
   //--warnHeadFore: black;
   //--warnBodyBack: #dedc1d;
   //--warnBodyFore: black;
-  --logDebugBack: repeating-linear-gradient(45deg, rgba(var(--logDebugColor), 0.6), rgba(var(--logDebugColor), 0.6) 10px, rgba(var(--logDebugColor), 0.8) 10px, rgba(var(--logDebugColor), 0.8) 20px);
+  --logDebugColor: repeating-linear-gradient(45deg, rgba(var(--logDebugRGB), 0.6), rgba(var(--logDebugRGB), 0.6) 10px, rgba(var(--logDebugRGB), 0.8) 10px, rgba(var(--logDebugRGB), 0.8) 20px);
 }
 
 .dialog-box.warning {
@@ -389,7 +388,7 @@ mat-icon[small] {
 }
 
 .debug {
-  background: var(--logDebugBack);
+  background: var(--logDebugColor);
   color: var(--logDebugFore) !important;
 }
 

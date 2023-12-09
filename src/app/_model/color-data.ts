@@ -9,6 +9,7 @@ export class ColorData extends BaseData {
   themeKey: string;
   title: string;
   subtitle: string;
+  type: 'standard' | 'rgb' = 'standard';
 
   constructor(public value: number[], public opacity = 1.0) {
     super();
@@ -18,6 +19,13 @@ export class ColorData extends BaseData {
   }
 
   get display(): string {
+    if (this.type === 'rgb') {
+      return `${this.value[0]},${this.value[1]},${this.value[2]}`;
+    }
+    return ColorUtils.display_rgba(this.value, this.opacity);
+  }
+
+  get css(): string {
     return ColorUtils.display_rgba(this.value, this.opacity);
   }
 
@@ -46,7 +54,12 @@ export class ColorData extends BaseData {
 
   static fromString(value: string): ColorData {
     const ret = new ColorData(null);
-    if (value?.length === 7) {
+    const parts = value.split(',');
+    if (parts.length === 3) {
+      ret.value[0] = +parts[0];
+      ret.value[1] = +parts[1];
+      ret.value[2] = +parts[2];
+    } else if (value?.length === 7) {
       const r = parseInt(value.substring(1, 3), 16);
       const g = parseInt(value.substring(3, 5), 16);
       const b = parseInt(value.substring(5), 16);
@@ -64,11 +77,9 @@ export class ColorData extends BaseData {
       ret.opacity = parseInt(value.substring(7), 16) / 255;
     } else if (value?.startsWith('rgb(')) {
       const parts = value.substring(4, value.length - 1).split(',');
-      console.log(parts, value);
       ret.value = [+parts[0], +parts[1], +parts[2]];
     } else if (value?.startsWith('rgba(')) {
       const parts = value.substring(5, value.length - 1).split(',');
-      // console.log(parts, value);
       ret.value = [+parts[0], +parts[1], +parts[2]];
       ret.opacity = +parts[3];
     }

@@ -10,6 +10,7 @@ import {MessageService} from '@/_services/message.service';
 import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {map, Observable, of} from 'rxjs';
+import {Log} from '@/_services/log.service';
 
 @Component({
   selector: 'app-color-cfg-dialog',
@@ -126,36 +127,47 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         continue;
       }
       let add = true;
-      if (key.endsWith('Back')) {
-        const subKey = key.substring(0, key.length - 4);
+      let type: 'standard' | 'rgb' = 'standard';
+      if (key.endsWith('Back') || key.endsWith('RGB')) {
+        const subKey = key.substring(0, key.length - (key.endsWith('RGB') ? 3 : 4));
         let titleKey = subKey; // subKey.replace(/Head/, '');
         // titleKey = titleKey.replace(/Body/, '');
         const foreKey = subKey + 'Fore';
         const idx = keyList.indexOf(foreKey);
         if (idx >= 0) {
           add = false;
-          keyList.splice(idx, 1);
-          const back = ColorData.fromString(this.ts.currTheme[key]);
-          back.icon = 'palette';
-          back.themeKey = key;
-          back.title = this.nameForColor(titleKey);
-          back.subtitle = $localize`Hintergrund`;
-          const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
-          fore.icon = 'text_fields';
-          fore.themeKey = foreKey;
-          fore.title = this.nameForColor(titleKey);
-          fore.subtitle = $localize`Text`;
-          this.colorList[subKey] = {
-            title: this.nameForColor(titleKey),
-            colors: [back, fore]
-          };
-          this.allColors.push(back);
-          this.allColors.push(fore);
-          ret.push(subKey);
+          if (this.mayUseMapping(titleKey)) {
+            keyList.splice(idx, 1);
+            const back = ColorData.fromString(this.ts.currTheme[key]);
+            if (key.endsWith('RGB')) {
+              back.type = 'rgb';
+            }
+            back.icon = 'palette';
+            back.themeKey = key;
+            back.title = this.nameForColor(titleKey);
+            back.subtitle = $localize`Hintergrund`;
+            const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
+            fore.icon = 'text_fields';
+            fore.themeKey = foreKey;
+            fore.title = this.nameForColor(titleKey);
+            fore.subtitle = $localize`Text`;
+            this.colorList[subKey] = {
+              title: this.nameForColor(titleKey),
+              colors: [back, fore]
+            };
+            this.allColors.push(back);
+            this.allColors.push(fore);
+            ret.push(subKey);
+          }
         }
       }
-      if (add) {
+
+      if (key.endsWith('RGB')) {
+        type = 'rgb';
+      }
+      if (add && this.mayUseMapping(key)) {
         const color = ColorData.fromString(this.ts.currTheme[key]);
+        color.type = type;
         color.icon = 'palette';
         color.themeKey = key;
         color.title = this.nameForColor(key);
@@ -246,6 +258,14 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     }
   }
 
+  mayUseMapping(key: string): boolean {
+    const check = new RegExp(/([a-z]*)([A-Z].*)/).exec(key)?.[1];
+    if (check != null && this.mapping[check] != null) {
+      return !(this.mapping[check]?.debugOnly ?? false) || Log.mayDebug;
+    }
+    return true;
+  }
+
   colors(key: string): ColorData[] {
     const ret: ColorData[] = [];
     if (this.mapping[key]?.colors != null) {
@@ -279,6 +299,15 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     // const ret = this.mapEntry(key, true)?.title;
     const ret = this.colorList[key]?.title;
     return ret ?? `(${key}) ${this.colorList[key].colors[0]?.themeKey}`;
+  }
+
+  styleForName(key: string): string[] {
+    const ret: string[] = [];
+    const check = new RegExp(/([a-z]*)([A-Z].*)*/).exec(key)?.[1];
+    if (this.mapping[check]?.debugOnly ?? false) {
+      ret.push('is-debug');
+    }
+    return ret;
   }
 
   storeTheme() {

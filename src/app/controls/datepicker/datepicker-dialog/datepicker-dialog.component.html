@@ -2,9 +2,9 @@
      cdkDragRootElement=".dialog-box.datepickerdialog">
   <div [class]="classForTitle" cdkDragHandle mat-dialog-title>
     <h1 *ngIf="!data.period.isEmpty" i18n="title for datepicker dialog">Zeitraum</h1>
-    <div *ngIf="data.period.isEmpty">
-      <h1 i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</h1>
-      <p i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</p>
+    <div *ngIf="data.period.isEmpty" class="period-empty">
+      <div class="title" i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</div>
+      <div class="info" i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</div>
     </div>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
@@ -44,7 +44,7 @@
           [class]="item.key"
           mat-button>
           <mat-icon *ngIf="item.key==='save'">save</mat-icon>
-          {{item.title}}
+          {{ item.title }}
         </button>
         <button
           (click)="onShortcutClick(item)"
@@ -52,7 +52,7 @@
           [class]="item.key"
           mat-raised-button>
           <mat-icon *ngIf="item.key==='save'">save</mat-icon>
-          {{item.title}}
+          {{ item.title }}
         </button>
         <span *ngIf="item.key==='today'">|</span>
       </ng-container>
@@ -62,12 +62,17 @@
               *ngIf="showShift"
               class="shift"
               mat-button>
-        {{shiftName}}
+        {{ shiftName }}
       </button>
-      <button class="iconButton ok" mat-button mat-dialog-close="save">
-        <mat-icon>done</mat-icon>
-        <ng-container i18n="buttonlabel for ok in control datepicker">Ok</ng-container>
-      </button>
+      <div row>
+        <button (click)="clickClear()" *ngIf="globals.isDebug" class="iconButton delete is-debug" mat-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button class="iconButton ok" mat-button mat-dialog-close="save">
+          <mat-icon>done</mat-icon>
+          <ng-container i18n="buttonlabel for ok in control datepicker">Ok</ng-container>
+        </button>
+      </div>
     </div>
   </div>
 </div>

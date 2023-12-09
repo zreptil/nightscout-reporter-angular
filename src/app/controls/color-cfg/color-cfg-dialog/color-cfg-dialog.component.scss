@@ -28,4 +28,9 @@ div[row] {
   [name] {
     flex: 1;
   }
+
+  [name].is-debug {
+    background: var(--logDebugColor) !important;
+    color: var(--logDebugFore) !important;
+  }
 }

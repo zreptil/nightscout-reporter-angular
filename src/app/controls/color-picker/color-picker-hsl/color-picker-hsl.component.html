@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div #opcBar [ngStyle]="styleForOpcBack" opc-back>
+  <div #opcBar *ngIf="color?.type !== 'rgb'" [ngStyle]="styleForOpcBack" opc-back>
     <div opc-fore></div>
     <div [ngStyle]="styleForOpcPointer" pointer vert>
       <div mark></div>
@@ -30,14 +30,14 @@
 </div>
 <div *ngIf="globals.isDebug" class="debug" info>
   <div>
-    H: {{floor(hue)}}
-    S: {{floor(sat)}}
-    L: {{floor(light)}}
+    H: {{ floor(hue) }}
+    S: {{ floor(sat) }}
+    L: {{ floor(light) }}
   </div>
   <div>
-    O: {{floor(opacity * 100)}}%
+    O: {{ floor(opacity * 100) }}%
   </div>
   <div>
-    #: {{color.display_rgba}}
+    #: {{ color.display_rgba }}
   </div>
 </div>

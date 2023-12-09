@@ -3,7 +3,7 @@ import {Utils} from '@/classes/utils';
 
 export class DatepickerData {
   loadedPeriod: string = null;
-  month: Date = null;
+  month: Date = new Date();
   period: DatepickerPeriod = null;
 
   constructor() {

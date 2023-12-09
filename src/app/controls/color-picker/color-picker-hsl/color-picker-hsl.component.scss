@@ -49,6 +49,7 @@
     position: relative;
 
     [hslwheel] {
+      overflow: hidden;
       pointer-events: none;
       --size: 200px;
       display: flex;

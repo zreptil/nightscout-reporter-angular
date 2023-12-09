@@ -377,6 +377,7 @@ export class DataService {
       const users = json.s2;
       const shortcuts = json.s3;
       GLOBALS.glucMGDLIdx = JsonData.toNumber(json.s5);
+      GLOBALS.editColors = JsonData.toBool(json.s6);
       // Die Speicherung der Sprache in sharedData ist
       // zunächst mal ausgeschaltet, weil das beim Start
       // Probleme mit der Zuordnung gibt
