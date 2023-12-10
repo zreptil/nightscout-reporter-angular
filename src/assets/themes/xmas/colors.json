@@ -32,18 +32,11 @@
   "helpBodyFore": "black",
   "helpHeadBack": "#4a148c",
   "helpHeadFore": "#e1bee7",
-  "infoBodyBack": "#e67c73",
-  "infoBodyFore": "black",
-  "infoErrorColor": "#e06055",
-  "infoHeadBack": "#a52714",
-  "infoHeadFore": "#f4c7c3",
-  "infoInfoColor": "#5e97f6",
-  "infoWarningColor": "#f6bf26",
   "legalBodyBack": "#aed581",
   "legalBodyFore": "black",
   "legalHeadBack": "#33691e",
   "legalHeadFore": "#aed581",
-  "legalLink": "#33691e",
+  "legalBodyLink": "#33691e",
   "localBack": "#e1bee7",
   "localFore": "#9c27b0",
   "settingsLoopMarked": "rgba(255,255,255,0.4)",
@@ -70,5 +63,5 @@
   "whatsnewBodyFore": "white",
   "whatsnewHeadBack": "#64dd17",
   "whatsnewHeadFore": "#055524",
-  "whatsnewLink": "rgba(255,255,255,0.6)"
+  "whatsnewBodyLink": "rgba(255,255,255,0.6)"
 }

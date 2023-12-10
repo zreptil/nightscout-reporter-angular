@@ -103,7 +103,8 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     const ret: string[] = [];
     const skip = ['panelBack', 'panelFore', 'bufferColor'];
     const additionalKeys: any = {
-      outputparams: ['settingsLoopMarked']
+      outputparams: ['settingsLoopMarked', 'datepickerBtnEmpty'],
+      main: ['userPinFore', 'local', 'beta']
     };
     const src = {...this.ts.currTheme};
     let keyList = Object.keys(src).sort();
@@ -133,11 +134,12 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         let titleKey = subKey; // subKey.replace(/Head/, '');
         // titleKey = titleKey.replace(/Body/, '');
         const foreKey = subKey + 'Fore';
-        const idx = keyList.indexOf(foreKey);
-        if (idx >= 0) {
+        const foreIdx = keyList.indexOf(foreKey);
+        const linkKey = subKey + 'Link';
+        let linkIdx = keyList.indexOf(linkKey);
+        if (foreIdx >= 0 || linkIdx >= 0) {
           add = false;
           if (this.mayUseMapping(titleKey)) {
-            keyList.splice(idx, 1);
             const back = ColorData.fromString(this.ts.currTheme[key]);
             if (key.endsWith('RGB')) {
               back.type = 'rgb';
@@ -146,17 +148,32 @@ export class ColorCfgDialogComponent implements AfterViewInit {
             back.themeKey = key;
             back.title = this.nameForColor(titleKey);
             back.subtitle = $localize`Hintergrund`;
-            const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
-            fore.icon = 'text_fields';
-            fore.themeKey = foreKey;
-            fore.title = this.nameForColor(titleKey);
-            fore.subtitle = $localize`Text`;
             this.colorList[subKey] = {
               title: this.nameForColor(titleKey),
-              colors: [back, fore]
+              colors: [back]
             };
             this.allColors.push(back);
-            this.allColors.push(fore);
+            if (foreIdx >= 0) {
+              keyList.splice(foreIdx, 1);
+              const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
+              fore.icon = 'text_fields';
+              fore.themeKey = foreKey;
+              fore.title = this.nameForColor(titleKey);
+              fore.subtitle = $localize`Text`;
+              this.colorList[subKey].colors.push(fore);
+              this.allColors.push(fore);
+            }
+            linkIdx = keyList.indexOf(linkKey);
+            if (linkIdx >= 0) {
+              keyList.splice(linkIdx, 1);
+              const link = ColorData.fromString(this.ts.currTheme[linkKey]);
+              link.icon = 'link';
+              link.themeKey = linkKey;
+              link.title = this.nameForColor(titleKey);
+              link.subtitle = $localize`Link`;
+              this.colorList[subKey].colors.push(link);
+              this.allColors.push(link);
+            }
             ret.push(subKey);
           }
         }
@@ -168,7 +185,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       if (add && this.mayUseMapping(key)) {
         const color = ColorData.fromString(this.ts.currTheme[key]);
         color.type = type;
-        color.icon = 'palette';
+        color.icon = key.endsWith('Fore') ? 'text_fields' : 'palette';
         color.themeKey = key;
         color.title = this.nameForColor(key);
         color.subtitle = '';

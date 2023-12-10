@@ -66,11 +66,16 @@ export class ColorPickerComponent {
     }
     let back = value.find(c => c.icon === 'palette');
     let fore = value.find(c => c.icon === 'text_fields');
+    let link = value.find(c => c.icon === 'link');
     if (back != null && fore != null) {
       back.btnBackColor = back.display;
       back.btnForeColor = fore.display;
       fore.btnBackColor = back.display;
       fore.btnForeColor = fore.display;
+      if (link != null) {
+        link.btnBackColor = back.display;
+        link.btnForeColor = link.display;
+      }
     }
     this._colors = value;
   }
