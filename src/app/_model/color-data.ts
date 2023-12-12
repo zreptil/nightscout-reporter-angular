@@ -6,6 +6,7 @@ export class ColorData extends BaseData {
   icon = 'palette';
   btnForeColor: string;
   btnBackColor: string;
+  btnClass: string;
   themeKey: string;
   title: string;
   subtitle: string;

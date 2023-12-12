@@ -393,6 +393,7 @@ mat-drawer-container {
       justify-content: space-between;
       padding: 0.1em;
       border-top: 1px solid rgba(0, 0, 0, 0.2);
+      background-color: var(--mainBodyBack);
 
       [mat-icon-button] {
         align-self: center;

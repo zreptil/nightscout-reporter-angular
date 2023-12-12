@@ -62,6 +62,8 @@
   "datepickerDowInactiveFore": "#eda29b",
   "mainSendCountFore": "#000",
   "mainSendCountFrame": "#fff",
+  "mainDonateBack": "#ffc439",
+  "mainDonateFore": "#000",
   "userPinFore": "rgba(255, 215, 0, 0.7)",
   "logDebugRGB": "255, 255, 0",
   "logDebugFore": "#000",

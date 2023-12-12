@@ -171,6 +171,13 @@ export class WatchComponent implements OnInit {
     return ret;
   }
 
+  // }
+  get styleForOwl(): any {
+    return {
+      '--theme-back': 'var(--settingsBodyBack)'
+    };
+  }
+
   async ngOnInit() {
     document.querySelector('head>title').innerHTML = this.msgTitle;
     document
@@ -357,18 +364,6 @@ export class WatchComponent implements OnInit {
       });
   }
 
-  clickWatchSettings(evt: MouseEvent) {
-    evt.stopPropagation();
-    this.ss.showPopup('watchsettings').subscribe(result => {
-      switch (result?.btn) {
-        case DialogResultButton.ok:
-          this.ds.save({skipReload: true});
-          break;
-      }
-    });
-    // GLOBALS.isWatchColor = !GLOBALS.isWatchColor;
-  }
-
   // settingsResult(evt: any) {
   //   switch (evt.type) {
   //     case 'ok':
@@ -387,7 +382,19 @@ export class WatchComponent implements OnInit {
   //       if (g.isConfigured) currPage = 'watch';
   //       break;
   //   }
-  // }
+
+  clickWatchSettings(evt: MouseEvent) {
+    evt.stopPropagation();
+    this.ss.showPopup('watchsettings').subscribe(result => {
+      switch (result?.btn) {
+        case DialogResultButton.ok:
+          this.ds.save({skipReload: true});
+          break;
+      }
+    });
+    // GLOBALS.isWatchColor = !GLOBALS.isWatchColor;
+  }
+
   clickGroup(evt: MouseEvent) {
     evt.stopPropagation();
     const ids: any = {

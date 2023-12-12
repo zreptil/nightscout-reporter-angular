@@ -35,7 +35,6 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     whatsnew: {title: $localize`Was bisher geschah...`},
     shortcut: {title: $localize`Shortcut`},
     settings: {title: $localize`Einstellungen`},
-    send: {title: $localize`PDF Button`},
     log: {title: $localize`Log`, debugOnly: true},
     local: {title: $localize`Lokal`, debugOnly: true},
     beta: {title: $localize`Beta`, debugOnly: true},
@@ -104,8 +103,13 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     const skip = ['panelBack', 'panelFore', 'bufferColor'];
     const additionalKeys: any = {
       outputparams: ['settingsLoopMarked', 'datepickerBtnEmpty'],
-      main: ['userPinFore', 'local', 'beta']
+      main: ['userPinFore', 'local', 'beta', 'log'],
+      settings: ['userPinFore']
     };
+    // if a color-button needs a special class, it is defined here
+    const classes: any = {
+      logDebug: 'is-debug'
+    }
     const src = {...this.ts.currTheme};
     let keyList = Object.keys(src).sort();
     this.colorList = {};
@@ -123,69 +127,81 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         return false;
       });
     }
+    const specialKeys: any = {
+      Fore: {icon: 'format_color_text', title: $localize`Text`},
+      Link: {icon: 'link', title: $localize`Link`}
+    };
+    const specialGroups: any = {
+      Back: {keys: specialKeys, title: $localize`Hintergrund`},
+      RGB: {keys: specialKeys, title: $localize`Hintergrund`},
+      Frame: {keys: specialKeys, title: $localize`Rahmen`},
+    };
     for (const key of keyList) {
       if (skip.indexOf(key) >= 0) {
         continue;
       }
       let add = true;
       let type: 'standard' | 'rgb' = 'standard';
-      if (key.endsWith('Back') || key.endsWith('RGB')) {
-        const subKey = key.substring(0, key.length - (key.endsWith('RGB') ? 3 : 4));
-        let titleKey = subKey; // subKey.replace(/Head/, '');
-        // titleKey = titleKey.replace(/Body/, '');
-        const foreKey = subKey + 'Fore';
-        const foreIdx = keyList.indexOf(foreKey);
-        const linkKey = subKey + 'Link';
-        let linkIdx = keyList.indexOf(linkKey);
-        if (foreIdx >= 0 || linkIdx >= 0) {
-          add = false;
-          if (this.mayUseMapping(titleKey)) {
+      // noinspection JSMismatchedCollectionQueryUpdate
+      let colorList: ColorData[] = [];
+      for (const groupKey of Object.keys(specialGroups)) {
+        if (key.endsWith(groupKey)) {
+          const group = specialGroups[groupKey];
+          const subKey = key.substring(0, key.length - groupKey.length);
+          let hasSpec = false;
+          for (const specKey of Object.keys(specialGroups[groupKey].keys)) {
+            const fullKey = subKey + specKey;
+            const idx = keyList.indexOf(fullKey);
+            if (idx >= 0 && this.mayUseMapping(subKey)) {
+              skip.push(fullKey);
+              hasSpec = true;
+              const spec = specialGroups[groupKey].keys[specKey];
+              const color = ColorData.fromString(this.ts.currTheme[fullKey]);
+              color.btnClass = classes[subKey];
+              color.icon = spec.icon;
+              color.themeKey = fullKey;
+              color.title = this.nameForColor(subKey);
+              color.subtitle = spec.title;
+              colorList.push(color);
+              this.allColors.push(color);
+              // if the fullKey is already in the return list, then it has to
+              // be removed. Happens, when the special key is alphabetically
+              // lower than the group key
+              const check = ret.findIndex(r => r === fullKey);
+              if (check >= 0) {
+                ret.splice(check, 1);
+              }
+            }
+          }
+          if (add && hasSpec) {
+            add = false;
             const back = ColorData.fromString(this.ts.currTheme[key]);
             if (key.endsWith('RGB')) {
               back.type = 'rgb';
             }
-            back.icon = 'palette';
+            back.btnClass = classes[subKey];
+            back.icon = 'format_color_fill';
             back.themeKey = key;
-            back.title = this.nameForColor(titleKey);
-            back.subtitle = $localize`Hintergrund`;
+            back.title = this.nameForColor(subKey);
+            back.subtitle = group.title;
             this.colorList[subKey] = {
-              title: this.nameForColor(titleKey),
+              title: this.nameForColor(subKey),
               colors: [back]
             };
+            colorList = this.colorList[subKey].colors;
             this.allColors.push(back);
-            if (foreIdx >= 0) {
-              keyList.splice(foreIdx, 1);
-              const fore = ColorData.fromString(this.ts.currTheme[foreKey]);
-              fore.icon = 'text_fields';
-              fore.themeKey = foreKey;
-              fore.title = this.nameForColor(titleKey);
-              fore.subtitle = $localize`Text`;
-              this.colorList[subKey].colors.push(fore);
-              this.allColors.push(fore);
-            }
-            linkIdx = keyList.indexOf(linkKey);
-            if (linkIdx >= 0) {
-              keyList.splice(linkIdx, 1);
-              const link = ColorData.fromString(this.ts.currTheme[linkKey]);
-              link.icon = 'link';
-              link.themeKey = linkKey;
-              link.title = this.nameForColor(titleKey);
-              link.subtitle = $localize`Link`;
-              this.colorList[subKey].colors.push(link);
-              this.allColors.push(link);
-            }
             ret.push(subKey);
           }
         }
       }
 
-      if (key.endsWith('RGB')) {
-        type = 'rgb';
-      }
       if (add && this.mayUseMapping(key)) {
+        if (key.endsWith('RGB')) {
+          type = 'rgb';
+        }
         const color = ColorData.fromString(this.ts.currTheme[key]);
         color.type = type;
-        color.icon = key.endsWith('Fore') ? 'text_fields' : 'palette';
+        color.icon = key.endsWith('Fore') ? 'format_color_text' : 'format_color_fill';
         color.themeKey = key;
         color.title = this.nameForColor(key);
         color.subtitle = '';
@@ -265,9 +281,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         this.dlgRef.removePanelClass('hidden');
         break;
       case 'closeOk':
-        console.log('onColorPicker', data);
         // resets internal list, so that the colors are read again
         this._listThemeKeys = null;
+        this.ts.changed = true;
         this.dlgRef.removePanelClass('hidden');
         break;
       default:

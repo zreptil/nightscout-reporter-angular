@@ -1,13 +1,26 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.whatsnew">
   <div cdkDragHandle mat-dialog-title>
-    <h1>{{globals.titles.whatsnew}}</h1>
+    <h1>{{ globals.titles.whatsnew }}</h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
-    <h2 (click)="click(42.2)">
-      <span i18n="version">Version</span><span i18n="v422">4.2.2 - 16.11.2023</span></h2>
-    <ul [class]="classFor(42.2)">
+    <h2 (click)="click(43.0)">
+      <span i18n="version">Version</span><span i18n="v430">4.3.0 - 11.12.2023</span></h2>
+    <ul [class]="classFor(43.0)">
+      <li class="added" i18n="v430a1">
+        Mit dieser Version ist es möglich die Farben in Nightscout Reporter anzupassen. Die
+        Aktivierung des Modus für die Farbänderung erfolgt in den Einstellungen über eine
+        Checkbox namens "Farben anpassen". Wenn diese aktiviert ist, dann wird sowohl daneben,
+        als auch an anderen Stellen (z.B. in jedem Dialog neben dem Schliessen-Button) ein Icon
+        mit einer Palette eingeblendet, über das man Zugriff auf die Farben für den entsprechenden
+        Bereich erhält. Das Icon neben der Checkbox zeigt beim Anklicken die vollständige Liste aller
+        Farben an. Die Farben sind mit möglichst sinnvollen Namen versehen, um die Identifizierung
+        zu ermöglichen. Beim Anklicken der Buttons für die einzelnen Farben erscheint ein Dialog,
+        in dem man dann die Farbe einstellen kann. Diese wird während der Änderung in der Anwendung
+        angepasst, so dass man sofort sehen kann, wie sich die Farbe auswirkt. Man kann die Farbänderung
+        jederzeit über das X rechts oben in den Dialogen beenden und die bisherigen Änderungen verwerfen.
+      </li>
       <li class="added">
         <span i18n>Neues Icon in NightWatch</span>
         <div row>
@@ -18,24 +31,24 @@
           </span>
         </div>
       </li>
-      <li class="added" i18n="v422a2">
+      <li class="added" i18n="v430a2">
         Auf dem Formular Auswertung kann jetzt auch die Liste der Glukosequellen ausgegeben werden.
         Es gibt eine entsprechende Option dafür, damit man das ein- und ausschalten kann.
       </li>
-      <li class="added" i18n="v422a3">
+      <li class="added" i18n="v430a3">
         Auf dem Formular Tagestrend kann jetzt bei Ausgabe aller Werte für den Tag festgelegt werden,
         dass nur die Glukosewerte angezeigt werden sollen. In diesem Fall werden pro Seite die
         Glukosewerte für einen Tag ohne zusätzliche Informationen angezeigt.
       </li>
-      <li class="fixed" i18n="v422f1">
+      <li class="fixed" i18n="v430f1">
         Die Ermittlung der COB erfolgt nun in den meisten Fällen auch dann korrekt, wenn aus den
         Profil-Switches die benötigte Kohlenhydrat-Resorptions-Rate nicht ermittelt werden kann.
       </li>
-      <li class="changed" i18n="v422c1">
+      <li class="changed" i18n="v430c1">
         Der Stern bei den Benutzern in der Benutzerliste ist jetzt immer sichtbar. Das
         macht es einfacher die Besternung zu ändern.
       </li>
-      <li class="changed" i18n="v422c2">
+      <li class="changed" i18n="v430c2">
         Die Verarbeitung der Daten bei Erstellung der PDFs wurde überarbeitet. Wenn viele
         Profile vorhanden sind, sollte die Verarbeitung nun wesentlich schneller erfolgen.
       </li>
@@ -205,7 +218,7 @@
         angegeben wird, dann wird automatisch die Auswahl "Alle" vorgenommen. Der Aufruf mit
         allen Parametern sieht dann so aus:</span>
         <br><br>
-        {{originUrl}}/shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
+        {{ originUrl }}/shortcut?name=<b>x</b>&user=<b>u</b>&shift=<b>s</b>&device=<b>d</b>
         <br><br>
         <b>x</b>: <span i18n>der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span><br>
         <b>u</b>: <span i18n>der Name des Benutzers, für den das PDF erzeugt werden soll.
@@ -239,11 +252,11 @@
         Der Aufruf von Shortcuts und NightWatch wurde etwas abgeändert. Statt eines #-Zeichens
         wird der Aufruf jetzt über die entsprechende Angabe im Pfad ausgeführt. Also statt
         <br><br>
-        {{originUrl}}#watch
+        {{ originUrl }}#watch
         <br><br>
         wird jetzt Folgendes verwendet:
         <br><br>
-        {{originUrl}}/watch
+        {{ originUrl }}/watch
         <br><br>
         Damit sind die Aufrufe als installierte Apps unter Windows und auf Smartphones
         stabiler, wenn man die Seiten neu lädt.
@@ -308,7 +321,7 @@
         das auf den Einstellungen in diesem Shortcut basiert. Die Url muss dabei folgendermassen aufgebaut
         sein:</span>
         <br><br>
-        {{originUrl}}#shortcut?name=x&user=u&shift=s
+        {{ originUrl }}#shortcut?name=x&user=u&shift=s
         <br>
         <br><span i18n>Hierbei ist x der Name, der beim Shortcut als Bezeichnung eingegeben wurde.</span>
         <br><span i18n>Die Angabe von user ist optional. u ist dabei der Name des Benutzers, für den das PDF

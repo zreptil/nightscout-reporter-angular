@@ -1,5 +1,6 @@
 :host {
   --headBack: var(--mainHeadBack);
+  --theme-back: var(--mainBodyBack);
   overflow: hidden
 }
 
@@ -54,6 +55,7 @@
 
 .themePanel {
   display: flex;
+  background-color: var(--theme-back);
   flex-flow: row;
   position: absolute;
   bottom: 0.75em;
@@ -75,8 +77,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffc439;
-    color: black;
+    background: var(--mainDonateBack);
+    color: var(--mainDonateFore);
     height: 2em;
     text-transform: none;
     border-radius: 2em !important;

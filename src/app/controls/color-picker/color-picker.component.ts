@@ -64,8 +64,8 @@ export class ColorPickerComponent {
       c.btnBackColor = c.display;
       c.btnForeColor = c.fontDisplay;
     }
-    let back = value.find(c => c.icon === 'palette');
-    let fore = value.find(c => c.icon === 'text_fields');
+    let back = value.find(c => c.icon === 'format_color_fill');
+    let fore = value.find(c => c.icon === 'format_color_text');
     let link = value.find(c => c.icon === 'link');
     if (back != null && fore != null) {
       back.btnBackColor = back.display;

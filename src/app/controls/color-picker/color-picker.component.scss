@@ -45,3 +45,8 @@
     }
   }
 }
+
+.is-debug {
+  background: var(--logDebugColor);
+  color: var(--logDebugFore);
+}

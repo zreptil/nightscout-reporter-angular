@@ -2,7 +2,7 @@
   <button (click)="clickActivate(idx)"
           [ngStyle]="{color: color?.btnForeColor}">
     <div checkers></div>
-    <div [ngStyle]="{backgroundColor: color?.btnBackColor}" back></div>
-    <mat-icon>{{color?.icon ?? 'palette'}}</mat-icon>
+    <div [class]="color?.btnClass" [ngStyle]="{backgroundColor: color?.btnBackColor}" back></div>
+    <mat-icon>{{ color?.icon ?? 'palette' }}</mat-icon>
   </button>
 </div>

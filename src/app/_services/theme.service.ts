@@ -6,6 +6,8 @@ import {GLOBALS} from '@/_model/globals-data';
 import * as JSZip from 'jszip';
 import {encode} from 'base64-arraybuffer';
 import {Log} from '@/_services/log.service';
+import {MessageService} from '@/_services/message.service';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class ThemeService {
   static lsThemeName = 'owntheme';
   readonly currTheme: any = {};
   langHeight = '16em';
+  changed = false;
 
   colorNames: any = {
     mainHead: $localize`Titel`,
@@ -50,8 +53,9 @@ export class ThemeService {
     datepickerBtnShiftKey: $localize`Verschiebung`,
     datepickerDowActive: $localize`Aktiver Wochentag`,
     datepickerDowInactive: $localize`Inaktiver Wochentag`,
-    mainSendCountFore: $localize`Anzahl Formulare`,
-    mainSendCountFrame: $localize`Rand um Anzahl Formulare`,
+    datepickerBody: $localize`Hintergrund`,
+    mainSendCount: $localize`Anzahl Formulare`,
+    mainDonate: $localize`Spendenbutton`,
     userPinFore: $localize`Sternmarkierung`,
     logDebug: $localize`Debug`,
     owlBody: $localize`Körper`,
@@ -86,7 +90,8 @@ export class ThemeService {
   };
 
   constructor(public ds: DataService,
-              public ms: MaterialColorService) {
+              public ms: MaterialColorService,
+              public msg: MessageService) {
     window.addEventListener('resize', this.onResize);
     this.onResize();
   }
@@ -113,8 +118,9 @@ export class ThemeService {
       zip.loadAsync(t, {base64: true}).then(packed => {
         packed.file('t').async('string').then(theme => {
           const src = JSON.parse(theme);
-          for (const key of Object.keys(src)) {
-            this.currTheme[key] = src[key];
+          console.log(src);
+          for (const key of Object.keys(this.currTheme)) {
+            this.currTheme[key] = src[key] ?? this.currTheme[key];
           }
           this.assignStyle(document.body.style, this.currTheme);
           // console.log(JSON.parse(ex));
@@ -158,6 +164,15 @@ export class ThemeService {
   }
 
   async setTheme(name: string) {
+    if (this.changed) {
+      this.msg.confirm($localize`Es wurden Farben geändert. Sollen diese Änderungen verworfen werden?`).subscribe(result => {
+        if (result?.btn === DialogResultButton.yes) {
+          this.changed = false;
+          this.setTheme(name);
+        }
+      });
+      return;
+    }
     const suffix = this.isWatch ? '-watch' : '';
     document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
     document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);

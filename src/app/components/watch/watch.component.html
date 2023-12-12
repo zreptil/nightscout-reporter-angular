@@ -36,7 +36,7 @@
           <mat-icon>format_italic</mat-icon>
         </button>
         <button (click)="clickVertical($event)" [disabled]="ws.selected==null" mat-button>
-          <mat-icon>{{verticalIcon}}</mat-icon>
+          <mat-icon>{{ verticalIcon }}</mat-icon>
         </button>
         <button (click)="clickDelete($event)" [disabled]="ws.selected==null" mat-button>
           <mat-icon>delete</mat-icon>
@@ -48,7 +48,7 @@
           <button (click)="clickTypeAdd($event)" [disabled]="ws.selected==null" mat-button>
             <mat-icon>arrow_right</mat-icon>
           </button>
-          <div typeName>{{types[ws.selected?.type]}}</div>
+          <div typeName>{{ types[ws.selected?.type] }}</div>
         </div>
         <button (click)="clickAdd($event)" mat-button>
           <mat-icon>add</mat-icon>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="owlPanel">
-      <app-owl-menu></app-owl-menu>
+      <app-owl-menu [style]="styleForOwl"></app-owl-menu>
     </div>
   </ng-container>
   <app-log></app-log>
