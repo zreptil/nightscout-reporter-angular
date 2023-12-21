@@ -452,7 +452,7 @@ export class Utils {
     if (key === 'all') {
       return entries ?? [];
     }
-    return entries.filter(e => Utils.isValidDevice(e, e.device)) ?? [];
+    return entries.filter(e => Utils.isValidDevice(e, key)) ?? [];
   }
 
   static containsDevice(list: string[], entry: EntryData) {
