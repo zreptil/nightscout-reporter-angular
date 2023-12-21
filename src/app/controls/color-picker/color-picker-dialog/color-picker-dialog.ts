@@ -8,6 +8,8 @@ import {ColorUtils} from '@/controls/color-picker/color-utils';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {of} from 'rxjs';
 import {ThemeService} from '@/_services/theme.service';
+import {CdkDragEnd} from '@angular/cdk/drag-drop';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
 @Component({
   templateUrl: './color-picker-dialog.html',
@@ -124,6 +126,10 @@ export class ColorPickerDialog implements AfterViewInit {
     };
   }
 
+  get globals(): GlobalsData {
+    return GLOBALS;
+  }
+
   updateTitle(): void {
     setTimeout(() => {
       const color = this.data.colorList[this.data.colorIdx];
@@ -142,9 +148,13 @@ export class ColorPickerDialog implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.defColor = ColorData.fromString(this.data.colorList[this.data.colorIdx].display);
+      this.updateDefColor();
     });
     this.currentColor = this.data.colorList[this.data.colorIdx];
+  }
+
+  updateDefColor(): void {
+    this.defColor = ColorData.fromString(this.data.colorList[this.data.colorIdx].display);
   }
 
   colorAddClick(value: ColorData) {
@@ -235,8 +245,13 @@ export class ColorPickerDialog implements AfterViewInit {
       idx = 0;
     }
     this.data.colorIdx = idx;
+    this.updateDefColor();
     this.updateTitle();
     this.currentColor = this.data.colorList[this.data.colorIdx];
     this.fireChange(this.currentColor);
+  }
+
+  dragEnded(evt: CdkDragEnd) {
+    GLOBALS.dragPos.colorPicker = evt.source.getFreeDragPosition();
   }
 }

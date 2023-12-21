@@ -10,6 +10,7 @@ export class ColorData extends BaseData {
   themeKey: string;
   title: string;
   subtitle: string;
+  isBackColor = true;
   type: 'standard' | 'rgb' = 'standard';
 
   constructor(public value: number[], public opacity = 1.0) {

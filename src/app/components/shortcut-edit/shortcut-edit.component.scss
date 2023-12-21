@@ -3,6 +3,7 @@
   --headFore: var(--shortcutHeadFore);
   --bodyBack: var(--shortcutBodyBack);
   --bodyFore: var(--shortcutBodyFore);
+  --bodyData: var(--shortcutBodyData);
   --accentBack: var(--shortcutHeadBack);
   --accentFore: var(--shortcutHeadFore);
 }
@@ -44,4 +45,5 @@ mat-form-field {
 
 .data {
   text-transform: none;
+  color: var(--bodyData);
 }

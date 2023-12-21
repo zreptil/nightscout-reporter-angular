@@ -11,6 +11,8 @@ import {DialogParams, DialogResultButton} from '@/_model/dialog-data';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {map, Observable, of} from 'rxjs';
 import {Log} from '@/_services/log.service';
+import {CdkDragEnd} from '@angular/cdk/drag-drop';
+import {Point} from 'pdfmake/interfaces';
 
 @Component({
   selector: 'app-color-cfg-dialog',
@@ -46,6 +48,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
 
   colorList: any = {};
   allColors: ColorData[] = [];
+  dragPos: Point;
 
   constructor(private ts: ThemeService,
               private ms: MessageService,
@@ -128,8 +131,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       });
     }
     const specialKeys: any = {
-      Fore: {icon: 'format_color_text', title: $localize`Text`},
-      Link: {icon: 'link', title: $localize`Link`}
+      Fore: {icon: ThemeService.icons.fore, title: $localize`Text`},
+      Data: {icon: ThemeService.icons.data, title: $localize`Daten`},
+      Link: {icon: ThemeService.icons.link, title: $localize`Link`}
     };
     const specialGroups: any = {
       Back: {keys: specialKeys, title: $localize`Hintergrund`},
@@ -159,6 +163,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
               const color = ColorData.fromString(this.ts.currTheme[fullKey]);
               color.btnClass = classes[subKey];
               color.icon = spec.icon;
+              color.isBackColor = false;
               color.themeKey = fullKey;
               color.title = this.nameForColor(subKey);
               color.subtitle = spec.title;
@@ -180,7 +185,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
               back.type = 'rgb';
             }
             back.btnClass = classes[subKey];
-            back.icon = 'format_color_fill';
+            back.icon = ThemeService.icons.back;
             back.themeKey = key;
             back.title = this.nameForColor(subKey);
             back.subtitle = group.title;
@@ -188,7 +193,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
               title: this.nameForColor(subKey),
               colors: [back]
             };
-            colorList = this.colorList[subKey].colors;
+            this.colorList[subKey].colors.push(...colorList);
             this.allColors.push(back);
             ret.push(subKey);
           }
@@ -201,7 +206,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         }
         const color = ColorData.fromString(this.ts.currTheme[key]);
         color.type = type;
-        color.icon = key.endsWith('Fore') ? 'format_color_text' : 'format_color_fill';
+        color.icon = key.endsWith('Fore') ? ThemeService.icons.fore : ThemeService.icons.back;
         color.themeKey = key;
         color.title = this.nameForColor(key);
         color.subtitle = '';
@@ -315,7 +320,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         const c = ColorData.fromString(this.ts.currTheme[key]);
         if (key.endsWith('Back')) {
           c.icon = 'palette';
-        } else if (key.endsWith('Fore')) {
+        } else if (key.endsWith('Fore') || key.endsWith('Data')) {
           c.icon = 'text_fields';
         }
         ret.push(c);
@@ -372,5 +377,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
 
   clickSave() {
     this.dlgRef.close();
+  }
+
+  dragEnded(evt: CdkDragEnd) {
+    GLOBALS.dragPos.colorCfg = evt.source.getFreeDragPosition();
   }
 }

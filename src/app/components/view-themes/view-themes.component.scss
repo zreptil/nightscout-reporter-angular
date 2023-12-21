@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5em;
+  overflow-y: auto;
+  gap: 0.5em;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+[hide] {
+  display: none;
+}
+
+[card] {
+  width: calc(20% - 0.5em);
+  max-height: 80%;
+
+  [title], [content] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+  }
+
+  [title] {
+    background-color: var(--back);
+    color: var(--fore);
+  }
+
+  [content] {
+    background-color: var(--back);
+    color: var(--fore);
+    height: 100px;
+  }
+}

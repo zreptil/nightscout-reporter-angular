@@ -4,7 +4,6 @@ import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
 import {GLOBALS} from '@/_model/globals-data';
 import * as JSZip from 'jszip';
-import {encode} from 'base64-arraybuffer';
 import {Log} from '@/_services/log.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton} from '@/_model/dialog-data';
@@ -14,10 +13,15 @@ import {DialogResultButton} from '@/_model/dialog-data';
 })
 export class ThemeService {
   static lsThemeName = 'owntheme';
+  static icons: any = {
+    back: 'water_drop',
+    fore: 'title',
+    data: 'edit_note',
+    link: 'link'
+  }
   readonly currTheme: any = {};
   langHeight = '16em';
   changed = false;
-
   colorNames: any = {
     mainHead: $localize`Titel`,
     mainBody: $localize`Inhalt`,
@@ -139,15 +143,17 @@ export class ThemeService {
       }
     }
     src = JSON.stringify(src);
-    const zip = new JSZip();
-    zip.file('t', src);
-    zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(blob => {
-      blob.arrayBuffer().then(buffer => {
-        GLOBALS.ownTheme = encode(buffer);
-        this.ds.saveWebData();
-      });
-      // saveAs(content, 'colors.zip');
-    });
+    GLOBALS.ownTheme = Utils.encodeBase64(src);
+    console.log(GLOBALS.ownTheme);
+    // const zip = new JSZip();
+    // zip.file('t', src);
+    // zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(blob => {
+    //   blob.arrayBuffer().then(buffer => {
+    //     GLOBALS.ownTheme = encode(buffer);
+    //     this.ds.saveWebData();
+    //   });
+    //   // saveAs(content, 'colors.zip');
+    // });
   }
 
   onResize() {

@@ -71,8 +71,13 @@ export class OwlMenuComponent implements OnInit {
       this.logoStyle = ls;
       if (key != '') {
         if (typeof key === 'string') {
-          GLOBALS.theme = key === 'null' ? null : key;
-          this.ts.setTheme(GLOBALS.theme);
+          console.log(key);
+          if (key === 'own') {
+            GLOBALS.viewType = 'themes';
+          } else {
+            GLOBALS.theme = key === 'null' ? null : key;
+            this.ts.setTheme(GLOBALS.theme);
+          }
         } else {
           this.ss.changeLanguage(key);
         }

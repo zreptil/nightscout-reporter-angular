@@ -3,16 +3,17 @@
   --headFore: var(--settingsHeadFore);
   --bodyBack: var(--settingsBodyBack);
   --bodyFore: var(--settingsBodyFore);
+  --bodyData: var(--settingsBodyData);
   --accentBack: var(--settingsHeadBack);
   --accentFore: var(--settingsHeadFore);
 
-  ::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: rgba(0, 0, 0, 0.9);
-  }
-
-  ::ng-deep .mdc-text-field .mdc-text-field__input {
-    caret-color: black;
-  }
+  //::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+  //  color: rgba(0, 0, 0, 0.9);
+  //}
+  //
+  //::ng-deep .mdc-text-field .mdc-text-field__input {
+  //  caret-color: black;
+  //}
 
   ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
     border-bottom-color: rgba(0, 0, 0, 0.9);
@@ -309,7 +310,8 @@
       line-height: 1em;
       margin-top: 0.3em;
       position: initial;
-      color: rgba(0, 0, 0, 0.6);
+      opacity: 0.6;
+      // color: rgba(0, 0, 0, 0.6);
     }
   }
 

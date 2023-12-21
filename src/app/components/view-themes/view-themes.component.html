@@ -1,0 +1,10 @@
+<!--suppress HtmlUnknownTarget -->
+<div [innerHTML]="svgCollection" hide></div>
+<div *ngFor="let theme of serverThemes" [class]="classForCard(theme)" card>
+  <div [style]="styleForTitle(theme)" title>{{ theme.name }}</div>
+  <div [style]="styleForContent(theme)" content>
+    <svg style="width:90%;height:90%" viewBox="0 0 219 250">
+      <use href="#owl-own"/>
+    </svg>
+  </div>
+</div>

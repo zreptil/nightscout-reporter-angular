@@ -1,11 +1,12 @@
 <!--suppress HtmlDeprecatedAttribute -->
-<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+<div cdkDrag
+     cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.dialog">
   <div [style]="customStyle('Head')" cdkDragHandle class="type{{data?.type}}" mat-dialog-title>
     <h1>
-      <mat-icon *ngIf="showTitleIcon">{{titleIcon}}</mat-icon>
+      <mat-icon *ngIf="showTitleIcon">{{ titleIcon }}</mat-icon>
       <img (error)="noImage($event)" *ngIf="showTitleImage" [src]="titleImage" alt="titleimage">
-      {{data.title}}
+      {{ data.title }}
     </h1>
     <div></div>
     <app-close-button *ngIf="!data?.params?.noClose" [data]="closeData"></app-close-button>
@@ -14,19 +15,19 @@
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
     <mat-chip-listbox *ngIf="data.chips != null" [(ngModel)]="chipsResult" multiple>
       <ng-container *ngFor="let btn of data.chips; let idx = index">
-        <mat-chip-option [selected]="btn.selected">{{btn.title}}</mat-chip-option>
+        <mat-chip-option [selected]="btn.selected">{{ btn.title }}</mat-chip-option>
       </ng-container>
     </mat-chip-listbox>
   </div>
   <div [style]="customStyle('Head')" align="end" class="type{{data?.type}}" mat-dialog-actions>
     <ng-container *ngFor="let btn of data.buttons; let idx = index">
       <button (click)="closeDialog(btn)" *ngIf="btn.url == null" mat-button>
-        <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>
-        {{btn.title}}
+        <mat-icon *ngIf="btn.icon != null">{{ btn.icon }}</mat-icon>
+        {{ btn.title }}
       </button>
       <button (click)="openUrl(btn)" *ngIf="btn.url != null" mat-button>
-        <mat-icon *ngIf="btn.icon != null">{{btn.icon}}</mat-icon>
-        {{btn.title}}
+        <mat-icon *ngIf="btn.icon != null">{{ btn.icon }}</mat-icon>
+        {{ btn.title }}
       </button>
     </ng-container>
   </div>

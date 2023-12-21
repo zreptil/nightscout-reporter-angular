@@ -51,6 +51,7 @@ import {ColorEditDirective} from '@/_directives/color-edit.directive';
 import {ColorPickerHslComponent} from '@/controls/color-picker/color-picker-hsl/color-picker-hsl.component';
 import {CloseButtonComponent} from './controls/close-button/close-button.component';
 import {ColorCfgDialogComponent} from './controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
+import { ViewThemesComponent } from './components/view-themes/view-themes.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {ColorCfgDialogComponent} from './controls/color-cfg/color-cfg-dialog/col
     ColorCfgComponent,
     ColorEditDirective,
     CloseButtonComponent,
-    ColorCfgDialogComponent
+    ColorCfgDialogComponent,
+    ViewThemesComponent
   ],
   imports: [
     BrowserModule,

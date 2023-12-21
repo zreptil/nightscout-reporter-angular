@@ -123,7 +123,7 @@ export class GlobalsData extends Settings {
   lluAutoExec = false;
   nwCurrPage = '';
   editColors = false;
-
+  dragPos: any = {};
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
@@ -326,8 +326,8 @@ export class GlobalsData extends Settings {
     }
     switch (value) {
       case 'tile':
-      case 'list':
       case 'users':
+      case 'themes':
         break;
       default:
         value = 'tile';

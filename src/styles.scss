@@ -85,6 +85,7 @@ body {
   //--shortcutHeadFore: #b3e5fc;
   //--shortcutBodyBack: #4fc3f7;
   //--shortcutBodyFore: black;
+  //--shortcutBodyData: black;
   //--helpHeadBack: #33691e;
   //--helpHeadFore: #dcedc8;
   //--helpBodyBack: #aed581;
@@ -810,4 +811,12 @@ svg {
     justify-content: center;
     font-size: 12px;
   }
+}
+
+.mdc-text-field .mdc-text-field__input {
+  caret-color: var(--bodyData);
+}
+
+.mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: var(--bodyData);
 }

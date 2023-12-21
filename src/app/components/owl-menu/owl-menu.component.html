@@ -1,5 +1,5 @@
 <!--suppress HtmlUnknownTarget -->
-<div [innerHTML]="svgCollection"></div>
+<div [innerHTML]="svgCollection" style="display:none"></div>
 <div [style]="themeStyle" class="themePanel">
   <button (click)="ss.donationClick()" class="donation" i18n="title of donate button" mat-flat-button>Spenden</button>
   <button (click)="togglePanels(key)" *ngFor="let key of globals.themeListKeys; let idx = index" class="themelogo" mat-mini-fab>

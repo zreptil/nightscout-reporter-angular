@@ -116,7 +116,8 @@ export class MainComponent implements OnInit {
   }
 
   get hasFooterBar(): boolean {
-    return GLOBALS.viewType === 'tile' || GLOBALS.viewType === 'users';
+    const list = ['tile', 'users', 'themes'];
+    return list.indexOf(GLOBALS.viewType) >= 0;
   }
 
   get userIdx(): number {

@@ -279,31 +279,31 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   }
 
   // TODO: should give the exact same position as mousemove - hsl
-  calcLightSatPos(x: number, y: number): any {
-    let ret: any = {x: 0, y: this.hptr.ptb.y + (this.hptr.pth.y - this.hptr.ptb.y) * y};
+  calcLightSatPos(l: number, s: number): any {
+    let ret: any = {x: 0, y: this.hptr.ptb.y + (this.hptr.pth.y - this.hptr.ptb.y) * s};
     let light, sat;
-    if (x <= 0.5) {
-      const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * y;
-      ret.x = xmin + (this.hptr.pth.x - xmin) * x * 2;
+    if (l <= 0.5) {
+      const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * s;
+      ret.x = xmin + (this.hptr.pth.x - xmin) * l * 2;
       // calculate light
-      const minLight = y / 2;
+      const minLight = s / 2;
       const rangeLight = 0.5 - minLight;
-      light = minLight + x * rangeLight / 0.5;
+      light = minLight + l * rangeLight / 0.5;
       // calculate saturation
-      const minSat = y;
+      const minSat = s;
       const maxSat = 1;
       const rangeSat = maxSat - minSat;
-      sat = 1 - (x * 2) * rangeSat / maxSat;
+      sat = 1 - (l * 2) * rangeSat / maxSat;
     } else {
-      const l1 = x - 0.5;
-      const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * y;
+      const l1 = l - 0.5;
+      const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * s;
       ret.x = this.hptr.pth.x + (xmax - this.hptr.pth.x) * l1 * 2;
       // calculate light
-      const maxLight = 0.5 + (1 - y) / 2;
+      const maxLight = 0.5 + (1 - s) / 2;
       const rangeLight = maxLight - 0.5;
       light = 0.5 + l1 * rangeLight / 0.5;
       // calculate saturation
-      const minSat = y;
+      const minSat = s;
       const maxSat = 1;
       const rangeSat = maxSat - minSat;
       sat = minSat + (l1 * 2) * rangeSat / maxSat;
@@ -409,6 +409,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
           let x = xm - p.x;
           if (p.x < xm) {
             const xmin = this.hptr.ptb.x + (this.hptr.pth.x - this.hptr.ptb.x) * sat;
+            // const lightMin = sat / 2;
             if (-x < xmin) {
               x = -xmin;
               light = sat / 2;
@@ -420,6 +421,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
             light = Math.min(Math.max(light, 0), 0.5);
           } else {
             const xmax = this.hptr.ptw.x - (this.hptr.ptw.x - this.hptr.pth.x) * sat;
+            // const lightMax = 1 - sat / 2;
             if (-x > xmax) {
               x = -xmax;
               light = 1 - sat / 2;

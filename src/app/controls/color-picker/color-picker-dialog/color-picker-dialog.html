@@ -1,4 +1,6 @@
-<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+<div (cdkDragEnded)="dragEnded($event)"
+     [cdkDragFreeDragPosition]="globals.dragPos.colorPicker"
+     cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.settings">
   <div cdkDragHandle mat-dialog-title>
     <h1>

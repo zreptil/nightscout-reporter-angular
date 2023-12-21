@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
 import {ColorMix} from '@/_model/color-mix-data';
 import {DialogResultButton} from '@/_model/dialog-data';
+import {ThemeService} from '@/_services/theme.service';
 
 export interface ColorDialogData {
   imageDataUrl: string;
@@ -63,20 +64,24 @@ export class ColorPickerComponent {
     for (const c of value) {
       c.btnBackColor = c.display;
       c.btnForeColor = c.fontDisplay;
-    }
-    let back = value.find(c => c.icon === 'format_color_fill');
-    let fore = value.find(c => c.icon === 'format_color_text');
-    let link = value.find(c => c.icon === 'link');
-    if (back != null && fore != null) {
-      back.btnBackColor = back.display;
-      back.btnForeColor = fore.display;
-      fore.btnBackColor = back.display;
-      fore.btnForeColor = fore.display;
-      if (link != null) {
-        link.btnBackColor = back.display;
-        link.btnForeColor = link.display;
+      if (!c.isBackColor) {
+        c.btnBackColor = value.find(c => c.icon === ThemeService.icons.back).display;
+        c.btnForeColor = c.display;
       }
     }
+    // let back = value.find(c => c.icon === ThemeService.icons.back);
+    // let fore = value.find(c => c.icon === ThemeService.icons.fore);
+    // let link = value.find(c => c.icon === ThemeService.icons.link);
+    // if (back != null && fore != null) {
+    //   back.btnBackColor = back.display;
+    //   back.btnForeColor = fore.display;
+    //   fore.btnBackColor = back.display;
+    //   fore.btnForeColor = fore.display;
+    //   if (link != null) {
+    //     link.btnBackColor = back.display;
+    //     link.btnForeColor = link.display;
+    //   }
+    // }
     this._colors = value;
   }
 
