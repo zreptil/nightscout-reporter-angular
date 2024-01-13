@@ -2,6 +2,7 @@ import {AfterViewInit, Component} from '@angular/core';
 import {ThemeService} from '@/_services/theme.service';
 import {DataService} from '@/_services/data.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-view-themes',
@@ -15,6 +16,7 @@ export class ViewThemesComponent implements AfterViewInit {
 
   constructor(public ts: ThemeService,
               public ds: DataService,
+              public ms: MessageService,
               public sanitizer: DomSanitizer) {
   }
 
@@ -26,20 +28,23 @@ export class ViewThemesComponent implements AfterViewInit {
           this.svgCollection = this.sanitizer.bypassSecurityTrustHtml(result.body);
         });
       }
-      this.ds.request('https://nightrep.reptilefarm.ddns.net/index.php',
-        {asJson: true}).then(result => {
+      const url = 'https://nightrep.reptilefarm.ddns.net';
+      this.ds.request(url,
+        {asJson: true, urlOnError: `${url}?activate`}).then(result => {
         this.serverThemes = [];
         if (this.ts.changed) {
           this.serverThemes.push({name: $localize`Aktuell`, colors: this.ts.currTheme});
         }
-        for (let i = 0; i < 50; i++) {
-          this.serverThemes.push(result[0]);
+        if (Array.isArray(result)) {
+          for (let i = 0; i < result.length; i++) {
+            this.serverThemes.push(result[i]);
+          }
         }
       });
     });
   }
 
-  classForCard(theme: any): string[] {
+  classForCard(_theme: any): string[] {
     const ret: string[] = [];
     if (false) {
       ret.push('mat-elevation-z20');

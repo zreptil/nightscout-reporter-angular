@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpRequest} from '@angular/common/http';
 import {lastValueFrom, throwError, timeout} from 'rxjs';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
@@ -22,6 +22,8 @@ import {EnvironmentService} from '@/_services/environment.service';
 import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DropboxService} from '@/_services/sync/dropbox.service';
 import {LibreLinkUpService} from '@/_services/libre-link-up.service';
+import {MessageService} from '@/_services/message.service';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -43,6 +45,7 @@ export class DataService {
   constructor(public http: HttpClient,
               public ss: StorageService,
               public ls: LanguageService,
+              public ms: MessageService,
               // public gds: GoogleDriveService,
               public env: EnvironmentService,
               public dbs: DropboxService,
@@ -156,7 +159,8 @@ export class DataService {
     body?: any,
     showError?: boolean,
     asJson?: boolean,
-    timeout?: number
+    timeout?: number,
+    urlOnError?: string
   }) {
     params ??= {};
     params.method ??= 'get';
@@ -183,14 +187,36 @@ export class DataService {
           break;
       }
     } catch (ex: any) {
+      console.error(ex);
       if (ex instanceof CustomTimeoutError) {
         response = $localize`Es gab keine Antwort innerhalb von ${params.timeout / 1000} Sekunden bei ${url}`;
-      } else if (ex?.messge != null) {
+      } else if (params.urlOnError != null && ex instanceof HttpErrorResponse) {
+        this.ms.confirm($localize`Beim Zugriff auf den Server ist ein Fehler aufgetreten. Das liegt vermutlich daran, dass das Zertifikat des Servers nicht käuflich erworben wurde. Wenn Du die Speicherung der Daten auf dem Server zur Verfügung haben möchtest, dann kannst Du das tun, indem Du im Browser auf der Webseite des Servers die Berechtigung zum Zugriff erteilst. Soll die Webseite des Servers aufgerufen werden, damit Du dort die Berechtigung erteilen kannst?`)
+          .subscribe(result => {
+            if (result.btn === DialogResultButton.yes) {
+              window.open(params.urlOnError, '_blank');
+              location.reload();
+            }
+          });
+      } else if (ex?.message != null) {
         response = ex.message;
       } else {
         response = ex;
       }
+      if (params.asJson) {
+        response = {body: response};
+      }
     }
+    /*
+    .catch(ex => {
+            console.error('SO NICHT!!!');
+            this.ms.confirm($localize`Beim Zugriff auf den Server ist ein Fehler aufgetreten. Das liegt vermutlich daran, dass das Zertifikat des Servers nicht käuflich erworben wurde. Wenn Du die Speicherung der Daten auf dem Server zur Verfügung haben möchtest, dann kannst Du das tun, indem Du im Browser auf der Webseite des Servers die Berechtigung zum Zugriff erteilst. Soll die Webseite des Servers aufgerufen werden, damit Du dort die Berechtigung erteilen kannst?`)
+              .subscribe(result => {
+                if (result.btn === DialogResultButton.yes) {
+                  window.open(url, '_blank');
+                }
+              });
+          })*/
     return params.asJson ? response.body : response;
   }
 

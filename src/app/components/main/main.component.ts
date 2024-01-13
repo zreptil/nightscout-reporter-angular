@@ -115,6 +115,10 @@ export class MainComponent implements OnInit {
     // }), 1000);
   }
 
+  get msgThemes(): string {
+    return $localize`Farbthemen`;
+  }
+
   get hasFooterBar(): boolean {
     const list = ['tile', 'users', 'themes'];
     return list.indexOf(GLOBALS.viewType) >= 0;

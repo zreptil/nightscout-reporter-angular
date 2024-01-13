@@ -154,7 +154,12 @@
     <mat-toolbar [class]="classForHeader">
       <mat-toolbar-row>
         <div [class]="classForView('basePanel')">
-          <button (click)="clickUser()" class="userName toolbar-button">{{ globals.user.display }}</button>
+          <ng-container *ngIf="globals.viewType!=='themes'">
+            <button (click)="clickUser()" class="userName toolbar-button">{{ globals.user.display }}</button>
+          </ng-container>
+          <ng-container *ngIf="globals.viewType==='themes'">
+            <button (click)="globals.viewType='tile'" class="userName toolbar-button">{{ msgThemes }}</button>
+          </ng-container>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
             <mat-form-field>
               <mat-select [(value)]="userIdx">
