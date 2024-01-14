@@ -3,7 +3,6 @@ import {DataService} from '@/_services/data.service';
 import {MaterialColorService} from '@/_services/material-color.service';
 import {Utils} from '@/classes/utils';
 import {GLOBALS} from '@/_model/globals-data';
-import * as JSZip from 'jszip';
 import {Log} from '@/_services/log.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton} from '@/_model/dialog-data';
@@ -116,21 +115,30 @@ export class ThemeService {
   }
 
   restoreTheme(): void {
-    const t = GLOBALS.ownTheme;
-    if (t != null) {
-      const zip = new JSZip();
-      zip.loadAsync(t, {base64: true}).then(packed => {
-        packed.file('t').async('string').then(theme => {
-          const src = JSON.parse(theme);
-          console.log(src);
-          for (const key of Object.keys(this.currTheme)) {
-            this.currTheme[key] = src[key] ?? this.currTheme[key];
-          }
-          this.assignStyle(document.body.style, this.currTheme);
-          // console.log(JSON.parse(ex));
-        });
-      });
+    const src = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme));
+    console.log('rest', src);
+    for (const key of Object.keys(this.currTheme)) {
+      if (this.currTheme[key] !== src[key]) {
+        this.changed = true;
+      }
+      this.currTheme[key] = src[key] ?? this.currTheme[key];
     }
+    this.assignStyle(document.body.style, this.currTheme);
+    // const t = GLOBALS.ownTheme;
+    // if (t != null) {
+    //   const zip = new JSZip();
+    //   zip.loadAsync(t, {base64: true}).then(packed => {
+    //     packed.file('t').async('string').then(theme => {
+    //       const src = JSON.parse(theme);
+    //       console.log(src);
+    //       for (const key of Object.keys(this.currTheme)) {
+    //         this.currTheme[key] = src[key] ?? this.currTheme[key];
+    //       }
+    //       this.assignStyle(document.body.style, this.currTheme);
+    //       // console.log(JSON.parse(ex));
+    //     });
+    //   });
+    // }
   }
 
   storeTheme(): void {
@@ -144,7 +152,7 @@ export class ThemeService {
     }
     src = JSON.stringify(src);
     GLOBALS.ownTheme = Utils.encodeBase64(src);
-    console.log(GLOBALS.ownTheme);
+    this.ds.saveWebData();
     // const zip = new JSZip();
     // zip.file('t', src);
     // zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(blob => {

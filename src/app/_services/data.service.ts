@@ -231,7 +231,8 @@ export class DataService {
       w2: GLOBALS._theme,
       w3: this._syncType,
       w4: this.oauth2AccessToken,
-      w5: GLOBALS.ownTheme
+      w5: GLOBALS.ownTheme,
+      w6: GLOBALS.apiAuth
     };
     this.ss.write(Settings.WebData, data);
   }
@@ -245,6 +246,7 @@ export class DataService {
       this._syncType = JsonData.toNumber(json.w3);
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
       GLOBALS.ownTheme = JsonData.toText(json.w5, null);
+      GLOBALS.apiAuth = JsonData.toText(json.w6, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }

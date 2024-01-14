@@ -1,10 +1,23 @@
 <!--suppress HtmlUnknownTarget -->
 <div [innerHTML]="svgCollection" hide></div>
-<div *ngFor="let theme of serverThemes" [class]="classForCard(theme)" card>
-  <div [style]="styleForTitle(theme)" title>{{ theme.name }}</div>
-  <div [style]="styleForContent(theme)" content>
-    <svg style="width:90%;height:90%" viewBox="0 0 219 250">
-      <use href="#owl-own"/>
-    </svg>
+<ng-container *ngFor="let theme of serverThemes">
+  <div [class]="classForCard(theme)" card>
+    <div [style]="styleForTitle(theme)" title>
+      {{ theme.name }}
+      <button (click)="clickDelete(theme)" *ngIf="mayDelete(theme)" delete mat-mini-fab>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <div [style]="styleForContent(theme)" content>
+      <button (click)="clickTheme(theme)" class="themeButton" mat-icon-button>
+        <svg style="width:90%;height:90%" viewBox="0 0 219 250">
+          <ng-container [ngSwitch]="theme.name">
+            <use *ngSwitchCase="'standard'" href="#owl-standard"/>
+            <use *ngSwitchCase="'xmas'" href="#owl-xmas"/>
+            <use *ngSwitchDefault href="#owl-own"/>
+          </ng-container>
+        </svg>
+      </button>
+    </div>
   </div>
-</div>
+</ng-container>

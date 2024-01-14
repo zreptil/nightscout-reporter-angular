@@ -43,7 +43,10 @@ export class MessageService {
   showDialog(type: DialogType | IDialogDef, content: string | string[], disableClose = false, params?: DialogParams): Observable<DialogResult> {
     params ??= new DialogParams();
     // console.error(content);
-    if (content == null || content === '' || content.length === 0) {
+    if (
+      (content == null || content === '' || content.length === 0)
+      && ((type as any)?.controls == null)
+    ) {
       const ret = new DialogResult();
       ret.btn = DialogResultButton.cancel;
       console.error('Es soll ein leerer Dialog angezeigt werden');

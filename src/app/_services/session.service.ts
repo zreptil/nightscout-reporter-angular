@@ -351,6 +351,7 @@ export class SessionService {
   async initialLoad() {
     this.ds.loadWebData();
     await this.ts.setTheme(GLOBALS.theme);
+    this.ts.restoreTheme();
     GLOBALS.listConfig = [];
     GLOBALS.listConfigOrg = [];
     for (const form of this.formList) {

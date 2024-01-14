@@ -101,6 +101,13 @@ export class DialogComponent implements OnInit, AfterViewChecked {
     if (this.data.chips != null) {
       btn.result.data = {btn: this.readData, chips: this.chipsResult};
     }
+    if (this.data.controls != null) {
+      const ctrls: any = {};
+      for (const ctrl of this.data.controls) {
+        ctrls[ctrl.id] = ctrl;
+      }
+      btn.result.data = {btn: this.readData, controls: ctrls};
+    }
     this.dialogRef.close(btn.result);
   }
 

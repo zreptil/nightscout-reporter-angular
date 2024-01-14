@@ -6,6 +6,7 @@
   gap: 0.5em;
   align-items: flex-start;
   justify-content: flex-start;
+  --contentSize: 100px;
 }
 
 [hide] {
@@ -13,24 +14,61 @@
 }
 
 [card] {
+  --br: 10px;
+  --b: 2px solid rgba(0, 0, 0, 0.5);
   width: calc(20% - 0.5em);
-  max-height: 80%;
+  border-radius: var(--br);
 
   [title], [content] {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5em;
+    border: var(--b);
   }
 
   [title] {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
     background-color: var(--back);
     color: var(--fore);
+    border-top-left-radius: var(--br);
+    border-top-right-radius: var(--br);
+    border-bottom-width: 0;
+
+    .mdc-fab--mini {
+      width: 20px;
+      height: 20px;
+    }
+
+    [delete] {
+      .mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   [content] {
     background-color: var(--back);
     color: var(--fore);
-    height: 100px;
+    height: var(--contentSize);
+    border-bottom-left-radius: var(--br);
+    border-bottom-right-radius: var(--br);
+    border-top-width: 0;
+  }
+}
+
+.themeButton {
+  height: var(--contentSize);
+  width: var(--contentSize);
+
+  mat-icon {
+    --cs: 48px;
+    font-size: var(--cs);
+    height: var(--cs);
+    width: var(--cs);
   }
 }

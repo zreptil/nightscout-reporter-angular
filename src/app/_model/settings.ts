@@ -54,6 +54,8 @@ export class Settings {
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
   ownTheme: any;
+  apiAuth: string;
+
   // subVersion is added to version to have a unique version number without changing the current version
   private _subVersion = '1';
 

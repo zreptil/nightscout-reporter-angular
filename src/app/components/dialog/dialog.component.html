@@ -13,6 +13,16 @@
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
     <div *ngFor="let text of data.display" [innerHTML]="text"></div>
+    <ng-container *ngFor="let ctrl of data.controls">
+      <ng-container [ngSwitch]="ctrl.type">
+        <ng-container *ngSwitchCase="'input'">
+          <mat-form-field>
+            <mat-label>{{ ctrl.title }}</mat-label>
+            <input [(ngModel)]="ctrl.value" matInput>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+    </ng-container>
     <mat-chip-listbox *ngIf="data.chips != null" [(ngModel)]="chipsResult" multiple>
       <ng-container *ngFor="let btn of data.chips; let idx = index">
         <mat-chip-option [selected]="btn.selected">{{ btn.title }}</mat-chip-option>
