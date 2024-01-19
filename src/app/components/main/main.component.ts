@@ -100,6 +100,8 @@ export class MainComponent implements OnInit {
     showClose: false,
     colorKey: 'main'
   };
+  msgDevWarn = $localize`Das ist eine Warnung.`;
+  msgDevError = $localize`Das war ein Fehler!!`;
 
   constructor(public ts: ThemeService,
               public ds: DataService,

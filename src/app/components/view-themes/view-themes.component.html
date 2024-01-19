@@ -1,6 +1,31 @@
 <!--suppress HtmlUnknownTarget -->
 <div [innerHTML]="svgCollection" hide></div>
-<ng-container *ngFor="let theme of serverThemes">
+<div *ngIf="globals.isDebug" class="debug">
+  <div>Themeserver: {{ globals.urlThemeServer }}</div>
+  <div>
+    <button (click)="copyData($event)" mat-button>
+      <mat-icon>content_copy</mat-icon>
+      <span i18n="buttonlabel for copying data">Kopieren</span>
+    </button>
+    <button (click)="getData()" mat-button>
+      <mat-icon>content_paste</mat-icon>
+      <span i18n="buttonlabel for pasting data">Importieren</span>
+    </button>
+  </div>
+</div>
+<div *ngIf="serverThemes?.length === 0 && cardForSave == null" empty>
+  Es sind noch keine Farbthemen vorhanden. Wenn etwas am Farbthema geändert wurde, kann es
+  hier gespeichert werden.
+</div>
+<ng-container *ngIf="cardForSave != null"
+              [ngTemplateOutletContext]="{theme:cardForSave}"
+              [ngTemplateOutlet]="tplTheme">
+</ng-container>
+<ng-container *ngFor="let theme of serverThemes"
+              [ngTemplateOutletContext]="{theme:theme}"
+              [ngTemplateOutlet]="tplTheme">
+</ng-container>
+<ng-template #tplTheme let-theme="theme">
   <div [class]="classForCard(theme)" card>
     <div [style]="styleForTitle(theme)" title>
       {{ theme.name }}
@@ -18,6 +43,8 @@
           </ng-container>
         </svg>
       </button>
+      <div time>{{ theme.modifyTime }}</div>
+      <div user>{{ theme.username }}</div>
     </div>
   </div>
-</ng-container>
+</ng-template>

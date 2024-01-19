@@ -47,8 +47,9 @@ export interface IDialogButton {
 
 export interface IDialogControls {
   id: string;
-  type: 'input';
+  type: 'input' | 'textarea';
   title: string;
+  hint?: string,
   value?: any;
 }
 
@@ -149,7 +150,7 @@ export class DialogData {
       if (this.content.length > 0) {
         if (typeof this.content[0] === 'string') {
           return (this.content as string[]).map(text => {
-            text = text.replace(/@(.*)@/g, `<span class='mark'>$1</span>`);
+            text = text.replace(/@([^@]*)@/g, `<span class='mark'>$1</span>`);
             return text;
           });
         }

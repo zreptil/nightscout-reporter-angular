@@ -51,7 +51,10 @@ import {ColorEditDirective} from '@/_directives/color-edit.directive';
 import {ColorPickerHslComponent} from '@/controls/color-picker/color-picker-hsl/color-picker-hsl.component';
 import {CloseButtonComponent} from './controls/close-button/close-button.component';
 import {ColorCfgDialogComponent} from './controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
-import { ViewThemesComponent } from './components/view-themes/view-themes.component';
+import {ViewThemesComponent} from './components/view-themes/view-themes.component';
+import {ExecuteComponent} from './components/execute/execute.component';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 
 @NgModule({
   declarations: [
@@ -96,7 +99,8 @@ import { ViewThemesComponent } from './components/view-themes/view-themes.compon
     ColorEditDirective,
     CloseButtonComponent,
     ColorCfgDialogComponent,
-    ViewThemesComponent
+    ViewThemesComponent,
+    ExecuteComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +113,9 @@ import { ViewThemesComponent } from './components/view-themes/view-themes.compon
     LogComponent,
     ProgressComponent,
     LocalToolsComponent,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ClipboardModule,
+    TextareaAutoresizeDirective
   ],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

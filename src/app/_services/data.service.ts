@@ -191,7 +191,7 @@ export class DataService {
       if (ex instanceof CustomTimeoutError) {
         response = $localize`Es gab keine Antwort innerhalb von ${params.timeout / 1000} Sekunden bei ${url}`;
       } else if (params.urlOnError != null && ex instanceof HttpErrorResponse) {
-        this.ms.confirm($localize`Beim Zugriff auf den Server ist ein Fehler aufgetreten. Das liegt vermutlich daran, dass das Zertifikat des Servers nicht käuflich erworben wurde. Wenn Du die Speicherung der Daten auf dem Server zur Verfügung haben möchtest, dann kannst Du das tun, indem Du im Browser auf der Webseite des Servers die Berechtigung zum Zugriff erteilst. Soll die Webseite des Servers aufgerufen werden, damit Du dort die Berechtigung erteilen kannst?`)
+        this.ms.confirm($localize`Beim Zugriff auf den Server ist ein Fehler aufgetreten. Eine mögliche Ursache dafür ist, dass das Zertifikat des Servers nicht käuflich erworben wurde. Wenn Du die Speicherung der Daten auf dem Server zur Verfügung haben möchtest, dann kannst Du das tun, indem Du im Browser auf der Webseite des Servers die Berechtigung zum Zugriff erteilst. Soll die Webseite des Servers aufgerufen werden, damit Du dort die Berechtigung erteilen kannst?`)
           .subscribe(result => {
             if (result.btn === DialogResultButton.yes) {
               window.open(params.urlOnError, '_blank');
@@ -228,11 +228,12 @@ export class DataService {
     const data = {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
-      w2: GLOBALS._theme,
+      w2: GLOBALS.theme,
       w3: this._syncType,
       w4: this.oauth2AccessToken,
       w5: GLOBALS.ownTheme,
-      w6: GLOBALS.apiAuth
+      w6: GLOBALS.apiAuth,
+      w7: GLOBALS.publicUsername
     };
     this.ss.write(Settings.WebData, data);
   }
@@ -247,6 +248,7 @@ export class DataService {
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
       GLOBALS.ownTheme = JsonData.toText(json.w5, null);
       GLOBALS.apiAuth = JsonData.toText(json.w6, null);
+      GLOBALS.publicUsername = JsonData.toText(json.w7, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }
@@ -257,10 +259,13 @@ export class DataService {
 
   async loadSettingsJson(skipSync = false) {
     try {
-      const data = await this.request('assets/settings.json', {showError: false});
+      const data = await this.request('assets/settings.json', {asJson: true, showError: false});
       if (data != null) {
         if (data.urlPlayground != null) {
           GLOBALS.urlPlayground = data.urlPlayground;
+        }
+        if (data.urlThemeServer != null) {
+          GLOBALS.urlThemeServer = data.urlThemeServer;
         }
         if (data.googleClientId != null) {
           GLOBALS.googleClientId = data.googleClientId;

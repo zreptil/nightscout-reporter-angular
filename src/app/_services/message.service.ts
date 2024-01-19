@@ -15,6 +15,10 @@ export class MessageService {
   constructor(private dialog: MatDialog) {
   }
 
+  error(content: string | string[], params?: DialogParams): Observable<DialogResult> {
+    return this.showDialog(DialogType.error, content, false, params);
+  }
+
   warn(content: string | string[], params?: DialogParams): Observable<DialogResult> {
     return this.showDialog(DialogType.warning, content, false, params);
   }

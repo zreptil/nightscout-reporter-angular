@@ -13,6 +13,7 @@ import {map, Observable, of} from 'rxjs';
 import {Log} from '@/_services/log.service';
 import {CdkDragEnd} from '@angular/cdk/drag-drop';
 import {Point} from 'pdfmake/interfaces';
+import {ThemeData} from '@/_model/theme-data';
 
 @Component({
   selector: 'app-color-cfg-dialog',
@@ -25,26 +26,6 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   lastValue: string;
   orgTheme: any;
   availableColormodes = 'hsl,mixer';
-  // mapping for several strings
-  mapping: any = {
-    owl: {title: $localize`Eule`},
-    datepicker: {title: $localize`Datumsauswahl`},
-    gluc: {title: $localize`Glukosewerte`},
-    google: {title: $localize`Google`},
-    info: {title: $localize`Info`},
-    help: {title: $localize`Hilfe`},
-    legal: {title: $localize`Gesetzliches`},
-    whatsnew: {title: $localize`Was bisher geschah...`},
-    shortcut: {title: $localize`Shortcut`},
-    settings: {title: $localize`Einstellungen`},
-    log: {title: $localize`Log`, debugOnly: true},
-    local: {title: $localize`Lokal`, debugOnly: true},
-    beta: {title: $localize`Beta`, debugOnly: true},
-    debug: {title: $localize`Debug`, debugOnly: true},
-    outputparams: {title: $localize`Ausgabe Parameter`},
-    main: {title: $localize`Hauptseite`},
-    user: {title: $localize`Benutzer`},
-  }
 
   colorList: any = {};
   allColors: ColorData[] = [];
@@ -104,25 +85,23 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     }
     const ret: string[] = [];
     const skip = ['panelBack', 'panelFore', 'bufferColor'];
-    const additionalKeys: any = {
-      outputparams: ['settingsLoopMarked', 'datepickerBtnEmpty'],
-      main: ['userPinFore', 'local', 'beta', 'log'],
-      settings: ['userPinFore']
-    };
     // if a color-button needs a special class, it is defined here
     const classes: any = {
       logDebug: 'is-debug'
     }
-    const src = {...this.ts.currTheme};
+    const src = {...this.ts.stdTheme}; // .currTheme};
     let keyList = Object.keys(src).sort();
     this.colorList = {};
     this.allColors = [];
     if (!Utils.isEmpty(this.dlgData.colorKey)) {
       keyList = keyList.filter(k => {
+        if (!this.mayUseColor(k)) {
+          return false;
+        }
         if (k.startsWith(this.dlgData.colorKey)) {
           return true;
         }
-        for (const check of additionalKeys[this.dlgData.colorKey] ?? []) {
+        for (const check of ThemeData.additionalColorsFor[this.dlgData.colorKey] ?? []) {
           if (k.startsWith(check)) {
             return true;
           }
@@ -130,16 +109,6 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         return false;
       });
     }
-    const specialKeys: any = {
-      Fore: {icon: ThemeService.icons.fore, title: $localize`Text`},
-      Data: {icon: ThemeService.icons.data, title: $localize`Daten`},
-      Link: {icon: ThemeService.icons.link, title: $localize`Link`}
-    };
-    const specialGroups: any = {
-      Back: {keys: specialKeys, title: $localize`Hintergrund`},
-      RGB: {keys: specialKeys, title: $localize`Hintergrund`},
-      Frame: {keys: specialKeys, title: $localize`Rahmen`},
-    };
     for (const key of keyList) {
       if (skip.indexOf(key) >= 0) {
         continue;
@@ -148,18 +117,19 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       let type: 'standard' | 'rgb' = 'standard';
       // noinspection JSMismatchedCollectionQueryUpdate
       let colorList: ColorData[] = [];
-      for (const groupKey of Object.keys(specialGroups)) {
+      for (const groupKey of Object.keys(ThemeData.specialGroups)) {
         if (key.endsWith(groupKey)) {
-          const group = specialGroups[groupKey];
+          // the color key ends with one of the keys in specialGroups
+          const group = ThemeData.specialGroups[groupKey];
           const subKey = key.substring(0, key.length - groupKey.length);
           let hasSpec = false;
-          for (const specKey of Object.keys(specialGroups[groupKey].keys)) {
+          for (const specKey of Object.keys(ThemeData.specialGroups[groupKey].keys)) {
             const fullKey = subKey + specKey;
             const idx = keyList.indexOf(fullKey);
             if (idx >= 0 && this.mayUseMapping(subKey)) {
               skip.push(fullKey);
               hasSpec = true;
-              const spec = specialGroups[groupKey].keys[specKey];
+              const spec = ThemeData.specialGroups[groupKey].keys[specKey];
               const color = ColorData.fromString(this.ts.currTheme[fullKey]);
               color.btnClass = classes[subKey];
               color.icon = spec.icon;
@@ -185,7 +155,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
               back.type = 'rgb';
             }
             back.btnClass = classes[subKey];
-            back.icon = ThemeService.icons.back;
+            back.icon = ThemeData.icons.back;
             back.themeKey = key;
             back.title = this.nameForColor(subKey);
             back.subtitle = group.title;
@@ -206,7 +176,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
         }
         const color = ColorData.fromString(this.ts.currTheme[key]);
         color.type = type;
-        color.icon = key.endsWith('Fore') ? ThemeService.icons.fore : ThemeService.icons.back;
+        color.icon = key.endsWith('Fore') ? ThemeData.icons.fore : ThemeData.icons.back;
         color.themeKey = key;
         color.title = this.nameForColor(key);
         color.subtitle = '';
@@ -227,11 +197,12 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   }
 
   nameForColor(key: string): string {
-    let ret = this.ts.colorNames[key] ?? `(${key})`;
+    let ret = Log.mayDebug ? ThemeData.colorData[key]?.titleDebug : null;
+    ret ??= ThemeData.colorData[key]?.title ?? `(${key})`;
     const check = new RegExp(/([a-z]*)([A-Z].*)/).exec(key)?.[1];
-    if (check != null && this.mapping[check]?.title != null) {
+    if (check != null && ThemeData.colorMapping[check]?.title != null) {
       if (Utils.isEmpty(this.dlgData.colorKey)) {
-        ret = `${this.mapping[check]?.title} - ${ret}`;
+        ret = `${ThemeData.colorMapping[check]?.title} - ${ret}`;
       }
     }
     return ret;
@@ -296,31 +267,37 @@ export class ColorCfgDialogComponent implements AfterViewInit {
     }
   }
 
+  mayUseColor(key: string): boolean {
+    return !(ThemeData.colorData[key]?.debugOnly ?? false) || Log.mayDebug;
+  }
+
   mayUseMapping(key: string): boolean {
     const check = new RegExp(/([a-z]*)([A-Z].*)/).exec(key)?.[1];
-    if (check != null && this.mapping[check] != null) {
-      return !(this.mapping[check]?.debugOnly ?? false) || Log.mayDebug;
+    if (check != null && ThemeData.colorMapping[check] != null) {
+      return !(ThemeData.colorMapping[check]?.debugOnly ?? false) || Log.mayDebug;
     }
     return true;
   }
 
   colors(key: string): ColorData[] {
     const ret: ColorData[] = [];
-    if (this.mapping[key]?.colors != null) {
-      for (const c of this.mapping[key].colors) {
+    if (ThemeData.colorMapping[key]?.colors != null) {
+      for (const c of ThemeData.colorMapping[key].colors) {
         const color = ColorData.fromString(this.ts.currTheme[`${this.dlgData.colorKey}${c.key}`]);
         color.icon = c.icon;
         ret.push(color);
       }
     } else {
       const subKey = key.substring(this.dlgData.colorKey.length);
-      if (this.mapping[subKey] != null) {
+      if (ThemeData.colorMapping[subKey] != null) {
         ret.push(ColorData.fromString(this.ts.currTheme[subKey]));
       } else {
         const c = ColorData.fromString(this.ts.currTheme[key]);
         if (key.endsWith('Back')) {
           c.icon = 'palette';
         } else if (key.endsWith('Fore') || key.endsWith('Data')) {
+          c.icon = 'text_fields';
+        } else if (key.endsWith('SubHead')) {
           c.icon = 'text_fields';
         }
         ret.push(c);
@@ -330,7 +307,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   }
 
   mapEntry(key: string, mayBeNull = false): any {
-    return this.mapping[key] ?? (mayBeNull ? null : this.mapping.unknown);
+    return ThemeData.colorMapping[key] ?? (mayBeNull ? null : ThemeData.colorMapping.unknown);
   }
 
   colorName(key: string): string {
@@ -342,7 +319,8 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   styleForName(key: string): string[] {
     const ret: string[] = [];
     const check = new RegExp(/([a-z]*)([A-Z].*)*/).exec(key)?.[1];
-    if (this.mapping[check]?.debugOnly ?? false) {
+    if ((ThemeData.colorMapping[check]?.debugOnly ?? false)
+      || (ThemeData.colorData[key]?.debugOnly ?? false)) {
       ret.push('is-debug');
     }
     return ret;
@@ -376,6 +354,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   }
 
   clickSave() {
+    this.storeTheme();
     this.dlgRef.close();
   }
 

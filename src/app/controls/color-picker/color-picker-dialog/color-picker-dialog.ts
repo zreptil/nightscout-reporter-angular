@@ -23,7 +23,7 @@ export class ColorPickerDialog implements AfterViewInit {
     };
   static _maxSavedColors = 12;
   fire = new EventEmitter<string>();
-  defColor: ColorData;
+  _stdColor: ColorData;
   triggerValue: number[];
   closeData: CloseButtonData = {
     closeAction: () => {
@@ -44,6 +44,20 @@ export class ColorPickerDialog implements AfterViewInit {
     }
     this.currSavedIdx = ColorPickerDialog._savedColors.length - 1;
     this.updateTitle();
+  }
+
+  _defColor: ColorData;
+
+  get defColor(): ColorData {
+    if (this._defColor?.equals(this.currentColor) && this.currentColor.themeKey != null) {
+      const c = this.ts.stdTheme[this.currentColor.themeKey];
+      return ColorData.fromString(c);
+    }
+    return this._defColor;
+  }
+
+  set defColor(value: ColorData) {
+    this._defColor = value;
   }
 
   get currentColor(): ColorData {

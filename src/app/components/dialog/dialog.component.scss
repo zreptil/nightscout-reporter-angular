@@ -26,6 +26,18 @@
   --mdc-chip-with-trailing-icon-trailing-icon-color: #212121;
 }
 
+:host {
+  --mat-select-panel-background-color: white;
+  --mat-select-enabled-trigger-text-color: rgba(0, 0, 0, 0.87);
+  --mat-select-disabled-trigger-text-color: rgba(0, 0, 0, 0.38);
+  --mat-select-placeholder-text-color: rgba(0, 0, 0, 0.6);
+  --mat-select-enabled-arrow-color: rgba(0, 0, 0, 0.54);
+  --mat-select-disabled-arrow-color: rgba(0, 0, 0, 0.38);
+  --mat-select-focused-arrow-color: var(--headBack);
+  --mat-select-invalid-arrow-color: rgba(244, 67, 54, 0.87);
+  --mdc-theme-primary: var(--headBack);
+}
+
 .dialog-text {
   div {
     //margin: 0.5em 0;

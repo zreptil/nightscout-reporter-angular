@@ -6,6 +6,10 @@
   --bodyData: var(--settingsBodyData);
   --accentBack: var(--settingsHeadBack);
   --accentFore: var(--settingsHeadFore);
+  --subHeadFore: var(--settingsBodySubHead);
+
+  --mat-select-focused-arrow-color: var(--subHeadFore);
+  --mdc-theme-primary: var(--subHeadFore);
 
   //::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
   //  color: rgba(0, 0, 0, 0.9);
@@ -310,7 +314,6 @@
       line-height: 1em;
       margin-top: 0.3em;
       position: initial;
-      opacity: 0.6;
       // color: rgba(0, 0, 0, 0.6);
     }
   }

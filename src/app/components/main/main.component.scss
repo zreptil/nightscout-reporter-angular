@@ -479,6 +479,9 @@ mat-drawer-container {
 }
 
 .userName {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
   font-size: 120%;
 }
 
@@ -505,5 +508,23 @@ button.send {
 
   ::ng-deep .mat-mdc-button-ripple {
     border-radius: initial;
+  }
+}
+
+button[micro-button] {
+  background-color: transparent;
+}
+
+.dev-error {
+  mat-icon {
+    color: var(--dlgErrorHeadBack);
+    margin-right: 0;
+  }
+}
+
+.dev-warn {
+  mat-icon {
+    color: var(--dlgWarnHeadBack);
+    margin-right: 0;
   }
 }

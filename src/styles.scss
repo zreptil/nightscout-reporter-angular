@@ -22,7 +22,7 @@ html, body {
   --mdc-dialog-container-shape: 8px !important;
 
   .subtitle {
-    color: var(--headBack);
+    color: var(--subHeadFore);
   }
 }
 
@@ -37,99 +37,6 @@ body {
   align-items: center;
   justify-content: center;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-
-  //--logInfoBack: #606099;
-  //--logInfoFore: #fff;
-  //--logWarnBack: #ff8020;
-  //--logWarnFore: #000;
-  //--logErrorBack: #ff2020;
-  //--logErrorFore: #fff;
-  //--logTodoBack: #4040ff;
-  //--logTodoFore: #c0c0ff;
-  //--logTodoBorder: rgba(255, 255, 255, 0.7);
-  //--logDebugRGB: 255, 255, 0;
-  //--logDebugFore: #000;
-  //--toolbarBack: rgba(0, 0, 0, 0.3);
-  //--toolbarFore: #fff;
-  //--helpBack: #fff;
-  //--helpFore: #000;
-  //--markBorder: 1px solid #000;
-  //--mainHeadBack: #055524;
-  //--mainHeadFore: white;
-  //--mainBodyBack: #57bb8a;
-  //--mainBodyFore: black;
-  //--settingsHeadBack: #006064;
-  //--settingsHeadFore: #b2ebf2;
-  //--settingsBodyBack: #4dd0e1;
-  //--settingsBodyFore: black;
-  //--settingsError: maroon;
-  //--legalHeadBack: #e65100;
-  //--legalHeadFore: #ffe0b2;
-  //--legalBodyBack: #ffb74d;
-  //--legalBodyFore: black;
-  //--legalBodyLink: #e65100;
-  //--whatsnewHeadBack: #1c3aa9;
-  //--whatsnewHeadFore: #c6dafc;
-  //--whatsnewBodyBack: #4285f4;
-  //--whatsnewBodyFore: black;
-  //--whatsnewBodyLink: rgba(255, 255, 255, 0.6);
-  //--localFore: #9c27b0;
-  //--localBack: #e1bee7;
-  //--betaBack: transparent;
-  //--settingsLoopMarked: rgba(255, 255, 255, 0.4);
-  //--outputparamsHeadBack: #a52714;
-  //--outputparamsHeadFore: #f4c7c3;
-  //--outputparamsBodyBack: #e67c73;
-  //--outputparamsBodyFore: black;
-  //--shortcutHeadBack: #01579b;
-  //--shortcutHeadFore: #b3e5fc;
-  //--shortcutBodyBack: #4fc3f7;
-  //--shortcutBodyFore: black;
-  //--shortcutBodyData: black;
-  //--helpHeadBack: #33691e;
-  //--helpHeadFore: #dcedc8;
-  //--helpBodyBack: #aed581;
-  //--helpBodyFore: black;
-  //--glucLow: #ff6666;
-  //--glucNormLow: #809933;
-  //--glucNorm: #00cc00;
-  //--glucNormHigh: #aacc00;
-  //--glucHigh: #cccc00;
-  //--glucUnknown: #ccc;
-  //--datepickerBtnEmptyBack: #e67c73;
-  //--datepickerBtnEmptyFore: black;
-  //--datepickerHeadEmptyBack: #db4437;
-  //--datepickerHeadEmptyFore: white;
-  //--datepickerHeadBack: #006064;
-  //--datepickerHeadFore: white;
-  //--datepickerBodyBack: #00bcd4;
-  //--datepickerMonthTitleBack: #006064;
-  //--datepickerMonthTitleFore: white;
-  //--datepickerMonthBack: #00bcd4;
-  //--datepickerMonthFore: black;
-  //--datepickerBtnRaisedBack: #0097a7;
-  //--datepickerBtnRaisedFore: black;
-  //--datepickerBtnRaisedKeyBack: #0b8043;
-  //--datepickerBtnRaisedKeyFore: white;
-  //--datepickerBtnShiftKeyBack: rgba(255, 255, 255, 0.4);
-  //--datepickerBtnShiftKeyFore: black;
-  //--datepickerDowActiveBack: #006064;
-  //--datepickerDowActiveFore: #aed581;
-  //--datepickerDowInactiveBack: #db4437;
-  //--datepickerDowInactiveFore: #eda29b;
-  //--mainSendCountFore: black;
-  //--mainSendCountFrame: white;
-  //--feedbackHeadBack: #383;
-  //--feedbackHeadFore: black;
-  //--feedbackBodyBack: #afa;
-  //--feedbackBodyFore: black;
-  //--infoButtonBack: var(--settingsHeadBack);
-  //--infoButtonFore: var(--settingsHeadFore);
-  //--userPinFore: rgba(255, 215, 0, 0.7);
-  //--warnHeadBack: #fe6606;
-  //--warnHeadFore: black;
-  //--warnBodyBack: #dedc1d;
-  //--warnBodyFore: black;
   --logDebugColor: repeating-linear-gradient(45deg, rgba(var(--logDebugRGB), 0.6), rgba(var(--logDebugRGB), 0.6) 10px, rgba(var(--logDebugRGB), 0.8) 10px, rgba(var(--logDebugRGB), 0.8) 20px);
 }
 
@@ -224,6 +131,7 @@ mat-icon[small] {
   --bodyFore: var(--mainBodyFore);
   --accentBack: var(--mainHeadBack);
   --accentFore: var(--mainHeadFore);
+  --subHeadFore: var(--mainHeadBack);
 }
 
 .dialog-box.info {
@@ -233,6 +141,27 @@ mat-icon[small] {
   --bodyFore: var(--mainBodyFore);
   --accentBack: var(--mainHeadBack);
   --accentFore: var(--mainHeadFore);
+  --subHeadFore: var(--mainHeadBack);
+}
+
+.dialog-box.error {
+  --headBack: var(--dlgErrorHeadBack);
+  --headFore: var(--dlgErrorHeadFore);
+  --bodyBack: var(--dlgErrorBodyBack);
+  --bodyFore: var(--dlgErrorBodyFore);
+  --accentBack: var(--dlgErrorHeadBack);
+  --accentFore: var(--dlgErrorHeadFore);
+  --subHeadFore: var(--dlgErrorHeadBack);
+}
+
+.dialog-box.warning {
+  --headBack: var(--dlgWarnHeadBack);
+  --headFore: var(--dlgWarnHeadFore);
+  --bodyBack: var(--dlgWarnBodyBack);
+  --bodyFore: var(--dlgWarnBodyFore);
+  --accentBack: var(--dlgWarnHeadBack);
+  --accentFore: var(--dlgWarnHeadFore);
+  --subHeadFore: var(--dlgWarnHeadBack);
 }
 
 @media (min-width: 1200px) {
@@ -549,7 +478,7 @@ form.oauth2 {
 }
 
 .mat-mdc-checkbox.mat-accent {
-  --mdc-checkbox-selected-checkmark-color: rgba(255, 255, 255, 0.8);
+  --mdc-checkbox-selected-checkmark-color: var(--headFore);
   --mdc-checkbox-selected-focus-icon-color: var(--headBack);
   --mdc-checkbox-selected-hover-icon-color: var(--headBack);
   --mdc-checkbox-selected-icon-color: var(--headBack);
@@ -646,7 +575,11 @@ form.oauth2 {
 }
 
 .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: var(--bodyFore);
+  color: var(--bodyData);
+}
+
+.mat-mdc-button.mat-unthemed {
+  --mdc-text-button-label-text-color: var(--bodyFore);
 }
 
 .mat-datepicker-content {
@@ -684,10 +617,10 @@ form.oauth2 {
 .mat-mdc-dialog-container .mdc-dialog__content.root {
   background-color: var(--bodyBack) !important;
   color: var(--bodyFore) !important;
-  --mdc-theme-text-primary-on-background: var(--bodyFore);
+  --mdc-theme-text-primary-on-background: var(--bodyData);
 
   .mat-mdc-checkbox.mat-accent {
-    --mdc-checkbox-unselected-icon-color: var(--bodyFore);
+    --mdc-checkbox-unselected-icon-color: var(--bodyData);
   }
 }
 
@@ -766,6 +699,7 @@ form.oauth2 {
 
 svg {
   --body: var(--owlBody, #080);
+  --body-back: #57bb8a;
   --brow: var(--owlBrow, #080);
   --body-left: var(--owlBodyLeft, #080);
   --body-right: var(--owlBodyRight, #080);
@@ -789,11 +723,13 @@ svg {
   --reporter-fabric: var(--owlReporterFabric, #040);
   --own-body-left: var(--owlOwnBodyLeft);
   --own-body-right: var(--owlOwnBodyRight);
+  --own-body-back: var(--mainBodyBack);
   --own-eyearea: var(--owlOwnEyearea);
   --own-eyes: var(--owlOwnEyes);
   --own-fabric: var(--owlOwnFabric, #040);
   --own-beard: var(--owlOwnBeard, #040);
   --own-frame: var(--owlOwnFrame, #070);
+  --own-brow: var(--owlOwnBrow, #070);
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base[micro-button] {

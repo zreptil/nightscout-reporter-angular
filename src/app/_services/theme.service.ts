@@ -6,97 +6,33 @@ import {GLOBALS} from '@/_model/globals-data';
 import {Log} from '@/_services/log.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton} from '@/_model/dialog-data';
+import * as JSZip from 'jszip';
+import {encode} from 'base64-arraybuffer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
   static lsThemeName = 'owntheme';
-  static icons: any = {
-    back: 'water_drop',
-    fore: 'title',
-    data: 'edit_note',
-    link: 'link'
-  }
   readonly currTheme: any = {};
   langHeight = '16em';
   changed = false;
-  colorNames: any = {
-    mainHead: $localize`Titel`,
-    mainBody: $localize`Inhalt`,
-    settingsHead: $localize`Titel`,
-    settingsBody: $localize`Inhalt`,
-    settingsError: $localize`Fehler`,
-    legalHead: $localize`Titel`,
-    legalBody: $localize`Inhalt`,
-    whatsnewHead: $localize`Titel`,
-    whatsnewBody: $localize`Inhalt`,
-    local: $localize`Lokal`,
-    betaBack: $localize`Beta`,
-    settingsLoopMarked: $localize`Kennzeichnung für Loop`,
-    outputparamsHead: $localize`Titel`,
-    outputparamsBody: $localize`Inhalt`,
-    shortcutHead: $localize`Titel`,
-    shortcutBody: $localize`Inhalt`,
-    helpHead: $localize`Titel`,
-    helpBody: $localize`Inhalt`,
-    glucLow: $localize`Niedrig`,
-    glucNormLow: $localize`Normal Niedrig`,
-    glucNorm: $localize`Normal`,
-    glucNormHigh: $localize`Normal Hoch`,
-    glucHigh: $localize`Hoch`,
-    datepickerBtnEmpty: $localize`Leerer Zeitraum`,
-    datepickerHeadEmpty: $localize`Titelbereich für leeres Datum`,
-    datepickerHead: $localize`Titel`,
-    datepickerBodyBack: $localize`Inhalt`,
-    datepickerMonthTitle: $localize`Monat Titel`,
-    datepickerMonth: $localize`Monat Inhalt`,
-    datepickerBtnRaised: $localize`Markierter Tag`,
-    datepickerBtnRaisedKey: $localize`Markierte relative Zeitspanne`,
-    datepickerBtnShiftKey: $localize`Verschiebung`,
-    datepickerDowActive: $localize`Aktiver Wochentag`,
-    datepickerDowInactive: $localize`Inaktiver Wochentag`,
-    datepickerBody: $localize`Hintergrund`,
-    mainSendCount: $localize`Anzahl Formulare`,
-    mainDonate: $localize`Spendenbutton`,
-    userPinFore: $localize`Sternmarkierung`,
-    logDebug: $localize`Debug`,
-    owlBody: $localize`Körper`,
-    owlBrow: $localize`Stirn`,
-    owlBodyLeft: $localize`Körper links`,
-    owlBodyRight: $localize`Körper rechts`,
-    owlEyearea: $localize`Augenpartie`,
-    owlEyes: $localize`Augen`,
-    owlXmasBodyLeft: $localize`Weihnacht - Körper links`,
-    owlXmasBodyRight: $localize`Weihnacht - Körper rechts`,
-    owlXmasEyearea: $localize`Weihnacht - Augenpartie`,
-    owlXmasEyes: $localize`Weihnacht - Augen`,
-    owlXmasFrame: $localize`Weihnacht - Hut Rand`,
-    owlXmasFur: $localize`Weihnacht - Hut Fell`,
-    owlXmasFabric: $localize`Weihnacht - Hut Stoff`,
-    owlWizardBodyLeft: $localize`Zauberer - Körper links`,
-    owlWizardBodyRight: $localize`Zauberer - Körper rechts`,
-    owlWizardEyearea: $localize`Zauberer - Augenpartie`,
-    owlWizardEyes: $localize`Zauberer - Augen`,
-    owlWizardFabric: $localize`Zauberer - Hut Stoff`,
-    owlWizardStar2: $localize`Zauberer - Hut Stern 2`,
-    owlWizardStar1: $localize`Zauberer - Hut Stern 1`,
-    owlReporterFrame: $localize`Reporterhut - Rand`,
-    owlReporterFabric: $localize`Reporterhut - Stoff`,
-    owlOwnBodyLeft: $localize`Angepasst - Körper links`,
-    owlOwnBodyRight: $localize`Angepasst - Körper rechts`,
-    owlOwnEyearea: $localize`Angepasst - Augenpartie`,
-    owlOwnEyes: $localize`Angepasst - Augen`,
-    owlOwnFabric: $localize`Angepasst - Stoff`,
-    owlOwnBeard: $localize`Angepasst - Bart`,
-    owlOwnFrame: $localize`Angepasst - Rand`,
-  };
 
   constructor(public ds: DataService,
               public ms: MaterialColorService,
               public msg: MessageService) {
     window.addEventListener('resize', this.onResize);
+    this.ds.requestJson(`assets/themes/standard/colors.json`).then(result => {
+      this._stdTheme = result;
+      this.restoreTheme();
+    });
     this.onResize();
+  }
+
+  _stdTheme: any;
+
+  get stdTheme(): any {
+    return this._stdTheme ?? {};
   }
 
   get themeWidth(): string {
@@ -115,53 +51,76 @@ export class ThemeService {
   }
 
   restoreTheme(): void {
+    if (GLOBALS.themeKey !== 'own') {
+      return;
+    }
     const src = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme));
-    console.log('rest', src);
-    for (const key of Object.keys(this.currTheme)) {
+    for (const key of Object.keys(this.stdTheme)) {
       if (this.currTheme[key] !== src[key]) {
         this.changed = true;
       }
-      this.currTheme[key] = src[key] ?? this.currTheme[key];
+      this.currTheme[key] = src[key] ?? this.currTheme[key] ?? this.stdTheme[key];
     }
     this.assignStyle(document.body.style, this.currTheme);
     // const t = GLOBALS.ownTheme;
     // if (t != null) {
-    //   const zip = new JSZip();
-    //   zip.loadAsync(t, {base64: true}).then(packed => {
-    //     packed.file('t').async('string').then(theme => {
-    //       const src = JSON.parse(theme);
-    //       console.log(src);
-    //       for (const key of Object.keys(this.currTheme)) {
-    //         this.currTheme[key] = src[key] ?? this.currTheme[key];
-    //       }
-    //       this.assignStyle(document.body.style, this.currTheme);
-    //       // console.log(JSON.parse(ex));
-    //     });
-    //   });
     // }
   }
 
   storeTheme(): void {
-    const list = Object.keys(this.currTheme);
+    const list = Object.keys(this.stdTheme);
     list.sort();
     let src: any = {};
     for (const key of list) {
-      if (this.currTheme[key] != null) {
-        src[key] = this.currTheme[key];
-      }
+//      if (this.currTheme[key] != null) {
+      src[key] = this.currTheme[key] ?? this.stdTheme[key];
+//      }
     }
     src = JSON.stringify(src);
     GLOBALS.ownTheme = Utils.encodeBase64(src);
     this.ds.saveWebData();
-    // const zip = new JSZip();
-    // zip.file('t', src);
-    // zip.generateAsync({type: 'blob', compression: 'DEFLATE'}).then(blob => {
-    //   blob.arrayBuffer().then(buffer => {
-    //     GLOBALS.ownTheme = encode(buffer);
-    //     this.ds.saveWebData();
-    //   });
-    //   // saveAs(content, 'colors.zip');
-    // });
+  }
+
+  packTheme(onDone: (data: string) => void, onError?: (error: string) => void): void {
+    if (onDone == null) {
+      return;
+    }
+    const zip = new JSZip();
+    zip.file('t', JSON.stringify(this.currTheme));
+    zip.generateAsync({type: 'blob', compression: 'DEFLATE'})
+      .then(blob => {
+        blob.arrayBuffer()
+          .then(buffer => {
+            onDone(encode(buffer));
+            this.ds.saveWebData();
+          })
+          .catch(error => {
+            onError?.(error.message);
+          });
+      })
+      .catch(error => {
+        onError?.(error.message);
+      });
+  }
+
+  unpackTheme(theme: string, onDone: (data: any) => void, onError?: (error: string) => void): void {
+    if (onDone == null) {
+      return;
+    }
+    const zip = new JSZip();
+    zip.loadAsync(theme, {base64: true})
+      .then(packed => {
+        packed.file('t').async('string')
+          .then(theme => {
+            onDone(JSON.parse(theme));
+          })
+          .catch(error => {
+            onError?.(error.message);
+          });
+      })
+      .catch(error => {
+        onError?.(error.message);
+      });
   }
 
   onResize() {
@@ -169,7 +128,7 @@ export class ThemeService {
   }
 
   async updateWithStandardTheme(theme: any) {
-    const std = await this.ds.requestJson(`assets/themes/standard/colors.json`);
+    const std: any = this.stdTheme;
     for (const key of Object.keys(std)) {
       if (theme[key] == null) {
         theme[key] = std[key];
@@ -177,15 +136,21 @@ export class ThemeService {
     }
   }
 
-  async setTheme(name: string) {
+  async setTheme(name: string, setGlobalTheme = false) {
     if (this.changed) {
       this.msg.confirm($localize`Es wurden Farben geändert. Sollen diese Änderungen verworfen werden?`).subscribe(result => {
         if (result?.btn === DialogResultButton.yes) {
           this.changed = false;
-          this.setTheme(name);
+          this.setTheme(name, setGlobalTheme);
         }
       });
       return;
+    }
+    if (GLOBALS.themeList[name] == null) {
+      name = 'own';
+    }
+    if (setGlobalTheme) {
+      GLOBALS.theme = name;
     }
     const suffix = this.isWatch ? '-watch' : '';
     document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
@@ -194,7 +159,6 @@ export class ThemeService {
     if (name === 'own') {
       this.restoreTheme();
       await this.updateWithStandardTheme(this.currTheme);
-      GLOBALS.theme = this.currTheme;
       this.ds.saveWebData();
       return;
     } else {
@@ -223,7 +187,7 @@ export class ThemeService {
     // } else {
     this.assignStyle(document.body.style, theme);
 //    }
-    GLOBALS.theme = theme;
+//    GLOBALS.theme = theme;
     this.ds.saveWebData();
   }
 

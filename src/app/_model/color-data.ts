@@ -56,8 +56,8 @@ export class ColorData extends BaseData {
 
   static fromString(value: string): ColorData {
     const ret = new ColorData(null);
-    const parts = value.split(',');
-    if (parts.length === 3) {
+    const parts = value?.split(',');
+    if (parts?.length === 3) {
       ret.value[0] = +parts[0];
       ret.value[1] = +parts[1];
       ret.value[2] = +parts[2];

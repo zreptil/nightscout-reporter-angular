@@ -155,10 +155,16 @@
       <mat-toolbar-row>
         <div [class]="classForView('basePanel')">
           <ng-container *ngIf="globals.viewType!=='themes'">
-            <button (click)="clickUser()" class="userName toolbar-button">{{ globals.user.display }}</button>
+            <button (click)="clickUser()" class="userName toolbar-button">
+              <mat-icon *ngIf="globals.viewType==='users'">chevron_left</mat-icon>
+              {{ globals.user.display }}
+            </button>
           </ng-container>
           <ng-container *ngIf="globals.viewType==='themes'">
-            <button (click)="globals.viewType='tile'" class="userName toolbar-button">{{ msgThemes }}</button>
+            <button (click)="globals.viewType='tile'" class="userName toolbar-button">
+              <mat-icon>chevron_left</mat-icon>
+              {{ msgThemes }}
+            </button>
           </ng-container>
           <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
             <mat-form-field>
@@ -202,6 +208,14 @@
           </div>
         </div>
         <nav class="material-navigation">
+          <ng-container *ngIf="globals.isDebug">
+            <button (click)="ms.error(msgDevError)" class="dev-error" mat-icon-button micro-button>
+              <mat-icon>wysiwyg</mat-icon>
+            </button>
+            <button (click)="ms.warn(msgDevWarn)" class="dev-warn" mat-icon-button micro-button>
+              <mat-icon>wysiwyg</mat-icon>
+            </button>
+          </ng-container>
           <app-close-button [data]="closeData"></app-close-button>
           <!--
           <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>

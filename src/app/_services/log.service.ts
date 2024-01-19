@@ -15,11 +15,11 @@ export class Log {
   private static _timer: number;
 
   static get mayDebug(): boolean {
-    return LogService.instance.mayDebug;
+    return LogService.instance?.mayDebug ?? false;
   }
 
   static get showTodo(): boolean {
-    return LogService.instance.showTodo;
+    return LogService.instance?.showTodo ?? false;
   }
 
   static get msg(): { [key: string]: any[] } {

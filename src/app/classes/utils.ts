@@ -146,6 +146,11 @@ export class Utils {
     return Utils.fmtDate(new Date(0, 0, 0, hour, minute, second), fmt);
   }
 
+  static fmtDateTime(date: Date): string {
+    const fmt = $localize`dd.MM.yyyy` + ', ' + $localize`hh:mm Uhr`;
+    return Utils.fmtDate(date, fmt);
+  }
+
   static fmtDate(date: Date, fmt: string = null): string {
     if (fmt == null) {
       fmt = $localize`dd.MM.yyyy`;
@@ -482,12 +487,14 @@ export class Utils {
     const ret: string[] = [];
     const words = text.split(' ');
     let line = '';
+    let diff = '';
     for (const word of words) {
       if (line.length + word.length > maxchars) {
         ret.push(line);
         line = word;
       } else {
-        line += ' ' + word;
+        line += diff + word;
+        diff = ' ';
       }
     }
     ret.push(line);

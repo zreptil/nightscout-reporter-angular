@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
 import {ColorMix} from '@/_model/color-mix-data';
 import {DialogResultButton} from '@/_model/dialog-data';
-import {ThemeService} from '@/_services/theme.service';
+import {ThemeData} from '@/_model/theme-data';
 
 export interface ColorDialogData {
   imageDataUrl: string;
@@ -65,7 +65,7 @@ export class ColorPickerComponent {
       c.btnBackColor = c.display;
       c.btnForeColor = c.fontDisplay;
       if (!c.isBackColor) {
-        c.btnBackColor = value.find(c => c.icon === ThemeService.icons.back).display;
+        c.btnBackColor = value.find(c => c.icon === ThemeData.icons.back).display;
         c.btnForeColor = c.display;
       }
     }

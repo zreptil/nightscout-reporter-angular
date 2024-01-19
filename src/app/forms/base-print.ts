@@ -670,6 +670,7 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Ø Zuckerwert`;
   }
 
+  // https://bionicwookiee.com/2020/02/26/cgm-metrics-gvi-pgs/
   get msgGVIFull(): string {
     return $localize`Glykämischer Variabilitäts Index (GVI)`;
   }

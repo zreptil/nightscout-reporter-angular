@@ -3,8 +3,13 @@
   --headFore: var(--outputparamsHeadFore);
   --bodyBack: var(--outputparamsBodyBack);
   --bodyFore: var(--outputparamsBodyFore);
+  --bodyData: var(--outputparamsBodyData);
   --accentBack: var(--outputparamsHeadBack);
   --accentFore: var(--outputparamsHeadFore);
+  --subHeadFore: var(--outputparamsBodySubHead);
+  --mat-select-panel-background-color: white;
+  --mat-select-focused-arrow-color: var(--subHeadFore);
+  --mdc-theme-primary: var(--subHeadFore);
 }
 
 ::ng-deep .mat-select-panel.output-params {
@@ -186,7 +191,7 @@ material-input {
   }
 
   ::ng-deep .focused.label-text {
-    color: var(--headBack);
+    color: var(--bodyData);
   }
 }
 

@@ -28,6 +28,7 @@ export class Settings {
   static PDFDIVIDER: number = 100000;
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
+  urlThemeServer = 'https://nightrep.zreptil.de';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
   isConfigured = false;
   dsgvoAccepted = false;
@@ -55,9 +56,19 @@ export class Settings {
   ];
   ownTheme: any;
   apiAuth: string;
-
+  publicUsername: string;
   // subVersion is added to version to have a unique version number without changing the current version
   private _subVersion = '1';
+
+  static _msgThemeOwn = $localize`:theme selection - own|:Eigenes`;
+
+  static get msgThemeOwn(): string {
+    return Settings._msgThemeOwn;
+  }
+
+  static set msgThemeOwn(value: string) {
+    Settings._msgThemeOwn = value;
+  }
 
   static get hastiod(): boolean {
     return localStorage.getItem(Settings.DebugFlag) !== Settings.DebugActive;
@@ -73,10 +84,6 @@ export class Settings {
 
   static get msgThemeXmas(): string {
     return $localize`:theme selection - christmas|:Weihnachten`;
-  }
-
-  static get msgThemeOwn(): string {
-    return $localize`:theme selection - own|:Eigenes`;
   }
 
   static get msgUnitMGDL(): string {
@@ -137,12 +144,18 @@ export class Settings {
         return 'standard';
       }
     }
+    if (this._theme === 'own') {
+      return Settings.msgThemeOwn;
+    }
     return this._theme;
   }
 
   set theme(value: string) {
     if (this.themeList[value] != null) {
       this._theme = value;
+    } else {
+      this._theme = 'own';
+      Settings.msgThemeOwn = value;
     }
   }
 
@@ -151,7 +164,17 @@ export class Settings {
   }
 
   get themeKey(): string {
-    return this._theme;
+    if (Utils.isEmpty(this._theme)) {
+      if (GlobalsData.now.getMonth() === 11) {
+        return 'xmas';
+      } else {
+        return 'standard';
+      }
+    }
+    if (this.themeList[this._theme] != null) {
+      return this._theme;
+    }
+    return 'own';
   }
 
   static tiod(src: string): string {

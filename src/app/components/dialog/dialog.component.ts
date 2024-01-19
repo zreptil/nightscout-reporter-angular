@@ -17,7 +17,7 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   closeData: CloseButtonData = {
     showClose: !this.dialogRef.disableClose,
     dialogClose: {btn: DialogResultButton.cancel},
-    colorKey: 'main'
+    colorKey: 'dialog'
   };
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,

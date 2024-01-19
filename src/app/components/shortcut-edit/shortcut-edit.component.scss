@@ -6,6 +6,10 @@
   --bodyData: var(--shortcutBodyData);
   --accentBack: var(--shortcutHeadBack);
   --accentFore: var(--shortcutHeadFore);
+  --subHeadFore: var(--shortcutBodyFore);
+
+  --mat-select-focused-arrow-color: var(--subHeadFore);
+  --mdc-theme-primary: var(--subHeadFore);
 }
 
 .controls {

@@ -19,6 +19,14 @@
           <mat-form-field>
             <mat-label>{{ ctrl.title }}</mat-label>
             <input [(ngModel)]="ctrl.value" matInput>
+            <mat-hint *ngIf="ctrl.hint != null">{{ ctrl.hint }}</mat-hint>
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'textarea'">
+          <mat-form-field>
+            <mat-label>{{ ctrl.title }}</mat-label>
+            <textarea [(ngModel)]="ctrl.value" appTextareaAutoresize autofocus matInput></textarea>
+            <mat-hint *ngIf="ctrl.hint != null">{{ ctrl.hint }}</mat-hint>
           </mat-form-field>
         </ng-container>
       </ng-container>

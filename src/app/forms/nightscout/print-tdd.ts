@@ -47,7 +47,7 @@ export class PrintTDD extends BasePrint {
   }
 
   override get title(): string {
-    return $localize`Zeitraumauswertung`;
+    return $localize`Zeitraum Auswertung`;
   }
 
   override get estimatePageCount(): any {
