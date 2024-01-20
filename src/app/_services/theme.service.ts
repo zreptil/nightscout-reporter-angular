@@ -16,7 +16,6 @@ export class ThemeService {
   static lsThemeName = 'owntheme';
   readonly currTheme: any = {};
   langHeight = '16em';
-  changed = false;
 
   constructor(public ds: DataService,
               public ms: MaterialColorService,
@@ -56,9 +55,6 @@ export class ThemeService {
     }
     const src = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme));
     for (const key of Object.keys(this.stdTheme)) {
-      if (this.currTheme[key] !== src[key]) {
-        this.changed = true;
-      }
       this.currTheme[key] = src[key] ?? this.currTheme[key] ?? this.stdTheme[key];
     }
     this.assignStyle(document.body.style, this.currTheme);
@@ -136,11 +132,11 @@ export class ThemeService {
     }
   }
 
-  async setTheme(name: string, setGlobalTheme = false) {
-    if (this.changed) {
+  async setTheme(name: string, setGlobalTheme = false, checkThemeChanged = true) {
+    if (checkThemeChanged && GLOBALS.themeChanged) {
       this.msg.confirm($localize`Es wurden Farben geändert. Sollen diese Änderungen verworfen werden?`).subscribe(result => {
         if (result?.btn === DialogResultButton.yes) {
-          this.changed = false;
+          GLOBALS.themeChanged = false;
           this.setTheme(name, setGlobalTheme);
         }
       });

@@ -137,7 +137,7 @@
       <use href="#ReporterHat"/>
     </g>
     <g id="owl-own"
-       style="--body-back:var(--own-body-back);--body-left:var(--own-body-left);--body-right:var(--own-body-right);--eyearea:var(--own-eyearea);--eyes:var(--own-eyes);--body:var(--own-frame);--brow:var(--own-brow)">
+       style="--body-back:transparent;--body-left:var(--own-body-left);--body-right:var(--own-body-right);--eyearea:var(--own-eyearea);--eyes:var(--own-eyes);--body:var(--own-frame);--brow:var(--own-brow)">
       <use href="#NightscoutOwl"/>
       <use href="#OwnHat"/>
     </g>

@@ -350,7 +350,7 @@ export class SessionService {
 
   async initialLoad() {
     this.ds.loadWebData();
-    await this.ts.setTheme(GLOBALS.theme);
+    await this.ts.setTheme(GLOBALS.theme, false, false);
     this.ts.restoreTheme();
     GLOBALS.listConfig = [];
     GLOBALS.listConfigOrg = [];

@@ -32,6 +32,7 @@ export class Settings {
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
   isConfigured = false;
   dsgvoAccepted = false;
+  themeChanged = false;
   themeList: any = {
     null: Settings.msgThemeAuto,
     standard: Settings.msgThemeStandard,

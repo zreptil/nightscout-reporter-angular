@@ -25,6 +25,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   valueFore: string;
   lastValue: string;
   orgTheme: any;
+  orgThemeChanged: boolean;
   availableColormodes = 'hsl,mixer';
 
   colorList: any = {};
@@ -68,6 +69,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
                 for (const key of Object.keys(this.orgTheme)) {
                   this.ts.currTheme[key] = this.orgTheme[key];
                 }
+                GLOBALS.themeChanged = this.orgThemeChanged;
                 this.ts.assignStyle(document.body.style, this.ts.currTheme);
                 this._listThemeKeys = null;
                 return true;
@@ -84,7 +86,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       return this._listThemeKeys;
     }
     const ret: string[] = [];
-    const skip = ['panelBack', 'panelFore', 'bufferColor'];
+    const skip = ['panelBack', 'panelFore', 'bufferColor', 'mainSendCountFore', 'logDebugFore'];
     // if a color-button needs a special class, it is defined here
     const classes: any = {
       logDebug: 'is-debug'
@@ -199,6 +201,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
   nameForColor(key: string): string {
     let ret = Log.mayDebug ? ThemeData.colorData[key]?.titleDebug : null;
     ret ??= ThemeData.colorData[key]?.title ?? `(${key})`;
+    if (Log.mayDebug && ret?.startsWith('(')) {
+      console.error(`${key}: Der Farbname kann nicht ermittelt werden`);
+    }
     const check = new RegExp(/([a-z]*)([A-Z].*)/).exec(key)?.[1];
     if (check != null && ThemeData.colorMapping[check]?.title != null) {
       if (Utils.isEmpty(this.dlgData.colorKey)) {
@@ -210,6 +215,7 @@ export class ColorCfgDialogComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.orgTheme = Utils.jsonize(this.ts.currTheme);
+    this.orgThemeChanged = GLOBALS.themeChanged;
   }
 
   colorChange(data: ColorDialogData) {
@@ -259,7 +265,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
       case 'closeOk':
         // resets internal list, so that the colors are read again
         this._listThemeKeys = null;
-        this.ts.changed = true;
+        if (color.themeKey != null && this.value !== this.orgTheme[color.themeKey]) {
+          GLOBALS.themeChanged = true;
+        }
         this.dlgRef.removePanelClass('hidden');
         break;
       default:

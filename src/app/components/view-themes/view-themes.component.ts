@@ -55,7 +55,7 @@ export class ViewThemesComponent implements AfterViewInit {
   }
 
   get cardForSave(): ServerTheme {
-    if (this.ts.changed && (this.allowed.save || this.allowed.admin)) {
+    if (GLOBALS.themeChanged && (this.allowed.save || this.allowed.admin)) {
       return {
         name: $localize`Speichern`,
         username: GLOBALS.publicUsername,
@@ -220,7 +220,7 @@ export class ViewThemesComponent implements AfterViewInit {
         method: 'post', body: JSON.stringify({
           cmd: 'save',
           name: theme.name,
-          username: GLOBALS.publicUsername,
+          username: theme.username,
           colors: colors,
           overwrite: overwrite,
           auth: GLOBALS.apiAuth
@@ -244,6 +244,7 @@ export class ViewThemesComponent implements AfterViewInit {
         }
         return;
       } else {
+        GLOBALS.themeChanged = false;
         this.ds.saveWebData();
         this.loadThemeList();
       }
@@ -257,22 +258,35 @@ export class ViewThemesComponent implements AfterViewInit {
         title: $localize`Speichern`,
         buttons: [{title: $localize`Ok`, result: {btn: DialogResultButton.ok}}],
         controls: [
-          {id: 'name', type: 'input', title: $localize`Name des Farbthemas`, value: GLOBALS.theme},
-          {id: 'username', type: 'input', title: $localize`Name des Benutzers`, hint: $localize`Wird als Autor des Farbthemas angezeigt`, value: GLOBALS.publicUsername}
+          {
+            id: 'name',
+            type: 'input',
+            title: $localize`Name des Farbthemas`,
+            value: GLOBALS.theme
+          },
+          {
+            id: 'username',
+            type: 'input',
+            title: $localize`Name des Benutzers`,
+            hint: $localize`Wird als Autor des Farbthemas angezeigt`,
+            value: GLOBALS.publicUsername
+          }
         ]
       };
       this.ms.showDialog(dlg, null).subscribe(result => {
         if (result?.btn === DialogResultButton.ok) {
           const name = result.data.controls.name.value;
+          const username = result.data.controls.username.value;
           if (!Utils.isEmpty(name)) {
             const t = new ServerTheme();
             t.name = name;
+            t.username = username;
             this.saveTheme(t);
           }
         }
       });
     } else {
-      if (this.ts.changed) {
+      if (GLOBALS.themeChanged) {
         this.ms.confirm($localize`Wenn das Thema @${theme.name}@ geladen wird, gehen die aktuellen Änderungen verloren. Soll das Thema trotzdem geladen werden?`)
           .subscribe(result => {
             if (result?.btn === DialogResultButton.yes) {
@@ -303,6 +317,7 @@ export class ViewThemesComponent implements AfterViewInit {
         this.ts.currTheme[key] = result[key];
       }
       GLOBALS.theme = theme.name;
+      GLOBALS.themeChanged = false;
       this.ts.storeTheme();
       this.ts.restoreTheme();
     });

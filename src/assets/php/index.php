@@ -57,7 +57,7 @@ if ($body == NULL)
 $cmd = $body['cmd'];
 if ($body['auth'] == '' || $body['auth'] == NULL|| $body['auth'] == 'null') 
 {
-  $body['auth'] == 'null';
+  $body['auth'] = 'null';
 }
 
 checkAuth();
@@ -240,8 +240,11 @@ switch($cmd)
 }
 
 function leave() {
-  $db = GLOBALS['db'];
-  $db->Disconnect();
+  $db = $GLOBALS['db'];
+  if ($db != null) 
+  {
+    $db->Disconnect();
+  }
   die();
 }
 

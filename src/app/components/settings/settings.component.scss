@@ -11,14 +11,6 @@
   --mat-select-focused-arrow-color: var(--subHeadFore);
   --mdc-theme-primary: var(--subHeadFore);
 
-  //::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-  //  color: rgba(0, 0, 0, 0.9);
-  //}
-  //
-  //::ng-deep .mdc-text-field .mdc-text-field__input {
-  //  caret-color: black;
-  //}
-
   ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
     border-bottom-color: rgba(0, 0, 0, 0.9);
   }
@@ -26,6 +18,51 @@
   ::ng-deep .mat-select-panel.settings {
     background-color: var(--bodyBack);
     max-height: initial !important;
+  }
+
+  ::ng-deep .mat-checkbox-label {
+    white-space: normal;
+  }
+
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: var(--bodyFore);
+  }
+
+  ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
+    color: var(--bodyFore);
+  }
+
+  [select] {
+    ::ng-deep .mat-form-field-underline,
+    ::ng-deep .mat-form-field-subscript-wrapper {
+      display: none
+    }
+  }
+
+  ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
+  ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
+    background-color: var(--headBack);
+  }
+
+  [mat-dialog-actions] {
+    background-color: var(--headBack);
+
+    button {
+      color: var(--headFore);
+    }
+  }
+
+  ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
+    background-color: var(--headBack);
+
+    .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
+      stroke: var(--headFore) !important;
+    }
+  }
+
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: var(--headBack);
   }
 
   input[type=file] {
@@ -149,54 +186,6 @@
     color: var(--bodyFore);
     background-color: var(--bodyBack);
   }
-
-  :host {
-    ::ng-deep .mat-checkbox-label {
-      white-space: normal;
-    }
-
-    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-      color: var(--bodyFore);
-    }
-
-    ::ng-deep .mat-form-field.mat-primary .mat-select-arrow {
-      color: var(--bodyFore);
-    }
-
-    [select] {
-      ::ng-deep .mat-form-field-underline,
-      ::ng-deep .mat-form-field-subscript-wrapper {
-        display: none
-      }
-    }
-
-    ::ng-deep .mat-slider.mat-accent .mat-slider-track-fill,
-    ::ng-deep .mat-slider.mat-accent .mat-slider-thumb,
-    ::ng-deep .mat-slider.mat-accent .mat-slider-thumb-label {
-      background-color: var(--headBack);
-    }
-
-    [mat-dialog-actions] {
-      background-color: var(--headBack);
-
-      button {
-        color: var(--headFore);
-      }
-    }
-
-    ::ng-deep .mat-checkbox-checked ::ng-deep .mat-checkbox-background {
-      background-color: var(--headBack);
-
-      .mat-checkbox-checkmark .mat-checkbox-checkmark-path {
-        stroke: var(--headFore) !important;
-      }
-    }
-
-    ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-      background-color: var(--headBack);
-    }
-  }
-
 
   .longtext {
     font-size: 75%;

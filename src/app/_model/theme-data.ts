@@ -31,7 +31,7 @@ export class ThemeData {
   static specialGroups: any = {
     Back: {keys: ThemeData.specialKeys, title: $localize`Hintergrund`},
     RGB: {keys: ThemeData.specialKeys, title: $localize`Hintergrund`},
-    Frame: {keys: ThemeData.specialKeys, title: $localize`Rahmen`},
+    Frame: {keys: ThemeData.specialKeys, title: $localize`Rahmen`}
   };
   /**
    * the names for the given colors
