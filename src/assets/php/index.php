@@ -1,16 +1,23 @@
 <?php
+// special authorizations must be defined in config.php
+require_once 'config.php';
+// the standard authorization
+$cfg['auth']['null'] = array('load','list','save');
+// $allowed has to contain the origins that are allowed to
+// access this script
+if ($allowed === NULL)
+{
+  $allowed = [];
+}
 if (isset($_SERVER['HTTP_ORIGIN'])) {
   $from = $_SERVER['HTTP_ORIGIN'];
-  $allowed = array('https://nightrep.zreptil.de',
-                   'http://localhost:3002',
-                   'https://nightrep-dev.zreptil.de');
   if (in_array($from,$allowed)) {
     header('Access-Control-Allow-Origin: '.$from);
     header('Access-Control-Allow-Credentials: true');
   }
 } else {
-  // currently not allowed from any other url than defined above
-  // header('Access-Control-Allow-Origin: https://nightrep-dev.zreptil.de');
+  // if the following line is activated then every origin can access this url
+  // header('Access-Control-Allow-Origin: *');
 }
 if (isset($_REQUEST['activate'])) {
 ?>
@@ -40,7 +47,6 @@ if (isset($_REQUEST['activate'])) {
 }
 header('Access-Control-Max-Age: 86400');
 require_once 'DatabaseConnector.php';
-require_once 'config.php';
 header('Content-Type: application/json');
 $body = file_get_contents('php://input');
 $body = json_decode($body, true);
