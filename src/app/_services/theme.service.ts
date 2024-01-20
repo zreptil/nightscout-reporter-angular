@@ -149,18 +149,20 @@ export class ThemeService {
       GLOBALS.theme = name;
     }
     const suffix = this.isWatch ? '-watch' : '';
-    document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
-    document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);
     let theme: any;
-    if (name === 'own') {
-      this.restoreTheme();
-      await this.updateWithStandardTheme(this.currTheme);
-      this.ds.saveWebData();
-      return;
-    } else {
-      theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
-      if (name !== 'standard') {
-        await this.updateWithStandardTheme(theme);
+    if (name != null && name !== 'null') {
+      document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
+      document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);
+      if (name === 'own') {
+        this.restoreTheme();
+        await this.updateWithStandardTheme(this.currTheme);
+        this.ds.saveWebData();
+        return;
+      } else {
+        theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
+        if (name !== 'standard') {
+          await this.updateWithStandardTheme(theme);
+        }
       }
     }
     if (theme == null) {
