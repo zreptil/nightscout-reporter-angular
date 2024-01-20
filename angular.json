@@ -71,6 +71,11 @@
                   "input": "src/build-replacements/assets/dev",
                   "output": "assets/",
                   "glob": "*.json"
+                },
+                {
+                  "input": "src/build-replacements/assets/dev/php",
+                  "output": "assets/php/",
+                  "glob": "*.php"
                 }
               ],
               "fileReplacements": [

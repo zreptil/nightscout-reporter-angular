@@ -228,7 +228,7 @@ export class DataService {
     const data = {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
-      w2: GLOBALS.theme,
+      w2: GLOBALS._theme,
       w3: this._syncType,
       w4: this.oauth2AccessToken,
       w5: GLOBALS.ownTheme,
@@ -498,10 +498,8 @@ export class DataService {
 
   reload(): void {
     if (location.href != location.origin) {
-      console.error('jetzt wird neu geladen');
       location.href = location.origin + location.pathname;
     } else {
-      console.error('Jetzt guck nach, was los ist!');
       location.reload();
     }
   }
@@ -525,7 +523,7 @@ export class DataService {
       GLOBALS.user.loadParamsFromForms();
       const json = this.ss.read(Settings.WebData);
       oldLang = JsonData.toText(json.w1);
-      oldWebTheme = JsonData.toText(json.w2);
+      oldWebTheme = JsonData.toText(json.w2, null);
       oldSyncType = JsonData.toNumber(json.w3);
       oldOauth2 = JsonData.toText(json.w4, null);
       oldOwnTheme = JsonData.toText(json.w5, null);

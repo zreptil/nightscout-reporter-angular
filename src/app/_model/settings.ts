@@ -138,17 +138,11 @@ export class Settings {
   _theme: string;
 
   get theme(): string {
-    if (Utils.isEmpty(this._theme)) {
-      if (GlobalsData.now.getMonth() === 11) {
-        return 'xmas';
-      } else {
-        return 'standard';
-      }
-    }
-    if (this._theme === 'own') {
+    let ret = this.baseThemeName(this._theme);
+    if (ret === 'own') {
       return Settings.msgThemeOwn;
     }
-    return this._theme;
+    return ret;
   }
 
   set theme(value: string) {
@@ -166,10 +160,9 @@ export class Settings {
 
   get themeKey(): string {
     if (Utils.isEmpty(this._theme)) {
-      if (GlobalsData.now.getMonth() === 11) {
-        return 'xmas';
-      } else {
-        return 'standard';
+      const ret = this.baseThemeName(this._theme);
+      if (!Utils.isEmpty(ret)) {
+        return ret;
       }
     }
     if (this.themeList[this._theme] != null) {
@@ -204,5 +197,16 @@ export class Settings {
         ret = `${ret.substring(pos)}${String.fromCharCode(Utils.rnd(26) + 64)}${String.fromCharCode(Utils.rnd(26) + 48)}${ret.substring(0, pos)}`;
         return ret;
     */
+  }
+
+  baseThemeName(name: string): string {
+    if (Utils.isEmpty(name)) {
+      if (GlobalsData.now.getMonth() === 11) {
+        return 'xmas';
+      } else {
+        return 'standard';
+      }
+    }
+    return name;
   }
 }

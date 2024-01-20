@@ -164,6 +164,11 @@ export class ThemeService {
           await this.updateWithStandardTheme(theme);
         }
       }
+    } else {
+      name = GLOBALS.baseThemeName(name);
+      if (name != null) {
+        theme = await this.ds.requestJson(`assets/themes/${name}/colors.json`) ?? {};
+      }
     }
     if (theme == null) {
       return;
