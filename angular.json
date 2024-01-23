@@ -8,15 +8,14 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "configurations": {
             "development": {
               "buildOptimizer": false,
               "extractLicenses": false,
               "namedChunks": true,
               "optimization": false,
-              "sourceMap": true,
-              "vendorChunk": true
+              "sourceMap": true
             },
             "production": {
               "budgets": [
@@ -122,17 +121,17 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nightscout-reporter:build"
+            "buildTarget": "nightscout-reporter:build"
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "nightscout-reporter:build:development"
+              "buildTarget": "nightscout-reporter:build:development"
             },
             "production": {
-              "browserTarget": "nightscout-reporter:build:production"
+              "buildTarget": "nightscout-reporter:build:production"
             }
           },
           "defaultConfiguration": "development"
