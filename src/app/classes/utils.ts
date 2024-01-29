@@ -1,7 +1,7 @@
 import {Log} from '@/_services/log.service';
 import {EntryData} from '@/_model/nightscout/entry-data';
 import {lastValueFrom, Observable} from 'rxjs';
-import {GlobalsData} from '@/_model/globals-data';
+import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
 export class Utils {
   static replace(text: string, src: string | string[], dst: string | string[]): string {
@@ -135,9 +135,9 @@ export class Utils {
     if (isNaN(time)) {
       time = 0;
     }
-    let fmt = $localize`hh:mm:ss Uhr`;
+    let fmt = GLOBALS.language.timeFormat;
     if (time < 1440) {
-      fmt = $localize`hh:mm Uhr`;
+      fmt = GLOBALS.language.timeShortFormat;
       time *= 60;
     }
     const hour = Math.floor(time / 3600) % 24;
@@ -147,26 +147,33 @@ export class Utils {
   }
 
   static fmtDateTime(date: Date): string {
-    const fmt = $localize`dd.MM.yyyy` + ', ' + $localize`hh:mm Uhr`;
+    const fmt = GLOBALS.language.dateFormat + ', ' + GLOBALS.language.timeFormat;
     return Utils.fmtDate(date, fmt);
   }
 
   static fmtDate(date: Date, fmt: string = null): string {
     if (fmt == null) {
-      fmt = $localize`dd.MM.yyyy`;
+      fmt = GLOBALS.language.dateFormat;
     }
     let ret = fmt;
     ret = ret.replace(/dd/g, Utils.pad(date?.getDate() ?? '--'));
-    if (date == null) {
-      ret = ret.replace(/MM/g, '--');
-    } else {
-      ret = ret.replace(/MM/g, Utils.pad(date?.getMonth() + 1));
-    }
     ret = ret.replace(/yyyy/g, Utils.pad(date?.getFullYear() ?? '----', 4));
     ret = ret.replace(/hh/g, Utils.pad(date?.getHours() ?? '--'));
     ret = ret.replace(/mm/g, Utils.pad(date?.getMinutes() ?? '--'));
     ret = ret.replace(/ss/g, Utils.pad(date?.getSeconds() ?? '--'));
     ret = ret.replace(/sss/g, Utils.pad(date?.getMilliseconds() ?? '---'));
+    if (date == null) {
+      ret = ret.replace(/MM/g, '--');
+      ret = ret.replace(/HH/g, '--');
+      ret = ret.replace(/ap/g, '--');
+      ret = ret.replace(/AP/g, '--');
+    } else {
+      ret = ret.replace(/MM/g, Utils.pad(date.getMonth() + 1));
+      const h = date.getHours() % 12;
+      ret = ret.replace(/HH/g, Utils.pad(h));
+      ret = ret.replace(/ap/g, date.getHours() >= 12 ? 'pm' : 'am');
+      ret = ret.replace(/AP/g, date.getHours() >= 12 ? 'PM' : 'AM');
+    }
     return ret;
   }
 
@@ -334,7 +341,7 @@ export class Utils {
   }
 
   static plural(value: number, options: any): string {
-    return options[value] ?? options.other;
+    return (options[value] ?? options.other).replace(/@count@/g, value);
   }
 
   static jsonize(data: any) {
@@ -360,6 +367,15 @@ export class Utils {
     return ret;
   }
 
+  static cvtMultilineText(text: string): string {
+    if (text != null) {
+      text = text.replace(/\n/g, 'µ') ?? '';
+      text = text.replace(/µµ/g, '<br><br>');
+      text = text.replace(/µ/g, ' ');
+    }
+    return text;
+  }
+
   static decodeBase64(src: string, failRet: string = null): string {
     let ret;
     // atob alleine reicht an dieser Stelle nicht, weil dadurch Umlaute nicht korrekt
@@ -374,7 +390,7 @@ export class Utils {
       }
       ret = decoder.decode(bufView);
     } catch (ex) {
-      Log.devError(ex, 'Fehler in Utils.decodeBase64');
+      Log.devError(ex, ['Fehler in Utils.decodeBase64', src]);
       ret = failRet;
     }
     return ret;
@@ -485,6 +501,7 @@ export class Utils {
 
   static wordify(text: string, maxchars: number): string[] {
     const ret: string[] = [];
+    text = Utils.cvtMultilineText(text);
     const words = text.split(' ');
     let line = '';
     let diff = '';
