@@ -120,7 +120,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
-          <context context-type="linenumber">324</context>
+          <context context-type="linenumber">357</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
@@ -494,7 +494,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">420</context>
+          <context context-type="linenumber">423</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8653385405278371687" datatype="html">
@@ -1492,18 +1492,57 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
           <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="4964416294308095119" datatype="html">
+        <source>Du hattest zwar die Erlaubnis für Google Analytics erteilt,
+es war aber nicht möglich, diesen Dienst zu erreichen. Möglicherweise ist ein Werbeblocker aktiv.
+Die Einwilligung zu Google Analytics wurde zurückgesetzt. Falls Du trotzdem bei der Analyse helfen
+möchtest, klicke hier auf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/data.service.ts</context>
+          <context context-type="linenumber">272,275</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="805936621286900416" datatype="html">
+        <source>und deaktiviere bitte das, was die Kommunikation
+mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im Hauptmenü erneut.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/data.service.ts</context>
+          <context context-type="linenumber">276,277</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8369377071178068952" datatype="html">
+        <source>Analytics erneut prüfen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/data.service.ts</context>
+          <context context-type="linenumber">278</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1107907165500787216" datatype="html">
+        <source>Analytics ist nicht erreichbar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/data.service.ts</context>
+          <context context-type="linenumber">286</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2590295681509395485" datatype="html">
+        <source>Schliessen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/data.service.ts</context>
+          <context context-type="linenumber">289</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6922036770833811680" datatype="html">
         <source>Datenanalyse</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
-          <context context-type="linenumber">321</context>
+          <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3572204835447283142" datatype="html">
         <source>Ja, ich helfe sehr gerne</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
-          <context context-type="linenumber">325</context>
+          <context context-type="linenumber">358</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6606990846524322888" datatype="html">
@@ -1917,70 +1956,70 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>vor <x id="PH" equiv-text="hours"/>:<x id="PH_1" equiv-text="Utils.pad(-minutes % 60)"/> Std</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1655600906414706904" datatype="html">
         <source>in <x id="PH" equiv-text="hours"/>:<x id="PH_1" equiv-text="Utils.pad(minutes % 60)"/> Std</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7474325248670696284" datatype="html">
         <source>vor <x id="PH" equiv-text="-minutes"/> Min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8323150325400475247" datatype="html">
         <source>in <x id="PH" equiv-text="minutes"/> Min</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="106915923521054589" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(minutes)"/> Minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">425</context>
+          <context context-type="linenumber">428</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5649152052903402207" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(minutes)"/> Minuten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">426</context>
+          <context context-type="linenumber">429</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5715822374601764396" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(hours)"/> Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">432</context>
+          <context context-type="linenumber">435</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6787170888491959005" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(hours)"/> Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">433</context>
+          <context context-type="linenumber">436</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2243853424457768965" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(days)"/> Tag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">440</context>
+          <context context-type="linenumber">443</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3499176050291189451" datatype="html">
         <source><x id="PH" equiv-text="Math.floor(days)"/> Tage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">441</context>
+          <context context-type="linenumber">444</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -1991,14 +2030,14 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source> <x id="PH" equiv-text="Math.floor(hours)"/> Stunde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">444</context>
+          <context context-type="linenumber">447</context>
         </context-group>
       </trans-unit>
       <trans-unit id="896232652852247226" datatype="html">
         <source> <x id="PH" equiv-text="Math.floor(hours)"/> Stunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">445</context>
+          <context context-type="linenumber">448</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5370131778638173602" datatype="html">
