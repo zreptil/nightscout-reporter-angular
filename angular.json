@@ -38,6 +38,11 @@
                   "input": "src/build-replacements/assets/master",
                   "output": "assets/",
                   "glob": "*.json"
+                },
+                {
+                  "input": "src/build-replacements/assets/dev/php",
+                  "output": "assets/php/",
+                  "glob": "*.php"
                 }
               ],
               "fileReplacements": [
