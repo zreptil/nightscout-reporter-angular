@@ -28,7 +28,7 @@ export class Settings {
   static PDFDIVIDER: number = 100000;
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
-  urlThemeServer = 'https://nightrep.zreptil.de';
+  urlThemeServer = 'https://nightrep.zreptil.de/php/index.php';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
   dsgvoAccepted = false;
   themeChanged = false;

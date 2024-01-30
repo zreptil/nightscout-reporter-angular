@@ -96,6 +96,7 @@
   }
 
   [creator] {
+    display: none;
     position: absolute;
     top: 0.5em;
     right: 0.5em;
@@ -103,6 +104,13 @@
     color: rgba(0, 0, 0, 0.6);
   }
 }
+
+[card]:hover {
+  [creator] {
+    display: flex;
+  }
+}
+
 
 .themeButton {
   height: var(--contentSize);

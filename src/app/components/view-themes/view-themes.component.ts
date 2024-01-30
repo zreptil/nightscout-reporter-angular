@@ -107,6 +107,7 @@ export class ViewThemesComponent implements AfterViewInit {
             for (const key of Object.keys(this.ts.currTheme)) {
               this.ts.currTheme[key] = data[key] ?? this.ts.currTheme[key];
             }
+            GLOBALS.themeChanged = true;
             this.ts.assignStyle(document.body.style, this.ts.currTheme);
             this.ts.storeTheme();
           }, (error) => {
@@ -397,6 +398,10 @@ export class ViewThemesComponent implements AfterViewInit {
   }
 
   openDB() {
-    window.open(`${GLOBALS.urlThemeServer}/phpliteadmin.php`);
+    let url = GLOBALS.urlThemeServer.replace(/index.php/g, '');
+    if (!url.endsWith('/')) {
+      url += '/';
+    }
+    window.open(`${url}phpliteadmin.php`);
   }
 }
