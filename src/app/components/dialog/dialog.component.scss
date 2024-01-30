@@ -47,6 +47,19 @@
   ::ng-deep .mark {
     font-weight: bold;
   }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .btn {
+    font-size: 75%;
+    cursor: pointer;
+  }
 }
 
 .mat-mdc-button:not(:disabled) {

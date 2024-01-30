@@ -3,8 +3,6 @@ import {Settings} from '@/_model/settings';
 import {Log} from '@/_services/log.service';
 import {PrintAnalysis} from '@/forms/nightscout/print-analysis';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {UserData} from '@/_model/nightscout/user-data';
-import {ReportData} from '@/_model/report-data';
 import {ThemeService} from '@/_services/theme.service';
 import {SafeUrl} from '@angular/platform-browser';
 import {BasePrint} from '@/forms/base-print';
@@ -13,6 +11,8 @@ import {PdfService} from '@/_services/pdf.service';
 import {SessionService} from '@/_services/session.service';
 import {ProgressService} from '@/_services/progress.service';
 import {MessageService} from '@/_services/message.service';
+import {Utils} from '@/classes/utils';
+import {NightscoutService} from '@/_services/nightscout.service';
 
 @Component({
   selector: 'app-test',
@@ -23,10 +23,12 @@ export class TestComponent implements OnInit {
 
   imgsrc: SafeUrl;
   srcList: BasePrint[];
+  start: Date;
 
   constructor(public ts: ThemeService,
               public ds: DataService,
               public pdf: PdfService,
+              public ns: NightscoutService,
               public ss: SessionService,
               public ms: MessageService,
               public ps: ProgressService) {
@@ -37,7 +39,7 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ts.setTheme('standard');
+    this.ss.initialLoad();
     const notes = 'Oleole, supernotitz -2738 und 09123 und 972131';
     //const notes = 'The quick brown fox jumps over the lazy dog. It barked.';
     //const rex = /(?<wurscht>fox|cat) jumps over/;
@@ -93,11 +95,13 @@ export class TestComponent implements OnInit {
 
   generatePdf() {
     GLOBALS.currPeriodShift = GLOBALS.listPeriodShift[0];
-    GLOBALS.userList.push(new UserData());
     GLOBALS.ppHideNightscoutInPDF = false;
-    const repData = new ReportData(new Date(), new Date());
-    repData.user = GLOBALS.userList[0];
-    // this.pdf.generatePdf(true);
+    // this.ns.reportData = new ReportData(new Date(), new Date());
+    // this.ns.reportData.user = new UserData();
+    // this.ns.reportData.user.listApiUrl = [new UrlData()];
+    // this.ns.reportData.user.listApiUrl[0].url = 'https://diamant.ns.10be.de';
+    // this.ns.reportData.user.listApiUrl[0].startDate = new Date(1900, 0, 1);
+    this.pdf.generatePdf(false);
   }
 
   testDialog() {
@@ -115,5 +119,26 @@ export class TestComponent implements OnInit {
       progressPanelFore: 'rgba(255, 255, 255, 0.9)',
       progressBarColor: '#d00'
     }, mayCancel);
+    if (!mayCancel) {
+      this.start = new Date();
+      this.ps.value = 0;
+      this.ps.max = 5;
+      this.doProgress();
+    }
+  }
+
+  doProgress(): void {
+    const now = new Date();
+    if (Utils.differenceInSeconds(now, this.start) <= this.ps.max) {
+      this.ps.value = Utils.differenceInSeconds(now, this.start);
+      this.ps.text = `${Utils.plural(this.ps.max - Utils.differenceInSeconds(now, this.start), {
+        0: 'Das wars!',
+        1: 'Nur noch 1 Sekunde',
+        other: `Noch @count@ Sekunden`
+      })}`;
+      setTimeout(() => this.doProgress(), 100);
+    } else {
+      this.ps.cancel();
+    }
   }
 }

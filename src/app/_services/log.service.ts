@@ -123,7 +123,9 @@ export class Log {
     if (Log.showTodo) {
       Log.error(...text);
     }
-    console.error(ex);
+    if (GLOBALS.isDebug) {
+      console.error(ex, text);
+    }
   }
 
   static todo(...text: any[]) {

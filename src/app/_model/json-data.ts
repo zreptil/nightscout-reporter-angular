@@ -62,13 +62,13 @@ export class JsonData {
     let second = 0;
     let parts = value.split(':');
     if (!Utils.isEmpty(parts)) {
-      hour = +parts[0] ?? 0;
+      hour = +(parts[0] ?? 0);
     }
     if (parts.length >= 2) {
-      minute = +parts[1] ?? 0;
+      minute = +(parts[1] ?? 0);
     }
     if (parts.length >= 3) {
-      second = +parts[2] ?? 0;
+      second = +(parts[2] ?? 0);
     }
     return new Date(0, 1, 1, hour, minute, second);
   }

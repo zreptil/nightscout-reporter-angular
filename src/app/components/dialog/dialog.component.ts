@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Observable, of} from 'rxjs';
-import {DialogData, DialogParams, DialogResultButton, DialogType, IDialogButton} from '@/_model/dialog-data';
+import {DialogData, DialogParams, DialogResultButton, DialogType, HelpListItem, IDialogButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 
@@ -125,5 +125,9 @@ export class DialogComponent implements OnInit, AfterViewChecked {
 
   noImage(evt: ErrorEvent) {
     (evt.target as any).src = 'assets/img/empty.print.png';
+  }
+
+  onHelpLinkClick(item: HelpListItem) {
+    window.open(item.data);
   }
 }

@@ -11,24 +11,6 @@
           <mat-icon>home</mat-icon>
           <span i18n="title of welcome screen">Willkommen</span>
         </button>
-        <!-- facebook is not the best choice for contact, so i removed it.
-         lets see, what the community thinks, maybe it needs to be reenabled
-        <button (click)="clickMenuButton('facebook')" class="iconButton">
-          <svg height="1.5em" id="Layer_1" viewBox="0 0 266.893 266.895" width="1.5em"
-               x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
-            <path
-              d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812	c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225 H248.082z"
-              fill="#3C5A99"
-              id="Blue_1_"/>
-            <path
-              d="M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935 l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585 v99.803H182.409z"
-              fill="#FFFFFF"
-              id="f"/>
-          </svg>
-          <div i18n="title of facebook link">Facebook Seite</div>
-          <mat-icon small>open_in_new</mat-icon>
-        </button>
-        -->
         <button (click)="clickMenuButton('feedback')" class="iconButton">
           <mat-icon>mail</mat-icon>
           <span i18n="title of feedback">Feedback</span>
@@ -37,20 +19,6 @@
           <mat-icon>settings</mat-icon>
           <span i18n="title of settings">Einstellungen</span>
         </button>
-        <!--
-        globals.viewType wird aktuell nicht ausgewertet. Es gibt zunächst nur den
-        Tileview. Wenn Benutzer den Listview zurück wollen, wird der wieder aktiviert.
-        <button (click)="clickMenuButton('menu')" class="iconButton">
-          <ng-container *ngIf="globals.viewType==='tile'">
-            <mat-icon>list</mat-icon>
-            <div i18n="title of change to listview">Zur Listenansicht</div>
-          </ng-container>
-          <ng-container *ngIf="globals.viewType==='list'">
-            <mat-icon>dashboard</mat-icon>
-            <div i18n="title of change to tileview">Zur Kachelansicht</div>
-          </ng-container>
-        </button>
-        -->
         <button (click)="toggleSync()" class="iconButton">
           <ng-container *ngIf="!ds.hasSync">
             <mat-icon>sync_disabled</mat-icon>
@@ -71,6 +39,11 @@
                         (onEvent)="signinEvent($event)"
                         (signinResult)="g.client=$event"></signin>
                         -->
+        <button (click)="ss.ds.confirmGoogleTag()" class="iconButton">
+          <mat-icon *ngIf="globals.allowGoogleTag">thumb_up</mat-icon>
+          <mat-icon *ngIf="!globals.allowGoogleTag">thumb_down</mat-icon>
+          <span i18n="title of google analytics">Google Analytics</span>
+        </button>
         <button (click)="ss.showPopup('whatsnew')" class="iconButton">
           <mat-icon>new_releases</mat-icon>
           <span i18n="title of whatsnew screen">Was bisher geschah...</span>

@@ -284,7 +284,7 @@ export class SessionService {
       return {msg: $localize`Die URL wurde noch nicht festgelegt`};
     }
     let ret = null;
-    const check = user.apiUrl(null, 'status');
+    const check = user.apiUrl(null, 'status.json');
     await this.ds.request(check).then(response => {
       if (response?.body?.status !== 'ok') {
         ret = GLOBALS.msgUrlFailure(check);

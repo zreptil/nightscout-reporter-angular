@@ -36,7 +36,7 @@ export class EntryData extends JsonData {
   }
 
   get gluc(): number {
-    return this.isGap ? -1 : Settings.adjustFactor * (this.type === 'sgv' ? this.sgv : this.rawbg) ?? 0;
+    return this.isGap ? -1 : (Settings.adjustFactor ?? 0) * ((this.type === 'sgv' ? this.sgv : this.rawbg) ?? 0);
   }
 
   get bloodGluc(): number {

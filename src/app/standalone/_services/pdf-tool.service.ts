@@ -5,7 +5,7 @@ import {LangData} from '@/_model/nightscout/lang-data';
 import {DataService} from '@/_services/data.service';
 import {GLOBALS} from '@/_model/globals-data';
 import {Log} from '@/_services/log.service';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import {saveAs} from 'file-saver';
 
 @Injectable({

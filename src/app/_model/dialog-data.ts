@@ -45,12 +45,18 @@ export interface IDialogButton {
   focus?: boolean;
 }
 
-export interface IDialogControls {
+export class HelpListItem {
+  constructor(public type: string, public text: string, public data?: any, public cls?: string) {
+  }
+}
+
+export interface IDialogControl {
   id: string;
-  type: 'input' | 'textarea';
+  type: 'input' | 'textarea' | 'helplist' | 'checkbox';
   title: string;
   hint?: string,
   value?: any;
+  helpList?: HelpListItem[];
 }
 
 export interface IDialogChip {
@@ -63,14 +69,14 @@ export interface IDialogDef {
   title: string;
   buttons: IDialogButton[];
   chips?: IDialogChip[];
-  controls?: IDialogControls[];
+  controls?: IDialogControl[];
 }
 
 export class DialogData {
   result: DialogResult;
   title: string | string[];
   buttons: IDialogButton[];
-  controls: IDialogControls[];
+  controls: IDialogControl[];
   chips: IDialogChip[];
   private defs = new Map<DialogType, IDialogDef>([
     [DialogType.info, {

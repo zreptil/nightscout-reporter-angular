@@ -61,6 +61,9 @@ class HelpItem {
   }
 }
 
+/**
+ * Base class for printing forms.
+ */
 export abstract class BasePrint extends FormConfig {
   baseId: string;
   baseIdx: string;
@@ -240,9 +243,10 @@ export abstract class BasePrint extends FormConfig {
 
   get helpStrings(): HelpItem[] {
     const ret: HelpItem[] = [];
-    let text = this.help?.replace(/\n/g, 'µ') ?? '';
-    text = text.replace(/µµ/g, '<br><br>');
-    text = text.replace(/µ/g, ' ');
+    let text = Utils.cvtMultilineText(this.help);
+    // let text = this.help?.replace(/\n/g, 'µ') ?? '';
+    // text = text.replace(/µµ/g, '<br><br>');
+    // text = text.replace(/µ/g, ' ');
     let pos = text.indexOf('@');
     while (pos >= 0) {
       if (pos > 0) {
@@ -1357,6 +1361,15 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Historisch ${value}`;
   }
 
+  /**
+   * Returns a localized string based on the count of columns.
+   * The localized string will indicate the number of available
+   * columns or provide instructions on how to select columns.
+   *
+   * @param {number} count - The count of columns.
+   *
+   * @return {string} - The localized string.
+   */
   msgColumns(count: number): string {
     return Utils.plural(count, {
       0: $localize`Eine Spalte abwählen, um eine@nl@andere aktivieren zu können`,
@@ -1377,6 +1390,13 @@ export abstract class BasePrint extends FormConfig {
     return GLOBALS.fmtDateTime(date, params);
   }
 
+  /**
+   * Formats a date according to the specified format.
+   *
+   * @param {Date} date - The date to format.
+   * @param {string} format - The format to use. Possible values are 'day', 'week', and 'month'.
+   * @returns {string} The formatted date.
+   */
   fmtDateShort(date: Date, format: string) {
     switch (format.toLowerCase()) {
       case 'day':
@@ -1394,6 +1414,14 @@ export abstract class BasePrint extends FormConfig {
     return '';
   }
 
+  /**
+   * Returns the title information based on the given start and end dates.
+   *
+   * @param {Date} startDate - The start date.
+   * @param {Date} endDate - The end date. If null, only the start date will be considered.
+   *
+   * @return {string} The title information based on the provided dates.
+   */
   titleInfoForDates(startDate: Date, endDate: Date): string {
     let ret: string;
     if (endDate == null) {

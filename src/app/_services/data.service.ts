@@ -23,7 +23,7 @@ import {oauth2SyncType} from '@/_services/sync/oauth2pkce';
 import {DropboxService} from '@/_services/sync/dropbox.service';
 import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 import {MessageService} from '@/_services/message.service';
-import {DialogResultButton} from '@/_model/dialog-data';
+import {DialogResultButton, DialogType, HelpListItem} from '@/_model/dialog-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -41,6 +41,13 @@ export class DataService {
   onAfterLoadDevice: () => void = null;
   _googleLoaded = false;
   oauth2AccessToken: string = null;
+  msgTextGoogleTag = $localize`Nightscout Reporter kann statistische Daten zur
+Benutzung der Seite über Google Analytics auswerten lassen. Das hilft mir (dem Programmierer)
+Einblicke in die Verwendung der Seite zu gewinnen und Entscheidungen über die Weiterentwicklung
+und die Sprachunterstützung zu treffen. Diese Datenteilung ist vollkommen freiwillig und die
+Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.`;
+  msgConfirmGoogleTag = $localize`Bist Du damit einverstanden, dass Google Analytics Informationen zu Deiner Verwendung der Seite sammelt?`;
+  msgInfoGoogleTag = $localize`Informationen zu Google Analytics`;
 
   constructor(public http: HttpClient,
               public ss: StorageService,
@@ -228,13 +235,12 @@ export class DataService {
     const data = {
       w0: GLOBALS.version,
       w1: GLOBALS.language.code ?? 'de_DE',
-      w2: GLOBALS._theme,
+      w2: GLOBALS.theme,
       w3: this._syncType,
       w4: this.oauth2AccessToken,
       w5: GLOBALS.ownTheme,
-      w6: GLOBALS.apiAuth,
-      w7: GLOBALS.publicUsername,
-      w8: GLOBALS.themeChanged
+      w6: GLOBALS.themeChanged,
+      w7: GLOBALS.allowGoogleTag
     };
     this.ss.write(Settings.WebData, data);
   }
@@ -248,9 +254,8 @@ export class DataService {
       this._syncType = JsonData.toNumber(json.w3);
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
       GLOBALS.ownTheme = JsonData.toText(json.w5, null);
-      GLOBALS.apiAuth = JsonData.toText(json.w6, null);
-      GLOBALS.publicUsername = JsonData.toText(json.w7, null);
-      GLOBALS.themeChanged = JsonData.toBool(json.w8, false);
+      GLOBALS.themeChanged = JsonData.toBool(json.w6, false);
+      GLOBALS.allowGoogleTag = JsonData.toBool(json.w7, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
     }
@@ -292,6 +297,39 @@ export class DataService {
       GLOBALS.lastVersion != null
       && !Utils.isEmpty(GLOBALS.lastVersion)
       && !Utils.isEmpty(GLOBALS.userList);
+
+    if (GLOBALS.isConfigured && GLOBALS.allowGoogleTag == null) {
+      this.confirmGoogleTag();
+    }
+  }
+
+  confirmGoogleTag() {
+    let langCode = GLOBALS.language.shortCode;
+    switch (langCode) {
+      case 'pt':
+        langCode = 'pt-BR_br';
+        break;
+    }
+    const list: HelpListItem[] = [
+      {type: 'text', text: `${this.msgTextGoogleTag}<br><br>`},
+      {type: 'text', text: `${this.msgConfirmGoogleTag}<br><br>`, cls: 'bold'},
+      {type: 'btn', text: this.msgInfoGoogleTag, data: this.ls.analyticsLink(langCode), cls: 'italic'}
+    ];
+
+    this.ms.showDialog({
+      type: DialogType.error,
+      title: $localize`Datenanalyse`,
+      controls: [{id: 'help', type: 'helplist', title: '', helpList: list}],
+      buttons: [
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, focus: true, icon: 'thumb_down'},
+        {title: $localize`Ja, ich helfe sehr gerne`, result: {btn: DialogResultButton.yes}, icon: 'thumb_up'}
+      ]
+    }, null, true)
+      .subscribe(result => {
+        GLOBALS.allowGoogleTag = result?.btn === DialogResultButton.yes;
+        this.saveWebData();
+        this.reload();
+      });
   }
 
   // loads all settings from localStorage
@@ -470,22 +508,11 @@ export class DataService {
           Log.devError(ex, `Fehler bei DataService.fromSharedJson (shortcuts)`);
         }
       }
-      // get watch entries if available
-      // TODO: remove in version 4.1.7 or later (changed to device setting in 4.1.5)
-      if (!Utils.isEmpty(json.s14)) {
-        let watchEntries = json.s14;
-        GLOBALS.watchList = [];
-        if (watchEntries != null) {
-          try {
-            for (const entry of watchEntries) {
-              GLOBALS.watchList.push(WatchElement.fromJson(entry));
-            }
-          } catch (ex) {
-            Log.devError(ex, `Fehler bei DataService.fromSharedJson (watchEntries)`);
-          }
-        }
+      GLOBALS.apiAuth = JsonData.toText(json.s14, null);
+      GLOBALS.publicUsername = JsonData.toText(json.s15, null);
+      if (GLOBALS.publicUsername === 'null') {
+        GLOBALS.publicUsername = null;
       }
-      // TODO: end of remove
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromSharedJson`);
     }

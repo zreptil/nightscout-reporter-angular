@@ -83,10 +83,11 @@ export class ProgressService {
     return !this.data.isStopped;
   }
 
-  init(style?: any, _mayCancel = true): void {
+  init(style?: any, mayCancel = true): void {
     this.data.isPaused = false;
     this.data.isStopped = false;
     this.style = style;
+    this.mayCancel = mayCancel;
     this.initializerSubject.next(style);
   }
 

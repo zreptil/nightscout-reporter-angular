@@ -11,6 +11,10 @@
       <mat-icon>content_paste</mat-icon>
       <span i18n="buttonlabel for pasting data">Importieren</span>
     </button>
+    <button (click)="openDB()" mat-button>
+      <mat-icon>edit</mat-icon>
+      <span i18n="buttonlabel for calling phpliteadmin">Tabellen editieren</span>
+    </button>
   </div>
 </div>
 <div *ngIf="serverThemes?.length === 0 && cardForSave == null" empty>
@@ -44,7 +48,8 @@
         </svg>
       </button>
       <div time>{{ theme.modifyTime }}</div>
-      <div user>{{ theme.username }}</div>
+      <div *ngIf="!theme.isSave" username>{{ theme.username ?? '' }}</div>
+      <div *ngIf="may(theme, 'admin')" creator>{{ theme.creator ?? '' }}</div>
     </div>
   </div>
 </ng-template>

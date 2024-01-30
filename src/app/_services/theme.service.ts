@@ -6,7 +6,7 @@ import {GLOBALS} from '@/_model/globals-data';
 import {Log} from '@/_services/log.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton} from '@/_model/dialog-data';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import {encode} from 'base64-arraybuffer';
 
 @Injectable({
@@ -53,7 +53,18 @@ export class ThemeService {
     if (GLOBALS.themeKey !== 'own') {
       return;
     }
-    const src = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme));
+    let src: any = {};
+    if (GLOBALS.ownTheme != null) {
+      try {
+        if (typeof GLOBALS.ownTheme === 'string') {
+          src = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme)) ?? {};
+        } else {
+          src = GLOBALS.ownTheme;
+        }
+      } catch {
+        src = {};
+      }
+    }
     for (const key of Object.keys(this.stdTheme)) {
       this.currTheme[key] = src[key] ?? this.currTheme[key] ?? this.stdTheme[key];
     }

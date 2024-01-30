@@ -46,7 +46,7 @@ export class ThemeData {
     legalBody: {title: $localize`Inhalt`},
     whatsnewHead: {title: $localize`Titel`},
     whatsnewBody: {title: $localize`Inhalt`},
-    local: {title: $localize`Lokal`},
+    local: {title: $localize`Lokal`, debugOnly: true},
     betaBack: {title: $localize`Beta`},
     settingsLoopMarked: {title: $localize`Kennzeichnung für Loop`},
     outputparamsHead: {title: $localize`Titel`},

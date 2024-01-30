@@ -17,6 +17,10 @@ class ServerTheme {
   username: string;
   // colors of theme
   colors: any;
+  // user id of create-user
+  creator?: string;
+  // visibility of theme (0 = admin, 1 = user, 2 = everyone)
+  visible?: number;
   // allowed actions on this theme
   actions?: string[] = [];
   // true, if theme is used for saving the current theme
@@ -166,6 +170,7 @@ export class ViewThemesComponent implements AfterViewInit {
           this.serverThemes.push({
             name: t.n,
             username: t.u,
+            creator: t.x,
             colors: t.c,
             actions: t.a,
             modifyTime: time
@@ -221,6 +226,7 @@ export class ViewThemesComponent implements AfterViewInit {
           cmd: 'save',
           name: theme.name,
           username: theme.username,
+          visible: theme.visible,
           colors: colors,
           overwrite: overwrite,
           auth: GLOBALS.apiAuth
@@ -238,14 +244,15 @@ export class ViewThemesComponent implements AfterViewInit {
             });
         } else if (result.error === 'errReservedName' || result.error === 'errExistsFixed') {
           const text = this.errors[result.error].replace(/_themeName_/g, theme.name);
-          this.ms.warn(text);
+          this.ms.error(text);
         } else {
           this.showError(result.error);
         }
         return;
       } else {
+        GLOBALS.apiAuth = result.auth;
         GLOBALS.themeChanged = false;
-        this.ds.saveWebData();
+        this.ds.save();
         this.loadThemeList();
       }
     });
@@ -253,6 +260,7 @@ export class ViewThemesComponent implements AfterViewInit {
 
   clickTheme(theme: ServerTheme): void {
     if (theme.isSave) {
+      console.log('gucki', GLOBALS.publicUsername);
       const dlg: IDialogDef = {
         type: DialogType.confirm,
         title: $localize`Speichern`,
@@ -270,17 +278,25 @@ export class ViewThemesComponent implements AfterViewInit {
             title: $localize`Name des Benutzers`,
             hint: $localize`Wird als Autor des Farbthemas angezeigt`,
             value: GLOBALS.publicUsername
+          },
+          {
+            id: 'public',
+            type: 'checkbox',
+            title: $localize`Für andere Benutzer verfügbar`,
+            value: true
           }
         ]
       };
       this.ms.showDialog(dlg, null).subscribe(result => {
         if (result?.btn === DialogResultButton.ok) {
           const name = result.data.controls.name.value;
-          const username = result.data.controls.username.value;
+          GLOBALS.publicUsername = result.data.controls.username.value;
           if (!Utils.isEmpty(name)) {
             const t = new ServerTheme();
             t.name = name;
-            t.username = username;
+            t.username = GLOBALS.publicUsername;
+            t.visible = result.data.controls.public ? 2 : 1;
+            this.ds.save();
             this.saveTheme(t);
           }
         }
@@ -339,8 +355,11 @@ export class ViewThemesComponent implements AfterViewInit {
         if (result?.btn === DialogResultButton.yes) {
           this.ds.request(GLOBALS.urlThemeServer,
             {
-              method: 'post', body: `{"cmd":"delete","name":"${theme.name}","auth":"${GLOBALS.apiAuth}"}`,
-              urlOnError: `${GLOBALS.urlThemeServer}?activate`
+              method: 'post', body: JSON.stringify({
+                cmd: 'delete',
+                name: theme.name, auth: GLOBALS.apiAuth,
+                urlOnError: `${GLOBALS.urlThemeServer}?activate`
+              })
             }).then(result => {
             if (result.error != null) {
               this.showError(result.error);
@@ -375,5 +394,9 @@ export class ViewThemesComponent implements AfterViewInit {
       this.ms.error(this.errors[error] ?? error);
       return of('ok');
     }
+  }
+
+  openDB() {
+    window.open(`${GLOBALS.urlThemeServer}/phpliteadmin.php`);
   }
 }

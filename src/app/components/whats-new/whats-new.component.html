@@ -6,7 +6,7 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(43.0)">
-      <span i18n="version">Version</span><span i18n="v430">4.3.0 - 11.12.2023</span></h2>
+      <span i18n="version">Version</span><span i18n="v430">4.3.0 - 25.01.2024</span></h2>
     <ul [class]="classFor(43.0)">
       <li class="added" i18n="v430a1">
         Mit dieser Version ist es möglich die Farben in Nightscout Reporter anzupassen. Die
@@ -14,12 +14,22 @@
         Checkbox namens "Farben anpassen". Wenn diese aktiviert ist, dann wird sowohl daneben,
         als auch an anderen Stellen (z.B. in jedem Dialog neben dem Schliessen-Button) ein Icon
         mit einer Palette eingeblendet, über das man Zugriff auf die Farben für den entsprechenden
-        Bereich erhält. Das Icon neben der Checkbox zeigt beim Anklicken die vollständige Liste aller
-        Farben an. Die Farben sind mit möglichst sinnvollen Namen versehen, um die Identifizierung
-        zu ermöglichen. Beim Anklicken der Buttons für die einzelnen Farben erscheint ein Dialog,
-        in dem man dann die Farbe einstellen kann. Diese wird während der Änderung in der Anwendung
-        angepasst, so dass man sofort sehen kann, wie sich die Farbe auswirkt. Man kann die Farbänderung
-        jederzeit über das X rechts oben in den Dialogen beenden und die bisherigen Änderungen verwerfen.
+        Bereich erhält. Das Icon neben der Checkbox in den Einstellungen zeigt beim Anklicken die
+        vollständige Liste aller Farben an. Die Farben sind mit möglichst sinnvollen Namen versehen,
+        um die Identifizierung zu ermöglichen. Beim Anklicken der Buttons für die einzelnen Farben
+        erscheint ein Dialog, in dem man dann die Farbe einstellen kann. Diese wird während der
+        Änderung in der Anwendung angepasst, so dass man sofort sehen kann, wie sich die Farbe auswirkt.
+        Man kann die Farbänderung jederzeit über das X rechts oben in den Dialogen beenden und die
+        bisherigen Änderungen verwerfen.
+      </li>
+      <li class="added" i18n="v430a2">
+        Ab dieser Version können Nutzungsdaten der Webseite analysiert werden. Deswegen wird beim
+        ersten Aufruf der Seite ein entsprechender Hinweis angezeigt, der positiv oder negativ
+        beantwortet werden muss. Die Entscheidung kann im Hauptmenü jederzeit geändert werden.
+        Wenn die Analyse verweigert wird, dann werden keine Daten an Google Analytics übermittelt.
+        Wenn die Analyse erlaubt wird, wird bei Aufruf der Seite Google Analytics darüber unterrichtet.
+        Das hilft dem Programmierer dabei, sinnvolle Entscheidungen über die Sprachunterstützung und
+        die Weiterentwicklung zu treffen.
       </li>
       <li class="added">
         <span i18n>Neues Icon in NightWatch</span>

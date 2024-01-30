@@ -29,6 +29,15 @@
             <mat-hint *ngIf="ctrl.hint != null">{{ ctrl.hint }}</mat-hint>
           </mat-form-field>
         </ng-container>
+        <ng-container *ngSwitchCase="'helplist'">
+          <ng-container *ngFor="let item of ctrl.helpList;let idx=index">
+            <span *ngIf="item.type==='text'" [class]="[item.cls]" [innerHtml]="item.text"></span>
+            <span (click)="onHelpLinkClick(item)" *ngIf="item.type==='btn'" [class]="['btn', item.cls]">{{ item.text }}</span>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'checkbox'">
+          <mat-checkbox [(ngModel)]="ctrl.value">{{ ctrl.title }}</mat-checkbox>
+        </ng-container>
       </ng-container>
     </ng-container>
     <mat-chip-listbox *ngIf="data.chips != null" [(ngModel)]="chipsResult" multiple>

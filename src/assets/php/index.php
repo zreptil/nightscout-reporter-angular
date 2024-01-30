@@ -1,17 +1,25 @@
 <?php
-// special authorizations must be defined in config.php
+// access-origins must be defined in config.php
 require_once 'config.php';
-// the standard authorization
-$cfg['auth']['null'] = array('load','list','save');
-// $allowed has to contain the origins that are allowed to
-// access this script
-if ($allowed === NULL)
-{
-  $allowed = [];
+/*
+for ($i = 1; $i <= 1000; $i++) {
+echo ($i." - ".createAuthKey().'<br>');
 }
-if (isset($_SERVER['HTTP_ORIGIN'])) {
+die();
+      // the standard authorization
+      $cfg['auth']['null'] = array('load','list','save');
+*/
+// $origins has to contain the origins that are allowed to
+// access this script
+if ($origins === NULL)
+{
+  $origins = [];
+}
+if (isset($_SERVER['HTTP_ORIGIN'])) 
+{
   $from = $_SERVER['HTTP_ORIGIN'];
-  if (in_array($from,$allowed)) {
+  if (in_array($from,$origins))
+  {
     header('Access-Control-Allow-Origin: '.$from);
     header('Access-Control-Allow-Credentials: true');
   }
@@ -19,7 +27,8 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
   // if the following line is activated then every origin can access this url
   // header('Access-Control-Allow-Origin: *');
 }
-if (isset($_REQUEST['activate'])) {
+if (isset($_REQUEST['activate']))
+{
 ?>
 <html>
 <head>
@@ -45,15 +54,17 @@ if (isset($_REQUEST['activate'])) {
 <?php
   die();
 }
+
 header('Access-Control-Max-Age: 86400');
 require_once 'DatabaseConnector.php';
 header('Content-Type: application/json');
 $body = file_get_contents('php://input');
-$body = json_decode($body, true);
-if (!isset($body)) {
+if (!isset($body)) 
+{
   echo '{"error":"errNoBody"}';
   die();
 }
+$body = json_decode($body, true);
 
 if ($body == NULL)
 {
@@ -61,23 +72,21 @@ if ($body == NULL)
 }
 
 $cmd = $body['cmd'];
-if ($body['auth'] == '' || $body['auth'] == NULL|| $body['auth'] == 'null') 
+if ($body['auth'] == '' || $body['auth'] === NULL || $body['auth'] == 'false')
 {
   $body['auth'] = 'null';
 }
 
-checkAuth();
+$isReadonly = $cmd != 'save' && $cmd != 'delete';
 $db = new DatabaseConnector();
 $dbFile = 'themes.sqlite';
-$timeout = 5000;
-$isReadonly = $cmd != 'save' && $cmd != 'delete';
 $dbOptions = null;
+
 if ($isReadonly)
 {
   $dbOptions = [PDO::SQLITE_ATTR_OPEN_FLAGS => PDO::SQLITE_OPEN_READONLY];
 }
 if ( $db->Connect("sqlite:$dbFile", null, null, $dbOptions) === FALSE )
-// if ( $db->ConnectSqlite3($dbFile, $timeout) === FALSE )
 {
   $myfile = fopen($dbFile, 'w');
   fclose($myfile);
@@ -87,28 +96,33 @@ if ( $db->Connect("sqlite:$dbFile", null, null, $dbOptions) === FALSE )
     die();
   }
 }
-
 if (!$isReadonly)
 {
-  // create table if not existing
-  // name        name of theme
-  // colors      list of colors
-  // username    public name given by user in editfield in frontend
-  // create_user user that created the entry
-  // create_time timestamp the entry was created
-  // modify_user user that last modified the entry
-  // modify_time timestamp the entry was last modified
-  // visible     visibility of the entry (0 = only admin, 1 = user that created it, 2 = everyone)
-  if ( $db->SqlExecute('CREATE TABLE IF NOT EXISTS themes(name TEXT PRIMARY KEY,colors TEXT, username TEXT, create_user TEXT NOT NULL, create_time INTEGER NOT NULL, modify_user TEXT NOT NULL, modify_time INTEGER NOT NULL, visible INTEGER NOT NULL DEFAULT (1))') === FALSE )
-  {
-    echo '{"error":"'.$db->GetLastError().'"}';
-    leave();
-  }
-} 
-$isAdmin = in_array('admin',$cfg['auth'][$body['auth']]);
+  ensureThemeTable();
+  ensureUserTable();
+}
+
+// load user
+$user = $db->SqlGetFirstLine('select * from users where key="'.$body['auth'].'"');
+if ( $user === FALSE )
+{
+  echo '{"error":"'.$db->GetLastError().'","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
+  leave();
+}
+if ($user === NULL)
+{
+  // if user is unknown, use default user
+  $user = [
+    'key' => 'null', 
+    'permissions' => 'load,list,save'
+  ];
+}
+$permissions = explode(',',$user['permissions']);
+$isAdmin = in_array('admin',$permissions);
 $now = new DateTime();
 $time = $now->format('YmdHis');
-     
+checkAuth();
+
 switch($cmd)
 {
   case 'save':
@@ -116,6 +130,13 @@ switch($cmd)
     {
       echo '{"error":"errReservedName","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
       leave();
+    }
+    if ($user['key'] == 'null') 
+    {
+      $body['auth'] = createAuthKey();
+      $user['key'] = $body['auth'];
+      $user['name'] = $body['username'];
+      $result = $db->SqlExecute('insert into users (key,name,permissions,create_user,create_time,modify_user,modify_time) values("'.$user['key'].'","'.$user['name'].'","'.$user['permissions'].'","'.$user['key'].'",'.$time.',"'.$user['key'].'",'.$time.')');
     }
     $result = $db->SqlGetFirstLine('select * from themes where name="'.$body['name'].'"');
     if ( $result === FALSE )
@@ -125,7 +146,7 @@ switch($cmd)
     }
     if ($result === NULL) 
     {
-      $db->SqlExecute('insert into themes (name,colors,username,create_user,create_time,modify_user,modify_time) values("'.$body['name'].'","'.$body['colors'].'","'.$body['username'].'","'.$body['auth'].'",'.$time.',"'.$body['auth'].'",'.$time.')');
+      $db->SqlExecute('insert into themes (name,colors,username,visible,create_user,create_time,modify_user,modify_time) values("'.$body['name'].'","'.$body['colors'].'","'.$body['username'].'",'.$body['visible'].',"'.$user['key'].'",'.$time.',"'.$user['key'].'",'.$time.')');
       if ( $db->GetLastError() )
       {
         echo '{"error":"'.$db->GetLastError().'","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
@@ -134,8 +155,8 @@ switch($cmd)
     } else {
       if ($body['overwrite'] && mayOverwrite($result))
       {
-        $db->SqlExecute('update themes set colors="'.$body['colors'].'",modify_user="'.$body['auth'].'",modify_time='.$time.' where name="'.$body['name'].'"');
-        echo '{}';
+        $db->SqlExecute('update themes set colors="'.$body['colors'].'",visible='.$body['visible'].',modify_user="'.$user['key'].'",modify_time='.$time.' where name="'.$body['name'].'"');
+        echo '{"auth":"'.$user['key'].'"}';
         leave();
       }
       if (mayOverwrite($result))
@@ -146,7 +167,7 @@ switch($cmd)
       }
       leave();
     }
-    echo '{}';
+    echo '{"auth":"'.$user['key'].'"}';
     break;
   case 'load':
     $result = $db->SqlGetFirstLine('select * from themes where name="'.$body['name'].'"');
@@ -177,9 +198,9 @@ switch($cmd)
   case 'list':
     $authList = '[';
     $diff = '';
-    foreach ($cfg['auth'][$body['auth']] as $entry)
+    foreach ($permissions as $entry)
     {
-      $authList .= $diff.'"'.$entry.'"';
+      $authList .= $diff.'"'.trim($entry).'"';
       $diff = ',';
     }
     $authList .= ']';
@@ -281,15 +302,15 @@ function checkTheme($theme)
 
 function checkAuth() 
 {
-  $cfg = $GLOBALS['cfg'];
+  $user = $GLOBALS['user'];
   $cmd = $GLOBALS['cmd'];
   $body = $GLOBALS['body'];
   if ($body == NULL) 
   {
     return;
   }
-  $auth = $cfg['auth'][$body['auth']];
-  if ( $auth == NULL || (!in_array($cmd, $auth) && $auth != ['admin']))
+  $permissions = explode(',',$user['permissions']);
+  if ( $permissions == NULL || (!in_array($cmd, $permissions) && !in_array('admin', $permissions)))
   {
     echo '{"error":"errAuthFail","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
     die();
@@ -303,4 +324,55 @@ function decode($encoded)
   for ($i=0; $i < ceil(strlen($encoded)/256); $i++)
     $decoded = $decoded.base64_decode(substr($encoded,$i*256,256));  
   return json_decode($decoded, true);
+}
+
+// creates an unique authkey using the current microtime
+function createAuthKey() 
+{
+  $ret = microtime(true);
+  if ($ret === FALSE) {
+    $ret = time();
+  }
+  $ret = str_replace('.','',"$ret");
+  while(strlen($ret)<14) {
+    $ret .= '0';
+  }
+  return $ret;
+}
+
+function ensureThemeTable()
+{
+  $db = $GLOBALS['db'];
+  // create table themes if not existing
+  // name        name of theme
+  // colors      list of colors
+  // username    public name given by user in editfield in frontend
+  // create_user user that created the entry
+  // create_time timestamp the entry was created
+  // modify_user user that last modified the entry
+  // modify_time timestamp the entry was last modified
+  // visible     visibility of the entry (0 = only admin, 1 = user that created it, 2 = everyone)
+  if ( $db->SqlExecute('CREATE TABLE IF NOT EXISTS themes(name TEXT PRIMARY KEY,colors TEXT,username TEXT,create_user TEXT NOT NULL,create_time INTEGER NOT NULL,modify_user TEXT NOT NULL,modify_time INTEGER NOT NULL,visible INTEGER NOT NULL DEFAULT (1))') === FALSE )
+  {
+    echo '{"error":"'.$db->GetLastError().'"}';
+    leave();
+  }
+}
+
+function ensureUserTable()
+{
+  $db = $GLOBALS['db'];
+  // create table users if not existing
+  // key         unique key of user (created with createAuthKey)
+  // name        public name given by user in editfield in frontend
+  // permissions comma separated list of allowed actions
+  // create_user user that created the entry
+  // create_time timestamp the entry was created
+  // modify_user user that last modified the entry
+  // modify_time timestamp the entry was last modified
+  if ( $db->SqlExecute('CREATE TABLE IF NOT EXISTS users(key TEXT PRIMARY KEY,name TEXT,permissions TEXT,create_user TEXT NOT NULL,create_time INTEGER NOT NULL,modify_user TEXT NOT NULL,modify_time INTEGER NOT NULL)') === FALSE )
+  {
+    echo '{"error":"'.$db->GetLastError().'"}';
+    leave();
+  }
 }

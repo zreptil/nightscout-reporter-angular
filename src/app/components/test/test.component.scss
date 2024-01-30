@@ -1,9 +1,10 @@
 :host {
   display: flex;
   flex-flow: column;
+  flex: 1;
+  height: var(--doc-height);
   gap: 1em;
-
-  ::ng-deep .hurz {
-    background-color: var(--headBack);
-  }
+  background-color: var(--mainBodyBack);
+  color: var(--mainBodyFore);
+  border: 10px solid red;
 }

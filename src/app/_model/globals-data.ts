@@ -508,6 +508,8 @@ export class GlobalsData extends Settings {
       + `,"s13":${this.showAllTileParams}`
       + `,"s2":[${users}]`
       + `,"s3":[${shortcuts}]`
+      + `,"s14":"${GLOBALS.apiAuth}"`
+      + `,"s15":"${GLOBALS.publicUsername ?? ''}"`
       + `}`;
   }
 
@@ -744,7 +746,7 @@ export class GlobalsData extends Settings {
 
   glucValueFromData(gluc: any): number {
     if (typeof gluc === 'string') {
-      gluc = +gluc ?? 0;
+      gluc = +(gluc ?? 0);
     }
     if (isNaN(gluc) || gluc === 0) {
       return null;

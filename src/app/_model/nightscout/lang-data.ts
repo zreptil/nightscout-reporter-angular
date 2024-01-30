@@ -1,6 +1,7 @@
 import {CrowdinData} from '@/_model/nightscout/crowdin-data';
 
 export class LangData {
+
   constructor(public code: string, public name: string, public img: string, public crowdin: CrowdinData, badgeCode: string, langCode?: string) {
     if (crowdin != null) {
       crowdin.langName = name;
@@ -17,6 +18,11 @@ export class LangData {
     }
   }
 
+  get shortCode(): string {
+    const parts = this.code?.split('-') ?? ['de'];
+    return parts[0];
+  }
+
   get is24HourFormat(): boolean {
     switch (this.code) {
       case 'en-US':
@@ -27,12 +33,20 @@ export class LangData {
     }
   }
 
-  get dateformat(): string {
-    return $localize`:this is the dateformat, please use dd for days, MM for months and yyyy for year. It has to be the english formatstring.:dd.MM.yyyy`;
+  get timeFormat(): string {
+    return $localize`:this is the timeformat - please use hh for 24-hours, HH for 12-hours, ap for am/pm, mm for minutes, ss for seconds:hh:mm:ss Uhr`;
+  }
+
+  get timeShortFormat(): string {
+    return $localize`:this is the short timeformat - please use hh for 24-hours, HH for 12-hours, ap for am/pm, mm for minutes:hh:mm Uhr`;
+  }
+
+  get dateFormat(): string {
+    return $localize`:this is the dateformat, please use dd for days, MM for months and yyyy for year.:dd.MM.yyyy`;
   }
 
   get dateShortFormat(): string {
-    return $localize`:this is the dateformat, please use dd for days, MM for months and no year. It has to be the english formatstring.:dd.MM.`;
+    return $localize`:this is the dateformat, please use dd for days, MM for months and no year.:dd.MM.`;
   }
 
   get imgPath(): String {

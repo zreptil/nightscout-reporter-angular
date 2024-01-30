@@ -124,6 +124,9 @@ export class ColorCfgDialogComponent implements AfterViewInit {
           // the color key ends with one of the keys in specialGroups
           const group = ThemeData.specialGroups[groupKey];
           const subKey = key.substring(0, key.length - groupKey.length);
+          if (!this.mayUseColor(subKey)) {
+            continue;
+          }
           let hasSpec = false;
           for (const specKey of Object.keys(ThemeData.specialGroups[groupKey].keys)) {
             const fullKey = subKey + specKey;

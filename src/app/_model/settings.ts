@@ -30,9 +30,9 @@ export class Settings {
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   urlThemeServer = 'https://nightrep.zreptil.de';
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
-  isConfigured = false;
   dsgvoAccepted = false;
   themeChanged = false;
+  allowGoogleTag = false;
   themeList: any = {
     null: Settings.msgThemeAuto,
     standard: Settings.msgThemeStandard,
@@ -56,8 +56,8 @@ export class Settings {
     new LangData('cs-CZ', `čeština`, 'cz', CrowdinData.factoryEnglish(), 'cs', 'cs'),
   ];
   ownTheme: any;
-  apiAuth: string;
   publicUsername: string;
+  isConfigured = false;
   // subVersion is added to version to have a unique version number without changing the current version
   private _subVersion = '1';
 
@@ -97,6 +97,16 @@ export class Settings {
 
   static get msgUnitBoth(): string {
     return $localize`Beide`;
+  }
+
+  _apiAuth: string;
+
+  get apiAuth(): string {
+    return this._apiAuth ?? '';
+  }
+
+  set apiAuth(value) {
+    this._apiAuth = value;
   }
 
   private _version = '4.3.0';

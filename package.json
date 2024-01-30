@@ -13,6 +13,8 @@
     "i18n-02-upload-german": "start https://crowdin.com/project/nightrep/content/files",
     "i18n-03-create-english-source": "tsc tools/i18n-create-english.ts && node tools/i18n-create-english.js",
     "i18n-04-upload-english": "start https://crowdin.com/project/nightrep-english/content/files",
+    "i18n-12-extract-and-upload-german": "npm run i18n-01-extract && npm run i18n-02-upload-german",
+    "i18n-34-create-and-upload-english": "npm run i18n-03-create-english-source && npm run i18n-04-upload-english",
     "i18n-05-create-messages": "tsc tools/i18n-create-messages.ts && node tools/i18n-create-messages.js"
   },
   "private": true,
@@ -37,6 +39,7 @@
     "file-saver": "^2.0.5",
     "google-one-tap": "^1.0.6",
     "jszip": "^3.10.1",
+    "node-ensure": "^0.0.0",
     "pdfjs-dist": "^3.1.81",
     "pdfmake": "^0.2.7",
     "rxjs": "~7.8.0",
@@ -57,10 +60,13 @@
     "@types/pdfjs-dist": "^2.10.378",
     "jasmine-core": "~4.5.0",
     "npm-build-zip": "^1.0.3",
-    "typescript": "~5.3.3",
-    "xliff": "^6.1.0"
+    "typescript": "~5.3.3"
   },
   "overrides": {
     "vite": "~5.0.12"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": "^7.0.0"
   }
 }

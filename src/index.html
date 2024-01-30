@@ -2,18 +2,8 @@
 <html>
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKTH26LEFV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-WKTH26LEFV');
-  </script>
+  <!--suppress HtmlUnknownAttribute -->
+  <script async id="googleTag"></script>
   <title>Nightscout Reporter</title>
   <base href="/">
   <meta content='no-cache, no-store, must-revalidate'/>
@@ -23,12 +13,12 @@
   <meta content='width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes' name='viewport'>
   <meta content="no-referrer-when-downgrade" name="referrer"/>
   <link href='assets/manifest.json' id='manifest' rel='manifest'>
-  <!--suppress HtmlUnknownTarget -->
-  <link href='./styles.css' rel='stylesheet'>
-  <link href='assets/themes/standard/index.css' id='themestyle' rel='stylesheet'>
+  <link id='themestyle' rel='stylesheet'>
   <link href='assets/themes/standard/favicon.png' id='favicon' rel='icon' type='image/png'>
-  <script src="https://accounts.google.com/gsi/client"></script>
-  <script src="https://apis.google.com/js/api.js"></script>
+  <!--suppress HtmlUnknownAttribute -->
+  <script id="googleClient"></script>
+  <!--suppress HtmlUnknownAttribute -->
+  <script id="googleApi"></script>
 </head>
 <body>
 <app-root>
@@ -37,7 +27,7 @@
     <img alt="landscape 1" class='landscape p2' height='24' src='assets/img/nr02.png'>
     <img alt="landscape 2" class='landscape p3' height='24' src='assets/img/nr03.png'>
     <div class='cover'></div>
-    <img alt="owl" class='owl' id='owl' src='assets/themes/standard/owl-watch.png'>
+    <img alt="owl" class='owl' id='owl' src='assets/themes/standard/owl.png'>
   </div>
 </app-root>
 <script>
@@ -52,9 +42,11 @@
     document.getElementById('manifest')?.setAttribute('href', 'assets/manifest.watch.json');
   }
   let theme = null;
+  let allowGoogleTag = false;
   try {
     const data = JSON.parse(window.localStorage[id]);
     theme = data['w2'];
+    allowGoogleTag = data['w7'] ?? false;
   } catch (ex) {
   }
   if (theme == null || theme === '') {
@@ -63,6 +55,19 @@
   document.getElementById('owl')?.setAttribute('src', 'assets/themes/' + theme + '/owl' + suffix + '.png');
   document.getElementById('themestyle')?.setAttribute('href', 'assets/themes/' + theme + '/index.css');
   document.getElementById('favicon')?.setAttribute('href', 'assets/themes/' + theme + '/favicon' + suffix + '.png');
+  if (allowGoogleTag) {
+    document.getElementById('googleTag')?.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-WKTH26LEFV');
+    document.getElementById('googleClient')?.setAttribute('src', 'https://accounts.google.com/gsi/client');
+    document.getElementById('googleApi')?.setAttribute('src', 'https://apis.google.com/js/api.js');
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-WKTH26LEFV');
+  }
 </script>
 </body>
 </html>

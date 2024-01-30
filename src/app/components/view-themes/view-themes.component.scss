@@ -35,6 +35,7 @@
   width: calc(20% - 0.5em);
   border-radius: var(--br);
   position: relative;
+  min-width: 200px;
 
   [title], [content] {
     display: flex;
@@ -75,6 +76,7 @@
     border-bottom-left-radius: var(--br);
     border-bottom-right-radius: var(--br);
     border-top-width: 0;
+    position: relative;
   }
 
   [time] {
@@ -85,10 +87,18 @@
     color: rgba(0, 0, 0, 0.6);
   }
 
-  [user] {
+  [username] {
     position: absolute;
     bottom: 0.5em;
     left: 0.5em;
+    font-size: 75%;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  [creator] {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
     font-size: 75%;
     color: rgba(0, 0, 0, 0.6);
   }

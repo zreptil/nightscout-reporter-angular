@@ -24,6 +24,10 @@ export class LanguageService {
   constructor() {
   }
 
+  analyticsLink(langCode: string): string {
+    return `https://marketingplatform.google.com/intl/${langCode}/about/analytics/`;
+  }
+
   activate(langCode: string) {
     // const check = JSON.parse(localStorage.getItem('webData'))?.w1 || 'de-DE';
     let lng = (messages as any).default.find((lang: any) => lang.id === langCode);

@@ -36,9 +36,9 @@ export class ExecuteComponent implements OnInit {
   }
 
   authorize(data: any): void {
-    this.ds.loadWebData();
+    this.ds.loadFromStorage();
     GLOBALS.apiAuth = Object.keys(data.params)[0];
-    this.ds.saveWebData();
+    this.ds.save();
     // this.ms.info(['Da kam was rein!', data.cmd, Object.keys(data.params)[0]]);
   }
 }

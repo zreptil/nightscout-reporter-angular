@@ -106,7 +106,7 @@ export class PrintTDD extends BasePrint {
       const x = xo + i * this._colWidth;
       let y2 = yo + height;
       if (x >= nextPos) {
-        let text = `${DatepickerPeriod.dowShortNames[Utils.getDow(day.date)]},${Utils.fmtDate(day.date, 'dd.MM.')}`;
+        let text = `${DatepickerPeriod.dowShortNames[Utils.getDow(day.date)]},${Utils.fmtDate(day.date, GLOBALS.language.dateShortFormat)}`;
         if (!this.showWeekdayNames) {
           text = `${Utils.fmtDate(day.date, $localize`dd.MM.`)}`;
         }

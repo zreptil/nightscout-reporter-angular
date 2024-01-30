@@ -3,6 +3,9 @@ import {EntryData} from '@/_model/nightscout/entry-data';
 import {lastValueFrom, Observable} from 'rxjs';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 
+/**
+ * A collection of utility functions.
+ */
 export class Utils {
   static replace(text: string, src: string | string[], dst: string | string[]): string {
     if (!Array.isArray(src) && !Array.isArray(dst)) {

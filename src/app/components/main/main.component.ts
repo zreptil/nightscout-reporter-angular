@@ -15,6 +15,7 @@ import {DropboxService} from '@/_services/sync/dropbox.service';
 import {MessageService} from '@/_services/message.service';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ColorData} from '@/_model/color-data';
+import {LanguageService} from '@/_services/language.service';
 
 @Component({
   selector: 'app-main',
@@ -22,78 +23,6 @@ import {ColorData} from '@/_model/color-data';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  /*
-        bool dropElement(html.Element drag, html.Element drop) {
-          const dragId = drag.getAttribute('id').substring(5);
-          const dropId = drop.getAttribute('id').substring(5);
-          if (dragId === dropId) return false;
-
-          FormConfig dragCfg;
-          const dragIdx = -1;
-          const dropIdx = -1;
-          for (let i = 0; i < g.listConfig.length; i++) {
-            if (g.listConfig[i].id === dragId) {
-              dragCfg = g.listConfig[i];
-              dragIdx = i;
-            }
-            if (g.listConfig[i].id === dropId) dropIdx = i;
-          }
-          if (dragCfg != null && dropIdx >= 0) {
-            g.listConfig.removeAt(dragIdx);
-            g.listConfig.insert(dragIdx < dropIdx ? dropIdx - 1 : dropIdx, dragCfg);
-          }
-          this.ds.savePdfOrder();
-          return true;
-        }
-
-        Draggable _drag;
-        Dropzone _drop;
-        String msgModelName = Intl.message('Max Mustermann', desc: 'modelname used in images on tiles');
-
-        ReportData reportData;
-
-        bool checkCfg(const cfg) => cfg.checked && (!cfg.form.isDebugOnly || g.isDebug) && (!cfg.form.isLocalOnly || g.isLocal);
-
-        void clickMenuButton(String type) {
-          drawerVisible = false;
-          switch (type) {
-            case 'facebook':
-              navigate('https://www.facebook.com/nightrep');
-              break;
-            case 'autotune':
-              navigate('https://autotuneweb.azurewebsites.net/');
-              break;
-            case 'translate':
-              navigate('https://translate.google.com/toolkit/');
-              break;
-            case 'jsonparser':
-              navigate('https://jsonformatter.org/json-parser');
-              break;
-            case 'nswatch':
-              navigate('?watch');
-              break;
-            case 'nsreports':
-              callNightscoutReports();
-              break;
-            case 'nightscout':
-              callNightscout();
-              break;
-            case 'whatsnew':
-              currPage = 'whatsnew';
-              break;
-            case 'nightscoutstatus':
-              callNightscoutStatus();
-              break;
-            case 'menu':
-              changeView();
-              break;
-            case 'settings':
-              g.save();
-              currPage = 'settings';
-              break;
-          }
-        }
-      */
   sendIcon = 'send';
   menuIdx = 0;
   closeData: CloseButtonData = {
@@ -110,11 +39,9 @@ export class MainComponent implements OnInit {
               public ps: ProgressService,
               public ns: NightscoutService,
               public dbs: DropboxService,
-              public ms: MessageService
+              public ms: MessageService,
+              public ls: LanguageService
   ) {
-    // setTimeout(() => this.ss.showPopup('all').subscribe(_ => {
-    //
-    // }), 1000);
   }
 
   get msgThemes(): string {
