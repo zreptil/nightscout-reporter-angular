@@ -128,6 +128,10 @@ export class DialogComponent implements OnInit, AfterViewChecked {
   }
 
   onHelpLinkClick(item: HelpListItem) {
-    window.open(item.data);
+    if (typeof item.data === 'function') {
+      item.data();
+    } else {
+      window.open(item.data);
+    }
   }
 }

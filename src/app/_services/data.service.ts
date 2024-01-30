@@ -255,6 +255,10 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
       GLOBALS.ownTheme = JsonData.toText(json.w5, null);
       GLOBALS.themeChanged = JsonData.toBool(json.w6, false);
+      if (json.w7 === 'error') {
+        json.w7 = false;
+        setTimeout(() => this.googleTagError(), 1000);
+      }
       GLOBALS.allowGoogleTag = JsonData.toBool(json.w7, null);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadWebData`);
@@ -262,6 +266,35 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
     if (this.oauth2AccessToken == null) {
       this._syncType = oauth2SyncType.none;
     }
+  }
+
+  googleTagError() {
+    const msg1 = $localize`Du hattest zwar die Erlaubnis für Google Analytics erteilt,
+es war aber nicht möglich, diesen Dienst zu erreichen. Möglicherweise ist ein Werbeblocker aktiv.
+Die Einwilligung zu Google Analytics wurde zurückgesetzt. Falls Du trotzdem bei der Analyse helfen
+möchtest, klicke hier auf`;
+    const msg2 = $localize`und deaktiviere bitte das, was die Kommunikation
+mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im Hauptmenü erneut.`;
+    const btn = $localize`Analytics erneut prüfen`;
+    const list: HelpListItem[] = [
+      {type: 'text', text: `${msg1} `},
+      {type: 'btn', text: btn, data: () => this.checkAnalyticsAgain(), cls: 'bold'},
+      {type: 'text', text: ` ${msg2}`}
+    ];
+    this.ms.showDialog({
+      type: DialogType.confirm,
+      title: $localize`Analytics ist nicht erreichbar`,
+      controls: [{id: 'help', type: 'helplist', title: '', helpList: list}],
+      buttons: [
+        {title: $localize`Schliessen`, result: {btn: DialogResultButton.cancel}, icon: 'done'}
+      ]
+    }, null, true);
+  }
+
+  checkAnalyticsAgain(): void {
+    GLOBALS.allowGoogleTag = null;
+    this.saveWebData();
+    this.reload();
   }
 
   async loadSettingsJson(skipSync = false) {

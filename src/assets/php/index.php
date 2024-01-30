@@ -114,7 +114,7 @@ if ($user === NULL)
   // if user is unknown, use default user
   $user = [
     'key' => 'null', 
-    'permissions' => 'load,list,save'
+    'permissions' => 'load,list,save,delete'
   ];
 }
 $permissions = explode(',',$user['permissions']);
@@ -245,6 +245,10 @@ switch($cmd)
         $data .= '"n":"'.$item['name'].'"';
         $data .= ',"c":{'.substr($colors,1).'}';
         $data .= ',"u":"'.$item['username'].'"';
+        if ($isAdmin) 
+        {
+          $data .= ',"x":"'.$item['create_user'].'"';
+        }
         $actions = '';
         if ($item['create_user'] == $body['auth'] || $isAdmin)
         {

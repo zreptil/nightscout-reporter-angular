@@ -345,6 +345,11 @@ export class MainComponent implements OnInit {
     this.ds.save();
   }
 
+  clickTheme() {
+    GLOBALS.viewType = 'tile';
+    this.ds.save();
+  }
+
   clickAddUser() {
     this.ss.showSettings(() => {
     }, {cmd: 'addUser'});

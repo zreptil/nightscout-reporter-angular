@@ -3,7 +3,7 @@
 <head>
   <!-- Google tag (gtag.js) -->
   <!--suppress HtmlUnknownAttribute -->
-  <script async id="googleTag"></script>
+  <script async id="googleTag" onerror="gtagError()"></script>
   <title>Nightscout Reporter</title>
   <base href="/">
   <meta content='no-cache, no-store, must-revalidate'/>
@@ -16,9 +16,9 @@
   <link id='themestyle' rel='stylesheet'>
   <link href='assets/themes/standard/favicon.png' id='favicon' rel='icon' type='image/png'>
   <!--suppress HtmlUnknownAttribute -->
-  <script id="googleClient"></script>
+  <script id="googleClient" onerror="gtagError()"></script>
   <!--suppress HtmlUnknownAttribute -->
-  <script id="googleApi"></script>
+  <script id="googleApi" onerror="gtagError()"></script>
 </head>
 <body>
 <app-root>
@@ -67,6 +67,14 @@
 
     gtag('js', new Date());
     gtag('config', 'G-WKTH26LEFV');
+
+    function gtagError() {
+      console.error('Das war mal kacke', document.event);
+      const data = JSON.parse(window.localStorage[id]);
+      data['w7'] = 'error';
+      window.localStorage.setItem(id, JSON.stringify(data));
+      console.log(data);
+    }
   }
 </script>
 </body>
