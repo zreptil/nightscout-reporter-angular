@@ -222,6 +222,16 @@ mat-drawer-container {
         }
       }
 
+      .line {
+        display: flex;
+        flex-flow: row;
+
+        button:not(:first-child) {
+          width: fit-content;
+        }
+
+      }
+
       .menu-language {
         display: flex;
         flex-flow: row;

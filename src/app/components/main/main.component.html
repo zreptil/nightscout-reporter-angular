@@ -39,11 +39,16 @@
                         (onEvent)="signinEvent($event)"
                         (signinResult)="g.client=$event"></signin>
                         -->
-        <button (click)="ss.ds.confirmGoogleTag()" class="iconButton">
-          <mat-icon *ngIf="globals.allowGoogleTag">thumb_up</mat-icon>
-          <mat-icon *ngIf="!globals.allowGoogleTag">thumb_down</mat-icon>
-          <span i18n="title of google analytics">Google Analytics</span>
-        </button>
+        <div class="line">
+          <button (click)="ss.ds.confirmGoogleTag()" class="iconButton">
+            <mat-icon *ngIf="globals.allowGoogleTag">thumb_up</mat-icon>
+            <mat-icon *ngIf="!globals.allowGoogleTag">thumb_down</mat-icon>
+            <span i18n="title of google analytics">Google Analytics</span>
+          </button>
+          <button (click)="clickMenuButton('analytics')" *ngIf="globals.isDebug" class="iconButton debug">
+            <mat-icon small>open_in_new</mat-icon>
+          </button>
+        </div>
         <button (click)="ss.showPopup('whatsnew')" class="iconButton">
           <mat-icon>new_releases</mat-icon>
           <span i18n="title of whatsnew screen">Was bisher geschah...</span>

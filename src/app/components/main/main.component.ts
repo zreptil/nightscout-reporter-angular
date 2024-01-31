@@ -248,6 +248,9 @@ export class MainComponent implements OnInit {
       case 'googlecloud':
         this.ss.navigate('https://navid200.github.io/xDrip/docs/Nightscout/GoogleCloud.html');
         break;
+      case 'analytics':
+        this.ss.navigate('https://analytics.google.com/analytics/web/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Fanalytics%2F#/p419132738/reports/reportinghub');
+        break;
       case 'feedback':
         const params: any = {
           subject: $localize`Feedback zu Nightscout Reporter ${GLOBALS.version}`,
