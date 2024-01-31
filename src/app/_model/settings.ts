@@ -28,8 +28,9 @@ export class Settings {
   static PDFDIVIDER: number = 100000;
   lastVersion: string;
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
-  urlThemeServer = 'https://nightrep.zreptil.de/php/index.php';
+  urlThemeServerIdx = 0;
   googleClientId = '939975570793-i9kj0rp6kgv470t45j1pf1hg3j9fqmbh';
+  themeServerSecret: string;
   dsgvoAccepted = false;
   themeChanged = false;
   allowGoogleTag = false;
@@ -97,6 +98,18 @@ export class Settings {
 
   static get msgUnitBoth(): string {
     return $localize`Beide`;
+  }
+
+  _urlThemeServer = ['https://nightrep.zreptil.de/php/index.php'];
+
+  get urlThemeServer(): string {
+    if (this.urlThemeServerIdx < 0) {
+      this.urlThemeServerIdx = 0;
+    }
+    if (this.urlThemeServerIdx >= this._urlThemeServer.length) {
+      this.urlThemeServerIdx = this._urlThemeServer.length - 1;
+    }
+    return this._urlThemeServer[this.urlThemeServerIdx];
   }
 
   _apiAuth: string;

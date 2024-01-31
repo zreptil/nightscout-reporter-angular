@@ -26,6 +26,28 @@ html, body {
   }
 }
 
+html {
+  .mat-mdc-standard-chip {
+    --mdc-chip-elevated-container-color: var(--mainBodyBack);
+  }
+
+  .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+    .mdc-evolution-chip__text-label {
+      --mdc-chip-label-text-color: var(--mainBodyFore);
+    }
+  }
+
+  .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary,
+  .mat-mdc-standard-chip.mat-mdc-chip-highlighted.mat-primary {
+    --mdc-chip-elevated-container-color: var(--mainHeadBack);
+    --mdc-chip-elevated-disabled-container-color: var(--mainHeadBack);
+
+    .mdc-evolution-chip__text-label {
+      --mdc-chip-label-text-color: var(--mainHeadFore);
+    }
+  }
+}
+
 body {
   --doc-height: 100vh;
   display: flex;

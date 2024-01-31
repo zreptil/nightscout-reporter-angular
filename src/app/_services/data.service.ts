@@ -194,7 +194,9 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
           break;
       }
     } catch (ex: any) {
-      console.error(ex);
+      if (params.showError) {
+        console.error(ex);
+      }
       if (ex instanceof CustomTimeoutError) {
         response = $localize`Es gab keine Antwort innerhalb von ${params.timeout / 1000} Sekunden bei ${url}`;
       } else if (params.urlOnError != null && ex instanceof HttpErrorResponse) {
@@ -299,18 +301,10 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
 
   async loadSettingsJson(skipSync = false) {
     try {
-      const data = await this.request('assets/settings.json', {asJson: true, showError: false});
-      if (data != null) {
-        if (data.urlPlayground != null) {
-          GLOBALS.urlPlayground = data.urlPlayground;
-        }
-        if (data.urlThemeServer != null) {
-          GLOBALS.urlThemeServer = data.urlThemeServer;
-        }
-        if (data.googleClientId != null) {
-          GLOBALS.googleClientId = data.googleClientId;
-        }
-      }
+      let data = await this.request('assets/settings.json', {asJson: true, showError: false});
+      this.extractJsonOverwrites(data);
+      data = await this.request('assets/secret.json', {asJson: true, showError: false});
+      this.extractJsonOverwrites(data);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadSettings`);
     }
@@ -321,6 +315,27 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       await this._loadFromSync();
     }
     this._initAfterLoad();
+  }
+
+  extractJsonOverwrites(data: any): void {
+    if (data != null) {
+      if (data.urlPlayground != null) {
+        GLOBALS.urlPlayground = data.urlPlayground;
+      }
+      if (data.urlThemeServer != null) {
+        if (Array.isArray(data.urlThemeServer)) {
+          GLOBALS._urlThemeServer = data.urlThemeServer;
+        } else {
+          GLOBALS._urlThemeServer = [data.urlThemeServer];
+        }
+      }
+      if (data.googleClientId != null) {
+        GLOBALS.googleClientId = data.googleClientId;
+      }
+      if (data.themeServerSecret != null) {
+        GLOBALS.themeServerSecret = data.themeServerSecret;
+      }
+    }
   }
 
   _initAfterLoad(): void {

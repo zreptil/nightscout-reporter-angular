@@ -9,6 +9,7 @@ import {Utils} from '@/classes/utils';
 import {Settings} from '@/_model/settings';
 import {map, Observable, of} from 'rxjs';
 import {Clipboard} from '@angular/cdk/clipboard';
+import {MatChipListboxChange} from '@angular/material/chips';
 
 class ServerTheme {
   // name of theme
@@ -129,7 +130,11 @@ export class ViewThemesComponent implements AfterViewInit {
     this.ds.request(GLOBALS.urlThemeServer,
       {
         method: 'post',
-        body: JSON.stringify({cmd: 'list', auth: GLOBALS.apiAuth}),
+        body: JSON.stringify({
+          cmd: 'list',
+          auth: GLOBALS.apiAuth,
+          themeServerSecret: GLOBALS.themeServerSecret
+        }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
       this.serverThemes = [];
@@ -230,7 +235,8 @@ export class ViewThemesComponent implements AfterViewInit {
           visible: theme.visible,
           colors: colors,
           overwrite: overwrite,
-          auth: GLOBALS.apiAuth
+          auth: GLOBALS.apiAuth,
+          themeServerSecret: GLOBALS.themeServerSecret
         }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
@@ -322,7 +328,8 @@ export class ViewThemesComponent implements AfterViewInit {
         method: 'post', body: JSON.stringify({
           cmd: 'load',
           name: theme.name,
-          auth: GLOBALS.apiAuth
+          auth: GLOBALS.apiAuth,
+          themeServerSecret: GLOBALS.themeServerSecret
         }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
@@ -358,7 +365,9 @@ export class ViewThemesComponent implements AfterViewInit {
             {
               method: 'post', body: JSON.stringify({
                 cmd: 'delete',
-                name: theme.name, auth: GLOBALS.apiAuth,
+                name: theme.name,
+                auth: GLOBALS.apiAuth,
+                themeServerSecret: GLOBALS.themeServerSecret,
                 urlOnError: `${GLOBALS.urlThemeServer}?activate`
               })
             }).then(result => {
@@ -403,5 +412,17 @@ export class ViewThemesComponent implements AfterViewInit {
       url += '/';
     }
     window.open(`${url}phpliteadmin.php`);
+  }
+
+  clickThemeServer(evt: MatChipListboxChange) {
+    if (evt.value != null) {
+      GLOBALS.urlThemeServerIdx = evt.value;
+      this.ngAfterViewInit();
+    }
+  }
+
+  getDisplayUrl(url: string) {
+    url = url.replace(/https:\/\/([^\/]*)\/(.*)/g, '$1');
+    return url;
   }
 }

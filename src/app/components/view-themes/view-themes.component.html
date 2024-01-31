@@ -1,7 +1,15 @@
 <!--suppress HtmlUnknownTarget -->
 <div [innerHTML]="svgCollection" hide></div>
 <div *ngIf="globals.isDebug" class="debug">
-  <div>Themeserver: {{ globals.urlThemeServer }}</div>
+  <div>Themeserver:
+    <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
+      <mat-chip-option *ngFor="let url of globals._urlThemeServer; let idx = index"
+                       [disabled]="idx === globals.urlThemeServerIdx"
+                       [selected]="idx === globals.urlThemeServerIdx"
+                       [value]="idx">{{ getDisplayUrl(url) }}
+      </mat-chip-option>
+    </mat-chip-listbox>
+  </div>
   <div>
     <button (click)="copyData($event)" mat-button>
       <mat-icon>content_copy</mat-icon>

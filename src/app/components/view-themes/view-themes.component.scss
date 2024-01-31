@@ -7,6 +7,10 @@
   align-items: flex-start;
   justify-content: flex-start;
   --contentSize: 100px;
+
+  .mat-mdc-standard-chip.mdc-evolution-chip--disabled {
+    opacity: 1;
+  }
 }
 
 .debug {
