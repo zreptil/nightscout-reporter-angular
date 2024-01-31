@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {DialogData, DialogParams, DialogResultButton, DialogType, HelpListItem, IDialogButton} from '@/_model/dialog-data';
 import {Utils} from '@/classes/utils';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {GLOBALS} from '@/_model/globals-data';
 
 @Component({
   selector: 'app-dialog',
@@ -133,5 +134,19 @@ export class DialogComponent implements OnInit, AfterViewChecked {
     } else {
       window.open(item.data);
     }
+  }
+
+  classForItem(item: HelpListItem, def?: string) {
+    const ret: string[] = def == null ? [] : [def];
+    ret.push(...(item.cls?.split(' ') ?? []));
+    return ret;
+  }
+
+  showHelpItem(item: HelpListItem, type: string) {
+    let ret = item.type === type;
+    if (item.cls?.split(' ').includes('debug') && !GLOBALS.isDebug) {
+      ret = false;
+    }
+    return ret;
   }
 }

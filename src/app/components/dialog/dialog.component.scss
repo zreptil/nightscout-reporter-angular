@@ -56,9 +56,18 @@
     font-style: italic;
   }
 
+  .line {
+    display: block;
+    text-align: center;
+  }
+
   .btn {
     font-size: 75%;
     cursor: pointer;
+  }
+
+  .debug {
+    padding: 0.2em;
   }
 }
 

@@ -31,8 +31,8 @@
         </ng-container>
         <ng-container *ngSwitchCase="'helplist'">
           <ng-container *ngFor="let item of ctrl.helpList;let idx=index">
-            <span *ngIf="item.type==='text'" [class]="[item.cls]" [innerHtml]="item.text"></span>
-            <span (click)="onHelpLinkClick(item)" *ngIf="item.type==='btn'" [class]="['btn', item.cls]">{{ item.text }}</span>
+            <span *ngIf="showHelpItem(item, 'text')" [class]="classForItem(item)" [innerHtml]="item.text"></span>
+            <span (click)="onHelpLinkClick(item)" *ngIf="showHelpItem(item, 'btn')" [class]="classForItem(item, 'btn')">{{ item.text }}</span>
           </ng-container>
         </ng-container>
         <ng-container *ngSwitchCase="'checkbox'">
