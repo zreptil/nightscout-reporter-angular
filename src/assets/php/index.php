@@ -1,27 +1,30 @@
 <?php
 // access-origins must be defined in config.php
 require_once 'config.php';
-/*
-for ($i = 1; $i <= 1000; $i++) {
-echo ($i." - ".createAuthKey().'<br>');
-}
-die();
-      // the standard authorization
-      $cfg['auth']['null'] = array('load','list','save');
-*/
 // $origins has to contain the origins that are allowed to
 // access this script
 if ($origins === NULL)
 {
   $origins = [];
 }
-if (isset($_SERVER['HTTP_ORIGIN'])) 
+if (isset($_SERVER['HTTP_ORIGIN']))
 {
   $from = $_SERVER['HTTP_ORIGIN'];
   if (in_array($from,$origins))
   {
     header('Access-Control-Allow-Origin: '.$from);
     header('Access-Control-Allow-Credentials: true');
+  } else {
+    $body = file_get_contents('php://input');
+    if (isset($body))
+    {
+      $body = json_decode($body, true);
+      if ($body['tss'] == $themeServerSecret)
+      {
+        header('Access-Control-Allow-Origin: '.$from);
+        header('Access-Control-Allow-Credentials: true');
+      }
+    }
   }
 } else {
   // if the following line is activated then every origin can access this url
@@ -59,7 +62,7 @@ header('Access-Control-Max-Age: 86400');
 require_once 'DatabaseConnector.php';
 header('Content-Type: application/json');
 $body = file_get_contents('php://input');
-if (!isset($body)) 
+if (!isset($body))
 {
   echo '{"error":"errNoBody"}';
   die();
@@ -113,7 +116,7 @@ if ($user === NULL)
 {
   // if user is unknown, use default user
   $user = [
-    'key' => 'null', 
+    'key' => 'null',
     'permissions' => 'load,list,save,delete'
   ];
 }
@@ -131,7 +134,7 @@ switch($cmd)
       echo '{"error":"errReservedName","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
       leave();
     }
-    if ($user['key'] == 'null') 
+    if ($user['key'] == 'null')
     {
       $body['auth'] = createAuthKey();
       $user['key'] = $body['auth'];
@@ -144,7 +147,7 @@ switch($cmd)
       echo '{"error":"'.$db->GetLastError().'","auth":"'.$body['auth'].'","cmd":"'.$cmd.'"}';
       leave();
     }
-    if ($result === NULL) 
+    if ($result === NULL)
     {
       $db->SqlExecute('insert into themes (name,colors,username,visible,create_user,create_time,modify_user,modify_time) values("'.$body['name'].'","'.$body['colors'].'","'.$body['username'].'",'.$body['visible'].',"'.$user['key'].'",'.$time.',"'.$user['key'].'",'.$time.')');
       if ( $db->GetLastError() )
@@ -245,7 +248,7 @@ switch($cmd)
         $data .= '"n":"'.$item['name'].'"';
         $data .= ',"c":{'.substr($colors,1).'}';
         $data .= ',"u":"'.$item['username'].'"';
-        if ($isAdmin) 
+        if ($isAdmin)
         {
           $data .= ',"x":"'.$item['create_user'].'"';
         }
@@ -272,7 +275,7 @@ switch($cmd)
 
 function leave() {
   $db = $GLOBALS['db'];
-  if ($db != null) 
+  if ($db != null)
   {
     $db->Disconnect();
   }
@@ -304,12 +307,12 @@ function checkTheme($theme)
   return $ret;
 }
 
-function checkAuth() 
+function checkAuth()
 {
   $user = $GLOBALS['user'];
   $cmd = $GLOBALS['cmd'];
   $body = $GLOBALS['body'];
-  if ($body == NULL) 
+  if ($body == NULL)
   {
     return;
   }
@@ -321,17 +324,17 @@ function checkAuth()
   }
 }
 
-function decode($encoded) 
+function decode($encoded)
 {
   $decoded = '';
   // strings longer than 5k can be problematic, so this is split
   for ($i=0; $i < ceil(strlen($encoded)/256); $i++)
-    $decoded = $decoded.base64_decode(substr($encoded,$i*256,256));  
+    $decoded = $decoded.base64_decode(substr($encoded,$i*256,256));
   return json_decode($decoded, true);
 }
 
 // creates an unique authkey using the current microtime
-function createAuthKey() 
+function createAuthKey()
 {
   $ret = microtime(true);
   if ($ret === FALSE) {

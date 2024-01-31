@@ -133,7 +133,7 @@ export class ViewThemesComponent implements AfterViewInit {
         body: JSON.stringify({
           cmd: 'list',
           auth: GLOBALS.apiAuth,
-          themeServerSecret: GLOBALS.themeServerSecret
+          tss: GLOBALS.themeServerSecret
         }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
@@ -236,7 +236,7 @@ export class ViewThemesComponent implements AfterViewInit {
           colors: colors,
           overwrite: overwrite,
           auth: GLOBALS.apiAuth,
-          themeServerSecret: GLOBALS.themeServerSecret
+          tss: GLOBALS.themeServerSecret
         }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
@@ -329,7 +329,7 @@ export class ViewThemesComponent implements AfterViewInit {
           cmd: 'load',
           name: theme.name,
           auth: GLOBALS.apiAuth,
-          themeServerSecret: GLOBALS.themeServerSecret
+          tss: GLOBALS.themeServerSecret
         }),
         urlOnError: `${GLOBALS.urlThemeServer}?activate`
       }).then(result => {
@@ -367,7 +367,7 @@ export class ViewThemesComponent implements AfterViewInit {
                 cmd: 'delete',
                 name: theme.name,
                 auth: GLOBALS.apiAuth,
-                themeServerSecret: GLOBALS.themeServerSecret,
+                tss: GLOBALS.themeServerSecret,
                 urlOnError: `${GLOBALS.urlThemeServer}?activate`
               })
             }).then(result => {
