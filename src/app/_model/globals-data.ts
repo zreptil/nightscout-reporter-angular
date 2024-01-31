@@ -804,7 +804,13 @@ export class GlobalsData extends Settings {
     if (decimals > 0) {
       value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
     }
-    let ret = formatNumber(value, this.language.code, `1.${decimals}-${decimals}`);
+    let ret;
+    try {
+      ret = formatNumber(value, this.language.code, `1.${decimals}-${decimals}`);
+    } catch (ex) {
+      console.error(ex);
+      ret = formatNumber(value, 'de-DE', `1.${decimals}-${decimals}`);
+    }
     if (stripTrailingZero) {
       while (ret.endsWith('0')) {
         ret = ret.substring(0, ret.length - 1);
