@@ -10,8 +10,8 @@ import jaJP from '@angular/common/locales/ja';
 import skSK from '@angular/common/locales/sk';
 import ptPT from '@angular/common/locales/pt-PT';
 import frFR from '@angular/common/locales/fr';
+import nl from '@angular/common/locales/nl';
 import noNO from '@angular/common/locales/no';
-import nlNL from '@angular/common/locales/nl';
 import ruRU from '@angular/common/locales/ru';
 import csCZ from '@angular/common/locales/cs';
 import {loadTranslations} from '@angular/localize';
@@ -35,20 +35,21 @@ export class LanguageService {
       lng = (messages as any).default[0];
     }
     loadTranslations(lng.data);
-    registerLocaleData(({
+    const locale = ({
       'de-DE': de,
       'en-GB': enGB,
       'en-US': enUS,
       'es-ES': esES,
       'fr-FR': frFR,
       'ja-JP': jaJP,
-      'nl-NL': nlNL,
+      'nl-NL': nl,
       'no-NO': noNO,
       'pl-PL': plPL,
       'pt-PT': ptPT,
       'ru-RU': ruRU,
       'sk-SK': skSK,
       'cs-CZ': csCZ
-    } as any)[lng.id]);
+    } as any)[lng.id];
+    registerLocaleData(locale);
   }
 }

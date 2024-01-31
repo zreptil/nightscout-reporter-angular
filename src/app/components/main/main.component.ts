@@ -169,6 +169,7 @@ export class MainComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.ls.activate(JSON.parse(localStorage.getItem('webData'))?.w1 || 'de-DE');
     this.ds.onAfterLoadShared = this.afterLoad.bind(this);
     this.ss.initialLoad();
     // this.ds.loadWebData();
