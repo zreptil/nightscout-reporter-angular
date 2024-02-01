@@ -73,6 +73,7 @@ export class OwlMenuComponent implements OnInit {
         if (typeof key === 'string') {
           if (key === 'own') {
             GLOBALS.viewType = 'themes';
+            this.ds.save();
           } else {
             this.ts.setTheme(key === 'null' ? null : key, true);
           }

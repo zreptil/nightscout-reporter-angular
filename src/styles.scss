@@ -59,7 +59,11 @@ body {
   align-items: center;
   justify-content: center;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  --logDebugColor: repeating-linear-gradient(45deg, rgba(var(--logDebugRGB), 0.6), rgba(var(--logDebugRGB), 0.6) 10px, rgba(var(--logDebugRGB), 0.8) 10px, rgba(var(--logDebugRGB), 0.8) 20px);
+  --logDebugColor: repeating-linear-gradient(45deg,
+    rgba(var(--logDebugRGB), 0.6),
+    rgba(var(--logDebugRGB), 0.6) 10px,
+    rgba(var(--logDebugRGB), 0.8) 10px,
+    rgba(var(--logDebugRGB), 0.8) 20px);
   --mdc-filled-text-field-container-color: var(--bodyBack);
   --mdc-filled-text-field-focus-active-indicator-color: var(--headBack);
   --mdc-filled-text-field-focus-label-text-color: var(--headBack);
