@@ -13,10 +13,13 @@
   }
 }
 
-.debug {
+.is-local {
   display: flex;
   flex-flow: column;
   width: 100%;
+}
+
+.debug {
   padding: 0.5em;
 }
 

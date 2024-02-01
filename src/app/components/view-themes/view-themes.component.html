@@ -1,28 +1,30 @@
 <!--suppress HtmlUnknownTarget -->
 <div [innerHTML]="svgCollection" hide></div>
-<div *ngIf="globals.isDebug" class="debug">
-  <div>Themeserver:
-    <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
-      <mat-chip-option *ngFor="let url of globals._urlThemeServer; let idx = index"
-                       [disabled]="idx === globals.urlThemeServerIdx"
-                       [selected]="idx === globals.urlThemeServerIdx"
-                       [value]="idx">{{ getDisplayUrl(url) }}
-      </mat-chip-option>
-    </mat-chip-listbox>
-  </div>
-  <div>
-    <button (click)="copyData($event)" mat-button>
-      <mat-icon>content_copy</mat-icon>
-      <span i18n="buttonlabel for copying data">Kopieren</span>
-    </button>
-    <button (click)="getData()" mat-button>
-      <mat-icon>content_paste</mat-icon>
-      <span i18n="buttonlabel for pasting data">Importieren</span>
-    </button>
-    <button (click)="openDB()" mat-button>
-      <mat-icon>edit</mat-icon>
-      <span i18n="buttonlabel for calling phpliteadmin">Tabellen editieren</span>
-    </button>
+<div *ngIf="globals.isLocal && globals.isDebug" class="is-local">
+  <div class="debug">
+    <div>Themeserver:
+      <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
+        <mat-chip-option *ngFor="let url of globals._urlThemeServer; let idx = index"
+                         [disabled]="idx === globals.urlThemeServerIdx"
+                         [selected]="idx === globals.urlThemeServerIdx"
+                         [value]="idx">{{ getDisplayUrl(url) }}
+        </mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+    <div>
+      <button (click)="copyData($event)" mat-button>
+        <mat-icon>content_copy</mat-icon>
+        <span i18n="buttonlabel for copying data">Kopieren</span>
+      </button>
+      <button (click)="getData()" mat-button>
+        <mat-icon>content_paste</mat-icon>
+        <span i18n="buttonlabel for pasting data">Importieren</span>
+      </button>
+      <button (click)="openDB()" mat-button>
+        <mat-icon>edit</mat-icon>
+        <span i18n="buttonlabel for calling phpliteadmin">Tabellen editieren</span>
+      </button>
+    </div>
   </div>
 </div>
 <div *ngIf="serverThemes?.length === 0 && cardForSave == null" empty>
