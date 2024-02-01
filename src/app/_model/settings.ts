@@ -122,7 +122,7 @@ export class Settings {
     this._apiAuth = value;
   }
 
-  private _version = '4.3.1';
+  private _version = '4.3.0';
 
   get version(): string {
     return `${this._version}-${this._subVersion}`;
