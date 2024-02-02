@@ -242,7 +242,7 @@ die gleichen Werte beinhalten.`;
         layout: 'noBorders',
         table: {
           headerRows: 0,
-          widths: [this.cm(3.8), this.cm(1.0)],
+          widths: [this.cm(3.7), this.cm(1.1)],
           body: bodyBasal
         }
       });

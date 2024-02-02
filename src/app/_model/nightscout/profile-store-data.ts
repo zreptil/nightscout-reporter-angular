@@ -112,26 +112,26 @@ export class ProfileStoreData extends JsonData {
     }
     ret.units = JsonData.toText(json.units);
     for (const entry of json.carbratio ?? []) {
-      ret.listCarbratio.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage, true));
+      ret.listCarbratio.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, ret.units, percentage, true));
     }
     this._adjust(ret.listCarbratio);
     for (const entry of json.sens ?? []) {
-      ret.listSens.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage, true));
+      ret.listSens.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, ret.units, percentage, true));
     }
     this._adjust(ret.listSens);
     ret.maxPrecision = 0;
     for (const entry of json.basal ?? []) {
-      ret.listBasal.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, percentage));
+      ret.listBasal.push(ProfileEntryData.fromJson(entry, ret.timezone, timeshift, ret.units, percentage));
       ret.maxPrecision = Math.max(ret.maxPrecision, Utils.decimalPlaces(Utils.last(ret.listBasal).value));
     }
     this._adjust(ret.listBasal);
     for (const entry of json.target_low ?? []) {
-      const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift);
+      const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift, ret.units);
       ret.listTargetLow.push(value);
     }
     this._adjust(ret.listTargetLow);
     for (const entry of json.target_high ?? []) {
-      const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift);
+      const value = ProfileEntryData.fromJson(entry, ret.timezone, timeshift, ret.units);
       ret.listTargetHigh.push(value);
     }
     this._adjust(ret.listTargetHigh);
