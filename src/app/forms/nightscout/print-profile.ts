@@ -167,7 +167,6 @@ die gleichen Werte beinhalten.`;
     for (const entry of profile.store.listSens) {
       listISF.push(entry.copy);
       // the values for isf are saved with the unit that the user uses for his glucose measurement
-      console.log(entry.value, profile.store.units, GLOBALS.glucMGDL, GLOBALS.glucMGDLFromStatus);
       listISF[listISF.length - 1].forceText = this.fmtGluc(GLOBALS.glucForSavedUnitValue(entry.value, profile.store.units));
     }
     const bodyISF = this.getFactorBody(page, date, listISF, this.msgFactorEntry,
