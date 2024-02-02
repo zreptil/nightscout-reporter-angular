@@ -100,7 +100,7 @@ export class ProfileEntryData extends JsonData {
     return ret;
   }
 
-  static fromJson(json: any, timezone: ProfileTimezone, timeshift: number, units: string,
+  static fromJson(json: any, timezone: ProfileTimezone, timeshift: number,
                   percentage = 1.0, isReciprocal = false): ProfileEntryData {
     const ret = new ProfileEntryData(timezone);
     if (json == null) {
@@ -114,9 +114,6 @@ export class ProfileEntryData extends JsonData {
     }
     ret.value = JsonData.toNumber(json.value, null);
     if (ret.value != null) {
-      if (units?.toLowerCase().indexOf('mmol') >= 0) {
-        ret.value *= 18.02;
-      }
       if (isReciprocal) {
         if (percentage > 0) {
           ret.value /= percentage;

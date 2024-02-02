@@ -68,6 +68,7 @@ export class GlobalsData extends Settings {
   userList: UserData[] = [];
   shortcutList: ShortcutData[] = [];
   glucMGDLIdx: number;
+  // true, if status has mg/dl as glucose unit
   glucMGDLFromStatus = true;
   currShortcut: ShortcutData;
   currShortcutIdx: number;
@@ -420,6 +421,7 @@ export class GlobalsData extends Settings {
     return [1000000, 2000, 1000, 500, 250, 100, 50, 10];
   }
 
+  // true, if forms should show mg/dl
   get glucMGDL(): boolean {
     return [true, false, true][this.glucMGDLIdx ?? 0];
   }
@@ -954,9 +956,19 @@ export class GlobalsData extends Settings {
     return `${date}`;
   }
 
-  // on the setting in the status
-  glucForSavedUnitValue(value: number) {
-    if (this.glucMGDL === this.glucMGDLFromStatus) {
+  /**
+   * Convert a glucose value from one unit to another.
+   *
+   * @param {number} value - The glucose value to be converted.
+   * @param {string} [units] - The unit of the glucose value (mmol or mg/dl). If not provided, the unit saved in the status will be used.
+   * @return {number} - The glucose value converted to the specified unit.
+   */
+  glucForSavedUnitValue(value: number, units?: string) {
+    let isMGDL = this.glucMGDLFromStatus;
+    if (units != null) {
+      isMGDL = units.toLowerCase().indexOf('mmol') < 0;
+    }
+    if (this.glucMGDL === isMGDL) {
       return value;
     }
     if (this.glucMGDL) {
