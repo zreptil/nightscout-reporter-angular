@@ -2,7 +2,7 @@
 <div [innerHTML]="svgCollection" hide></div>
 <div *ngIf="globals.isLocal && globals.isDebug" class="is-local">
   <div class="debug">
-    <div>Themeserver:
+    <div><span>Themeserver</span>
       <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
         <mat-chip-option *ngFor="let url of globals._urlThemeServer; let idx = index"
                          [disabled]="idx === globals.urlThemeServerIdx"

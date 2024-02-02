@@ -14,13 +14,20 @@
 }
 
 .is-local {
-  display: flex;
-  flex-flow: column;
   width: 100%;
 }
 
 .debug {
+  display: flex;
+  flex-flow: column;
   padding: 0.5em;
+
+  div {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: 0.5em;
+  }
 }
 
 [hide] {
