@@ -34,6 +34,12 @@ export class LanguageService {
     if (lng == null) {
       lng = (messages as any).default[0];
     }
+    if (langCode !== 'en-GB') {
+      const src = lng;
+      lng = (messages as any).default.find((lang: any) => lang.id === 'en-GB');
+      lng.id = src.id;
+      lng.data = {...lng.data, ...src.data};
+    }
     loadTranslations(lng.data);
     const locale = ({
       'de-DE': de,
