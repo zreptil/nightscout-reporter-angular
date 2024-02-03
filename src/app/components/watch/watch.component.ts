@@ -9,6 +9,7 @@ import {SessionService} from '@/_services/session.service';
 import {WatchService} from '@/_services/watch.service';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
+import {LanguageService} from '@/_services/language.service';
 
 @Component({
   selector: 'app-watch',
@@ -21,7 +22,8 @@ export class WatchComponent implements OnInit {
               public ts: ThemeService,
               public ss: SessionService,
               public ws: WatchService,
-              public ms: MessageService) {
+              public ms: MessageService,
+              public ls: LanguageService) {
   }
 
   get globals(): GlobalsData {
@@ -183,16 +185,23 @@ export class WatchComponent implements OnInit {
     document
       .querySelector('head>link[rel=manifest]')
       .setAttribute('href', 'assets/manifest.watch.json');
-    this.ds.loadWebData();
-    await this.ts.setTheme(GLOBALS.theme);
-    await this.ds.loadSettingsJson().then((_) => {
-      if (GLOBALS.isConfigured) {
-        GLOBALS.glucRunning = false;
-        this.ds.getCurrentGluc({force: true, timeout: 30});
-      } else {
-        this.showSettings();
-      }
-    });
+    const lng = JSON.parse(localStorage.getItem('webData'))?.w1 || 'de-DE';
+    if (lng !== 'de-DE') {
+      this.ls.activate(lng);
+    }
+    this.ds.onAfterLoadShared = this.afterLoad.bind(this);
+    await this.ss.initialLoad();
+    if (GLOBALS.isConfigured) {
+      GLOBALS.glucRunning = false;
+      this.ds.getCurrentGluc({force: true, timeout: 30});
+    } else {
+      this.showSettings();
+    }
+  }
+
+  afterLoad(): void {
+    GLOBALS.listConfigOrg = [];
+    Utils.pushAll(GLOBALS.listConfigOrg, GLOBALS.listConfig);
   }
 
   clickSettings(evt: MouseEvent) {

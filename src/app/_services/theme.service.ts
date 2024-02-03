@@ -50,7 +50,7 @@ export class ThemeService {
   }
 
   restoreTheme(): void {
-    if (GLOBALS.themeKey !== 'own') {
+    if (GLOBALS.themeKey !== 'own' && !GLOBALS.themeChanged) {
       return;
     }
     let src: any = {};

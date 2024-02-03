@@ -18,13 +18,25 @@ export class WatchSettingsComponent {
   savedColors: ColorData[] = [];
   closeData: CloseButtonData = {
     dialogClose: {btn: 2},
-    colorKey: 'settings'
+    colorKey: 'watchsettings'
   };
 
   constructor(private dlgRef: MatDialogRef<WatchSettingsComponent>,
               public ss: SessionService,
               public ws: WatchService) {
 
+  }
+
+  get lluTimeout(): number[] {
+    return [1, 2, 3, 4, 5];
+  }
+
+  get maxGlucAge(): number[] {
+    const ret = [2, 3, 4, 5, 6, 7, 8, 9, 10, 15];
+    if (GLOBALS.isLocal) {
+      ret.splice(0, 0, 0.5);
+    }
+    return ret;
   }
 
   get watchColorLabel(): string {

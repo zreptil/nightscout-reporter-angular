@@ -104,7 +104,11 @@ export class ColorCfgDialogComponent implements AfterViewInit {
           return true;
         }
         for (const check of ThemeData.additionalColorsFor[this.dlgData.colorKey] ?? []) {
-          if (k.startsWith(check)) {
+          if (check.startsWith('@')) {
+            if (check.substring(1) === k) {
+              return true;
+            }
+          } else if (k.startsWith(check)) {
             return true;
           }
         }
