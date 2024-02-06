@@ -391,7 +391,6 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       this.cm(8.0),
       100);
     //    const percLegend = LegendData(this.cm(xo), this.cm(height - 5.0), this.cm(8.0), 100);
-
     if (this.addPercentileGraph(percGraph, percList, 10, 90, '#aaaaff')) {
       this.addLegendEntry(percLegend, '#aaaaff', this.msgPercentile1090);
     }
@@ -902,9 +901,9 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       }
     }
     x = this.glucX(new Date(0, 1, 1, 23, 59, 59));
-    ptsHigh.push({x: this.cm(x), y: this.cm(this.glucY(Utils.first(percList).percentile(high)))});
+    ptsHigh.push({x: this.cm(x), y: this.cm(this.glucY(Utils.first(percList)?.percentile(high) ?? 0))});
     if (high !== low) {
-      ptsLow.splice(0, 0, {x: this.cm(x), y: this.cm(this.glucY(Utils.first(percList).percentile(low)))});
+      ptsLow.splice(0, 0, {x: this.cm(x), y: this.cm(this.glucY(Utils.first(percList)?.percentile(low) ?? 0))});
     }
     const area: any = {
       type: 'polyline',
