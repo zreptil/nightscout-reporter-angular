@@ -200,8 +200,9 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       p.isVisible = this.params[0].intValue != 0;
     }
 
-    this.params[1].isVisible = this.params[0].intValue != 0;
-    this.params[2].isVisible = this.params[0].intValue != 1;
+    this.params[1].isVisible = this.params[0].intValue !== 0;
+    this.params[2].isVisible = this.params[0].intValue !== 1;
+    this.params[3].isVisible = this.params[0].intValue !== 0;
 
     let count = 0;
     for (const idx of list) {
@@ -241,6 +242,8 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
   override fillPages(pages: PageData[]): void {
     // const deviceKey = 'all';
     for (const deviceKey of this.repData.deviceFilter) {
+      this.isPortrait = false;
+      this._title = null;
       this.titleInfo = this.titleInfoBegEnd();
       let hasData = true;
       if (this.showGPD) {
@@ -260,6 +263,8 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         GLOBALS.glucMGDLIdx = 2;
       }
     }
+    this.isPortrait = false;
+    this._title = null;
   }
 
   getPage(pages: PageData[], deviceKey: string): boolean {
