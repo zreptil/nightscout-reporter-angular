@@ -5,6 +5,14 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.2)">
+      <span i18n="version">Version</span><span i18n="v431">4.3.2 - 20.02.2024</span></h2>
+    <ul [class]="classFor(43.2)">
+      <li class="added" i18n="v432a1">
+        Bei den Ausgabeparametern kann jetzt festgelegt werden, ob der HbA1C wie bisher
+        in Prozent oder in mmol/mol angegeben wird.
+      </li>
+    </ul>
     <h2 (click)="click(43.1)">
       <span i18n="version">Version</span><span i18n="v431">4.3.1 - 02.02.2024</span></h2>
     <ul [class]="classFor(43.1)">
