@@ -1366,7 +1366,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
       infoBody.push([
         {text: this.msgHbA1C, fontSize: this.fs(10)},
-        {text: `${this.hba1c(day.mid('all'))} %`, color: this.colHbA1c, fontSize: this.fs(10), alignment: 'right'}
+        {
+          text: `${this.hba1c(day.mid('all'))}${this.hba1cUnit(true)}`, color: this.colHbA1c,
+          fontSize: this.fs(10), alignment: 'right'
+        }
       ]);
       let prz = day.ieBasalSum(!this.showBasalDay) / (day.ieBasalSum(!this.showBasalDay) + day.ieBolusSum) * 100;
       infoBody.push([

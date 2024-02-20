@@ -807,7 +807,7 @@ export class PrintAnalysis extends BasePrint {
           style: ['infodata', 'hba1c']
         },
         {
-          text: '%',
+          text: this.hba1cUnit(),
           style: ['hba1c', 'infounit'],
           colSpan: 2
         },

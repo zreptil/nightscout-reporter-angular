@@ -465,6 +465,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS.maxGlucAge = JsonData.toNumber(json.d18, 15);
       GLOBALS.lluAutoExec = JsonData.toBool(json.d19);
       GLOBALS.ppShowDurationWarning = JsonData.toBool(json.d20, true);
+      GLOBALS.ppShowHbA1Cmmol = JsonData.toBool(json.d21, false);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }

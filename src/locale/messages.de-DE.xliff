@@ -973,7 +973,7 @@
         <source>Glukose Normal Hoch</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2332843510461964339" datatype="html">

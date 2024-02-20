@@ -125,6 +125,7 @@ export class GlobalsData extends Settings {
   nwCurrPage = '';
   editColors = false;
   dragPos: any = {};
+  ppShowHbA1Cmmol = false;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {
@@ -543,6 +544,7 @@ export class GlobalsData extends Settings {
       + `,"d18":"${this.maxGlucAge}"`
       + `,"d19":"${this.lluAutoExec ? 'true' : 'false'}"`
       + `,"d20":"${this.ppShowDurationWarning ? 'true' : 'false'}"`
+      + `,"d21":"${this.ppShowHbA1Cmmol ? 'true' : 'false'}"`
       + '}';
   }
 

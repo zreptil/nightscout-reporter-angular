@@ -982,6 +982,14 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Kalibrierung (scale ${scale} / intercept ${intercept} / slope ${slope})`;
   }
 
+  hba1cUnit(withSpacer = false): string {
+    const ret = GLOBALS.ppShowHbA1Cmmol ? $localize`mmol/mol` : '%';
+    if (withSpacer) {
+      return `${GLOBALS.ppShowHbA1Cmmol ? '\n' : ' '}${ret}`;
+    }
+    return ret;
+  }
+
   msgMedian(deviceKey: string): string {
     let ret = $localize`:@@msgMedian:Median`;
     if (deviceKey != null && this.repData.deviceList?.[0] !== 'all') {
@@ -1021,7 +1029,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   hba1c(avgGluc: number): string {
-    return avgGluc == null ? '' : GLOBALS.fmtNumber(this.hba1cValue(avgGluc), 1);
+    return avgGluc == null ? '' : this.hba1cDisplay(avgGluc);
   }
 
   hba1cValue(avgGluc: number): number {
@@ -1859,13 +1867,13 @@ export abstract class BasePrint extends FormConfig {
     return this.colNormBack;
   }
 
-  /// draws a graphic grid
-  ///
-  /// it uses [horzfs] as the fontsize of the horizontal scale and [vertfs] as the fontsize for the vertical
-
   carbFromData(carb: any, precision = 0): string {
     return GLOBALS.fmtNumber(carb, precision);
   }
+
+  /// draws a graphic grid
+  ///
+  /// it uses [horzfs] as the fontsize of the horizontal scale and [vertfs] as the fontsize for the vertical
 
   /// scale.
   drawGraphicGrid(glucMax: number, graphHeight: number, graphWidth: number, vertCvs: any[], horzCvs: any[],
@@ -2429,6 +2437,9 @@ export abstract class BasePrint extends FormConfig {
     };
   }
 
+  getTimeConsumingParts(data: ReportData, ret: string[]): void {
+  }
+
   // String get helpHtml {
   //   if (help == null) return null;
   //
@@ -2450,6 +2461,10 @@ export abstract class BasePrint extends FormConfig {
   //   return ret;
   // }
 
-  getTimeConsumingParts(data: ReportData, ret: string[]): void {
+  private hba1cDisplay(avgGluc: number): string {
+    if (GLOBALS.ppShowHbA1Cmmol) {
+      return GLOBALS.fmtNumber((this.hba1cValue(avgGluc) - 2.15) * 10.929, 2);
+    }
+    return GLOBALS.fmtNumber(this.hba1cValue(avgGluc), 1);
   }
 }

@@ -1,7 +1,7 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.outputparams">
   <div cdkDragHandle mat-dialog-title>
-    <h1>{{globals.titles.outputparams}}</h1>
+    <h1>{{ globals.titles.outputparams }}</h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
 
@@ -24,22 +24,22 @@
                     [showInfo]="g.showInfo" [showLabel]="false"
                             -->
         <mat-form-field>
-          <mat-label>{{globals.lblGlucUnits}}</mat-label>
+          <mat-label>{{ globals.lblGlucUnits }}</mat-label>
           <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
             <mat-option (click)="changeGlucUnits(idx)"
                         *ngFor="let item of globals.listGlucUnits; let idx=index"
                         [value]="idx"
                         class="selectItem">
-              <div class="itemTitle">{{item}}</div>
+              <div class="itemTitle">{{ item }}</div>
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <mat-checkbox [(ngModel)]="globals.ppStandardLimits" [disabled]="globals.ppComparable" class="chk">
-        {{msgStandardLimits(globals.getGlucInfo()["stdlow"], globals.getGlucInfo()["stdhigh"], globals.getGlucInfo()["unit"])}}
+        {{ msgStandardLimits(globals.getGlucInfo()["stdlow"], globals.getGlucInfo()["stdhigh"], globals.getGlucInfo()["unit"]) }}
       </mat-checkbox>
       <mat-checkbox *ngIf="!globals.ppComparable && !globals.ppStandardLimits" [(ngModel)]="globals.ppCGPAlwaysStandardLimits" class="chk indent">
-        {{msgStandardCGP}}
+        {{ msgStandardCGP }}
       </mat-checkbox>
       <div class="line">
         <mat-form-field long>
@@ -49,7 +49,7 @@
                         *ngFor="let item of listGlucMaxValues; let idx=index"
                         [value]="idx"
                         class="selectItem">
-              <div class="itemTitle">{{item}}</div>
+              <div class="itemTitle">{{ item }}</div>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -60,7 +60,7 @@
                         *ngFor="let item of listBasalPrecision; let idx=index"
                         [value]="idx"
                         class="selectItem">
-              <div class="itemTitle">{{item}}</div>
+              <div class="itemTitle">{{ item }}</div>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -68,7 +68,7 @@
     </div>
     <div>
       <mat-checkbox [(ngModel)]="globals.ppLatestFirst" class="chk">
-        {{msgLatestFirst}}
+        {{ msgLatestFirst }}
       </mat-checkbox>
     </div>
     <div class="line">
@@ -91,6 +91,9 @@
     <mat-checkbox [(ngModel)]="globals.ppFixAAPS30" class="chk" i18n="label for fix for AAPS 3.0">
       Korrektur für Datenänderungen in AAPS 3.0
     </mat-checkbox>
+    <mat-checkbox [(ngModel)]="globals.ppShowHbA1Cmmol" class="chk" i18n="label for checkbox to show hba1c in mmol">
+      HbA1C in mmol/mol anzeigen
+    </mat-checkbox>
     <mat-checkbox [(ngModel)]="globals.ppShowDurationWarning" class="chk" i18n="label for duration warning">
       Warnung anzeigen, wenn die Erstellung länger dauern kann
     </mat-checkbox>
@@ -102,7 +105,7 @@
                       *ngFor="let item of globals.listSkipSensorChange; let idx=index"
                       [value]="item.idx"
                       class="selectItem">
-            <div class="itemTitle">{{item.label}}</div>
+            <div class="itemTitle">{{ item.label }}</div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -117,12 +120,12 @@
         <button (click)="periodShift=item"
                 *ngIf="item===periodShift"
                 mat-raised-button>
-          {{item.title}}
+          {{ item.title }}
         </button>
         <button (click)="periodShift=item"
                 *ngIf="item!==periodShift"
                 mat-button>
-          {{item.title}}
+          {{ item.title }}
         </button>
       </ng-container>
     </div>

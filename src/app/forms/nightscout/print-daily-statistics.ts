@@ -408,10 +408,11 @@ schwächerer Schrift angezeigt wird.`;
       alignment: 'center',
       color: this.colHbA1c
     }, {
-      text: `${this.hba1c(day.mid(deviceKey))} %`,
+      text: `${this.hba1c(day.mid(deviceKey))}${this.hba1cUnit(true)}`,
       style: style,
       alignment: 'right',
-      color: this.colHbA1c
+      color: this.colHbA1c,
+      fontSize: this.fs(10 / (GLOBALS.ppShowHbA1Cmmol ? 1.5 : 1))
     });
     this.tableHeadFilled = true;
   }
