@@ -2304,7 +2304,7 @@
           <context context-type="linenumber">95,97</context>
         </context-group>
         <note priority="1" from="description">label for checkbox to show hba1c in mmol</note>
-        <source> show HbA1C in mmol/mol </source>
+        <source> Show HbA1C in mmol/mol </source>
       </trans-unit>
       <trans-unit id="4300784323178007786" datatype="html" approved="yes">
         <context-group purpose="location">
