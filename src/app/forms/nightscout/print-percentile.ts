@@ -338,7 +338,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     }
     this.glucMax = grid.gridLines * grid.glucScale;
     const yHigh = this.glucY(this.targets(this.repData).low);
-    const yLow = this.glucY(this.targets(this.repData).high);
+    const yLow = Math.max(0, this.glucY(this.targets(this.repData).high));
     const limitLines = {
       relativePosition: {x: this.cm(xo), y: this.cm(yo)},
       canvas: [

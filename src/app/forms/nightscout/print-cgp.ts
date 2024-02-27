@@ -312,7 +312,7 @@ Diese Grafik kann auch bei @05@ und @08@ ausgegeben werden.`;
       // if gluc is 70 or below
       // add area under curve for 5 minutes
       if (entry.gluc <= low) {
-        hypo += (70 - entry.gluc) * 5;
+        hypo += (low - entry.gluc) * 5;
         hypoTime += 5;
       }
     }
