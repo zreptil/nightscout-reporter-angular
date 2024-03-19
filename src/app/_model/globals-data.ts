@@ -193,6 +193,10 @@ export class GlobalsData extends Settings {
     return $localize`Letzter Monat`;
   }
 
+  static get msgLast2Months(): string {
+    return $localize`Letzte 2 Monate`;
+  }
+
   static get msgLast3Months(): string {
     return $localize`Letzte 3 Monate`;
   }
@@ -618,6 +622,12 @@ export class GlobalsData extends Settings {
       data.end = period.baseDate;
     }, (date: Date) => {
       return Utils.addDateMonths(date, -1);
+    }));
+    period.list.push(new DatepickerEntry('2months', this.msgLast2Months, (data: DatepickerPeriod) => {
+      data.start = Utils.addDateMonths(period.baseDate, -2);
+      data.end = period.baseDate;
+    }, (date: Date) => {
+      return Utils.addDateMonths(date, -2);
     }));
     period.list.push(new DatepickerEntry('3months', this.msgLast3Months, (data: DatepickerPeriod) => {
       data.start = Utils.addDateMonths(period.baseDate, -3);

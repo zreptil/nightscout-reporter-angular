@@ -63,7 +63,7 @@ export class ColorPickerHslComponent extends ColorPickerBaseComponent implements
   @Input()
   set triggerValue(value: number[]) {
     if (value?.length === 4) {
-      this.color.update(value, value[3]);
+      this.color.update([value[0], value[1], value[2]], value[3]);
     }
     this.calcHsl();
     this.colorChange?.next(this.color);
