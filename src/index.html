@@ -44,7 +44,7 @@
   let theme = null;
   let allowGoogleTag = false;
   try {
-    const data = JSON.parse(window.localStorage[id]);
+    const data = JSON.parse(localStorage[id]);
     theme = data['w2'];
     allowGoogleTag = data['w7'] ?? false;
   } catch (ex) {
@@ -70,9 +70,9 @@
 
     function gtagError() {
       console.error('Das war mal kacke', document.event);
-      const data = JSON.parse(window.localStorage[id]);
+      const data = JSON.parse(localStorage[id]);
       data['w7'] = 'error';
-      window.localStorage.setItem(id, JSON.stringify(data));
+      localStorage.setItem(id, JSON.stringify(data));
       console.log(data);
     }
   }

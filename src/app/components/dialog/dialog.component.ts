@@ -74,6 +74,8 @@ export class DialogComponent implements OnInit, AfterViewChecked {
       }
       ret.push(`--back:var(--${id}Back)`);
       ret.push(`--fore:var(--${id}Fore)`);
+      ret.push(`--${key.toLowerCase()}Back:var(--back)`);
+      ret.push(`--${key.toLowerCase()}Fore:var(--fore)`);
       ret.push(`background-color:var(--back)`);
       ret.push(`color:var(--fore)`);
     }

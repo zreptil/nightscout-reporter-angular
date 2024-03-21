@@ -166,12 +166,13 @@ export class SessionService {
   }
 
   showSettings(afterPopup?: () => void, data?: any): void {
-    const sharedOrg = GLOBALS.asSharedString;
+    GLOBALS.ensureSharedString(null);
+    const sharedOrg = GLOBALS.sharedCheck.shared;
     const deviceOrg = GLOBALS.asDeviceString;
     this.showPopup('settings', data).subscribe((result: DialogResult) => {
       switch (result.btn) {
         case DialogResultButton.ok:
-          this.ds.save({skipReload: true});
+          this.ds.save({skipReload: true, sharedOrg: sharedOrg});
           this.ns.reportData = null;
           break;
         default:
@@ -255,6 +256,7 @@ export class SessionService {
 
   fillFormsFromShortcut(data: ShortcutData): void {
     GLOBALS.period = new DatepickerPeriod(data.periodData);
+    GLOBALS.currPeriodShift = GLOBALS.listPeriodShift.find(ps => ps.months === data.periodShift)
     for (const cfg of GLOBALS.listConfig) {
       cfg.checked = Object.keys(data.forms).includes(cfg.form.dataId);
       if (cfg.checked) {

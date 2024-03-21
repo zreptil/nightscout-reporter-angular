@@ -5,8 +5,35 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.3)">
+      <span i18n="version">Version</span><span i18n="v433">4.3.2 - 20.03.2024</span></h2>
+    <ul [class]="classFor(43.3)">
+      <li class="added" i18n="v433a1">
+        Bei Eingabe des Zeitraums wurde "Letzte 2 Monate" zur Liste der auswählbaren Zeiträume
+        hinzugefügt.
+      </li>
+      <li class="added" i18n="v433a2">
+        Bei den Historischen Daten im Dialog Ausgabe Parameter wurde die Auswahl "Zwei Monate vorher"
+        hinzugefügt.
+      </li>
+      <li class="added" i18n="v433a3">
+        In der Liste der Shortcuts gibt es jetzt für jeden Shortcut einen Link-Button. Wenn dieser
+        angeklickt wird, wird der entsprechende Shortcut mit dem aktuellen Benutzer in einem neuen
+        Browser-Fenster geöffnet. So kann man den Link für den direkten Aufruf des Shortcuts
+        direkt aus der Adresszeile des Browser-Fensters kopieren und muss diesen nicht erst
+        in der Dokumentation suchen.
+      </li>
+      <li class="changed" i18n="v433c1">
+        In den Shortcuts wird nun auch die Verschiebung des Zeitraums der Daten gespeichert, so dass
+        man sich spezielle Shortcuts für historisierte Daten speichern kann.
+      </li>
+      <li class="fixed" i18n="v433f1">
+        Die Farben des Dialogs zur Übernahme der aktuellen Formulare oder des aktuellen Zeitraums
+        in einen Shortcut wurden korrigiert.
+      </li>
+    </ul>
     <h2 (click)="click(43.2)">
-      <span i18n="version">Version</span><span i18n="v431">4.3.2 - 20.02.2024</span></h2>
+      <span i18n="version">Version</span><span i18n="v432">4.3.2 - 20.02.2024</span></h2>
     <ul [class]="classFor(43.2)">
       <li class="added" i18n="v432a1">
         Bei den Ausgabeparametern kann jetzt festgelegt werden, ob der HbA1C wie bisher

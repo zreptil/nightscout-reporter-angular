@@ -118,6 +118,12 @@ export class MainComponent implements OnInit {
     return ret;
   }
 
+  callShortcut(shortcutIdx: number) {
+    const shortcut = GLOBALS.shortcutList[shortcutIdx];
+    const url = `${location.origin}/shortcut?name=${shortcut.name}&user=${GLOBALS.user.name}&shift=${shortcut.periodShift}&device=`;
+    window.open(url);
+  }
+
   editShortcut(shortcutIdx: number): void {
     GLOBALS.currShortcutIdx = shortcutIdx;
     if (shortcutIdx >= 0 && shortcutIdx < GLOBALS.shortcutList.length) {

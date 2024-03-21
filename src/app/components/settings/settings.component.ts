@@ -330,7 +330,11 @@ export class SettingsComponent implements OnInit {
   }
 
   clickExport(): void {
-    saveAs(new Blob([Settings.doit(GLOBALS.asSharedString)]), `nightrep-cfg.${Utils.fmtDate(new Date(), 'yyyyMMdd-hhmm')}.json`);
+    if (GLOBALS.ensureSharedString(null)) {
+      saveAs(new Blob([Settings.doit(GLOBALS.sharedCheck.shared)]), `nightrep-cfg.${Utils.fmtDate(new Date(), 'yyyyMMdd-hhmm')}.json`);
+    } else {
+      GLOBALS.showSharedError();
+    }
     // this.exportData = convert.base64Encode(convert.utf8.encode(Settings.doit(g.asSharedString)));
     //
     // Future.delayed(Duration(milliseconds: 100), () {

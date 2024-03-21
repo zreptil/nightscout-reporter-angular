@@ -177,7 +177,7 @@ mat-drawer-container {
               }
             }
 
-            button:not(:first-child) {
+            button:last-child {
               border-top-right-radius: 20px;
               border-bottom-right-radius: 20px;
               display: flex;

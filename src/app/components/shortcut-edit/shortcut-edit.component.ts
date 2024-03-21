@@ -121,6 +121,7 @@ export class ShortcutEditComponent implements OnInit {
         case DialogResultButton.yes:
           GLOBALS.currShortcut.periodData = GLOBALS.period.toString();
           GLOBALS.currShortcut.periodText = GLOBALS.period.display;
+          GLOBALS.currShortcut.periodShift = GLOBALS.currPeriodShift?.months ?? 0;
           break;
       }
     });

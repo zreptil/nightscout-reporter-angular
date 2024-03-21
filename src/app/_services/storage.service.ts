@@ -59,8 +59,10 @@ export class StorageService {
     if (Settings.skipStorageClear) {
       return;
     }
-    for (let i = 0; i < window.localStorage.length; i++) {
-      const key = window.localStorage.key(i);
+    const sharedOrg = localStorage.getItem(Settings.SharedData);
+    GLOBALS.ensureSharedString(sharedOrg);
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
       let doKill = false;
       doKill = key.startsWith(Settings.betaPrefix);
       if (!GLOBALS.isBeta) {
@@ -73,8 +75,11 @@ export class StorageService {
         doKill = false;
       }
       if (doKill) {
-        window.localStorage.removeItem(key);
+        localStorage.removeItem(key);
       }
+    }
+    if (GLOBALS.showSharedError()) {
+      localStorage.setItem(Settings.SharedData, GLOBALS.sharedCheck.shared);
     }
   }
 

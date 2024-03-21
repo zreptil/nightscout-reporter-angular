@@ -8,6 +8,7 @@ export class ShortcutData {
   pdfOrder: string;
   periodData: string;
   periodText: string;
+  periodShift: number;
   glucMGDLIdx: number;
   icon = 'attach_file';
   forms: { [key: string]: any } = {};
@@ -15,6 +16,7 @@ export class ShortcutData {
   constructor() {
     this.periodData = GLOBALS.period.toString();
     this.periodText = GLOBALS.period.display;
+    this.periodShift = GLOBALS.currPeriodShift?.months ?? 0;
     this.glucMGDLIdx = GLOBALS.glucMGDLIdx;
     this.loadCurrentForms();
   }
@@ -31,6 +33,10 @@ export class ShortcutData {
     if (!this._isSamePeriod(this.periodData, GLOBALS.period.toString())) {
       return false;
     }
+    const ps = GLOBALS.listPeriodShift.find(ps => ps.months === this.periodShift)
+    if ((ps?.months ?? 0) !== (GLOBALS.currPeriodShift?.months ?? 0)) {
+      return false;
+    }
     // noinspection RedundantIfStatementJS
     if ((this.glucMGDLIdx ?? GLOBALS.glucMGDLIdx) != GLOBALS.glucMGDLIdx) {
       return false;
@@ -42,6 +48,7 @@ export class ShortcutData {
     const ret = new ShortcutData();
     ret.name = this.name;
     ret.periodData = this.periodData;
+    ret.periodShift = this.periodShift;
     ret.periodText = this.periodText;
     ret.icon = this.icon;
     ret.pdfOrder = this.pdfOrder;
@@ -61,7 +68,8 @@ export class ShortcutData {
       + `"p":"${this.periodData}",`
       + `"o":"${this.pdfOrder}",`
       + `"f":${this.formData},`
-      + `"u":${this.glucMGDLIdx}`
+      + `"u":${this.glucMGDLIdx},`
+      + `"s":${this.periodShift ?? 0}`
       + '}';
   }
 
@@ -78,6 +86,11 @@ export class ShortcutData {
       const period = new DatepickerPeriod(ret.periodData);
       GlobalsData.updatePeriod(period);
       ret.periodText = period.display;
+      ret.periodShift = JsonData.toNumber(json.s, 0);
+      const ps = GLOBALS.listPeriodShift.find(ps => ps.months === ret.periodShift)
+      if ((ps?.months ?? 0) !== 0) {
+        ret.periodText = `${ret.periodText} - ${ps.title}`;
+      }
       ret.pdfOrder = json.o;
       ret.glucMGDLIdx = JsonData.toNumber(json.u, GLOBALS.glucMGDLIdx);
     } catch (ex) {

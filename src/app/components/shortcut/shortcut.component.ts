@@ -38,6 +38,9 @@ export class ShortcutComponent implements OnInit {
       }
     }
     GLOBALS.deviceForShortcut = this.env.appParams.device;
+    if (Utils.isEmpty(GLOBALS.deviceForShortcut)) {
+      GLOBALS.deviceForShortcut = null;
+    }
     const idx = GLOBALS.shortcutList.findIndex(sc => sc.name.toLowerCase() === this.env.appParams?.name?.toLowerCase());
     if (idx >= 0) {
       this.shortcut = GLOBALS.shortcutList[idx];

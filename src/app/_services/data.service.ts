@@ -580,7 +580,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
     }
   }
 
-  save(params?: { updateSync?: boolean, skipReload?: boolean }) {
+  save(params?: { updateSync?: boolean, skipReload?: boolean, sharedOrg?: string }) {
     if (GLOBALS.avoidSaveAndLoad) {
       return;
     }
@@ -619,7 +619,11 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
     GLOBALS.ownTheme = oldOwnTheme;
 
     this.saveWebData();
-    this.ss.writeCrypt(Settings.SharedData, GLOBALS.asSharedString);
+    if (GLOBALS.ensureSharedString(params.sharedOrg)) {
+      this.ss.writeCrypt(Settings.SharedData, GLOBALS.sharedCheck.shared);
+    } else {
+      GLOBALS.showSharedError();
+    }
     this.saveDeviceData();
 
     const doReload = (GLOBALS.language.code !== oldLang && GLOBALS.language.code !== null) && !params.skipReload;
@@ -654,7 +658,11 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
   // }
 
   async _uploadToSync(_doReload: boolean) {
-    await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.asSharedString);
+    if (GLOBALS.ensureSharedString(null)) {
+      await this.dbs.uploadFile(this.env.settingsFilename, GLOBALS.sharedCheck.shared);
+    } else {
+      GLOBALS.showSharedError();
+    }
     // if (status.status === gdsStatus.error) {
     //   Log.error(status.text);
     // }

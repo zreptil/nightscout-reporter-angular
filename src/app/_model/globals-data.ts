@@ -15,6 +15,12 @@ import {StatusData} from '@/_model/nightscout/status-data';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
 
+class SharedCheck {
+  constructor(public shared?: string,
+              public error?: any) {
+  }
+}
+
 export class PdfWarnings {
   showGlucSources = false;
   // noinspection JSUnusedLocalSymbols
@@ -53,6 +59,7 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
+  sharedCheck = new SharedCheck();
   titles: any = {
     settings: $localize`Einstellungen`,
     dsgvo: $localize`Datenschutzerklärung`,
@@ -447,6 +454,7 @@ export class GlobalsData extends Settings {
     return [
       new PeriodShift($localize`Ausgewählter Zeitraum`, 0),
       new PeriodShift($localize`Einen Monat vorher`, 1),
+      new PeriodShift($localize`Zwei Monate vorher`, 2),
       new PeriodShift($localize`Drei Monate vorher`, 3),
       new PeriodShift($localize`Sechs Monate vorher`, 6),
       new PeriodShift($localize`Ein Jahr vorher`, 12)
@@ -455,6 +463,10 @@ export class GlobalsData extends Settings {
 
   get basalPrecision(): number {
     return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
+  }
+
+  get basalPrecisionValues(): number[] {
+    return [null, 0, 1, 2, 3];
   }
 
   // get pdfControlMaxSize(): number {
@@ -478,47 +490,6 @@ export class GlobalsData extends Settings {
   //   value = Math.min(value, Settings.PDFUNLIMITED);
   //   this._pdfCreationMaxSize = value;
   // }
-
-  get basalPrecisionValues(): number[] {
-    return [null, 0, 1, 2, 3];
-  }
-
-  // retrieve the settings that can be shared as json-encoded-string
-  get asSharedString(): string {
-    let users = '';
-    for (let i = 0; i < this.userList.length; i++) {
-      users = `${users},${this.userList[i].asJsonString}`;
-    }
-    if (users.length > 1) {
-      users = users.substring(1);
-    }
-    let shortcuts = '';
-    for (let i = 0; i < this.shortcutList.length; i++) {
-      shortcuts = `${shortcuts},${this.shortcutList[i].asJsonString}`;
-    }
-    if (shortcuts.length > 1) {
-      shortcuts = shortcuts.substring(1);
-    }
-    const timestamp = GlobalsData.now.getTime();
-    return '{'
-      + `"s1":"${this.version}"`
-      + `,"s4":${this.userIdx ?? 0}`
-      + `,"s5":${this.glucMGDLIdx ?? 0}`
-      + `,"s6":${this.editColors ?? false}`
-      // + `,"s6":"${this.language.code ?? 'de_DE'}"`
-      // + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
-      + `,"s8":"${this.period?.toString()}"`
-      + `,"s9":"${this._pdfOrder}"`
-      + `,"s10":"${this._viewType}"`
-      + `,"s11":${timestamp}`
-      + `,"s12":${this.tileShowImage}`
-      + `,"s13":${this.showAllTileParams}`
-      + `,"s2":[${users}]`
-      + `,"s3":[${shortcuts}]`
-      + `,"s14":"${GLOBALS.apiAuth}"`
-      + `,"s15":"${GLOBALS.publicUsername ?? ''}"`
-      + `}`;
-  }
 
   get asDeviceString(): string {
     const temp = [];
@@ -570,6 +541,43 @@ export class GlobalsData extends Settings {
 
   get lastGlucValue(): number {
     return this.lastGlucSrc == null ? null : this.lastGlucSrc.gluc / this.glucFactor;
+  }
+
+  // retrieve the settings that can be shared as json-encoded-string
+  private get _asSharedString(): string {
+    let users = '';
+    for (let i = 0; i < this.userList.length; i++) {
+      users = `${users},${this.userList[i].asJsonString}`;
+    }
+    if (users.length > 1) {
+      users = users.substring(1);
+    }
+    let shortcuts = '';
+    for (let i = 0; i < this.shortcutList.length; i++) {
+      shortcuts = `${shortcuts},${this.shortcutList[i].asJsonString}`;
+    }
+    if (shortcuts.length > 1) {
+      shortcuts = shortcuts.substring(1);
+    }
+    const timestamp = GlobalsData.now.getTime();
+    return '{'
+      + `"s1":"${this.version}"`
+      + `,"s4":${this.userIdx ?? 0}`
+      + `,"s5":${this.glucMGDLIdx ?? 0}`
+      + `,"s6":${this.editColors ?? false}`
+      // + `,"s6":"${this.language.code ?? 'de_DE'}"`
+      // + `,"s7":"${this.showCurrentGluc ? 'yes' : 'no'}"`
+      + `,"s8":"${this.period?.toString()}"`
+      + `,"s9":"${this._pdfOrder}"`
+      + `,"s10":"${this._viewType}"`
+      + `,"s11":${timestamp}`
+      + `,"s12":${this.tileShowImage}`
+      + `,"s13":${this.showAllTileParams}`
+      + `,"s2":[${users}]`
+      + `,"s3":[${shortcuts}]`
+      + `,"s14":"${GLOBALS.apiAuth}"`
+      + `,"s15":"${GLOBALS.publicUsername ?? ''}"`
+      + `}`;
   }
 
   static updatePeriod(period: DatepickerPeriod): void {
@@ -681,6 +689,28 @@ export class GlobalsData extends Settings {
         return 0.0;
       }
     }
+  }
+
+  showSharedError(): boolean {
+    if (this.sharedCheck.error != null) {
+      console.log('An error occured when trying to create json from data');
+      console.error(this.sharedCheck.error);
+      return true;
+    }
+    return false;
+  }
+
+  ensureSharedString(def: string): boolean {
+    this.sharedCheck.error = null;
+    try {
+      this.sharedCheck.shared = this._asSharedString;
+      JSON.parse(this.sharedCheck.shared);
+    } catch (ex) {
+      this.sharedCheck.error = ex;
+      this.sharedCheck.shared = def;
+      return false;
+    }
+    return true;
   }
 
   watchListForGroup(id: string): WatchElement[] {
