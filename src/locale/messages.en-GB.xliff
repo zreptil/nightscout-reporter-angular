@@ -47,7 +47,7 @@
       <trans-unit id="2310647568592664311" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/datepicker-period.ts</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/controls/datepicker/datepicker-dialog/datepicker-dialog.component.html</context>
@@ -204,7 +204,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">106</context>
         </context-group>
         <source>Data protection</source>
       </trans-unit>
@@ -222,7 +222,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <source>Imprint</source>
       </trans-unit>
@@ -2193,42 +2193,42 @@
       <trans-unit id="8765060851282185334" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <source>This is a warning.</source>
       </trans-unit>
       <trans-unit id="3446712881363799322" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <source>This is an error!!</source>
       </trans-unit>
       <trans-unit id="4804939999076972325" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <source>Colorthemes</source>
       </trans-unit>
       <trans-unit id="623302995999546215" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <source>Add</source>
       </trans-unit>
       <trans-unit id="412051503823250652" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">268</context>
+          <context context-type="linenumber">266</context>
         </context-group>
         <source>Feedback for Nightscout Reporter <x id="PH" equiv-text="GLOBALS.version"/></source>
       </trans-unit>
       <trans-unit id="7582790153734020223" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">342</context>
+          <context context-type="linenumber">340</context>
         </context-group>
         <source>Do you want to unsync with Dropbox?</source>
       </trans-unit>
@@ -3628,13 +3628,13 @@ Maximum number of profile datasets:</source>
         <note priority="1" from="description">version</note>
         <source>Version</source>
       </trans-unit>
-      <trans-unit id="3301453700200999120" datatype="html" approved="yes">
+      <trans-unit id="2144188449150319412" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/whats-new.component.html</context>
           <context context-type="linenumber">9,10</context>
         </context-group>
         <note priority="1" from="description">v433</note>
-        <source>4.3.2 - 20/03/2024</source>
+        <source>4.3.3 - 20/03/2024</source>
       </trans-unit>
       <trans-unit id="8588002369878839329" datatype="html" approved="yes">
         <context-group purpose="location">
