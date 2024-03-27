@@ -503,21 +503,88 @@ export class Utils {
   }
 
   static wordify(text: string, maxchars: number): string[] {
+    let handleLinks = false;
+    if (text.startsWith('@<>@')) {
+      handleLinks = true;
+      text = text.substring(4);
+    }
     const ret: string[] = [];
     text = Utils.cvtMultilineText(text);
-    const words = text.split(' ');
-    let line = '';
-    let diff = '';
-    for (const word of words) {
-      if (line.length + word.length > maxchars) {
-        ret.push(line);
-        line = word;
-      } else {
-        line += diff + word;
-        diff = ' ';
+    const wordSrc = text.split(' ');
+    const wordDst: string[] = [];
+    for (const word of wordSrc) {
+      const lines = word.split('<br>');
+      for (let idx = 0; idx < lines.length; idx++) {
+        if (!Utils.isEmpty(lines[idx])) {
+          wordDst.push(lines[idx]);
+        }
+        if (idx < lines.length - 1) {
+          wordDst.push('<br>');
+        }
       }
     }
-    ret.push(line);
+    const words: string[] = [];
+    if (handleLinks) {
+      let link: string = null;
+      for (let idx = 0; idx < wordDst.length; idx++) {
+        if (wordDst[idx].startsWith('<a')) {
+          link = wordDst[idx];
+          wordDst[idx] = null;
+        } else if (link != null) {
+          const pos = wordDst[idx].indexOf('</a>');
+          if (pos >= 0) {
+            link += ' ' + wordDst[idx].substring(0, pos + 4);
+            wordDst[idx] = wordDst[idx].substring(pos + 4);
+            if (!wordDst[idx].startsWith(' ')) {
+              link += wordDst[idx];
+              wordDst[idx] = null;
+            }
+            words.push(link);
+            link = null;
+          } else {
+            link += ' ' + wordDst[idx];
+            wordDst[idx] = null;
+          }
+        }
+        if (!Utils.isEmpty(wordDst[idx])) {
+          words.push(wordDst[idx]);
+        }
+      }
+    } else {
+      words.push(...wordDst);
+    }
+    let line = '';
+    let diff = '';
+    let len = 0;
+    for (const word of words) {
+      if (word === '<br>') {
+        ret.push(line);
+        len = 0;
+        line = ' ';
+        diff = '';
+      } else {
+        let check = word.length;
+        if (handleLinks && word.startsWith('<a')) {
+          const pos1 = word.indexOf('>');
+          let pos2 = word.lastIndexOf('<');
+          check = pos2 - pos1;
+          pos2 = word.lastIndexOf('>');
+          check += word.length - pos2;
+        }
+        if (len + check > maxchars) {
+          ret.push(line.trim());
+          line = word;
+          len = line.trim().length;
+          diff = ' ';
+        } else {
+          line += diff + word;
+          len += diff.length + word.length;
+          diff = ' ';
+        }
+      }
+    }
+    ret.push(line.trim());
+    console.log(text);
     return ret;
   }
 

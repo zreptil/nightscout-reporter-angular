@@ -409,7 +409,7 @@
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
           <context context-type="linenumber">371</context>
         </context-group>
-        <source>&lt;br&gt;&lt;br&gt;If this URL is protected (AUTH_DEFAULT_ROLES is not set to "admin" or "readable"), the access key must also be defined correctly. This can be done via "Administrator Tools" on the personal Nightscout page.&lt;br&gt;&lt;br&gt;More information about the AUTH_DEFAULT_ROLES is available &lt;a href="https://nightscout.github.io/nightscout/security/ #how-to-turn-off-unauthorized-access" target="_blank"&gt;here&lt;/a&gt;.</source>
+        <source>&lt;br&gt;&lt;br&gt;If this URL is protected (AUTH_DEFAULT_ROLES is not set to "admin" or "readable"), the access key must also be defined correctly. This can be done via "Administrator Tools" on the personal Nightscout page.&lt;br&gt;&lt;br&gt;More information about the AUTH_DEFAULT_ROLES is available &lt;a href="https://nightscout.github.io/nightscout/security/#how-to-turn-off-unauthorized-access" target="_blank"&gt;here&lt;/a&gt;.</source>
       </trans-unit>
       <trans-unit id="2383228502926115665" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -1768,6 +1768,13 @@
         </context-group>
         <note priority="1" from="description">displayed when data of a day is loading</note>
         <source>Loading data for {$PH}...</source>
+      </trans-unit>
+      <trans-unit id="3262398233348565360" datatype="html" approved="yes">
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+        <source>Cancelled, because the user cannot be reached.</source>
       </trans-unit>
       <trans-unit id="3336682057311020015" datatype="html" approved="yes">
         <context-group purpose="location">

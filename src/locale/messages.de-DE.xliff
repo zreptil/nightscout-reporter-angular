@@ -1778,6 +1778,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         </context-group>
         <note priority="1" from="description">displayed when data of a day is loading</note>
       </trans-unit>
+      <trans-unit id="3262398233348565360" datatype="html">
+        <source>Abbruch, weil der Benutzer nicht erreichbar ist.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3336682057311020015" datatype="html">
         <source>status</source>
         <context-group purpose="location">

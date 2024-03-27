@@ -760,16 +760,16 @@ export class GlobalsData extends Settings {
     if (url.indexOf('ns.10be') >= 0) {
       return {
         buttons: [{title: 'ns.10be', url: 'https://ns.10be.de', icon: 'open_in_new'}],
-        msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailure10be}${this.msgUrlFailureSuffix}`
+        msg: `@<>@${this.msgUrlFailurePrefix}${this.msgUrlFailure10be}${this.msgUrlFailureSuffix}`
       };
     } else if (regex.test(url)) {
       return {
         buttons: [{title: $localize`Google Cloud Variablen`, url: 'https://navid200.github.io/xDrip/docs/Nightscout/NS_Variables', icon: 'open_in_new'}],
-        msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailureGoogleCloud}${this.msgUrlFailureSuffix}`
+        msg: `@<>@${this.msgUrlFailurePrefix}${this.msgUrlFailureGoogleCloud}${this.msgUrlFailureSuffix}`
       };
     }
     return {
-      msg: `${this.msgUrlFailurePrefix}${this.msgUrlFailureHerokuapp}${this.msgUrlFailureSuffix}`
+      msg: `@<>@${this.msgUrlFailurePrefix}${this.msgUrlFailureHerokuapp}${this.msgUrlFailureSuffix}`
     };
   }
 
