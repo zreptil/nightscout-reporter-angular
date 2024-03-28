@@ -19,26 +19,16 @@ Initial steps to compile, deploy, and run nightscout reporter on your own infras
 * Download or git clone the repository
 * Download and install node.js from https://nodejs.org
 * Install Angular using "npm install -g @angular/cli"
-* Download the [compiled version](https://nightrep.zreptil.de/nightscout-reporter_local.zip) and extract it
 
 ### Build
 
 * Call build.bat from the repository folder in cmd
-* Result will be avaialbe in .\build directory
-* Copy pdfmake from the downloaded zip to the build folder
-* Open .\build\settings.json and set the `urlPDF` and "urlPlayground" option to the location of your pdfmake installation:
-
-```
-{
-  "urlPDF":"http://your-domain.de/path-to-reporter/pdfmake/pdfmake.php",
-  "urlPlayground":"http://your-domain.de/path-to-reporter/pdfmake/playground.php"
-}
-```
+* Result will be avaialbe in directory .\dist\nightrep
 
 ### Deploy
 
-* Get a web server (or online web space) with php support
-* Copy content of .\build to the content folder of your web server (or any subfolder)
+* Get a web server (or online web space)
+* Copy content of .\dist\nightrep to the content folder of your web server (or any subfolder)
 
 You can run your own nightscout-reporter instance by calling the URL of your web-server in a browser.
 
@@ -46,26 +36,11 @@ You can run your own nightscout-reporter instance by calling the URL of your web
 
 ### Web.config
 
-When hosting on an IIS you need to add the following to the web.config to enable the url for Night Watch at http://your-domain.de/path-to-reporter/watch.
-
-```
-<system.webServer>
-  <rewrite>
-    <rules>
-      <rule name="watch" stopProcessing="true">
-        <match url="^watch$" />
-        <action type="Rewrite" url="?watch" />
-      </rule>
-    </rules>
-  </rewrite>
-</system.webServer>
-```
-
-If anybody knows what to add on other hosting systems just let me know and i will add it here. The technical basis is, that the url nightscout-reporter/watch has to be mapped to
-nightscout-reporter#watch without causing an illegal page error. With this, it is possible to add nightscout reporter as a WebApp to Windows or to the startscreen of an android phone or iphone.
+A web.config file is provided in the root-directory of the deployment.
 
 ## Internationalization
-#### (i18n is short for i-nternationalizatio-n - i followed by 18 letters and the letter n) 
+
+#### (i18n is short for i-nternationalizatio-n - i followed by 18 letters and the letter n)
 
 Every text in nightscout reporter can be translated. For this purpose Angular Internationalization is used: https://angular.io/guide/i18n-overview. The source
 language for nightscout reporter is german. I decided this, since this is my mother tongue and creating the program needed focus on the programming and not on
@@ -74,12 +49,16 @@ I (zreptil) provide german and english as source for translations. The process o
 
 1. Extract all texts from code
 2. Upload the created file with german language to crowdin
-   - Translate all texts from german to the given target languages
-   - Download the files for the target languages
+
+- Translate all texts from german to the given target languages
+- Download the files for the target languages
+
 3. Create the target language file for english as a source language file
 4. Upload the created file with english language to crowdin
-   - Translate all texts from english to the given target languages
-   - Download the files for the target languages
+
+- Translate all texts from english to the given target languages
+- Download the files for the target languages
+
 5. Create the file assets/messages.json for use in the application
 
 As you can see, the process is extensive and has some specialities since I decided to use german as source language. To make this tasks easier and reduce the source
