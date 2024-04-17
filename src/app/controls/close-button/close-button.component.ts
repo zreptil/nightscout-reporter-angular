@@ -3,6 +3,8 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Log} from '@/_services/log.service';
+import {NightscoutService} from '@/_services/nightscout.service';
+import {SessionService} from '@/_services/session.service';
 
 @Component({
   selector: 'app-close-button',
@@ -14,7 +16,10 @@ export class CloseButtonComponent {
   @Input()
   data: CloseButtonData = new CloseButtonData();
 
-  constructor(@Optional() public dialogRef: MatDialogRef<any>) {
+  constructor(
+    public ns: NightscoutService,
+    public ss: SessionService,
+    @Optional() public dialogRef: MatDialogRef<any>) {
   }
 
   get showColorCfg(): boolean {
@@ -39,5 +44,11 @@ export class CloseButtonComponent {
     } else {
       this.dialogRef?.close(this.data.dialogClose);
     }
+  }
+
+  clickDebugTrigger() {
+    this.ns.reportData = null;
+    GLOBALS.isDebug = !GLOBALS.isDebug;
+    this.ss.checkPrint();
   }
 }

@@ -9,6 +9,7 @@ export class UrlData {
   startDate: Date;
   endDate: Date;
   startDateEditString: string;
+  timeout: number;
   apiSecret: string;
   linkupUsername: string;
   linkupPassword: string;
@@ -28,7 +29,8 @@ export class UrlData {
       lun: this.linkupUsername,
       lup: this.linkupPassword,
       lur: this.linkupRegion,
-      lupid: this.linkupPatientId
+      lupid: this.linkupPatientId,
+      ti: this.timeout
     };
   }
 
@@ -79,6 +81,7 @@ export class UrlData {
       ret.linkupPassword = JsonData.toText(json.lup);
       ret.linkupRegion = JsonData.toText(json.lur) ?? 'DE';
       ret.linkupPatientId = JsonData.toText(json.lupid);
+      ret.timeout = JsonData.toNumber(json.ti, 7000);
     } catch (ex) {
       Log.devError(ex, `Fehler bei UrlData.fromJson`);
     }

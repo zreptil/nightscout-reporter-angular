@@ -327,12 +327,6 @@ export class MainComponent implements OnInit {
     return ret;
   }
 
-  clickDebugTrigger() {
-    this.ns.reportData = null;
-    GLOBALS.isDebug = !GLOBALS.isDebug;
-    this.ss.checkPrint();
-  }
-
   toggleSync() {
     if (this.ds.syncType === oauth2SyncType.dropbox) {
       const params = new DialogParams();

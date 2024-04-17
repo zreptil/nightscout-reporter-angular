@@ -173,7 +173,7 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
     params.method ??= 'get';
     params.showError ??= true;
     params.asJson ??= false;
-    params.timeout ??= 1000;
+    params.timeout ??= 7000;
     let response;
     const req = new HttpRequest(params.method, url,
       null,
