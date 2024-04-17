@@ -7,7 +7,7 @@ import {UserData} from '@/_model/nightscout/user-data';
 import {UrlData} from '@/_model/nightscout/url-data';
 import {DataNeeded} from '@/forms/base-print';
 import {FormConfig} from '@/forms/form-config';
-import {DataService} from '@/_services/data.service';
+import {DataService, RequestParams} from '@/_services/data.service';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {ProfileData} from '@/_model/nightscout/profile-data';
 import {Log} from '@/_services/log.service';
@@ -113,6 +113,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       && Utils.isSameDay(this.reportData.endDate, end)
       && this.reportData.isValid
       && !this.reportData.mustReload) {
+      this.ps.info = '';
       this.ps.text = this.msgPreparingPDF;
       this.ps.max = 1;
       this.ps.value = 0;
@@ -161,9 +162,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         if (needed.status.anybody || user === GlobalsData.user) {
           this.ps.text = this.msgLoadingDataFor(user.name);
           try {
-            const url = user.apiUrl(null, 'status.json');
+            const reqParams: RequestParams = {showError: false};
+            const url = user.apiUrl(null, 'status.json', {reqParams: reqParams});
             Log.displayLink('status', url, {type: 'debug'});
-            const content = await this.ds.requestJson(url, {showError: false});
+            const content = await this.ds.requestJson(url, reqParams);
             user.status = null;
             if (content != null) {
               user.status = StatusData.fromJson(content);
@@ -182,8 +184,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     } else {
       GlobalsData.user.status = null;
       try {
-        const url = GlobalsData.user.apiUrl(null, 'status.json');
-        const content = await this.ds.requestJson(url, {showError: false});
+        const reqParams: RequestParams = {showError: false};
+        const url = GlobalsData.user.apiUrl(null, 'status.json', {reqParams: reqParams});
+        const content = await this.ds.requestJson(url, reqParams);
         if (content != null) {
           GlobalsData.user.status = StatusData.fromJson(content);
         }
@@ -195,8 +198,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     }
 
     if (!needed.needsData || !GLOBALS.user.isReachable) {
-      console.log('Schaut schlecht aus', needed, GLOBALS.user);
-      setTimeout(() => this.ms.info($localize`Abbruch, weil der Benutzer nicht erreichbar ist.`), 10);
+      setTimeout(() => this.showTimeoutMessage($localize`Der Nightscout Server ist nicht erreichbar.`));
       this.ps.cancel();
       return data;
     }
@@ -210,9 +212,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     // g.msg.links = [];
     // g.msg.type = 'msg toggle-debug';
 
-    let url = data.user.apiUrl(endDate, 'status.json');
+    const reqParams: RequestParams = {};
+    let url = data.user.apiUrl(endDate, 'status.json', {reqParams: reqParams});
     Log.displayLink($localize`status`, url, {type: 'debug'});
-    let content = await this.ds.requestJson(url);
+    let content = await this.ds.requestJson(url, reqParams);
     if (content != null) {
       data.status = StatusData.fromJson(content);
       if (data.status.status === '401') {
@@ -234,13 +237,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       //const month = `${date.getMonth() + 1}`.padStart(2, '0');
       //const urlParams = `find[startDate][$gte]=${date.getFullYear()}-${month}-01T00:00:00.000Z&count=${maxCount}`;
       // url = urlData.fullUrl('profile.json', urlParams);
+      let reqParams: RequestParams = {onDone: urlData.requestDone, timeout: 10000};
       url = urlData.fullUrl('profile.json', `count=${maxCount}`);
-      content = await this.ds.requestJson(url);
+      content = await this.ds.requestJson(url, reqParams);
       while (content == null && data.user.profileMaxIdx < GLOBALS.profileMaxCounts.length - 1) {
         data.user.profileMaxIdx++;
         maxCount = GLOBALS.profileMaxCounts[data.user.profileMaxIdx];
         url = urlData.fullUrl('profile.json', `count=${maxCount}`);
-        content = await this.ds.requestJson(url);
+        content = await this.ds.requestJson(url, reqParams);
       }
       Log.displayLink(`profiles (${content?.length})`, url, {count: content?.length, type: 'debug'});
 
@@ -285,8 +289,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
 
       // find profileswitches in treatments, create profiledata and mix it in the profiles
+      reqParams = {onDone: urlData.requestDone, timeout: urlData.timeout};
       url = urlData.fullUrl('treatments.json', params);
-      content = await this.ds.requestJson(url);
+      content = await this.ds.requestJson(url, reqParams);
       Log.displayLink(`profileswitch (${content?.length})`, url, {count: content?.length, type: 'debug'});
       if (content != null) {
         try {
@@ -477,11 +482,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
         this.ps.text = this.msgLoadingDataFor(Utils.fmtDate(begDate));
         const urlDate = new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate());
+        let reqParams: RequestParams = {};
         let url = GlobalsData.user.apiUrl(urlDate, 'entries.json',
           {
-            params: `find[date][$gte]=${beg.getTime()}&find[date][$lte]=${end.getTime()}&count=100000`
+            params: `find[date][$gte]=${beg.getTime()}&find[date][$lte]=${end.getTime()}&count=100000`,
+            reqParams: reqParams
           });
-        let src = await this.ds.requestJson(url);
+        let src = await this.ds.requestJson(url, reqParams);
         if (src != null) {
           Log.displayLink(`e${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           this.reportData.mustReload = false;
@@ -512,11 +519,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         }
         if (data.lastTempBasal == null) {
           // find last temp basal of treatments of day before current day.
+          const reqParams: RequestParams = {};
           url = data.user.apiUrl(urlDate, 'treatments.json',
             {
-              params: `find[created_at][$lt]=${profileBeg.toISOString()}&find[created_at][$gt]=${Utils.addDateDays(profileBeg, -1).toISOString()}&count=100&find[eventType][$eq]=Temp%20Basal'`
+              params: `find[created_at][$lt]=${profileBeg.toISOString()}&find[created_at][$gt]=${Utils.addDateDays(profileBeg, -1).toISOString()}&count=100&find[eventType][$eq]=Temp%20Basal'`,
+              reqParams: reqParams
             });
-          src = await this.ds.requestJson(url);
+          src = await this.ds.requestJson(url, reqParams);
           if (src != null) {
             const list: TreatmentData[] = [];
             for (const treatment of src) {
@@ -528,9 +537,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             }
           }
         }
+        reqParams = {};
         url = data.user.apiUrl(urlDate, 'treatments.json',
-          {params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`});
-        src = await this.ds.requestJson(url);
+          {
+            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`,
+            reqParams: reqParams
+          });
+        src = await this.ds.requestJson(url, reqParams);
         let hasExercise = false;
         if (src != null) {
           Log.displayLink(`t${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
@@ -574,11 +587,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         //   t.isSMB = false;
         //   data.ns.treatments.add(t);
         // }
+        reqParams = {};
         url = data.user.apiUrl(urlDate, 'devicestatus.json',
           {
-            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`
+            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`,
+            reqParams: reqParams
           });
-        src = await this.ds.requestJson(url);
+        src = await this.ds.requestJson(url, reqParams);
         if (src != null) {
           Log.displayLink(`ds${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const devicestatus of src) {
@@ -586,11 +601,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             data.ns.devicestatusList.push(DeviceStatusData.fromJson(devicestatus));
           }
         }
+        reqParams = {};
         url = data.user.apiUrl(urlDate, 'activity.json',
           {
-            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`
+            params: `find[created_at][$gte]=${profileBeg.toISOString()}&find[created_at][$lte]=${profileEnd.toISOString()}&count=100000`,
+            reqParams: reqParams
           });
-        src = await this.ds.requestJson(url);
+        src = await this.ds.requestJson(url, reqParams);
         if (src != null) {
           Log.displayLink(`ac${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           for (const activity of src) {
@@ -807,7 +824,54 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     } else {
       this.ps.text = null;
     }
+
+    this.showTimeoutMessage();
     return data;
+  }
+
+  showTimeoutMessage(msg?: string): void {
+    if (!GLOBALS.ppShowSlowServerWarning && msg == null) {
+      return;
+    }
+    let duration = 0;
+    const servers: any = {};
+    let hasTimeout = false;
+    Log.msg['collect'].map(entry => {
+      if (entry.id === 'timeout') {
+        hasTimeout = true;
+      }
+      servers[entry.data.server] = (servers[entry.data.server] ?? 0) + entry.data.duration;
+      duration += +entry.data.duration;
+    });
+    const info: string[] = [];
+    if (hasTimeout) {
+      info.push($localize`Der Zugriff auf den Nightscout-Server ist extrem langsam. Das
+kann an einer fehlerhaften Konfiguration auf dem Server liegen oder an einer
+schlechten Internetverbindung.`);
+      info[0] += ' ' + Utils.plural(Object.keys(servers).length, {
+        1: $localize`Die Daten wurden von folgendem Server geladen und die Antwort benötigte insgesamt die angegebene Zeit:`,
+        other: $localize`Die Daten wurden von den folgenden Servern geladen und die Antwort benötigte insgesamt die angegebene Zeit:`
+      });
+      info.push('');
+      for (const key of Object.keys(servers)) {
+        info.push(`${key} - ${GLOBALS.fmtNumber(servers[key] / 1000, 2)} ` + $localize`Sekunden`);
+      }
+      info.push('');
+      info.push($localize`Diese Meldung kann im Dialog Ausgabe Parameter deaktiviert werden.`);
+    }
+
+    if (hasTimeout || msg != null) {
+      if (msg != null) {
+        info.splice(0, 0, msg, '');
+      }
+      this.ms.showDialog({
+        type: DialogType.warning,
+        title: $localize`Warnung`,
+        buttons: [
+          // {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
+        ]
+      }, `${Utils.join(info, '<br>')}`, false);
+    }
   }
 
   timeConsumingParts(data: ReportData): string[] {

@@ -584,7 +584,6 @@ export class Utils {
       }
     }
     ret.push(line.trim());
-    console.log(text);
     return ret;
   }
 

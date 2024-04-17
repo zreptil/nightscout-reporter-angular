@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {SessionService} from '@/_services/session.service';
-import {DataService} from '@/_services/data.service';
+import {DataService, RequestParams} from '@/_services/data.service';
 import {NightscoutService} from '@/_services/nightscout.service';
 import {PeriodShift} from '@/_model/period-shift';
 import {Utils} from '@/classes/utils';
@@ -91,8 +91,9 @@ export class OutputParamsComponent implements OnInit {
   async ngOnInit() {
     Utils.pushAll(this.listPeriodShift, GLOBALS.listPeriodShift.reverse());
     this.periodShift = this.listPeriodShift.find((e) => e.months === GLOBALS.currPeriodShift.months);
-    const url = GLOBALS.user.apiUrl(null, 'status.json');
-    const content = await this.ds.request(url, {asJson: true});
+    const reqParams: RequestParams = {asJson: true};
+    const url = GLOBALS.user.apiUrl(null, 'status.json', {reqParams: reqParams});
+    const content = await this.ds.request(url, reqParams);
     const status = StatusData.fromJson(content);
     GLOBALS.setGlucMGDL(status);
     this.fillComboBoxes();

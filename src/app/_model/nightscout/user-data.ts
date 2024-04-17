@@ -7,6 +7,7 @@ import {Utils} from '@/classes/utils';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
+import {RequestParams} from '@/_services/data.service';
 
 export class UserData {
   name = '';
@@ -147,7 +148,7 @@ export class UserData {
   }
 
   // retrieves the url to the api for a data
-  apiUrl(date: Date, cmd: string, params?: { params?: string, noApi?: boolean, noToken?: boolean }): string {
+  apiUrl(date: Date, cmd: string, params?: { params?: string, noApi?: boolean, noToken?: boolean, reqParams?: RequestParams }): string {
     params ??= {};
     params.params ??= '';
     params.noApi ??= false;
@@ -156,6 +157,10 @@ export class UserData {
       return null;
     }
     const found = this.urlDataFor(date);
+    if (params.reqParams != null) {
+      params.reqParams.timeout = 10000;
+      params.reqParams.onDone = found.requestDone.bind(found);
+    }
     return found.fullUrl(cmd, params.params, params.noApi, params.noToken);
   }
 

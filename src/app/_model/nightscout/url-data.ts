@@ -81,12 +81,24 @@ export class UrlData {
       ret.linkupPassword = JsonData.toText(json.lup);
       ret.linkupRegion = JsonData.toText(json.lur) ?? 'DE';
       ret.linkupPatientId = JsonData.toText(json.lupid);
-      ret.timeout = JsonData.toNumber(json.ti, 7000);
+      ret.timeout = JsonData.toNumber(json.ti, 2000);
     } catch (ex) {
       Log.devError(ex, `Fehler bei UrlData.fromJson`);
     }
     return ret;
   }
+
+  requestDone(url: string, milliseconds: number, ex: any): void {
+    if (ex != null && GLOBALS.isDebug) {
+      console.error(url, milliseconds, this.timeout, ex);
+    }
+    const server = url.substring(0, url.indexOf('/', 9));
+    if (milliseconds > this.timeout) {
+      Log.collect('timeout', {duration: milliseconds, timeout: this.timeout, url: url, server: server});
+    } else {
+      Log.collect('info', {duration: milliseconds, timeout: this.timeout, url: url, server: server});
+    }
+  };
 
   fullUrl(cmd: string, params = '', noApi = false, noToken = false): string {
     let ret = this.url;

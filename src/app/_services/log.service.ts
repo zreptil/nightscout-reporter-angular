@@ -37,7 +37,8 @@ export class Log {
         warn: [],
         debug: [],
         error: [],
-        todo: []
+        todo: [],
+        collect: []
       };
       LogService.instance.links = [];
     } else if (type === 'links') {
@@ -117,6 +118,10 @@ export class Log {
 
   static error(...text: any[]): void {
     Log.addText('error', ...text);
+  }
+
+  static collect(id: string, obj: any): void {
+    LogService.instance.msg['collect'].push({id: id, data: obj});
   }
 
   static devError(ex: any, ...text: any[]) {

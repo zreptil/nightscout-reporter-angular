@@ -109,5 +109,7 @@
   "dlgErrorHeadBack": "#b3261e",
   "dlgErrorHeadFore": "#fff",
   "dlgErrorBodyBack": "#f9dedc",
-  "dlgErrorBodyFore": "#410e0b"
+  "dlgErrorBodyFore": "#410e0b",
+  "logErrorBack": "#ff0000",
+  "logErrorFore": "#ffffff"
 }

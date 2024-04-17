@@ -5,6 +5,24 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.4)">
+      <span i18n="version">Version</span><span i18n="v434">4.3.4 - 17.04.2024</span></h2>
+    <ul [class]="classFor(43.4)">
+      <li class="added" i18n="v434a1">
+        Der Zugriff auf die Nightscout Daten wird jetzt von Nightscout Reporter genauer
+        beobachtet und ausgewertet. Wenn der Zugriff zu langsam ist, dann wird eine Meldung
+        angezeigt, die auf diesen Umstand hinweist.
+      </li>
+      <li class="added" i18n="v434a2">
+        Im Dialog Ausgabe Parameter gibt es eine neue Option, mit der man die Anzeige der
+        Meldung wegen langsamer Serververbindung ein- und ausschalten kann.
+      </li>
+      <li class="changed" i18n="v434c1">
+        Der Timeout für den Zugriff auf Daten von Nightscout wurde auf 10 Sekunden erhöht,
+        um auch bei schlechter Internetverbindung oder fragwürdiger Serverkonfiguration
+        PDFs erzeugen zu können.
+      </li>
+    </ul>
     <h2 (click)="click(43.3)">
       <span i18n="version">Version</span><span i18n="v433">4.3.3 - 20.03.2024</span></h2>
     <ul [class]="classFor(43.3)">

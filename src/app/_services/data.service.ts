@@ -25,6 +25,17 @@ import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton, DialogType, HelpListItem} from '@/_model/dialog-data';
 
+export class RequestParams {
+  method?: string;
+  options?: any;
+  body?: any;
+  showError?: boolean;
+  asJson?: boolean;
+  timeout?: number;
+  urlOnError?: string;
+  onDone?: (url: string, milliseconds: number, ex: any) => void;
+}
+
 class CustomTimeoutError extends Error {
   constructor() {
     super('It was too slow');
@@ -154,21 +165,29 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
     this.save({updateSync: updateSync, skipReload: true});
   }
 
-  async requestJson(url: string, params?: { method?: string, options?: any, body?: any, showError?: boolean, asJson?: boolean, timeout?: number }) {
+  async requestJson(url: string, params?: RequestParams) {
     return this.request(url, params).then(response => {
       return response?.body;
     });
   }
 
-  async request(url: string, params?: {
-    method?: string,
-    options?: any,
-    body?: any,
-    showError?: boolean,
-    asJson?: boolean,
-    timeout?: number,
-    urlOnError?: string
-  }) {
+  requestDone(url: string, params: RequestParams, start: Date, ex?: any): void {
+    const now = new Date();
+    const ms = now.getTime() - start.getTime();
+    if (params.onDone != null) {
+      params.onDone(url, ms, ex);
+    } else if (GLOBALS.isDebug) {
+      if (ex != null) {
+        console.log(url.split('?')[0], `${ms} ms`, ex.message);
+      } else {
+        console.log(url.split('?')[0], `${ms} ms`);
+      }
+    } else if (ex != null && params.showError) {
+      Log.error(`${url.split('?')[0]} ${ms}ms - ${ex.message}`);
+    }
+  }
+
+  async request(url: string, params?: RequestParams) {
     params ??= {};
     params.method ??= 'get';
     params.showError ??= true;
@@ -178,25 +197,33 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
     const req = new HttpRequest(params.method, url,
       null,
       params.options);
+    const now = new Date();
     try {
       switch (params.method.toLowerCase()) {
         case 'post':
           response = await lastValueFrom(this.http.post(url, params.body, params.options).pipe(timeout({
             each: params.timeout,
-            with: () => throwError(() => new CustomTimeoutError())
+            with: () => throwError(() => {
+              return new CustomTimeoutError();
+            })
           })));
+          this.requestDone(url, params, now);
           break;
         default:
           response = await lastValueFrom(this.http.request(req).pipe(timeout({
             each: params.timeout,
-            with: () => throwError(() => new CustomTimeoutError())
+            with: () => throwError(() => {
+              return new CustomTimeoutError();
+            })
           })));
+          this.requestDone(url, params, now);
           break;
       }
     } catch (ex: any) {
-      if (params.showError) {
-        console.error(ex);
-      }
+      this.requestDone(url, params, now, ex);
+      // if (params.showError) {
+      //   console.error(ex);
+      // }
       if (ex instanceof CustomTimeoutError) {
         response = $localize`Es gab keine Antwort innerhalb von ${params.timeout / 1000} Sekunden bei ${url}`;
       } else if (params.urlOnError != null && ex instanceof HttpErrorResponse) {
@@ -466,6 +493,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS.lluAutoExec = JsonData.toBool(json.d19);
       GLOBALS.ppShowDurationWarning = JsonData.toBool(json.d20, true);
       GLOBALS.ppShowHbA1Cmmol = JsonData.toBool(json.d21, false);
+      GLOBALS.ppShowSlowServerWarning = JsonData.toBool(json.d22, true);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }
@@ -727,10 +755,11 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
     }
 
     GLOBALS.glucRunning = true;
-    let url = GLOBALS.user.apiUrl(null, 'status.json');
+    let reqParams: RequestParams = {showError: false};
+    let url = GLOBALS.user.apiUrl(null, 'status.json', {reqParams: reqParams});
     let status: StatusData = null;
     if (!GLOBALS.hasMGDL) {
-      const content = await this.requestJson(url);
+      const content = await this.requestJson(url, reqParams);
       if (content != null) {
         status = StatusData.fromJson(content);
         GLOBALS.setGlucMGDL(status);
@@ -738,9 +767,10 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
         GLOBALS.targetTop = status.settings.bgTargetTop;
       }
     }
-    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=20'});
+    reqParams = {showError: false};
+    url = GLOBALS.user.apiUrl(null, 'entries.json', {params: 'count=20', reqParams: reqParams});
     // Log.debug(`{time} waiting for ${url}`);
-    let src: any[] = await this.requestJson(url);
+    let src: any[] = await this.requestJson(url, reqParams);
     // Log.debug(`{time} returned`);
     if (src != null) {
       src.sort((a, b) => {
@@ -808,13 +838,15 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
     };
     const end = new Date();
     const beg = Utils.addDateMonths(end, -1);
+    reqParams = {showError: false};
     url = GLOBALS.user.apiUrl(null, 'treatments.json', {
       params: `find[created_at][$lte]=${end.toISOString()}`
         + `&find[created_at][$gte]=${beg.toISOString()}`
-        + `&find[eventType][$regex]=Change`
+        + `&find[eventType][$regex]=Change`,
+      reqParams: reqParams
     });
     // Log.debug(`{time} waiting for ${url}`);
-    src = await this.requestJson(url);
+    src = await this.requestJson(url, reqParams);
     // Log.debug(`{time} returned`);
     if (src != null) {
       const list = [];

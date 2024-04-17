@@ -105,6 +105,7 @@ export class GlobalsData extends Settings {
   basalPrecisionAuto = 1;
   ppBasalPrecisionIdx = 0;
   ppShowDurationWarning = true;
+  ppShowSlowServerWarning = true;
   isWatchColor = true;
   maxGlucAge = 14;
   timestamp = 0;
@@ -520,6 +521,7 @@ export class GlobalsData extends Settings {
       + `,"d19":"${this.lluAutoExec ? 'true' : 'false'}"`
       + `,"d20":"${this.ppShowDurationWarning ? 'true' : 'false'}"`
       + `,"d21":"${this.ppShowHbA1Cmmol ? 'true' : 'false'}"`
+      + `,"d22":"${this.ppShowSlowServerWarning ? 'true' : 'false'}"`
       + '}';
   }
 

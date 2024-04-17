@@ -12,7 +12,7 @@ import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
 import {SettingsComponent} from '@/components/settings/settings.component';
 import {HelpviewComponent} from '@/components/helpview/helpview.component';
 import {UserData} from '@/_model/nightscout/user-data';
-import {DataService} from '@/_services/data.service';
+import {DataService, RequestParams} from '@/_services/data.service';
 import {GLOBALS} from '@/_model/globals-data';
 import {WelcomeComponent} from '@/components/welcome/welcome.component';
 import {NightscoutService} from '@/_services/nightscout.service';
@@ -286,8 +286,9 @@ export class SessionService {
       return {msg: $localize`Die URL wurde noch nicht festgelegt`};
     }
     let ret = null;
-    const check = user.apiUrl(null, 'status.json');
-    await this.ds.request(check).then(response => {
+    const reqParams: RequestParams = {showError: false};
+    const check = user.apiUrl(null, 'status.json', {reqParams: reqParams});
+    await this.ds.request(check, reqParams).then(response => {
       if (response?.body?.status !== 'ok') {
         ret = GLOBALS.msgUrlFailure(check);
       }
