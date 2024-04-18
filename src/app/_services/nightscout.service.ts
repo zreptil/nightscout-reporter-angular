@@ -861,16 +861,19 @@ schlechten Internetverbindung.`);
     }
 
     if (hasTimeout || msg != null) {
-      if (msg != null) {
-        info.splice(0, 0, msg, '');
-      }
-      this.ms.showDialog({
+      const type: IDialogDef = {
         type: DialogType.warning,
         title: $localize`Warnung`,
         buttons: [
           // {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
         ]
-      }, `${Utils.join(info, '<br>')}`, false);
+      };
+      if (msg != null) {
+        info.splice(0, 0, msg, '');
+        type.title = $localize`Fehler`;
+        type.type = DialogType.error;
+      }
+      this.ms.showDialog(type, `${Utils.join(info, '<br>')}`, false);
     }
   }
 
