@@ -31,6 +31,7 @@ export class UserData {
   adjustTarget: boolean = false;
   adjustCalc = 5.0;
   adjustLab = 5.0;
+  userIdx: number;
 
   constructor() {
     this.listApiUrl.push(new UrlData());
@@ -110,8 +111,9 @@ export class UserData {
   }
 
   // creates an instance and fills it with data from a json-structure
-  static fromJson(json: any): UserData {
+  static fromJson(json: any, idx: number): UserData {
     const ret = new UserData();
+    ret.userIdx = idx;
     try {
       ret.name = JsonData.toText(json.n);
       ret.birthDate = JsonData.toText(json.bd);

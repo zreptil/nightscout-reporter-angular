@@ -1,15 +1,29 @@
 :host {
   display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
+  flex-flow: column;
+  align-items: center;
   flex: 1;
+  overflow-y: hidden;
 
-  .tilelist {
+  [filter] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 1em 0;
+    gap: 0.5em;
+
+    [index] {
+      font-size: 75%;
+      opacity: 0.5;
+    }
+  }
+
+  [tilelist] {
     display: flex;
     flex-wrap: wrap;
-    flex: 1;
     width: 100%;
     justify-content: center;
+    overflow-y: auto;
   }
 }
 

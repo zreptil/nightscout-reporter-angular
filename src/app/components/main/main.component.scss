@@ -397,6 +397,10 @@ mat-drawer-container {
       overflow-x: hidden;
     }
 
+    .content.users {
+      padding-right: 0;
+    }
+
     .footer {
       display: flex;
       position: relative;

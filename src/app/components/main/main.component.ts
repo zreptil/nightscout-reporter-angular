@@ -44,6 +44,14 @@ export class MainComponent implements OnInit {
   ) {
   }
 
+  get classForContent(): string[] {
+    const ret = ['content'];
+    if (GLOBALS.viewType === 'users') {
+      ret.push('users');
+    }
+    return ret;
+  }
+
   get msgThemes(): string {
     return $localize`Farbthemen`;
   }

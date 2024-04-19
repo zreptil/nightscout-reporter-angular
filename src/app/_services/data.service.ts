@@ -548,8 +548,9 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS.userList = [];
       if (users != null) {
         try {
+          let idx = 0;
           for (const entry of users) {
-            GLOBALS.userList.push(UserData.fromJson(entry));
+            GLOBALS.userList.push(UserData.fromJson(entry, idx++));
           }
         } catch (ex) {
           Log.devError(ex, `Fehler bei DataService.fromSharedJson (users)`);

@@ -1,26 +1,31 @@
-<div class="tilelist">
-  <ng-container *ngFor="let user of globals.userList; let idx=index">
-    <div (click)="tileClicked($event,idx)"
-         [class]="tileClass(idx)"
-         id="tile-{{idx}}">
+<div *ngIf="filter !== ''" filter>
+  <mat-icon>filter_alt</mat-icon>
+  <div>{{ filter }}</div>
+  <div index>{{ userList.length }} / {{ globals.userList.length }}</div>
+</div>
+<div tilelist>
+  <ng-container *ngFor="let user of userList">
+    <div (click)="tileClicked($event,user.userIdx)"
+         [class]="tileClass(user.userIdx)"
+         id="tile-{{user.userIdx}}">
       <div column>
         <div (click)="clickPin($event, user)" pin>
-          <mat-icon [class]="user.classForPin">{{user.iconForPin}}</mat-icon>
+          <mat-icon [class]="user.classForPin">{{ user.iconForPin }}</mat-icon>
         </div>
         <div (click)="clickDelete($event)"
-             *ngIf="idx===globals.userIdx"
+             *ngIf="user.userIdx===globals.userIdx"
              settings>
           <mat-icon [class]="user.classForPin">delete</mat-icon>
         </div>
       </div>
       <div row>
-        <div name>{{user.display}}</div>
-        <div subtext>{{user.apiUrl(null, "", {noApi: true, noToken: true})}}</div>
+        <div name>{{ user.display }}</div>
+        <div subtext>{{ user.apiUrl(null, "", {noApi: true, noToken: true}) }}</div>
       </div>
-      <div (click)="clickSettings($event)" *ngIf="idx===globals.userIdx" settings>
+      <div (click)="clickSettings($event)" *ngIf="user.userIdx===globals.userIdx" settings>
         <mat-icon>settings</mat-icon>
       </div>
-      <div index>{{idx + 1}}</div>
+      <div index>{{ user.userIdx + 1 }}</div>
     </div>
   </ng-container>
 </div>

@@ -5,8 +5,19 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.5)">
+      <span i18n="version">Version</span><span i18n="v435">4.3.5 - xx.05.2024</span></h2>
+    <ul [class]="classFor(43.5)">
+      <li class="added" i18n="v435a1">
+        In der Benutzerliste kann im Browser durch tippen von Buchstaben und Zahlen die Liste
+        gefiltert werden. Dann wird oberhalb der Liste ein Filter eingeblendet und angezeigt,
+        wie viele Benutzer die eingegebenen Zeichen im Namen oder in einer Url haben. Ausserdem
+        wird die Benutzerliste entsprechend der Eingabe gefiltert.
+      </li>
+    </ul>
     <h2 (click)="click(43.4)">
-      <span i18n="version">Version</span><span i18n="v434">4.3.4 - 17.04.2024</span></h2>
+      <span i18n="version">Version</span><span i18n="v434">4.3.4 - 17.04.2024</span>
+    </h2>
     <ul [class]="classFor(43.4)">
       <li class="added" i18n="v434a1">
         Der Zugriff auf die Nightscout Daten wird jetzt von Nightscout Reporter genauer
