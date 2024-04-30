@@ -19,11 +19,12 @@
   }
 
   [tilelist] {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     width: 100%;
     justify-content: center;
     overflow-y: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.1em;
   }
 }
 
@@ -50,9 +51,6 @@
   border: 2px solid rgba(0, 0, 0, 0.12);
   align-items: center;
   justify-content: center;
-  flex: 1;
-  min-width: 20%;
-  max-width: 20%;
   max-height: 5em;
 
   [row] {
@@ -62,7 +60,7 @@
     max-height: 100%;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     [row] {
       font-size: 70%;
     }

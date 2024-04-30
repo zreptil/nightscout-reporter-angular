@@ -99,6 +99,8 @@ export abstract class BasePrint extends FormConfig {
     colCarbsText: '#ff6f00',
     colDurationNotes: '#ff00ff',
     colDurationNotesLine: '#ff50ff',
+    colDurationNotesBar: '#ff80ff',
+    colDurationNotesText: '#000000',
     colNotes: '#000000',
     colNotesLine: '#666666',
     colGlucValues: '#000000',
@@ -417,6 +419,14 @@ export abstract class BasePrint extends FormConfig {
 
   get colDurationNotes(): string {
     return this.colors['colDurationNotes'];
+  }
+
+  get colDurationNotesText(): string {
+    return this.colors['colDurationNotesText'];
+  }
+
+  get colDurationNotesBar(): string {
+    return this.colors['colDurationNotesBar'];
   }
 
   get colDurationNotesLine(): string {

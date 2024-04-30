@@ -6,13 +6,23 @@
   </div>
   <div mat-dialog-content>
     <h2 (click)="click(43.5)">
-      <span i18n="version">Version</span><span i18n="v435">4.3.5 - xx.05.2024</span></h2>
+      <span i18n="version">Version</span><span i18n="v435">4.3.5 - 30.04.2024</span>
+    </h2>
     <ul [class]="classFor(43.5)">
       <li class="added" i18n="v435a1">
         In der Benutzerliste kann im Browser durch tippen von Buchstaben und Zahlen die Liste
         gefiltert werden. Dann wird oberhalb der Liste ein Filter eingeblendet und angezeigt,
         wie viele Benutzer die eingegebenen Zeichen im Namen oder in einer Url haben. Ausserdem
-        wird die Benutzerliste entsprechend der Eingabe gefiltert.
+        wird die Benutzerliste entsprechend der Eingabe gefiltert. Mit den Cursor-Tasten kann
+        die Auswahl des aktuellen Benutzers durch die Liste bewegt werden. Mit der Enter-Taste
+        wird der ausgewählte Benutzer aktiviert.
+      </li>
+      <li class="added" i18n="v435a2">
+        Bei der Tagesgrafik gibt es in den Formularparametern jetzt eine Option, um bei den
+        Notizen die Dauer als Balken anzeigen zu lassen. Der entsprechende Balken wird unterhalb
+        des Balkens ausgegeben, der die Bewegung anzeigt. Er wird nur ausgegeben, wenn die
+        entsprechende Notiz eine Dauer gespeichert hat. Ansonsten wird die Notiz ganz normal
+        unterhalb der Grafik ausgegeben.
       </li>
     </ul>
     <h2 (click)="click(43.4)">

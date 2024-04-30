@@ -159,7 +159,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       this.ps.max = GLOBALS.userList.length + 1;
       this.ps.value = 0;
       for (const user of GLOBALS.userList) {
-        if (needed.status.anybody || user === GlobalsData.user) {
+        if (needed.status.anybody || user.userIdx === GlobalsData.user.userIdx) {
           this.ps.text = this.msgLoadingDataFor(user.name);
           try {
             const reqParams: RequestParams = {showError: false};
@@ -182,25 +182,24 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       // GLOBALS.save(skipReload: true);
     } else {
-      GlobalsData.user.status = null;
+      GLOBALS.user.status = null;
       try {
         const reqParams: RequestParams = {showError: false};
-        const url = GlobalsData.user.apiUrl(null, 'status.json', {reqParams: reqParams});
+        const url = GLOBALS.user.apiUrl(null, 'status.json', {reqParams: reqParams});
         const content = await this.ds.requestJson(url, reqParams);
         if (content != null) {
-          GlobalsData.user.status = StatusData.fromJson(content);
+          GLOBALS.user.status = StatusData.fromJson(content);
         }
       } catch (ex) {
         console.error(ex);
-        GlobalsData.user.status = null;
+        GLOBALS.user.status = null;
       }
-      GlobalsData.user.isReachable = GlobalsData.user.status != null;
-    }
-
-    if (!needed.needsData || !GLOBALS.user.isReachable) {
-      setTimeout(() => this.showTimeoutMessage($localize`Der Nightscout Server ist nicht erreichbar.`));
-      this.ps.cancel();
-      return data;
+      GLOBALS.user.isReachable = GLOBALS.user.status != null;
+      if (!needed.needsData || !GLOBALS.user.isReachable) {
+        setTimeout(() => this.showTimeoutMessage($localize`Der Nightscout Server ist nicht erreichbar.`));
+        this.ps.cancel();
+        return data;
+      }
     }
 
     // const bd = new Date(data.begDate.getFullYear(), data.begDate.getMonth(), data.begDate.getDate());

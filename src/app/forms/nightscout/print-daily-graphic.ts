@@ -91,7 +91,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           boolValue: false
         }), new ParamInfo(1, this.msgParam21, {
           boolValue: false
-        })]
+        }), new ParamInfo(2, this.msgParam28, {
+          boolValue: false
+        })
+        ]
       }),
     new ParamInfo(11, '', {boolValue: false, isDeprecated: true}),
     new ParamInfo(13, this.msgParam11, {boolValue: true}),
@@ -149,14 +152,19 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
   graphBottom: number;
   glucTableHeight = 0.6;
   glucTableTop: number;
-  glucExerciseHeight = 0.6;
-  glucExerciseTop: number;
+  exerciseBarHeight = 0.35;
+  exerciseBarSpace = 0.1;
+  exerciseDurationTop: number;
+  exerciseTop: number;
+  exerciseBottom: number = 0;
   tempOverridesTop: number;
   tempOverridesHeight = 0.6;
   collInsulin: CollectInfo[] = [];
   collCarbs: CollectInfo[] = [];
   hasExercises: boolean;
   hasTempOverrides: boolean;
+  showNoteDuration: boolean;
+  hasNoteDuration: boolean;
 
   constructor(ps: PdfService, suffix: string = null) {
     super(ps);
@@ -272,6 +280,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     return $localize`Maximalwert für Kohlenhydrate`;
   }
 
+  get msgParam28(): string {
+    return $localize`Dauer als Balken`;
+  }
+
   override get backsuffix(): string {
     return this.showCGP ? 'cgp' : '';
   }
@@ -335,6 +347,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     this.showNotes = this.params[8].boolValue;
     this.showNoteLinesAtGluc = this.params[8].subParams[0].boolValue;
     this.showHTMLNotes = this.params[8].subParams[1].boolValue;
+    this.showNoteDuration = this.params[8].subParams[2].boolValue;
     this.spareBool1 = this.params[9].boolValue;
     this.showGlucTable = this.params[10].boolValue;
     this.sumNarrowValues = this.params[11].boolValue;
@@ -462,11 +475,26 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     const basalTopSave = this.basalTop;
     this.hasExercises = day.treatments.find((t) => t.isExercise) != null;
     this.hasExercises ||= day.activityList.reverse().find((ac) => ac.type === 'steps-total') != null;
+    this.hasNoteDuration = day.treatments.find((t) => !t.isExercise && t.duration > 0 && !Utils.isEmpty(t.notes ?? '')) != null;
+    let space = 0;
+    this.exerciseBottom = 0;
+    this.exerciseDurationTop = this.exerciseBarSpace;
     if (this.showExercises && this.hasExercises) {
-      this.graphHeight -= this.glucExerciseHeight;
-      this.basalTop += this.glucExerciseHeight;
+      this.graphHeight -= this.exerciseBarHeight;
+      this.basalTop += this.exerciseBarHeight;
+      space = this.exerciseBarSpace * 2;
+      this.exerciseBottom += this.exerciseBarHeight;
+      this.exerciseDurationTop += this.exerciseBarHeight;
     }
-    this.glucExerciseTop = this.graphHeight;
+    if (this.showNoteDuration && this.hasNoteDuration) {
+      this.graphHeight -= this.exerciseBarHeight;
+      this.basalTop += this.exerciseBarHeight;
+      space = this.exerciseBarSpace * 2;
+      this.exerciseBottom += this.exerciseBarHeight;
+    }
+    this.graphHeight -= space;
+    this.exerciseBottom += space;
+    this.exerciseTop = this.graphHeight;
     this.hasTempOverrides = day.treatments.find((t) => t.isTempOverride) != null;
     if (this.showTempOverrides && this.hasTempOverrides) {
       this.graphHeight -= this.tempOverridesHeight;
@@ -581,7 +609,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       canvas: []
     };
     const exerciseCvs: any = {
-      relativePosition: {x: this.cm(xo), y: this.cm(yo + this.glucExerciseTop)},
+      relativePosition: {x: this.cm(xo), y: this.cm(yo + this.exerciseTop)},
       canvas: []
     };
     const tempOverridesCvs: any = {
@@ -956,20 +984,44 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         exerciseCvs.canvas.push({
           type: 'rect',
           x: this.cm(x),
-          y: this.cm(0.1),
+          y: this.cm(this.exerciseBarSpace),
           w: this.cm(wid),
-          h: this.cm(this.glucExerciseHeight - 0.25),
+          h: this.cm(this.exerciseBarHeight),
           color: this.colExercises
         });
         if (!Utils.isEmpty(t.notes ?? '')) {
           graphLegend.stack.push({
-            relativePosition: {x: this.cm(x + 0.05), y: this.cm(this.glucExerciseTop + this.glucExerciseHeight / 2 - 0.14)},
+            relativePosition: {
+              x: this.cm(x + 0.05),
+              y: this.cm(this.exerciseTop + this.exerciseBarSpace + this.exerciseBarHeight / 2 - 0.13)
+            },
             text: t.notes,
             fontSize: this.fs(6),
             alignment: 'left',
             color: this.colExerciseText
           });
         }
+      } else if (!Utils.isEmpty(t.notes ?? '') && t.duration > 0 && this.showNoteDuration) {
+        const x = this.glucX(t.createdAt);
+        const wid = this.glucX(new Date(0, 0, 0, 0, 0, t.duration));
+        exerciseCvs.canvas.push({
+          type: 'rect',
+          x: this.cm(x),
+          y: this.cm(this.exerciseDurationTop),
+          w: this.cm(wid),
+          h: this.cm(this.exerciseBarHeight),
+          color: this.colDurationNotesBar
+        });
+        graphLegend.stack.push({
+          relativePosition: {
+            x: this.cm(x + 0.05),
+            y: this.cm(this.exerciseTop + this.exerciseDurationTop + this.exerciseBarHeight / 2 - 0.13)
+          },
+          text: t.notes,
+          fontSize: this.fs(6),
+          alignment: 'left',
+          color: this.colDurationNotesText
+        });
       } else if (this.showNotes && !Utils.isEmpty(t.notes ?? '') && !t.isECarb) {
         let notes = t.notes;
         if (!this.showHTMLNotes) {
@@ -1052,12 +1104,18 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     if (this.showExercises && ac != null) {
       const x = this.glucX(ac.createdAt);
       pictures.stack.push({
-        relativePosition: {x: this.cm(x - this.glucExerciseHeight / 2), y: this.cm(this.glucExerciseTop + 0.1)},
+        relativePosition: {
+          x: this.cm(x - this.exerciseBarHeight / 2),
+          y: this.cm(this.exerciseTop + 0.1)
+        },
         image: 'steps.print',
-        width: this.cm(this.glucExerciseHeight - 0.25)
+        width: this.cm(this.exerciseBarHeight)
       });
       graphLegend.stack.push({
-        relativePosition: {x: this.cm(x + 0.05), y: this.cm(this.glucExerciseTop + this.glucExerciseHeight / 2 - 0.14)},
+        relativePosition: {
+          x: this.cm(x + 0.05),
+          y: this.cm(this.exerciseTop + this.exerciseBarHeight / 2 - 0.14)
+        },
         text: `${ac.steps}`,
         fontSize: this.fs(6),
         alignment: 'left',
@@ -1068,9 +1126,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       exerciseCvs.canvas.push({
         type: 'line',
         x1: this.cm(0),
-        y1: this.cm(this.glucExerciseHeight),
+        y1: this.cm(this.exerciseBottom),
         x2: this.cm(this.graphWidth),
-        y2: this.cm(this.glucExerciseHeight),
+        y2: this.cm(this.exerciseBottom),
         lineWidth: this.cm(this.lw),
         lineColor: this.lcFrame
       });
@@ -1491,9 +1549,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       graphCob,
       glucTableCvs,
       tempOverridesCvs,
-      exerciseCvs,
       vertLegend,
       vertLines,
+      exerciseCvs,
       horzLegend,
       horzLines,
       limitLines,
