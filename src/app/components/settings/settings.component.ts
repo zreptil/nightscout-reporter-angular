@@ -384,7 +384,8 @@ export class SettingsComponent implements OnInit {
     if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
       const user = new UserData();
       GLOBALS.userList.push(user);
-      GLOBALS.userIdx = GLOBALS.userList.length - 1;
+      GLOBALS.indexUsers();
+      GLOBALS.userIdx = user.userIdx;
     }
   }
 
@@ -417,13 +418,14 @@ export class SettingsComponent implements OnInit {
       buttons.push({title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'});
       buttons.push({title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'});
       this.ms.showDialog({
-        type: DialogType.confirm,
+        type: DialogType.error,
         title: $localize`Soll gespeichert werden?`,
         buttons: buttons
-      }, ret.msg, false, new DialogParams({theme: 'settings'}))
+      }, ret.msg, false, new DialogParams({theme: 'dlgError'}))
         .subscribe(result => {
           switch (result.btn) {
             case DialogResultButton.yes:
+              GLOBALS.indexUsers();
               this.ds.saveWebData();
               this.closeDialog();
               break;
@@ -433,6 +435,7 @@ export class SettingsComponent implements OnInit {
     }
     if (ret == null) {
       GLOBALS.isConfigured = true;
+      GLOBALS.indexUsers();
       this.ds.saveWebData();
       this.closeDialog();
     }

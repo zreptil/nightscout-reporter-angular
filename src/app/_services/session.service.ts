@@ -329,7 +329,6 @@ export class SessionService {
     GLOBALS.userIdx = idx;
     this.ns.reportData = null;
     this.ds.save();
-    this.ds.getCurrentGluc();
     this.checkPrint();
     this.ds._initAfterLoad();
   }
@@ -340,6 +339,8 @@ export class SessionService {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);
+          GLOBALS.indexUsers();
+          this.ds.save();
           break;
       }
     });

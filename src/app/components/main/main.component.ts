@@ -234,7 +234,8 @@ export class MainComponent implements OnInit {
     this.ss.checkPrint();
   }
 
-  clickMenuButton(type: string) {
+  clickMenuButton(evt: MouseEvent, type: string) {
+    evt?.stopPropagation();
     switch (type) {
       case 'facebook':
         this.ss.navigate('https://www.facebook.com/nightrep');
@@ -286,6 +287,9 @@ export class MainComponent implements OnInit {
           paramList.push(`${key}=${params[key]}`)
         }
         this.ss.navigate(`mailto:nightrep@zreptil.de?${Utils.join(paramList, '&')}`);
+        break;
+      case 'dropboxlink':
+        window.open('https://www.dropbox.com/home/Apps/Nightscout%20Reporter');
         break;
     }
   }

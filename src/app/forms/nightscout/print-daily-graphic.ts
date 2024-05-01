@@ -312,6 +312,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     return $localize`Bewegung`;
   }
 
+  get msgNoteDuration(): string {
+    return $localize`Notiz mit Dauer`;
+  }
+
   get msgBloody(): string {
     return $localize`Blutige Messung`;
   }
@@ -1354,6 +1358,9 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       }
       if (this.showExercises && this.hasExercises) {
         this.addLegendEntry(legend, this.colExercises, this.msgExercises, {isArea: false, lineWidth: 0.3});
+      }
+      if (this.showNoteDuration && this.hasNoteDuration) {
+        this.addLegendEntry(legend, this.colDurationNotesBar, this.msgNoteDuration, {isArea: false, lineWidth: 0.3});
       }
       if (this.showTempOverrides && this.hasTempOverrides) {
         this.addLegendEntry(legend, this.colTempOverrides, BasePrint.msgOverrides, {isArea: false, lineWidth: 0.3});

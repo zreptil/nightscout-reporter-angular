@@ -26,6 +26,7 @@ import {DayData} from '@/_model/nightscout/day-data';
 import {ListData} from '@/_model/nightscout/list-data';
 import {StatisticData} from '@/_model/nightscout/statistic-data';
 import {Settings} from '@/_model/settings';
+import {SettingsComponent} from '@/components/settings/settings.component';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     return cfg.checked
       && (!cfg.form.isDebugOnly || GLOBALS.isDebug)
       && (!cfg.form.isLocalOnly || GLOBALS.isLocal);
+  }
+
+  clickSettings() {
+    console.log('Da haben wirs');
   }
 
   async loadData(isForThumbs: boolean) {
@@ -196,7 +201,12 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       GLOBALS.user.isReachable = GLOBALS.user.status != null;
       if (!needed.needsData || !GLOBALS.user.isReachable) {
-        setTimeout(() => this.showTimeoutMessage($localize`Der Nightscout Server ist nicht erreichbar.`));
+        setTimeout(() => this.showTimeoutMessage(
+          Utils.join([
+            '@settings@'
+            , $localize`Der Nightscout Server ist nicht erreichbar. Bitte prüfe in den Einstellungen, ob der Zugriff korrekt konfiguriert wurde.`
+          ], '')
+        ));
         this.ps.cancel();
         return data;
       }
@@ -867,12 +877,22 @@ schlechten Internetverbindung.`);
           // {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
         ]
       };
+      const params: DialogParams = new DialogParams();
       if (msg != null) {
+        if (msg.startsWith('@settings@')) {
+          type.buttons = [{result: {btn: 'settings'}, icon: 'settings', title: 'Einstellungen'}];
+          msg = msg.substring(10);
+        }
         info.splice(0, 0, msg, '');
         type.title = $localize`Fehler`;
         type.type = DialogType.error;
+        params.theme = 'dlgError';
       }
-      this.ms.showDialog(type, `${Utils.join(info, '<br>')}`, false);
+      this.ms.showDialog(type, `${Utils.join(info, '<br>')}`, false, params).subscribe(result => {
+        if (result?.btn === 'settings') {
+          this.ms.showPopup(SettingsComponent, '', {});
+        }
+      });
     }
   }
 

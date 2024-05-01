@@ -22,13 +22,13 @@
       </div>
     </div>
     <div class="userinfo">
-      <button (click)="globals.user.isPinned=!globals.user.isPinned"
+      <button (click)="globals.togglePin(globals.user)"
               mat-icon-button>
         <mat-icon [class]="globals.user.classForPin">{{ globals.user.iconForPin }}</mat-icon>
       </button>
       <mat-form-field>
         <mat-label>{{ msgName }}</mat-label>
-        <input [(ngModel)]="globals.user.name" matInput>
+        <input [(ngModel)]="globals.user.name" autofocus matInput>
       </mat-form-field>
       <mat-form-field>
         <mat-label i18n="label of editfield for birthday">Geburtstag</mat-label>

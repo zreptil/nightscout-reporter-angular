@@ -9,7 +9,7 @@ export const environment = {
   // api key for cloud_data
   // GOOGLE_API_KEY: 'AIzaSyDp7Skby_Lno-4-sQV51WU6olJMYxrrXZI',
   // name of settings file in google appdatafolder
-  settingsFilename: 'nightrep-settings',
+  settingsFilename: 'nightrep-settings-local',
   // api key for dropbox
   DROPBOX_APP_KEY: 'z5opkgt8251mhsb'
 };

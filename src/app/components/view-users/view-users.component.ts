@@ -24,8 +24,8 @@ export class ViewUsersComponent {
 
   get userList(): UserData[] {
     return GLOBALS.userList.filter(user => {
-      return user.name.toLowerCase().includes(this.filter.toLowerCase())
-        || user.listApiUrl.some(u => u.url.toLowerCase().includes(this.filter.toLowerCase()));
+      return user.name?.toLowerCase()?.includes(this.filter.toLowerCase())
+        || user.listApiUrl?.some(u => u.url?.toLowerCase()?.includes(this.filter.toLowerCase()));
     });
   }
 
@@ -43,7 +43,7 @@ export class ViewUsersComponent {
     if (idx === GLOBALS.userIdx) {
       ret.push('tilechecked');
     }
-    if (GLOBALS.userList[idx].isPinned) {
+    if (GLOBALS.userList[idx]?.isPinned) {
       ret.push('pinned');
     }
     return ret;
@@ -61,13 +61,15 @@ export class ViewUsersComponent {
 
   clickPin(evt: MouseEvent, user: UserData) {
     evt.stopPropagation();
-    user.isPinned = !user.isPinned;
-    GLOBALS.sortUserList();
+    GLOBALS.togglePin(user);
     this.ds.save();
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
+    if ((event.target as any)?.tagName?.toLowerCase() !== 'body') {
+      return;
+    }
     const chars = '.-abcdefghijklmnopqrstuvwxyzäöüßABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ0123456789 ';
     if (chars.indexOf(event.key) >= 0) {
       this.filter += event.key;
@@ -113,7 +115,7 @@ export class ViewUsersComponent {
       count--;
     }
     document.getElementById(`tile-${GLOBALS.userIdx}`).scrollIntoView({
-      behavior: 'smooth',
+      behavior: 'instant',
       block: 'center',
       inline: 'nearest'
     });

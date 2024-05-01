@@ -11,7 +11,7 @@
           <mat-icon>home</mat-icon>
           <span i18n="title of welcome screen">Willkommen</span>
         </button>
-        <button (click)="clickMenuButton('feedback')" class="iconButton">
+        <button (click)="clickMenuButton($event, 'feedback')" class="iconButton">
           <mat-icon>mail</mat-icon>
           <span i18n="title of feedback">Feedback</span>
         </button>
@@ -27,6 +27,9 @@
           <ng-container *ngIf="ds.hasSync">
             <img alt="dropbox" src="assets/img/dropbox.png">
             <div i18n="synchronized with dropbox">Mit Dropbox synchronisiert</div>
+            <button (click)="clickMenuButton($event, 'dropboxlink')">
+              <mat-icon small>open_in_new</mat-icon>
+            </button>
           </ng-container>
         </button>
         <!--
@@ -45,7 +48,7 @@
             <mat-icon *ngIf="!globals.allowGoogleTag">thumb_down</mat-icon>
             <span i18n="title of google analytics">Google Analytics</span>
           </button>
-          <button (click)="clickMenuButton('analytics')" *ngIf="globals.isDebug" class="iconButton debug">
+          <button (click)="clickMenuButton($event, 'analytics')" *ngIf="globals.isDebug" class="iconButton debug">
             <mat-icon small>open_in_new</mat-icon>
           </button>
         </div>
@@ -55,27 +58,27 @@
         </button>
       </div>
       <div class="menu-links">
-        <button (click)="clickMenuButton('nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton">
+        <button (click)="clickMenuButton($event, 'nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
           <span i18n="title of nightscout page">Nightscout Seite</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('nsreports')" *ngIf="globals.user?.reportUrl != null" class="iconButton">
+        <button (click)="clickMenuButton($event, 'nsreports')" *ngIf="globals.user?.reportUrl != null" class="iconButton">
           <img alt="nightscout white" src="assets/img/nightscout-white.png">
           <span i18n="title of nightscout reports">Nightscout Berichte</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('nswatch')" class="iconButton">
+        <button (click)="clickMenuButton($event, 'nswatch')" class="iconButton">
           <img alt="nightscout white" src="assets/img/night-watch-white.png">
           <span i18n="title of night-watch">Night-Watch</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('local-tools')" *ngIf="globals.isLocal" class="iconButton is-local">
+        <button (click)="clickMenuButton($event, 'local-tools')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
           <span i18n="title of local tools">Local Tools</span>
           <mat-icon small>open_in_new</mat-icon>
         </button>
-        <button (click)="clickMenuButton('googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local">
+        <button (click)="clickMenuButton($event, 'googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local">
           <img alt="nightscout white" src="assets/img/nightscout.png">
           <span i18n="title of local tools">Google Cloud Setup</span>
           <mat-icon small>open_in_new</mat-icon>
@@ -87,15 +90,15 @@
                   <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
                     <div *ngIf="g.isDebug" class="toggle-debug">
                       <material-button icon mini class="material-drawer-button"
-                                       (trigger)="clickMenuButton('jsonparser')">
+                                       (trigger)="clickMenuButton($event, 'jsonparser')">
                         <material-icon icon="code"></material-icon>
                       </material-button>
                       <material-button icon mini class="material-drawer-button"
-                                       (trigger)="clickMenuButton('translate')">
+                                       (trigger)="clickMenuButton($event, 'translate')">
                         <material-icon icon="g_translate"></material-icon>
                       </material-button>
                       <material-button icon mini class="material-drawer-button"
-                                       (trigger)="clickMenuButton('autotune')">
+                                       (trigger)="clickMenuButton($event, 'autotune')">
                         <material-icon icon="tune"></material-icon>
                       </material-button>
                     </div>

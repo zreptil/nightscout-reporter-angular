@@ -667,7 +667,9 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
   async _loadFromSync() {
     const result = await this.dbs.downloadFile(this.env.settingsFilename);
     if (result?.name === 'HttpErrorResponse') {
-      this.dbs.disconnect();
+      if (+(result?.status) !== 409) {
+        this.dbs.disconnect();
+      }
     } else if (result != null) {
       this.fromSharedJson(result);
     }

@@ -5,6 +5,24 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.6)">
+      <span i18n="version">Version</span><span i18n="v436">4.3.6 - 01.05.2024</span>
+    </h2>
+    <ul [class]="classFor(43.6)">
+      <li class="added" i18n="v436a1">
+        Im Menü wurde neben dem Menüpunkt bei Dropbox Synchronisation ein externer Link zum
+        entsprechenden Dropbox-Ordner hinzugefügt.
+      </li>
+      <li class="added" i18n="v436a2">
+        Bei der Fehlermeldung bezüglich der nicht Erreichbarkeit des Nightscout Servers
+        wurde ein Hinweis hinzugefügt sowie ein Button, mit dem man die Einstellungen
+        aufrufen kann, um eine eventuell vorhandene Fehlkonfiguration korrigieren zu können.
+      </li>
+      <li class="changed" i18n="v436c1">
+        Die Fehlermeldung beim Speichern der Einstellungen, wenn die Nightscout Url nicht
+        erreichbar ist, wurde farblich markanter gestaltet.
+      </li>
+    </ul>
     <h2 (click)="click(43.5)">
       <span i18n="version">Version</span><span i18n="v435">4.3.5 - 30.04.2024</span>
     </h2>

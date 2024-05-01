@@ -1033,10 +1033,26 @@ export class GlobalsData extends Settings {
     const user = this.user;
     this.userList.sort((a, b) => {
       if (a.isPinned === b.isPinned) {
-        return Utils.compare(a.display.toLowerCase(), b.display.toLowerCase());
+        return Utils.compare(a.display?.toLowerCase(), b.display?.toLowerCase());
       }
       return Utils.compare(b.isPinned, a.isPinned);
     });
     this.userIdx = this.userList.findIndex(u => u.display === user.display);
+  }
+
+  indexUsers(): void {
+    this.sortUserList();
+    const list: UserData[] = [];
+    let idx = 0;
+    for (const user of this.userList) {
+      user.userIdx = idx++;
+      list.push(user);
+    }
+    GLOBALS.userList = list;
+  }
+
+  togglePin(user: UserData): void {
+    user.isPinned = !user.isPinned;
+    this.indexUsers();
   }
 }
