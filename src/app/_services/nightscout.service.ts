@@ -880,7 +880,7 @@ schlechten Internetverbindung.`);
       const params: DialogParams = new DialogParams();
       if (msg != null) {
         if (msg.startsWith('@settings@')) {
-          type.buttons = [{result: {btn: 'settings'}, icon: 'settings', title: 'Einstellungen'}];
+          type.buttons = [{result: {btn: 'settings'}, icon: 'settings', title: $localize`Einstellungen`}];
           msg = msg.substring(10);
         }
         info.splice(0, 0, msg, '');
