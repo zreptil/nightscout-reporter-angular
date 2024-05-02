@@ -6,7 +6,8 @@ import {Settings} from '@/_model/settings';
   providedIn: 'root'
 })
 export class EnvironmentService {
-  isProduction: boolean = false;
+  isProduction = false;
+  isDemo = false;
   OAUTH2_CLIENT_ID: string = null;
   GOOGLE_API_KEY: string = null;
   DROPBOX_APP_KEY: string = null;

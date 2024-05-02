@@ -1,0 +1,17 @@
+{
+  "icons": [
+    {
+      "sizes": "176x176",
+      "src": "themes/standard/favicon.png",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "name": "Nightscout Reporter Dev",
+  "permissions": [],
+  "prefer_related_applications": true,
+  "related_applications": [],
+  "short_name": "NR Dev",
+  "start_url": "/beta/index.html",
+  "url": "https://nightrep-dev.zreptil.de/"
+}

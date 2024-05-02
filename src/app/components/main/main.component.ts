@@ -16,6 +16,7 @@ import {MessageService} from '@/_services/message.service';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ColorData} from '@/_model/color-data';
 import {LanguageService} from '@/_services/language.service';
+import {EnvironmentService} from '@/_services/environment.service';
 
 @Component({
   selector: 'app-main',
@@ -40,7 +41,8 @@ export class MainComponent implements OnInit {
               public ns: NightscoutService,
               public dbs: DropboxService,
               public ms: MessageService,
-              public ls: LanguageService
+              public ls: LanguageService,
+              public env: EnvironmentService
   ) {
   }
 
@@ -289,7 +291,7 @@ export class MainComponent implements OnInit {
         this.ss.navigate(`mailto:nightrep@zreptil.de?${Utils.join(paramList, '&')}`);
         break;
       case 'dropboxlink':
-        window.open('https://www.dropbox.com/home/Apps/Nightscout%20Reporter');
+        window.open(`https://www.dropbox.com/home/Apps/Nightscout%20Reporter?select=${this.env.settingsFilename}`);
         break;
     }
   }

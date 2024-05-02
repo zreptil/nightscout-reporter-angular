@@ -20,7 +20,7 @@
       </div>
       <div row>
         <div name>{{ user.display }}</div>
-        <div subtext>{{ user.apiUrl(null, "", {noApi: true, noToken: true}) }}</div>
+        <div (click)="clickUserInfo($event, user.userIdx)" subtext>{{ userInfo(user) }}</div>
       </div>
       <div (click)="clickSettings($event)" *ngIf="user.userIdx===globals.userIdx" settings>
         <mat-icon>settings</mat-icon>

@@ -497,6 +497,10 @@ mat-drawer-container {
   flex-flow: row;
   align-items: center;
   font-size: 120%;
+
+  mat-icon {
+    margin: 0 0.3em;
+  }
 }
 
 .is-local {

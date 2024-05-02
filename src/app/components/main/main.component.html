@@ -142,6 +142,7 @@
             <button (click)="clickUser()" class="userName toolbar-button">
               <mat-icon *ngIf="globals.viewType==='users'">chevron_left</mat-icon>
               {{ globals.user.display }}
+              <mat-icon *ngIf="globals.viewType==='tile' && globals.userList?.length > 1">list</mat-icon>
             </button>
           </ng-container>
           <ng-container *ngIf="globals.viewType==='themes'">

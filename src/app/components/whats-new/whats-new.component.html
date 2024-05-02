@@ -5,6 +5,15 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.7)">
+      <span i18n="version">Version</span><span i18n="v437">4.3.7 - 02.05.2024</span>
+    </h2>
+    <ul [class]="classFor(43.7)">
+      <li class="fixed" i18n="v437c1">
+        Der Fortschrittsbalken für die Ermittlung der Zeitspanne der Daten in den Einstellungen
+        wurde korrigiert.
+      </li>
+    </ul>
     <h2 (click)="click(43.6)">
       <span i18n="version">Version</span><span i18n="v436">4.3.6 - 01.05.2024</span>
     </h2>

@@ -134,6 +134,7 @@ export class GlobalsData extends Settings {
   editColors = false;
   dragPos: any = {};
   ppShowHbA1Cmmol = false;
+  userInfo: number = 0;
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {

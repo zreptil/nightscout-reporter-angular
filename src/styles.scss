@@ -150,6 +150,7 @@ mat-icon[small] {
 
     .mat-mdc-dialog-actions:not([align=end]) {
       justify-content: space-between;
+      padding: 0 1em;
     }
   }
 }

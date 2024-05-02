@@ -16,6 +16,7 @@ import {DialogParams, DialogResultButton, DialogType} from '@/_model/dialog-data
 import {MessageService} from '@/_services/message.service';
 import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
+import {ThemeService} from '@/_services/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -93,6 +94,7 @@ export class SettingsComponent implements OnInit {
               private da: DateAdapter<any>,
               public ds: DataService,
               public ps: ProgressService,
+              public ts: ThemeService,
               public ss: SessionService,
               public ns: NightscoutService,
               public ms: MessageService) {
@@ -238,6 +240,7 @@ export class SettingsComponent implements OnInit {
 
   cancelCalculation(): void {
     this.confirmIdx = 0;
+    this.ps.text = null;
   }
 
   msgCalculatingDay(date: Date): string {
@@ -250,6 +253,13 @@ export class SettingsComponent implements OnInit {
     this.calcDate = GlobalsData.now;
     let diff = -256;
     this.msgCalcDayTitle = this.msgCalcDayFirstTitle;
+    this.ps.init({
+      progressPanelBack: this.ts.currTheme.settingsHeadBack,
+      progressPanelFore: this.ts.currTheme.settingsHeadFore,
+      progressBarColor: this.ts.currTheme.settingsBodyBack
+    });
+    this.ps.info = '';
+    this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
     this.ps.max = 3;
     this.ps.value = 1;
     while (this.confirmIdx === 3 && !done) {
@@ -325,8 +335,9 @@ export class SettingsComponent implements OnInit {
     this.ps.clear();
     // urlData.startDateEditString = urlData.startDateEdit;
     // Log.info(`${Utils.fmtDate(urlData.startDate)} - ${Utils.fmtDate(urlData.endDate)} ${urlData.startDateEditString}`);
-    console.log(GLOBALS.user.listApiUrl);
+    // console.log(GLOBALS.user.listApiUrl);
     this.confirmIdx = 0;
+    this.ps.text = null;
   }
 
   clickExport(): void {

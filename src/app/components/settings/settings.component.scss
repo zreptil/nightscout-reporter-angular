@@ -352,4 +352,12 @@
   #importData {
     display: none;
   }
+
+  mat-expansion-panel {
+    --mat-expansion-container-background-color: rgba(255, 255, 255, 0.2);
+
+    margin: 0.5em 1em;
+    _background-color: var(--bodyBack);
+    _color: var(--bodyFore);
+  }
 }

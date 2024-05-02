@@ -3,6 +3,7 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {SessionService} from '@/_services/session.service';
 import {DataService} from '@/_services/data.service';
 import {UserData} from '@/_model/nightscout/user-data';
+import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-view-users',
@@ -119,5 +120,24 @@ export class ViewUsersComponent {
       block: 'center',
       inline: 'nearest'
     });
+  }
+
+  userInfo(user: UserData) {
+    switch (GLOBALS.userInfo) {
+      case 1:
+        return Utils.isEmpty(user.birthDate) ? $localize`Geburtstag unbekannt` : user.birthDate;
+      case 2:
+        return Utils.isEmpty(user.insulin) ? $localize`Insulin unbekannt` : user.insulin;
+      default:
+        GLOBALS.userInfo = 0;
+        return user.apiUrl(null, '', {noApi: true, noToken: true});
+    }
+  }
+
+  clickUserInfo(evt: MouseEvent, idx: number) {
+    if (idx === GLOBALS.user.userIdx) {
+      evt.stopPropagation();
+      GLOBALS.userInfo++;
+    }
   }
 }

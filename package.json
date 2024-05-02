@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3002 --open",
+    "start-demo": "ng serve --configuration demo --port 3003 --open",
     "build": "ng build && npm run zip && npm run rename",
     "build-dev": "ng build --configuration dev && npm run zip && npm run rename",
+    "build-demo": "ng build --configuration demo",
     "zip": "npm-build-zip --source=dist/nightrep --destination=dist/nightrep",
     "rename": "node -e \"require('fs').rename('dist/nightrep/nightscout-reporter_0.0.0.zip', 'dist/nightrep/nightscout-reporter_local.zip', function(err) { if (err) console.log(err); console.log('File successfully renamed!') })\"",
     "watch": "ng build --watch --configuration development",

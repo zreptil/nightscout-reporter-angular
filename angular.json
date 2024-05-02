@@ -54,6 +54,44 @@
               "outputHashing": "all",
               "sourceMap": false
             },
+            "demo": {
+              "outputPath": "demo",
+              "budgets": [
+                {
+                  "maximumError": "10mb",
+                  "maximumWarning": "7mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumError": "10mb",
+                  "maximumWarning": "7mb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/web.config",
+                {
+                  "input": "src/build-replacements/assets/demo",
+                  "output": "assets/",
+                  "glob": "*.json"
+                },
+                {
+                  "input": "src/build-replacements/assets/demo/php",
+                  "output": "assets/php/",
+                  "glob": "*.php"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.demo.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "sourceMap": true
+            },
             "dev": {
               "budgets": [
                 {
@@ -137,6 +175,9 @@
             },
             "production": {
               "buildTarget": "nightscout-reporter:build:production"
+            },
+            "demo": {
+              "buildTarget": "nightscout-reporter:build:demo"
             }
           },
           "defaultConfiguration": "development"
