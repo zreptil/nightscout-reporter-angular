@@ -580,6 +580,7 @@ export class GlobalsData extends Settings {
       + `,"s3":[${shortcuts}]`
       + `,"s14":"${GLOBALS.apiAuth}"`
       + `,"s15":"${GLOBALS.publicUsername ?? ''}"`
+      + `,"s16":"${GLOBALS.userInfo ?? 0}"`
       + `}`;
   }
 
@@ -760,7 +761,7 @@ export class GlobalsData extends Settings {
     }
 
     const regex = new RegExp('.*\\.(chickenkiller|crabdance|ignorelist|jumpingcrab|mooo|strangled|twilightparadox)(\\.com|\\.net).*', 'g');
-    if (url.indexOf('ns.10be') >= 0) {
+    if (url.indexOf('10be.de') >= 0) {
       return {
         buttons: [{title: 'ns.10be', url: 'https://ns.10be.de', icon: 'open_in_new'}],
         msg: `@<>@${this.msgUrlFailurePrefix}${this.msgUrlFailure10be}${this.msgUrlFailureSuffix}`

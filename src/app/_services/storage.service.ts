@@ -55,6 +55,13 @@ export class StorageService {
     }
   }
 
+  resetAll(): void {
+    localStorage.removeItem(Settings.SharedData);
+    localStorage.removeItem(Settings.WebData);
+    localStorage.removeItem(Settings.DeviceData);
+    location.reload();
+  }
+
   clearStorage(): void {
     if (Settings.skipStorageClear) {
       return;

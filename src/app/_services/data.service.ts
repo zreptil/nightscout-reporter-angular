@@ -401,9 +401,13 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       ]
     }, null, true)
       .subscribe(result => {
+        const allowSave = GLOBALS.allowGoogleTag;
         GLOBALS.allowGoogleTag = result?.btn === DialogResultButton.yes;
+        console.log(allowSave, GLOBALS.allowGoogleTag);
         this.saveWebData();
-        this.reload();
+        if (GLOBALS.allowGoogleTag !== allowSave && (allowSave != null || GLOBALS.allowGoogleTag)) {
+          this.reload();
+        }
       });
   }
 
@@ -591,6 +595,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       if (GLOBALS.publicUsername === 'null') {
         GLOBALS.publicUsername = null;
       }
+      GLOBALS.userInfo = JsonData.toNumber(json.s16, 0);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromSharedJson`);
     }

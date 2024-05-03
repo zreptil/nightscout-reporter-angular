@@ -5,6 +5,10 @@
   --bodyFore: var(--whatsnewBodyFore);
   --accentBack: var(--whatsnewHeadBack);
   --accentFore: var(--whatsnewHeadFore);
+
+  .cdk-drag {
+    height: 70vh;
+  }
 }
 
 h1 {
@@ -44,12 +48,15 @@ div[header] {
 }
 
 [mat-dialog-content] {
-  padding: 1em;
+  padding: 1em 1em 0;
   font-size: 1.2em;
   height: 40vh;
 
   div {
     text-align: justify;
+  }
+
+  div:not(:first-child) {
     padding-top: 1.0em;
   }
 }

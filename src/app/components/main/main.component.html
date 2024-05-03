@@ -1,5 +1,5 @@
 <!--suppress HtmlUnknownTarget -->
-<mat-drawer-container autosize hasBackdrop="false">
+<mat-drawer-container *ngIf="globals.isConfigured" autosize hasBackdrop="false">
   <mat-drawer #drawer class="mat-elevation-z10">
     <div class="tabs">
       <button (click)="menuIdx=0" [class]="getDrawerButtonClass(0)" i18n="tab title for menu" mat-button>Menü</button>

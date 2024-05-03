@@ -17,6 +17,7 @@ import {MessageService} from '@/_services/message.service';
 import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoints';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ThemeService} from '@/_services/theme.service';
+import {FormConfig} from '@/forms/form-config';
 
 @Component({
   selector: 'app-settings',
@@ -111,7 +112,7 @@ export class SettingsComponent implements OnInit {
   }
 
   get msgUrlHint(): string {
-    return $localize`Url zur Nightscout-API (z.B. https://xxx.ns.10be.de)`;
+    return $localize`Url zur Nightscout-API (z.B. https://xxx.10be.de)`;
   }
 
   get msgName(): string {
@@ -382,7 +383,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     switch (this.dlgData?.cmd) {
       case 'addUser':
-        setTimeout(() => this.addUser(), 1);
+        setTimeout(() => this.addUser(true), 1);
         break;
     }
   }
@@ -391,10 +392,24 @@ export class SettingsComponent implements OnInit {
     return $localize`:@@msgCheckUser:Überprüfe Zugriff auf ${url}...`;
   }
 
-  addUser(): void {
-    if (!Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
+  addUser(overwrite = false): void {
+    if (overwrite || !Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
       const user = new UserData();
-      GLOBALS.userList.push(user);
+      for (const form of this.ss.formList) {
+        const frm = new FormConfig(form, form.dataId === 'analysis');
+        if (frm.checked) {
+          GLOBALS.listConfig.find(cfg => cfg.dataId === frm.dataId).checked = true;
+        }
+        user.formParams[frm.dataId] = frm.asString;
+      }
+      if (GLOBALS.isLocal) {
+        user.listApiUrl[0].url = 'https://nightrep.10be.de';
+      }
+      if (overwrite) {
+        GLOBALS.userList[GLOBALS.userList.length - 1] = user;
+      } else {
+        GLOBALS.userList.push(user);
+      }
       GLOBALS.indexUsers();
       GLOBALS.userIdx = user.userIdx;
     }

@@ -20,10 +20,17 @@
       </div>
       <div row>
         <div name>{{ user.display }}</div>
-        <div (click)="clickUserInfo($event, user.userIdx)" subtext>{{ userInfo(user) }}</div>
+        <div subtext>{{ userInfo(user) }}</div>
       </div>
-      <div (click)="clickSettings($event)" *ngIf="user.userIdx===globals.userIdx" settings>
-        <mat-icon>settings</mat-icon>
+      <div column>
+        <div (click)="clickSettings($event)" *ngIf="user.userIdx===globals.userIdx" settings>
+          <mat-icon [class]="user.classForPin">settings</mat-icon>
+        </div>
+        <div (click)="clickUserInfo($event, user.userIdx)"
+             *ngIf="user.userIdx===globals.userIdx"
+             info>
+          <mat-icon [class]="user.classForPin">info_outline</mat-icon>
+        </div>
       </div>
       <div index>{{ user.userIdx + 1 }}</div>
     </div>

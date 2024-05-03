@@ -138,6 +138,7 @@ export class ViewUsersComponent {
     if (idx === GLOBALS.user.userIdx) {
       evt.stopPropagation();
       GLOBALS.userInfo++;
+      this.ds.save();
     }
   }
 }

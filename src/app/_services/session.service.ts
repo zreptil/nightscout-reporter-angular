@@ -339,8 +339,12 @@ export class SessionService {
       switch (result.btn) {
         case DialogResultButton.yes:
           GLOBALS.userList.splice(GLOBALS.userIdx, 1);
-          GLOBALS.indexUsers();
-          this.ds.save();
+          if (GLOBALS.userList.length === 0) {
+            this.ss.resetAll();
+          } else {
+            GLOBALS.indexUsers();
+            this.ds.save();
+          }
           break;
       }
     });
@@ -375,7 +379,7 @@ export class SessionService {
     // _lastPage = _currPage;
     this.ds.sortConfigs();
     for (const entry of GLOBALS.listConfig) {
-      GLOBALS.user.formParams[entry.id] = entry.asString;
+      GLOBALS.user.formParams[entry.dataId] = entry.asString;
     }
   }
 
@@ -400,5 +404,9 @@ export class SessionService {
         }
       }
     }
+  }
+
+  closeAllPopups(): void {
+    this.dialog.closeAll();
   }
 }

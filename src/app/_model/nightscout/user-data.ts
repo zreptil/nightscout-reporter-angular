@@ -59,6 +59,12 @@ export class UserData {
     for (const url of this.listApiUrl) {
       urls.push(url.asJson);
     }
+    // remove formParams that were saved with the wrong id
+    for (const key of Object.keys(this.formParams)) {
+      if (key.endsWith('-')) {
+        delete this.formParams[key];
+      }
+    }
     return `{"n":"${this.name}"`
       + `,"bd":"${this.birthDate ?? ''}"`
       + `,"s":${JSON.stringify(urls)}`

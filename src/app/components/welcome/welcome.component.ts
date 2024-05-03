@@ -62,4 +62,14 @@ export class WelcomeComponent implements OnInit {
   doSync() {
     this.dbs.connect();
   }
+
+  showSettings() {
+    this.ss.showSettings(() => {
+      if (GLOBALS.isConfigured) {
+        this.ss.closeAllPopups();
+        this.ds.confirmGoogleTag();
+        this.ss.checkPrint();
+      }
+    }, {cmd: 'addUser'});
+  }
 }
