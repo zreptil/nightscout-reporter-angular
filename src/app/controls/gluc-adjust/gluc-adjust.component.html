@@ -1,7 +1,7 @@
-<mat-checkbox [(ngModel)]="globals.user.adjustGluc" class="chk">{{msgAdjustGluc}}</mat-checkbox>
+<mat-checkbox [(ngModel)]="globals.user.adjustGluc" class="chk">{{ msgAdjustGluc }}</mat-checkbox>
 <div *ngIf="globals.user.adjustGluc" class="adjustPanel">
   <div class="adjust">
-    <div class="label">{{msgAdjustCalc}}</div>
+    <div class="label">{{ msgAdjustCalc }}</div>
     <mat-slider
       [displayWith]="formatLabel"
       [max]="20.0"
@@ -13,7 +13,7 @@
     </mat-slider>
   </div>
   <div class="adjust">
-    <div class="label">{{msgAdjustLab}}</div>
+    <div class="label">{{ msgAdjustLab }}</div>
     <mat-slider
       [displayWith]="formatLabel"
       [max]="20.0"
@@ -24,5 +24,5 @@
       <input [(ngModel)]="globals.user.adjustLab" matSliderThumb>
     </mat-slider>
   </div>
+  <mat-checkbox [(ngModel)]="globals.user.adjustTarget" class="chk indent">{{ msgAdjustTarget }}</mat-checkbox>
 </div>
-<mat-checkbox [(ngModel)]="globals.user.adjustTarget" class="chk indent">{{msgAdjustTarget}}</mat-checkbox>

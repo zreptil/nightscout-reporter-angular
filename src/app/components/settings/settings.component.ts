@@ -418,6 +418,12 @@ export class SettingsComponent implements OnInit {
 
   async checkUser() {
     GLOBALS.user.listApiUrl.sort((a, b) => Utils.compareDate(a.endDate, b.endDate));
+    this.ps.init({
+      progressPanelBack: this.ts.currTheme.settingsHeadBack,
+      progressPanelFore: this.ts.currTheme.settingsHeadFore,
+      progressBarColor: this.ts.currTheme.settingsBodyBack
+    });
+    this.ps.info = '';
     this.ps.text = this.msgCheckUser(GLOBALS.user.apiUrl(null, '', {noApi: true}));
     const ret = await this.ss.isUserValid(GLOBALS.user);
     this.ps.text = null;
