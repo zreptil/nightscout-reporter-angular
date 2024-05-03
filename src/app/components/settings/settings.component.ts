@@ -385,7 +385,7 @@ export class SettingsComponent implements OnInit {
       case 'addUser':
         setTimeout(() => this.addUser(), 1);
         break;
-      case 'addUserForce':
+      case 'createUser':
         setTimeout(() => this.addUser(true), 1);
         break;
     }
