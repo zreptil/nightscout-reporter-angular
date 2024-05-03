@@ -1,7 +1,7 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.dsgvo">
   <div cdkDragHandle mat-dialog-title>
-    <h1>{{globals.titles.dsgvo}}</h1>
+    <h1>{{ globals.titles.dsgvo }}</h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div class="root" mat-dialog-content>
@@ -10,7 +10,7 @@
       Diese Webseite speichert keine Daten auf Servern. Die benötigten Daten werden von der eingegebenen URL zur
       Nightscout-Instanz geholt und als PDF aufbereitet. Die Daten, die zur Funktion der Webseite benötigt werden,
       werden im localStorage des Browsers gespeichert und nicht an den Server übermittelt. Wenn die Synchronisierung
-      mit Google Drive aktiviert wird, dann werden diese Daten zusätzlich in den Anwendungsdaten auf dem Google Drive
+      mit Dropbox aktiviert wird, dann werden diese Daten zusätzlich in den Anwendungsdaten auf der Dropbox
       des verbundenen Kontos gespeichert.
     </p>
     <p i18n="allsaid in dataprotection">Mehr gibt es dazu eigentlich nicht zu sagen.</p>

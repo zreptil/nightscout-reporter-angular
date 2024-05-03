@@ -127,7 +127,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">435</context>
+          <context context-type="linenumber">454</context>
         </context-group>
         <source>No</source>
       </trans-unit>
@@ -146,7 +146,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">436</context>
+          <context context-type="linenumber">455</context>
         </context-group>
         <source>Yes</source>
       </trans-unit>
@@ -2116,13 +2116,13 @@
         <note priority="1" from="description">headline for shorttext for dataprotection</note>
         <source>tl;dr</source>
       </trans-unit>
-      <trans-unit id="5947911019810079011" datatype="html" approved="yes">
+      <trans-unit id="8728706536054731178" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/dsgvo/dsgvo.component.html</context>
           <context context-type="linenumber">10,15</context>
         </context-group>
         <note priority="1" from="description">shorttext for dataprotection</note>
-        <source>This website does not store data on servers. The required data is retrieved from the entered URL to the Nightscout instance and formatted as PDF. The data required for the website to work is stored in the localStorage of the browser and not transmitted to the server. If syncing with Google Drive is turned on, then that data will also be stored in the application data on Google Drive's associated account.</source>
+        <source> This website does not store any data on servers. The required data is fetched from the URL to the Nightscout instance and converted in a PDF. The data required for the website to work is stored in the browser's localStorage and is not transmitted to the server. If syncing with Dropbox is enabled, this data will also be stored in the application data on the connected account's Dropbox. </source>
       </trans-unit>
       <trans-unit id="6499248921022013171" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -2608,21 +2608,21 @@
       <trans-unit id="5065735907279008206" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">111</context>
         </context-group>
         <source>Url to Nightscout-API</source>
       </trans-unit>
       <trans-unit id="6358191445971149830" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <source>Url to Nightscout-API (e.g. https://xxx.10be.de)</source>
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-user-data.ts</context>
@@ -2633,7 +2633,7 @@
       <trans-unit id="3908184019891735429" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -2652,84 +2652,84 @@
       <trans-unit id="7251442440878885611" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <source>Access Token</source>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <source>Username</source>
       </trans-unit>
       <trans-unit id="6057821346666596338" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">135</context>
         </context-group>
         <source>Password</source>
       </trans-unit>
       <trans-unit id="8139094752944980260" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">139</context>
         </context-group>
         <source>Patient-Id</source>
       </trans-unit>
       <trans-unit id="5324498437447909499" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">143</context>
         </context-group>
         <source>Region for access to LibreLinkUp</source>
       </trans-unit>
       <trans-unit id="3171615835928522212" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">154</context>
         </context-group>
         <source>Data from</source>
       </trans-unit>
       <trans-unit id="4391891567115525191" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <source>Data to</source>
       </trans-unit>
       <trans-unit id="4265956136039965395" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">162</context>
         </context-group>
         <source>Searching first day with data</source>
       </trans-unit>
       <trans-unit id="8753888603691598520" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">166</context>
         </context-group>
         <source>Searching last day with data</source>
       </trans-unit>
       <trans-unit id="4191173912022256463" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">169,173</context>
+          <context context-type="linenumber">170,174</context>
         </context-group>
         <source>Configuring LibreLinkUp allows Nightwatch to transmit the values received from the sensor via Abbott's Libre app to Nightscout. In order to do that, it is necessary for Nightscout Reporter to also know the API secret of the Nightscout instance, which is why you have to store it here. The other settings in this area are used to receive the data from LibreLinkUp.</source>
       </trans-unit>
       <trans-unit id="7216405079245914772" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">178</context>
         </context-group>
         <source>API-Secret for Nightscout</source>
       </trans-unit>
       <trans-unit id="4562561451144140468" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">181,186</context>
+          <context context-type="linenumber">182,187</context>
         </context-group>
         <source>The profile table should normally only contain data on the profiles used. iOS Loop uses this table to save its own settings and does this excessively at some users. Above a certain amount of data, the profile table can then no longer be queried correctly via the API. This is why there is this option of restricting the number of data records that are fetched from this table. This is necessary as long as iOS Loop or other uploaders fill this table incorrectly.
 
@@ -2738,99 +2738,99 @@ Maximum number of profile datasets:</source>
       <trans-unit id="msgLinkupUsernameHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">191</context>
         </context-group>
         <source>This username / password combination makes it possible to receive data from LibreLinkUp.</source>
       </trans-unit>
       <trans-unit id="msgLinkupPatientIdHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">195</context>
         </context-group>
         <source>This patient Id is used to obtain data from LibreLinkUp. It is only needed if there are multiple connections.</source>
       </trans-unit>
       <trans-unit id="msgLinkupRegionHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">199</context>
         </context-group>
         <source>Here the region for LibreLinkUp must be specified.</source>
       </trans-unit>
       <trans-unit id="msgAccessTokenHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">214</context>
+          <context context-type="linenumber">215</context>
         </context-group>
         <source>The Access Token is only required if access in Nightscout was restricted via AUTH_DEFAULT_ROLES</source>
       </trans-unit>
       <trans-unit id="msgApiSecretHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">220</context>
+          <context context-type="linenumber">221</context>
         </context-group>
         <source>The API secret only needs to be entered if the LibreLinkUp functionality is to be used.</source>
       </trans-unit>
       <trans-unit id="4907738756705330706" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">227</context>
         </context-group>
         <source>This password makes it possible to write data to the Nightscout instance. Please do not pass it on to others!</source>
       </trans-unit>
       <trans-unit id="msgStartDateHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <source>The date of the first day with data</source>
       </trans-unit>
       <trans-unit id="msgEndDateHint" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">238</context>
         </context-group>
         <source>The date of the last complete day with data</source>
       </trans-unit>
       <trans-unit id="msgCalculatingDay" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">247</context>
+          <context context-type="linenumber">248</context>
         </context-group>
         <source>Checking <x id="PH" equiv-text="date"/> ...</source>
       </trans-unit>
       <trans-unit id="4523326423447298135" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">263</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">284</context>
+          <context context-type="linenumber">285</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">321</context>
         </context-group>
         <source>Checking <x id="PH" equiv-text="Utils.fmtDate(this.calcDate)"/> ...</source>
       </trans-unit>
       <trans-unit id="msgCheckUser" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">391</context>
+          <context context-type="linenumber">395</context>
         </context-group>
         <source>Checking access to ${PH}...</source>
       </trans-unit>
       <trans-unit id="6976047278355685385" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">404</context>
+          <context context-type="linenumber">423</context>
         </context-group>
         <source>Do you really want to delete the URL <x id="PH" equiv-text="GLOBALS.user.listApiUrl[idx].url"/> from the user?</source>
       </trans-unit>
       <trans-unit id="94497717439360872" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">439</context>
+          <context context-type="linenumber">458</context>
         </context-group>
         <source>Save the userdata?</source>
       </trans-unit>

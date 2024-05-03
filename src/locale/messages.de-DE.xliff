@@ -128,7 +128,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">435</context>
+          <context context-type="linenumber">454</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8807722618432376624" datatype="html">
@@ -147,7 +147,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">436</context>
+          <context context-type="linenumber">455</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9175670018185396326" datatype="html">
@@ -2132,8 +2132,8 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         </context-group>
         <note priority="1" from="description">headline for shorttext for dataprotection</note>
       </trans-unit>
-      <trans-unit id="5947911019810079011" datatype="html">
-        <source> Diese Webseite speichert keine Daten auf Servern. Die benötigten Daten werden von der eingegebenen URL zur Nightscout-Instanz geholt und als PDF aufbereitet. Die Daten, die zur Funktion der Webseite benötigt werden, werden im localStorage des Browsers gespeichert und nicht an den Server übermittelt. Wenn die Synchronisierung mit Google Drive aktiviert wird, dann werden diese Daten zusätzlich in den Anwendungsdaten auf dem Google Drive des verbundenen Kontos gespeichert. </source>
+      <trans-unit id="8728706536054731178" datatype="html">
+        <source> Diese Webseite speichert keine Daten auf Servern. Die benötigten Daten werden von der eingegebenen URL zur Nightscout-Instanz geholt und als PDF aufbereitet. Die Daten, die zur Funktion der Webseite benötigt werden, werden im localStorage des Browsers gespeichert und nicht an den Server übermittelt. Wenn die Synchronisierung mit Dropbox aktiviert wird, dann werden diese Daten zusätzlich in den Anwendungsdaten auf der Dropbox des verbundenen Kontos gespeichert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/dsgvo/dsgvo.component.html</context>
           <context context-type="linenumber">10,15</context>
@@ -2625,21 +2625,21 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Url zur Nightscout-API</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6358191445971149830" datatype="html">
         <source>Url zur Nightscout-API (z.B. https://xxx.10be.de)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8953033926734869941" datatype="html">
         <source>Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/nightscout/print-user-data.ts</context>
@@ -2650,7 +2650,7 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Insulin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
@@ -2669,63 +2669,63 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <source>Zugriffsschlüssel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5248717555542428023" datatype="html">
         <source>Username</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6057821346666596338" datatype="html">
         <source>Passwort</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8139094752944980260" datatype="html">
         <source>Patienten Id</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5324498437447909499" datatype="html">
         <source>Region bei Zugriff auf LibreLinkUp</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3171615835928522212" datatype="html">
         <source>Daten von</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4391891567115525191" datatype="html">
         <source>Daten bis</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4265956136039965395" datatype="html">
         <source>Ermittle ersten Tag mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8753888603691598520" datatype="html">
         <source>Ermittle letzten Tag mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4191173912022256463" datatype="html">
@@ -2736,14 +2736,14 @@ Soll der Bestätigungsablauf gestartet werden?</source>
     dienen dazu, die Daten von LibreLinkUp zu empfangen.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">169,173</context>
+          <context context-type="linenumber">170,174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7216405079245914772" datatype="html">
         <source>API-Secret für Nightscout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4562561451144140468" datatype="html">
@@ -2755,106 +2755,106 @@ Soll der Bestätigungsablauf gestartet werden?</source>
   iOS Loop oder andere Uploader diese Tabelle falsch befüllen.&lt;br&gt;&lt;br&gt;Maximale Anzahl an Profildatensätzen:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">181,186</context>
+          <context context-type="linenumber">182,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgLinkupUsernameHint" datatype="html">
         <source>Diese Usernamen / Passwort Kombination ermöglicht es, Daten von LibreLinkUp zu erhalten.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgLinkupPatientIdHint" datatype="html">
         <source>Diese Patienten Id wird verwendet, um Daten von LibreLinkUp zu erhalten. Sie wird nur benötigt, wenn dort mehrere Verbindungen vorhanden sind.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgLinkupRegionHint" datatype="html">
         <source>Hier muss die Region für LibreLinkUp angegeben werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">198</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgAccessTokenHint" datatype="html">
         <source>Der Zugriffsschlüssel wird nur benötigt, wenn der Zugriff in Nightscout über AUTH_DEFAULT_ROLES eingeschränkt wurde</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">214</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgApiSecretHint" datatype="html">
         <source>Das API-Secret muss nur erfasst werden, wenn die LibreLinkUp-Funktionaliät benutzt werden soll.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">220</context>
+          <context context-type="linenumber">221</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4907738756705330706" datatype="html">
         <source>Dieses Passwort ermöglicht es, Daten in die Nightscout Instanz zu schreiben. Bitte auf keinen Fall an andere weitergeben!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">227</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgStartDateHint" datatype="html">
         <source>Das Datum des ersten Tages mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgEndDateHint" datatype="html">
         <source>Das Datum des letzten kompletten Tages mit Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">238</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCalculatingDay" datatype="html">
         <source>Überprüfe <x id="PH" equiv-text="date"/> ...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">247</context>
+          <context context-type="linenumber">248</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4523326423447298135" datatype="html">
         <source>Prüfe <x id="PH" equiv-text="Utils.fmtDate(this.calcDate)"/> ...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">263</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">284</context>
+          <context context-type="linenumber">285</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">321</context>
         </context-group>
       </trans-unit>
       <trans-unit id="msgCheckUser" datatype="html">
         <source>Überprüfe Zugriff auf <x id="PH" equiv-text="url"/>...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">391</context>
+          <context context-type="linenumber">395</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6976047278355685385" datatype="html">
         <source>Soll die URL <x id="PH" equiv-text="GLOBALS.user.listApiUrl[idx].url"/> vom Benutzer wirklich gelöscht werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">404</context>
+          <context context-type="linenumber">423</context>
         </context-group>
       </trans-unit>
       <trans-unit id="94497717439360872" datatype="html">
         <source>Soll gespeichert werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
-          <context context-type="linenumber">439</context>
+          <context context-type="linenumber">458</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6494831464643926227" datatype="html">
