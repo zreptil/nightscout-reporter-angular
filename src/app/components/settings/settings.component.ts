@@ -383,6 +383,9 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     switch (this.dlgData?.cmd) {
       case 'addUser':
+        setTimeout(() => this.addUser(), 1);
+        break;
+      case 'addUserForce':
         setTimeout(() => this.addUser(true), 1);
         break;
     }
@@ -395,8 +398,9 @@ export class SettingsComponent implements OnInit {
   addUser(overwrite = false): void {
     if (overwrite || !Utils.isEmpty(GLOBALS.userList[GLOBALS.userList.length - 1].apiUrl(null, ''))) {
       const user = new UserData();
+      const checkList = ['analysis', 'daygraph', 'percentile', 'tdd'];
       for (const form of this.ss.formList) {
-        const frm = new FormConfig(form, form.dataId === 'analysis');
+        const frm = new FormConfig(form, checkList.includes(form.dataId));
         if (frm.checked) {
           GLOBALS.listConfig.find(cfg => cfg.dataId === frm.dataId).checked = true;
         }

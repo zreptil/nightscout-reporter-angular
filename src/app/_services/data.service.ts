@@ -403,7 +403,6 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       .subscribe(result => {
         const allowSave = GLOBALS.allowGoogleTag;
         GLOBALS.allowGoogleTag = result?.btn === DialogResultButton.yes;
-        console.log(allowSave, GLOBALS.allowGoogleTag);
         this.saveWebData();
         if (GLOBALS.allowGoogleTag !== allowSave && (allowSave != null || GLOBALS.allowGoogleTag)) {
           this.reload();

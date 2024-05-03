@@ -70,6 +70,6 @@ export class WelcomeComponent implements OnInit {
         this.ds.confirmGoogleTag();
         this.ss.checkPrint();
       }
-    }, {cmd: 'addUser'});
+    }, {cmd: 'addUserForce'});
   }
 }
