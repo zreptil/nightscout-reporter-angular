@@ -113,7 +113,7 @@ export class MainComponent implements OnInit {
   }
 
   get msgDSGVO(): string {
-    return $localize`Datenschutzerklärung`;
+    return $localize`Datenschutz-erklärung`;
   }
 
   test(value: number[][]): ColorData[] {

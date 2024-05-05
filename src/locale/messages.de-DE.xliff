@@ -215,10 +215,6 @@
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
           <context context-type="linenumber">65</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">116</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="6302927129016485768" datatype="html">
         <source>Formularparameter</source>
@@ -2286,6 +2282,13 @@ Soll der Bestätigungsablauf gestartet werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
           <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5561713216422757536" datatype="html">
+        <source>Datenschutz-erklärung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="412051503823250652" datatype="html">

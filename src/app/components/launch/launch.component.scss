@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: row;
+  width: 100vw;
+  height: 100vh;
+
+  [owl] {
+    width: 8em;
+  }
+
+  [btn] {
+    cursor: pointer;
+    border-radius: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 90%;
+
+    [title] {
+      font-size: 3em;
+      position: absolute;
+      --c1: #f00;
+      --c2: #fff;
+      text-shadow: 0 0 5px var(--c1),
+      0 0 10px var(--c1),
+      0 0 15px var(--c1),
+      0 0 20px var(--c2),
+      0 0 30px var(--c2),
+      0 0 40px var(--c2),
+      0 0 55px var(--c2),
+      0 0 75px var(--c2);
+      color: white;
+    }
+
+    [youtube] {
+      height: 100%;
+      max-width: 95%;
+    }
+  }
+}

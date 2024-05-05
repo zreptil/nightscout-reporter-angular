@@ -214,10 +214,6 @@
           <context context-type="sourcefile">src/app/_model/globals-data.ts</context>
           <context context-type="linenumber">65</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">116</context>
-        </context-group>
         <source>Data protection</source>
       </trans-unit>
       <trans-unit id="6302927129016485768" datatype="html" approved="yes">
@@ -2271,6 +2267,13 @@
           <context context-type="linenumber">79</context>
         </context-group>
         <source>Add</source>
+      </trans-unit>
+      <trans-unit id="5561713216422757536" datatype="html" approved="yes">
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+        <source>Data protection</source>
       </trans-unit>
       <trans-unit id="412051503823250652" datatype="html" approved="yes">
         <context-group purpose="location">

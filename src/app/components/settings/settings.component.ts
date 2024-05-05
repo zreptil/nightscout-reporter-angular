@@ -263,75 +263,90 @@ export class SettingsComponent implements OnInit {
     this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
     this.ps.max = 3;
     this.ps.value = 1;
+    let error: string;
     while (this.confirmIdx === 3 && !done) {
       const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 0, 0, 0, 0);
       const url = urlData.fullUrl('entries.json', `find[date][$lte]=${check.getTime()}&count=2`);
-      const json = await this.ds.request(url, {asJson: true});
-      try {
-        if (diff < -1) {
-          if (json.length < 1) {
-            diff = Math.floor(-diff / 2);
+      const json = await this.ds.request(url, {asJson: true, showError: false});
+      if (typeof json === 'string') {
+        done = true;
+        error = json;
+        this.calcDate = null;
+      } else {
+        try {
+          if (diff < -1) {
+            if (json.length < 1) {
+              diff = Math.floor(-diff / 2);
+            }
+          } else if (diff > 1) {
+            if (json.length > 0) {
+              diff = Math.floor(-diff / 2);
+            }
+          } else {
+            done = true;
+            if (json.length > 0) {
+              this.calcDate = Utils.addDateDays(this.calcDate, diff);
+            }
           }
-        } else if (diff > 1) {
-          if (json.length > 0) {
-            diff = Math.floor(-diff / 2);
-          }
-        } else {
+          this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
+        } catch (ex) {
           done = true;
-          if (json.length > 0) {
+          Log.devError(ex, 'Fehler in SettingsComponent.calculateFirstDay startDatumsErmittlung');
+        }
+
+        if (!done) {
+          this.calcDate = Utils.addDateDays(this.calcDate, diff);
+        }
+      }
+    }
+    if (this.calcDate != null) {
+      this.ps.next();
+      diff = 256;
+      urlData.startDate = this.calcDate;
+      done = false;
+      this.msgCalcDayTitle = this.msgCalcDayLastTitle;
+      while (this.confirmIdx === 3 && !done) {
+        const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 23, 59, 59, 999);
+        const url = urlData.fullUrl('entries.json', `find[date][$gte]=${check.getTime()}&count=2`);
+        const json = await this.ds.request(url, {asJson: true, showError: false});
+        if (typeof json === 'string') {
+          done = true;
+          error = json;
+          this.calcDate = null;
+        } else {
+          try {
+            if (diff > 1) {
+              if (json.length < 1) {
+                diff = Math.floor(-diff / 2);
+              }
+            } else if (diff < -1) {
+              if (json.length > 0) {
+                diff = Math.floor(-diff / 2);
+              }
+            } else {
+              done = true;
+              if (Utils.isOnOrAfter(this.calcDate, Utils.addDateDays(GlobalsData.now, -1))) {
+                this.calcDate = GlobalsData.now;
+              } else if (json.length < 1) {
+                this.calcDate = Utils.addDateDays(this.calcDate, -diff);
+              }
+            }
+            this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
+          } catch (ex) {
+            done = true;
+          }
+
+          if (!done) {
             this.calcDate = Utils.addDateDays(this.calcDate, diff);
           }
         }
-        this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
-      } catch (ex) {
-        done = true;
-        Log.devError(ex, 'Fehler in SettingsComponent.calculateFirstDay startDatumsErmittlung');
       }
 
-      if (!done) {
-        this.calcDate = Utils.addDateDays(this.calcDate, diff);
+      if (Utils.isOnOrAfter(this.calcDate, GlobalsData.now)) {
+        urlData.endDate = null;
+      } else {
+        urlData.endDate = this.calcDate;
       }
-    }
-    this.ps.next();
-    diff = 256;
-    urlData.startDate = this.calcDate;
-    done = false;
-    this.msgCalcDayTitle = this.msgCalcDayLastTitle;
-    while (this.confirmIdx === 3 && !done) {
-      const check = new Date(this.calcDate.getFullYear(), this.calcDate.getMonth(), this.calcDate.getDate(), 23, 59, 59, 999);
-      const url = urlData.fullUrl('entries.json', `find[date][$gte]=${check.getTime()}&count=2`);
-      const json = await this.ds.request(url, {asJson: true});
-      try {
-        if (diff > 1) {
-          if (json.length < 1) {
-            diff = Math.floor(-diff / 2);
-          }
-        } else if (diff < -1) {
-          if (json.length > 0) {
-            diff = Math.floor(-diff / 2);
-          }
-        } else {
-          done = true;
-          if (Utils.isOnOrAfter(this.calcDate, Utils.addDateDays(GlobalsData.now, -1))) {
-            this.calcDate = GlobalsData.now;
-          } else if (json.length < 1) {
-            this.calcDate = Utils.addDateDays(this.calcDate, -diff);
-          }
-        }
-        this.ps.text = $localize`Prüfe ${Utils.fmtDate(this.calcDate)} ...`;
-      } catch (ex) {
-        done = true;
-      }
-
-      if (!done) {
-        this.calcDate = Utils.addDateDays(this.calcDate, diff);
-      }
-    }
-
-    if (Utils.isOnOrAfter(this.calcDate, GlobalsData.now)) {
-      urlData.endDate = null;
-    } else {
-      urlData.endDate = this.calcDate;
     }
     this.ps.clear();
     // urlData.startDateEditString = urlData.startDateEdit;
@@ -339,6 +354,9 @@ export class SettingsComponent implements OnInit {
     // console.log(GLOBALS.user.listApiUrl);
     this.confirmIdx = 0;
     this.ps.text = null;
+    if (error != null) {
+      this.ms.error(error);
+    }
   }
 
   clickExport(): void {

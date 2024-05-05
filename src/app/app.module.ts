@@ -55,6 +55,7 @@ import {ViewThemesComponent} from './components/view-themes/view-themes.componen
 import {ExecuteComponent} from './components/execute/execute.component';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
+import {LaunchComponent} from '@/components/launch/launch.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.dir
     CloseButtonComponent,
     ColorCfgDialogComponent,
     ViewThemesComponent,
-    ExecuteComponent
+    ExecuteComponent,
+    LaunchComponent
   ],
   imports: [
     BrowserModule,

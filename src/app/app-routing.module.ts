@@ -6,6 +6,7 @@ import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.componen
 import {TestComponent} from '@/components/test/test.component';
 import {ShortcutComponent} from '@/components/shortcut/shortcut.component';
 import {ExecuteComponent} from '@/components/execute/execute.component';
+import {LaunchComponent} from '@/components/launch/launch.component';
 
 const routes: Routes = [
   {path: 'authorize', component: ExecuteComponent, data: {cmd: 'authorize'}},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'tools', component: LocalToolsComponent},
   {path: 'shortcut', component: ShortcutComponent},
   {path: 'watch', component: WatchComponent},
+  {path: 'launch', component: LaunchComponent},
   {path: '', component: MainComponent},
   {path: '**', redirectTo: ''}
 ];
