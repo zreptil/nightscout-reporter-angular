@@ -119,7 +119,7 @@ export class DropboxService {
   /**
    * download a file from dropbox.
    *
-   * @param filename name of the file to upload (containig path)   */
+   * @param filename name of the file to download (containig path)   */
   async downloadFile(filename: string) {
     let ret: any;
     let url = 'https://content.dropboxapi.com/2/files/download';
@@ -134,9 +134,12 @@ export class DropboxService {
     let response: any;
     try {
       response = await lastValueFrom(this.http.request(req)).catch(
-        (error) => {
-          console.error('error when downloading file from dropbox', error);
-          return error;
+        async (ex) => {
+          console.error('error when downloading file from Dropbox', ex);
+          response = await this.checkRefreshToken(req, ex);
+          // ret = response?.body;
+          // console.error('error when downloading file from dropbox', error);
+          // return error;
         });
       switch (response?.status) {
         case 200:
@@ -184,7 +187,7 @@ export class DropboxService {
       const check = await this.downloadFile(filename);
       if (this.isSameContent(check, content)) {
         this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde nicht hochgeladen, da sich der Inhalt nicht geändert hat.`);
-        console.log(this.lastStatus.text);
+        // console.log(this.lastStatus.text);
         return;
       }
       await lastValueFrom(this.http.request(req));

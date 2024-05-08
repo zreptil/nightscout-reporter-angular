@@ -288,7 +288,7 @@ export class MainComponent implements OnInit {
         for (const key of Object.keys(params)) {
           paramList.push(`${key}=${params[key]}`)
         }
-        this.ss.navigate(`mailto:nightrep@zreptil.de?${Utils.join(paramList, '&')}`);
+        this.ss.navigate(`mailto:nightscoutreporter@gmail.com?${Utils.join(paramList, '&')}`);
         break;
       case 'dropboxlink':
         window.open(`https://www.dropbox.com/home/Apps/Nightscout%20Reporter?select=${this.env.settingsFilename}`);

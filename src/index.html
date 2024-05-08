@@ -69,11 +69,9 @@
     gtag('config', 'G-WKTH26LEFV');
 
     function gtagError() {
-      console.error('Das war mal kacke', document.event);
       const data = JSON.parse(localStorage[id]);
       data['w7'] = 'error';
       localStorage.setItem(id, JSON.stringify(data));
-      console.log(data);
     }
   }
 </script>
