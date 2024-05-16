@@ -42,7 +42,7 @@
     "google-one-tap": "^1.0.6",
     "jszip": "^3.10.1",
     "node-ensure": "^0.0.0",
-    "pdfjs-dist": "^3.1.81",
+    "pdfjs-dist": "^4.2.67",
     "pdfmake": "^0.2.7",
     "rxjs": "~7.8.0",
     "sha1": "^1.1.1",
@@ -65,7 +65,15 @@
     "typescript": "~5.3.3"
   },
   "overrides": {
-    "vite": "~5.0.12"
+    "vite": "~5.2.6",
+    "undici": "~6.11.1",
+    "webpack-dev-middleware": "~7.1.0",
+    "node-tar": "~6.2.1",
+    "tar": "~6.2.1",
+    "ip": "~2.0.1",
+    "follow-redirects": "~1.15.6",
+    "express": "~4.19.2",
+    "es5-ext": "~0.10.63"
   },
   "engines": {
     "node": ">=14.0.0",

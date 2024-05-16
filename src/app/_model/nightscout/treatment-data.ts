@@ -143,7 +143,7 @@ export class TreatmentData extends JsonData {
   }
 
   get isMealBolus(): boolean {
-    return this._t === 'meal bolus';
+    return this._t === 'meal bolus' || this._t === 'carb correction';
   }
 
   get isBolusWizard(): boolean {

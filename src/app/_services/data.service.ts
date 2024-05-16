@@ -281,6 +281,7 @@ Funktionalität der Seite ist unabhängig von der hier getroffenen Entscheidung.
       GLOBALS.language = GLOBALS.languageList.find((lang) => lang.code === code);
       GLOBALS.theme = JsonData.toText(json.w2, null);
       this._syncType = JsonData.toNumber(json.w3);
+      // json.w4 = '=0nIGZDM4l3YkFjSvFGS1xmUZlzMBxWLiB3NZlDOuJlWJ5EaGp2S3MHWRpmbYFUQBFUQBFUQBFURU1kcwQkeFZEdVJiOiQnciwiInNWeM9URLFlaEdDTHlFbINTerVmV3gjMxl0NHJ1UyNlYahGc4pkTMRFTHlnWtUGdUtEOyAVVtokcpVnNsF0RERme69mbXBFZUF2dfNzNoVDe4YXSaB1T4pUS0NGOMRFRkBXR39ERZ9meQBnTZFzXWFzMzYUb4RkepRzUEhjUxJGSuFTUzpGRtAjMwIkLsNnI6ICdhJye'
       this.oauth2AccessToken = JsonData.toText(json.w4, null);
       GLOBALS.ownTheme = JsonData.toText(json.w5, null);
       GLOBALS.themeChanged = JsonData.toBool(json.w6, false);
