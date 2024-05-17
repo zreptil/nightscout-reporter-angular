@@ -1007,7 +1007,13 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         }
       } else if (!Utils.isEmpty(t.notes ?? '') && t.duration > 0 && this.showNoteDuration) {
         const x = this.glucX(t.createdAt);
-        const wid = this.glucX(new Date(0, 0, 0, 0, 0, t.duration));
+        const until = new Date(t.createdAt.getTime() + t.duration * 1000);
+        const check = new Date(t.createdAt.getTime());
+        check.setHours(23, 59, 59);
+        if (until.getTime() > check.getTime()) {
+          until.setTime(check.getTime());
+        }
+        const wid = this.glucX(until) - x;
         exerciseCvs.canvas.push({
           type: 'rect',
           x: this.cm(x),
