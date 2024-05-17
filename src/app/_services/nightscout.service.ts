@@ -1024,6 +1024,30 @@ schlechten Internetverbindung.`);
       }
     }
 
+    /**
+     *  check all treatments for durations that span more than the day of the treatment
+     */
+    for (let i = 0; i < list.treatments.length; i++) {
+      const t = list.treatments[i];
+      const type = t.eventType.toLowerCase();
+      if (type === 'note' && t.duration != null) {
+        const until = new Date(t.createdAt.getTime() + t.duration * 1000);
+        const check = new Date(t.createdAt.getTime());
+        check.setHours(23, 59, 59);
+        if (until.getTime() > check.getTime()) {
+          // if a treatment is discovered cut the duration to the end of the day
+          // and append a new treatment with a new duration to the list of treatments
+          const t1 = t.copy;
+          t1.createdAt = Utils.addDateDays(t1.createdAt, 1);
+          t1.createdAt.setHours(0, 0, 0);
+          t1.duration = (until.getTime() - check.getTime()) / 1000;
+          t.duration = (check.getTime() - t.createdAt.getTime()) / 1000;
+          list.treatments.push(t1);
+        }
+      }
+    }
+    list.treatments.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
+
     for (let i = 0; i < list.treatments.length; i++) {
       const t = list.treatments[i];
       const type = t.eventType.toLowerCase();
