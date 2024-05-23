@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {DataService} from '@/_services/data.service';
+import {EnvironmentService} from '@/_services/environment.service';
 
 @Component({
   selector: 'app-launch',
@@ -11,7 +12,9 @@ export class LaunchComponent {
   svgCollection: SafeHtml;
 
   constructor(public ds: DataService,
+              public env: EnvironmentService,
               public sanitizer: DomSanitizer) {
+    env.settingsFilename = 'nightrep-settings-demo';
   }
 
   ngOnInit(): void {
