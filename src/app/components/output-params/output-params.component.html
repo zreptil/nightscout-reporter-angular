@@ -100,6 +100,9 @@
     <mat-checkbox [(ngModel)]="globals.ppShowDurationWarning" class="chk" i18n="label for duration warning">
       Warnung anzeigen, wenn die Erstellung länger dauern kann
     </mat-checkbox>
+    <mat-checkbox [(ngModel)]="globals.pp24HourFormat" class="chk" i18n="label for 24 hour format">
+      Zeitformat mit 24 Stunden (ansonsten AM / PM)
+    </mat-checkbox>
     <div class="line">
       <mat-form-field long>
         <mat-label i18n="label for max basalprecision in printparams">Stunden, die Werte nach einem Sensorstart ignoriert werden:</mat-label>

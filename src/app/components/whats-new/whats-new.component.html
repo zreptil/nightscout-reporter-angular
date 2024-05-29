@@ -5,6 +5,27 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(43.8)">
+      <span i18n="version">Version</span><span i18n="v438">4.3.8 - 29.05.2024</span>
+    </h2>
+    <ul [class]="classFor(43.8)">
+      <li class="added" i18n="1438a1">
+        Es gibt jetzt in den Ausgabeparametern eine Option, mit der festgelegt wird, ob
+        Zeiten im 24 Stunden oder 12 Stunden Format angezeigt werden sollen. Bisher wurde
+        das anhand der Sprache festgelegt. Englisch (GB und US) hatte dabei das 12 Stunden
+        Format, alle anderen das 24 Stunden Format. Falls das nicht stimmt, dann einfach die
+        Option umschalten.
+      </li>
+      <li class="added" i18n="1438a2">
+        Wie ich kürzlich erfahren habe, gibt es auf dem Nightscout Server auch die Möglichkeit,
+        das Problem mit CORS noch weiter zu verschärfen, indem man die Variable CORS_ALLOW_ORIGIN
+        mit erlaubten URLs befüllt. CORS verhindert zwar in keiner Weise den Zugriff auf die API von
+        Programmen, die nicht im Browser laufen, aber das ist eine weitere Hürde beim Zugriff für
+        Programme wie Nightscout Reporter. Deswegen wurde der Hinweis bei Verbindungsproblemen
+        in den Einstellungen erweitert, um auf das mögliche Vorhandensein dieser Variable auf dem
+        Server hinzuweisen.
+      </li>
+    </ul>
     <h2 (click)="click(43.7)">
       <span i18n="version">Version</span><span i18n="v437">4.3.7 - 02.05.2024</span>
     </h2>

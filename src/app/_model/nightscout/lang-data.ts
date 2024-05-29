@@ -1,4 +1,5 @@
 import {CrowdinData} from '@/_model/nightscout/crowdin-data';
+import {GLOBALS} from '@/_model/globals-data';
 
 export class LangData {
 
@@ -24,6 +25,9 @@ export class LangData {
   }
 
   get is24HourFormat(): boolean {
+    if (GLOBALS.pp24HourFormat !== null) {
+      return GLOBALS.pp24HourFormat;
+    }
     switch (this.code) {
       case 'en-US':
       case 'en-GB':

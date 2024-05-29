@@ -596,6 +596,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
         GLOBALS.publicUsername = null;
       }
       GLOBALS.userInfo = JsonData.toNumber(json.s16, 0);
+      GLOBALS.pp24HourFormat = JsonData.toBool(json.s17, true);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromSharedJson`);
     }

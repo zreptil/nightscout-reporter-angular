@@ -106,6 +106,7 @@ export class GlobalsData extends Settings {
   ppBasalPrecisionIdx = 0;
   ppShowDurationWarning = true;
   ppShowSlowServerWarning = true;
+  pp24HourFormat = true;
   isWatchColor = true;
   maxGlucAge = 14;
   timestamp = 0;
@@ -386,7 +387,7 @@ export class GlobalsData extends Settings {
   }
 
   get msgUrlFailureHerokuapp(): string {
-    return $localize`In der Variable ENABLE muss das Wort "cors" stehen, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen.`;
+    return $localize`In der Variable ENABLE muss das Wort "cors" stehen, damit externe Tools wie dieses hier auf die Daten zugreifen dürfen. Falls der Server noch über die Variable CORS_ALLOW_ORIGIN verfügt, muss sichergestellt sein, dass dort entweder die aktuelle URL (@${location.href}@) oder @*@ eingetragen ist.`;
   }
 
   get msgUrlFailure10be(): string {
@@ -581,6 +582,7 @@ export class GlobalsData extends Settings {
       + `,"s14":"${GLOBALS.apiAuth}"`
       + `,"s15":"${GLOBALS.publicUsername ?? ''}"`
       + `,"s16":"${GLOBALS.userInfo ?? 0}"`
+      + `,"s17":"${GLOBALS.pp24HourFormat ? 'true' : 'false'}"`
       + `}`;
   }
 
