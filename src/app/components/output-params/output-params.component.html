@@ -88,9 +88,16 @@
     <mat-checkbox [(ngModel)]="globals.ppShowUrlInPDF" class="chk" i18n="label for checkbox to show nightscout url in footer">
       Nightscout Url in der Fusszeile des PDFs anzeigen
     </mat-checkbox>
-    <mat-checkbox [(ngModel)]="globals.ppFixAAPS30" class="chk" i18n="label for fix for AAPS 3.0">
-      Korrektur für Datenänderungen in AAPS 3.0
-    </mat-checkbox>
+    <div class="line">
+      <mat-checkbox [(ngModel)]="globals.ppFixAAPS30"
+                    class="chk"
+                    i18n="label for fix for AAPS 3.0">
+        Korrektur für Datenänderungen in AAPS 3.0
+      </mat-checkbox>
+      <div (click)="ss.clickHelp($event,'msgFixAAPS30')" help>
+        <mat-icon>help_outline</mat-icon>
+      </div>
+    </div>
     <mat-checkbox [(ngModel)]="globals.ppShowHbA1Cmmol" class="chk" i18n="label for checkbox to show hba1c in mmol">
       HbA1C in mmol/mol anzeigen
     </mat-checkbox>

@@ -409,4 +409,12 @@ export class SessionService {
   closeAllPopups(): void {
     this.dialog.closeAll();
   }
+
+  clickHelp(evt: MouseEvent, key: string) {
+    const cfg = new PrintTemplate(this.pdf);
+    cfg._title = $localize`Hilfe`;
+    cfg.help = (GLOBALS as any)[key];
+    this.showPopup('helpview', cfg);
+    evt.stopPropagation();
+  }
 }

@@ -12,7 +12,6 @@ export class PrintTemplate extends BasePrint {
   override params = [
     new ParamInfo(0, 'Parameter', {boolValue: false}),
   ];
-
   showParameter = false;
 
   constructor(ps: PdfService, suffix: string = null) {
@@ -24,8 +23,10 @@ export class PrintTemplate extends BasePrint {
     return $localize`Parameter für PrintTemplate`;
   }
 
+  _title = $localize`Template`;
+
   override get title(): string {
-    return $localize`Template`;
+    return this._title;
   }
 
   override get isDebugOnly(): boolean {

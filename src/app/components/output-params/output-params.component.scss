@@ -113,6 +113,12 @@ div.line {
   width: 100%;
 }
 
+[help] {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .functions {
   display: flex;
   flex-flow: column;
