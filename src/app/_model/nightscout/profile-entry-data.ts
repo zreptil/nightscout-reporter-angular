@@ -38,7 +38,8 @@ export class ProfileEntryData extends JsonData {
   }
 
   get localDiff(): number {
-    return this._timezone.localDiff;
+    console.log(this._timezone?.localDiff);
+    return this._timezone?.localDiff ?? 0;
   }
 
   get hash(): string {
@@ -102,6 +103,7 @@ export class ProfileEntryData extends JsonData {
 
   static fromJson(json: any, timezone: ProfileTimezone, timeshift: number,
                   percentage = 1.0, isReciprocal = false): ProfileEntryData {
+    // timezone = null;
     const ret = new ProfileEntryData(timezone);
     if (json == null) {
       return ret;
@@ -137,7 +139,7 @@ export class ProfileEntryData extends JsonData {
   time(date: Date, adjustLocalForTime = false): Date {
     let hour = this._time.getHours();
     if (adjustLocalForTime) {
-      hour += this._timezone.localDiff;
+      hour += this._timezone?.localDiff ?? 0;
     }
     hour = hour % 24;
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, this._time.getMinutes(), this._time.getSeconds());

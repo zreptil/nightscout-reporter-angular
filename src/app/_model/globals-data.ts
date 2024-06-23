@@ -59,6 +59,10 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
+  msgFixAAPS30 = $localize`Die Erstellung der PDFs kann extrem lange dauern. Das liegt an einer Flut von Profil-Switches, die
+        durch ein Plugin für die Automatisierung erstellt werden. Das verursacht einen Profil-Switch alle 4 Minuten mit
+        Speicherung des kompletten Profils. Wenn die Option aktiv ist, dann werden diese Profil-Switches aussortiert
+        und ermöglichen dadurch die Erstellung des PDFs. Diese Profil-Switches sind dann in den PDFs nicht mehr sichtbar.`;
   sharedCheck = new SharedCheck();
   titles: any = {
     settings: $localize`Einstellungen`,
@@ -70,7 +74,6 @@ export class GlobalsData extends Settings {
     welcome: $localize`Willkommen bei Nightscout Reporter!`,
     whatsnew: $localize`Was bisher geschah...`
   };
-
   avoidSaveAndLoad = false;
   userList: UserData[] = [];
   shortcutList: ShortcutData[] = [];
@@ -468,10 +471,6 @@ export class GlobalsData extends Settings {
     return (this.ppBasalPrecisionIdx ?? 0) > 0 ? this.basalPrecisionValues[this.ppBasalPrecisionIdx] : this.basalPrecisionAuto;
   }
 
-  get basalPrecisionValues(): number[] {
-    return [null, 0, 1, 2, 3];
-  }
-
   // get pdfControlMaxSize(): number {
   //   return this.pdfCreationMaxSize / Settings.PDFDIVIDER;
   // }
@@ -493,6 +492,10 @@ export class GlobalsData extends Settings {
   //   value = Math.min(value, Settings.PDFUNLIMITED);
   //   this._pdfCreationMaxSize = value;
   // }
+
+  get basalPrecisionValues(): number[] {
+    return [null, 0, 1, 2, 3];
+  }
 
   get asDeviceString(): string {
     const temp = [];
@@ -940,6 +943,8 @@ export class GlobalsData extends Settings {
     return date;
   }
 
+  // calculate a value that is saved in a unit depending
+
   fmtBasal(value: number, params?: { dontRound?: boolean }) {
     params ??= {};
     params.dontRound ??= false;
@@ -949,8 +954,6 @@ export class GlobalsData extends Settings {
     }
     return this.fmtNumber(value, precision, 0, 'null', params.dontRound);
   }
-
-  // calculate a value that is saved in a unit depending
 
   fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
     params ??= {};

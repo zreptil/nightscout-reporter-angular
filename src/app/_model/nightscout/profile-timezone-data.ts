@@ -4,7 +4,7 @@ export class ProfileTimezone {
   // noinspection JSUnusedLocalSymbols
   constructor(public name: string, isInitializing = false) {
     // Log.todo('Die Locale muss noch korrekt implementiert werden!');
-    const date = new Date();
-    this.localDiff = date.getTimezoneOffset() / 60; // d.diff(new Date(0), 'hour') + JsonData.hourDiff;
+    // const date = new Date();
+    this.localDiff = 0; //date.getTimezoneOffset() / 60; // d.diff(new Date(0), 'hour') + JsonData.hourDiff;
   }
 }
