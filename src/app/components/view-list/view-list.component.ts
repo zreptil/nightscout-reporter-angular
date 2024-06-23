@@ -24,14 +24,14 @@ export class ViewListComponent implements OnInit {
   }
 
   expansionPanelClicked(evt: MouseEvent, cfg: FormConfig) {
-  if (!cfg.opened) {
+    if (!cfg.opened) {
 //   if (evt.currentTarget.attributes['dontclick'] == 'true') {
 //   evt.currentTarget.removeAttribute('dontclick');
 //   return;
 // }
-cfg.checked = !cfg.checked;
-}
-}
+      cfg.checked = !cfg.checked;
+    }
+  }
 
   clickTileHelp(evt: MouseEvent, cfg: FormConfig) {
     this.ss.showPopup('helpview', cfg)
