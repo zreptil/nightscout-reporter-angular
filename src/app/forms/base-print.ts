@@ -314,27 +314,27 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get colText(): string {
-    return this.colors['colText'];
+    return this.colors.colText;
   }
 
   get colInfo(): string {
-    return this.colors['colInfo'];
+    return this.colors.colInfo;
   }
 
   get colSubTitle(): string {
-    return this.colors['colSubTitle'];
+    return this.colors.colSubTitle;
   }
 
   get colLine(): string {
-    return this.colors['colLine'];
+    return this.colors.colLine;
   }
 
   get colValue(): string {
-    return this.colors['colValue'];
+    return this.colors.colValue;
   }
 
   get colBasalProfile(): string {
-    return this.colors['colBasalProfile'];
+    return this.colors.colBasalProfile;
   }
 
   get colBasalDay(): string {
@@ -342,43 +342,43 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get colBasalFont(): string {
-    return this.colors['colBasalFont'];
+    return this.colors.colBasalFont;
   }
 
   get colProfileSwitch(): string {
-    return this.colors['colProfileSwitch'];
+    return this.colors.colProfileSwitch;
   }
 
   get colBolus(): string {
-    return this.colors['colBolus'];
+    return this.colors.colBolus;
   }
 
   get colBolusExt(): string {
-    return this.colors['colBolusExt'];
+    return this.colors.colBolusExt;
   }
 
   get colCarbBolus(): string {
-    return this.colors['colCarbBolus'];
+    return this.colors.colCarbBolus;
   }
 
   get colLow(): string {
-    return this.colors['colLow'];
+    return this.colors.colLow;
   }
 
   get colNormLow(): string {
-    return this.colors['colNormLow'];
+    return this.colors.colNormLow;
   }
 
   get colNorm(): string {
-    return this.colors['colNorm'];
+    return this.colors.colNorm;
   }
 
   get colNormHigh(): string {
-    return this.colors['colNormHigh'];
+    return this.colors.colNormHigh;
   }
 
   get colHigh(): string {
-    return this.colors['colHigh'];
+    return this.colors.colHigh;
   }
 
   get colLowBack(): string {
@@ -402,139 +402,139 @@ export abstract class BasePrint extends FormConfig {
   }
 
   get colTargetArea(): string {
-    return this.colors['colTargetArea'];
+    return this.colors.colTargetArea;
   }
 
   get colTargetValue(): string {
-    return this.colors['colTargetValue'];
+    return this.colors.colTargetValue;
   }
 
   get colCarbs(): string {
-    return this.colors['colCarbs'];
+    return this.colors.colCarbs;
   }
 
   get colCarbsText(): string {
-    return this.colors['colCarbsText'];
+    return this.colors.colCarbsText;
   }
 
   get colDurationNotes(): string {
-    return this.colors['colDurationNotes'];
+    return this.colors.colDurationNotes;
   }
 
   get colDurationNotesText(): string {
-    return this.colors['colDurationNotesText'];
+    return this.colors.colDurationNotesText;
   }
 
   get colDurationNotesBar(): string {
-    return this.colors['colDurationNotesBar'];
+    return this.colors.colDurationNotesBar;
   }
 
   get colDurationNotesLine(): string {
-    return this.colors['colDurationNotesLine'];
+    return this.colors.colDurationNotesLine;
   }
 
   get colNotes(): string {
-    return this.colors['colNotes'];
+    return this.colors.colNotes;
   }
 
   get colNotesLine(): string {
-    return this.colors['colNotesLine'];
+    return this.colors.colNotesLine;
   }
 
   get colGlucValues(): string {
-    return this.colors['colGlucValues'];
+    return this.colors.colGlucValues;
   }
 
   get colBloodValues(): string {
-    return this.colors['colBloodValues'];
+    return this.colors.colBloodValues;
   }
 
   get colHbA1c(): string {
-    return this.colors['colHbA1c'];
+    return this.colors.colHbA1c;
   }
 
   get colWeekDays(): string[] {
-    return this.colors['colWeekDays'];
+    return this.colors.colWeekDays;
   }
 
   get colWeekDaysText(): string[] {
-    return this.colors['colWeekDaysText'];
+    return this.colors.colWeekDaysText;
   }
 
   get colExercises(): string {
-    return this.colors['colExercises'];
+    return this.colors.colExercises;
   }
 
   get colExerciseText(): string {
-    return this.colors['colExerciseText'];
+    return this.colors.colExerciseText;
   }
 
   get colTempOverrides(): string {
-    return this.colors['colTempOverrides'];
+    return this.colors.colTempOverrides;
   }
 
   get colTempOverridesText(): string {
-    return this.colors['colTempOverridesText'];
+    return this.colors.colTempOverridesText;
   }
 
   get colCGPLine(): string {
-    return this.colors['colCGPLine'];
+    return this.colors.colCGPLine;
   }
 
   get colCGPHealthyLine(): string {
-    return this.colors['colCGPHealthyLine'];
+    return this.colors.colCGPHealthyLine;
   }
 
   get colCGPHealthyFill(): string {
-    return this.colors['colCGPHealthyFill'];
+    return this.colors.colCGPHealthyFill;
   }
 
   get colCGPPatientLine(): string {
-    return this.colors['colCGPPatientLine'];
+    return this.colors.colCGPPatientLine;
   }
 
   get colCGPPatientFill(): string {
-    return this.colors['colCGPPatientFill'];
+    return this.colors.colCGPPatientFill;
   }
 
   get colIOBFill(): string {
-    return this.colors['colIOBFill'];
+    return this.colors.colIOBFill;
   }
 
   get colIOBLine(): string {
-    return this.colors['colIOBLine'];
+    return this.colors.colIOBLine;
   }
 
   get colCOBFill(): string {
-    return this.colors['colCOBFill'];
+    return this.colors.colCOBFill;
   }
 
   get colCOBLine(): string {
-    return this.colors['colCOBLine'];
+    return this.colors.colCOBLine;
   }
 
   get colTrendCrit(): string {
-    return this.colors['colTrendCrit'];
+    return this.colors.colTrendCrit;
   }
 
   get colTrendWarn(): string {
-    return this.colors['colTrendWarn'];
+    return this.colors.colTrendWarn;
   }
 
   get colTrendNorm(): string {
-    return this.colors['colTrendNorm'];
+    return this.colors.colTrendNorm;
   }
 
   get colCOBDaily(): string {
-    return this.colors['colCOBDaily'];
+    return this.colors.colCOBDaily;
   }
 
   get colIOBDaily(): string {
-    return this.colors['colIOBDaily'];
+    return this.colors.colIOBDaily;
   }
 
   get colWarning(): string {
-    return this.colors['colWarning'];
+    return this.colors.colWarning;
   }
 
   _isPortrait = true;
