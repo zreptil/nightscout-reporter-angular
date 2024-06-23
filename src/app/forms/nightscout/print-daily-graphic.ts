@@ -1636,7 +1636,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         }
       ]
     };
-    if (basalSum != 0) {
+    if (basalSum !== 0) {
       ret.stack.push(
         {
           relativePosition: {x: this.cm(xo), y: this.cm(yo + this.graphHeight + this.basalHeight + this.basalTop + 0.2)},
@@ -1652,7 +1652,6 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         },
       );
     }
-    let lastY = -1.0;
     const areaPoints: any[] = [];
     const area: any = {
       type: 'polyline',
@@ -1686,8 +1685,12 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     }
 
     if (!displayProfile) {
-      areaPoints.push({x: this.cm(this.basalX(new Date(0, 1, 1, 0, 0))), y: this.cm(this.basalY(0.0))});
+      areaPoints.push({
+        x: this.cm(this.basalX(new Date(0, 1, 1, 0, 0))),
+        y: this.cm(this.basalY(0.0))
+      });
     }
+    let lastY = -1.0;
     for (const entry of temp) {
       const time = entry.time(day.date, useProfile);
       let x = this.basalX(time);
