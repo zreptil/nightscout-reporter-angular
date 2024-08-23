@@ -296,6 +296,15 @@ export class TreatmentData extends JsonData {
       && ret.eventType.toLowerCase() === 'smb') {
       ret.isSMB = true;
     }
+
+    if (ret.isBolusWizard && ret._carbs === 0) {
+      try {
+        const temp = JSON.parse(json.bolusCalculatorResult);
+        ret._carbs = +temp.carbs;
+        // ignore: empty_catches
+      } catch (ex) {
+      }
+    }
     return ret;
   }
 

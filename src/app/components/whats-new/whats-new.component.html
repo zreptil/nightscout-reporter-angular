@@ -5,15 +5,25 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(44.0)">
+      <span i18n="version">Version</span><span i18n="v440">4.4.0 - 23.08.2024</span>
+    </h2>
+    <ul [class]="classFor(44.0)">
+      <li class="added" i18n="1440a1">
+        Bei Auswertung der Behandlungen wurden Bolus Wizard Einträge ignoriert. Auch diese
+        werden jetzt berücksichtigt, solange es keinen Eintrag mit gleichem Zeitpunkt gibt,
+        der einen Mahlzeitbolus beinhaltet.
+      </li>
+    </ul>
     <h2 (click)="click(43.9)">
       <span i18n="version">Version</span><span i18n="v439">4.3.9 - 23.06.2024</span>
     </h2>
     <ul [class]="classFor(43.9)">
-      <li class="fixed" i18n="1439f1">
+      <li class="fixed" i18n="v439f1">
         Bei Auswertung der Profil-Switches wurde eine falsche Zeitzoneneinstellung verwendet,
         was unter Umständen zu merkwürdigen Linienverläufen der Basalrate führte. Das wurde korrigiert.
       </li>
-      <li class="added" i18n="1439a1">
+      <li class="added" i18n="v439a1">
         Bei den Ausgabe Parametern kann für die Korrektur für AAPS 3.0 ein Hilfetext angezeigt werden.
         Wenn mir weitere erklärungswürdige Punkte in Nightscout Reporter auffallen, werde ich diese
         ebenfalls mit Hilfetexten versehen.
@@ -23,14 +33,14 @@
       <span i18n="version">Version</span><span i18n="v438">4.3.8 - 29.05.2024</span>
     </h2>
     <ul [class]="classFor(43.8)">
-      <li class="added" i18n="1438a1">
+      <li class="added" i18n="v438a1">
         Es gibt jetzt in den Ausgabeparametern eine Option, mit der festgelegt wird, ob
         Zeiten im 24 Stunden oder 12 Stunden Format angezeigt werden sollen. Bisher wurde
         das anhand der Sprache festgelegt. Englisch (GB und US) hatte dabei das 12 Stunden
         Format, alle anderen das 24 Stunden Format. Falls das nicht stimmt, dann einfach die
         Option umschalten.
       </li>
-      <li class="added" i18n="1438a2">
+      <li class="added" i18n="v438a2">
         Wie ich kürzlich erfahren habe, gibt es auf dem Nightscout Server auch die Möglichkeit,
         das Problem mit CORS noch weiter zu verschärfen, indem man die Variable CORS_ALLOW_ORIGIN
         mit erlaubten URLs befüllt. CORS verhindert zwar in keiner Weise den Zugriff auf die API von
