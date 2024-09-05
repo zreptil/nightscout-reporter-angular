@@ -32,11 +32,28 @@ Initial steps to compile, deploy, and run nightscout reporter on your own infras
 
 You can run your own nightscout-reporter instance by calling the URL of your web-server in a browser.
 
-## IIS Hosting
+### IIS Hosting
 
-### Web.config
+#### Web.config
 
 A web.config file is provided in the root-directory of the deployment.
+
+## Installation with Docker
+### Build
+* git clone the repository
+* Run the docker build command in the root directory of the project. This will create a docker image with the name "nightscout-reporter".
+```
+docker build . -t nightscout-reporter
+```
+
+### Run
+* Run the docker image with the following command. This will start a container with the name "nightscout-reporter" and expose the port 8088 to the host.
+```
+docker run --name some-nginx -d -p 8088:80 nightscout-reporter
+```
+
+> you can choose any port you want to expose to the host. Just replace the 8088 with the port you want to use.
+
 
 ## Internationalization
 
