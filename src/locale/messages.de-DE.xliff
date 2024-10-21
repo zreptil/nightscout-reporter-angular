@@ -82,7 +82,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">666</context>
+          <context context-type="linenumber">669</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-themes/view-themes.component.ts</context>
@@ -105,7 +105,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">883</context>
+          <context context-type="linenumber">886</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5982204146953564471" datatype="html">
@@ -162,7 +162,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">895</context>
+          <context context-type="linenumber">898</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2883646110198626293" datatype="html">
@@ -212,7 +212,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">891</context>
+          <context context-type="linenumber">894</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
@@ -628,8 +628,8 @@
           <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5539321303339478818" datatype="html">
-        <source>0,0 bis 2,0</source>
+      <trans-unit id="6086221697515123438" datatype="html">
+        <source>bis 2,0</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">140</context>
@@ -1853,42 +1853,42 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         <source>Bitte wählen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">665</context>
+          <context context-type="linenumber">668</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8360301681112167508" datatype="html">
         <source>Die Daten beinhalten Einträge, die mit verschiedenen Geräten erfasst wurden. Bitte die Geräte auswählen, deren Daten ausgewertet werden sollen. Wenn keine Geräte ausgewählt werden, werden die Daten zusammengefasst.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">673</context>
+          <context context-type="linenumber">676</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8229774050844619452" datatype="html">
         <source>Verarbeite Daten...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">755</context>
+          <context context-type="linenumber">758</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2190934274403864185" datatype="html">
         <source>Verarbeite Daten für <x id="PH" equiv-text="key"/>...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">757</context>
+          <context context-type="linenumber">760</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1334020886951778216" datatype="html">
         <source>Die Erstellung wird aus folgenden Gründen länger dauern:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">822</context>
+          <context context-type="linenumber">825</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1730833417169771924" datatype="html">
         <source>Soll die Erstellung fortgesetzt werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">823</context>
+          <context context-type="linenumber">826</context>
         </context-group>
       </trans-unit>
       <trans-unit id="861998933050632103" datatype="html">
@@ -1897,42 +1897,42 @@ kann an einer fehlerhaften Konfiguration auf dem Server liegen oder an einer
 schlechten Internetverbindung.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">865,867</context>
+          <context context-type="linenumber">868,870</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5424143238567006958" datatype="html">
         <source>Die Daten wurden von folgendem Server geladen und die Antwort benötigte insgesamt die angegebene Zeit:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">869</context>
+          <context context-type="linenumber">872</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7183609650288511006" datatype="html">
         <source>Die Daten wurden von den folgenden Servern geladen und die Antwort benötigte insgesamt die angegebene Zeit:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">870</context>
+          <context context-type="linenumber">873</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1545610362746601839" datatype="html">
         <source>Sekunden</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">874</context>
+          <context context-type="linenumber">877</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2430386112697125856" datatype="html">
         <source>Diese Meldung kann im Dialog Ausgabe Parameter deaktiviert werden.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">877</context>
+          <context context-type="linenumber">880</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4628571871438022934" datatype="html">
         <source>mehr als <x id="PH" equiv-text="max"/> Profilwechsel (<x id="PH_1" equiv-text="data.profiles.length"/>)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">911</context>
+          <context context-type="linenumber">914</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3117299459475029064" datatype="html">

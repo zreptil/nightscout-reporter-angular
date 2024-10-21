@@ -569,10 +569,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
               temp.push(t);
             }
           }
+          //   "created_at": "2024-08-22T04:57:33.360Z",
+          //   "created_at": "2024-08-22T05:12:33.360Z",
           for (const t of temp) {
             // if the treatment is a bolus wizard entry there could exist an entry with the same timestamp
             // but as mealbolus. In this case the entry with the bolus wizard is skipped.
-            if (t.isBolusWizard && temp.some(entry => entry.isMealBolus && entry.createdAt.getTime() === t.createdAt.getTime())) {
+            if (t._carbs > 0 && t.isBolusWizard && temp.some(entry => entry.isMealBolus
+              && entry.createdAt.getTime() === (t.createdAt.getTime() + t.bwpGlucoseDifference * 1000 * 60))) {
               continue;
             } else if (t.isExercise) {
               hasExercise = true;

@@ -81,7 +81,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">666</context>
+          <context context-type="linenumber">669</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-themes/view-themes.component.ts</context>
@@ -104,7 +104,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">883</context>
+          <context context-type="linenumber">886</context>
         </context-group>
         <source>Warning</source>
       </trans-unit>
@@ -161,7 +161,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">895</context>
+          <context context-type="linenumber">898</context>
         </context-group>
         <source>Error</source>
       </trans-unit>
@@ -208,7 +208,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">891</context>
+          <context context-type="linenumber">894</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
@@ -616,21 +616,21 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">132</context>
         </context-group>
-        <source>Glycemic variability represents the variation of values around the glycemic average value in percent.</source>
+        <source>Coefficient of Variability represents the variation of values around the glycaemic average value in percent.</source>
       </trans-unit>
       <trans-unit id="msgPGRInfo" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">136</context>
         </context-group>
-        <source>The Prognostic Glycemic Riskparameter represents the risk of long-term complications (not proven by studies up to now).</source>
+        <source>The Prognostic Glycaemic Risk parameter represents the risk of long-term complications (not proven by studies up to now).</source>
       </trans-unit>
-      <trans-unit id="5539321303339478818" datatype="html" approved="yes">
+      <trans-unit id="6086221697515123438" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">140</context>
         </context-group>
-        <source>0,0 to 2,0</source>
+        <source>to 2.0</source>
       </trans-unit>
       <trans-unit id="5962004825937570815" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -644,7 +644,7 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">148</context>
         </context-group>
-        <source>2,1 to 3,0</source>
+        <source>2.1 to 3.0</source>
       </trans-unit>
       <trans-unit id="6012456275191603911" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -658,7 +658,7 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">156</context>
         </context-group>
-        <source>3,1 to 4,0</source>
+        <source>3.1 to 4.0</source>
       </trans-unit>
       <trans-unit id="7455759543878757138" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -672,7 +672,7 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">164</context>
         </context-group>
-        <source>4,1 to 4,5</source>
+        <source>4.1 to 4.5</source>
       </trans-unit>
       <trans-unit id="7031259184374415421" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -686,7 +686,7 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">172</context>
         </context-group>
-        <source>from 4,6</source>
+        <source>from 4.6</source>
       </trans-unit>
       <trans-unit id="7168784554971184029" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -759,7 +759,7 @@
           <context context-type="sourcefile">src/app/_model/nightscout/pentagon-data.ts</context>
           <context context-type="linenumber">227</context>
         </context-group>
-        <source>The mean glycemic value in specified period.</source>
+        <source>The mean glycaemic value in specified period.</source>
       </trans-unit>
       <trans-unit id="78489376954995556" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -1526,7 +1526,7 @@
           <context context-type="sourcefile">src/app/_services/data.service.ts</context>
           <context context-type="linenumber">228</context>
         </context-group>
-        <source>there was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds from <x id="PH_1" equiv-text="url"/></source>
+        <source>There was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds from <x id="PH_1" equiv-text="url"/></source>
       </trans-unit>
       <trans-unit id="3163993145568982076" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -1840,84 +1840,84 @@
       <trans-unit id="6663654121912104043" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">665</context>
+          <context context-type="linenumber">668</context>
         </context-group>
         <source>Please Select</source>
       </trans-unit>
       <trans-unit id="8360301681112167508" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">673</context>
+          <context context-type="linenumber">676</context>
         </context-group>
         <source>The data includes entries recorded using various devices. Please select the devices whose data should be used. If no devices are selected, the data is accumulated.</source>
       </trans-unit>
       <trans-unit id="8229774050844619452" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">755</context>
+          <context context-type="linenumber">758</context>
         </context-group>
         <source>Processing data...</source>
       </trans-unit>
       <trans-unit id="2190934274403864185" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">757</context>
+          <context context-type="linenumber">760</context>
         </context-group>
         <source>Processing data for <x id="PH" equiv-text="key"/>...</source>
       </trans-unit>
       <trans-unit id="1334020886951778216" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">822</context>
+          <context context-type="linenumber">825</context>
         </context-group>
         <source>Creation will take longer for the following reasons:</source>
       </trans-unit>
       <trans-unit id="1730833417169771924" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">823</context>
+          <context context-type="linenumber">826</context>
         </context-group>
         <source>Should the creation continue?</source>
       </trans-unit>
       <trans-unit id="861998933050632103" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">865,867</context>
+          <context context-type="linenumber">868,870</context>
         </context-group>
         <source>Access to the Nightscout server is extremely slow. This could be due to an incorrect configuration on the server or a poor internet connection.</source>
       </trans-unit>
       <trans-unit id="5424143238567006958" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">869</context>
+          <context context-type="linenumber">872</context>
         </context-group>
         <source>The data was loaded from the following server and the response took the specified time in total:</source>
       </trans-unit>
       <trans-unit id="7183609650288511006" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">870</context>
+          <context context-type="linenumber">873</context>
         </context-group>
         <source>The data was loaded from the following servers and the response took the specified time in total:</source>
       </trans-unit>
       <trans-unit id="1545610362746601839" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">874</context>
+          <context context-type="linenumber">877</context>
         </context-group>
         <source>Seconds</source>
       </trans-unit>
       <trans-unit id="2430386112697125856" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">877</context>
+          <context context-type="linenumber">880</context>
         </context-group>
         <source>This message can be deactivated in the Output Parameters dialogue.</source>
       </trans-unit>
       <trans-unit id="4628571871438022934" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/nightscout.service.ts</context>
-          <context context-type="linenumber">911</context>
+          <context context-type="linenumber">914</context>
         </context-group>
         <source>more than <x id="PH" equiv-text="max"/> profile change (<x id="PH_1" equiv-text="data.profiles.length"/>)</source>
       </trans-unit>
@@ -5692,7 +5692,7 @@ strange basal rate lines. This has been corrected. </source>
           <context context-type="linenumber">1208,1209</context>
         </context-group>
         <note priority="1" from="description">v14f2</note>
-        <source>The values VarK and ToR in the CGP are correctly output for day and week graphics in the legend and in the graphic.</source>
+        <source> The values CV and ToR in the CGP are correctly output for day and week graphics in the legend and in the graphic. </source>
       </trans-unit>
       <trans-unit id="2852591961759458780" datatype="html" approved="yes">
         <context-group purpose="location">
@@ -7805,14 +7805,14 @@ strange basal rate lines. This has been corrected. </source>
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">689</context>
         </context-group>
-        <source>Glycemic Variability Index (GVI)</source>
+        <source>Glycaemic Variability Index (GVI)</source>
       </trans-unit>
       <trans-unit id="2560018446621143068" datatype="html" approved="yes">
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/forms/base-print.ts</context>
           <context context-type="linenumber">693</context>
         </context-group>
-        <source>Patient Glycemic Status (PGS)</source>
+        <source>Patient Glycaemic Status (PGS)</source>
       </trans-unit>
       <trans-unit id="4285342514168660953" datatype="html" approved="yes">
         <context-group purpose="location">
