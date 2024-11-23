@@ -331,8 +331,8 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
     try {
       let data = await this.request('assets/settings.json', {asJson: true, showError: false});
       this.extractJsonOverwrites(data);
-      data = await this.request('assets/secret.json', {asJson: true, showError: false});
-      this.extractJsonOverwrites(data);
+      // data = await this.request('assets/secret.json', {asJson: true, showError: false});
+      // this.extractJsonOverwrites(data);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.loadSettings`);
     }
