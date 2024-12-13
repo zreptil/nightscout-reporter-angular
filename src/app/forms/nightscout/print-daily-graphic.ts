@@ -579,6 +579,8 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
     if (GLOBALS.glucMaxValue != null) {
       this.glucMax = GLOBALS.glucMaxValues[GLOBALS.ppGlucMaxIdx];
+    } else {
+      this.glucMax += 50;
     }
     this.ieMax = Math.max(this.ieMax, 3.0);
 
