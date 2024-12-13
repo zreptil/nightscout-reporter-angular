@@ -5,6 +5,15 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(44.1)">
+      <span i18n="version">Version</span><span i18n="v440">4.4.1 - 13.12.2024</span>
+    </h2>
+    <ul [class]="classFor(44.1)">
+      <li class="added" i18n="1441c1">
+        Bei Ermittlung der Obergrenze der Glukosewerte in der Tagesgrafik werden nun auch die temporären
+        Zielbereiche berücksichtigt.
+      </li>
+    </ul>
     <h2 (click)="click(44.0)">
       <span i18n="version">Version</span><span i18n="v440">4.4.0 - 23.08.2024</span>
     </h2>

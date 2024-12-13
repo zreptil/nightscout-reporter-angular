@@ -577,11 +577,15 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       this.ieMax = Math.max(entry.bolusInsulin, this.ieMax);
     }
 
+    const targetMax = this.targets(this.repData)['high'];
+    if (targetMax > this.glucMax) {
+      this.glucMax = targetMax;
+    }
+
     if (GLOBALS.glucMaxValue != null) {
       this.glucMax = GLOBALS.glucMaxValues[GLOBALS.ppGlucMaxIdx];
-    } else {
-      this.glucMax += 50;
     }
+    
     this.ieMax = Math.max(this.ieMax, 3.0);
 
     const vertLines: any = {
