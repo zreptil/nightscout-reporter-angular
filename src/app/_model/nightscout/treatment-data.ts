@@ -19,6 +19,7 @@ export class TreatmentData extends JsonData {
   _percent: number;
   _absolute: number;
   _rate: number;
+  bwpGlucoseDifference: number;
   createdAt: Date;
   enteredBy: string;
   NSClientId: string;
@@ -295,6 +296,22 @@ export class TreatmentData extends JsonData {
     if (!ret.isSMB
       && ret.eventType.toLowerCase() === 'smb') {
       ret.isSMB = true;
+    }
+
+    ret.bwpGlucoseDifference = 0;
+    if (ret.isBolusWizard) {
+      try {
+        const temp = JSON.parse(json.bolusCalculatorResult);
+        if (ret._carbs === 0) {
+          // ret._carbs = +temp.carbs;
+        }
+        ret.bwpGlucoseDifference = JsonData.toNumber(temp.glucoseDifference, 0);
+        if (ret.bwpGlucoseDifference != 0) {
+          //ret.bwpGlucoseDifference--;
+        }
+        // ignore: empty_catches
+      } catch (ex) {
+      }
     }
     return ret;
   }

@@ -137,7 +137,7 @@ export class PentagonData {
   }
 
   static get msgPGR02(): string {
-    return $localize`0,0 bis 2,0`;
+    return $localize`bis 2,0`;
   }
 
   static get msgPGR02Info(): string {

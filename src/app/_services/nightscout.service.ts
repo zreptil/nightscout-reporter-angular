@@ -556,6 +556,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
         let hasExercise = false;
         if (src != null) {
           Log.displayLink(`t${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
+          const temp: TreatmentData[] = [];
           for (const treatment of src) {
             hasData = true;
             const t = TreatmentData.fromJson(treatment);
@@ -563,22 +564,32 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             if (t.enteredBy === 'sync') {
             } else if (!Utils.isEmpty(data.ns.treatments) && t.equals(data.ns.treatments[data.ns.treatments.length - 1])) {
               // duplicate Treatments are removed
-              data.ns.treatments[data.ns.treatments.length - 1].duplicates++;
+              temp[data.ns.treatments.length - 1].duplicates++;
             } else {
-              data.ns.treatments.push(t);
-              if (t.isExercise) {
-                hasExercise = true;
-              } else if (t.isBGCheck) {
-                const entry = new EntryData();
-                entry.id = t.id;
-                entry.time = t.createdAt;
-                entry.device = t.enteredBy;
-                entry.type = 'mbg';
-                entry.mbg = t.glucose * GLOBALS.glucFactor;
-                entry.rawbg = t.glucose;
-                data.ns.bloody.push(entry);
-              }
+              temp.push(t);
             }
+          }
+          //   "created_at": "2024-08-22T04:57:33.360Z",
+          //   "created_at": "2024-08-22T05:12:33.360Z",
+          for (const t of temp) {
+            // if the treatment is a bolus wizard entry there could exist an entry with the same timestamp
+            // but as mealbolus. In this case the entry with the bolus wizard is skipped.
+            if (t._carbs > 0 && t.isBolusWizard && temp.some(entry => entry.isMealBolus
+              && entry.createdAt.getTime() === (t.createdAt.getTime() + t.bwpGlucoseDifference * 1000 * 60))) {
+              continue;
+            } else if (t.isExercise) {
+              hasExercise = true;
+            } else if (t.isBGCheck) {
+              const entry = new EntryData();
+              entry.id = t.id;
+              entry.time = t.createdAt;
+              entry.device = t.enteredBy;
+              entry.type = 'mbg';
+              entry.mbg = t.glucose * GLOBALS.glucFactor;
+              entry.rawbg = t.glucose;
+              data.ns.bloody.push(entry);
+            }
+            data.ns.treatments.push(t);
           }
         }
         // the following code inserts an exercise in the data if there is none present
