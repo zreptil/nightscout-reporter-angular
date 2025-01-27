@@ -1795,7 +1795,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   hasData(src: ReportData): boolean {
-    return (src.dayCount > 0 && src.data.countValid > 0) || this.needed.needsStatus;
+    return (src.dayCount > 0 && (src.data.countValid > 0 || src.data.treatments?.length > 0)) || this.needed.needsStatus;
   }
 
   getEmptyForm(isPortrait: boolean, status: string, params?: { skipFooter?: boolean }): PageData {
@@ -1888,7 +1888,7 @@ export abstract class BasePrint extends FormConfig {
   /// scale.
   drawGraphicGrid(glucMax: number, graphHeight: number, graphWidth: number, vertCvs: any[], horzCvs: any[],
                   horzStack: any[], vertStack: any[], params?:
-                    { glucScale?: number, graphBottom?: number, horzfs?: number, vertfs?: number }): GridData {
+                  { glucScale?: number, graphBottom?: number, horzfs?: number, vertfs?: number }): GridData {
     params ??= {};
     params.glucScale ??= 0.0;
     params.graphBottom ??= 0.0;

@@ -127,6 +127,10 @@ export class OutputParamsComponent implements OnInit {
     return $localize`Standard Zielbereich verwenden (${low} ${unit} - ${high} ${unit})`;
   }
 
+  msgTestData(): string {
+    return $localize`Testdaten generieren`;
+  }
+
   clickExecute() {
     // make sure the value uses the correct factor
     GLOBALS.user.adjustGluc = GLOBALS.user.adjustGluc;

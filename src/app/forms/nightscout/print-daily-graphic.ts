@@ -585,7 +585,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     if (GLOBALS.glucMaxValue != null) {
       this.glucMax = GLOBALS.glucMaxValues[GLOBALS.ppGlucMaxIdx];
     }
-    
+
     this.ieMax = Math.max(this.ieMax, 3.0);
 
     const vertLines: any = {

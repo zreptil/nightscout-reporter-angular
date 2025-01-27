@@ -6,6 +6,14 @@
   </div>
 
   <div mat-dialog-content>
+    @if (ss.mayDebug) {
+      <div class="functions debug">
+        <div i18n="label of area for section general in printparams">Debugging</div>
+        <mat-checkbox [(ngModel)]="globals.createTestData" class="dbg">
+          {{ msgTestData() }}
+        </mat-checkbox>
+      </div>
+    }
     <div class="subtitle">
       <div i18n="label of area for section general in printparams">Allgemeines</div>
       <div class="comparable">

@@ -554,6 +554,24 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           });
         src = await this.ds.requestJson(url, reqParams);
         let hasExercise = false;
+        if (Log.mayDebug && GLOBALS.createTestData) {
+          const date = new Date(urlDate.getTime());
+          date.setHours(12, 0, 0);
+          src.push(
+            {
+              '_id': '0123456789abcdef01234567',
+              'eventType': 'BG Check',
+              'isValid': true,
+              'created_at': date.toISOString(),
+              'enteredBy': 'NRCode',
+              'units': 'mg/dl',
+              'glucose': 120,
+              'glucoseType': 'Finger',
+              'carbs': null,
+              'insulin': null
+            }
+          );
+        }
         if (src != null) {
           Log.displayLink(`t${Utils.fmtDate(begDate)} (${src.length})`, url, {count: src.length, type: 'debug'});
           const temp: TreatmentData[] = [];
@@ -564,9 +582,14 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             if (t.enteredBy === 'sync') {
             } else if (!Utils.isEmpty(data.ns.treatments) && t.equals(data.ns.treatments[data.ns.treatments.length - 1])) {
               // duplicate Treatments are removed
-              temp[data.ns.treatments.length - 1].duplicates++;
+              if (temp[data.ns.treatments.length - 1] != null) {
+                temp[data.ns.treatments.length - 1].duplicates++;
+              }
             } else {
               temp.push(t);
+            }
+            if (t.isBGCheck) {
+              console.log('blut', treatment);
             }
           }
           //   "created_at": "2024-08-22T04:57:33.360Z",

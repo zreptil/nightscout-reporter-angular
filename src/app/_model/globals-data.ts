@@ -105,6 +105,7 @@ export class GlobalsData extends Settings {
   isCreatingPDF = false;
   isDebug = localStorage.getItem('forceDebug') === 'true';
   isBeta = window.location.href.indexOf('/beta/') >= 0;
+  createTestData = false;
   basalPrecisionAuto = 1;
   ppBasalPrecisionIdx = 0;
   ppShowDurationWarning = true;
