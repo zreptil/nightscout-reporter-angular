@@ -588,9 +588,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             } else {
               temp.push(t);
             }
-            if (t.isBGCheck) {
-              console.log('blut', treatment);
-            }
           }
           //   "created_at": "2024-08-22T04:57:33.360Z",
           //   "created_at": "2024-08-22T05:12:33.360Z",
@@ -679,6 +676,10 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
       }
       // if (sendIcon != 'stop') return data;
     } // while begdate < enddate
+
+    if (this.reportData.deviceList.length === 1 && this.reportData.deviceList[0] === '') {
+      this.reportData.deviceList = ['all'];
+    }
     this.reportData.deviceFilter = this.reportData.deviceList;
     this.reportData.deviceDataList = this.reportData.deviceList;
     if (this.reportData.deviceList.length > 1) {

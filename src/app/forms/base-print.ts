@@ -1239,7 +1239,7 @@ export abstract class BasePrint extends FormConfig {
   }
 
   msgValuesVeryLow(value: string): string {
-    return $localize`'Sehr niedrige Werte (< ${value})`;
+    return $localize`Sehr niedrige Werte (< ${value})`;
   }
 
   msgKHBE(value: string): string {
