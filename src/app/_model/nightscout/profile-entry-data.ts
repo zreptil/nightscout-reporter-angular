@@ -34,11 +34,12 @@ export class ProfileEntryData extends JsonData {
   }
 
   get tempAdjusted(): number {
-    return this._absoluteRate != null ? 0 : (this.orgValue == null || this.orgValue === 0 ? 0 : (this.value - this.orgValue) / this.orgValue);
+    return this._absoluteRate != null
+      ? this._absoluteRate
+      : (this.orgValue == null || this.orgValue === 0 ? 0 : (this.value - this.orgValue) / this.orgValue);
   }
 
   get localDiff(): number {
-    console.log(this._timezone?.localDiff);
     return this._timezone?.localDiff ?? 0;
   }
 

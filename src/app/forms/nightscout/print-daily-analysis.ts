@@ -32,6 +32,7 @@ export class PrintDailyAnalysis extends BaseDaily {
   lineWidth: number;
   glucMax = 0.0;
   profMax = 0.0;
+  basalMax = 0.0;
   carbMax = 200.0;
   bolusMax = 50.0;
   ieMax = 0.0;
@@ -114,9 +115,9 @@ export class PrintDailyAnalysis extends BaseDaily {
     return this.basalWidth / 1440 * (time.getHours() * 60 + time.getMinutes());
   }
 
-  basalY(value: number): number {
-    return this.profMax != 0 && value != null
-      ? this.graphHeight - (this.basalHeight / this.profMax * value) : 0.0;
+  basalY(value: number, max: number): number {
+    return max != 0 && value != null
+      ? this.graphHeight - (this.basalHeight / max * value) : 0.0;
   }
 
   override fillPages(pages: PageData[]): void {
@@ -472,10 +473,15 @@ export class PrintDailyAnalysis extends BaseDaily {
       ]
     };
     // graphic for basalrate
-    this.profMax = -1000.0;
+    this.basalMax = -1000.0;
     for (const entry of day.basalData.store.listBasal) {
-      this.profMax = Math.max((entry.value ?? 0) + 0.2, this.profMax);
+      this.basalMax = Math.max((entry.value ?? 0) + 0.2, this.basalMax);
     }
+    this.profMax = -1000.0;
+    for (const entry of day.profile) {
+      this.profMax = Math.max((entry.tempAdjusted ?? 0), this.profMax);
+    }
+    this.profMax = this.profMax * 100.0;
 
     this.basalHeight = this.drawScaleIE(
       xo,
@@ -483,7 +489,7 @@ export class PrintDailyAnalysis extends BaseDaily {
       this.graphHeight,
       this.graphHeight,
       0.0,
-      this.profMax,
+      this.basalMax,
       this._colWidth,
       this._horzCvs,
       this._vertStack,
@@ -491,15 +497,6 @@ export class PrintDailyAnalysis extends BaseDaily {
       (i, step, value) =>
         `${GLOBALS.fmtNumber(value ?? i * step, 1)} ${this.msgInsulinUnit}`);
     const profileBasal = this.getBasalGraph(this.graphHeight, day, true, xo, yo);
-
-    // graphic for temporary basalratechanges
-    this.profMax = -1000.0;
-    for (const entry of day.profile) {
-      this.profMax = Math.max(entry.tempAdjusted ?? 0, this.profMax);
-    }
-
-    //    profMax = (profMax * 100 / 10).ceil().toDouble() * 10;
-    this.profMax = this.profMax * 100.0;
 
     const step = this.profMax + 100 > 300 ? 50 : this.profMax + 100 > 150 ? 20 : 10;
     gridLines = Math.floor(((this.profMax + 100) / step) + 1);
@@ -656,12 +653,12 @@ export class PrintDailyAnalysis extends BaseDaily {
 
     areaPoints.push({
       x: this.cm(this.basalX(new Date(0, 1, 1, 0, 0))),
-      y: this.cm(useProfile ? this.basalY(0.0) : this.basalHeight)
+      y: this.cm(useProfile ? this.basalY(0.0, this.basalMax) : this.basalHeight)
     });
     for (const entry of temp) {
       const x = this.basalX(entry.time(day.date, useProfile));
       const y = useProfile
-        ? this.basalY(entry.value)
+        ? this.basalY(entry.value, this.basalMax)
         : this.basalHeight / this.profMax * (this.profMax - entry.tempAdjusted * 100);
       if (lastY != null) {
         areaPoints.push({x: this.cm(x), y: this.cm(lastY)});
@@ -675,7 +672,7 @@ export class PrintDailyAnalysis extends BaseDaily {
 
     areaPoints.push({
       x: this.cm(this.basalX(new Date(0, 1, 1, 23, 59))),
-      y: this.cm(useProfile ? this.basalY(0.0) : this.basalHeight)
+      y: this.cm(useProfile ? this.basalY(0.0, this.basalMax) : this.basalHeight)
     });
     basalCvs.push(area);
 
