@@ -53,6 +53,8 @@ import {ExecuteComponent} from './components/execute/execute.component';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 import {LaunchComponent} from '@/components/launch/launch.component';
+import {ProgressComponent} from '@/components/progress/progress.component';
+import {LogComponent} from '@/components/log/log.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,8 @@ import {LaunchComponent} from '@/components/launch/launch.component';
     ExecuteComponent,
     LaunchComponent
   ],
-  bootstrap: [AppComponent], imports: [BrowserModule,
+  bootstrap: [AppComponent],
+  imports: [BrowserModule,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
@@ -109,6 +112,8 @@ import {LaunchComponent} from '@/components/launch/launch.component';
     DragDropModule,
     BrowserAnimationsModule,
     ClipboardModule,
+    ProgressComponent,
+    LogComponent,
     TextareaAutoresizeDirective], providers: [
     provideHttpClient(withInterceptorsFromDi())
   ]
