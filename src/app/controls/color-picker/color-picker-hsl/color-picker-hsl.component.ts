@@ -15,7 +15,8 @@ class Area {
 @Component({
   selector: 'app-color-picker-hsl',
   templateUrl: './color-picker-hsl.component.html',
-  styleUrls: ['./color-picker-hsl.component.scss']
+  styleUrls: ['./color-picker-hsl.component.scss'],
+  standalone: false
 })
 export class ColorPickerHslComponent extends ColorPickerBaseComponent implements AfterViewInit {
   @ViewChild('mouseArea')

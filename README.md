@@ -39,21 +39,25 @@ You can run your own nightscout-reporter instance by calling the URL of your web
 A web.config file is provided in the root-directory of the deployment.
 
 ## Installation with Docker
+
 ### Build
+
 * git clone the repository
 * Run the docker build command in the root directory of the project. This will create a docker image with the name "nightscout-reporter".
+
 ```
 docker build . -t nightscout-reporter
 ```
 
 ### Run
+
 * Run the docker image with the following command. This will start a container with the name "nightscout-reporter" and expose the port 8088 to the host.
+
 ```
 docker run --name some-nginx -d -p 8088:80 nightscout-reporter
 ```
 
 > you can choose any port you want to expose to the host. Just replace the 8088 with the port you want to use.
-
 
 ## Internationalization
 
@@ -85,3 +89,11 @@ with "i18n-" and the number in the list above.
 This works on a windows installation. I think the scripts have to be changed, when running in another environment. But since I am the only one who can upload the
 files to this crowdin projects and do the management of the languages there, I wrote this only to have a documentation of the concept. Everyone is invited to adapt this for his
 own purposes, but I cannot provide support for systems I do not run by myself.
+
+## Updates
+
+for updating angular to a newer version use this line in the terminal (windows powershell):
+
+_$v=xxx ; ng update @angular/core@$v @angular/cli@$v @angular/material@$v_
+
+xxx is the version number to update to.

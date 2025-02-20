@@ -8,10 +8,9 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "configurations": {
             "development": {
-              "buildOptimizer": false,
               "extractLicenses": false,
               "namedChunks": true,
               "optimization": false,
@@ -55,7 +54,9 @@
               "sourceMap": false
             },
             "demo": {
-              "outputPath": "demo",
+              "outputPath": {
+                "base": "demo"
+              },
               "budgets": [
                 {
                   "maximumError": "10mb",
@@ -147,9 +148,12 @@
             ],
             "index": "src/index.html",
             "inlineStyleLanguage": "scss",
-            "main": "src/main.ts",
-            "outputPath": "dist/nightrep",
-            "polyfills": "src/polyfills.ts",
+            "outputPath": {
+              "base": "dist/nightrep"
+            },
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "scripts": [
               "src/assets/scripts/pdf.js",
               "src/assets/scripts/pdf.worker.js"
@@ -158,7 +162,8 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "tsConfig": "tsconfig.app.json"
+            "tsConfig": "tsconfig.app.json",
+            "browser": "src/main.ts"
           }
         },
         "extract-i18n": {

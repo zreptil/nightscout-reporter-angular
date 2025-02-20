@@ -11,7 +11,8 @@ import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 @Component({
   selector: 'app-watch-group',
   templateUrl: './watch-group.component.html',
-  styleUrls: ['./watch-group.component.scss']
+  styleUrls: ['./watch-group.component.scss'],
+  standalone: false
 })
 export class WatchGroupComponent {
   @Input()

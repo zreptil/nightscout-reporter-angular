@@ -2,15 +2,15 @@ import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChil
 import {ProgressService} from '@/_services/progress.service';
 import {ThemeService} from '@/_services/theme.service';
 import {of, Subscription} from 'rxjs';
-import {CommonModule} from '@angular/common';
 import {MaterialModule} from '@/material.module';
+import {CommonModule} from '@angular/common';
 
 @Component({
-  standalone: true,
   imports: [CommonModule, MaterialModule],
+  standalone: true,
   selector: 'app-progress',
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.scss']
+  styleUrls: ['./progress.component.scss'],
 })
 export class ProgressComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('overlay') overlay: any;

@@ -13,7 +13,7 @@ import {LogPipe} from '@/components/log/log.pipe';
   standalone: true,
   selector: 'app-log',
   templateUrl: './log.component.html',
-  styleUrls: ['./log.component.scss']
+  styleUrls: ['./log.component.scss'],
 })
 export class LogComponent implements OnInit {
   constructor(public ss: SessionService,

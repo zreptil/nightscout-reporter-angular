@@ -11,7 +11,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-watch-settings',
   templateUrl: './watch-settings.component.html',
-  styleUrls: ['./watch-settings.component.scss']
+  styleUrls: ['./watch-settings.component.scss'],
+  standalone: false
 })
 export class WatchSettingsComponent {
   colpick: ColorData;

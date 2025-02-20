@@ -5,7 +5,8 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 @Component({
   selector: 'app-dsgvo',
   templateUrl: './dsgvo.component.html',
-  styleUrls: ['./dsgvo.component.scss']
+  styleUrls: ['./dsgvo.component.scss'],
+  standalone: false
 })
 export class DsgvoComponent implements OnInit {
 

@@ -8,7 +8,8 @@ import {Log} from '@/_services/log.service';
 @Component({
   selector: 'app-datepicker',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss']
+  styleUrls: ['./datepicker.component.scss'],
+  standalone: false
 })
 export class DatepickerComponent implements OnInit {
   @Input()

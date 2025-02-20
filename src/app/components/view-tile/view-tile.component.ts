@@ -10,7 +10,8 @@ import {CdkDragDrop, CdkDragStart} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-view-tile',
   templateUrl: './view-tile.component.html',
-  styleUrls: ['./view-tile.component.scss']
+  styleUrls: ['./view-tile.component.scss'],
+  standalone: false
 })
 export class ViewTileComponent implements OnInit {
 

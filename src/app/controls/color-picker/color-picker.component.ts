@@ -24,7 +24,8 @@ export interface ColorDialogData {
 @Component({
   selector: 'app-color-picker',
   templateUrl: './color-picker.component.html',
-  styleUrls: ['./color-picker.component.scss']
+  styleUrls: ['./color-picker.component.scss'],
+  standalone: false
 })
 export class ColorPickerComponent {
   @Output()

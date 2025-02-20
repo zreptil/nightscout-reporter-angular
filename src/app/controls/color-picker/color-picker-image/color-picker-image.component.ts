@@ -7,7 +7,8 @@ import {ColorPickerBaseComponent} from '@/controls/color-picker/color-picker-bas
 @Component({
   selector: 'app-color-picker-image',
   templateUrl: './color-picker-image.component.html',
-  styleUrls: ['./color-picker-image.component.scss']
+  styleUrls: ['./color-picker-image.component.scss'],
+  standalone: false
 })
 export class ColorPickerImageComponent extends ColorPickerBaseComponent implements AfterViewInit {
   @ViewChild('canvasBox')

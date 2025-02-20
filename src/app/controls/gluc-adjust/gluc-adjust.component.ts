@@ -4,7 +4,8 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 @Component({
   selector: 'app-gluc-adjust',
   templateUrl: './gluc-adjust.component.html',
-  styleUrls: ['./gluc-adjust.component.scss']
+  styleUrls: ['./gluc-adjust.component.scss'],
+  standalone: false
 })
 export class GlucAdjustComponent implements OnInit {
   constructor() {

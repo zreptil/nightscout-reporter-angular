@@ -8,7 +8,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-helpview',
   templateUrl: './helpview.component.html',
-  styleUrls: ['./helpview.component.scss']
+  styleUrls: ['./helpview.component.scss'],
+  standalone: false
 })
 export class HelpviewComponent implements OnInit {
 

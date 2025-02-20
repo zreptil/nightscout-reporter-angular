@@ -8,7 +8,8 @@ import {GLOBALS} from '@/_model/globals-data';
 @Component({
   selector: 'app-execute',
   template: '',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class ExecuteComponent implements OnInit {
 

@@ -6,7 +6,8 @@ import {EnvironmentService} from '@/_services/environment.service';
 @Component({
   selector: 'app-launch',
   templateUrl: './launch.component.html',
-  styleUrl: './launch.component.scss'
+  styleUrl: './launch.component.scss',
+  standalone: false
 })
 export class LaunchComponent {
   svgCollection: SafeHtml;

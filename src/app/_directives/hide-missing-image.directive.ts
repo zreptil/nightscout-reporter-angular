@@ -1,7 +1,8 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
-  selector: '[hideMissingImage]'
+  selector: '[hideMissingImage]',
+  standalone: false
 })
 export class HideMissingImageDirective {
 

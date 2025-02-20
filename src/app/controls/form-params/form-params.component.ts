@@ -4,7 +4,8 @@ import {ParamInfo} from '@/_model/param-info';
 @Component({
   selector: 'app-form-params',
   templateUrl: './form-params.component.html',
-  styleUrls: ['./form-params.component.scss']
+  styleUrls: ['./form-params.component.scss'],
+  standalone: false
 })
 export class FormParamsComponent implements OnInit {
 

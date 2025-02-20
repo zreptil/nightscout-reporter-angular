@@ -10,7 +10,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-owl-menu',
   templateUrl: './owl-menu.component.html',
-  styleUrls: ['./owl-menu.component.scss']
+  styleUrls: ['./owl-menu.component.scss'],
+  standalone: false
 })
 export class OwlMenuComponent implements OnInit {
 

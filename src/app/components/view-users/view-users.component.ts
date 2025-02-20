@@ -8,7 +8,8 @@ import {Utils} from '@/classes/utils';
 @Component({
   selector: 'app-view-users',
   templateUrl: './view-users.component.html',
-  styleUrls: ['./view-users.component.scss']
+  styleUrls: ['./view-users.component.scss'],
+  standalone: false
 })
 export class ViewUsersComponent {
 

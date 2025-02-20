@@ -8,7 +8,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
+  standalone: false
 })
 export class WelcomeComponent implements OnInit {
 

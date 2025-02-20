@@ -14,10 +14,10 @@ import {MaterialModule} from '@/material.module';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {LogComponent} from '@/components/log/log.component';
-import {ProgressComponent} from '@/components/progress/progress.component';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 import {ProgressService} from '@/_services/progress.service';
 import {Subscriber} from 'rxjs';
+import {ProgressComponent} from '@/components/progress/progress.component';
 
 @Component({
   imports: [
@@ -28,8 +28,8 @@ import {Subscriber} from 'rxjs';
     ProgressComponent,
     TextareaAutoresizeDirective
   ],
-  selector: 'app-local-tools',
   standalone: true,
+  selector: 'app-local-tools',
   styleUrls: ['./local-tools.component.scss'],
   templateUrl: './local-tools.component.html'
 })

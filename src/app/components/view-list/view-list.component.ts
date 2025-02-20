@@ -8,7 +8,8 @@ import {FormConfig} from '@/forms/form-config';
 @Component({
   selector: 'app-view-list',
   templateUrl: './view-list.component.html',
-  styleUrls: ['./view-list.component.scss']
+  styleUrls: ['./view-list.component.scss'],
+  standalone: false
 })
 export class ViewListComponent implements OnInit {
   constructor(public ss: SessionService,

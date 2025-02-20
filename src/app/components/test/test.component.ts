@@ -17,7 +17,8 @@ import {NightscoutService} from '@/_services/nightscout.service';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  styleUrls: ['./test.component.scss'],
+  standalone: false
 })
 export class TestComponent implements OnInit {
 

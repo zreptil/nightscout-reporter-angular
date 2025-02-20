@@ -11,7 +11,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-shortcut-edit',
   templateUrl: './shortcut-edit.component.html',
-  styleUrls: ['./shortcut-edit.component.scss']
+  styleUrls: ['./shortcut-edit.component.scss'],
+  standalone: false
 })
 export class ShortcutEditComponent implements OnInit {
 

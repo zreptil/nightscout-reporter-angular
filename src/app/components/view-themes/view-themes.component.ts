@@ -34,6 +34,7 @@ class ServerTheme {
   selector: 'app-view-themes',
   templateUrl: './view-themes.component.html',
   styleUrls: ['./view-themes.component.scss'],
+  standalone: false
 })
 export class ViewThemesComponent implements AfterViewInit {
 

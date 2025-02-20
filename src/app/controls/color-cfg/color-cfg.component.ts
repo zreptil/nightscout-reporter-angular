@@ -4,7 +4,8 @@ import {SessionService} from '@/_services/session.service';
 @Component({
   selector: 'color-cfg',
   templateUrl: './color-cfg.component.html',
-  styleUrls: ['./color-cfg.component.scss']
+  styleUrls: ['./color-cfg.component.scss'],
+  standalone: false
 })
 export class ColorCfgComponent {
 

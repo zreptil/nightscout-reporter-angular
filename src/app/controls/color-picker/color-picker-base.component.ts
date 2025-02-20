@@ -3,7 +3,8 @@ import {ColorDialogData} from '@/controls/color-picker/color-picker.component';
 import {ColorData} from '@/_model/color-data';
 
 @Component({
-  template: ``
+  template: ``,
+  standalone: false
 })
 export class ColorPickerBaseComponent implements AfterViewInit {
   @Input()

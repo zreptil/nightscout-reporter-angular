@@ -7,7 +7,8 @@ import {GlobalsData} from '@/_model/globals-data';
 @Component({
   selector: 'app-datepicker-month',
   templateUrl: './datepicker-month.component.html',
-  styleUrls: ['./datepicker-month.component.scss']
+  styleUrls: ['./datepicker-month.component.scss'],
+  standalone: false
 })
 export class DatepickerMonthComponent implements OnInit {
 

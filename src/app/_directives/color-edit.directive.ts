@@ -2,7 +2,8 @@ import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
 import {GLOBALS} from '@/_model/globals-data';
 
 @Directive({
-  selector: '[colorEdit]'
+  selector: '[colorEdit]',
+  standalone: false
 })
 export class ColorEditDirective {
   private hasView = false;

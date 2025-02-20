@@ -14,7 +14,8 @@ import {LanguageService} from '@/_services/language.service';
 @Component({
   selector: 'app-watch',
   templateUrl: './watch.component.html',
-  styleUrls: ['./watch.component.scss']
+  styleUrls: ['./watch.component.scss'],
+  standalone: false
 })
 export class WatchComponent implements OnInit {
 

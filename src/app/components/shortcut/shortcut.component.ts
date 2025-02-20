@@ -12,7 +12,8 @@ import {Utils} from '@/classes/utils';
 @Component({
   selector: 'app-shortcut',
   templateUrl: './shortcut.component.html',
-  styleUrls: ['./shortcut.component.scss']
+  styleUrls: ['./shortcut.component.scss'],
+  standalone: false
 })
 export class ShortcutComponent implements OnInit {
   shortcut: ShortcutData = null;

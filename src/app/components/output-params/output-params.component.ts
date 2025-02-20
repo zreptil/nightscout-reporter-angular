@@ -14,7 +14,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-output-params',
   templateUrl: './output-params.component.html',
-  styleUrls: ['./output-params.component.scss']
+  styleUrls: ['./output-params.component.scss'],
+  standalone: false
 })
 export class OutputParamsComponent implements OnInit {
   listGlucMaxValues = [this.msgAutomatic];

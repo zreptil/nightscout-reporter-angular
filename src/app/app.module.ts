@@ -5,14 +5,13 @@ import {AppComponent} from './app.component';
 import {AutofocusDirective} from '@/_directives/autofocus.directive';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {ColorPickerDialog} from '@/controls/color-picker/color-picker-dialog/color-picker-dialog';
-import {LogComponent} from '@/components/log/log.component';
 import {ColorPickerComponent} from '@/controls/color-picker/color-picker.component';
 import {ColorPickerImageComponent} from '@/controls/color-picker/color-picker-image/color-picker-image.component';
 import {ColorPickerMixerComponent} from '@/controls/color-picker/color-picker-mixer/color-picker-mixer.component';
 import {ColorPickerBaseComponent} from '@/controls/color-picker/color-picker-base.component';
 import {ColorPickerSliderComponent} from '@/controls/color-picker/color-picker-slider/color-picker-slider.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {MaterialModule} from '@/material.module';
 import {AppRoutingModule} from '@/app-routing.module';
 import {WhatsNewComponent} from './components/whats-new/whats-new.component';
@@ -31,14 +30,12 @@ import {OwlMenuComponent} from './components/owl-menu/owl-menu.component';
 import {WatchComponent} from './components/watch/watch.component';
 import {WatchEntryComponent} from './controls/watch-entry/watch-entry.component';
 import {OutputParamsComponent} from './components/output-params/output-params.component';
-import {ProgressComponent} from './components/progress/progress.component';
 import {DatepickerComponent} from './controls/datepicker/datepicker.component';
 import {DatepickerMonthComponent} from './controls/datepicker/datepicker-month/datepicker-month.component';
 import {DatepickerDialogComponent} from './controls/datepicker/datepicker-dialog/datepicker-dialog.component';
 import {ShortcutEditComponent} from './components/shortcut-edit/shortcut-edit.component';
 import {FormParamsDialogComponent} from './components/form-params-dialog/form-params-dialog.component';
 import {FormParamsComponent} from './controls/form-params/form-params.component';
-import {LocalToolsComponent} from '@/standalone/local-tools/local-tools.component';
 import {ViewUsersComponent} from './components/view-users/view-users.component';
 import {ShortcutComponent} from './components/shortcut/shortcut.component';
 import {WatchSettingsComponent} from './components/watch-settings/watch-settings.component';
@@ -104,25 +101,17 @@ import {LaunchComponent} from '@/components/launch/launch.component';
     ExecuteComponent,
     LaunchComponent
   ],
-  imports: [
-    BrowserModule,
+  bootstrap: [AppComponent], imports: [BrowserModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
     DragDropModule,
-    LogComponent,
-    ProgressComponent,
-    LocalToolsComponent,
     BrowserAnimationsModule,
     ClipboardModule,
-    TextareaAutoresizeDirective
-  ],
-  providers: [
-    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
-  ],
-  bootstrap: [AppComponent]
+    TextareaAutoresizeDirective], providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule {
 }

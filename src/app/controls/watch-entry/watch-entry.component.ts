@@ -4,7 +4,8 @@ import {WatchElement} from '@/_model/watch-element';
 @Component({
   selector: 'app-watch-entry',
   templateUrl: './watch-entry.component.html',
-  styleUrls: ['./watch-entry.component.scss']
+  styleUrls: ['./watch-entry.component.scss'],
+  standalone: false
 })
 export class WatchEntryComponent implements OnInit {
 

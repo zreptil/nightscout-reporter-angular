@@ -9,7 +9,8 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 @Component({
   selector: 'app-form-params-dialog',
   templateUrl: './form-params-dialog.component.html',
-  styleUrls: ['./form-params-dialog.component.scss']
+  styleUrls: ['./form-params-dialog.component.scss'],
+  standalone: false
 })
 export class FormParamsDialogComponent implements OnInit {
   closeData: CloseButtonData = {
