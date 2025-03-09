@@ -495,7 +495,7 @@ export class Utils {
   static async refreshUI() {
     await lastValueFrom(new Observable<any>(sub => {
       setTimeout(() => {
-        sub.next();
+        sub.next(null);
         sub.complete();
         sub.unsubscribe();
       });

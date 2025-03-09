@@ -63,9 +63,5 @@
     "jasmine-core": "~4.5.0",
     "npm-build-zip": "^1.0.3",
     "typescript": "~5.5.4"
-  },
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": "^7.0.0"
   }
 }

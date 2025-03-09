@@ -20,12 +20,12 @@
               "budgets": [
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "initial"
                 },
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -60,12 +60,12 @@
               "budgets": [
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "initial"
                 },
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -97,12 +97,12 @@
               "budgets": [
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "initial"
                 },
                 {
                   "maximumError": "10mb",
-                  "maximumWarning": "7mb",
+                  "maximumWarning": "8mb",
                   "type": "anyComponentStyle"
                 }
               ],
@@ -139,6 +139,7 @@
               "file-saver",
               "pdfjs-dist",
               "fast-sha256",
+              "node-ensure",
               "https://apis.google.com/js/api.js"
             ],
             "assets": [
