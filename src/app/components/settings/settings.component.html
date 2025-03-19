@@ -169,6 +169,17 @@
           </button>
         </div>
       </mat-expansion-panel>
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title i18n="label of area for url settings - additional data">
+            Externe Daten die bei Reporterstellung zusätzlich geladen werden
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-checkbox (click)="toggleDatasource($event, 'fitbit')"
+                      [checked]="globals.user.dataSources['fitbit']!=null" i18n>
+          <img [class]="classForDS('fitbit')" alt="fitbit" datasource src="assets/img/fitbit.png">
+        </mat-checkbox>
+      </mat-expansion-panel>
       <div class="controls">
         <button (click)="addUrl()"
                 *ngIf="idx===globals.user.listApiUrl.length-1"

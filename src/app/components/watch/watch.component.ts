@@ -210,6 +210,10 @@ export class WatchComponent implements OnInit {
     GLOBALS.nwCurrPage = 'users';
   }
 
+  configureThemes(): void {
+    GLOBALS.nwCurrPage = 'themes';
+  }
+
   async showSettings() {
     this.ss.showSettings.bind(this.ss)();
   }

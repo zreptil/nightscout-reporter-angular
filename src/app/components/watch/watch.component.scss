@@ -24,6 +24,24 @@
   }
 }
 
+.themes {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+
+  button {
+    min-height: 3em;
+    background-color: var(--settingsBodyBack);
+    color: var(--settingsBodyFore);
+  }
+
+  .scrollable {
+    overflow: auto;
+    height: 100%;
+  }
+}
+
 .root {
   display: flex;
   flex-flow: column;

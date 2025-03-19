@@ -373,3 +373,11 @@
     color: rgba(255, 255, 255, 0.5);
   }
 }
+
+img[datasource] {
+  height: 32px;
+
+  &.disabled {
+    filter: grayscale(100%);
+  }
+}

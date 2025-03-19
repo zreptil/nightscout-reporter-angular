@@ -6,6 +6,14 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 </div>
+<div *ngIf="globals.nwCurrPage==='themes'" class="themes">
+  <div class="scrollable">
+    <app-view-themes></app-view-themes>
+  </div>
+  <button (click)="clickBack($event)" mat-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
 <div (click)="clickBackground()" *ngIf="globals.nwCurrPage===''" class="root">
   <div content>
     <app-watch-group groupId="tl"></app-watch-group>
@@ -77,7 +85,7 @@
       </div>
     </div>
     <div class="owlPanel">
-      <app-owl-menu [style]="styleForOwl"></app-owl-menu>
+      <app-owl-menu (openThemes)="configureThemes()" [style]="styleForOwl"></app-owl-menu>
     </div>
   </ng-container>
   <app-log></app-log>

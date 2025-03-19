@@ -18,6 +18,8 @@ import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoi
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
+import {OAuth2} from '@/_services/sync/auth.config';
+import {FitbitService} from '@/_services/sync/fitbit.service';
 
 @Component({
   selector: 'app-settings',
@@ -91,6 +93,8 @@ export class SettingsComponent implements OnInit {
     colorKey: 'settings'
   };
 
+  oauth2Data: any;
+
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,
               @Inject(MAT_DIALOG_DATA) public dlgData: { cmd: string },
               private da: DateAdapter<any>,
@@ -99,7 +103,8 @@ export class SettingsComponent implements OnInit {
               public ts: ThemeService,
               public ss: SessionService,
               public ns: NightscoutService,
-              public ms: MessageService) {
+              public ms: MessageService,
+              public os: FitbitService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
   }
@@ -507,5 +512,41 @@ export class SettingsComponent implements OnInit {
 
   clickSave() {
     this.checkUser();
+  }
+
+  clickAuth(key: string) {
+    console.log(OAuth2[key]);
+    const oauth = OAuth2[key];
+    window.location.href = `${oauth.loginUrl}?response_type=code`
+      + `&client_id=${oauth.clientId}`
+      + `&redirect_uri=${encodeURIComponent(oauth.redirectUri)}`
+      + `&scope=${encodeURIComponent(oauth.scope)}`;
+  }
+
+  toggleDatasource(evt: Event, key: string) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    if (GLOBALS.user.dataSources[key] == null) {
+      const oauth = OAuth2[key];
+      window.location.href = `${oauth.loginUrl}?response_type=code`
+        + `&client_id=${oauth.clientId}`
+        + `&redirect_uri=${encodeURIComponent(oauth.redirectUri)}`
+        + `&scope=${encodeURIComponent(oauth.scope)}`;
+    } else {
+      this.ms.confirm($localize`Soll ${key} wirklich deaktiviert werden?`).subscribe(
+        result => {
+          if (result.btn === DialogResultButton.yes) {
+            this.os.revokeToken();
+          }
+        })
+    }
+  }
+
+  classForDS(key: string) {
+    const ret: string[] = [];
+    if (GLOBALS.user.dataSources[key] == null) {
+      ret.push('disabled');
+    }
+    return ret;
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ThemeService} from '@/_services/theme.service';
 import {SessionService} from '@/_services/session.service';
@@ -14,6 +14,9 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
   standalone: false
 })
 export class OwlMenuComponent implements OnInit {
+
+  @Output()
+  openThemes = new EventEmitter<any>();
 
   themeStyle = 'width:0;';
   langStyle = 'height:0;';
@@ -73,7 +76,11 @@ export class OwlMenuComponent implements OnInit {
       if (key !== '') {
         if (typeof key === 'string') {
           if (key === 'own') {
-            GLOBALS.viewType = 'themes';
+            if (this.openThemes.observed) {
+              this.openThemes.next(null);
+            } else {
+              GLOBALS.viewType = 'themes';
+            }
             this.ds.save();
           } else {
             this.ts.setTheme(key === 'null' ? null : key, true);

@@ -1,13 +1,12 @@
 import {GLOBALS} from '@/_model/globals-data';
 import {UrlData} from '@/_model/nightscout/url-data';
 import {StatusData} from '@/_model/nightscout/status-data';
-import {EntryData} from '@/_model/nightscout/entry-data';
-import {TreatmentData} from '@/_model/nightscout/treatment-data';
 import {Utils} from '@/classes/utils';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
 import {Settings} from '@/_model/settings';
 import {RequestParams} from '@/_services/data.service';
+import {OAuth2Data} from '@/_model/oauth2-data';
 
 export class UserData {
   name = '';
@@ -21,8 +20,7 @@ export class UserData {
   status: StatusData;
   profileMaxIdx: number = 0;
   isReachable = true;
-  lastEntry: EntryData = null;
-  lastTreatment: TreatmentData = null;
+  dataSources: { [key: string]: OAuth2Data } = {};
 
   // returns the adjustvalues to check them against the values that
   // were loaded. so the saving of the data can be managed depending
@@ -65,6 +63,12 @@ export class UserData {
         delete this.formParams[key];
       }
     }
+    const dataSources: any[] = [];
+    for (const key of Object.keys(this.dataSources)) {
+      dataSources.push(this.dataSources[key].asJson);
+    }
+    dataSources.filter(ds => ds.key != null)
+      .sort((a, b) => Utils.compare(a.key, b.key));
     return `{"n":"${this.name}"`
       + `,"bd":"${this.birthDate ?? ''}"`
       + `,"s":${JSON.stringify(urls)}`
@@ -79,6 +83,7 @@ export class UserData {
       + `,"al":"${this.adjustLab?.toString() ?? 5.0}"`
       + `,"at":${this.adjustTarget ? 'true' : 'false'}`
       + `,"p":${this.isPinned ? 'true' : 'false'}`
+      + `,"ds":${JSON.stringify(dataSources)}`
       + `}`;
   }
 
@@ -138,6 +143,11 @@ export class UserData {
       ret.adjustLab = JsonData.toNumber(json.al, 5.0);
       ret.adjustTarget = JsonData.toBool(json.at ?? false);
       ret.isPinned = JsonData.toBool(json.p ?? false);
+      ret.dataSources = {};
+      for (const s of json.ds ?? []) {
+        const data = OAuth2Data.fromJson(s);
+        ret.dataSources[data.key] = data;
+      }
       ret.adjustLoaded = ret.adjustCheck;
       ret.formParams = json.f;
       if (ret.formParams != null && typeof ret.formParams['analysis'] === 'boolean') {
