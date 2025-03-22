@@ -5,6 +5,7 @@ import {ActivityData} from '@/_model/nightscout/activity-data';
 import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 import {StatisticData} from './statistic-data';
 import {Utils} from '@/classes/utils';
+import {HealthData} from '@/_model/nightscout/health-data';
 
 export class ListData {
   days: DayData[] = [];
@@ -14,6 +15,7 @@ export class ListData {
   treatments: TreatmentData[] = [];
   devicestatusList: DeviceStatusData[] = [];
   activityList: ActivityData[] = [];
+  healthList: HealthData[] = [];
   catheterCount: number;
   ampulleCount: number;
   sensorCount: number;

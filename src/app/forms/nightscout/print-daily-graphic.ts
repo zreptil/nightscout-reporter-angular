@@ -321,7 +321,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
   }
 
   override get imgList(): string[] {
-    return ['nightscout', 'katheter.print', 'sensor.print', 'ampulle.print', 'steps.print'];
+    return [
+      'nightscout', 'katheter.print', 'sensor.print',
+      'ampulle.print', 'steps.print', 'heart.print',
+      'heart-full.print'];
   }
 
   override get isPortrait(): boolean {
@@ -479,6 +482,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     const basalTopSave = this.basalTop;
     this.hasExercises = day.treatments.find((t) => t.isExercise) != null;
     this.hasExercises ||= day.activityList.reverse().find((ac) => ac.type === 'steps-total') != null;
+    this.hasExercises ||= day.healthList.length > 0;
     this.hasNoteDuration = day.treatments.find((t) => !t.isExercise && t.duration > 0 && !Utils.isEmpty(t.notes ?? '')) != null;
     let space = 0;
     this.exerciseBottom = 0;
@@ -1137,6 +1141,79 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         alignment: 'left',
         color: this.colExerciseText
       });
+    }
+    if (this.showExercises) {
+      for (const health of day.healthList) {
+        if (health.startTime != null && health.duration != null) {
+          const x = this.graphWidth / 1440 * health.startTime;
+          let x1 = x + this.graphWidth / 86400000 * health.duration
+          if (health.steps != null) {
+            graphNotes.canvas.push({
+              type: 'rect',
+              x: this.cm(x),
+              y: this.cm(this.exerciseTop + 0.05),
+              w: this.cm(x1 - x),
+              h: this.cm(this.exerciseBarHeight + 0.1),
+              color: this.colExercises
+            });
+            pictures.stack.push({
+              relativePosition: {
+                x: this.cm(x - this.exerciseBarHeight),
+                y: this.cm(this.exerciseTop + 0.1)
+              },
+              image: 'steps.print',
+              width: this.cm(this.exerciseBarHeight)
+            });
+            let text = `${health.steps}`;
+            let y1 = this.exerciseTop + this.exerciseBarHeight / 2 - 0.02;
+            if (health.distance > 0.05) {
+              y1 -= 0.1;
+              text = `${text}\n${GLOBALS.fmtNumber(health.distance, 1)} km`
+            }
+            graphLegend.stack.push({
+              relativePosition: {
+                x: this.cm(x + 0.05),
+                y: this.cm(y1)
+              },
+              text: text,
+              lineHeight: this.cm(0.025),
+              fontSize: this.fs(6),
+              alignment: 'left',
+              color: this.colExerciseText
+            });
+          }
+          if (health.heartRate != null) {
+            x1 = Math.max(x1, x + 0.6);
+            pictures.stack.push({
+              relativePosition: {
+                x: this.cm(x1 + 0.1),
+                y: this.cm(this.exerciseTop + 0.03)
+              },
+              image: 'heart-full.print',
+              width: this.cm(this.exerciseBarHeight * 1.4)
+            });
+            graphLegend.stack.push({
+              relativePosition: {
+                x: this.cm(x1 + 0.1),
+                y: this.cm(this.exerciseTop + 0.08)
+              },
+              columns: [
+                {
+                  width: this.cm(this.exerciseBarHeight * 1.4),
+                  text: `${health.heartRate}`,
+                  fontSize: this.fs(6),
+                  color: this.colExerciseText,
+                  alignment: 'center'
+                },
+              ],
+              // text: `${health.heartRate}`,
+              // fontSize: this.fs(6),
+              // alignment: 'left',
+              // color: this.colExerciseText
+            });
+          }
+        }
+      }
     }
     if (this.showExercises && this.hasExercises) {
       exerciseCvs.canvas.push({

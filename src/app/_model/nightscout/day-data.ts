@@ -11,6 +11,7 @@ import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {ReportData} from '@/_model/report-data';
 import {CalcCOBData} from '@/_model/nightscout/calc-cob-data';
 import {Settings} from '@/_model/settings';
+import {HealthData} from '@/_model/nightscout/health-data';
 
 export class DeviceData {
   lowCount = 0;
@@ -57,6 +58,7 @@ export class DayData {
   treatments: TreatmentData[] = [];
   devicestatusList: DeviceStatusData[] = [];
   activityList: ActivityData[] = [];
+  healthList: HealthData[] = [];
 
   constructor(public date: Date, public basalData: ProfileGlucData) {
     if (date == null) {

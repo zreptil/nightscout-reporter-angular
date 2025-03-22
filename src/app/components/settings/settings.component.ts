@@ -20,6 +20,7 @@ import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
 import {OAuth2} from '@/_services/sync/auth.config';
 import {FitbitService} from '@/_services/sync/fitbit.service';
+import {OAuth2Data} from '@/_model/oauth2-data';
 
 @Component({
   selector: 'app-settings',
@@ -38,6 +39,8 @@ export class SettingsComponent implements OnInit {
   listProfileMaxCount: string[];
   @ViewChild('fileSelect')
   fileSelect: ElementRef<HTMLInputElement>;
+  @ViewChild('fileSelectDatasource')
+  fileSelectDatasource: ElementRef<HTMLInputElement>;
   /*
   @Output('settingsresult')
   Stream<html.UIEvent> get trigger => _trigger.stream;
@@ -92,8 +95,7 @@ export class SettingsComponent implements OnInit {
     dialogClose: {btn: 2},
     colorKey: 'settings'
   };
-
-  oauth2Data: any;
+  importKey: string
 
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,
               @Inject(MAT_DIALOG_DATA) public dlgData: { cmd: string },
@@ -107,6 +109,10 @@ export class SettingsComponent implements OnInit {
               public os: FitbitService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
+  }
+
+  get oauth2List() {
+    return Object.keys(OAuth2);
   }
 
   get globals(): GlobalsData {
@@ -525,7 +531,6 @@ export class SettingsComponent implements OnInit {
 
   toggleDatasource(evt: Event, key: string) {
     evt.stopPropagation();
-    evt.preventDefault();
     if (GLOBALS.user.dataSources[key] == null) {
       const oauth = OAuth2[key];
       window.location.href = `${oauth.loginUrl}?response_type=code`
@@ -549,4 +554,49 @@ export class SettingsComponent implements OnInit {
     }
     return ret;
   }
+
+  clickDataSource(evt: MouseEvent, key: string, target: string) {
+    evt.stopPropagation();
+    window.open((OAuth2[key] as any)[target]);
+  }
+
+  clickExportDatasource(key: string): void {
+    saveAs(new Blob([Utils.encodeBase64(JSON.stringify(GLOBALS.user.dataSources[key].asJson))]), `nightrep-${key}.${Utils.fmtDate(new Date(), 'yyyyMMdd-hhmm')}.json`);
+  }
+
+  fileSelectedDatasource(fileInput: any) {
+    if (fileInput?.target?.files?.length > 0) {
+      const reader = new FileReader();
+      const file = fileInput.target.files[0];
+      reader.addEventListener('load', (event: any) => {
+        let content = event.target.result;
+        const pos = content.indexOf(',');
+        if (pos >= 0) {
+          content = Utils.decodeBase64(content.substring(pos + 1));
+        }
+        try {
+          content = OAuth2Data.fromJson(JSON.parse(Utils.decodeBase64(content)));
+          if (content.key === this.importKey) {
+            GLOBALS.user.dataSources[this.importKey] = content;
+          } else {
+            console.log(content);
+            this.ms.error($localize`Die Datei enthält keine Daten für ${this.importKey}`);
+          }
+        } catch (ex) {
+          this.ms.error($localize`Die Datei enthält keine Daten für ${this.importKey}`);
+        }
+        this.fileSelectDatasource.nativeElement.value = null;
+      });
+      reader.readAsDataURL(file);
+    } else {
+      console.error(fileInput);
+      Log.error(fileInput);
+    }
+  }
+
+  clickImportDatasource(key: string) {
+    this.importKey = key;
+    this.fileSelectDatasource.nativeElement.click();
+  }
+
 }

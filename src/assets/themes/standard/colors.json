@@ -9,6 +9,8 @@
   "settingsBodyFore": "#00000099",
   "settingsBodyData": "#000",
   "settingsError": "#b3261e",
+  "settingsOptionOn": "#008000",
+  "settingsOptionOff": "#800000",
   "legalHeadBack": "mat-orange-900",
   "legalHeadFore": "mat-orange-100",
   "legalBodyBack": "mat-orange-300",

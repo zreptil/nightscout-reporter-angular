@@ -38,6 +38,27 @@ You can run your own nightscout-reporter instance by calling the URL of your web
 
 A web.config file is provided in the root-directory of the deployment.
 
+#### php
+
+For using fitbit-data in the reports you need to setup php at your website.
+Then you have to copy the content of folder _src/\_php/src_ to the folder
+_backup_ at your website. In this folder you have to create a subfolder
+_config_ and place a configuration file for every datasource that can be
+included in nightscout reporter. It needs to have the following content (e.g. for fitbit):
+
+_fitbit.php_
+
+```php
+<?php
+include('config.php');
+$clientId = '<CLIENT_ID>';
+$clientSecret = '<CLIENT_SECRET>';
+$scope = 'activity heartrate location nutrition profile settings sleep social weight';
+```
+
+_CLIENT\_ID_ and _CLIENT\_SECRET_ are the values you get when setting up the app at a
+fitbit developer account to access the data.
+
 ## Installation with Docker
 
 ### Build

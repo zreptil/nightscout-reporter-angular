@@ -48,6 +48,9 @@ html {
   }
 }
 
+::ng-deep * {
+}
+
 body {
   --doc-height: 100vh;
   display: flex;
@@ -68,6 +71,11 @@ body {
   --mdc-filled-text-field-focus-active-indicator-color: var(--headBack);
   --mdc-filled-text-field-focus-label-text-color: var(--headBack);
   --mdc-filled-text-field-caret-color: var(--headBack);
+
+  .debug {
+    background: var(--logDebugColor) !important;
+    color: var(--logDebugFore) !important;
+  }
 }
 
 .dialog-box.warning {
@@ -128,7 +136,7 @@ mat-icon[small] {
       }
     }
 
-    [mat-dialog-content] {
+    .mat-mdc-dialog-title + .mat-mdc-dialog-content {
       padding: 1em;
       margin: 0;
       min-width: 50%;
@@ -341,11 +349,6 @@ mat-icon[small] {
   }
 }
 
-.debug {
-  background: var(--logDebugColor) !important;
-  color: var(--logDebugFore) !important;
-}
-
 @keyframes owl_showthemes {
   0% {
     width: 0;
@@ -509,6 +512,7 @@ form.oauth2 {
 }
 
 .mat-mdc-checkbox.mat-accent {
+  --mat-checkbox-label-text-color: var(--bodyFore);
   --mdc-checkbox-selected-checkmark-color: var(--headFore);
   --mdc-checkbox-selected-focus-icon-color: var(--headBack);
   --mdc-checkbox-selected-hover-icon-color: var(--headBack);
@@ -647,7 +651,6 @@ form.oauth2 {
 .mat-mdc-dialog-container .mdc-dialog__content,
 .mat-mdc-dialog-container .mdc-dialog__content.root {
   background-color: var(--bodyBack) !important;
-  color: var(--bodyFore) !important;
   --mdc-theme-text-primary-on-background: var(--bodyData);
 
   .mat-mdc-checkbox.mat-accent {
@@ -792,3 +795,4 @@ svg {
   outline: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 2px;
 }
+

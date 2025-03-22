@@ -11,6 +11,22 @@
   --mat-select-focused-arrow-color: var(--subHeadFore);
   --mdc-theme-primary: var(--subHeadFore);
 
+  --mat-expansion-header-text-color: var(--bodyFore);
+  --mat-expansion-container-text-color: var(--bodyFore);
+  --mat-expansion-header-indicator-color: var(--bodyFore);
+  --mdc-filled-text-field-input-text-color: var(--bodyFore);
+  --mdc-filled-text-field-label-text-color: var(--bodyFore);
+  --mdc-filled-text-field-hover-label-text-color: var(--bodyFore);
+  --mdc-icon-button-icon-color: var(--bodyFore);
+  --mdc-dialog-supporting-text-color: var(--bodyFore);
+  --mdc-text-button-disabled-label-text-color: color-mix(in srgb, var(--bodyFore) 38%, transparent);
+
+  --logDebugColor: repeating-linear-gradient(45deg,
+    rgba(var(--logDebugRGB), 0.6),
+    rgba(var(--logDebugRGB), 0.6) 10px,
+    rgba(var(--logDebugRGB), 0.8) 10px,
+    rgba(var(--logDebugRGB), 0.8) 20px);
+
   ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
     border-bottom-color: rgba(0, 0, 0, 0.9);
   }
@@ -380,4 +396,26 @@ img[datasource] {
   &.disabled {
     filter: grayscale(100%);
   }
+}
+
+[oauthItem] {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
+  [on] {
+    color: var(--settingsOptionOn);
+  }
+
+  [off] {
+    color: var(--settingsOptionOff);
+  }
+
+  .debug {
+    border-radius: 1em;
+  }
+}
+
+::ng-deep .mat-mdc-option {
+  --mat-option-label-text-color: var(--bodyFore) !important;
 }

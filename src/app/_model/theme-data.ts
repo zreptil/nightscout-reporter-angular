@@ -42,6 +42,8 @@ export class ThemeData {
     settingsHead: {title: $localize`Titel`},
     settingsBody: {title: $localize`Inhalt`},
     settingsError: {title: $localize`Fehler`},
+    settingsOptionOn: {title: $localize`Aktiviert`},
+    settingsOptionOff: {title: $localize`Deaktiviert`},
     legalHead: {title: $localize`Titel`},
     legalBody: {title: $localize`Inhalt`},
     whatsnewHead: {title: $localize`Titel`},

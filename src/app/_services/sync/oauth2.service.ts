@@ -5,19 +5,38 @@ import {OAuth2} from '@/_services/sync/auth.config';
 import {catchError, switchMap} from 'rxjs/operators';
 import {GLOBALS} from '@/_model/globals-data';
 import {DataService} from '@/_services/data.service';
+import {HealthData} from '@/_model/nightscout/health-data';
+import JSZip from 'jszip';
+import {encode} from 'base64-arraybuffer';
+import {OAuth2Data} from '@/_model/oauth2-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class OAuth2Service {
   abstract authKey: string;
-  abstract revokeUrl: string
+  abstract revokeUrl: string;
 
   constructor(private http: HttpClient,
               private ds: DataService) {
   }
 
+  get msgErrorRefresh(): string {
+    return $localize`Fehler beim Abruf der ${this.authKey}-Daten`;
+  }
+
+  get msgErrorData(): string {
+    return $localize`Fehler beim Abruf der ${this.authKey}-Daten`;
+  }
+
+  get msgErrorToken(): string {
+    return $localize`Fehler beim Widerruf des ${this.authKey}-Token`;
+  }
+
   oauth(key: string) {
+    GLOBALS.user.dataSources[key] ??= OAuth2Data.fromJson({
+      key: key
+    });
     return GLOBALS.user.dataSources[key];
   }
 
@@ -36,18 +55,60 @@ export abstract class OAuth2Service {
           this.ds.save();
         },
         error: (error => {
-          delete (GLOBALS.user.dataSources[this.authKey]);
+          delete GLOBALS.user.dataSources[this.authKey];
+          GLOBALS.user.dataSources[this.authKey] = null;
           this.ds.save();
-          console.error('Fehler beim Widerrufen des Tokens:', error);
-          return throwError(() => new Error('Token konnte nicht widerrufen werden.'));
+          console.error(this.msgErrorToken, error);
+          return throwError(() => new Error(this.msgErrorToken));
         })
       });
+  }
+
+  public abstract getActivities(begDate: Date, endDate: Date): Promise<HealthData[]>;
+
+  protected dataToCache(data: any, onDone?: () => any, onError?: (error: string) => void) {
+    const zip = new JSZip();
+    zip.file('f', JSON.stringify(data));
+    zip.generateAsync({type: 'blob', compression: 'DEFLATE'})
+      .then(blob => {
+        blob.arrayBuffer()
+          .then(buffer => {
+            localStorage.setItem(this.authKey, encode(buffer));
+            onDone?.();
+          })
+          .catch(error => {
+            onError?.(error.message);
+          });
+      })
+      .catch(error => {
+        onError?.(error.message);
+      });
+  }
+
+  protected async dataFromCache(onError?: (error: any) => void): Promise<any> {
+    const src = localStorage.getItem(this.authKey);
+    if (src == null) {
+      onError?.($localize`Es gibt keine gespeicherten Daten`);
+      return;
+    }
+    const zip = new JSZip();
+    let packed: any
+    try {
+      packed = await zip.loadAsync(src, {base64: true});
+      if (packed != null) {
+        const f = await packed.file('f').async('string');
+        return JSON.parse(f);
+      }
+    } catch (ex) {
+      onError?.(ex);
+    }
+    return null;
   }
 
   // Daten abrufen
   protected getData(url: string): Observable<any> {
     if (this.oauth(this.authKey) == null || OAuth2[this.authKey] == null) {
-      return throwError(() => new Error('Keine OAuth2-Daten vorhanden'));
+      return throwError(() => new Error($localize`Keine OAuth2-Daten vorhanden`));
     }
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.oauth(this.authKey)?.accessToken}`,
@@ -61,8 +122,8 @@ export abstract class OAuth2Service {
             switchMap(() => this.getData(url))
           );
         }
-        console.error('Fehler beim Abrufen der Fitbit-Daten:', error);
-        return throwError(() => new Error('Fehler beim Abrufen der Fitbit-Daten'));
+        console.error(this.msgErrorData, error);
+        return throwError(() => new Error(this.msgErrorData));
       })
     );
   }
@@ -85,8 +146,9 @@ export abstract class OAuth2Service {
         return response;
       }),
       catchError(error => {
-        console.error('Fehler beim Token-Refresh:', error);
-        return throwError(() => new Error('Fehler beim Token-Refresh'));
+        console.error(this.msgErrorRefresh, error);
+        GLOBALS.user.dataSources[this.authKey] = null;
+        return throwError(() => new Error(this.msgErrorRefresh));
       })
     );
   }

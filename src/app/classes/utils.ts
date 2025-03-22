@@ -283,12 +283,12 @@ export class Utils {
   }
 
   static dateAsNumber(date: Date): number {
-    return date?.getFullYear() * 10000 + date?.getMonth() * 100 + date?.getDate();
+    return date?.getFullYear() * 10000 + (date?.getMonth() + 1) * 100 + date?.getDate();
   }
 
   static timeAsNumber(date: Date): number {
     return date?.getFullYear() * 10000000000
-      + date?.getMonth() * 100000000
+      + (date?.getMonth() + 1) * 100000000
       + date?.getDate() * 1000000
       + date?.getHours() * 10000
       + date?.getMinutes() * 100

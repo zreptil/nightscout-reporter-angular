@@ -274,22 +274,7 @@ export class MainComponent implements OnInit {
         this.ss.navigate('https://analytics.google.com/analytics/web/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Fanalytics%2F#/p419132738/reports/reportinghub');
         break;
       case 'feedback':
-        const params: any = {
-          subject: $localize`Feedback zu Nightscout Reporter ${GLOBALS.version}`,
-          body: `${GLOBALS.user.name}%0d----%0dURL zur Nightscout Instanz:%0d${GLOBALS.user.urlDataFor(new Date()).fullUrl('', '', true)}%0d----%0d`
-        };
-        const regex = new RegExp('(de\-|en\-).*', 'g');
-        if (!regex.test(GLOBALS.language.code)) {
-          const msg = 'Please note: I, the developer, can only understand German or English. '
-            + 'Please use one of these languages for communication. '
-            + 'This will make it easier for both of us.';
-          params.body = `${msg}%0d%0d${params.body}`;
-        }
-        const paramList: string[] = [];
-        for (const key of Object.keys(params)) {
-          paramList.push(`${key}=${params[key]}`)
-        }
-        this.ss.navigate(`mailto:nightscoutreporter@gmail.com?${Utils.join(paramList, '&')}`);
+        this.sendFeedback();
         break;
       case 'dropboxlink':
         window.open(`https://www.dropbox.com/home/Apps/Nightscout%20Reporter?select=${this.env.settingsFilename}`);
@@ -375,5 +360,24 @@ export class MainComponent implements OnInit {
   clickAddUser() {
     this.ss.showSettings(() => {
     }, {cmd: 'addUser'});
+  }
+
+  sendFeedback() {
+    const params: any = {
+      subject: $localize`Feedback zu Nightscout Reporter ${GLOBALS.version}`,
+      body: `${GLOBALS.user.name}%0d----%0dURL zur Nightscout Instanz:%0d${GLOBALS.user.urlDataFor(new Date()).fullUrl('', '', true)}%0d----%0d`
+    };
+    const regex = new RegExp('(de\-|en\-).*', 'g');
+    if (!regex.test(GLOBALS.language.code)) {
+      const msg = 'Please note: I, the developer, can only understand German or English. '
+        + 'Please use one of these languages for communication. '
+        + 'This will make it easier for both of us.';
+      params.body = `${msg}%0d%0d${params.body}`;
+    }
+    const paramList: string[] = [];
+    for (const key of Object.keys(params)) {
+      paramList.push(`${key}=${params[key]}`)
+    }
+    this.ss.navigate(`mailto:nightscoutreporter@gmail.com?${Utils.join(paramList, '&')}`);
   }
 }

@@ -11816,7 +11816,7 @@ version was created by github user notmasteryet
           var args, at, i, atLength;
           switch (header.type) {
             case 0: // SymbolDictionary
-                    // 7.4.2 Symbol dictionary segment syntax
+              // 7.4.2 Symbol dictionary segment syntax
               var dictionary = {};
               var dictionaryFlags = readUint16(data, position); // 7.4.2.1.1
               dictionary.huffman = !!(dictionaryFlags & 1);
@@ -43195,19 +43195,21 @@ version was created by github user notmasteryet
       }
 
       var supportsMozChunked = (function supportsMozChunkedClosure() {
-        try {
-          var x = new XMLHttpRequest();
-          // Firefox 37- required .open() to be called before setting responseType.
-          // https://bugzilla.mozilla.org/show_bug.cgi?id=707484
-          // Even though the URL is not visited, .open() could fail if the URL is
-          // blocked, e.g. via the connect-src CSP directive or the NoScript addon.
-          // When this error occurs, this feature detection method will mistakenly
-          // report that moz-chunked-arraybuffer is not supported in Firefox 37-.
-          x.open('GET', 'https://example.com');
-          x.responseType = 'moz-chunked-arraybuffer';
-          return x.responseType === 'moz-chunked-arraybuffer';
-        } catch (e) {
-          return false;
+        if (typeof navigator !== 'undefined' && navigator.userAgent.includes('Firefox')) {
+          try {
+            var x = new XMLHttpRequest();
+            // Firefox 37- required .open() to be called before setting responseType.
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=707484
+            // Even though the URL is not visited, .open() could fail if the URL is
+            // blocked, e.g. via the connect-src CSP directive or the NoScript addon.
+            // When this error occurs, this feature detection method will mistakenly
+            // report that moz-chunked-arraybuffer is not supported in Firefox 37-.
+            x.open('GET', 'https://example.com', true);
+            x.responseType = 'moz-chunked-arraybuffer';
+            return x.responseType === 'moz-chunked-arraybuffer';
+          } catch (e) {
+            return false;
+          }
         }
       })();
 

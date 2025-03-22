@@ -175,21 +175,56 @@
             Externe Daten die bei Reporterstellung zusätzlich geladen werden
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-checkbox (click)="toggleDatasource($event, 'fitbit')"
-                      [checked]="globals.user.dataSources['fitbit']!=null" i18n>
-          <img [class]="classForDS('fitbit')" alt="fitbit" datasource src="assets/img/fitbit.png">
-        </mat-checkbox>
+        @for (key of oauth2List; track $index) {
+          <div oauthItem>
+            <button (click)="toggleDatasource($event, key)" mat-button>
+              @if (globals.user.dataSources[key] != null) {
+                <mat-icon on>thumb_up</mat-icon>
+              } @else {
+                <mat-icon off>thumb_down</mat-icon>
+              }
+              <img [class]="classForDS(key)" [alt]="key" datasource src="assets/img/{{key}}.png">
+            </button>
+            @if (globals.isDebug) {
+              <div class="debug">
+                <button (click)="clickDataSource($event, key, 'apiExplorerUrl')"
+                        [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
+                        mat-icon-button>
+                  <mat-icon>api</mat-icon>
+                </button>
+                <button (click)="clickDataSource($event, key, 'devAppUrl')"
+                        [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
+                        mat-icon-button>
+                  <mat-icon>developer_board</mat-icon>
+                </button>
+                @if (globals.user.dataSources[key] != null) {
+                  <button (click)="clickExportDatasource(key)" mat-icon-button>
+                    <mat-icon>cloud_download</mat-icon>
+                  </button>
+                } @else {
+                  <button (click)="clickImportDatasource(key)" mat-icon-button>
+                    <mat-icon>cloud_upload</mat-icon>
+                  </button>
+                  <input #fileSelectDatasource (change)="fileSelectedDatasource($event)" type="file">
+                }
+              </div>
+            }
+          </div>
+        }
       </mat-expansion-panel>
       <div class="controls">
-        <button (click)="addUrl()"
-                *ngIf="idx===globals.user.listApiUrl.length-1"
-                [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
-                mat-mini-fab>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button (click)="deleteUrl(idx)" *ngIf="idx>0" mat-mini-fab>
-          <mat-icon>delete</mat-icon>
-        </button>
+        @if (idx === globals.user.listApiUrl.length - 1) {
+          <button (click)="addUrl()"
+                  [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
+                  mat-mini-fab>
+            <mat-icon>add</mat-icon>
+          </button>
+        }
+        @if (idx > 0) {
+          <button (click)="deleteUrl(idx)" mat-mini-fab>
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
       </div>
     </div>
     <div class="sub">

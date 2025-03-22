@@ -59,6 +59,8 @@
   "settingsError": "#a52714",
   "settingsHeadBack": "#4a148c",
   "settingsHeadFore": "#e1bee7",
+  "settingsOptionOn": "#008000",
+  "settingsOptionOff": "#800000",
   "shortcutBodyBack": "#69f0ae",
   "shortcutBodyFore": "#000",
   "shortcutBodyData": "#000",

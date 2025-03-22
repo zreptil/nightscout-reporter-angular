@@ -65,7 +65,10 @@ export class UserData {
     }
     const dataSources: any[] = [];
     for (const key of Object.keys(this.dataSources)) {
-      dataSources.push(this.dataSources[key].asJson);
+      const data = this.dataSources[key];
+      if (data != null) {
+        dataSources.push(this.dataSources[key].asJson);
+      }
     }
     dataSources.filter(ds => ds.key != null)
       .sort((a, b) => Utils.compare(a.key, b.key));

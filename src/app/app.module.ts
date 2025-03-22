@@ -55,6 +55,7 @@ import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.dir
 import {LaunchComponent} from '@/components/launch/launch.component';
 import {ProgressComponent} from '@/components/progress/progress.component';
 import {LogComponent} from '@/components/log/log.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import {LogComponent} from '@/components/log/log.component';
     ProgressComponent,
     LogComponent,
     TextareaAutoresizeDirective], providers: [
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}
   ]
 })
 export class AppModule {

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+
 import {ReportData} from '@/_model/report-data';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {Utils} from '@/classes/utils';
@@ -27,6 +28,7 @@ import {ListData} from '@/_model/nightscout/list-data';
 import {StatisticData} from '@/_model/nightscout/statistic-data';
 import {Settings} from '@/_model/settings';
 import {SettingsComponent} from '@/components/settings/settings.component';
+import {DataSourceService} from '@/_services/sync/data-source.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +40,8 @@ export class NightscoutService {
   constructor(public ps: ProgressService,
               public ds: DataService,
               public ts: ThemeService,
-              public ms: MessageService) {
+              public ms: MessageService,
+              public datasourceService: DataSourceService) {
   }
 
   get msgProfileError(): string {
@@ -478,6 +481,13 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     const info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
     this.ps.info = $localize`${info} für ${GLOBALS.user.name}`;
     this.reportData.deviceList = [];
+    // request other datasources present in the settings
+    for (const key of Object.keys(data.user.dataSources)) {
+      await this.datasourceService.getActivities(data.user.dataSources[key],
+        begDate, endDate, data.ns.healthList, (error) => {
+          Log.error(error);
+        });
+    }
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {
@@ -836,6 +846,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     data.calc.treatments = data.ns.treatments;
     data.calc.devicestatusList = data.ns.devicestatusList;
     data.calc.activityList = data.ns.activityList;
+    data.calc.healthList = data.ns.healthList;
 
     const date = new Date(this.reportData.begDate.getFullYear(), this.reportData.begDate.getMonth(), this.reportData.begDate.getDate());
     let params = new ProfileParams();
@@ -854,7 +865,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           this.ps.isPaused = false;
         }
       })));
-      if (result.btn === DialogResultButton.no) {
+      if (result?.btn === DialogResultButton.no) {
         doFinalize = false;
       }
     }
@@ -1146,6 +1157,9 @@ schlechten Internetverbindung.`);
       Utils.pushAll(day.devicestatusList, list.devicestatusList.filter((ds) => day.isSameDay(JsonData.toLocal(ds.createdAt))));
       day.activityList = [];
       Utils.pushAll(day.activityList, list.activityList.filter((ac) => day.isSameDay(JsonData.toLocal(ac.createdAt))));
+      day.healthList = [];
+      Utils.pushAll(day.healthList, list.healthList.filter((hd) => Utils.dateAsNumber(day.date) === hd.startDate));
+      // console.log(Utils.dateAsNumber(day.date), day.healthList);
     }
     // the last day before the period was added at the beginning.
     // Now it has to be removed.

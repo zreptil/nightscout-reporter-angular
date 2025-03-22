@@ -63,7 +63,7 @@ export class PdfService {
       const pdfMakeModule: any = await import('pdfmake/build/pdfmake');
       const pdfFontsModule: any = await import('pdfmake/build/vfs_fonts');
       this.pdfMake = pdfMakeModule.default;
-      this.pdfMake.vfs = pdfFontsModule.default.pdfMake.vfs;
+      this.pdfMake.vfs = pdfFontsModule.vfs;
     }
   }
 
@@ -78,7 +78,9 @@ export class PdfService {
     const repData = await this.ns.loadData(createThumbs != null);
     Log.showTimer('loadData done');
     if (!repData?.isValid) {
-      console.error('repData ist nicht gültig', repData);
+      if (GLOBALS.isDebug) {
+        console.error('repData ist nicht gültig', repData);
+      }
       this.ps.text = null;
       return;
     }
