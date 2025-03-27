@@ -12,6 +12,7 @@ export class EnvironmentService {
   GOOGLE_API_KEY: string = null;
   DROPBOX_APP_KEY: string = null;
   settingsFilename: string = null;
+  backendUrl: string = null;
 
   urlParams: any = {};
 

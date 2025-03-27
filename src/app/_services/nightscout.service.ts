@@ -476,18 +476,21 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     // add the previous day of the period to have the daydata available in forms that need this information
     begDate = Utils.addDateDays(begDate, -1);
     data.dayCount = -1;
-    this.ps.value = 0;
-    this.ps.max = Utils.differenceInDays(endDate, begDate)
     const info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;
     this.ps.info = $localize`${info} für ${GLOBALS.user.name}`;
     this.reportData.deviceList = [];
     // request other datasources present in the settings
+    this.ps.max = Object.keys(data.user.dataSources).length;
+    this.ps.text = $localize`Lade Daten aus externen Datenquellen...`;
     for (const key of Object.keys(data.user.dataSources)) {
+      this.ps.value++;
       await this.datasourceService.getActivities(data.user.dataSources[key],
         begDate, endDate, data.ns.healthList, (error) => {
           Log.error(error);
         });
     }
+    this.ps.value = 0;
+    this.ps.max = Utils.differenceInDays(endDate, begDate)
     while (begDate <= endDate) {
       let hasData = false;
       if (GLOBALS.period.isDowActive(begDate.getDay())) {

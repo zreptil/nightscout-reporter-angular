@@ -18,9 +18,10 @@ import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoi
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
-import {OAuth2} from '@/_services/sync/auth.config';
 import {FitbitService} from '@/_services/sync/fitbit.service';
 import {OAuth2Data} from '@/_model/oauth2-data';
+import {OAuth2Service} from '@/_services/sync/oauth2.service';
+import {EnvironmentService} from '@/_services/environment.service';
 
 @Component({
   selector: 'app-settings',
@@ -100,19 +101,21 @@ export class SettingsComponent implements OnInit {
   constructor(private dlgRef: MatDialogRef<SettingsComponent>,
               @Inject(MAT_DIALOG_DATA) public dlgData: { cmd: string },
               private da: DateAdapter<any>,
+              public env: EnvironmentService,
               public ds: DataService,
               public ps: ProgressService,
               public ts: ThemeService,
               public ss: SessionService,
               public ns: NightscoutService,
               public ms: MessageService,
+              public oauth: OAuth2Service,
               public os: FitbitService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
   }
 
   get oauth2List() {
-    return Object.keys(OAuth2);
+    return Object.keys(this.oauth?.oauthList ?? {});
   }
 
   get globals(): GlobalsData {
@@ -520,23 +523,10 @@ export class SettingsComponent implements OnInit {
     this.checkUser();
   }
 
-  clickAuth(key: string) {
-    console.log(OAuth2[key]);
-    const oauth = OAuth2[key];
-    window.location.href = `${oauth.loginUrl}?response_type=code`
-      + `&client_id=${oauth.clientId}`
-      + `&redirect_uri=${encodeURIComponent(oauth.redirectUri)}`
-      + `&scope=${encodeURIComponent(oauth.scope)}`;
-  }
-
   toggleDatasource(evt: Event, key: string) {
     evt.stopPropagation();
     if (GLOBALS.user.dataSources[key] == null) {
-      const oauth = OAuth2[key];
-      window.location.href = `${oauth.loginUrl}?response_type=code`
-        + `&client_id=${oauth.clientId}`
-        + `&redirect_uri=${encodeURIComponent(oauth.redirectUri)}`
-        + `&scope=${encodeURIComponent(oauth.scope)}`;
+      window.location.href = `${this.env.backendUrl}/oauth.php?app=${key}`;
     } else {
       this.ms.confirm($localize`Soll ${key} wirklich deaktiviert werden?`).subscribe(
         result => {
@@ -557,7 +547,12 @@ export class SettingsComponent implements OnInit {
 
   clickDataSource(evt: MouseEvent, key: string, target: string) {
     evt.stopPropagation();
-    window.open((OAuth2[key] as any)[target]);
+    const url = (this.oauth.oauthList[key] as any)[target];
+    if (url != null) {
+      window.open(url);
+    } else {
+      this.ss.ms.error($localize`Es ist keine Definition für ${key}-${target} vorhanden`);
+    }
   }
 
   clickExportDatasource(key: string): void {
@@ -599,4 +594,14 @@ export class SettingsComponent implements OnInit {
     this.fileSelectDatasource.nativeElement.click();
   }
 
+  classForOauthItem(key: string): string[] {
+    const ret: string[] = [];
+    if (GLOBALS.isDebug) {
+      ret.push('debug');
+    }
+    if (GLOBALS.user.dataSources[key] != null) {
+      ret.push('active');
+    }
+    return ret;
+  }
 }

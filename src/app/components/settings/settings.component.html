@@ -107,6 +107,53 @@
           </div>
         </div>
       </div>
+      @if (oauth2List.length > 0) {
+        <mat-expansion-panel expanded="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title i18n="label of area for url settings - additional data">
+              Externe Daten die bei Reporterstellung zusätzlich geladen werden
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div row>
+            @for (key of oauth2List; track $index) {
+              <div oauthItem [class]="classForOauthItem(key)">
+                <button (click)="toggleDatasource($event, key)" mat-button>
+                  @if (globals.user.dataSources[key] != null) {
+                    <mat-icon on>thumb_up</mat-icon>
+                  } @else {
+                    <mat-icon off>thumb_down</mat-icon>
+                  }
+                  <img [class]="classForDS(key)" [alt]="key" datasource src="assets/img/{{key}}.png">
+                </button>
+                @if (globals.isDebug) {
+                  <div>
+                    <button (click)="clickDataSource($event, key, 'apiExplorerUrl')"
+                            [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
+                            mat-icon-button>
+                      <mat-icon>api</mat-icon>
+                    </button>
+                    <button (click)="clickDataSource($event, key, 'devAppUrl')"
+                            [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
+                            mat-icon-button>
+                      <mat-icon>developer_board</mat-icon>
+                    </button>
+                    @if (globals.user.dataSources[key] != null) {
+                      <button (click)="clickExportDatasource(key)" mat-icon-button>
+                        <mat-icon>cloud_download</mat-icon>
+                      </button>
+                    } @else {
+                      <button (click)="clickImportDatasource(key)" mat-icon-button>
+                        <mat-icon>cloud_upload</mat-icon>
+                      </button>
+                      <input #fileSelectDatasource (change)="fileSelectedDatasource($event)" type="file">
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </mat-expansion-panel>
+      }
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title i18n="label of area for url settings - librelinkup">
@@ -168,49 +215,6 @@
             <mat-icon class="urlIcon">{{ showSecret !== idx ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </div>
-      </mat-expansion-panel>
-      <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title i18n="label of area for url settings - additional data">
-            Externe Daten die bei Reporterstellung zusätzlich geladen werden
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        @for (key of oauth2List; track $index) {
-          <div oauthItem>
-            <button (click)="toggleDatasource($event, key)" mat-button>
-              @if (globals.user.dataSources[key] != null) {
-                <mat-icon on>thumb_up</mat-icon>
-              } @else {
-                <mat-icon off>thumb_down</mat-icon>
-              }
-              <img [class]="classForDS(key)" [alt]="key" datasource src="assets/img/{{key}}.png">
-            </button>
-            @if (globals.isDebug) {
-              <div class="debug">
-                <button (click)="clickDataSource($event, key, 'apiExplorerUrl')"
-                        [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
-                        mat-icon-button>
-                  <mat-icon>api</mat-icon>
-                </button>
-                <button (click)="clickDataSource($event, key, 'devAppUrl')"
-                        [disabled]="ss.isEmpty(globals.user.apiUrl(null, '', {noApi: true}))"
-                        mat-icon-button>
-                  <mat-icon>developer_board</mat-icon>
-                </button>
-                @if (globals.user.dataSources[key] != null) {
-                  <button (click)="clickExportDatasource(key)" mat-icon-button>
-                    <mat-icon>cloud_download</mat-icon>
-                  </button>
-                } @else {
-                  <button (click)="clickImportDatasource(key)" mat-icon-button>
-                    <mat-icon>cloud_upload</mat-icon>
-                  </button>
-                  <input #fileSelectDatasource (change)="fileSelectedDatasource($event)" type="file">
-                }
-              </div>
-            }
-          </div>
-        }
       </mat-expansion-panel>
       <div class="controls">
         @if (idx === globals.user.listApiUrl.length - 1) {

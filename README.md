@@ -23,12 +23,12 @@ Initial steps to compile, deploy, and run nightscout reporter on your own infras
 ### Build
 
 * Call build.bat from the repository folder in cmd
-* Result will be avaialbe in directory .\dist\nightrep
+* Result will be avaialbe in directory _dist/nightrep/browser_
 
 ### Deploy
 
-* Get a web server (or online web space)
-* Copy content of .\dist\nightrep to the content folder of your web server (or any subfolder)
+* Get a web server (or online webspace)
+* Copy content of _dist/nightrep/browser_ to the content folder of your web server (or any subfolder)
 
 You can run your own nightscout-reporter instance by calling the URL of your web-server in a browser.
 
@@ -38,26 +38,25 @@ You can run your own nightscout-reporter instance by calling the URL of your web
 
 A web.config file is provided in the root-directory of the deployment.
 
-#### php
+#### external datasources
 
-For using fitbit-data in the reports you need to setup php at your website.
-Then you have to copy the content of folder _src/\_php/src_ to the folder
-_backup_ at your website. In this folder you have to create a subfolder
-_config_ and place a configuration file for every datasource that can be
-included in nightscout reporter. It needs to have the following content (e.g. for fitbit):
+For using data from external datasources in the reports you need to set up PHP at your website.
+This is necessary since many webservices that use OAUTH2 don't allow access from webapps
+in the browser but have no problem when accessing the same using any other client than a browser.
 
-_fitbit.php_
+The php-part of the website is placed in folder _backend_ at the website. The sources for this
+folder can be found in _src/\_php/src_. You have to place the variables needed to
+access a certain webservice in the given file in the subfolder _config/apps_.
 
-```php
-<?php
-include('config.php');
-$clientId = '<CLIENT_ID>';
-$clientSecret = '<CLIENT_SECRET>';
-$scope = 'activity heartrate location nutrition profile settings sleep social weight';
-```
+During the buildprocess the files from folder _build-replacements/\_php/config/apps_ will
+be copied to the destination.
 
-_CLIENT\_ID_ and _CLIENT\_SECRET_ are the values you get when setting up the app at a
-fitbit developer account to access the data.
+So you can place your configuration in the files there. These files will not be available in
+github at this place, since they have to contain the configuration depending on the
+apps that were set up for access via oauth2 at the desired destinations.
+
+If the configuration for a datasource is missing, it will not be available in Nightscout
+Reporter for use in reports.
 
 ## Installation with Docker
 

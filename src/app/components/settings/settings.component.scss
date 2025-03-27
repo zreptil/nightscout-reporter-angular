@@ -402,6 +402,12 @@ img[datasource] {
   display: flex;
   flex-flow: row;
   align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0.5em;
+
+  &.active {
+    background: rgba(255, 255, 255, 0.2);
+  }
 
   [on] {
     color: var(--settingsOptionOn);
@@ -418,4 +424,13 @@ img[datasource] {
 
 ::ng-deep .mat-mdc-option {
   --mat-option-label-text-color: var(--bodyFore) !important;
+}
+
+[row] {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1em;
 }

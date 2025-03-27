@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3002 --open",
+    "backend": "cmd /c backend.bat",
     "start-demo": "ng serve --configuration demo --port 3003 --open",
     "build": "ng build && npm run zip && npm run rename",
     "build-dev": "ng build --configuration dev && npm run zip && npm run rename",

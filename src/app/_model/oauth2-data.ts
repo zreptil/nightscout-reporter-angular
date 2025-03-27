@@ -5,6 +5,7 @@ export class OAuth2Data {
   key: string;
   accessToken: string;
   refreshToken: string;
+  tokenExpires: number;
   userId: string;
   scope: string;
 
@@ -18,7 +19,8 @@ export class OAuth2Data {
       b: this.accessToken,
       c: this.refreshToken,
       d: this.userId,
-      e: this.scope
+      e: this.scope,
+      f: this.tokenExpires
     };
   }
 
@@ -30,6 +32,7 @@ export class OAuth2Data {
       ret.refreshToken = JsonData.toText(json.c);
       ret.userId = JsonData.toText(json.d);
       ret.scope = JsonData.toText(json.e);
+      ret.tokenExpires = JsonData.toNumber(json.f);
     } catch (ex) {
       Log.devError(ex, `Fehler bei OAuth2Data.fromJson`);
     }

@@ -50,7 +50,7 @@ import {PrintTDD} from '@/forms/nightscout/print-tdd';
 import {PrintTemplate} from '@/forms/nightscout/print-template';
 import {ColorCfgDialogComponent} from '@/controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
 import {EnvironmentService} from '@/_services/environment.service';
-import {OAuth2Data} from '@/_model/oauth2-data';
+import {OAuth2Service} from '@/_services/sync/oauth2.service';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -110,6 +110,7 @@ export class SessionService {
               public pdf: PdfService,
               public ts: ThemeService,
               public env: EnvironmentService,
+              public os: OAuth2Service,
               public ms: MessageService) {
     GLOBALS.onPeriodChange.subscribe(_ => {
       this.checkPrint();
@@ -371,7 +372,6 @@ export class SessionService {
     Utils.pushAll(GLOBALS.listConfig, GLOBALS.listConfigOrg);
 
     await this.ds.loadSettingsJson();
-    this.extractUrlParams();
     let dlgId = GLOBALS.version === GLOBALS.lastVersion ? null : 'whatsnew';
     dlgId = GLOBALS.isConfigured ? dlgId : 'welcome';
     this.showPopup(dlgId).subscribe(_ => {
@@ -420,32 +420,5 @@ export class SessionService {
     cfg.help = (GLOBALS as any)[key];
     this.showPopup('helpview', cfg);
     evt.stopPropagation();
-  }
-
-  extractUrlParams() {
-    if (GLOBALS.user != null) {
-      if (this.env.urlParams['fitbit'] != null) {
-        const data: any = JSON.parse(Utils.decodeBase64(this.env.urlParams['fitbit']));
-        // {
-        // "access_token":"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM1E0SzkiLCJzdWIiOiJCN0pCMloiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IiwiZXhwIjoxNzQyNDI0NTQ2LCJpYXQiOjE3NDIzOTU3NDZ9.PSHHBcMw9Q0mbpmjtJI1bRDUfzWtwqeh1rF9875l4G8",
-        // "expires_in":28800,
-        // "refresh_token":"c58c12a76ecf7baf07c40f89133a5264b5423e438055f86709e4b33a4712295b",
-        // "scope":"activity",
-        // "token_type":"Bearer",
-        // "user_id":"B7JB2Z"
-        // }
-        const oauth2 = new OAuth2Data();
-        oauth2.key = 'fitbit';
-        oauth2.accessToken = data.access_token;
-        oauth2.refreshToken = data.refresh_token;
-        oauth2.userId = data.user_id;
-        oauth2.scope = data.scope;
-        GLOBALS.user.dataSources[oauth2.key] = oauth2;
-        this.ds.save();
-        this.ds.reload();
-      }
-    } else {
-      this.ds.reload();
-    }
   }
 }

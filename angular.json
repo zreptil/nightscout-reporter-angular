@@ -111,6 +111,21 @@
                 "src/assets",
                 "src/web.config",
                 {
+                  "input": "src/_php/src",
+                  "output": "backend/",
+                  "glob": "**/*.php"
+                },
+                {
+                  "input": "src/_php/src",
+                  "output": "backend/",
+                  "glob": ".htaccess"
+                },
+                {
+                  "input": "src/_php/src",
+                  "output": "backend/",
+                  "glob": "web.config"
+                },
+                {
                   "input": "src/build-replacements/assets/dev",
                   "output": "assets/",
                   "glob": "*.json"
@@ -119,12 +134,17 @@
                   "input": "src/build-replacements/assets/dev/php",
                   "output": "assets/php/",
                   "glob": "*.php"
+                },
+                {
+                  "input": "src/build-replacements/_php/config/apps",
+                  "output": "backend/config/apps",
+                  "glob": "*.php"
                 }
               ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ],
               "outputHashing": "all",

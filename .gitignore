@@ -53,5 +53,4 @@ Thumbs.db
 /package-lock.json
 /test-data/krawuzl.profileswitch.json
 /src/assets/secret.json
-
-/src/_php/src/config/
+/src/build-replacements/_php/config/apps
