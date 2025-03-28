@@ -68,33 +68,35 @@ export class FitbitService extends OAuth2Service {
         break;
     }
     return lastValueFrom(this.getData('activities', {dateKey: dateKey, date: Utils.fmtDate(date, 'yyyy-MM-dd')}).pipe(
-        map(async (response: any) => {
-          const srcLimits = this.getMinMax(src);
-          if (src != null) {
-            // mix response in src
-            for (const act of response.activities) {
-              if (!src.activities.some((a: any) => a.logId === act.logId)) {
-                src.activities.push(act);
-              }
+      map(async (response: any) => {
+        const srcLimits = this.getMinMax(src);
+        if (src != null) {
+          // mix response in src
+          for (const act of response.activities) {
+            if (!src.activities.some((a: any) => a.logId === act.logId)) {
+              src.activities.push(act);
             }
-          } else {
-            src = response;
           }
-          // save src to localStorage
-          await this.dataToCache(src);
-          const limits = this.getMinMax(src);
-          if (srcLimits.min?.getTime() !== limits.min?.getTime()
-            || srcLimits.max?.getTime() !== limits.max?.getTime()) {
-            // console.log(srcLimits);
-            // console.log(limits);
-            // console.log(src);
-//          return await this.readActivities(begDate, endDate, src);
+        } else {
+          src = response;
+        }
+        // save src to localStorage
+        await this.dataToCache(src);
+        const limits = this.getMinMax(src);
+        if (srcLimits.min?.getTime() !== limits.min?.getTime()
+          || srcLimits.max?.getTime() !== limits.max?.getTime()) {
+          // console.log(srcLimits);
+          // console.log(limits);
+          // console.log(src);
+          if (response.activities.length === 100) {
+            return await this.readActivities(begDate, endDate, src);
           }
-          return await this.extractHealthData(src, healthList);
-        }),
-        catchError(_error => {
-          return throwError(() => new Error('Fehler beim Abrufen der Fitbit-Daten'));
-        }))
+        }
+        return await this.extractHealthData(src, healthList);
+      }),
+      catchError(_error => {
+        return throwError(() => new Error('Fehler beim Abrufen der Fitbit-Daten'));
+      }))
     );
   }
 

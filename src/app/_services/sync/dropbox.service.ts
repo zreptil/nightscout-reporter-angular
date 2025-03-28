@@ -72,9 +72,9 @@ export class DropboxService {
   }
 
   connect(): void {
-    if (this.status !== oauthStatus.none) {
-      return;
-    }
+    // if (this.status !== oauthStatus.none) {
+    //   return;
+    // }
     let codeVerifier = '';
     // codeVerfier has to be a random sequence and has to match
     // regex [0-9a-zA-Z\-\.\_\~], {43,128}
@@ -145,6 +145,8 @@ export class DropboxService {
         case 200:
           ret = response?.body;
           this.lastStatus = new DBSStatus(dbsStatus.info, $localize`Die Datei ${filename} wurde von Dropbox heruntergeladen.`);
+          break;
+        case 409: // file not found
           break;
         default:
           ret = response;

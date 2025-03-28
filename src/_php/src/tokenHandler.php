@@ -28,7 +28,22 @@ function refreshAccessToken($refreshToken)
   ]);
   $response = curl_exec($ch);
   curl_close($ch);
-  return json_decode($response, true);
+  $ret = json_decode($response, true);
+  $ret['wurst'] = 'Leber';
+  if (!$ret['success']) {
+    // redirect to this file again, will be called with "code" as parameter
+    $redirectUri = $cfg['redirectUri'] . basename(__FILE__);
+    $authUrl = $cfg['authUrl'] . '?'
+      . http_build_query([
+        'response_type' => 'code',
+        'client_id' => $cfg['clientId'],
+        'redirect_uri' => $redirectUri,
+        'scope' => $cfg['scope'],
+      ]);
+    header('Location: ' . $authUrl);
+    exit;
+  }
+  return $ret;
 }
 
 // fill return array for output to the caller
@@ -43,9 +58,7 @@ if (isset($_REQUEST['at']) && time() < $_REQUEST['te']) {
   $accessToken = $_REQUEST['at'];
 } elseif (isset($_REQUEST['rt'])) {
   // Access-Token ist abgelaufen, aber Refresh-Token ist vorhanden
-  $refreshToken = $_REQUEST['rt'];
-
-  $tokenData = refreshAccessToken($refreshToken);
+  $tokenData = refreshAccessToken($_REQUEST['rt']);
 
   if (isset($tokenData['access_token'])) {
     // set new values to return array

@@ -473,7 +473,8 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     this.ps.text = $localize`Entferne leere Profile...`;
     data.profiles = data.profiles.filter((p) => !(p.duration < 2 && p != Utils.last(data.profiles) && p.store['NR Profil'] == null));
 
-    // add the previous day of the period to have the daydata available in forms that need this information
+    // add the previous day of the period to have the
+    // daydata available in forms that need this information
     begDate = Utils.addDateDays(begDate, -1);
     data.dayCount = -1;
     const info = isForThumbs ? `${GLOBALS.fmtDate(begDate)} - ${GLOBALS.fmtDate(endDate)}` : GLOBALS.period.display;

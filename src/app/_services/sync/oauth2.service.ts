@@ -70,7 +70,7 @@ export abstract class OAuth2Service {
             oauth2.key = key;
             oauth2.accessToken = data.access_token;
             oauth2.refreshToken = data.refresh_token;
-            oauth2.tokenExpires = new Date().getTime() + data.expires_in;
+            oauth2.tokenExpires = Math.floor(new Date().getTime() / 1000) + data.expires_in;
             oauth2.userId = data.user_id;
             oauth2.scope = data.scope;
             GLOBALS.user.dataSources[oauth2.key] = oauth2;
