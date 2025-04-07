@@ -25,7 +25,9 @@ if (isset($_REQUEST['app'])) {
 //        curl_close($ch);
       }
     } catch (Exception $ex) {
-      error_log($ex->getMessage());
+      $error['code'] = 500;
+      $error['msg'] = $ex->getMessage();
+      include('error.php');
     }
     exit;
   } else if (isset($_REQUEST['cmd'])) {

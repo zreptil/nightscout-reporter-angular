@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
   calcDate = GlobalsData.now;
   msgCalcDayTitle = '';
   listProfileMaxCount: string[];
+  listTileDisplay = [$localize`Text`, $localize`Bild`, $localize`Text und Bild`];
   @ViewChild('fileSelect')
   fileSelect: ElementRef<HTMLInputElement>;
   @ViewChild('fileSelectDatasource')
@@ -528,7 +529,7 @@ export class SettingsComponent implements OnInit {
     if (GLOBALS.user.dataSources[key] == null) {
       window.location.href = `${this.env.backendUrl}/oauth.php?app=${key}`;
     } else {
-      this.ms.confirm($localize`Soll ${key} wirklich deaktiviert werden?`).subscribe(
+      this.ms.confirm($localize`Soll ${key} wirklich deaktiviert werden? Es ist dann nicht mehr möglich, diese Daten in Reports zu sehen.`).subscribe(
         result => {
           if (result.btn === DialogResultButton.yes) {
             this.os.revokeToken();

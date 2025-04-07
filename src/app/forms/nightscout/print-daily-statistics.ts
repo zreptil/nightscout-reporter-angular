@@ -128,10 +128,15 @@ schwächerer Schrift angezeigt wird.`;
     for (const idx of list) {
       const p = this.params[idx];
       if (p.boolValue) {
-        count++;
+        let add = 1;
         if (idx === 2) {
-          count += 2;
+          add += 2;
         }
+        if (count + add > 7) {
+          add = 0;
+          p.boolValue = false;
+        }
+        count += add;
       }
     }
 

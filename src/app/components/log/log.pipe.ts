@@ -7,7 +7,7 @@ import {Utils} from '@/classes/utils';
 })
 export class LogPipe implements PipeTransform {
   format(time: string, line: string): string {
-    return time != null ? `${time} ${line}` : line;
+    return time != null ? `${time} - ${line}` : line;
   }
 
   transform(src: unknown, ...args: unknown[]): unknown {

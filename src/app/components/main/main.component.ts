@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
 import {ThemeService} from '@/_services/theme.service';
 import {DataService} from '@/_services/data.service';
@@ -17,6 +17,7 @@ import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ColorData} from '@/_model/color-data';
 import {LanguageService} from '@/_services/language.service';
 import {EnvironmentService} from '@/_services/environment.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main',
@@ -24,7 +25,7 @@ import {EnvironmentService} from '@/_services/environment.service';
   styleUrls: ['./main.component.scss'],
   standalone: false
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
   sendIcon = 'send';
   menuIdx = 0;
   closeData: CloseButtonData = {
@@ -33,6 +34,8 @@ export class MainComponent implements OnInit {
   };
   msgDevWarn = $localize`Das ist eine Warnung.`;
   msgDevError = $localize`Das war ein Fehler!!`;
+  svgCollection: SafeHtml;
+  keepCover = false;
 
   constructor(public ts: ThemeService,
               public ds: DataService,
@@ -43,8 +46,10 @@ export class MainComponent implements OnInit {
               public dbs: DropboxService,
               public ms: MessageService,
               public ls: LanguageService,
-              public env: EnvironmentService
+              public env: EnvironmentService,
+              public sanitizer: DomSanitizer
   ) {
+    this.keepCover = this.ss.mayDebug;
   }
 
   get classForContent(): string[] {
@@ -89,7 +94,7 @@ export class MainComponent implements OnInit {
   }
 
   get classForHeader(): string[] {
-    const ret = ['mat-elevation-z4'];
+    const ret = [];
     if (GLOBALS.isDebug) {
       ret.push('debug');
     }
@@ -379,5 +384,31 @@ export class MainComponent implements OnInit {
       paramList.push(`${key}=${params[key]}`)
     }
     this.ss.navigate(`mailto:nightscoutreporter@gmail.com?${Utils.join(paramList, '&')}`);
+  }
+
+  async ngAfterViewInit() {
+    let theme: any;
+    if (GLOBALS.theme !== 'standard' && GLOBALS.theme !== 'xmas') {
+      theme = JSON.parse(Utils.decodeBase64(GLOBALS.ownTheme)) ?? {};
+    } else {
+      await this.ts.setTheme(GLOBALS.theme, false, false);
+      theme = this.ts.currTheme;
+    }
+    document.body.style.setProperty('background', theme.mainBodyBack);
+    document.getElementById('cover').style.setProperty('background', theme.mainBodyBack);
+//    document.getElementById('owl').style.setProperty('background', theme.mainBodyBack);
+//     if (theme === 'standard' || theme === 'own' || theme === 'xmas') {
+//       document.getElementById('owl')?.setAttribute('src', 'src/assets/themes/' + theme + '/owl' + suffix + '.png');
+//       document.getElementById('themestyle')?.setAttribute('href', 'src/assets/themes/' + theme + '/index.css');
+//       document.getElementById('favicon')?.setAttribute('href', 'src/assets/themes/' + theme + '/favicon' + suffix + '.png');
+//     }
+    if (this.svgCollection == null) {
+      setTimeout(() => {
+        this.svgCollection = {};
+        this.ds.request('assets/img/owl.svg', {options: {responseType: 'text'}}).then(result => {
+          this.svgCollection = this.sanitizer.bypassSecurityTrustHtml(result.body);
+        });
+      });
+    }
   }
 }

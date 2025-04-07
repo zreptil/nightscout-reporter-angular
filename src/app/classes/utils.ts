@@ -7,6 +7,8 @@ import {GLOBALS, GlobalsData} from '@/_model/globals-data';
  * A collection of utility functions.
  */
 export class Utils {
+  static decimalSeparator: string = '.';
+
   static replace(text: string, src: string | string[], dst: string | string[]): string {
     if (!Array.isArray(src) && !Array.isArray(dst)) {
       src = [src];

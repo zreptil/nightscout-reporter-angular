@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3002 --open",
-    "backend": "cmd /c backend.bat",
+    "backend": "cmd /k backend.bat",
     "pre-build": "node tools/update-version.js",
     "start-demo": "ng serve --configuration demo --port 3003 --open",
     "build": "npm run pre-build && ng build && npm run zip && npm run rename",
@@ -35,7 +35,6 @@
     "@angular/router": "^19.1.7",
     "@types/google-one-tap": "^1.2.2",
     "@types/pdfmake": "^0.2.1",
-    "@types/ws": "^8.5.4",
     "base64-arraybuffer": "^1.0.2",
     "better-npm-audit": "^3.7.3",
     "extract-zip": "^2.0.1",

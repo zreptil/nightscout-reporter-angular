@@ -15,6 +15,7 @@ import noNO from '@angular/common/locales/no';
 import ruRU from '@angular/common/locales/ru';
 import csCZ from '@angular/common/locales/cs';
 import {loadTranslations} from '@angular/localize';
+import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,8 @@ export class LanguageService {
       'cs-CZ': csCZ
     } as any)[lng.id];
     registerLocaleData(locale);
+    const nf = new Intl.NumberFormat(locale, {style: 'decimal'});
+    const parts = nf.formatToParts(1.1);
+    Utils.decimalSeparator = parts.find(part => part.type === 'decimal')?.value ?? '.';
   }
 }

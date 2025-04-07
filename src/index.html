@@ -21,15 +21,7 @@
   <script id="googleApi" onerror="gtagError()"></script>
 </head>
 <body>
-<app-root>
-  <div class='loading'>
-    <img alt="portrait 1" class='portrait p1' height='35' src='assets/img/nr01.png'>
-    <img alt="landscape 1" class='landscape p2' height='24' src='assets/img/nr02.png'>
-    <img alt="landscape 2" class='landscape p3' height='24' src='assets/img/nr03.png'>
-    <div class='cover'></div>
-    <img alt="owl" class='owl' id='owl' src='assets/themes/standard/owl.png'>
-  </div>
-</app-root>
+<app-root></app-root>
 <script>
   const d = new Date();
   let id = 'webData';
@@ -39,7 +31,7 @@
   let suffix = '';
   if (location.href.indexOf('watch') >= 0) {
     suffix = '-watch';
-    document.getElementById('manifest')?.setAttribute('href', 'assets/manifest.watch.json');
+    document.getElementById('manifest')?.setAttribute('href', 'src/assets/manifest.watch.json');
   }
   let theme = null;
   let allowGoogleTag = false;
@@ -52,11 +44,12 @@
   if (theme == null || theme === '') {
     theme = 'standard';
   }
-  if (theme === 'standard' || theme === 'own' || theme === 'xmax') {
-    document.getElementById('owl')?.setAttribute('src', 'assets/themes/' + theme + '/owl' + suffix + '.png');
-    document.getElementById('themestyle')?.setAttribute('href', 'assets/themes/' + theme + '/index.css');
-    document.getElementById('favicon')?.setAttribute('href', 'assets/themes/' + theme + '/favicon' + suffix + '.png');
-  }
+  // document.getElementById('info').text = theme;
+  // if (theme === 'standard' || theme === 'own' || theme === 'xmas') {
+  //   document.getElementById('owl')?.setAttribute('src', 'src/assets/themes/' + theme + '/owl' + suffix + '.png');
+  //   document.getElementById('themestyle')?.setAttribute('href', 'src/assets/themes/' + theme + '/index.css');
+  //   document.getElementById('favicon')?.setAttribute('href', 'src/assets/themes/' + theme + '/favicon' + suffix + '.png');
+  // }
   if (allowGoogleTag) {
     document.getElementById('googleTag')?.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-WKTH26LEFV');
     document.getElementById('googleClient')?.setAttribute('src', 'https://accounts.google.com/gsi/client');

@@ -131,7 +131,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    font-size: 1em;
+    font-size: 0.8em;
     display: flex;
     z-index: 100;
   }
@@ -175,6 +175,13 @@
   [title] {
     padding: 1em;
     z-index: 100;
+  }
+
+  [titleimg] {
+    position: absolute;
+    padding: 0;
+    top: 0;
+    font-size: 0.8em;
   }
 
   display: flex;

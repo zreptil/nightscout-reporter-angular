@@ -12,5 +12,5 @@ export const environment = {
   settingsFilename: 'nightrep-settings-local',
   // api key for dropbox
   DROPBOX_APP_KEY: 'z5opkgt8251mhsb',
-  backendUrl: 'http://localhost:80'
+  backendUrl: 'http://localhost:30020'
 };

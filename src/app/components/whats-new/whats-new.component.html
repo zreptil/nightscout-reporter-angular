@@ -5,11 +5,29 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(45.0)">
+      <span i18n="version">Version</span><span i18n="v450">4.5.0 - xx.4.2025</span>
+    </h2>
+    <ul [class]="classFor(45.0)">
+      <li class="changed" i18n="450c1">
+        Die Einstellung für die Anzeige der Kacheln wurde erweitert. Jetzt kann man
+        auch das Bild und den Text gleichzeitig auf den Kacheln anzeigen lassen. Das
+        erleichtert es okularherausgeforderten Menschen wie mir, die Formulare besser
+        zu erkennen.
+      </li>
+      <li class="fixed" i18n="450f1">
+        Das Nightscout Reporter Icon beim Laden der Seite wurde wieder aktiviert.
+      </li>
+      <li class="fixed" i18n="450f2">
+        Im Formular "Tagesstatistik" wird die Spaltenanzahl nun korrekt überprüft und
+        limitiert.
+      </li>
+    </ul>
     <h2 (click)="click(44.1)">
       <span i18n="version">Version</span><span i18n="v440">4.4.1 - 13.12.2024</span>
     </h2>
     <ul [class]="classFor(44.1)">
-      <li class="added" i18n="1441c1">
+      <li class="added" i18n="441c1">
         Bei Ermittlung der Obergrenze der Glukosewerte in der Tagesgrafik werden nun auch die temporären
         Zielbereiche berücksichtigt.
       </li>
@@ -18,7 +36,7 @@
       <span i18n="version">Version</span><span i18n="v440">4.4.0 - 23.08.2024</span>
     </h2>
     <ul [class]="classFor(44.0)">
-      <li class="added" i18n="1440a1">
+      <li class="added" i18n="440a1">
         Bei Auswertung der Behandlungen wurden Bolus Wizard Einträge ignoriert. Auch diese
         werden jetzt berücksichtigt, solange es keinen Eintrag mit gleichem Zeitpunkt gibt,
         der einen Mahlzeitbolus beinhaltet.

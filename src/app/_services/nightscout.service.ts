@@ -41,7 +41,7 @@ export class NightscoutService {
               public ds: DataService,
               public ts: ThemeService,
               public ms: MessageService,
-              public datasourceService: DataSourceService) {
+              public dss: DataSourceService) {
   }
 
   get msgProfileError(): string {
@@ -485,7 +485,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
     this.ps.text = $localize`Lade Daten aus externen Datenquellen...`;
     for (const key of Object.keys(data.user.dataSources)) {
       this.ps.value++;
-      await this.datasourceService.getActivities(data.user.dataSources[key],
+      await this.dss.getActivities(data.user.dataSources[key],
         begDate, endDate, data.ns.healthList, (error) => {
           Log.error(error);
         });

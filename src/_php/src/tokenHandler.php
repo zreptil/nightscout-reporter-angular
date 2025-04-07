@@ -18,32 +18,39 @@ function refreshAccessToken($refreshToken)
     'refresh_token' => $refreshToken,
   ];
 
-  $ch = curl_init($cfg['tokenUrl']);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($tokenParams));
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_USERPWD, $cfg['clientId'] . ':' . $cfg['clientSecret']);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/x-www-form-urlencoded',
-  ]);
-  $response = curl_exec($ch);
-  curl_close($ch);
-  $ret = json_decode($response, true);
-  $ret['wurst'] = 'Leber';
-  if (!$ret['success']) {
-    // redirect to this file again, will be called with "code" as parameter
-    $redirectUri = $cfg['redirectUri'] . basename(__FILE__);
-    $authUrl = $cfg['authUrl'] . '?'
-      . http_build_query([
-        'response_type' => 'code',
-        'client_id' => $cfg['clientId'],
-        'redirect_uri' => $redirectUri,
-        'scope' => $cfg['scope'],
-      ]);
-    header('Location: ' . $authUrl);
-    exit;
+  try {
+    $ch = curl_init($cfg['tokenUrl']);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($tokenParams));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERPWD, $cfg['clientId'] . ':' . $cfg['clientSecret']);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      'Content-Type: application/x-www-form-urlencoded',
+    ]);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    $ret = json_decode($response, true);
+    $ret['wurst'] = 'Leber';
+    if (!$ret['success']) {
+      // redirect to this file again, will be called with "code" as parameter
+      $redirectUri = $cfg['redirectUri'] . 'oauth.php';
+      $authUrl = $cfg['authUrl'] . '?'
+        . http_build_query([
+          'response_type' => 'code',
+          'client_id' => $cfg['clientId'],
+          'redirect_uri' => $redirectUri,
+          'scope' => $cfg['scope'],
+        ]);
+      header('Location: ' . $authUrl);
+      exit;
+    }
+    return $ret;
+  } catch (Exception $ex) {
+    $error['code'] = 500;
+    $error['msg'] = $ex->getMessage();
+    include('error.php');
   }
-  return $ret;
+  return null;
 }
 
 // fill return array for output to the caller
@@ -72,7 +79,8 @@ if (isset($_REQUEST['at']) && time() < $_REQUEST['te']) {
     exit;
   }
 } else {
-  // no valid token available
-  echo 'please authorize the app again.';
+  $error['code'] = 401;
+  $error['msg'] = 'please authorize the app again.';
+  include('error.php');
   exit;
 }

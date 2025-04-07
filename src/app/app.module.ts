@@ -56,6 +56,7 @@ import {LaunchComponent} from '@/components/launch/launch.component';
 import {ProgressComponent} from '@/components/progress/progress.component';
 import {LogComponent} from '@/components/log/log.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
 
 @NgModule({
   declarations: [
@@ -102,10 +103,11 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
     ColorCfgDialogComponent,
     ViewThemesComponent,
     ExecuteComponent,
-    LaunchComponent
+    LaunchComponent,
   ],
   bootstrap: [AppComponent],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
@@ -115,7 +117,7 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
     ClipboardModule,
     ProgressComponent,
     LogComponent,
-    TextareaAutoresizeDirective], providers: [
+    TextareaAutoresizeDirective, ScrollShadowDirective], providers: [
     provideHttpClient(withInterceptorsFromDi()),
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}
   ]

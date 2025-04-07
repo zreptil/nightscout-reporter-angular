@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpRequest} from '@angular/common/http';
 import {lastValueFrom, throwError, timeout} from 'rxjs';
-import {GLOBALS, GlobalsData} from '@/_model/globals-data';
+import {GLOBALS, GlobalsData, TileDisplay} from '@/_model/globals-data';
 import {JsonData} from '@/_model/json-data';
 import {Log} from '@/_services/log.service';
 import {StorageService} from '@/_services/storage.service';
@@ -546,7 +546,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS._pdfOrder = JsonData.toText(json.s9);
       GLOBALS.viewType = JsonData.toText(json.s10);
       GLOBALS.timestamp = JsonData.toNumber(json.s11);
-      GLOBALS.tileShowImage = JsonData.toBool(json.s12, true);
+      GLOBALS.tileDisplay = JsonData.toNumber(json.s12, TileDisplay.both);
       GLOBALS.showAllTileParams = JsonData.toBool(json.s13);
       GLOBALS.userListLoaded = false;
       GLOBALS.userList = [];

@@ -3,8 +3,8 @@
   <div>{{ filter }}</div>
   <div index>{{ userList.length }} / {{ globals.userList.length }}</div>
 </div>
-<div tilelist>
-  <ng-container *ngFor="let user of userList">
+<div scrollShadow tilelist>
+  @for (user of userList; track $index) {
     <div (click)="tileClicked($event,user.userIdx)"
          [class]="tileClass(user.userIdx)"
          id="tile-{{user.userIdx}}">
@@ -34,5 +34,5 @@
       </div>
       <div index>{{ user.userIdx + 1 }}</div>
     </div>
-  </ng-container>
+  }
 </div>

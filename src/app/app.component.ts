@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, contentChild} from '@angular/core';
 import {GLOBALS} from '@/_model/globals-data';
 import {LogService} from '@/_services/log.service';
 import {EnvironmentService} from '@/_services/environment.service';
@@ -17,6 +17,8 @@ import {map} from 'rxjs';
   standalone: false
 })
 export class AppComponent {
+  protected readonly contentChild = contentChild;
+
   constructor(public env: EnvironmentService,
               cr: ChangeDetectorRef,
               ds: DataService,

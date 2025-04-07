@@ -1,6 +1,6 @@
 import {UserData} from '@/_model/nightscout/user-data';
 import {Utils} from '@/classes/utils';
-import {DatePipe, formatNumber, getLocaleNumberSymbol, NumberSymbol} from '@angular/common';
+import {DatePipe, formatNumber} from '@angular/common';
 import {FormConfig} from '@/forms/form-config';
 import {BasePrint} from '@/forms/base-print';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
@@ -55,6 +55,12 @@ export class PdfWarnings {
   }
 }
 
+export enum TileDisplay {
+  text,
+  image,
+  both
+}
+
 export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
@@ -85,7 +91,7 @@ export class GlobalsData extends Settings {
   hasMGDL = false;
   showAllTileParams = false;
   showInfo = false;
-  tileShowImage = true;
+  tileDisplay: TileDisplay = TileDisplay.both;
   isDataSmoothing = true;
   ppMaxInsulinEffectInMS: number = 3 * 60 * 60 * 1000;
   ppCGPAlwaysStandardLimits = true;
@@ -229,6 +235,18 @@ export class GlobalsData extends Settings {
 
   static get msgQuarter4(): string {
     return $localize`Viertes Quartal`;
+  }
+
+  get showTileBoth() {
+    return this.tileDisplay === TileDisplay.both;
+  }
+
+  get showTileText() {
+    return this.tileDisplay === TileDisplay.text || this.tileDisplay === TileDisplay.both;
+  }
+
+  get showTileImage() {
+    return this.tileDisplay === TileDisplay.image || this.tileDisplay === TileDisplay.both;
   }
 
   get isLLUPossible(): boolean {
@@ -579,7 +597,7 @@ export class GlobalsData extends Settings {
       + `,"s9":"${this._pdfOrder}"`
       + `,"s10":"${this._viewType}"`
       + `,"s11":${timestamp}`
-      + `,"s12":${this.tileShowImage}`
+      + `,"s12":${this.tileDisplay}`
       + `,"s13":${this.showAllTileParams}`
       + `,"s2":[${users}]`
       + `,"s3":[${shortcuts}]`
@@ -864,7 +882,7 @@ export class GlobalsData extends Settings {
         ret = ret.substring(0, ret.length - 1);
       }
 
-      if (ret.endsWith(getLocaleNumberSymbol(this.language.code, NumberSymbol.Decimal))) {
+      if (ret.endsWith(Utils.decimalSeparator)) {
         ret = ret.substring(0, ret.length - 1);
       }
     }

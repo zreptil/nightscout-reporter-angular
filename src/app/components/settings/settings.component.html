@@ -8,7 +8,7 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
 
-  <div mat-dialog-content>
+  <div mat-dialog-content scrollShadow>
     <div class="subtitle">
       <ng-container i18n="label for settings-area with user data">Benutzerdaten</ng-container>
       <div class="navControls">
@@ -246,9 +246,17 @@
     <div class="sub">
       <div class="subtitle" i18n="label of area for display setting">Anzeigeeinstellungen</div>
       <div class="functions">
-        <mat-checkbox [(ngModel)]="globals.tileShowImage" class="chk" i18n="label for checkbox to show images on tiles">
-          Auf Kacheln Bilder statt Namen anzeigen
-        </mat-checkbox>
+        <mat-form-field select>
+          <mat-label i18n>Kacheldarstellung</mat-label>
+          <mat-select [(value)]="globals.tileDisplay" panelClass="settings">
+            @for (item of listTileDisplay; track $index) {
+              <mat-option (onSelectionChange)="globals.tileDisplay=$index"
+                          [value]="$index">
+                <div class="itemTitle">{{ item }}</div>
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
         <div class="row">
           <mat-checkbox [(ngModel)]="globals.editColors" class="chk" i18n="label for checkbox to toggle colormode">
             Farben anpassen
