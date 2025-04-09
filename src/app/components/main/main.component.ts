@@ -49,7 +49,7 @@ export class MainComponent implements OnInit, AfterViewInit {
               public env: EnvironmentService,
               public sanitizer: DomSanitizer
   ) {
-    this.keepCover = this.ss.mayDebug;
+    // this.keepCover = this.ss.mayDebug;
   }
 
   get classForContent(): string[] {

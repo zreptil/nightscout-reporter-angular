@@ -1160,6 +1160,53 @@ export abstract class BasePrint extends FormConfig {
   checkValue(_: ParamInfo, __: any): void {
   }
 
+  /**
+   * Processes a list of indices, updating the `params` object properties
+   * based on their conditions.
+   *
+   * @param {number[]} list - Array of indices representing which parameters to check and update.
+   * @param {number} maxCount - Maximum allowed count of `true` values for the specified parameters.
+   * @param {number} msgIdx - Index of the parameter used to update visibility or title based on the remaining allowed count.
+   * @return {void} This method does not return a value.
+   */
+  checkList(list: number[], maxCount: number, msgIdx: number) {
+    let count = 0;
+    let trueIdx = -1;
+    for (const idx of list) {
+      const p = this.params[idx];
+      p.isDisabled = false;
+      if (p.boolValue) {
+        trueIdx = idx;
+        let add = 1;
+        if (count + 1 > maxCount) {
+          add = 0;
+          p.boolValue = false;
+        }
+        count += add;
+      }
+    }
+
+    if (count === 1) {
+      this.params[trueIdx].isDisabled = true;
+    } else {
+      for (const idx of list) {
+        const p = this.params[idx];
+        if (count >= maxCount) {
+          if (!p.boolValue) {
+            p.isDisabled = true;
+          }
+        } else {
+          p.isDisabled = false;
+        }
+      }
+    }
+    if (maxCount === list.length) {
+      this.params[msgIdx].isVisible = false;
+    } else {
+      this.params[msgIdx].title = this.msgAreas(maxCount - count);
+    }
+  }
+
   msgCarbBolusInsulin(value: string): string {
     return $localize`Mahlzeiten Bolus (${value})`;
   }
@@ -1393,6 +1440,23 @@ export abstract class BasePrint extends FormConfig {
       0: $localize`Eine Spalte abwählen, um eine@nl@andere aktivieren zu können`,
       1: $localize`Noch eine Spalte verfügbar`,
       other: $localize`Noch ${count} Spalten verfügbar`
+    }).replace('@nl@', '<br>');
+  }
+
+  /**
+   * Returns a localized string based on the count of columns.
+   * The localized string will indicate the number of available
+   * columns or provide instructions on how to select columns.
+   *
+   * @param {number} count - The count of columns.
+   *
+   * @return {string} - The localized string.
+   */
+  msgAreas(count: number): string {
+    return Utils.plural(count, {
+      0: $localize`Einen Bereich abwählen, um einen@nl@anderen aktivieren zu können`,
+      1: $localize`Noch ein Bereich verfügbar`,
+      other: $localize`Noch ${count} Bereiche verfügbar`
     }).replace('@nl@', '<br>');
   }
 
@@ -1798,12 +1862,14 @@ export abstract class BasePrint extends FormConfig {
     return (src.dayCount > 0 && (src.data.countValid > 0 || src.data.treatments?.length > 0)) || this.needed.needsStatus;
   }
 
-  getEmptyForm(isPortrait: boolean, status: string, params?: { skipFooter?: boolean }): PageData {
+  getEmptyForm(isPortrait: boolean, status: string, params?: { skipFooter?: boolean, msg?: string }): PageData {
+    params ??= {};
+    params.msg ??= status === '401' ? this.msgServerNotReachable : this.msgMissingData;
     return new PageData(isPortrait, [
       this.headerFooter({skipFooter: params?.skipFooter ?? false}),
       {
         margin: [this.cm(2), this.cm(3.5), this.cm(2), this.cm(0)],
-        text: status === '401' ? this.msgServerNotReachable : this.msgMissingData,
+        text: params.msg,
         color: 'red',
         fontSize: this.fs(10),
         alignment: 'justify'
@@ -2291,38 +2357,40 @@ export abstract class BasePrint extends FormConfig {
     const lineHeight = gridLines === 0 ? 0 : graphHeight / gridLines;
 
 //    top += 0.1 * (lineHeight / step);
-    for (let i = 1; i < gridLines; i++) {
-      const y = top + (gridLines - i) * lineHeight;
-      horzCvs.push({
-        type: 'line',
-        x1: this.cm(-0.2),
-        y1: this.cm(y) - this.lw / 2,
-        x2: this.cm(24 * colWidth + 0.2),
-        y2: this.cm(y) - this.lw / 2,
-        lineWidth: this.cm(this.lw),
-        lineColor: i > 0 ? this.lc : this.lcFrame
-      });
+    if (top >= 0) {
+      for (let i = 1; i < gridLines; i++) {
+        const y = top + (gridLines - i) * lineHeight;
+        horzCvs.push({
+          type: 'line',
+          x1: this.cm(0),
+          y1: this.cm(y) - this.lw / 2,
+          x2: this.cm(24 * colWidth + 0.4),
+          y2: this.cm(y) - this.lw / 2,
+          lineWidth: this.cm(this.lw),
+          lineColor: i > 0 ? this.lc : this.lcFrame
+        });
 //      double value = min + (max - min) / step * i;
 //      vertCvs.push({'relativePosition': {'x': this.cm(xo - 0.7), 'y': this.cm(yo + (gridLines - i) * lineHeight - 0.15)},
 //      'text': GLOBALS.fmtNumber(i / 10, 1), 'fontSize': fs(8)});
-      const text = display(i, step);
+        const text = display(i, step);
 //      String text = '${GLOBALS.fmtNumber(i * step, 1)} ${msgInsulinUnit}';
-      vertStack.push({
-        relativePosition: {x: this.cm(xo - 3.0), y: this.cm(y + yo - 0.15)},
-        columns: [
-          {width: this.cm(2.7), text: text, fontSize: this.fs(8), alignment: 'right'}
-        ]
-      });
-      vertStack.push({
-        relativePosition: {x: this.cm(xo + colWidth * 24 + 0.3), y: this.cm(y + yo - 0.15)},
-        text: text,
-        fontSize: this.fs(8)
-      });
+        vertStack.push({
+          relativePosition: {x: this.cm(xo - 3.0), y: this.cm(y + yo - 0.15)},
+          columns: [
+            {width: this.cm(2.7), text: text, fontSize: this.fs(8), alignment: 'right'}
+          ]
+        });
+        vertStack.push({
+          relativePosition: {x: this.cm(xo + colWidth * 24 + 0.3), y: this.cm(y + yo - 0.15)},
+          text: text,
+          fontSize: this.fs(8)
+        });
+      }
     }
     return (gridLines - 1) * lineHeight;
   }
 
-  getIobCob(xo: number, yo: number, graphWidth: number, graphHeight: number, horzCvs: any[], vertStack: any[],
+  getIobCob(xo: number, yo: number, iobTop: number, cobTop: number, graphWidth: number, graphHeight: number, horzCvs: any[], vertStack: any[],
             day: DayData, upperIob = 0, upperCob = 0): any {
     const colWidth = graphWidth / 24;
     // graphic for iob and cob
@@ -2372,11 +2440,12 @@ export abstract class BasePrint extends FormConfig {
     } else {
       maxIob = upperIob;
     }
+
     const iobHeight = this.drawScaleIE(
       xo,
       yo,
       graphHeight,
-      3 * graphHeight,
+      iobTop,
       minIob,
       maxIob,
       colWidth,
@@ -2398,20 +2467,20 @@ export abstract class BasePrint extends FormConfig {
         ptsIob[i].y = this.cm(iobHeight);
       }
     }
-
     const cobHeight = this.drawScaleIE(
       xo,
       yo,
       graphHeight,
-      4 * graphHeight,
+      cobTop,
       0.0,
       maxCob,
       colWidth,
       horzCvs,
       vertStack,
       [this.S(100, 20), this.S(50, 10), this.S(20, 5), this.S(0, 1)],
-      (i, step, value) => `${GLOBALS.fmtNumber(value ?? i * step, 0)} g`);
-
+      (i, step, value) => {
+        return `${GLOBALS.fmtNumber(value ?? i * step, 0)} g`;
+      });
     if (upperCob === 0) {
       maxCob = maxCob * 1.1;
     } else {

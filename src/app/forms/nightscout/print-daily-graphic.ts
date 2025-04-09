@@ -1619,7 +1619,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     if (this.showCOB || this.showIOB) {
       const hc: any[] = [];
       const vs: any[] = [];
-      const pts = this.getIobCob(xo, yo, this.graphWidth, this.graphHeight, hc, vs, day, this.ieMax * 4, this.carbMax);
+      const pts = this.getIobCob(xo, yo, 3 * this.graphHeight, 4 * this.graphHeight, this.graphWidth, this.graphHeight, hc, vs, day, this.ieMax * 4, this.carbMax);
 
       if (this.showIOB) {
         graphIob = {

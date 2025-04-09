@@ -30,7 +30,6 @@ function refreshAccessToken($refreshToken)
     $response = curl_exec($ch);
     curl_close($ch);
     $ret = json_decode($response, true);
-    $ret['wurst'] = 'Leber';
     if (!$ret['success']) {
       // redirect to this file again, will be called with "code" as parameter
       $redirectUri = $cfg['redirectUri'] . 'oauth.php';
