@@ -18,6 +18,8 @@ import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoi
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
+import {OAuthService} from 'angular-oauth2-oidc';
+import {OAuth} from '@/_services/sync/auth.config';
 
 @Component({
   selector: 'app-settings',
@@ -99,7 +101,8 @@ export class SettingsComponent implements OnInit {
               public ts: ThemeService,
               public ss: SessionService,
               public ns: NightscoutService,
-              public ms: MessageService) {
+              public ms: MessageService,
+              private oas: OAuthService) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
   }
@@ -507,5 +510,11 @@ export class SettingsComponent implements OnInit {
 
   clickSave() {
     this.checkUser();
+  }
+
+  fitbitAuth() {
+    console.log(OAuth.fitbit);
+    this.oas.configure(OAuth.fitbit);
+    this.oas.loadDiscoveryDocumentAndTryLogin();
   }
 }

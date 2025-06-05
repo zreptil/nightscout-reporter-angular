@@ -1,27 +1,33 @@
-<div *ngIf="links.length > 0 && globals.isDebug" links>
-  <button (click)="onClickDelete($event, 'links')" close mat-icon-button>
-    <mat-icon>close</mat-icon>
-  </button>
-  <ng-container *ngFor="let link of links">
-    <button (click)="openLink(link)" [class]="link.btnClass" mat-flat-button>
-      <mat-icon>{{link.icon}}</mat-icon>
-      {{link.title}}
+@if (links.length > 0 && globals.isDebug) {
+  <div links>
+    <button (click)="onClickDelete($event, 'links')" close mat-icon-button>
+      <mat-icon>close</mat-icon>
     </button>
-  </ng-container>
-</div>
-<ng-container *ngFor="let type of ['error', 'info', 'debug', 'warn', 'todo']">
-  <div *ngIf="showType(type)" [class]="type" content>
-    <button (click)="onClickDelete($event, type)" delete mat-flat-button>
-      <mat-icon>delete</mat-icon>
-      {{msg[type].length}}
-    </button>
-    <div lines>
-      <ng-container *ngFor="let line of msg[type]">
-        <div [class]="classForLine(line)">
-          <mat-icon *ngFor="let icon of iconsForLine(line)">{{icon}}</mat-icon>
-          {{line | log}}
-        </div>
-      </ng-container>
-    </div>
+    @for (link of links; track link) {
+      <button (click)="openLink(link)" [class]="link.btnClass" mat-flat-button>
+        <mat-icon>{{ link.icon }}</mat-icon>
+        {{ link.title }}
+      </button>
+    }
   </div>
-</ng-container>
+}
+@for (type of ['error', 'info', 'debug', 'warn', 'todo']; track type) {
+  @if (showType(type)) {
+    <div [class]="type" content>
+      <button (click)="onClickDelete($event, type)" delete mat-flat-button>
+        <mat-icon>delete</mat-icon>
+        {{ msg[type].length }}
+      </button>
+      <div lines>
+        @for (line of msg[type]; track line) {
+          <div [class]="classForLine(line)">
+            @for (icon of iconsForLine(line); track icon) {
+              <mat-icon>{{ icon }}</mat-icon>
+            }
+            {{ line | log }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+}

@@ -1,73 +1,119 @@
 <div [class]="classForRoot">
-  <ng-container *ngFor="let entry of globals.watchListForGroup(groupId)">
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='space'" [element]="entry" [isEditMode]="ws.isEditMode">&nbsp;</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='nl'" [element]="entry" [isEditMode]="ws.isEditMode"></app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='user'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.user.name}}</app-watch-entry>
-    <ng-container *ngIf="entry.type==='factor'">
-      <app-watch-entry (click)="onClick(entry)" *ngIf="globals.user.adjustGluc" [element]="entry" [isEditMode]="ws.isEditMode">*{{globals.msgAdjustFactor}}</app-watch-entry>
-    </ng-container>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='time'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtTime(ws.now)}}</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='date'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.fmtDate(ws.now)}}</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'unit')" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.getGlucInfo()['unit']}}</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='gluc'" [element]="entry" [isEditMode]="ws.isEditMode">
-      <div gluc>
-        <div>{{globals.currentGluc}}</div>
-        <div *ngIf="globals.currentGlucSrc?.device != null" device>{{globals.currentGlucSrc.device}}</div>
-      </div>
-    </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='glucorg'" [element]="entry" [isEditMode]="ws.isEditMode">
-      <div gluc>
-        <div>{{globals.currentGlucOrg}}</div>
-        <div *ngIf="globals.currentGlucSrc?.device != null" device>{{globals.currentGlucSrc.device}}</div>
-      </div>
-    </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='lasttime'" [element]="entry" [isEditMode]="ws.isEditMode">{{globals.currentGlucTime}}</app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type.startsWith('change')" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
-      <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{changeInfo(entry)}}
-    </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'target')" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
-      <div class="target">
-        <div [ngStyle]="styleTargetLow" class="low">{{globals.glucFromData(globals.targetBottom)}}</div>
-        <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
-        <div [ngStyle]="styleTargetHigh" class="high">{{globals.glucFromData(globals.targetTop)}}</div>
-        <div [ngStyle]="styleLastGluc" class="marker last"></div>
-        <div [ngStyle]="styleCurrentGluc" class="marker"></div>
-        <div [ngStyle]="styleArrowTrack" class="arrowtrack"></div>
-        <div [ngStyle]="styleArrowTip" class="arrowtip"></div>
-      </div>
-    </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
-      <svg [style.transform]="globals.currentGlucDir" class="arrow" fill="#000000" viewBox="0 0 45.513 45.512" width="300px">
-        <g>
-          <path d="M44.275,19.739L30.211,5.675c-0.909-0.909-2.275-1.18-3.463-0.687c-1.188,0.493-1.959,1.654-1.956,2.938l0.015,5.903
+  @for (entry of globals.watchListForGroup(groupId); track entry) {
+    @if (entry.type === 'space') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">&nbsp;</app-watch-entry>
+    }
+    @if (entry.type === 'nl') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode"></app-watch-entry>
+    }
+    @if (entry.type === 'user') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.user.name }}</app-watch-entry>
+    }
+    @if (entry.type === 'factor') {
+      @if (globals.user.adjustGluc) {
+        <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">*{{ globals.msgAdjustFactor }}</app-watch-entry>
+      }
+    }
+    @if (entry.type === 'time') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.fmtTime(ws.now) }}</app-watch-entry>
+    }
+    @if (entry.type === 'date') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.fmtDate(ws.now) }}</app-watch-entry>
+    }
+    @if (showEntry(entry, 'unit')) {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.getGlucInfo()['unit'] }}</app-watch-entry>
+    }
+    @if (entry.type === 'gluc') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        <div gluc>
+          <div>{{ globals.currentGluc }}</div>
+          @if (globals.currentGlucSrc?.device != null) {
+            <div device>{{ globals.currentGlucSrc.device }}</div>
+          }
+        </div>
+      </app-watch-entry>
+    }
+    @if (entry.type === 'glucorg') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        <div gluc>
+          <div>{{ globals.currentGlucOrg }}</div>
+          @if (globals.currentGlucSrc?.device != null) {
+            <div device>{{ globals.currentGlucSrc.device }}</div>
+          }
+        </div>
+      </app-watch-entry>
+    }
+    @if (entry.type === 'lasttime') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.currentGlucTime }}</app-watch-entry>
+    }
+    @if (entry.type.startsWith('change')) {
+      <app-watch-entry (click)="onClick(entry)" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{ changeInfo(entry) }}
+      </app-watch-entry>
+    }
+    @if (showEntry(entry, 'target')) {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode" style="width:100%">
+        <div class="target">
+          <div [ngStyle]="styleTargetLow" class="low">{{ globals.glucFromData(globals.targetBottom) }}</div>
+          <div [ngStyle]="styleTargetNorm" class="norm">&nbsp;</div>
+          <div [ngStyle]="styleTargetHigh" class="high">{{ globals.glucFromData(globals.targetTop) }}</div>
+          <div [ngStyle]="styleLastGluc" class="marker last"></div>
+          <div [ngStyle]="styleCurrentGluc" class="marker"></div>
+          <div [ngStyle]="styleArrowTrack" class="arrowtrack"></div>
+          <div [ngStyle]="styleArrowTip" class="arrowtip"></div>
+        </div>
+      </app-watch-entry>
+    }
+    @if (showEntry(entry, 'arrow')) {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        <svg [style.transform]="globals.currentGlucDir" class="arrow" fill="#000000" viewBox="0 0 45.513 45.512" width="300px">
+          <g>
+            <path d="M44.275,19.739L30.211,5.675c-0.909-0.909-2.275-1.18-3.463-0.687c-1.188,0.493-1.959,1.654-1.956,2.938l0.015,5.903
 		l-21.64,0.054C1.414,13.887-0.004,15.312,0,17.065l0.028,11.522c0.002,0.842,0.338,1.648,0.935,2.242s1.405,0.927,2.247,0.925
 		l21.64-0.054l0.014,5.899c0.004,1.286,0.781,2.442,1.971,2.931c1.189,0.487,2.557,0.21,3.46-0.703L44.29,25.694
 		C45.926,24.043,45.92,21.381,44.275,19.739z"/>
-        </g>
-      </svg>
-      <div class="centered">{{globals.currentGlucDiff}}</div>
-    </app-watch-entry>
+          </g>
+        </svg>
+        <div class="centered">{{ globals.currentGlucDiff }}</div>
+      </app-watch-entry>
+    }
     <!-- app-watch-entry (click)="onClick(entry)" *ngIf="showEntry(entry, 'arrow')" [element]="entry" [isEditMode]="ws.isEditMode">
-      <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
-           xmlns="http://www.w3.org/2000/svg">
-        <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
-          <circle class="circle" cx="50" cy="50" r="37.391"/>
-        </g>
-        <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
-          <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
-        </g>
-      </svg>
-      <div class="centered">{{globals.currentGlucDiff}}</div>
+    <svg [style.transform]="globals.currentGlucDir" class="arrow" viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
+        <circle class="circle" cx="50" cy="50" r="37.391"/>
+      </g>
+      <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
+        <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
+      </g>
+    </svg>
+    <div class="centered">{{globals.currentGlucDiff}}</div>
     </app-watch-entry -->
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='llu_autoexec'" [element]="entry" [isEditMode]="ws.isEditMode">
-      <mat-icon *ngIf="globals.lluAutoExec" class="libre_linkup">visibility</mat-icon>
-      <mat-icon *ngIf="!globals.lluAutoExec" class="libre_linkup">visibility_off</mat-icon>
-      <mat-icon *ngIf="!globals.isLLUPossible" class="libre_linkup samePos">close</mat-icon>
-    </app-watch-entry>
-    <app-watch-entry (click)="onClick(entry)" *ngIf="entry.type==='llu_schedule'" [element]="entry" [isEditMode]="ws.isEditMode">
-      <mat-icon *ngIf="!lls.isRunning" class="libre_linkup">schedule_send</mat-icon>
-      <mat-icon *ngIf="lls.isRunning" class="libre_linkup">cancel_schedule_send</mat-icon>
-      <mat-icon *ngIf="!globals.isLLUPossible" class="libre_linkup samePos">close</mat-icon>
-    </app-watch-entry>
-  </ng-container>
+    @if (entry.type === 'llu_autoexec') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        @if (globals.lluAutoExec) {
+          <mat-icon class="libre_linkup">visibility</mat-icon>
+        }
+        @if (!globals.lluAutoExec) {
+          <mat-icon class="libre_linkup">visibility_off</mat-icon>
+        }
+        @if (!globals.isLLUPossible) {
+          <mat-icon class="libre_linkup samePos">close</mat-icon>
+        }
+      </app-watch-entry>
+    }
+    @if (entry.type === 'llu_schedule') {
+      <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        @if (!lls.isRunning) {
+          <mat-icon class="libre_linkup">schedule_send</mat-icon>
+        }
+        @if (lls.isRunning) {
+          <mat-icon class="libre_linkup">cancel_schedule_send</mat-icon>
+        }
+        @if (!globals.isLLUPossible) {
+          <mat-icon class="libre_linkup samePos">close</mat-icon>
+        }
+      </app-watch-entry>
+    }
+  }
 </div>

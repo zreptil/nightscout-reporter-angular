@@ -28,7 +28,7 @@ button:not([icon]) {
 
 .mat-mdc-button {
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 0 var(--mat-protected-button-horizontal-padding, 16px);
+  padding: 0 var(--mat-button-protected-horizontal-padding, 16px);
 }
 
 .weektitle, .weekmarks {

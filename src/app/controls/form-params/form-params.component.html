@@ -1,43 +1,59 @@
-<ng-container *ngFor="let param of paramList">
-  <div *ngIf="param.literalFormat!=null && param.isVisible" class="paramLiteral">
-    <div [innerHtml]="param.title"></div>
-    <div *ngIf="param.literalFormat.divider" class="divider"></div>
-  </div>
-  <div *ngIf="param.boolValue!=null && param.isVisible">
-    <mat-checkbox [(ngModel)]="param.boolValue"
-                  [class]="getClass(param)"
-                  [disabled]="param.isDisabled">
-      <div class="wrap">{{param.title}}</div>
-    </mat-checkbox>
-  </div>
-  <div *ngIf="param.intValue!=null && param.list == null && param.isVisible" class="paramSlider">
-    <div [class]="getClass(param)">{{param.title}}: {{param.intValue}}</div>
-    <mat-slider [(ngModel)]="param.sliderValue"
-                [class]="getClass(param, 'slider')"
-                [max]="param.max"
-                [min]="param.min">
-      <input [(ngModel)]="param.sliderValue" matSliderThumb>
-    </mat-slider>
-  </div>
-  <div *ngIf="param.stringValue!=null && param.isVisible">
-    <mat-form-field>
-      <mat-label>{{param.title}}</mat-label>
-      <input [(ngModel)]="param.stringValue" matInput>
-    </mat-form-field>
-  </div>
-  <div *ngIf="param.list!=null && param.isVisible" class="paramList">
-    <mat-form-field appearance="fill" class="select">
-      <mat-label>{{param.title}}</mat-label>
-      <mat-select [(value)]="param.intValue" panelClass="settings">
-        <mat-option *ngFor="let item of param.list; let idx = index"
-                    [value]="idx"
-                    class="selectItem">
-          <div class="itemTitle">{{item}}</div>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div *ngIf="param.subParams!=null && param.boolValue && param.isVisible" class="subParams">
-    <app-form-params [paramList]="param.subParams"></app-form-params>
-  </div>
-</ng-container>
+@for (param of paramList; track param) {
+  @if (param.literalFormat != null && param.isVisible) {
+    <div class="paramLiteral">
+      <div [innerHtml]="param.title"></div>
+      @if (param.literalFormat.divider) {
+        <div class="divider"></div>
+      }
+    </div>
+  }
+  @if (param.boolValue != null && param.isVisible) {
+    <div>
+      <mat-checkbox [(ngModel)]="param.boolValue"
+                    [class]="getClass(param)"
+                    [disabled]="param.isDisabled">
+        <div class="wrap">{{ param.title }}</div>
+      </mat-checkbox>
+    </div>
+  }
+  @if (param.intValue != null && param.list == null && param.isVisible) {
+    <div class="paramSlider">
+      <div [class]="getClass(param)">{{ param.title }}: {{ param.intValue }}</div>
+      <mat-slider [(ngModel)]="param.sliderValue"
+                  [class]="getClass(param, 'slider')"
+                  [max]="param.max"
+                  [min]="param.min">
+        <input [(ngModel)]="param.sliderValue" matSliderThumb>
+      </mat-slider>
+    </div>
+  }
+  @if (param.stringValue != null && param.isVisible) {
+    <div>
+      <mat-form-field>
+        <mat-label>{{ param.title }}</mat-label>
+        <input [(ngModel)]="param.stringValue" matInput>
+      </mat-form-field>
+    </div>
+  }
+  @if (param.list != null && param.isVisible) {
+    <div class="paramList">
+      <mat-form-field appearance="fill" class="select">
+        <mat-label>{{ param.title }}</mat-label>
+        <mat-select [(value)]="param.intValue" panelClass="settings">
+          @for (item of param.list; track item; let idx = $index) {
+            <mat-option
+              [value]="idx"
+              class="selectItem">
+              <div class="itemTitle">{{ item }}</div>
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  }
+  @if (param.subParams != null && param.boolValue && param.isVisible) {
+    <div class="subParams">
+      <app-form-params [paramList]="param.subParams"></app-form-params>
+    </div>
+  }
+}

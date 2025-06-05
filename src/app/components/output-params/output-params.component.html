@@ -28,48 +28,53 @@
       <div class="line">
         <app-datepicker [period]="globals.period" [showLabel]="false"></app-datepicker>
         <!--
-(periodChange)="changePeriod($event)"
-                    [showInfo]="g.showInfo" [showLabel]="false"
-                            -->
+        (periodChange)="changePeriod($event)"
+        [showInfo]="g.showInfo" [showLabel]="false"
+        -->
         <mat-form-field>
           <mat-label>{{ globals.lblGlucUnits }}</mat-label>
           <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
-            <mat-option (click)="changeGlucUnits(idx)"
-                        *ngFor="let item of globals.listGlucUnits; let idx=index"
-                        [value]="idx"
-                        class="selectItem">
-              <div class="itemTitle">{{ item }}</div>
-            </mat-option>
+            @for (item of globals.listGlucUnits; track item; let idx = $index) {
+              <mat-option (click)="changeGlucUnits(idx)"
+                          [value]="idx"
+                          class="selectItem">
+                <div class="itemTitle">{{ item }}</div>
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>
       <mat-checkbox [(ngModel)]="globals.ppStandardLimits" [disabled]="globals.ppComparable" class="chk">
         {{ msgStandardLimits(globals.getGlucInfo()["stdlow"], globals.getGlucInfo()["stdhigh"], globals.getGlucInfo()["unit"]) }}
       </mat-checkbox>
-      <mat-checkbox *ngIf="!globals.ppComparable && !globals.ppStandardLimits" [(ngModel)]="globals.ppCGPAlwaysStandardLimits" class="chk indent">
-        {{ msgStandardCGP }}
-      </mat-checkbox>
+      @if (!globals.ppComparable && !globals.ppStandardLimits) {
+        <mat-checkbox [(ngModel)]="globals.ppCGPAlwaysStandardLimits" class="chk indent">
+          {{ msgStandardCGP }}
+        </mat-checkbox>
+      }
       <div class="line">
         <mat-form-field long>
           <mat-label i18n="label for max glucvalue in printparams">Maximaler Glukosewert in Grafiken</mat-label>
           <mat-select [(value)]="glucMaxIdx" class="selectButton" panelClass="output-params">
-            <mat-option (click)="glucMaxIdx=idx"
-                        *ngFor="let item of listGlucMaxValues; let idx=index"
-                        [value]="idx"
-                        class="selectItem">
-              <div class="itemTitle">{{ item }}</div>
-            </mat-option>
+            @for (item of listGlucMaxValues; track item; let idx = $index) {
+              <mat-option (click)="glucMaxIdx=idx"
+                          [value]="idx"
+                          class="selectItem">
+                <div class="itemTitle">{{ item }}</div>
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
         <mat-form-field long>
           <mat-label i18n="label for max basalprecision in printparams">Genauigkeit der Basalangaben:</mat-label>
           <mat-select [(value)]="basalPrecisionIdx" class="selectButton" panelClass="output-params">
-            <mat-option (click)="basalPrecisionIdx=idx"
-                        *ngFor="let item of listBasalPrecision; let idx=index"
-                        [value]="idx"
-                        class="selectItem">
-              <div class="itemTitle">{{ item }}</div>
-            </mat-option>
+            @for (item of listBasalPrecision; track item; let idx = $index) {
+              <mat-option (click)="basalPrecisionIdx=idx"
+                          [value]="idx"
+                          class="selectItem">
+                <div class="itemTitle">{{ item }}</div>
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>
@@ -122,12 +127,13 @@
       <mat-form-field long>
         <mat-label i18n="label for max basalprecision in printparams">Stunden, die Werte nach einem Sensorstart ignoriert werden:</mat-label>
         <mat-select [(value)]="skipSensorChange" class="selectButton" panelClass="output-params">
-          <mat-option (click)="skipSensorChange=idx"
-                      *ngFor="let item of globals.listSkipSensorChange; let idx=index"
-                      [value]="item.idx"
-                      class="selectItem">
-            <div class="itemTitle">{{ item.label }}</div>
-          </mat-option>
+          @for (item of globals.listSkipSensorChange; track item; let idx = $index) {
+            <mat-option (click)="skipSensorChange=idx"
+                        [value]="item.idx"
+                        class="selectItem">
+              <div class="itemTitle">{{ item.label }}</div>
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -137,18 +143,20 @@
         Hiermit wird festgelegt, um wieviel der Zeitraum des PDFs verschoben werden soll, um Vergleichswerte zu
         erhalten.
       </div>
-      <ng-container *ngFor="let item of listPeriodShift">
-        <button (click)="periodShift=item"
-                *ngIf="item===periodShift"
-                mat-raised-button>
-          {{ item.title }}
-        </button>
-        <button (click)="periodShift=item"
-                *ngIf="item!==periodShift"
-                mat-button>
-          {{ item.title }}
-        </button>
-      </ng-container>
+      @for (item of listPeriodShift; track item) {
+        @if (item === periodShift) {
+          <button (click)="periodShift=item"
+                  mat-raised-button>
+            {{ item.title }}
+          </button>
+        }
+        @if (item !== periodShift) {
+          <button (click)="periodShift=item"
+                  mat-button>
+            {{ item.title }}
+          </button>
+        }
+      }
     </div>
     <app-gluc-adjust></app-gluc-adjust>
     <!-- -->

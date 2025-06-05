@@ -19,9 +19,9 @@
   </div>
 
   <div [ngStyle]="styleForColorWheel" color-wheel>
-    <ng-container *ngFor="let color of wheelColorList; let idx = index">
+    @for (color of wheelColorList; track color; let idx = $index) {
       <button (click)="clickColorSelect(color)" [ngStyle]="selectColorWheel(idx)" color></button>
-    </ng-container>
+    }
   </div>
 </div>
 

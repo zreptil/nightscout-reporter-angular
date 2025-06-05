@@ -1,7 +1,13 @@
-<color-cfg *ngIf="showColorCfg" [colorKey]="data.colorKey"></color-cfg>
-<button (click)="clickDebugTrigger()" *ngIf="mayDebug" class="debug" mat-icon-button micro-button>
-  <mat-icon>bug_report</mat-icon>
-</button>
-<button (click)="clickClose()" *ngIf="data.showClose ?? true" mat-icon-button>
-  <mat-icon>close</mat-icon>
-</button>
+@if (showColorCfg) {
+  <color-cfg [colorKey]="data.colorKey"></color-cfg>
+}
+@if (mayDebug) {
+  <button (click)="clickDebugTrigger()" class="debug" mat-icon-button micro-button>
+    <mat-icon>bug_report</mat-icon>
+  </button>
+}
+@if (data.showClose ?? true) {
+  <button (click)="clickClose()" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+}

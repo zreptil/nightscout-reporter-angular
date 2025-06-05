@@ -9,7 +9,7 @@
   --subHeadFore: var(--settingsBodySubHead);
 
   --mat-select-focused-arrow-color: var(--subHeadFore);
-  --mdc-theme-primary: var(--subHeadFore);
+  --mat-theme-primary: var(--subHeadFore);
 
   ::ng-deep .mdc-text-field--filled .mdc-line-ripple::after {
     border-bottom-color: rgba(0, 0, 0, 0.9);

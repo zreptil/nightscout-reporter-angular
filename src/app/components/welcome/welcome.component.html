@@ -5,16 +5,22 @@
     <div>
       <h1>{{ globals.titles.welcome }}</h1>
     </div>
-    <div *ngIf="!globals.isConfigured" class="langPanel">
-      <ng-container *ngFor="let lang of globals.languageList; let idx = index">
-        <button (click)="ds.changeLanguage(lang, {checkConfigured: true})"
-                *ngIf="lang.code!=globals.language.code" mat-button>
-          <img alt="language {{lang.code}}" src="{{lang.imgPath}}">
-        </button>
-      </ng-container>
-    </div>
+    @if (!globals.isConfigured) {
+      <div class="langPanel">
+        @for (lang of globals.languageList; track $index) {
+          @if (lang.code != globals.language.code) {
+            <button (click)="ds.changeLanguage(lang, {checkConfigured: true})"
+                    mat-button>
+              <img alt="language {{lang.code}}" src="{{lang.imgPath}}">
+            </button>
+          }
+        }
+      </div>
+    }
     <div row>
-      <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
+      @if (globals.isConfigured) {
+        <app-close-button [data]="closeData"></app-close-button>
+      }
     </div>
   </div>
   <div mat-dialog-content>
@@ -31,19 +37,21 @@
       angegebenen Nightscout-Instanz aufgebaut und die dort vorhandenen Daten ausgelesen, um daraus ein PDF-Dokument
       zu erzeugen. Dieses kann dann dem Diabetesberater oder sonstigen Interessenten vorgelegt werden.
     </div>
-    <div *ngIf="globals.isLocal" i18n="welcome section 3">
-      Wenn in den Einstellungen eine Verbindung zum Google-Konto hergestellt wird, werden die Cookies von Google
-      verwendet und die Daten zusätzlich im AppStorage auf Google Drive gespeichert. Auf diese Art kann man die
-      Daten zentralisiert verwalten und hat diese in jedem Browser zur Verfügung, der mit dem angegebenen Google
-      Konto verbunden ist.
-    </div>
+    @if (globals.isLocal) {
+      <div i18n="welcome section 3">
+        Wenn in den Einstellungen eine Verbindung zum Google-Konto hergestellt wird, werden die Cookies von Google
+        verwendet und die Daten zusätzlich im AppStorage auf Google Drive gespeichert. Auf diese Art kann man die
+        Daten zentralisiert verwalten und hat diese in jedem Browser zur Verfügung, der mit dem angegebenen Google
+        Konto verbunden ist.
+      </div>
+    }
     <div i18n="welcome section 4">
       Die Webseite verwendet Javascript zur Erledigung ihrer Aufgaben.
     </div>
   </div>
   <div class="controls" mat-dialog-actions>
     <div class="left">
-      <ng-container *ngIf="!globals.isConfigured">
+      @if (!globals.isConfigured) {
         <button (click)="showSettings()" autofocus class="iconButton" mat-button>
           <mat-icon>settings</mat-icon>
           <div i18n="label for button to open settings on welcome screen">
@@ -56,15 +64,15 @@
             Synchronisieren
           </div>
         </button>
-      </ng-container>
+      }
       <!--
-        <signin [isVisible]="true"
-                [raised]="true" [(isAuthorized)]="g.syncGoogle"
-                [clientId]="g.googleClientId"
-                (onEvent)="signinEvent($event)"
-                (signinResult)="g.client=$event" i18n:msgDisconnected="synchronize with google drive"
-                msgDisconnected="Mit Google Drive synchronisieren"></signin>
-  -->
+      <signin [isVisible]="true"
+        [raised]="true" [(isAuthorized)]="g.syncGoogle"
+        [clientId]="g.googleClientId"
+        (onEvent)="signinEvent($event)"
+        (signinResult)="g.client=$event" i18n:msgDisconnected="synchronize with google drive"
+      msgDisconnected="Mit Google Drive synchronisieren"></signin>
+      -->
     </div>
     <div class="right">
       <button (click)="ss.showVideo('intro')" class="imageButton" mat-button>

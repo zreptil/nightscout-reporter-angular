@@ -11,7 +11,7 @@
     "strict": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "strictNullChecks": false,
     "noImplicitOverride": true,

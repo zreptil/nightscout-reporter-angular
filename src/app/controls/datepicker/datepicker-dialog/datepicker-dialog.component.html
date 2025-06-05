@@ -1,22 +1,26 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.datepickerdialog">
   <div [class]="classForTitle" cdkDragHandle mat-dialog-title>
-    <h1 *ngIf="!data.period.isEmpty" i18n="title for datepicker dialog">Zeitraum</h1>
-    <div *ngIf="data.period.isEmpty" class="period-empty">
-      <div class="title" i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</div>
-      <div class="info" i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</div>
-    </div>
+    @if (!data.period.isEmpty) {
+      <h1 i18n="title for datepicker dialog">Zeitraum</h1>
+    }
+    @if (data.period.isEmpty) {
+      <div class="period-empty">
+        <div class="title" i18n="title for datepicker dialog when period empty">Der Zeitraum enthält keine auswertbaren Tage</div>
+        <div class="info" i18n="subtitle for datepicker dialog when period empty">Bitte überprüfe die Aktivierung der Wochentage unter dem Monat</div>
+      </div>
+    }
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <div class="editcontrols">
       <!--
-            <material-input (focus)="setMonth(data.period.start)" [(ngModel)]="startDate" [error]="isStartValid?'':msgStartIncorrect" floatingLabel
-                            i18n-label="datepicker label from"
-                            label="Von"></material-input>
-            <material-input (focus)="setMonth(data.period.end)" [(ngModel)]="endDate" [error]="isEndValid?'':msgEndIncorrect"
-                            floatingLabel i18n-label="datepicker label to"
-                            label="Bis"></material-input>
+      <material-input (focus)="setMonth(data.period.start)" [(ngModel)]="startDate" [error]="isStartValid?'':msgStartIncorrect" floatingLabel
+        i18n-label="datepicker label from"
+      label="Von"></material-input>
+      <material-input (focus)="setMonth(data.period.end)" [(ngModel)]="endDate" [error]="isEndValid?'':msgEndIncorrect"
+        floatingLabel i18n-label="datepicker label to"
+      label="Bis"></material-input>
       -->
     </div>
     <div class="month">
@@ -37,37 +41,48 @@
   </div>
   <div mat-dialog-actions>
     <div class="shortcuts">
-      <ng-container *ngFor="let item of data.period.list">
-        <button
-          (click)="onShortcutClick(item)"
-          *ngIf="data.period.entryKey!==item.key"
-          [class]="item.key"
-          mat-button>
-          <mat-icon *ngIf="item.key==='save'">save</mat-icon>
-          {{ item.title }}
-        </button>
-        <button
-          (click)="onShortcutClick(item)"
-          *ngIf="data.period.entryKey===item.key"
-          [class]="item.key"
-          mat-raised-button>
-          <mat-icon *ngIf="item.key==='save'">save</mat-icon>
-          {{ item.title }}
-        </button>
-        <span *ngIf="item.key==='today'">|</span>
-      </ng-container>
+      @for (item of data.period.list; track item) {
+        @if (data.period.entryKey !== item.key) {
+          <button
+            (click)="onShortcutClick(item)"
+            [class]="item.key"
+            mat-button>
+            @if (item.key === 'save') {
+              <mat-icon>save</mat-icon>
+            }
+            {{ item.title }}
+          </button>
+        }
+        @if (data.period.entryKey === item.key) {
+          <button
+            (click)="onShortcutClick(item)"
+            [class]="item.key"
+            mat-raised-button>
+            @if (item.key === 'save') {
+              <mat-icon>save</mat-icon>
+            }
+            {{ item.title }}
+          </button>
+        }
+        @if (item.key === 'today') {
+          <span>|</span>
+        }
+      }
     </div>
     <div class="controls">
-      <button (click)="onShiftClick()"
-              *ngIf="showShift"
-              class="shift"
-              mat-button>
-        {{ shiftName }}
-      </button>
-      <div row>
-        <button (click)="clickClear()" *ngIf="globals.isDebug" class="iconButton delete is-debug" mat-button>
-          <mat-icon>delete</mat-icon>
+      @if (showShift) {
+        <button (click)="onShiftClick()"
+                class="shift"
+                mat-button>
+          {{ shiftName }}
         </button>
+      }
+      <div row>
+        @if (globals.isDebug) {
+          <button (click)="clickClear()" class="iconButton delete is-debug" mat-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
         <button class="iconButton ok" mat-button mat-dialog-close="save">
           <mat-icon>done</mat-icon>
           <ng-container i18n="buttonlabel for ok in control datepicker">Ok</ng-container>

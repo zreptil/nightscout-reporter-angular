@@ -3,10 +3,9 @@ import {ProgressService} from '@/_services/progress.service';
 import {ThemeService} from '@/_services/theme.service';
 import {of, Subscription} from 'rxjs';
 import {MaterialModule} from '@/material.module';
-import {CommonModule} from '@angular/common';
 
 @Component({
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule],
   standalone: true,
   selector: 'app-progress',
   templateUrl: './progress.component.html',

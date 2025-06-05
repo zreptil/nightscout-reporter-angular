@@ -2,19 +2,25 @@
      cdkDragRootElement=".dialog-box.helpview">
   <div cdkDragHandle mat-dialog-title>
     <h1>
-      <button (click)="onBackClick()" *ngIf="tileHelp.length>1" mat-icon-button>
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      {{tileHelp[tileHelp.length - 1]?.form.title}}
+      @if (tileHelp.length > 1) {
+        <button (click)="onBackClick()" mat-icon-button>
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      }
+      {{ tileHelp[tileHelp.length - 1]?.form.title }}
     </h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
     <div>
-      <ng-container *ngFor="let item of tileHelp[tileHelp.length-1].form.helpStrings;let idx=index">
-        <span *ngIf="item.type==='text'" [innerHtml]="item.text"></span>
-        <span (click)="onLinkClick(idx)" *ngIf="item.type==='btn'" class="btn">{{item.cfg.form.title}}</span>
-      </ng-container>
+      @for (item of tileHelp[tileHelp.length - 1].form.helpStrings; track item; let idx = $index) {
+        @if (item.type === 'text') {
+          <span [innerHtml]="item.text"></span>
+        }
+        @if (item.type === 'btn') {
+          <span (click)="onLinkClick(idx)" class="btn">{{ item.cfg.form.title }}</span>
+        }
+      }
     </div>
   </div>
 </div>

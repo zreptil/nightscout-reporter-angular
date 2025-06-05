@@ -3,13 +3,13 @@ import {LinkDef, Log} from '@/_services/log.service';
 import {SessionService} from '@/_services/session.service';
 import {PdfService} from '@/_services/pdf.service';
 import {GLOBALS, GlobalsData} from '@/_model/globals-data';
-import {CommonModule} from '@angular/common';
+
 import {MaterialModule} from '@/material.module';
 import {FormsModule} from '@angular/forms';
 import {LogPipe} from '@/components/log/log.pipe';
 
 @Component({
-  imports: [CommonModule, MaterialModule, FormsModule, LogPipe],
+  imports: [MaterialModule, FormsModule, LogPipe],
   standalone: true,
   selector: 'app-log',
   templateUrl: './log.component.html',

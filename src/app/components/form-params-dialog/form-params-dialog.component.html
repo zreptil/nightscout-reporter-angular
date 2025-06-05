@@ -3,41 +3,47 @@
   <div cdkDragHandle mat-dialog-title>
     <h1>
       <mat-icon>tune</mat-icon>
-      {{globals.titles.formparams}}
+      {{ globals.titles.formparams }}
     </h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
-    <div *ngIf="!globals.showAllTileParams" [class]="classForList(form, 'formparams')">
-      <div paramtitle title>
-        <mat-checkbox (ngModelChange)="setAllParamsFor($event, form.params)" [ngModel]="false"></mat-checkbox>
-        {{form.display}}
-        <div>
-          <button (click)="clickListToggle()" mat-button>
-            <mat-icon>list</mat-icon>
-          </button>
-        </div>
-      </div>
-      <app-form-params [paramList]="form.sortedParams"></app-form-params>
-    </div>
-    <div *ngIf="globals.showAllTileParams" class="formparams">
-      <div title>
-        <div i18n="title for parameters">Optionen</div>
-        <div>
-          <button (click)="clickListToggle()" mat-button>
-            <mat-icon>description</mat-icon>
-          </button>
-        </div>
-      </div>
-      <ng-container *ngFor="let cfg of globals.listConfig">
-        <div *ngIf="isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0" [class]="classForList(cfg.form, 'card')">
-          <div paramtitle title>
-            <mat-checkbox (ngModelChange)="setAllParamsFor($event, cfg.form.params)" [ngModel]="false"></mat-checkbox>
-            {{cfg.form.display}}
+    @if (!globals.showAllTileParams) {
+      <div [class]="classForList(form, 'formparams')">
+        <div paramtitle title>
+          <mat-checkbox (ngModelChange)="setAllParamsFor($event, form.params)" [ngModel]="false"></mat-checkbox>
+          {{ form.display }}
+          <div>
+            <button (click)="clickListToggle()" mat-button>
+              <mat-icon>list</mat-icon>
+            </button>
           </div>
-          <app-form-params [paramList]="cfg.form.sortedParams"></app-form-params>
         </div>
-      </ng-container>
-    </div>
+        <app-form-params [paramList]="form.sortedParams"></app-form-params>
+      </div>
+    }
+    @if (globals.showAllTileParams) {
+      <div class="formparams">
+        <div title>
+          <div i18n="title for parameters">Optionen</div>
+          <div>
+            <button (click)="clickListToggle()" mat-button>
+              <mat-icon>description</mat-icon>
+            </button>
+          </div>
+        </div>
+        @for (cfg of globals.listConfig; track cfg) {
+          @if (isFormVisible(cfg.form) && cfg.checked && cfg.form.sortedParams.length > 0) {
+            <div [class]="classForList(cfg.form, 'card')">
+              <div paramtitle title>
+                <mat-checkbox (ngModelChange)="setAllParamsFor($event, cfg.form.params)" [ngModel]="false"></mat-checkbox>
+                {{ cfg.form.display }}
+              </div>
+              <app-form-params [paramList]="cfg.form.sortedParams"></app-form-params>
+            </div>
+          }
+        }
+      </div>
+    }
   </div>
 </div>

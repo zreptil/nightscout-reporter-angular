@@ -1,14 +1,20 @@
-<div *ngIf="!ps.data.isPaused" [class]="classForOverlay(!ps.data.isActive)" overlay>
-  <div #overlay panel>
-    <div *ngIf="ps.data.info!=null" label>{{ps.data.info}}</div>
-    <mat-progress-bar [value]="ps.data.percent"
-                      mode="determinate">
-    </mat-progress-bar>
-    <div label>{{ps.data.text}}</div>
-    <div controls>
-      <button (click)="ps.cancel()" *ngIf="ps.mayCancel" mat-icon-button>
-        <mat-icon>cancel</mat-icon>
-      </button>
+@if (!ps.data.isPaused) {
+  <div [class]="classForOverlay(!ps.data.isActive)" overlay>
+    <div #overlay panel>
+      @if (ps.data.info != null) {
+        <div label>{{ ps.data.info }}</div>
+      }
+      <mat-progress-bar [value]="ps.data.percent"
+                        mode="determinate">
+      </mat-progress-bar>
+      <div label>{{ ps.data.text }}</div>
+      <div controls>
+        @if (ps.mayCancel) {
+          <button (click)="ps.cancel()" mat-icon-button>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        }
+      </div>
     </div>
   </div>
-</div>
+}
