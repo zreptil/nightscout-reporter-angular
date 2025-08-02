@@ -10,7 +10,7 @@ RUN npm install -g @angular/cli
 RUN npm install
 
 #### generate build
-RUN npm run build
+RUN ng build
  
 
 FROM nginx:latest
