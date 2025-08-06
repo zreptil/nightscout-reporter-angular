@@ -193,6 +193,7 @@ export class PrintTDD extends BasePrint {
     }
     this.graphHeight /= graphCount;
     this._colWidth = this.graphWidth / data.days.length;
+    const showValue = this._colWidth >= 0.7;
     const grid: any = {
       vertLines: {
         relativePosition: {x: this.cm(xo), y: this.cm(this.yorg)},
@@ -215,6 +216,7 @@ export class PrintTDD extends BasePrint {
         canvas: []
       }
     };
+    const svg: any[] = [];
 
     let maxTDD = 0.0;
     let maxBasal = 0.0;
@@ -296,6 +298,23 @@ export class PrintTDD extends BasePrint {
           h: this.cm(h),
           color: this.colors.colBolus
         });
+        if (showValue) {
+          grid.vertLegend.stack.push({
+            relativePosition: {
+              x: this.cm(x),
+              y: this.cm(this.yorg + y)
+            },
+            columns: [{
+              // x: this.cm(x),
+              width: this.cm(this._colWidth),
+              text: `${GLOBALS.fmtBasal(tddSum)}`,
+              fontSize: this.fs(7),
+              color: this.colors.colBasalFont,
+              alignment: 'center'
+            }]
+          });
+        }
+
         h = graphHeight * (basalSum / maxTDD) * maxScale;
         y = yo + graphHeight - h;
         grid.graph.canvas.push({
@@ -306,6 +325,41 @@ export class PrintTDD extends BasePrint {
           h: this.cm(h),
           color: this.colors.colBasalProfile
         });
+        if (showValue) {
+          let h1 = h;
+          if (h1 < 0.3) {
+            h1 = 0.3;
+          }
+          const y1 = this.yorg + yo + graphHeight - h1;
+          grid.vertLegend.stack.push({
+            relativePosition: {
+              x: this.cm(x),
+              y: this.cm(y + h)
+            },
+            columns: [{
+              // x: this.cm(x),
+              width: this.cm(this._colWidth),
+              text: `${GLOBALS.fmtBasal(basalSum)}`,
+              fontSize: this.fs(7),
+              color: this.colors.colBasalFont,
+              alignment: 'center'
+            }]
+          });
+
+          const svg1 = `<svg width="${this.cm(0.5)}" height="${this.cm(this._colWidth)}">
+<g transform="rotate(90)">
+<text fill="${this.colors.colBasalFont}" x="0" y="0" font-size="7">Hurz</text>
+</g>
+</svg>`;
+          svg.push({
+            relativePosition: {
+              x: this.cm(x + this._colWidth / 2),
+              y: this.cm(y1),
+            },
+            svg: svg1, width: this.cm(this._colWidth), height: this.cm(graphHeight),
+            color: this.colors.colBasalProfile
+          });
+        }
       });
       if (this.showLegends) {
         this.addLegendEntry(legendTDD, this.colors.colBolus, this.msgLegendTDD());
@@ -337,6 +391,22 @@ export class PrintTDD extends BasePrint {
           h: this.cm(h),
           color: this.colors.colCarbs
         });
+        if (showValue) {
+          grid.vertLegend.stack.push({
+            relativePosition: {
+              x: this.cm(x),
+              y: this.cm(this.yorg + y - 0.3)
+            },
+            columns: [{
+              // x: this.cm(x),
+              width: this.cm(this._colWidth),
+              text: `${GLOBALS.fmtBasal(carbSum)}`,
+              fontSize: this.fs(7),
+              color: this.colors.colCarbsText,
+              alignment: 'center'
+            }]
+          });
+        }
       });
       if (this.showLegends) {
         this.addLegendEntry(legendCarbs, this.colors.colCarbs, $localize`Kohlenhydrate`);
@@ -364,6 +434,8 @@ export class PrintTDD extends BasePrint {
     if (legendCarbs.asOutput != null) {
       ret.content.push(legendCarbs.asOutput);
     }
+    ret.content.push(...svg);
+    console.log(ret);
     return ret;
   }
 }

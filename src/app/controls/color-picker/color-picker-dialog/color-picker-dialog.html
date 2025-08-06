@@ -16,38 +16,42 @@
   </div>
 
   <div mat-dialog-content>
-    <ng-container *ngIf="data.mode === 'hsl'">
+    @if (data.mode === 'hsl') {
       <app-color-picker-hsl (colorChange)="fireChange($event)"
                             (colorSaveClick)="colorAddClick($event)"
                             [(color)]="currentColor"
                             [data]="data"
                             [parentClick]="fire"
                             [triggerValue]="triggerValue"></app-color-picker-hsl>
-    </ng-container>
-    <ng-container *ngIf="data.mode === 'image'">
+    }
+    @if (data.mode === 'image') {
       <app-color-picker-image (colorSaveClick)="colorAddClick($event)"
                               [(color)]="currentColor"
                               [data]="data"
                               [parentClick]="fire"></app-color-picker-image>
-    </ng-container>
-    <ng-container *ngIf="data.mode === 'mixer'">
+    }
+    @if (data.mode === 'mixer') {
       <app-color-picker-mixer (colorSaveClick)="colorAddClick($event)"
                               [(color)]="currentColor"
                               [data]="data"
                               [parentClick]="fire"></app-color-picker-mixer>
-    </ng-container>
-    <ng-container *ngIf="data.mode === 'slider'">
+    }
+    @if (data.mode === 'slider') {
       <app-color-picker-slider (colorSaveClick)="colorAddClick($event)"
                                [(color)]="currentColor"
                                [data]="data"
                                [parentClick]="fire"></app-color-picker-slider>
-    </ng-container>
-    <button (click)="clickNextColor(-1)" *ngIf="data.colorList.length > 1" left mat-button nav>
-      <mat-icon>arrow_left</mat-icon>
-    </button>
-    <button (click)="clickNextColor(1)" *ngIf="data.colorList.length > 1" mat-button nav right>
-      <mat-icon>arrow_right</mat-icon>
-    </button>
+    }
+    @if (data.colorList.length > 1) {
+      <button (click)="clickNextColor(-1)" left mat-button nav>
+        <mat-icon>arrow_left</mat-icon>
+      </button>
+    }
+    @if (data.colorList.length > 1) {
+      <button (click)="clickNextColor(1)" mat-button nav right>
+        <mat-icon>arrow_right</mat-icon>
+      </button>
+    }
   </div>
 
   <mat-dialog-actions>
@@ -55,21 +59,24 @@
       <div (click)="resetClick($event)"
            [ngStyle]="{backgroundColor:defColor?.display,marginRight:'1em'}"
            class="color"></div>
-      <div (click)="colorClick($event, color, idx)"
-           *ngFor="let color of savedColors; let idx = index"
-           [class]="classForSavedColor(idx)"
-           [ngStyle]="{backgroundColor:color.display}">
-        <mat-icon *ngIf="currSavedIdx === idx" [ngStyle]="styleForSaveIcon">
-          {{ iconForSave(color) }}
-        </mat-icon>
-      </div>
+      @for (color of savedColors; track color; let idx = $index) {
+        <div (click)="colorClick($event, color, idx)"
+             [class]="classForSavedColor(idx)"
+             [ngStyle]="{backgroundColor:color.display}">
+          @if (currSavedIdx === idx) {
+            <mat-icon [ngStyle]="styleForSaveIcon">
+              {{ iconForSave(color) }}
+            </mat-icon>
+          }
+        </div>
+      }
     </div>
     <div right>
-      <ng-container *ngIf="data.mode === 'image'">
+      @if (data.mode === 'image') {
         <button (click)="fire.emit('File')" mat-icon-button>
           <mat-icon>upload</mat-icon>
         </button>
-      </ng-container>
+      }
       <button (click)="saveClick()" mat-button>
         <mat-icon>save</mat-icon>
         <span i18n="buttonlabel for saving data">Speichern</span>

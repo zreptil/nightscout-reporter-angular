@@ -9,7 +9,7 @@
   --subHeadFore: var(--outputparamsBodySubHead);
   --mat-select-panel-background-color: white;
   --mat-select-focused-arrow-color: var(--subHeadFore);
-  --mdc-theme-primary: var(--subHeadFore);
+  --mat-theme-primary: var(--subHeadFore);
 }
 
 ::ng-deep .mat-select-panel.output-params {
@@ -26,13 +26,13 @@
   //.mat-mdc-checkbox.mat-accent.dbg {
   //  --c1: rgba(0, 0, 0, 0.5);
   //  --c2: orange;
-  //  --mdc-checkbox-selected-checkmark-color: var(--c1);
-  //  --mdc-checkbox-selected-focus-icon-color: var(--c2);
-  //  --mdc-checkbox-selected-hover-icon-color: var(--c2);
-  //  --mdc-checkbox-selected-icon-color: var(--c2);
-  //  --mdc-checkbox-selected-pressed-icon-color: var(--c2);
-  //  --mdc-checkbox-unselected-focus-icon-color: var(--c2);
-  //  --mdc-checkbox-unselected-hover-icon-color: var(--c2);
+  //  --mat-checkbox-selected-checkmark-color: var(--c1);
+  //  --mat-checkbox-selected-focus-icon-color: var(--c2);
+  //  --mat-checkbox-selected-hover-icon-color: var(--c2);
+  //  --mat-checkbox-selected-icon-color: var(--c2);
+  //  --mat-checkbox-selected-pressed-icon-color: var(--c2);
+  //  --mat-checkbox-unselected-focus-icon-color: var(--c2);
+  //  --mat-checkbox-unselected-hover-icon-color: var(--c2);
   //}
 
   ::ng-deep .mat-slide-toggle-content {

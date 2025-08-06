@@ -20,20 +20,23 @@
       <mat-form-field>
         <mat-label>{{ globals.lblGlucUnits }}</mat-label>
         <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
-          <mat-option (click)="changeGlucUnits(idx)"
-                      *ngFor="let item of globals.listGlucUnits; let idx=index"
-                      [value]="idx"
-                      class="selectItem">
-            <div class="itemTitle">{{ item }}</div>
-          </mat-option>
+          @for (item of globals.listGlucUnits; track item; let idx = $index) {
+            <mat-option (click)="changeGlucUnits(idx)"
+                        [value]="idx"
+                        class="selectItem">
+              <div class="itemTitle">{{ item }}</div>
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
       <div class="subinfo">{{ maxGlucAgeLabel }}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.maxGlucAge">
-          <mat-button-toggle *ngFor="let btn of maxGlucAge" [value]="+btn">
-            {{ btn }} {{ msgMinute(btn) }}
-          </mat-button-toggle>
+          @for (btn of maxGlucAge; track btn) {
+            <mat-button-toggle [value]="+btn">
+              {{ btn }} {{ msgMinute(btn) }}
+            </mat-button-toggle>
+          }
         </mat-button-toggle-group>
       </div>
     </div>
@@ -46,9 +49,11 @@
       <div class="subinfo">{{ lluTimeoutLabel }}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.lluTimeout">
-          <mat-button-toggle *ngFor="let btn of lluTimeout" [value]="+btn">
-            {{ btn }} {{ msgMinute(btn) }}
-          </mat-button-toggle>
+          @for (btn of lluTimeout; track btn) {
+            <mat-button-toggle [value]="+btn">
+              {{ btn }} {{ msgMinute(btn) }}
+            </mat-button-toggle>
+          }
         </mat-button-toggle-group>
       </div>
     </div>

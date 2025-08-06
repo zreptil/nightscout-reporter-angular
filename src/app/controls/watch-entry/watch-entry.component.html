@@ -1,7 +1,11 @@
 <div (click)="clickElement($event)" content>
   <ng-content></ng-content>
-  <ng-container *ngIf="isEditMode">
-    <mat-icon *ngIf="element.type==='nl'">keyboard_return</mat-icon>
-    <mat-icon *ngIf="element.type==='space'">check_box_outline_blank</mat-icon>
-  </ng-container>
+  @if (isEditMode) {
+    @if (element.type === 'nl') {
+      <mat-icon>keyboard_return</mat-icon>
+    }
+    @if (element.type === 'space') {
+      <mat-icon>check_box_outline_blank</mat-icon>
+    }
+  }
 </div>

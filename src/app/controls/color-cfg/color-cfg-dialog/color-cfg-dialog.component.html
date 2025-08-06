@@ -6,18 +6,22 @@
     <div>
       <h1>{{ dialogTitle }}</h1>
     </div>
-    <app-close-button *ngIf="globals.isConfigured" [data]="closeData"></app-close-button>
+    @if (globals.isConfigured) {
+      <app-close-button [data]="closeData"></app-close-button>
+    }
   </div>
   <div mat-dialog-content>
-    <div *ngFor="let key of listThemeKeys" row>
-      <div>
-        <app-color-picker (onDialogEvent)="onColorPicker($event)"
-                          [allColors]="allColors"
-                          [colors]="colorList?.[key]?.colors"
-                          [modeList]="availableColormodes"></app-color-picker>
+    @for (key of listThemeKeys; track key) {
+      <div row>
+        <div>
+          <app-color-picker (onDialogEvent)="onColorPicker($event)"
+                            [allColors]="allColors"
+                            [colors]="colorList?.[key]?.colors"
+                            [modeList]="availableColormodes"></app-color-picker>
+        </div>
+        <div [class]="styleForName(key)" name>{{ colorName(key) }}</div>
       </div>
-      <div [class]="styleForName(key)" name>{{ colorName(key) }}</div>
-    </div>
+    }
   </div>
   <div class="controls" mat-dialog-actions>
     <div class="left">

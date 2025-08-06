@@ -31,6 +31,7 @@ export class ListData {
   gviTotal: number;
   rms: number;
   pgs: number;
+  gri: number;
   stat: { [key: string]: StatisticData };
   min: number;
   max: number;

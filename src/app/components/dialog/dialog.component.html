@@ -4,58 +4,84 @@
      cdkDragRootElement=".dialog-box.dialog">
   <div [style]="customStyle('Head')" cdkDragHandle class="type{{data?.type}}" mat-dialog-title>
     <h1>
-      <mat-icon *ngIf="showTitleIcon">{{ titleIcon }}</mat-icon>
-      <img (error)="noImage($event)" *ngIf="showTitleImage" [src]="titleImage" alt="titleimage">
+      @if (showTitleIcon) {
+        <mat-icon>{{ titleIcon }}</mat-icon>
+      }
+      @if (showTitleImage) {
+        <img (error)="noImage($event)" [src]="titleImage" alt="titleimage">
+      }
       {{ data.title }}
     </h1>
     <div></div>
-    <app-close-button *ngIf="!data?.params?.noClose" [data]="closeData"></app-close-button>
+    @if (!data?.params?.noClose) {
+      <app-close-button [data]="closeData"></app-close-button>
+    }
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
-    <div *ngFor="let text of data.display" [innerHTML]="text"></div>
-    <ng-container *ngFor="let ctrl of data.controls">
-      <ng-container [ngSwitch]="ctrl.type">
-        <ng-container *ngSwitchCase="'input'">
+    @for (text of data.display; track text) {
+      <div [innerHTML]="text"></div>
+    }
+    @for (ctrl of data.controls; track ctrl) {
+      @switch (ctrl.type) {
+        @case ('input') {
           <mat-form-field>
             <mat-label>{{ ctrl.title }}</mat-label>
             <input [(ngModel)]="ctrl.value" matInput>
-            <mat-hint *ngIf="ctrl.hint != null">{{ ctrl.hint }}</mat-hint>
+            @if (ctrl.hint != null) {
+              <mat-hint>{{ ctrl.hint }}</mat-hint>
+            }
           </mat-form-field>
-        </ng-container>
-        <ng-container *ngSwitchCase="'textarea'">
+        }
+        @case ('textarea') {
           <mat-form-field>
             <mat-label>{{ ctrl.title }}</mat-label>
             <textarea [(ngModel)]="ctrl.value" appTextareaAutoresize autofocus matInput></textarea>
-            <mat-hint *ngIf="ctrl.hint != null">{{ ctrl.hint }}</mat-hint>
+            @if (ctrl.hint != null) {
+              <mat-hint>{{ ctrl.hint }}</mat-hint>
+            }
           </mat-form-field>
-        </ng-container>
-        <ng-container *ngSwitchCase="'helplist'">
-          <ng-container *ngFor="let item of ctrl.helpList;let idx=index">
-            <span *ngIf="showHelpItem(item, 'text')" [class]="classForItem(item)" [innerHtml]="item.text"></span>
-            <span (click)="onHelpLinkClick(item)" *ngIf="showHelpItem(item, 'btn')" [class]="classForItem(item, 'btn')">{{ item.text }}</span>
-          </ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="'checkbox'">
+        }
+        @case ('helplist') {
+          @for (item of ctrl.helpList; track $index) {
+            @if (showHelpItem(item, 'text')) {
+              <span [class]="classForItem(item)" [innerHtml]="item.text"></span>
+            }
+            @if (showHelpItem(item, 'btn')) {
+              <span (click)="onHelpLinkClick(item)" [class]="classForItem(item, 'btn')">{{ item.text }}</span>
+            }
+          }
+        }
+        @case ('checkbox') {
           <mat-checkbox [(ngModel)]="ctrl.value">{{ ctrl.title }}</mat-checkbox>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-    <mat-chip-listbox *ngIf="data.chips != null" [(ngModel)]="chipsResult" multiple>
-      <ng-container *ngFor="let btn of data.chips; let idx = index">
-        <mat-chip-option [selected]="btn.selected">{{ btn.title }}</mat-chip-option>
-      </ng-container>
-    </mat-chip-listbox>
+        }
+      }
+    }
+    @if (data.chips != null) {
+      <mat-chip-listbox [(ngModel)]="chipsResult" multiple>
+        @for (btn of data.chips; track $index) {
+          <mat-chip-option [selected]="btn.selected">{{ btn.title }}</mat-chip-option>
+        }
+      </mat-chip-listbox>
+    }
   </div>
   <div [style]="customStyle('Head')" align="end" class="type{{data?.type}}" mat-dialog-actions>
-    <ng-container *ngFor="let btn of data.buttons; let idx = index">
-      <button (click)="closeDialog(btn)" *ngIf="btn.url == null" mat-button>
-        <mat-icon *ngIf="btn.icon != null">{{ btn.icon }}</mat-icon>
-        {{ btn.title }}
-      </button>
-      <button (click)="openUrl(btn)" *ngIf="btn.url != null" mat-button>
-        <mat-icon *ngIf="btn.icon != null">{{ btn.icon }}</mat-icon>
-        {{ btn.title }}
-      </button>
-    </ng-container>
+    @for (btn of data.buttons; track $index) {
+      @if (btn.url == null) {
+        <button (click)="closeDialog(btn)" mat-button>
+          @if (btn.icon != null) {
+            <mat-icon>{{ btn.icon }}</mat-icon>
+          }
+          {{ btn.title }}
+        </button>
+      }
+      @if (btn.url != null) {
+        <button (click)="openUrl(btn)" mat-button>
+          @if (btn.icon != null) {
+            <mat-icon>{{ btn.icon }}</mat-icon>
+          }
+          {{ btn.title }}
+        </button>
+      }
+    }
   </div>
 </div>

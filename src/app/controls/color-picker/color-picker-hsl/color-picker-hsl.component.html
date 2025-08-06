@@ -21,22 +21,26 @@
       </div>
     </div>
   </div>
-  <div #opcBar *ngIf="color?.type !== 'rgb'" [ngStyle]="styleForOpcBack" opc-back>
-    <div opc-fore></div>
-    <div [ngStyle]="styleForOpcPointer" pointer vert>
-      <div mark></div>
+  @if (color?.type !== 'rgb') {
+    <div #opcBar [ngStyle]="styleForOpcBack" opc-back>
+      <div opc-fore></div>
+      <div [ngStyle]="styleForOpcPointer" pointer vert>
+        <div mark></div>
+      </div>
+    </div>
+  }
+</div>
+@if (globals.isDebug) {
+  <div class="debug" info>
+    <div>
+      H: {{ floor(hue) }}
+      S: {{ floor(sat) }}
+      L: {{ floor(light) }}
+      O: {{ floor(opacity * 100) }}%
+    </div>
+    <div>{{ color.themeKey }}</div>
+    <div>
+      #: {{ color.display_rgba }}
     </div>
   </div>
-</div>
-<div *ngIf="globals.isDebug" class="debug" info>
-  <div>
-    H: {{ floor(hue) }}
-    S: {{ floor(sat) }}
-    L: {{ floor(light) }}
-    O: {{ floor(opacity * 100) }}%
-  </div>
-  <div>{{ color.themeKey }}</div>
-  <div>
-    #: {{ color.display_rgba }}
-  </div>
-</div>
+}

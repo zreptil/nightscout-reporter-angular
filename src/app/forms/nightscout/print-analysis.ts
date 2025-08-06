@@ -731,6 +731,7 @@ export class PrintAnalysis extends BasePrint {
           ],
         ]);
     }
+    const griData = this.griData(data.gri);
     this.addBodyArea(tableBody, this.msgPeriod, [
       [
         {text: '', style: 'infotitle'},
@@ -774,6 +775,27 @@ export class PrintAnalysis extends BasePrint {
         {text: this.pgsQuality(data.pgs), style: 'infounit', colSpan: 2},
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
+      ],
+      [
+        {text: '', style: 'infotitle'},
+        {text: this.msgGRIFull, style: 'infotitle'},
+        {text: GLOBALS.fmtNumber(data.gri, 0), style: 'infodata'},
+        {text: griData.quality, style: 'infounit', colSpan: 2},
+        {text: '', style: 'infotitle'},
+        {
+          canvas: [
+            {
+              type: 'rect',
+              x: this.cm(cvsLeft),
+              y: this.cm(0.05),
+              w: this.cm(cvsWidth),
+              h: this.cm(0.4),
+              color: griData.color,
+              lineWidth: 0.5,
+              lineColor: 'black'
+            },
+          ]
+        },
       ],
       [
         {text: '', style: 'infotitle'},

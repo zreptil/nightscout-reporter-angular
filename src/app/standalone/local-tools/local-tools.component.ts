@@ -11,7 +11,7 @@ import {PdfToolService} from '@/standalone/_services/pdf-tool.service';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
 import {MaterialModule} from '@/material.module';
-import {CommonModule} from '@angular/common';
+
 import {FormsModule} from '@angular/forms';
 import {LogComponent} from '@/components/log/log.component';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
@@ -21,7 +21,6 @@ import {ProgressComponent} from '@/components/progress/progress.component';
 
 @Component({
   imports: [
-    CommonModule,
     MaterialModule,
     FormsModule,
     LogComponent,

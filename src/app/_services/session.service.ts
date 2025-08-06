@@ -378,7 +378,7 @@ export class SessionService {
 
     });
     // if (!GLOBALS.dsgvoAccepted) {
-    //   _currPage = 'dsgvo';
+    //   _currPage = 'dsgvo'  ;
     // }
     // _lastPage = _currPage;
     this.ds.sortConfigs();

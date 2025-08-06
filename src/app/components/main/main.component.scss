@@ -522,7 +522,7 @@ mat-drawer-container {
 }
 
 button.send {
-  --mdc-fab-container-shape: 50px;
+  --mat-fab-container-shape: 50px;
 
   ::ng-deep .mat-mdc-button-ripple {
     border-radius: initial;

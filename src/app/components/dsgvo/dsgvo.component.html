@@ -282,7 +282,9 @@
                                           target="_blank">Datenschutzerklärungs-Generator
       Muster-Vorlagen.net</a></div>
   </div>
-  <mat-dialog-actions *ngIf="false">
-    <mat-checkbox class="check">Akzeptiert</mat-checkbox>
-  </mat-dialog-actions>
+  @if (false) {
+    <mat-dialog-actions>
+      <mat-checkbox class="check">Akzeptiert</mat-checkbox>
+    </mat-dialog-actions>
+  }
 </div>

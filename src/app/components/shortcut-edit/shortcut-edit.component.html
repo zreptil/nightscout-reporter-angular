@@ -1,51 +1,55 @@
 <div cdkDrag cdkDragBoundary=".cdk-overlay-container"
      cdkDragRootElement=".dialog-box.shortcutedit">
   <div cdkDragHandle mat-dialog-title>
-    <h1>{{msgTitle}}</h1>
+    <h1>{{ msgTitle }}</h1>
     <app-close-button [data]="closeData"></app-close-button>
   </div>
 
-  <div *ngIf="globals.currShortcut != null" mat-dialog-content>
-    <div class="info" i18n="info text for shortcuts">
-      Ein Shortcut beinhaltet den Zeitraum und die ausgewählten Formulare mit den jeweils gesetzten Optionen. Wenn ein Shortcut
-      aktiviert wird, werden die darin gespeicherten Einstellungen geladen und aktiviert.
+  @if (globals.currShortcut != null) {
+    <div mat-dialog-content>
+      <div class="info" i18n="info text for shortcuts">
+        Ein Shortcut beinhaltet den Zeitraum und die ausgewählten Formulare mit den jeweils gesetzten Optionen. Wenn ein Shortcut
+        aktiviert wird, werden die darin gespeicherten Einstellungen geladen und aktiviert.
+      </div>
+      <div class="icondef">
+        <button mat-button>
+          <mat-icon>{{ globals.currShortcut?.icon }}</mat-icon>
+        </button>
+        <mat-form-field>
+          <mat-label>{{ msgName }}</mat-label>
+          <input [(ngModel)]="globals.currShortcut.name" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <ng-container i18n="number of forms for shortcut">Anzahl:</ng-container>
+        <button (click)="clickForms()" class="data" mat-button>
+          {{ msgFormsText(formsCount) }}
+        </button>
+      </div>
+      <div>
+        <ng-container i18n="period for shortcuts">Zeitraum:</ng-container>
+        <button (click)="clickZeitraum()" class="data" mat-button>
+          {{ globals.currShortcut.periodText }}
+        </button>
+      </div>
+      <div>
+        {{ globals.lblGlucUnits }}:
+        <button (click)="clickGlucUnits()" class="data" mat-button>
+          {{ globals.listGlucUnits[globals.currShortcut.glucMGDLIdx ?? globals.glucMGDLIdx] }}
+        </button>
+      </div>
     </div>
-    <div class="icondef">
-      <button mat-button>
-        <mat-icon>{{globals.currShortcut?.icon}}</mat-icon>
-      </button>
-      <mat-form-field>
-        <mat-label>{{msgName}}</mat-label>
-        <input [(ngModel)]="globals.currShortcut.name" matInput>
-      </mat-form-field>
-    </div>
-    <div>
-      <ng-container i18n="number of forms for shortcut">Anzahl:</ng-container>
-      <button (click)="clickForms()" class="data" mat-button>
-        {{msgFormsText(formsCount)}}
-      </button>
-    </div>
-    <div>
-      <ng-container i18n="period for shortcuts">Zeitraum:</ng-container>
-      <button (click)="clickZeitraum()" class="data" mat-button>
-        {{globals.currShortcut.periodText}}
-      </button>
-    </div>
-    <div>
-      {{globals.lblGlucUnits}}:
-      <button (click)="clickGlucUnits()" class="data" mat-button>
-        {{globals.listGlucUnits[globals.currShortcut.glucMGDLIdx ?? globals.glucMGDLIdx]}}
-      </button>
-    </div>
-  </div>
+  }
 
   <div mat-dialog-actions>
     <div></div>
     <div>
-      <button (click)="clickDelete()" *ngIf="globals.currShortcutIdx>=0" class="iconButton" mat-button>
-        <mat-icon>delete</mat-icon>
-        <div i18n="buttonlabel for deleting data">Löschen</div>
-      </button>
+      @if (globals.currShortcutIdx >= 0) {
+        <button (click)="clickDelete()" class="iconButton" mat-button>
+          <mat-icon>delete</mat-icon>
+          <div i18n="buttonlabel for deleting data">Löschen</div>
+        </button>
+      }
       <button (click)="clickSave()" class="iconButton" mat-button>
         <mat-icon>save</mat-icon>
         <div i18n="buttonlabel for saving data">Speichern</div>

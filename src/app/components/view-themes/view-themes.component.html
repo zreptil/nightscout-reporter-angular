@@ -1,14 +1,17 @@
 <!--suppress HtmlUnknownTarget -->
 <div [innerHTML]="svgCollection" hide></div>
-<div *ngIf="globals.isLocal && globals.isDebug" class="is-local">
-  <div class="debug">
-    <div><span>Themeserver</span>
+@if (globals.isLocal && globals.isDebug) {
+  <div class="is-local">
+    <div class="debug">
+      <div><span>Themeserver</span>
       <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
-        <mat-chip-option *ngFor="let url of globals._urlThemeServer; let idx = index"
-                         [disabled]="idx === globals.urlThemeServerIdx"
-                         [selected]="idx === globals.urlThemeServerIdx"
-                         [value]="idx">{{ getDisplayUrl(url) }}
-        </mat-chip-option>
+        @for (url of globals._urlThemeServer; track url; let idx = $index) {
+          <mat-chip-option
+            [disabled]="idx === globals.urlThemeServerIdx"
+            [selected]="idx === globals.urlThemeServerIdx"
+            [value]="idx">{{ getDisplayUrl(url) }}
+          </mat-chip-option>
+        }
       </mat-chip-listbox>
     </div>
     <div>
@@ -27,39 +30,60 @@
     </div>
   </div>
 </div>
-<div *ngIf="serverThemes?.length === 0 && cardForSave == null" empty>
-  Es sind noch keine Farbthemen vorhanden. Wenn etwas am Farbthema geändert wurde, kann es
-  hier gespeichert werden.
-</div>
-<ng-container *ngIf="cardForSave != null"
-              [ngTemplateOutletContext]="{theme:cardForSave}"
-              [ngTemplateOutlet]="tplTheme">
-</ng-container>
-<ng-container *ngFor="let theme of serverThemes"
-              [ngTemplateOutletContext]="{theme:theme}"
-              [ngTemplateOutlet]="tplTheme">
-</ng-container>
+}
+@if (serverThemes?.length === 0 && cardForSave == null) {
+  <div empty>
+    Es sind noch keine Farbthemen vorhanden. Wenn etwas am Farbthema geändert wurde, kann es
+    hier gespeichert werden.
+  </div>
+}
+@if (cardForSave != null) {
+  <ng-container
+    [ngTemplateOutletContext]="{theme:cardForSave}"
+    [ngTemplateOutlet]="tplTheme">
+  </ng-container>
+}
+@for (theme of serverThemes; track theme) {
+  <ng-container
+    [ngTemplateOutletContext]="{theme:theme}"
+    [ngTemplateOutlet]="tplTheme">
+  </ng-container>
+}
 <ng-template #tplTheme let-theme="theme">
   <div [class]="classForCard(theme)" card>
     <div [style]="styleForTitle(theme)" title>
       {{ theme.name }}
-      <button (click)="clickDelete(theme)" *ngIf="mayDelete(theme)" delete mat-mini-fab>
-        <mat-icon>delete</mat-icon>
-      </button>
+      @if (mayDelete(theme)) {
+        <button (click)="clickDelete(theme)" delete mat-mini-fab>
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
     </div>
     <div [style]="styleForContent(theme)" content>
       <button (click)="clickTheme(theme)" class="themeButton" mat-icon-button>
         <svg style="width:90%;height:90%" viewBox="0 0 219 250">
-          <ng-container [ngSwitch]="theme.name">
-            <use *ngSwitchCase="'standard'" href="#owl-standard"/>
-            <use *ngSwitchCase="'xmas'" href="#owl-xmas"/>
-            <use *ngSwitchDefault href="#owl-own"/>
+          <ng-container>
+            @switch (theme.name) {
+              @case ('standard') {
+                <use href="#owl-standard"/>
+              }
+              @case ('xmas') {
+                <use href="#owl-xmas"/>
+              }
+              @default {
+                <use href="#owl-own"/>
+              }
+            }
           </ng-container>
         </svg>
       </button>
       <div time>{{ theme.modifyTime }}</div>
-      <div *ngIf="!theme.isSave" username>{{ theme.username ?? '' }}</div>
-      <div *ngIf="may(theme, 'admin')" creator>{{ theme.creator ?? '' }}</div>
+      @if (!theme.isSave) {
+        <div username>{{ theme.username ?? '' }}</div>
+      }
+      @if (may(theme, 'admin')) {
+        <div creator>{{ theme.creator ?? '' }}</div>
+      }
     </div>
   </div>
 </ng-template>

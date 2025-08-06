@@ -1,12 +1,14 @@
 <mat-tab-group>
   <mat-tab label="PDF Tools">
     <button (click)="clickBackWork()" mat-button>Leg los</button>
-    <div>value: {{backwork}}</div>
+    <div>value: {{ backwork }}</div>
     <div lang>
-      <button (click)="clickCreateThumbs(lang)" *ngFor="let lang of globals.languageList" mat-raised-button>
-        <img [src]="lang.imgPath" alt="language image">
-        <div>{{lang.code}}</div>
-      </button>
+      @for (lang of globals.languageList; track lang) {
+        <button (click)="clickCreateThumbs(lang)" mat-raised-button>
+          <img [src]="lang.imgPath" alt="language image">
+          <div>{{ lang.code }}</div>
+        </button>
+      }
       <button (click)="clickCreateThumbs()" mat-raised-button>
         <div>Alle</div>
       </button>
@@ -23,10 +25,12 @@
       </button>
     </div>
     <div lang>
-      <button (click)="clickLanguage(lang)" *ngFor="let lang of globals.languageList" mat-raised-button>
-        <img [src]="lang.imgPath" alt="language image">
-        <div>{{lang.code}}</div>
-      </button>
+      @for (lang of globals.languageList; track lang) {
+        <button (click)="clickLanguage(lang)" mat-raised-button>
+          <img [src]="lang.imgPath" alt="language image">
+          <div>{{ lang.code }}</div>
+        </button>
+      }
     </div>
   </mat-tab>
   <mat-tab label="Code Replacer">
@@ -36,9 +40,11 @@
     <mat-form-field appearance="fill" class="dartcode">
       <mat-label>Zu überarbeitender Dart-Code</mat-label>
       <textarea [(ngModel)]="code" appTextareaAutoresize matInput type="text"></textarea>
-      <button (click)="code=''" *ngIf="code" aria-label="Clear" mat-icon-button matSuffix>
-        <mat-icon>close</mat-icon>
-      </button>
+      @if (code) {
+        <button (click)="code=''" aria-label="Clear" mat-icon-button matSuffix>
+          <mat-icon>close</mat-icon>
+        </button>
+      }
     </mat-form-field>
   </mat-tab>
   <mat-tab label="Color Converter">
