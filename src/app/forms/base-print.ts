@@ -693,6 +693,10 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Patient Glykämischer Status (PGS)`;
   }
 
+  get msgGRIFull(): string {
+    return $localize`Glykämischer Risiko Index (GRI)`;
+  }
+
   get msgKHPerDay(): string {
     return $localize`Ø KH pro Tag`;
   }
@@ -1373,6 +1377,43 @@ export abstract class BasePrint extends FormConfig {
       return this.msgPGSBad(100, 150);
     }
     return this.msgPGSVeryBad(150);
+  }
+
+  msgGRIZone(zone: string, min: number, max?: number): string {
+    const txtMin = GLOBALS.fmtNumber(min);
+    const txtMax = GLOBALS.fmtNumber(max);
+    if (max != null) {
+      return $localize`Zone ${zone} (${txtMin} bis ${txtMax})`;
+    }
+    return $localize`Zone ${zone} (über ${txtMin})`;
+  }
+
+  griData(gri: number): any {
+    if (gri <= 20.0) {
+      return {
+        quality: this.msgGRIZone('A', 0, 20),
+        color: '#79BF7A'
+      };
+    } else if (gri <= 40.0) {
+      return {
+        quality: this.msgGRIZone('B', 20, 40),
+        color: '#F6F27E'
+      };
+    } else if (gri <= 60.0) {
+      return {
+        quality: this.msgGRIZone('C', 40, 60),
+        color: '#FFD079'
+      };
+    } else if (gri <= 80.0) {
+      return {
+        quality: this.msgGRIZone('D', 60, 80),
+        color: '#F2787A'
+      };
+    }
+    return {
+      quality: this.msgGRIZone('E', 80),
+      color: '#CF9390'
+    };
   }
 
   msgHistorical(value: string): string {
