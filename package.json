@@ -32,7 +32,6 @@
     "@angular/router": "^20.0.1",
     "@types/google-one-tap": "^1.2.2",
     "@types/pdfmake": "^0.2.7",
-    "@types/ws": "^8.5.4",
     "angular-oauth2-oidc": "^19.0.0",
     "base64-arraybuffer": "^1.0.2",
     "better-npm-audit": "^3.7.3",
