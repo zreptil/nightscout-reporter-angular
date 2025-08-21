@@ -1,4 +1,4 @@
-@for (color of colors; track color; let idx = $index) {
+@for (color of colors; track idx; let idx = $index) {
   <div panel>
     <button (click)="clickActivate(idx)"
             [ngStyle]="{color: color?.btnForeColor}">

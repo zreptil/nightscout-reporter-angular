@@ -58,7 +58,7 @@ export class LanguageService {
       'cs-CZ': csCZ
     } as any)[lng.id];
     registerLocaleData(locale);
-    const nf = new Intl.NumberFormat(locale, {style: 'decimal'});
+    const nf = new Intl.NumberFormat(lng.id, {style: 'decimal'});
     const parts = nf.formatToParts(1.1);
     Utils.decimalSeparator = parts.find(part => part.type === 'decimal')?.value ?? '.';
   }

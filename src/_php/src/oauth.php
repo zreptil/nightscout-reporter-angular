@@ -1,7 +1,20 @@
 <?php
 session_start();
+$from = '*';
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+  $from = $_SERVER['HTTP_ORIGIN'];
+}
+header('Access-Control-Allow-Origin: ' . $from);
+header('Vary: Origin');
 // call with ?app=xxx
 if (isset($_REQUEST['app'])) {
+//  if ($_REQUEST['app'] == 'info') {
+//    include('config.php');
+//    global $cfg;
+//    echo($cfg['redirectUri'] . '<br>');
+//    phpinfo();
+//    exit;
+//  }
   $_SESSION['app'] = $_REQUEST['app'];
   include('config/' . $_SESSION['app'] . '.php');
   global $cfg;
@@ -36,13 +49,18 @@ if (isset($_REQUEST['app'])) {
   } else {
     // redirect to this file again, will be called with "code" as parameter
     $redirectUri = $cfg['redirectUri'] . basename(__FILE__);
-    $authUrl = $cfg['authUrl'] . '?'
-      . http_build_query([
-        'response_type' => 'code',
-        'client_id' => $cfg['clientId'],
-        'redirect_uri' => $redirectUri,
-        'scope' => $cfg['scope'],
-      ]);
+    $httpParams = [
+      'response_type' => 'code',
+      'client_id' => $cfg['clientId'],
+      'redirect_uri' => $redirectUri,
+      'scope' => $cfg['scope'],
+    ];
+    if (isset($cfg['authParams']) && is_array($cfg['authParams']) && !empty($cfg['authParams'])) {
+      foreach ($cfg['authParams'] as $key => $value) {
+        $httpParams[$key] = $value;
+      }
+    }
+    $authUrl = $cfg['authUrl'] . '?' . http_build_query($httpParams);
     header('Location: ' . $authUrl);
     exit;
   }
@@ -58,6 +76,11 @@ if (isset($_REQUEST['app'])) {
     'redirect_uri' => $cfg['redirectUri'] . basename(__FILE__),
     'code' => $code,
   ];
+  if (isset($cfg['tokenParams']) && is_array($cfg['tokenParams']) && !empty($cfg['tokenParams'])) {
+    foreach ($cfg['tokenParams'] as $key => $value) {
+      $tokenParams[$key] = $value;
+    }
+  }
 
   $ch = curl_init($cfg['tokenUrl']);
   curl_setopt($ch, CURLOPT_POST, true);
@@ -73,10 +96,14 @@ if (isset($_REQUEST['app'])) {
   curl_close($ch);
 
   $tokenData = json_decode($response, true);
+  // withings returns tokenData in body
+  if (isset($tokenData['body'])) {
+    $tokenData = $tokenData['body'];
+  }
   // check for presence of access_token
   if (isset($tokenData['access_token'])) {
     // redirect back to angular-app
-    header('Location: ' . $cfg['homeUri'] . '?' . $cfg['app'] . '=' . base64_encode($response));
+    header('Location: ' . $cfg['homeUri'] . '?' . $cfg['app'] . '=' . base64_encode(json_encode($tokenData)));
     exit;
   } else {
     // error handling

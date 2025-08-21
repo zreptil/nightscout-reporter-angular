@@ -1,5 +1,5 @@
 <div class="formlist">
-  @for (cfg of globals.listConfig; track cfg) {
+  @for (cfg of globals.listConfig; track $index) {
     @if (cfg.form.isVisible) {
       <div>
         <div class="sortable" id="list-{{cfg.id}}">

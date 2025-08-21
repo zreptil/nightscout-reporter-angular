@@ -3,7 +3,7 @@
     <button (click)="clickBackWork()" mat-button>Leg los</button>
     <div>value: {{ backwork }}</div>
     <div lang>
-      @for (lang of globals.languageList; track lang) {
+      @for (lang of globals.languageList; track $index) {
         <button (click)="clickCreateThumbs(lang)" mat-raised-button>
           <img [src]="lang.imgPath" alt="language image">
           <div>{{ lang.code }}</div>
@@ -25,7 +25,7 @@
       </button>
     </div>
     <div lang>
-      @for (lang of globals.languageList; track lang) {
+      @for (lang of globals.languageList; track $index) {
         <button (click)="clickLanguage(lang)" mat-raised-button>
           <img [src]="lang.imgPath" alt="language image">
           <div>{{ lang.code }}</div>

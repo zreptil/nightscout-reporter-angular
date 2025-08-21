@@ -20,16 +20,16 @@ html, body {
 
 html {
   .mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
-    --mdc-fab-small-container-color: var(--headBack);
-    --mdc-fab-container-color: var(--headBack);
-    --mdc-fab-icon-color: var(--headFore);
+    --mat-fab-small-container-color: var(--headBack);
+    --mat-fab-container-color: var(--headBack);
+    --mat-fab-icon-color: var(--headFore);
     --mat-mdc-fab-color: var(--headFore);
     --mat-fab-small-foreground-color: var(--headFore);
   }
 }
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
-  --mdc-dialog-container-shape: 8px !important;
+  --mat-dialog-container-shape: 8px !important;
 
   .subtitle {
     color: var(--subHeadFore);
@@ -38,22 +38,22 @@ html {
 
 html {
   .mat-mdc-standard-chip {
-    --mdc-chip-elevated-container-color: var(--mainBodyBack);
+    --mat-chip-elevated-container-color: var(--mainBodyBack);
   }
 
   .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
     .mdc-evolution-chip__text-label {
-      --mdc-chip-label-text-color: var(--mainBodyFore);
+      --mat-chip-label-text-color: var(--mainBodyFore);
     }
   }
 
   .mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary,
   .mat-mdc-standard-chip.mat-mdc-chip-highlighted.mat-primary {
-    --mdc-chip-elevated-container-color: var(--mainHeadBack);
-    --mdc-chip-elevated-disabled-container-color: var(--mainHeadBack);
+    --mat-chip-elevated-container-color: var(--mainHeadBack);
+    --mat-chip-elevated-disabled-container-color: var(--mainHeadBack);
 
     .mdc-evolution-chip__text-label {
-      --mdc-chip-label-text-color: var(--mainHeadFore);
+      --mat-chip-label-text-color: var(--mainHeadFore);
     }
   }
 }
@@ -77,10 +77,10 @@ body {
     rgba(var(--logDebugRGB), 0.6) 10px,
     rgba(var(--logDebugRGB), 0.8) 10px,
     rgba(var(--logDebugRGB), 0.8) 20px);
-  --mdc-filled-text-field-container-color: var(--bodyBack);
-  --mdc-filled-text-field-focus-active-indicator-color: var(--headBack);
-  --mdc-filled-text-field-focus-label-text-color: var(--headBack);
-  --mdc-filled-text-field-caret-color: var(--headBack);
+  --mat-form-field-filled-container-color: var(--bodyBack);
+  --mat-form-field-filled-focus-active-indicator-color: var(--headBack);
+  --mat-form-field-filled-focus-label-text-color: var(--headBack);
+  --mat-form-field-filled-caret-color: var(--headBack);
 
   .debug {
     background: var(--logDebugColor) !important;
@@ -473,50 +473,50 @@ form.oauth2 {
 }
 
 .mat-mdc-slide-toggle {
-  --mdc-switch-disabled-selected-handle-color: var(--headBack);
-  --mdc-switch-disabled-unselected-handle-color: var(--headBack);
-  --mdc-switch-disabled-selected-track-color: var(--headBack);
-  --mdc-switch-disabled-unselected-track-color: var(--headBack);
-  --mdc-switch-unselected-focus-state-layer-color: var(--headBack);
-  --mdc-switch-unselected-pressed-state-layer-color: var(--headBack);
-  --mdc-switch-unselected-hover-state-layer-color: var(--headBack);
-  --mdc-switch-unselected-focus-track-color: rgba(255, 255, 255, 0.3);
-  --mdc-switch-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
-  --mdc-switch-unselected-pressed-track-color: rgba(255, 255, 255, 0.3);
-  --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3);
-  --mdc-switch-unselected-focus-handle-color: var(--headBack);
-  --mdc-switch-unselected-hover-handle-color: var(--headBack);
-  --mdc-switch-unselected-pressed-handle-color: var(--headBack);
-  --mdc-switch-handle-surface-color: var(--mdc-theme-surface, #fff);
-  --mdc-switch-unselected-handle-color: var(--headBack);
-  --mdc-switch-selected-icon-color: #fff;
-  --mdc-switch-disabled-selected-icon-color: #fff;
-  --mdc-switch-disabled-unselected-icon-color: #fff;
-  --mdc-switch-unselected-icon-color: #fff;
+  --mat-slide-toggle-disabled-selected-handle-color: var(--headBack);
+  --mat-slide-toggle-disabled-unselected-handle-color: var(--headBack);
+  --mat-slide-toggle-disabled-selected-track-color: var(--headBack);
+  --mat-slide-toggle-disabled-unselected-track-color: var(--headBack);
+  --mat-slide-toggle-unselected-focus-state-layer-color: var(--headBack);
+  --mat-slide-toggle-unselected-pressed-state-layer-color: var(--headBack);
+  --mat-slide-toggle-unselected-hover-state-layer-color: var(--headBack);
+  --mat-slide-toggle-unselected-focus-track-color: rgba(255, 255, 255, 0.3);
+  --mat-slide-toggle-unselected-hover-track-color: rgba(255, 255, 255, 0.3);
+  --mat-slide-toggle-unselected-pressed-track-color: rgba(255, 255, 255, 0.3);
+  --mat-slide-toggle-unselected-track-color: rgba(255, 255, 255, 0.3);
+  --mat-slide-toggle-unselected-focus-handle-color: var(--headBack);
+  --mat-slide-toggle-unselected-hover-handle-color: var(--headBack);
+  --mat-slide-toggle-unselected-pressed-handle-color: var(--headBack);
+  --mat-slide-toggle-handle-surface-color: var(--mat-theme-surface, #fff);
+  --mat-slide-toggle-unselected-handle-color: var(--headBack);
+  --mat-slide-toggle-selected-icon-color: #fff;
+  --mat-slide-toggle-disabled-selected-icon-color: #fff;
+  --mat-slide-toggle-disabled-unselected-icon-color: #fff;
+  --mat-slide-toggle-unselected-icon-color: #fff;
 }
 
 .mat-mdc-slide-toggle.mat-accent {
-  --mdc-switch-selected-focus-state-layer-color: var(--accentBack);
-  --mdc-switch-selected-handle-color: var(--accentBack);
-  --mdc-switch-selected-hover-state-layer-color: var(--accentBack);
-  --mdc-switch-selected-pressed-state-layer-color: var(--accentBack);
-  --mdc-switch-selected-focus-handle-color: var(--accentBack);
-  --mdc-switch-selected-hover-handle-color: var(--accentBack);
-  --mdc-switch-selected-pressed-handle-color: var(--accentBack);
-  --mdc-switch-selected-focus-track-color: rgba(255, 255, 255, 0.5);
-  --mdc-switch-selected-hover-track-color: rgba(255, 255, 255, 0.5);
-  --mdc-switch-selected-pressed-track-color: rgba(255, 255, 255, 0.5);
-  --mdc-switch-selected-track-color: rgba(255, 255, 255, 0.5);
+  --mat-slide-toggle-selected-focus-state-layer-color: var(--accentBack);
+  --mat-slide-toggle-selected-handle-color: var(--accentBack);
+  --mat-slide-toggle-selected-hover-state-layer-color: var(--accentBack);
+  --mat-slide-toggle-selected-pressed-state-layer-color: var(--accentBack);
+  --mat-slide-toggle-selected-focus-handle-color: var(--accentBack);
+  --mat-slide-toggle-selected-hover-handle-color: var(--accentBack);
+  --mat-slide-toggle-selected-pressed-handle-color: var(--accentBack);
+  --mat-slide-toggle-selected-focus-track-color: rgba(255, 255, 255, 0.5);
+  --mat-slide-toggle-selected-hover-track-color: rgba(255, 255, 255, 0.5);
+  --mat-slide-toggle-selected-pressed-track-color: rgba(255, 255, 255, 0.5);
+  --mat-slide-toggle-selected-track-color: rgba(255, 255, 255, 0.5);
 }
 
 .mat-mdc-slider.mat-primary {
-  --mdc-slider-handle-color: var(--headBack);
-  --mdc-slider-focus-handle-color: var(--headBack);
-  --mdc-slider-hover-handle-color: var(--headBack);
-  --mdc-slider-active-track-color: var(--headBack);
-  --mdc-slider-inactive-track-color: var(--headBack);
-  --mdc-slider-with-tick-marks-active-container-color: #fff;
-  --mdc-slider-with-tick-marks-inactive-container-color: var(--headBack);
+  --mat-slider-handle-color: var(--headBack);
+  --mat-slider-focus-handle-color: var(--headBack);
+  --mat-slider-hover-handle-color: var(--headBack);
+  --mat-slider-active-track-color: var(--headBack);
+  --mat-slider-inactive-track-color: var(--headBack);
+  --mat-slider-with-tick-marks-active-container-color: #fff;
+  --mat-slider-with-tick-marks-inactive-container-color: var(--headBack);
   --mat-mdc-slider-ripple-color: var(--headBack);
   --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
   --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
@@ -524,17 +524,17 @@ form.oauth2 {
 
 .mat-mdc-checkbox.mat-accent {
   --mat-checkbox-label-text-color: var(--bodyFore);
-  --mdc-checkbox-selected-checkmark-color: var(--headFore);
-  --mdc-checkbox-selected-focus-icon-color: var(--headBack);
-  --mdc-checkbox-selected-hover-icon-color: var(--headBack);
-  --mdc-checkbox-selected-icon-color: var(--headBack);
-  --mdc-checkbox-selected-pressed-icon-color: var(--headBack);
-  --mdc-checkbox-unselected-focus-icon-color: var(--headBack);
-  --mdc-checkbox-unselected-hover-icon-color: var(--headBack);
-  --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
-  --mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
-  --mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+  --mat-checkbox-selected-checkmark-color: var(--headFore);
+  --mat-checkbox-selected-focus-icon-color: var(--headBack);
+  --mat-checkbox-selected-hover-icon-color: var(--headBack);
+  --mat-checkbox-selected-icon-color: var(--headBack);
+  --mat-checkbox-selected-pressed-icon-color: var(--headBack);
+  --mat-checkbox-unselected-focus-icon-color: var(--headBack);
+  --mat-checkbox-unselected-hover-icon-color: var(--headBack);
+  --mat-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+  --mat-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+  --mat-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+  --mat-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
 }
 
 .mdc-menu-surface {
@@ -619,7 +619,7 @@ form.oauth2 {
 }
 
 .mat-mdc-button.mat-unthemed {
-  --mdc-text-button-label-text-color: var(--bodyFore);
+  --mat-button-text-label-text-color: var(--bodyFore);
 }
 
 .mat-datepicker-content {
@@ -656,10 +656,10 @@ form.oauth2 {
 .mat-mdc-dialog-container .mdc-dialog__content,
 .mat-mdc-dialog-container .mdc-dialog__content.root {
   background-color: var(--bodyBack) !important;
-  --mdc-theme-text-primary-on-background: var(--bodyData);
+  --mat-theme-text-primary-on-background: var(--bodyData);
 
   .mat-mdc-checkbox.mat-accent {
-    --mdc-checkbox-unselected-icon-color: var(--bodyData);
+    --mat-checkbox-unselected-icon-color: var(--bodyData);
   }
 }
 
@@ -772,12 +772,12 @@ svg {
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base[micro-button] {
-  --mdc-icon-button-state-layer-size: 24px;
+  --mat-icon-button-state-layer-size: 24px;
   padding: 0;
 
   .mat-mdc-button-touch-target {
-    width: var(--mdc-icon-button-state-layer-size);
-    height: var(--mdc-icon-button-state-layer-size);
+    width: var(--mat-icon-button-state-layer-size);
+    height: var(--mat-icon-button-state-layer-size);
   }
 
   mat-icon {

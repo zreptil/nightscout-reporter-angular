@@ -33,13 +33,18 @@ function refreshAccessToken($refreshToken)
     if (!$ret['success']) {
       // redirect to this file again, will be called with "code" as parameter
       $redirectUri = $cfg['redirectUri'] . 'oauth.php';
-      $authUrl = $cfg['authUrl'] . '?'
-        . http_build_query([
-          'response_type' => 'code',
-          'client_id' => $cfg['clientId'],
-          'redirect_uri' => $redirectUri,
-          'scope' => $cfg['scope'],
-        ]);
+      $httpParams = [
+        'response_type' => 'code',
+        'client_id' => $cfg['clientId'],
+        'redirect_uri' => $redirectUri,
+        'scope' => $cfg['scope'],
+      ];
+      if (isset($cfg['authParams']) && is_array($cfg['authParams']) && !empty($cfg['authParams'])) {
+        foreach ($cfg['authParams'] as $key => $value) {
+          $httpParams[$key] = $value;
+        }
+      }
+      $authUrl = $cfg['authUrl'] . '?' . http_build_query($httpParams);
       header('Location: ' . $authUrl);
       exit;
     }

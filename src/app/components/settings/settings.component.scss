@@ -14,12 +14,12 @@
   --mat-expansion-header-text-color: var(--bodyFore);
   --mat-expansion-container-text-color: var(--bodyFore);
   --mat-expansion-header-indicator-color: var(--bodyFore);
-  --mdc-filled-text-field-input-text-color: var(--bodyFore);
-  --mdc-filled-text-field-label-text-color: var(--bodyFore);
-  --mdc-filled-text-field-hover-label-text-color: var(--bodyFore);
-  --mdc-icon-button-icon-color: var(--bodyFore);
-  --mdc-dialog-supporting-text-color: var(--bodyFore);
-  --mdc-text-button-disabled-label-text-color: color-mix(in srgb, var(--bodyFore) 38%, transparent);
+  --mat-form-field-filled-input-text-color: var(--bodyFore);
+  --mat-form-field-filled-label-text-color: var(--bodyFore);
+  --mat-form-field-filled-hover-label-text-color: var(--bodyFore);
+  --mat-icon-button-icon-color: var(--bodyFore);
+  --mat-dialog-supporting-text-color: var(--bodyFore);
+  --mat-button-text-disabled-label-text-color: color-mix(in srgb, var(--bodyFore) 38%, transparent);
 
   --logDebugColor: repeating-linear-gradient(45deg,
     rgba(var(--logDebugRGB), 0.6),

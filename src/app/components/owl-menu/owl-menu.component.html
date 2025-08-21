@@ -21,7 +21,7 @@
 </div>
 <div [style]="langStyle" class="langPanel">
   <div frame>
-    @for (item of globals.languageList; track item; let idx = $index) {
+    @for (item of globals.languageList; track idx; let idx = $index) {
       <div [ngStyle]="{zIndex:1000-idx}"
            class="btnLanguage">
         <button (click)="togglePanels(item)" [class]="ss.languageClass(item)" mat-icon-button>

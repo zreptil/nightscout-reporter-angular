@@ -18,10 +18,10 @@
     }
   </div>
   <div [style]="customStyle('Body')" class="dialog-text" mat-dialog-content>
-    @for (text of data.display; track text) {
+    @for (text of data.display; track $index) {
       <div [innerHTML]="text"></div>
     }
-    @for (ctrl of data.controls; track ctrl) {
+    @for (ctrl of data.controls; track $index) {
       @switch (ctrl.type) {
         @case ('input') {
           <mat-form-field>

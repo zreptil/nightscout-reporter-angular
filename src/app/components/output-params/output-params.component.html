@@ -34,7 +34,7 @@
         <mat-form-field>
           <mat-label>{{ globals.lblGlucUnits }}</mat-label>
           <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
-            @for (item of globals.listGlucUnits; track item; let idx = $index) {
+            @for (item of globals.listGlucUnits; track idx; let idx = $index) {
               <mat-option (click)="changeGlucUnits(idx)"
                           [value]="idx"
                           class="selectItem">
@@ -56,7 +56,7 @@
         <mat-form-field long>
           <mat-label i18n="label for max glucvalue in printparams">Maximaler Glukosewert in Grafiken</mat-label>
           <mat-select [(value)]="glucMaxIdx" class="selectButton" panelClass="output-params">
-            @for (item of listGlucMaxValues; track item; let idx = $index) {
+            @for (item of listGlucMaxValues; track idx; let idx = $index) {
               <mat-option (click)="glucMaxIdx=idx"
                           [value]="idx"
                           class="selectItem">
@@ -68,7 +68,7 @@
         <mat-form-field long>
           <mat-label i18n="label for max basalprecision in printparams">Genauigkeit der Basalangaben:</mat-label>
           <mat-select [(value)]="basalPrecisionIdx" class="selectButton" panelClass="output-params">
-            @for (item of listBasalPrecision; track item; let idx = $index) {
+            @for (item of listBasalPrecision; track idx; let idx = $index) {
               <mat-option (click)="basalPrecisionIdx=idx"
                           [value]="idx"
                           class="selectItem">
@@ -127,7 +127,7 @@
       <mat-form-field long>
         <mat-label i18n="label for max basalprecision in printparams">Stunden, die Werte nach einem Sensorstart ignoriert werden:</mat-label>
         <mat-select [(value)]="skipSensorChange" class="selectButton" panelClass="output-params">
-          @for (item of globals.listSkipSensorChange; track item; let idx = $index) {
+          @for (item of globals.listSkipSensorChange; track idx; let idx = $index) {
             <mat-option (click)="skipSensorChange=idx"
                         [value]="item.idx"
                         class="selectItem">
@@ -143,7 +143,7 @@
         Hiermit wird festgelegt, um wieviel der Zeitraum des PDFs verschoben werden soll, um Vergleichswerte zu
         erhalten.
       </div>
-      @for (item of listPeriodShift; track item) {
+      @for (item of listPeriodShift; track $index) {
         @if (item === periodShift) {
           <button (click)="periodShift=item"
                   mat-raised-button>

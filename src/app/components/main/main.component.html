@@ -36,37 +36,43 @@
             <span i18n="title of settings">Einstellungen</span>
           </button>
           <button (click)="toggleSync()" class="iconButton">
-            <ng-container *ngIf="!ds.hasSync">
+            @if (!ds.hasSync) {
               <mat-icon>sync_disabled</mat-icon>
               <div i18n="synchronize">Synchronisieren</div>
-            </ng-container>
-            <ng-container *ngIf="ds.hasSync">
+            }
+            @if (ds.hasSync) {
               <img alt="dropbox" src="assets/img/dropbox.png">
               <div i18n="synchronized with dropbox">Mit Dropbox synchronisiert</div>
               <button (click)="clickMenuButton($event, 'dropboxlink')">
                 <mat-icon small>open_in_new</mat-icon>
               </button>
-            </ng-container>
+            }
           </button>
           <!--
-                  <signin [isVisible]="true"
-                          [autoStart]="false"
-                          [showMenuButton]="true"
-                          [raised]="true"
-                          [(isAuthorized)]="g.syncGoogle"
-                          [clientId]="g.googleClientId"
-                          (onEvent)="signinEvent($event)"
-                          (signinResult)="g.client=$event"></signin>
-                          -->
+          <signin [isVisible]="true"
+            [autoStart]="false"
+            [showMenuButton]="true"
+            [raised]="true"
+            [(isAuthorized)]="g.syncGoogle"
+            [clientId]="g.googleClientId"
+            (onEvent)="signinEvent($event)"
+          (signinResult)="g.client=$event"></signin>
+          -->
           <div class="line">
             <button (click)="ss.ds.confirmGoogleTag()" class="iconButton">
-              <mat-icon *ngIf="globals.allowGoogleTag">thumb_up</mat-icon>
-              <mat-icon *ngIf="!globals.allowGoogleTag">thumb_down</mat-icon>
+              @if (globals.allowGoogleTag) {
+                <mat-icon>thumb_up</mat-icon>
+              }
+              @if (!globals.allowGoogleTag) {
+                <mat-icon>thumb_down</mat-icon>
+              }
               <span i18n="title of google analytics">Google Analytics</span>
             </button>
-            <button (click)="clickMenuButton($event, 'analytics')" *ngIf="globals.isDebug" class="iconButton debug">
-              <mat-icon small>open_in_new</mat-icon>
-            </button>
+            @if (globals.isDebug) {
+              <button (click)="clickMenuButton($event, 'analytics')" class="iconButton debug">
+                <mat-icon small>open_in_new</mat-icon>
+              </button>
+            }
           </div>
           <button (click)="ss.showPopup('whatsnew')" class="iconButton">
             <mat-icon>new_releases</mat-icon>
@@ -74,77 +80,87 @@
           </button>
         </div>
         <div class="menu-links">
-          <button (click)="clickMenuButton($event, 'nightscout')" *ngIf="globals.user!=null && globals.user.apiUrl(null, '', {noApi: true})!=null" class="iconButton">
-            <img alt="nightscout white" src="assets/img/nightscout-white.png">
-            <span i18n="title of nightscout page">Nightscout Seite</span>
-            <mat-icon small>open_in_new</mat-icon>
-          </button>
-          <button (click)="clickMenuButton($event, 'nsreports')" *ngIf="globals.user?.reportUrl != null" class="iconButton">
-            <img alt="nightscout white" src="assets/img/nightscout-white.png">
-            <span i18n="title of nightscout reports">Nightscout Berichte</span>
-            <mat-icon small>open_in_new</mat-icon>
-          </button>
+          @if (globals.user != null && globals.user.apiUrl(null, '', {noApi: true}) != null) {
+            <button (click)="clickMenuButton($event, 'nightscout')" class="iconButton">
+              <img alt="nightscout white" src="assets/img/nightscout-white.png">
+              <span i18n="title of nightscout page">Nightscout Seite</span>
+              <mat-icon small>open_in_new</mat-icon>
+            </button>
+          }
+          @if (globals.user?.reportUrl != null) {
+            <button (click)="clickMenuButton($event, 'nsreports')" class="iconButton">
+              <img alt="nightscout white" src="assets/img/nightscout-white.png">
+              <span i18n="title of nightscout reports">Nightscout Berichte</span>
+              <mat-icon small>open_in_new</mat-icon>
+            </button>
+          }
           <button (click)="clickMenuButton($event, 'nswatch')" class="iconButton">
             <img alt="nightscout white" src="assets/img/night-watch-white.png">
             <span i18n="title of night-watch">Night-Watch</span>
             <mat-icon small>open_in_new</mat-icon>
           </button>
-          <button (click)="clickMenuButton($event, 'local-tools')" *ngIf="globals.isLocal" class="iconButton is-local">
-            <img alt="nightscout white" src="assets/img/nightscout.png">
-            <span i18n="title of local tools">Local Tools</span>
-            <mat-icon small>open_in_new</mat-icon>
-          </button>
-          <button (click)="clickMenuButton($event, 'googlecloud')" *ngIf="globals.isLocal" class="iconButton is-local">
-            <img alt="nightscout white" src="assets/img/nightscout.png">
-            <span i18n="title of local tools">Google Cloud Setup</span>
-            <mat-icon small>open_in_new</mat-icon>
-          </button>
+          @if (globals.isLocal) {
+            <button (click)="clickMenuButton($event, 'local-tools')" class="iconButton is-local">
+              <img alt="nightscout white" src="assets/img/nightscout.png">
+              <span i18n="title of local tools">Local Tools</span>
+              <mat-icon small>open_in_new</mat-icon>
+            </button>
+          }
+          @if (globals.isLocal) {
+            <button (click)="clickMenuButton($event, 'googlecloud')" class="iconButton is-local">
+              <img alt="nightscout white" src="assets/img/nightscout.png">
+              <span i18n="title of local tools">Google Cloud Setup</span>
+              <mat-icon small>open_in_new</mat-icon>
+            </button>
+          }
           <div class="menu-legal">
             <button (click)="ss.showPopup('impressum')" class="legal" mat-button>{{ msgImpressum }}</button>
             <button (click)="ss.showPopup('dsgvo')" class="legal" mat-button>{{ msgDSGVO }}</button>
             <!--
-                    <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
-                      <div *ngIf="g.isDebug" class="toggle-debug">
-                        <material-button icon mini class="material-drawer-button"
-                                         (trigger)="clickMenuButton($event, 'jsonparser')">
-                          <material-icon icon="code"></material-icon>
-                        </material-button>
-                        <material-button icon mini class="material-drawer-button"
-                                         (trigger)="clickMenuButton($event, 'translate')">
-                          <material-icon icon="g_translate"></material-icon>
-                        </material-button>
-                        <material-button icon mini class="material-drawer-button"
-                                         (trigger)="clickMenuButton($event, 'autotune')">
-                          <material-icon icon="tune"></material-icon>
-                        </material-button>
-                      </div>
-                    </div
-            -->
+            <div class="menuFabs" [style.display]="g.canDebug?'flex':'none'">
+              <div *ngIf="g.isDebug" class="toggle-debug">
+                <material-button icon mini class="material-drawer-button"
+                  (trigger)="clickMenuButton($event, 'jsonparser')">
+                  <material-icon icon="code"></material-icon>
+                </material-button>
+                <material-button icon mini class="material-drawer-button"
+                  (trigger)="clickMenuButton($event, 'translate')">
+                  <material-icon icon="g_translate"></material-icon>
+                </material-button>
+                <material-button icon mini class="material-drawer-button"
+                  (trigger)="clickMenuButton($event, 'autotune')">
+                  <material-icon icon="tune"></material-icon>
+                </material-button>
+              </div>
+              </div
+              -->
           </div>
         </div>
       </div>
       <div [class]="getDrawerClass(1)">
         <div class="content">
-          <div *ngFor="let item of globals.shortcutList; let idx = index" [class]="shortcutClass(item)">
-            <button (click)="ss.activateShortcut(idx)">
-            <span content>
-              <mat-icon>{{ item.icon }}</mat-icon>
-              <span text>{{ item.name }}</span>
-            </span>
-            </button>
-            <button (click)="editShortcut(idx)">
-              <mat-icon small>edit</mat-icon>
-            </button>
-            <button (click)="callShortcut(idx)">
-              <mat-icon small>link</mat-icon>
-            </button>
-          </div>
+          @for (item of globals.shortcutList; track idx; let idx = $index) {
+            <div [class]="shortcutClass(item)">
+              <button (click)="ss.activateShortcut(idx)">
+                  <span content>
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span text>{{ item.name }}</span>
+                  </span>
+              </button>
+              <button (click)="editShortcut(idx)">
+                <mat-icon small>edit</mat-icon>
+              </button>
+              <button (click)="callShortcut(idx)">
+                <mat-icon small>link</mat-icon>
+              </button>
+            </div>
+          }
           <div class="shortcut">
             <button (click)="editShortcut(-1)" class="add">
-            <span content>
-              <mat-icon>add</mat-icon>
-              <span text>{{ msgAddText }}</span>
-            </span>
+                <span content>
+                  <mat-icon>add</mat-icon>
+                  <span text>{{ msgAddText }}</span>
+                </span>
             </button>
           </div>
         </div>
@@ -154,131 +170,166 @@
       <mat-toolbar [class]="classForHeader">
         <mat-toolbar-row>
           <div [class]="classForView('basePanel')">
-            <ng-container *ngIf="globals.viewType!=='themes'">
+            @if (globals.viewType !== 'themes') {
               <button (click)="clickUser()" class="userName toolbar-button">
-                <mat-icon *ngIf="globals.viewType==='users'">chevron_left</mat-icon>
+                @if (globals.viewType === 'users') {
+                  <mat-icon>chevron_left</mat-icon>
+                }
                 {{ globals.user.display }}
-                <mat-icon *ngIf="globals.viewType==='tile' && globals.userList?.length > 1">list</mat-icon>
+                @if (globals.viewType === 'tile' && globals.userList?.length > 1) {
+                  <mat-icon>list</mat-icon>
+                }
               </button>
-            </ng-container>
-            <ng-container *ngIf="globals.viewType==='themes'">
+            }
+            @if (globals.viewType === 'themes') {
               <button (click)="clickTheme()" class="userName toolbar-button">
                 <mat-icon>chevron_left</mat-icon>
                 {{ msgThemes }}
               </button>
-            </ng-container>
-            <div *ngIf="globals.userList.length > 1 && false" [class]="classForView('userPanel')">
-              <mat-form-field>
-                <mat-select [(value)]="userIdx">
-                  <mat-select-trigger>
-                    {{ ss.isEmpty(globals.user.display) ? '' : globals.user.display }}
-                  </mat-select-trigger>
-                  <mat-option (click)="ss.activateUser(idx)"
-                              *ngFor="let item of globals.userList; let idx = index"
-                              [class]="userClass(item)"
-                              [value]="idx">
-                    <div class="itemTitle">{{ ss.isEmpty(item.name) ? item.apiUrl(null, "", {noApi: true}) : item.name }}</div>
-                    <div class="itemSub">{{ item.apiUrl(null, "", {noApi: true}) }}</div>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+            }
+            @if (globals.userList.length > 1 && false) {
+              <div [class]="classForView('userPanel')">
+                <mat-form-field>
+                  <mat-select [(value)]="userIdx">
+                    <mat-select-trigger>
+                      {{ ss.isEmpty(globals.user.display) ? '' : globals.user.display }}
+                    </mat-select-trigger>
+                    @for (item of globals.userList; track idx; let idx = $index) {
+                      <mat-option (click)="ss.activateUser(idx)"
+                                  [class]="userClass(item)"
+                                  [value]="idx">
+                        <div class="itemTitle">{{ ss.isEmpty(item.name) ? item.apiUrl(null, "", {noApi: true}) : item.name }}</div>
+                        <div class="itemSub">{{ item.apiUrl(null, "", {noApi: true}) }}</div>
+                      </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            }
             <!--
-                      <datepicker [period]="g.period" (periodChange)="changePeriod($event)" [isLocal]="g.isLocal"
-                                  [showInfo]="g.showInfo" [showLabel]="false"></datepicker>
+            <datepicker [period]="g.period" (periodChange)="changePeriod($event)" [isLocal]="g.isLocal"
+            [showInfo]="g.showInfo" [showLabel]="false"></datepicker>
             -->
           </div>
           <div>
             <button (click)="drawer.toggle()" class="toolbar-button" mat-icon-button>
-              <mat-icon *ngIf="drawer.opened">menu_open</mat-icon>
-              <ng-container *ngIf="!drawer.opened">
-                <mat-icon *ngIf="!ds.hasSync">menu</mat-icon>
-                <img *ngIf="ds.hasSync" alt="dropbox" src="assets/img/dropbox.png">
-              </ng-container>
+              @if (drawer.opened) {
+                <mat-icon>menu_open</mat-icon>
+              }
+              @if (!drawer.opened) {
+                @if (!ds.hasSync) {
+                  <mat-icon>menu</mat-icon>
+                }
+                @if (ds.hasSync) {
+                  <img alt="dropbox" src="assets/img/dropbox.png">
+                }
+              }
             </button>
             <div class="title">
               <div>
                 <span class="appTitle">{{ globals.appTitle }}</span>
-                <span *ngIf="globals.isBeta" class="toolbar-button betaTitle">BETA</span>
-                <button (click)="clickLocalTitle()" *ngIf="globals.runsLocal" class="toolbar-button localTitle" mat-button>
-                  <span *ngIf="globals.isLocal">Lokal</span>
-                  <span *ngIf="!globals.isLocal">Vorschau</span>
-                </button>
+                @if (globals.isBeta) {
+                  <span class="toolbar-button betaTitle">BETA</span>
+                }
+                @if (globals.runsLocal) {
+                  <button (click)="clickLocalTitle()" class="toolbar-button localTitle" mat-button>
+                    @if (globals.isLocal) {
+                      <span>Lokal</span>
+                    }
+                    @if (!globals.isLocal) {
+                      <span>Vorschau</span>
+                    }
+                  </button>
+                }
               </div>
               <button (click)="ss.showPopup('whatsnew')" class="versionText toolbar-button">{{ globals.displayVersion }}</button>
             </div>
           </div>
           <nav class="material-navigation">
-            <ng-container *ngIf="globals.isDebug">
+            @if (globals.isDebug) {
               <button (click)="ms.error(msgDevError)" class="dev-error" mat-icon-button micro-button>
                 <mat-icon>wysiwyg</mat-icon>
               </button>
               <button (click)="ms.warn(msgDevWarn)" class="dev-warn" mat-icon-button micro-button>
                 <mat-icon>wysiwyg</mat-icon>
               </button>
-            </ng-container>
+            }
             <app-close-button [data]="closeData"></app-close-button>
             <!--
             <button (click)="clickUserImage()" *ngIf="gs?.userImage != null" mat-icon-button>
               <img (error)="ss.handleMissingImage($event)"
-                   [src]="ss.reloadUserImg ? gs?.userImage : 'https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA'"
-                   alt="userimage" class="userimage">
-            </button>
-            -->
+                [src]="ss.reloadUserImg ? gs?.userImage : 'https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA'"
+                alt="userimage" class="userimage">
+              </button>
+              -->
             <!--
-                      <material-button *ngIf="g.showCurrentGluc" raised class="currentGluc" (trigger)="navigate('?watch')">
-                        <pre *ngIf="!g.currentGlucVisible" @i18n="message for current glucose if not active">Pausiert</pre>
-                        <div *ngIf="g.currentGlucVisible">
-                          <div factor *ngIf="g.user.adjustGluc">*{{g.msgAdjustFactor}}</div>
-                          {{g.currentGluc}}
-                          <div time>{{g.currentGlucTime}}</div>
-                          <div *ngIf="g.isLocal" debug>{{g.currentGlucCounter}}</div>
-                        </div>
-                        <div arrow *ngIf="g.currentGlucVisible">
-                          <div>
-                            <svg class="arrow" [style.transform]="g.currentGlucDir" viewBox="0 0 100 100" version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg">
-                              <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
-                                <circle class="circle" cx="50" cy="50" r="37.391"/>
-                              </g>
-                              <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
-                                <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
-                              </g>
-                            </svg>
-                          </div>
-                          <div diff class="centered">{{g.currentGlucDiff}}</div>
-                        </div>
-                      </material-button>
-                      <a *ngIf="!g.showCurrentGluc" href="http://www.nightscout.info/" target="_blank">#WeAreNotWaiting</a>
+            <material-button *ngIf="g.showCurrentGluc" raised class="currentGluc" (trigger)="navigate('?watch')">
+              <pre *ngIf="!g.currentGlucVisible" @i18n="message for current glucose if not active">Pausiert</pre>
+              <div *ngIf="g.currentGlucVisible">
+                <div factor *ngIf="g.user.adjustGluc">*{{g.msgAdjustFactor}}</div>
+                {{g.currentGluc}}
+                <div time>{{g.currentGlucTime}}</div>
+                <div *ngIf="g.isLocal" debug>{{g.currentGlucCounter}}</div>
+              </div>
+              <div arrow *ngIf="g.currentGlucVisible">
+                <div>
+                  <svg class="arrow" [style.transform]="g.currentGlucDir" viewBox="0 0 100 100" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g transform="matrix(0.689535,0,0,0.689535,15.5233,15.5233)">
+                      <circle class="circle" cx="50" cy="50" r="37.391"/>
+                    </g>
+                    <g transform="matrix(2.13103,0,0,1,-113.103,0.000479201)">
+                      <path d="M100,50.002L87.391,59.934L87.395,40.065L100,50.002Z"/>
+                    </g>
+                  </svg>
+                </div>
+                <div diff class="centered">{{g.currentGlucDiff}}</div>
+              </div>
+            </material-button>
+            <a *ngIf="!g.showCurrentGluc" href="http://www.nightscout.info/" target="_blank">#WeAreNotWaiting</a>
             -->
           </nav>
         </mat-toolbar-row>
       </mat-toolbar>
 
       <div [class]="classForContent">
-        <app-view-tile *ngIf="globals.viewType==='tile'"></app-view-tile>
-        <app-view-list *ngIf="globals.viewType==='list'"></app-view-list>
-        <app-view-users *ngIf="globals.viewType==='users'"></app-view-users>
-        <app-view-themes *ngIf="globals.viewType==='themes'"></app-view-themes>
+        @if (globals.viewType === 'tile') {
+          <app-view-tile></app-view-tile>
+        }
+        @if (globals.viewType === 'list') {
+          <app-view-list></app-view-list>
+        }
+        @if (globals.viewType === 'users') {
+          <app-view-users></app-view-users>
+        }
+        @if (globals.viewType === 'themes') {
+          <app-view-themes></app-view-themes>
+        }
       </div>
-      <div *ngIf="hasFooterBar" class="footer">
-        <app-owl-menu></app-owl-menu>
-        <button (click)="clickAddUser()"
-                *ngIf="globals.viewType === 'users'"
-                mat-icon-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button (click)="clickSend()"
-                *ngIf="globals.viewType === 'tile'"
-                [attr.aria-label]="ss.msgAriaPlay"
-                [class]="sendIcon"
-                [disabled]="ss.activeCfgCount===0"
-                mat-fab>
-          <span *ngIf="ss.activeCfgCount>0">{{ ss.activeCfgCount }}</span>
-          <mat-icon>{{ createIcon }}</mat-icon>
-        </button>
-      </div>
-      <ng-container *ngIf="globals.viewType === 'list'">
+      @if (hasFooterBar) {
+        <div class="footer">
+          <app-owl-menu></app-owl-menu>
+          @if (globals.viewType === 'users') {
+            <button (click)="clickAddUser()"
+                    mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+          }
+          @if (globals.viewType === 'tile') {
+            <button (click)="clickSend()"
+                    [attr.aria-label]="ss.msgAriaPlay"
+                    [class]="sendIcon"
+                    [disabled]="ss.activeCfgCount===0"
+                    mat-fab>
+              @if (ss.activeCfgCount > 0) {
+                <span>{{ ss.activeCfgCount }}</span>
+              }
+              <mat-icon>{{ createIcon }}</mat-icon>
+            </button>
+          }
+        </div>
+      }
+      @if (globals.viewType === 'list') {
         <div class="owlPanel">
           <app-owl-menu></app-owl-menu>
         </div>
@@ -288,11 +339,13 @@
                   [class]="sendIcon"
                   [disabled]="ss.activeCfgCount===0"
                   mat-fab>
-            <span *ngIf="ss.activeCfgCount>0">{{ ss.activeCfgCount }}</span>
+            @if (ss.activeCfgCount > 0) {
+              <span>{{ ss.activeCfgCount }}</span>
+            }
             <mat-icon>{{ createIcon }}</mat-icon>
           </button>
         </div>
-      </ng-container>
+      }
       <app-log></app-log>
     </mat-drawer-content>
   </mat-drawer-container>

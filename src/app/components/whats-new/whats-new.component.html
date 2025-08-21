@@ -5,6 +5,29 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(50.0)">
+      <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.8.2025</span>
+    </h2>
+    <ul [class]="classFor(50.0)">
+      <li class="changed" i18n="500c1">
+        Die Einstellung für die Anzeige der Kacheln wurde erweitert. Jetzt kann man
+        auch das Bild und den Text gleichzeitig auf den Kacheln anzeigen lassen. Das
+        erleichtert es okularherausgeforderten Menschen wie mir, die Formulare besser
+        zu erkennen.
+      </li>
+      <li class="changed" i18n="500c2">
+        Das Formular Tagesanalyse wurde überarbeitet. Man kann jetzt in den Formularparametern
+        festlegen, welche Analysen ausgegeben werden sollen. Die Grafiken werden dann so
+        skaliert, dass sie die gesamte Seite füllen.
+      </li>
+      <li class="fixed" i18n="500f1">
+        Das Nightscout Reporter Icon beim Laden der Seite wurde wieder aktiviert.
+      </li>
+      <li class="fixed" i18n="500f2">
+        Im Formular "Tagesstatistik" wird die Spaltenanzahl nun korrekt überprüft und
+        limitiert.
+      </li>
+    </ul>
     <h2 (click)="click(44.2)">
       <span i18n="version">Version</span><span i18n="v442">4.4.2 - 06.08.2025</span>
     </h2>
@@ -15,29 +38,6 @@
         <a href="https://www.diabetestechnology.org/gri" target="_blank">
           https://www.diabetestechnology.org/gri
         </a>
-      </li>
-    </ul>
-    <h2 (click)="click(45.0)">
-      <span i18n="version">Version</span><span i18n="v450">4.5.0 - xx.4.2025</span>
-    </h2>
-    <ul [class]="classFor(45.0)">
-      <li class="changed" i18n="450c1">
-        Die Einstellung für die Anzeige der Kacheln wurde erweitert. Jetzt kann man
-        auch das Bild und den Text gleichzeitig auf den Kacheln anzeigen lassen. Das
-        erleichtert es okularherausgeforderten Menschen wie mir, die Formulare besser
-        zu erkennen.
-      </li>
-      <li class="changed" i18n="450c2">
-        Das Formular Tagesanalyse wurde überarbeitet. Man kann jetzt in den Formularparametern
-        festlegen, welche Analysen ausgegeben werden sollen. Die Grafiken werden dann so
-        skaliert, dass sie die gesamte Seite füllen.
-      </li>
-      <li class="fixed" i18n="450f1">
-        Das Nightscout Reporter Icon beim Laden der Seite wurde wieder aktiviert.
-      </li>
-      <li class="fixed" i18n="450f2">
-        Im Formular "Tagesstatistik" wird die Spaltenanzahl nun korrekt überprüft und
-        limitiert.
       </li>
     </ul>
     <h2 (click)="click(44.1)">

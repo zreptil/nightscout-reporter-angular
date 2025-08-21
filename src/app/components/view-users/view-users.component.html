@@ -1,36 +1,42 @@
-<div *ngIf="filter !== ''" filter>
-  <mat-icon>filter_alt</mat-icon>
-  <div>{{ filter }}</div>
-  <div index>{{ userList.length }} / {{ globals.userList.length }}</div>
-</div>
+@if (filter !== '') {
+  <div filter>
+    <mat-icon>filter_alt</mat-icon>
+    <div>{{ filter }}</div>
+    <div index>{{ userList.length }} / {{ globals.userList.length }}</div>
+  </div>
+}
 <div scrollShadow tilelist>
   @for (user of userList; track $index) {
     <div (click)="tileClicked($event,user.userIdx)"
-         [class]="tileClass(user.userIdx)"
-         id="tile-{{user.userIdx}}">
+      [class]="tileClass(user.userIdx)"
+      id="tile-{{user.userIdx}}">
       <div column>
         <div (click)="clickPin($event, user)" pin>
           <mat-icon [class]="user.classForPin">{{ user.iconForPin }}</mat-icon>
         </div>
-        <div (click)="clickDelete($event)"
-             *ngIf="user.userIdx===globals.userIdx"
-             settings>
-          <mat-icon [class]="user.classForPin">delete</mat-icon>
-        </div>
+        @if (user.userIdx===globals.userIdx) {
+          <div (click)="clickDelete($event)"
+            settings>
+            <mat-icon [class]="user.classForPin">delete</mat-icon>
+          </div>
+        }
       </div>
       <div row>
         <div name>{{ user.display }}</div>
         <div subtext>{{ userInfo(user) }}</div>
       </div>
       <div column>
-        <div (click)="clickSettings($event)" *ngIf="user.userIdx===globals.userIdx" settings>
-          <mat-icon [class]="user.classForPin">settings</mat-icon>
-        </div>
-        <div (click)="clickUserInfo($event, user.userIdx)"
-             *ngIf="user.userIdx===globals.userIdx"
-             info>
-          <mat-icon [class]="user.classForPin">info_outline</mat-icon>
-        </div>
+        @if (user.userIdx===globals.userIdx) {
+          <div (click)="clickSettings($event)" settings>
+            <mat-icon [class]="user.classForPin">settings</mat-icon>
+          </div>
+        }
+        @if (user.userIdx===globals.userIdx) {
+          <div (click)="clickUserInfo($event, user.userIdx)"
+            info>
+            <mat-icon [class]="user.classForPin">info_outline</mat-icon>
+          </div>
+        }
       </div>
       <div index>{{ user.userIdx + 1 }}</div>
     </div>

@@ -13,7 +13,7 @@
   </div>
   <div mat-dialog-content>
     <div>
-      @for (item of tileHelp[tileHelp.length - 1].form.helpStrings; track item; let idx = $index) {
+      @for (item of tileHelp[tileHelp.length - 1].form.helpStrings; track idx; let idx = $index) {
         @if (item.type === 'text') {
           <span [innerHtml]="item.text"></span>
         }

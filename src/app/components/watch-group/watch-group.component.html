@@ -1,5 +1,5 @@
 <div [class]="classForRoot">
-  @for (entry of globals.watchListForGroup(groupId); track entry) {
+  @for (entry of globals.watchListForGroup(groupId); track $index) {
     @if (entry.type === 'space') {
       <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">&nbsp;</app-watch-entry>
     }

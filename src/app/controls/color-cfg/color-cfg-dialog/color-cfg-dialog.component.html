@@ -11,7 +11,7 @@
     }
   </div>
   <div mat-dialog-content>
-    @for (key of listThemeKeys; track key) {
+    @for (key of listThemeKeys; track $index) {
       <div row>
         <div>
           <app-color-picker (onDialogEvent)="onColorPicker($event)"

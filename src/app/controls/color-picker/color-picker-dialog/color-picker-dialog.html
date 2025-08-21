@@ -59,7 +59,7 @@
       <div (click)="resetClick($event)"
            [ngStyle]="{backgroundColor:defColor?.display,marginRight:'1em'}"
            class="color"></div>
-      @for (color of savedColors; track color; let idx = $index) {
+      @for (color of savedColors; track idx; let idx = $index) {
         <div (click)="colorClick($event, color, idx)"
              [class]="classForSavedColor(idx)"
              [ngStyle]="{backgroundColor:color.display}">

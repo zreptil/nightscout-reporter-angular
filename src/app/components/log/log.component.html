@@ -1,14 +1,16 @@
-<div *ngIf="links.length > 0 && globals.isDebug" links>
-  <button (click)="onClickDelete($event, 'links')" close mat-icon-button>
-    <mat-icon>close</mat-icon>
-  </button>
-  <ng-container *ngFor="let link of links">
-    <button (click)="openLink(link)" [class]="link.btnClass" mat-flat-button>
-      <mat-icon>{{ link.icon }}</mat-icon>
-      {{ link.title }}
+@if (links.length > 0 && globals.isDebug) {
+  <div links>
+    <button (click)="onClickDelete($event, 'links')" close mat-icon-button>
+      <mat-icon>close</mat-icon>
     </button>
-  </ng-container>
-</div>
+    @for (link of links; track $index) {
+      <button (click)="openLink(link)" [class]="link.btnClass" mat-flat-button>
+        <mat-icon>{{ link.icon }}</mat-icon>
+        {{ link.title }}
+      </button>
+    }
+  </div>
+}
 @for (type of ['error', 'info', 'debug', 'warn', 'todo']; track $index) {
   @if (showType(type)) {
     <div [class]="type" content>

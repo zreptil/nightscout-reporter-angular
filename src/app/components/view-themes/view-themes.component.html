@@ -4,32 +4,32 @@
   <div class="is-local">
     <div class="debug">
       <div><span>Themeserver</span>
-      <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
-        @for (url of globals._urlThemeServer; track url; let idx = $index) {
-          <mat-chip-option
-            [disabled]="idx === globals.urlThemeServerIdx"
-            [selected]="idx === globals.urlThemeServerIdx"
-            [value]="idx">{{ getDisplayUrl(url) }}
-          </mat-chip-option>
-        }
-      </mat-chip-listbox>
-    </div>
-    <div>
-      <button (click)="copyData($event)" mat-button>
-        <mat-icon>content_copy</mat-icon>
-        <span i18n="buttonlabel for copying data">Kopieren</span>
-      </button>
-      <button (click)="getData()" mat-button>
-        <mat-icon>content_paste</mat-icon>
-        <span i18n="buttonlabel for pasting data">Importieren</span>
-      </button>
-      <button (click)="openDB()" mat-button>
-        <mat-icon>edit</mat-icon>
-        <span i18n="buttonlabel for calling phpliteadmin">Tabellen editieren</span>
-      </button>
+        <mat-chip-listbox (change)="clickThemeServer($event)" [value]="globals.urlThemeServerIdx">
+          @for (url of globals._urlThemeServer; track idx; let idx = $index) {
+            <mat-chip-option
+              [disabled]="idx === globals.urlThemeServerIdx"
+              [selected]="idx === globals.urlThemeServerIdx"
+              [value]="idx">{{ getDisplayUrl(url) }}
+            </mat-chip-option>
+          }
+        </mat-chip-listbox>
+      </div>
+      <div>
+        <button (click)="copyData($event)" mat-button>
+          <mat-icon>content_copy</mat-icon>
+          <span i18n="buttonlabel for copying data">Kopieren</span>
+        </button>
+        <button (click)="getData()" mat-button>
+          <mat-icon>content_paste</mat-icon>
+          <span i18n="buttonlabel for pasting data">Importieren</span>
+        </button>
+        <button (click)="openDB()" mat-button>
+          <mat-icon>edit</mat-icon>
+          <span i18n="buttonlabel for calling phpliteadmin">Tabellen editieren</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
 }
 @if (serverThemes?.length === 0 && cardForSave == null) {
   <div empty>
@@ -43,7 +43,7 @@
     [ngTemplateOutlet]="tplTheme">
   </ng-container>
 }
-@for (theme of serverThemes; track theme) {
+@for (theme of serverThemes; track $index) {
   <ng-container
     [ngTemplateOutletContext]="{theme:theme}"
     [ngTemplateOutlet]="tplTheme">

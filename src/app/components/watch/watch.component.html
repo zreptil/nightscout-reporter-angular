@@ -1,94 +1,108 @@
-<div *ngIf="globals.nwCurrPage==='users'" class="users">
-  <div class="scrollable">
-    <app-view-users></app-view-users>
+@if (globals.nwCurrPage==='users') {
+  <div class="users">
+    <div class="scrollable">
+      <app-view-users></app-view-users>
+    </div>
+    <button (click)="clickBack($event)" mat-button>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
   </div>
-  <button (click)="clickBack($event)" mat-button>
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-</div>
-<div *ngIf="globals.nwCurrPage==='themes'" class="themes">
-  <div class="scrollable">
-    <app-view-themes></app-view-themes>
+}
+@if (globals.nwCurrPage==='themes') {
+  <div class="themes">
+    <div class="scrollable">
+      <app-view-themes></app-view-themes>
+    </div>
+    <button (click)="clickBack($event)" mat-button>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
   </div>
-  <button (click)="clickBack($event)" mat-button>
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-</div>
-<div (click)="clickBackground()" *ngIf="globals.nwCurrPage===''" class="root">
-  <div content>
-    <app-watch-group groupId="tl"></app-watch-group>
-    <app-watch-group groupId="tr"></app-watch-group>
-    <app-watch-group groupId="center"></app-watch-group>
-    <app-watch-group groupId="bl"></app-watch-group>
-    <app-watch-group groupId="br"></app-watch-group>
-  </div>
-  <ng-container *ngIf="ws.isEditMode">
-    <div class="controls">
+}
+@if (globals.nwCurrPage==='') {
+  <div (click)="clickBackground()" class="root">
+    <div content>
+      <app-watch-group groupId="tl"></app-watch-group>
+      <app-watch-group groupId="tr"></app-watch-group>
+      <app-watch-group groupId="center"></app-watch-group>
+      <app-watch-group groupId="bl"></app-watch-group>
+      <app-watch-group groupId="br"></app-watch-group>
+    </div>
+    @if (ws.isEditMode) {
       <div class="controls">
-        <button (click)="clickLeft($event)" [disabled]="leftDisabled" mat-button>
-          <mat-icon>arrow_left</mat-icon>
-        </button>
-        <button (click)="clickRight($event)" [disabled]="rightDisabled" mat-button>
-          <mat-icon>arrow_right</mat-icon>
-        </button>
-        <button (click)="clickSmaller($event)" [disabled]="smallerDisabled" mat-button>
-          <mat-icon>text_decrease</mat-icon>
-        </button>
-        <button (click)="clickBigger($event)" [disabled]="biggerDisabled" mat-button>
-          <mat-icon>text_increase</mat-icon>
-        </button>
-        <button (click)="clickBold($event)" [class]="(ws.selected?.bold??false)?'active':''" [disabled]="ws.selected==null" mat-button>
-          <mat-icon>format_bold</mat-icon>
-        </button>
-        <button (click)="clickItalic($event)" [class]="(ws.selected?.italic??false)?'active':''" [disabled]="ws.selected==null" mat-button>
-          <mat-icon>format_italic</mat-icon>
-        </button>
-        <button (click)="clickVertical($event)" [disabled]="ws.selected==null" mat-button>
-          <mat-icon>{{ verticalIcon }}</mat-icon>
-        </button>
-        <button (click)="clickDelete($event)" [disabled]="ws.selected==null" mat-button>
-          <mat-icon>delete</mat-icon>
-        </button>
-        <div typePanel>
-          <button (click)="clickTypeSub($event)" [disabled]="ws.selected==null" mat-button>
+        <div class="controls">
+          <button (click)="clickLeft($event)" [disabled]="leftDisabled" mat-button>
             <mat-icon>arrow_left</mat-icon>
           </button>
-          <button (click)="clickTypeAdd($event)" [disabled]="ws.selected==null" mat-button>
+          <button (click)="clickRight($event)" [disabled]="rightDisabled" mat-button>
             <mat-icon>arrow_right</mat-icon>
           </button>
-          <div typeName>{{ types[ws.selected?.type] }}</div>
-        </div>
-        <button (click)="clickAdd($event)" mat-button>
-          <mat-icon>add</mat-icon>
-        </button>
-        <button (click)="clickWatchSettings($event)" mat-button>
-          <mat-icon>tune</mat-icon>
-        </button>
-        <button (click)="clickSettings($event)" mat-button>
-          <mat-icon>manage_accounts</mat-icon>
-        </button>
-        <button (click)="clickSave($event)" mat-button>
-          <mat-icon>save</mat-icon>
-        </button>
-        <button (click)="clickReset($event)" mat-button>
-          <mat-icon>lock_reset</mat-icon>
-        </button>
-        <button (click)="globals.isDebug = !globals.isDebug" *ngIf="ss.mayDebug" mat-button>
-          <mat-icon *ngIf="!globals.isDebug">bug_report</mat-icon>
-          <mat-icon *ngIf="globals.isDebug">pest_control</mat-icon>
-        </button>
-        <div *ngIf="globals.isLocal" class="is-local">
-          <button (click)="clickGroup($event)" mat-button>
-            <mat-icon>group</mat-icon>
+          <button (click)="clickSmaller($event)" [disabled]="smallerDisabled" mat-button>
+            <mat-icon>text_decrease</mat-icon>
           </button>
+          <button (click)="clickBigger($event)" [disabled]="biggerDisabled" mat-button>
+            <mat-icon>text_increase</mat-icon>
+          </button>
+          <button (click)="clickBold($event)" [class]="(ws.selected?.bold??false)?'active':''" [disabled]="ws.selected==null" mat-button>
+            <mat-icon>format_bold</mat-icon>
+          </button>
+          <button (click)="clickItalic($event)" [class]="(ws.selected?.italic??false)?'active':''" [disabled]="ws.selected==null" mat-button>
+            <mat-icon>format_italic</mat-icon>
+          </button>
+          <button (click)="clickVertical($event)" [disabled]="ws.selected==null" mat-button>
+            <mat-icon>{{ verticalIcon }}</mat-icon>
+          </button>
+          <button (click)="clickDelete($event)" [disabled]="ws.selected==null" mat-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <div typePanel>
+            <button (click)="clickTypeSub($event)" [disabled]="ws.selected==null" mat-button>
+              <mat-icon>arrow_left</mat-icon>
+            </button>
+            <button (click)="clickTypeAdd($event)" [disabled]="ws.selected==null" mat-button>
+              <mat-icon>arrow_right</mat-icon>
+            </button>
+            <div typeName>{{ types[ws.selected?.type] }}</div>
+          </div>
+          <button (click)="clickAdd($event)" mat-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button (click)="clickWatchSettings($event)" mat-button>
+            <mat-icon>tune</mat-icon>
+          </button>
+          <button (click)="clickSettings($event)" mat-button>
+            <mat-icon>manage_accounts</mat-icon>
+          </button>
+          <button (click)="clickSave($event)" mat-button>
+            <mat-icon>save</mat-icon>
+          </button>
+          <button (click)="clickReset($event)" mat-button>
+            <mat-icon>lock_reset</mat-icon>
+          </button>
+          @if (ss.mayDebug) {
+            <button (click)="globals.isDebug = !globals.isDebug" mat-button>
+              @if (!globals.isDebug) {
+                <mat-icon>bug_report</mat-icon>
+              }
+              @if (globals.isDebug) {
+                <mat-icon>pest_control</mat-icon>
+              }
+            </button>
+          }
+          @if (globals.isLocal) {
+            <div class="is-local">
+              <button (click)="clickGroup($event)" mat-button>
+                <mat-icon>group</mat-icon>
+              </button>
+            </div>
+          }
         </div>
       </div>
+      <div class="owlPanel">
+        <app-owl-menu (openThemes)="configureThemes()" [style]="styleForOwl"></app-owl-menu>
+      </div>
+    }
+    <app-log></app-log>
+    <div class="-watch">
     </div>
-    <div class="owlPanel">
-      <app-owl-menu (openThemes)="configureThemes()" [style]="styleForOwl"></app-owl-menu>
-    </div>
-  </ng-container>
-  <app-log></app-log>
-  <div class="-watch">
   </div>
-</div>
+}

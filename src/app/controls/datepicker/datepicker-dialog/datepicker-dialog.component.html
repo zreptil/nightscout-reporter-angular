@@ -41,7 +41,7 @@
   </div>
   <div mat-dialog-actions>
     <div class="shortcuts">
-      @for (item of data.period.list; track item) {
+      @for (item of data.period.list; track $index) {
         @if (data.period.entryKey !== item.key) {
           <button
             (click)="onShortcutClick(item)"

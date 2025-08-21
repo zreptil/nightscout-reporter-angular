@@ -20,7 +20,7 @@
       <mat-form-field>
         <mat-label>{{ globals.lblGlucUnits }}</mat-label>
         <mat-select [(value)]="globals.glucMGDLIdx" class="selectButton" panelClass="output-params">
-          @for (item of globals.listGlucUnits; track item; let idx = $index) {
+          @for (item of globals.listGlucUnits; track idx; let idx = $index) {
             <mat-option (click)="changeGlucUnits(idx)"
                         [value]="idx"
                         class="selectItem">
@@ -32,7 +32,7 @@
       <div class="subinfo">{{ maxGlucAgeLabel }}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.maxGlucAge">
-          @for (btn of maxGlucAge; track btn) {
+          @for (btn of maxGlucAge; track $index) {
             <mat-button-toggle [value]="+btn">
               {{ btn }} {{ msgMinute(btn) }}
             </mat-button-toggle>
@@ -49,7 +49,7 @@
       <div class="subinfo">{{ lluTimeoutLabel }}</div>
       <div class="subinfo">
         <mat-button-toggle-group [(ngModel)]="globals.lluTimeout">
-          @for (btn of lluTimeout; track btn) {
+          @for (btn of lluTimeout; track $index) {
             <mat-button-toggle [value]="+btn">
               {{ btn }} {{ msgMinute(btn) }}
             </mat-button-toggle>
