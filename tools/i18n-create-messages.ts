@@ -15,7 +15,7 @@ async function main() {
   try {
     const filenames = ['nightrep (translations)', 'nightrep (english) (translations)'];
     for (const filename of filenames) {
-      let zipfile = getPath(`${os.homedir()}/Downloads/${filenames[0]}.zip`);
+      let zipfile = getPath(`${os.homedir()}/Downloads/${filename}.zip`);
       console.log('extracting', zipfile, '...');
       await extract(zipfile, {dir: getPath('../temp')});
     }
