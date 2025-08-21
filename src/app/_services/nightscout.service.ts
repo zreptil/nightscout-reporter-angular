@@ -1274,7 +1274,7 @@ schlechten Internetverbindung.`);
     list.pgs = list.gvi * (glucTotal / usedRecords) * (1.0 - tirMultiplier);
     const entries = list.days.flatMap(day => day.entries.map(entry => entry.gluc));
     const count = entries.length / 100;
-    const vlow = entries.filter(gluc => gluc < 54).length / count;
+    const vlow = entries.filter(gluc => gluc < 54 && gluc > 0).length / count;
     const low = entries.filter(gluc => gluc >= 54 && gluc < 70).length / count;
     const high = entries.filter(gluc => gluc >= 180 && gluc < 250).length / count;
     const vhigh = entries.filter(gluc => gluc > 250).length / count;
