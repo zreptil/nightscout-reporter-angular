@@ -274,6 +274,45 @@ export class PrintAnalysis extends BasePrint {
       data.stat['stdNorm'].values.length / count * (this.useFineLimits ? f1 : f);
     const below70 =
       data.stat['stdLow'].values.length / count * (this.useFineLimits ? f1 : f);
+    
+    // Calculate percentages with proper rounding to ensure they sum to 100%
+    const rawHighPercent = data.stat['stdHigh'].values.length / count * 100;
+    const rawNormPercent = data.stat['stdNorm'].values.length / count * 100;
+    const rawLowPercent = data.stat['stdLow'].values.length / count * 100;
+    
+    // Use largest remainder method to ensure percentages sum to 100%
+    let highPercent: number;
+    let normPercent: number;
+    let lowPercent: number;
+    
+    if (this._precisionTarget === 0) {
+      // For integer percentages, use largest remainder method
+      const floored = [Math.floor(rawHighPercent), Math.floor(rawNormPercent), Math.floor(rawLowPercent)];
+      const remainders = [
+        rawHighPercent - floored[0],
+        rawNormPercent - floored[1],
+        rawLowPercent - floored[2]
+      ];
+      const sum = floored.reduce((a, b) => a + b, 0);
+      const diff = 100 - sum;
+      
+      // Sort indices by remainder (descending)
+      const indices = [0, 1, 2].sort((a, b) => remainders[b] - remainders[a]);
+      
+      // Distribute the difference to the largest remainders
+      for (let i = 0; i < diff; i++) {
+        floored[indices[i]]++;
+      }
+      
+      highPercent = floored[0];
+      normPercent = floored[1];
+      lowPercent = floored[2];
+    } else {
+      // For decimal percentages, use raw values
+      highPercent = rawHighPercent;
+      normPercent = rawNormPercent;
+      lowPercent = rawLowPercent;
+    }
 
     const above250 = data.stat['stdVeryHigh'].values.length / count * f1;
     const in180250 = data.stat['stdNormHigh'].values.length / count * f1;
@@ -614,7 +653,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text: `${GLOBALS.fmtNumber(data.stat['stdHigh'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${GLOBALS.fmtNumber(highPercent, this._precisionTarget)} %`,
             style: 'infodata'
           },
           {
@@ -662,7 +701,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text: `${GLOBALS.fmtNumber(data.stat['stdNorm'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${GLOBALS.fmtNumber(normPercent, this._precisionTarget)} %`,
             style: 'infodata'
           },
           {
@@ -682,7 +721,7 @@ export class PrintAnalysis extends BasePrint {
           },
           {
             text:
-              `${GLOBALS.fmtNumber(data.stat['stdLow'].values.length / count * 100, this._precisionTarget)} %`,
+              `${GLOBALS.fmtNumber(lowPercent, this._precisionTarget)} %`,
             style: 'infodata'
           },
           {
