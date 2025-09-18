@@ -30,7 +30,7 @@ function refreshAccessToken($refreshToken)
     $response = curl_exec($ch);
     curl_close($ch);
     $ret = json_decode($response, true);
-    if (!$ret['success']) {
+    if (!isset($ret['success']) || $ret['success'] !== true) {
       // redirect to this file again, will be called with "code" as parameter
       $redirectUri = $cfg['redirectUri'] . 'oauth.php';
       $httpParams = [
@@ -45,7 +45,7 @@ function refreshAccessToken($refreshToken)
         }
       }
       $authUrl = $cfg['authUrl'] . '?' . http_build_query($httpParams);
-      header('Location: ' . $authUrl);
+      returnResult($authUrl);
       exit;
     }
     return $ret;

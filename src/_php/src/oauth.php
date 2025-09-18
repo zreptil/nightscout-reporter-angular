@@ -8,14 +8,15 @@ header('Access-Control-Allow-Origin: ' . $from);
 header('Vary: Origin');
 // call with ?app=xxx
 if (isset($_REQUEST['app'])) {
-//  if ($_REQUEST['app'] == 'info') {
-//    include('config.php');
-//    global $cfg;
-//    echo($cfg['redirectUri'] . '<br>');
-//    phpinfo();
-//    exit;
-//  }
+  if ($_REQUEST['app'] == 'info') {
+    include('config.php');
+    global $cfg;
+    echo($cfg['redirectUri'] . '<br>');
+    phpinfo();
+    exit;
+  }
   $_SESSION['app'] = $_REQUEST['app'];
+  $_SESSION['home'] = $_REQUEST['home'];
   include('config/' . $_SESSION['app'] . '.php');
   global $cfg;
   if (isset($_REQUEST['revoke'])) {
@@ -61,8 +62,7 @@ if (isset($_REQUEST['app'])) {
       }
     }
     $authUrl = $cfg['authUrl'] . '?' . http_build_query($httpParams);
-    header('Location: ' . $authUrl);
-    exit;
+    returnResult($authUrl, 'Request authorization from ' . $cfg['app']);
   }
 } else if (isset($_GET['code'])) {
   // received code
@@ -103,17 +103,28 @@ if (isset($_REQUEST['app'])) {
   // check for presence of access_token
   if (isset($tokenData['access_token'])) {
     // redirect back to angular-app
-    header('Location: ' . $cfg['homeUri'] . '?' . $cfg['app'] . '=' . base64_encode(json_encode($tokenData)));
-    exit;
+    returnResult(
+      $cfg['homeUri'] . '?' . $cfg['app'] . '=' . base64_encode(json_encode($tokenData)),
+      'Received access-token from ' . $cfg['app'] . '<br><br>' . json_encode($tokenData));
   } else {
     // error handling
-    header('Location: ' . $cfg['homeUri'] . '?' . $cfg['app'] . '=error&error=' . base64_encode($response));
-    exit;
+    returnResult(
+      $cfg['homeUri'] . '?' . $cfg['app'] . '=error&error=' . base64_encode($response),
+      'Received error from ' . $cfg['app'] . '<br><br>' . $response);
   }
+} else if (isset($_GET[$_SESSION['app']])) {
+  include('config/' . $_SESSION['app'] . '.php');
+  global $cfg;
+  print_r($_SESSION);
+  returnResult(
+    $cfg['homeUri'] . '?' . $cfg['app'] . '=' . $_GET[$_SESSION['app']],
+    'Received data from ' . $cfg['app'] . '<br><br>' . $_GET[$_SESSION['app']]);
 } else {
   include('config/' . $_SESSION['app'] . '.php');
   global $cfg;
   // error handling when this file is called without proper parameters
-  header('Location: ' . $cfg['homeUri'] . '?' . $cfg['app'] . '=error');
+  returnResult(
+    $cfg['homeUri'] . '?' . $cfg['app'] . '=error',
+    $cfg['app'] . ' called without proper parameters');
   exit;
 }

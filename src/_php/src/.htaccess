@@ -1,13 +1,18 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/$
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^$ /oauth.php [L,QSA]
+
 <FilesMatch "\.sqlite$">
     Header set Content-Type "text/plain"
     Header set Status "404 Not Found"
     ErrorDocument 404 "Not Found"
     Require all denied
 </FilesMatch>
-<FilesMatch ".*">
-    Deny from all
-</FilesMatch>
-<Files "index.php">
-    Allow from all
+<Files "oauth.php">
+    Require all granted
+</Files>
+<Files "ngconfig.php">
+    Require all granted
 </Files>
 ErrorDocument 404 /errors.php
