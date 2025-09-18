@@ -596,4 +596,79 @@ export class Utils {
     }
     return value;
   }
+
+  /**
+   * Distributes an array of numeric values to a percentage scale summing up to 100,
+   * with a specified precision.
+   *
+   * @param {number[]} values - The array of numeric values to be distributed proportionally.
+   * @param {number} precision - The number of decimal places to round the percentage values to.
+   * @return {number[]} An array of percentages, summing up to 100, derived from the input values.
+   */
+  static distributeTo100(
+    values: number[],
+    precision: number
+  ): number[] {
+    interface PercentItem {
+      original: number;
+      index: number;
+      exactPct: number;
+      roundedPct: number;
+      remainder: number;
+    }
+
+    const sum = values.reduce((a, b) => a + b, 0);
+    if (sum === 0) {
+      return values.map(_ => 0);
+    }
+
+    const factor = Math.pow(10, precision);
+
+    // calculate exact percent and save index
+    const items: PercentItem[] = values.map((v, i) => {
+      const exactPct = (v / sum) * 100;
+      const floored = Math.floor(exactPct * factor) / factor;
+      const remainder = exactPct - floored;
+      return {
+        original: v,
+        index: i,
+        exactPct: exactPct,
+        roundedPct: floored,
+        remainder: remainder
+      };
+    });
+
+    // sum of floored values
+    const roundedSum = items.reduce((acc, it) => acc + it.roundedPct, 0);
+
+    // deficit (how many percent have still to be distributed)
+    const deficit = 100 - roundedSum;
+    const unitsToDistribute = Math.round(deficit * factor);
+
+    if (unitsToDistribute > 0) {
+      // sort for the remainder descending, but only for the distribution
+      const itemsByRemainder = [...items].sort((a, b) => b.remainder - a.remainder);
+
+      // add a unit to the top entries
+      for (let k = 0; k < unitsToDistribute; k++) {
+        itemsByRemainder[k].roundedPct += 1 / factor;
+      }
+    } else if (unitsToDistribute < 0) {
+      // overdistribution – subtract values from bottom entries
+      const toTake = -unitsToDistribute;
+      const itemsByRemainder = [...items].sort((a, b) => a.remainder - b.remainder);
+      for (let k = 0; k < toTake; k++) {
+        itemsByRemainder[k].roundedPct -= 1 / factor;
+      }
+    }
+
+    // sort result by index
+    const ret: number[] = [];
+    ret.length = values.length;
+    for (const it of items) {
+      ret[it.index] = it.roundedPct;
+    }
+
+    return ret;
+  }
 }
