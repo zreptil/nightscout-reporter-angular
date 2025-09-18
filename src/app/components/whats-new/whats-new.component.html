@@ -5,6 +5,15 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(44.3)">
+      <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
+    </h2>
+    <ul [class]="classFor(44.3)">
+      <li class="changed" i18n="1443c1">
+        Die Grenzwerte in der Analyse werden jetzt so berechnet, dass sie aufsummiert
+        100% ergeben. Durch Rundungen kam es da teilweise zu Abweichungen.
+      </li>
+    </ul>
     <h2 (click)="click(50.0)">
       <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.8.2025</span>
     </h2>
@@ -44,7 +53,7 @@
       <span i18n="version">Version</span><span i18n="v441">4.4.1 - 13.12.2024</span>
     </h2>
     <ul [class]="classFor(44.1)">
-      <li class="added" i18n="441c1">
+      <li class="added" i18n="441a1">
         Bei Ermittlung der Obergrenze der Glukosewerte in der Tagesgrafik werden nun auch die temporären
         Zielbereiche berücksichtigt.
       </li>

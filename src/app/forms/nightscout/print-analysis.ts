@@ -289,6 +289,21 @@ export class PrintAnalysis extends BasePrint {
     const ampulleCount = data.ampulleCount > 1
       ? this.msgReservoirDays(Math.round(this.repData.dayCount / data.ampulleCount), txt)
       : '';
+
+    let stdKeys = this.useFineLimits
+      ? ['stdVeryLow', 'stdNormLow', 'stdNorm', 'stdNormHigh', 'stdVeryHigh']
+      : ['stdLow', 'stdNorm', 'stdHigh'];
+    const percents: any = {};
+    for (const percentKeys of [stdKeys, ['low', 'norm', 'high']]) {
+      let percentValues = percentKeys.map(key => {
+        return data.stat[key].values.length / count * 100;
+      });
+      percentValues = Utils.distributeTo100(percentValues, this._precisionTarget);
+      let idx = 0;
+      for (const key of percentKeys) {
+        percents[key] = GLOBALS.fmtNumber(percentValues[idx++], this._precisionTarget);
+      }
+    }
     const tableBody: any[] = [
       [
         {text: '', style: 'infotitle'},
@@ -373,8 +388,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['high'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['high']} %`,
             style: 'infodata'
           },
           {
@@ -422,8 +436,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['norm'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['norm']} %`,
             style: 'infodata'
           },
           {
@@ -442,8 +455,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['low'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['low']} %`,
             style: 'infodata'
           },
           {
@@ -466,8 +478,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['stdVeryHigh'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['stdVeryHigh']} %`,
             style: 'infodata'
           },
           {
@@ -531,8 +542,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['stdNormHigh'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['stdNormHigh']} %`,
             style: 'infodata'
           },
           {
@@ -552,8 +562,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text:
-              `${GLOBALS.fmtNumber(data.stat['stdNorm'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['stdNorm']} %`,
             style: 'infodata'
           },
           {
@@ -572,7 +581,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text: `${GLOBALS.fmtNumber(data.stat['stdNormLow'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['stdNormLow']} %`,
             style: 'infodata'
           },
           {
@@ -614,7 +623,7 @@ export class PrintAnalysis extends BasePrint {
             style: 'infotitle'
           },
           {
-            text: `${GLOBALS.fmtNumber(data.stat['stdHigh'].values.length / count * 100, this._precisionTarget)} %`,
+            text: `${percents['stdHigh']} %`,
             style: 'infodata'
           },
           {
