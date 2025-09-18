@@ -129,6 +129,8 @@ export class ViewUsersComponent {
         return Utils.isEmpty(user.birthDate) ? $localize`Geburtstag unbekannt` : user.birthDate;
       case 2:
         return Utils.isEmpty(user.insulin) ? $localize`Insulin unbekannt` : user.insulin;
+      case 3:
+        return Utils.isEmpty(user.customData['info']) ? $localize`Keine Bemerkung` : user.customData['info'];
       default:
         GLOBALS.userInfo = 0;
         return user.apiUrl(null, '', {noApi: true, noToken: true});

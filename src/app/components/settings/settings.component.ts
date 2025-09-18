@@ -18,7 +18,6 @@ import {LLU_API_ENDPOINTS} from '@/_model/libre-link-up/constants/llu-api-endpoi
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {ThemeService} from '@/_services/theme.service';
 import {FormConfig} from '@/forms/form-config';
-import {FitbitService} from '@/_services/sync/fitbit.service';
 import {OAuth2Data} from '@/_model/oauth2-data';
 import {OAuth2Service} from '@/_services/sync/oauth2.service';
 import {EnvironmentService} from '@/_services/environment.service';
@@ -109,8 +108,7 @@ export class SettingsComponent implements OnInit {
               public ss: SessionService,
               public ns: NightscoutService,
               public ms: MessageService,
-              public oauth: OAuth2Service,
-              public os: FitbitService) {
+              public oauth: OAuth2Service) {
     da.setLocale(GLOBALS.language.code);
     this.fillSelects();
   }
@@ -137,6 +135,10 @@ export class SettingsComponent implements OnInit {
 
   get msgInsulin(): string {
     return $localize`Insulin`;
+  }
+
+  get msgInfo(): string {
+    return $localize`Bemerkung`;
   }
 
   get msgAccessToken(): string {
@@ -527,12 +529,17 @@ export class SettingsComponent implements OnInit {
   toggleDatasource(evt: Event, key: string) {
     evt.stopPropagation();
     if (GLOBALS.user.dataSources[key] == null) {
-      window.location.href = `${this.env.backendUrl}/oauth.php?app=${key}`;
+      if (GLOBALS.isDebug) {
+        window.open(`${this.env.backendUrl}/oauth.php?app=${key}&home=${window.location.href}`);
+      } else {
+        window.location.href = `${this.env.backendUrl}/oauth.php?app=${key}&home=${window.location.href}`;
+      }
     } else {
       this.ms.confirm($localize`Soll ${key} wirklich deaktiviert werden? Es ist dann nicht mehr möglich, diese Daten in Reports zu sehen.`).subscribe(
         result => {
           if (result.btn === DialogResultButton.yes) {
-            this.os.revokeToken();
+            // TODO: Muss noch flexibilisiert werden
+            // this.os.revokeToken();
           }
         })
     }

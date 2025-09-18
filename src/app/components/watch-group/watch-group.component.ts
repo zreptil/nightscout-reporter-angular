@@ -7,6 +7,7 @@ import {WatchElement} from '@/_model/watch-element';
 import {Settings} from '@/_model/settings';
 import {WatchService} from '@/_services/watch.service';
 import {LibreLinkUpService} from '@/_services/libre-link-up.service';
+import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-watch-group',
@@ -108,6 +109,15 @@ export class WatchGroupComponent {
     return ret;
   }
 
+  get pumpInfo(): string {
+    const ret: string[] = [];
+    const time = Utils.differenceInMinutes(GlobalsData.now, GLOBALS.pumpInfo?.clock);
+    ret.push(`${GLOBALS.msgGlucTime(time)}`);
+    ret.push(`${GLOBALS.pumpInfo?.reservoir} ${$localize`IE`}`);
+    ret.push(`${GLOBALS.pumpInfo?.pumpStatus?.status}`);
+    return Utils.join(ret, ' - ');
+  }
+
   colForGluc(gluc: number): string {
     if (gluc == null || !GLOBALS.currentGlucValid) {
       return 'unknown';
@@ -166,6 +176,19 @@ export class WatchGroupComponent {
     return GLOBALS.currentChanges?.[id]?.lasttime;
   }
 
+  pumpClass(): string[] {
+    const ret = ['alarm'];
+    const time = Utils.differenceInMinutes(GlobalsData.now, GLOBALS.pumpInfo?.clock);
+    if (time >= +GLOBALS.currentChanges['pumpClock']?.getAlarm('urgent')
+      || +GLOBALS.pumpInfo?.reservoir <= +GLOBALS.currentChanges['pumpRes']?.getAlarm('urgent')) {
+      ret.push('alarm1');
+    } else if (time >= +GLOBALS.currentChanges['pumpClock']?.getAlarm('warn')
+      || +GLOBALS.pumpInfo?.reservoir <= +GLOBALS.currentChanges['pumpRes']?.getAlarm('warn')) {
+      ret.push('alarm2');
+    }
+    return ret;
+  }
+
   showEntry(entry: WatchElement, type: string) {
     if (entry.type !== type) {
       return false;
@@ -179,6 +202,8 @@ export class WatchGroupComponent {
         return GLOBALS.currentGlucSrc != null;
       case 'arrow':
         return GLOBALS.currentGlucValid;
+      case 'pump':
+        return GLOBALS.pumpInfo != null;
     }
     return false;
   }

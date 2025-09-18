@@ -5,19 +5,21 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
-    <h2 (click)="click(44.3)">
-      <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
-    </h2>
-    <ul [class]="classFor(44.3)">
-      <li class="changed" i18n="1443c1">
-        Die Grenzwerte in der Analyse werden jetzt so berechnet, dass sie aufsummiert
-        100% ergeben. Durch Rundungen kam es da teilweise zu Abweichungen.
-      </li>
-    </ul>
     <h2 (click)="click(50.0)">
-      <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.8.2025</span>
+      <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.10.2025</span>
     </h2>
     <ul [class]="classFor(50.0)">
+      <li class="added" i18n="500a1">
+        In <a href="/watch" target="_blank">NightWatch</a> gibt es eine neue Anzeige für Pumpeninformationen. Diese sind am Icon
+        <img alt="Pumpeninformationen" src="assets/img/pump.print.png"> erkennbar.
+        Dort wird angezeigt, wie lange die letzte Verbindung zur Pumpe zurück liegt,
+        wieviel Insulin noch im Reservoir ist und der Status der Pumpe.
+      </li>
+      <li class="added" i18n="500a2">
+        In den Einstellungen gibt es für die Benutzer jetzt ein zusätzliches Feld für
+        Bemerkungen zu diesem Benutzer. Diese kann auch als Information in der Benutzerliste
+        angezeigt werden.
+      </li>
       <li class="changed" i18n="500c1">
         Die Einstellung für die Anzeige der Kacheln wurde erweitert. Jetzt kann man
         auch das Bild und den Text gleichzeitig auf den Kacheln anzeigen lassen. Das
@@ -35,6 +37,15 @@
       <li class="fixed" i18n="500f2">
         Im Formular "Tagesstatistik" wird die Spaltenanzahl nun korrekt überprüft und
         limitiert.
+      </li>
+    </ul>
+    <h2 (click)="click(44.3)">
+      <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
+    </h2>
+    <ul [class]="classFor(44.3)">
+      <li class="changed" i18n="1443c1">
+        Die Grenzwerte in der Analyse werden jetzt so berechnet, dass sie aufsummiert
+        100% ergeben. Durch Rundungen kam es da teilweise zu Abweichungen.
       </li>
     </ul>
     <h2 (click)="click(44.2)">

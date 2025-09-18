@@ -6,7 +6,6 @@
   --accentBack: var(--settingsHeadBack);
   --accentFore: var(--settingsHeadFore);
 
-
   .sub {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -27,8 +26,9 @@
     }
 
     .mat-button-toggle-checked {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: rgba(255, 255, 255, 0.9);
+      background-color: var(--settingsHeadBack);
+      color: var(--settingsHeadFore);
+      --mat-button-toggle-selected-state-text-color: var(--settingsHeadFore);
     }
 
     .subtitle {

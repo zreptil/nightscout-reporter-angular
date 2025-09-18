@@ -91,6 +91,10 @@ export class WatchComponent implements OnInit {
     return $localize`Ampullen-Wechsel`;
   }
 
+  get msgPump(): string {
+    return $localize`Pumpen-Info`;
+  }
+
   get msgChangeBattery(): string {
     return $localize`Batterie-Wechsel`;
   }
@@ -121,6 +125,7 @@ export class WatchComponent implements OnInit {
       change_katheter: this.msgChangeKatheter,
       change_ampulle: this.msgChangeAmpulle,
       change_battery: this.msgChangeBattery,
+      pump: this.msgPump,
       llu_schedule: this.msgLLUSchedule,
       llu_autoexec: this.msgLLUAutoExec
     };

@@ -51,6 +51,7 @@ import {PrintTemplate} from '@/forms/nightscout/print-template';
 import {ColorCfgDialogComponent} from '@/controls/color-cfg/color-cfg-dialog/color-cfg-dialog.component';
 import {EnvironmentService} from '@/_services/environment.service';
 import {OAuth2Service} from '@/_services/sync/oauth2.service';
+import {DataSourceService} from '@/_services/sync/data-source.service';
 
 class GlobalData extends BaseData {
   get asJson(): any {
@@ -110,8 +111,9 @@ export class SessionService {
               public pdf: PdfService,
               public ts: ThemeService,
               public env: EnvironmentService,
-              public os: OAuth2Service,
-              public ms: MessageService) {
+              public ms: MessageService,
+              public dss: DataSourceService,
+              public oauth: OAuth2Service) {
     GLOBALS.onPeriodChange.subscribe(_ => {
       this.checkPrint();
     });
@@ -385,6 +387,7 @@ export class SessionService {
     for (const entry of GLOBALS.listConfig) {
       GLOBALS.user.formParams[entry.dataId] = entry.asString;
     }
+    this.dss.os.extractUrlParams();
   }
 
   activateShortcut(shortcutIdx: number): void {

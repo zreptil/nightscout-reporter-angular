@@ -22,30 +22,36 @@
       </div>
     </div>
     <div class="userinfo">
-      <button (click)="globals.togglePin(globals.user)"
-              mat-icon-button pin>
-        <mat-icon [class]="globals.user.classForPin">{{ globals.user.iconForPin }}</mat-icon>
-        @if (globals.user.isPinned) {
-          <mat-icon class="over">star_border</mat-icon>
-        }
-      </button>
-      <mat-form-field>
-        <mat-label>{{ msgName }}</mat-label>
-        <input [(ngModel)]="globals.user.name" autofocus matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label i18n="label of editfield for birthday">Geburtstag</mat-label>
-        <input [(ngModel)]="globals.user.birthDate" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label i18n="label of editfield for diabetes since">Diabetes seit</mat-label>
-        <input [(ngModel)]="globals.user.diaStartDate" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>{{ msgInsulin }}</mat-label>
-        <input [(ngModel)]="globals.user.insulin" matInput>
-      </mat-form-field>
-      <div class="controls">
+      <div>
+        <button (click)="globals.togglePin(globals.user)"
+                mat-icon-button pin>
+          <mat-icon [class]="globals.user.classForPin">{{ globals.user.iconForPin }}</mat-icon>
+          @if (globals.user.isPinned) {
+            <mat-icon class="over">star_border</mat-icon>
+          }
+        </button>
+        <mat-form-field>
+          <mat-label>{{ msgName }}</mat-label>
+          <input [(ngModel)]="globals.user.name" autofocus matInput>
+        </mat-form-field>
+        <mat-form-field size1>
+          <mat-label i18n="label of editfield for birthday">Geburtstag</mat-label>
+          <input [(ngModel)]="globals.user.birthDate" matInput>
+        </mat-form-field>
+        <mat-form-field size1>
+          <mat-label i18n="label of editfield for diabetes since">Diabetes seit</mat-label>
+          <input [(ngModel)]="globals.user.diaStartDate" matInput>
+        </mat-form-field>
+        <mat-form-field size1>
+          <mat-label>{{ msgInsulin }}</mat-label>
+          <input [(ngModel)]="globals.user.insulin" matInput>
+        </mat-form-field>
+      </div>
+      <div class="controls" sizeFull>
+        <mat-form-field>
+          <mat-label>{{ msgInfo }}</mat-label>
+          <textarea [(ngModel)]="globals.user.customData['info']" appTextareaAutoresize matInput></textarea>
+        </mat-form-field>
         <button (click)="addUser()"
                 [disabled]="mayAddUser"
                 mat-mini-fab>

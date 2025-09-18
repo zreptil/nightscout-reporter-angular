@@ -24,6 +24,7 @@ import {DropboxService} from '@/_services/sync/dropbox.service';
 import {LibreLinkUpService} from '@/_services/libre-link-up.service';
 import {MessageService} from '@/_services/message.service';
 import {DialogResultButton, DialogType, HelpListItem} from '@/_model/dialog-data';
+import {DeviceStatusData} from '@/_model/nightscout/device-status-data';
 
 export class RequestParams {
   method?: string;
@@ -477,19 +478,16 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS.ppFixAAPS30 = JsonData.toBool(json.d11);
       GLOBALS.ppPdfSameWindow = JsonData.toBool(json.d12);
       GLOBALS.ppPdfDownload = JsonData.toBool(json.d13);
-      GLOBALS.isWatchColor = JsonData.toBool(json.d14);
+      GLOBALS.isWatchColor = JsonData.toBool(json.d14 ?? 'true');
       GLOBALS.ppSkipSensorChange = JsonData.toNumber(json.d15);
-      // TODO: remove list check after version 4.1.7
-      if (Utils.isEmpty(GLOBALS.watchList) && !Utils.isEmpty(json.d16)) {
-        let watchEntries = json.d16;
-        GLOBALS.watchList = [];
-        if (Utils.isEmpty(watchEntries)) {
-          watchEntries = this.defaultWatchEntries;
-        }
-        if (watchEntries != null) {
-          for (const entry of watchEntries) {
-            GLOBALS.watchList.push(WatchElement.fromJson(entry));
-          }
+      let watchEntries = json.d16;
+      GLOBALS.watchList = [];
+      if (Utils.isEmpty(watchEntries)) {
+        watchEntries = this.defaultWatchEntries;
+      }
+      if (watchEntries != null) {
+        for (const entry of watchEntries) {
+          GLOBALS.watchList.push(WatchElement.fromJson(entry));
         }
       }
       GLOBALS.lluTimeout = JsonData.toNumber(json.d17, 5);
@@ -617,12 +615,14 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
 
   save(params?: { updateSync?: boolean, skipReload?: boolean, sharedOrg?: string }) {
     if (GLOBALS.avoidSaveAndLoad) {
+      console.error('save() called while avoidSaveAndLoad is true');
       return;
     }
     params ??= {};
     params.updateSync ??= true;
     params.skipReload ??= false;
     if (this.isLoading) {
+      console.error('save() called while loading');
       return;
     }
     let oldLang: string = null;
@@ -843,7 +843,12 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       ampulle: new WatchChangeData('ampulle', '?', status?.extendedSettings.iage),
       katheter: new WatchChangeData('katheter', '?', status?.extendedSettings.cage),
       battery: new WatchChangeData('battery', '?', status?.extendedSettings.bage),
-      sensor: new WatchChangeData('sensor', '?', status?.extendedSettings.sage)
+      sensor: new WatchChangeData('sensor', '?', status?.extendedSettings.sage),
+
+      pumpClock: new WatchChangeData('pumpClock', '?', status?.extendedSettings.pcage),
+      pumpRes: new WatchChangeData('pumpRes', '?', status?.extendedSettings.prage),
+      pumpBattP: new WatchChangeData('pumpBattP', '?', status?.extendedSettings.pbpage),
+      pumpBattV: new WatchChangeData('pumpBattV', '?', status?.extendedSettings.pbvage),
     };
     const end = new Date();
     const beg = Utils.addDateMonths(end, -1);
@@ -881,6 +886,10 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       }
     }
     GLOBALS.currentChanges = changes;
+
+    url = GLOBALS.user.apiUrl(null, 'devicestatus.json', {params: 'count=1', reqParams: reqParams});
+    src = await this.requestJson(url, reqParams);
+    GLOBALS.pumpInfo = DeviceStatusData.fromJson(src?.[0])?.pump;
 
     if (params.force) {
       this.refreshCurrentTimer(params);

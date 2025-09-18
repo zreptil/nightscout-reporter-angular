@@ -115,5 +115,13 @@
         }
       </app-watch-entry>
     }
+    @if (showEntry(entry, 'pump')) {
+      <app-watch-entry (click)="onClick(entry)" [class]="pumpClass()" [element]="entry" [isEditMode]="ws.isEditMode">
+        <div class="pump">
+          <img [alt]="'assets/img/pump.print.png'" [src]="'assets/img/pump.print.png'">
+          {{ pumpInfo }}
+        </div>
+      </app-watch-entry>
+    }
   }
 </div>
