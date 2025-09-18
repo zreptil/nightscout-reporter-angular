@@ -5,6 +5,15 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <h2 (click)="click(44.3)">
+      <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
+    </h2>
+    <ul [class]="classFor(44.3)">
+      <li class="changed" i18n="1443c1">
+        Die Grenzwerte in der Analyse werden jetzt so berechnet, dass sie aufsummiert
+        100% ergeben. Durch Rundungen kam es da teilweise zu Abweichungen.
+      </li>
+    </ul>
     <h2 (click)="click(44.2)">
       <span i18n="version">Version</span><span i18n="v442">4.4.2 - 06.08.2025</span>
     </h2>
