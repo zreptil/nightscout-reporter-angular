@@ -9,6 +9,10 @@ export class ExtendedSettingsData extends JsonData {
   bage: AgeData;
   iage: AgeData;
   pumpFields: string[] = [];
+  pcage: AgeData;
+  prage: AgeData;
+  pbpage: AgeData;
+  pbvage: AgeData;
   advancedDeviceStatus: boolean;
 
   constructor() {
@@ -24,6 +28,10 @@ export class ExtendedSettingsData extends JsonData {
       for (const entry of JsonData.toText(json.pump.fields).toString().split(' ')) {
         ret.pumpFields.push(entry);
       }
+      ret.pcage = AgeData.fromJson({warn: json.pump.warnClock, urgent: json.pump.urgentClock});
+      ret.prage = AgeData.fromJson({warn: json.pump.warnRes, urgent: json.pump.urgentRes});
+      ret.pbpage = AgeData.fromJson({warn: json.pump.pumpWarnBattP, urgent: json.pump.pumpUrgentBattP});
+      ret.pbvage = AgeData.fromJson({warn: json.pump.pumpWarnBattV, urgent: json.pump.pumpUrgentBattV});
     }
     if (json.upbat != null) {
       ret.upbatEnableAlerts = JsonData.toBool(json.upbat.enableAlerts);

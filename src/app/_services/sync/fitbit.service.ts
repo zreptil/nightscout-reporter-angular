@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DataService} from '@/_services/data.service';
-import {OAuth2Service} from '@/_services/sync/oauth2.service';
+import {OAuth2BaseService, OAuth2Service} from '@/_services/sync/oauth2.service';
 import {lastValueFrom, map, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {JsonData} from '@/_model/json-data';
@@ -12,13 +12,14 @@ import {EnvironmentService} from '@/_services/environment.service';
 @Injectable({
   providedIn: 'root'
 })
-export class FitbitService extends OAuth2Service {
+export class FitbitService extends OAuth2BaseService {
   authKey = 'fitbit';
 
   constructor(http: HttpClient,
               env: EnvironmentService,
-              ds: DataService) {
-    super(http, env, ds);
+              ds: DataService,
+              os: OAuth2Service) {
+    super(http, env, ds, os);
   }
 
   public async getActivities(begDate: Date, endDate: Date): Promise<HealthData[]> {

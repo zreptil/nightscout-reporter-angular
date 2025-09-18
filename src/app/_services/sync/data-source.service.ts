@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {FitbitService} from '@/_services/sync/fitbit.service';
 import {OAuth2Data} from '@/_model/oauth2-data';
-import {OAuth2Service} from '@/_services/sync/oauth2.service';
+import {OAuth2BaseService, OAuth2Service} from '@/_services/sync/oauth2.service';
 import {HealthData} from '@/_model/nightscout/health-data';
 
 @Injectable({
@@ -9,11 +9,12 @@ import {HealthData} from '@/_model/nightscout/health-data';
 })
 export class DataSourceService {
 
-  constructor(private fs: FitbitService) {
+  constructor(public os: OAuth2Service,
+              private fs: FitbitService) {
   }
 
   async getActivities(oauth: OAuth2Data, begDate: Date, endDate: Date, list: HealthData[], onError?: (error: any) => void) {
-    const srv = this.getService(oauth);
+    const srv = this.getService(oauth?.key);
     if (srv == null) {
       return;
     }
@@ -39,11 +40,15 @@ export class DataSourceService {
     }
   }
 
-  private getService(auth: OAuth2Data): OAuth2Service {
-    switch (auth?.key) {
+  getService(key: string): OAuth2BaseService {
+    switch (key) {
       case 'fitbit':
         return this.fs;
     }
     return null;
+  }
+
+  hasValidData(_key: string, _data: any) {
+
   }
 }

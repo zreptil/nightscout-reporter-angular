@@ -10,10 +10,6 @@ export class OAuth2Data {
   scope: string;
 
   get asJson(): any {
-    // if certain values are not set, then return null
-    if (this.key == null || this.refreshToken == null || this.userId == null) {
-      return null;
-    }
     return {
       a: this.key,
       b: this.accessToken,

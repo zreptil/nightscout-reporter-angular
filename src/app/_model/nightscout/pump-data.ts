@@ -24,9 +24,9 @@ export class PumpData extends JsonData {
       return ret;
     }
     ret.clock = JsonData.toDate(json.clock);
-    ret.pumpBattery = PumpBatteryData.fromJson(json.pumpbattery);
+    ret.pumpBattery = PumpBatteryData.fromJson(json.battery);
     ret.reservoir = JsonData.toNumber(json.reservoir);
-    ret.pumpStatus = PumpStatusData.fromJson(json.pumpstatus);
+    ret.pumpStatus = PumpStatusData.fromJson(json.status);
     return ret;
   }
 }

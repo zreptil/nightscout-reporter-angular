@@ -14,6 +14,7 @@ import {EntryData} from './nightscout/entry-data';
 import {StatusData} from '@/_model/nightscout/status-data';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {WatchChangeData} from '@/_model/nightscout/watch-change-data';
+import {PumpData} from '@/_model/nightscout/pump-data';
 
 class SharedCheck {
   constructor(public shared?: string,
@@ -130,6 +131,7 @@ export class GlobalsData extends Settings {
   currentGlucSrc: EntryData;
   currentChanges: { [key: string]: WatchChangeData };
   lastGlucSrc: EntryData;
+  pumpInfo: PumpData;
   currentGlucPast: number;
   currentGlucDiff: string;
   currentGlucTime: string;
@@ -734,6 +736,7 @@ export class GlobalsData extends Settings {
       this.sharedCheck.shared = this._asSharedString;
       JSON.parse(this.sharedCheck.shared);
     } catch (ex) {
+      console.error('error reading shared data:', ex);
       this.sharedCheck.error = ex;
       this.sharedCheck.shared = def;
       return false;

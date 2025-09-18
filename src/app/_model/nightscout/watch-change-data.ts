@@ -22,6 +22,10 @@ export class WatchChangeData {
     // console.log(type, age);
   }
 
+  getAlarm(key: string): number {
+    return (this.age as any)[key] ?? -1;
+  }
+
   calcAlarm(createdAt: Date): void {
     const hours = Utils.differenceInHours(GlobalsData.now, createdAt);
     this.alarm = 0;

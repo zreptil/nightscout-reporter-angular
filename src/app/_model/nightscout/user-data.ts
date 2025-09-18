@@ -67,10 +67,16 @@ export class UserData {
     for (const key of Object.keys(this.dataSources)) {
       const data = this.dataSources[key];
       if (data != null) {
-        dataSources.push(this.dataSources[key].asJson);
+        // if certain values are not set, then return null
+        if (key == null || this.dataSources[key].refreshToken == null || this.dataSources[key].userId == null) {
+          console.error('not saved', this.dataSources[key]);
+        } else {
+          const dst = this.dataSources[key].asJson;
+          dataSources.push(dst);
+        }
       }
     }
-    dataSources.filter(ds => ds.key != null)
+    dataSources.filter(ds => ds?.key != null)
       .sort((a, b) => Utils.compare(a.key, b.key));
     return `{"n":"${this.name}"`
       + `,"bd":"${this.birthDate ?? ''}"`
