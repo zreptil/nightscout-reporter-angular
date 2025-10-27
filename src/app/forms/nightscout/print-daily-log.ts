@@ -52,7 +52,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     new ParamInfo(1, PrintDailyLog.msgParam10, {boolValue: true, subParams: [new ParamInfo(0, PrintDailyLog.msgParam18, {boolValue: false})]}),
     new ParamInfo(6, PrintDailyLog.msgParam11, {boolValue: true, subParams: [new ParamInfo(0, PrintDailyLog.msgParam12, {boolValue: true})]}),
     new ParamInfo(7, PrintDailyLog.msgParam13, {boolValue: true}),
-    new ParamInfo(12, PrintDailyLog.msgParam16, {boolValue: false, subParams: [new ParamInfo(0, PrintDailyLog.msgParam17, {boolValue: false})]}),
+    new ParamInfo(12, PrintDailyLog.msgParam16, {boolValue: false, stateForAll: false, subParams: [new ParamInfo(0, PrintDailyLog.msgParam17, {boolValue: false, stateForAll: false})]}),
     new ParamInfo(9, BasePrint.msgOverrides, {boolValue: true, isLoopValue: true}),
   ];
 
