@@ -72,7 +72,7 @@ export class FormParamsDialogComponent implements OnInit {
   setAllParamsFor(value: boolean, params: ParamInfo[]): void {
     for (const param of params ?? []) {
       if (param.boolValue != null) {
-        param.boolValue = value;
+        param.boolValue = param.stateForAll ?? value;
       }
       if (param.subParams != null) {
         this.setAllParamsFor(value, param.subParams);

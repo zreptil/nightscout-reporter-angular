@@ -22,6 +22,7 @@ export class ParamInfo {
   list: string[];
   subParams: ParamInfo[];
   thumbValue: any;
+  stateForAll: boolean;
 
   constructor(public sort: number,
               public title: string,
@@ -36,7 +37,8 @@ export class ParamInfo {
                 subParams?: ParamInfo[],
                 isDeprecated?: boolean,
                 isLoopValue?: boolean,
-                thumbValue?: any
+                thumbValue?: any,
+                stateForAll?: boolean,
               }) {
     Utils.pushArgs(args, this);
     this.isDeprecated ??= false;
