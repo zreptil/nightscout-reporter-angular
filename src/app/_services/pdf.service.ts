@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {DOCUMENT, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {PageData} from '@/_model/page-data';
 import {Log} from '@/_services/log.service';
@@ -31,11 +31,15 @@ export class PdfService {
   pdfList: PdfData[] = [];
   pdfDoc: any = null;
   images: any;
+  private renderer: Renderer2;
 
   constructor(public http: HttpClient,
               public ps: ProgressService,
               public ns: NightscoutService,
-              public ds: DataService) {
+              public ds: DataService,
+              rendererFactory: RendererFactory2,
+              @Inject(DOCUMENT) private document: Document) {
+    this.renderer = rendererFactory.createRenderer(null, null);
   }
 
   get msgCreatingPDF(): string {
@@ -444,7 +448,16 @@ export class PdfService {
         // });
       } else if (GLOBALS.ppPdfSameWindow) {
         pdf.getDataUrl((base64URL) => {
-          document.write(`<iframe src="${base64URL}" style="border:0;top:0;left:0;bottom:0;right:0;width:100%;height:100%;" allowFullScreen></iframe>`);
+          const body = this.document.body;
+          const root = this.document.querySelector('app-root');
+          if (root != null) {
+            this.renderer.removeChild(body, root);
+          }
+          const iframe = this.renderer.createElement('iframe');
+          this.renderer.setAttribute(iframe, 'src', base64URL);
+          this.renderer.setAttribute(iframe, 'style', 'border:0;top:0;left:0;bottom:0;right:0;width:100%;height:100%;');
+          this.renderer.setAttribute(iframe, 'allowfullscreen', '');
+          this.renderer.appendChild(this.document.body, iframe);
         });
       } else if (GLOBALS.ppPdfDownload) {
         pdf.download();
