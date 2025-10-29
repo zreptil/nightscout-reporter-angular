@@ -578,6 +578,9 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           for (const treatment of src) {
             hasData = true;
             const t = TreatmentData.fromJson(treatment);
+            if (GLOBALS.isLocal && !Utils.isEmpty(t.notes)) {
+              t.notes = `\uD83D\uDE00${t.notes}\uD83D\uDE08`;
+            }
             // Treatments entered by sync are ignored
             if (t.enteredBy === 'sync') {
             } else if (!Utils.isEmpty(data.ns.treatments) && t.equals(data.ns.treatments[data.ns.treatments.length - 1])) {

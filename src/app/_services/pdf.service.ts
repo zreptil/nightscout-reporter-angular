@@ -14,6 +14,7 @@ import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
 import {PrintPercentile} from '@/forms/nightscout/print-percentile';
+import emojiRegex from 'emoji-regex';
 
 export class PdfData {
   isPrinted = false;
@@ -254,6 +255,64 @@ export class PdfService {
     this._generatePdf(data);
   }
 
+  getTextWithEmojiObjects(s: string): any[] {
+    let hasUnicodeProp = true;
+    let unicodeRegex: RegExp | null = null;
+// Extended_Pictographic
+    try {
+      unicodeRegex = new RegExp('\\p{Emoji_Presentation}', 'ug');
+      unicodeRegex.test('');  // force compiling
+    } catch (e) {
+      hasUnicodeProp = false;
+    }
+
+    let emojis: string[] = [];
+    let nonEmojis: string[];
+
+    if (hasUnicodeProp && unicodeRegex) {
+      const separator = '[[EMOJI_PLACEHOLDER]]';
+      const stringWithPlaceholders = s.replaceAll(
+        unicodeRegex,
+        (emoji: string) => {
+          emojis.push(emoji);
+          return separator;
+        }
+      );
+      nonEmojis = stringWithPlaceholders.split(separator);
+    } else {
+      const eReg = emojiRegex();
+      const separator = '[[EMOJI_PLACEHOLDER]]';
+
+      let lastIndex = 0;
+      const parts: string[] = [];
+      emojis = [];
+
+      for (const match of s.matchAll(eReg)) {
+        const emoji = match[0];
+        const idx = match.index!;
+        parts.push(s.substring(lastIndex, idx));
+        parts.push(separator);
+        emojis.push(emoji);
+        lastIndex = idx + emoji.length;
+      }
+      parts.push(s.substring(lastIndex));
+
+      nonEmojis = parts.filter((_, i) => i % 2 === 0);
+    }
+
+    const ret: any[] = [];
+    for (let i = 0; i < nonEmojis.length; i++) {
+      const textPart = nonEmojis[i];
+      if (textPart !== '') {
+        ret.push(textPart);
+      }
+      if (i < emojis.length) {
+        ret.push({font: 'NotoEmoji', text: emojis[i], color: 'maroon'});
+      }
+    }
+    return ret;
+  }
+
   private collectPages(cfg: FormConfig, idx: number, repData: ReportData, createThumbs?: (pdf: TCreatedPdf) => void): Observable<{ idx: number, docList: any[] }> {
     let doc: any;
     const docList: any[] = [];
@@ -365,7 +424,7 @@ export class PdfService {
   private preprocessData(data: any) {
     if (typeof data === 'object' && data != null) {
       for (const key of Object.keys(data)) {
-        if (key === 'text') {
+        if (key === 'text' && !Array.isArray(data[key])) {
           const text = data[key];
           let isHebrew = false;
           for (let i = 0; i < text?.length; i++) {
@@ -421,6 +480,12 @@ export class PdfService {
           bold: 'Roboto-Medium.ttf',
           italics: 'Roboto-Italic.ttf',
           bolditalics: 'Roboto-MediumItalic.ttf'
+        },
+        NotoEmoji: {
+          normal: 'NotoEmoji-Medium.ttf',
+          bold: 'NotoEmoji-Medium.ttf',
+          italics: 'NotoEmoji-Medium.ttf',
+          bolditalics: 'NotoEmoji-Medium.ttf'
         }
       };
 
