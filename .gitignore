@@ -54,3 +54,5 @@ Thumbs.db
 /test-data/krawuzl.profileswitch.json
 /src/assets/secret.json
 
+/src/assets/fonts/ttf/NotoColorEmoji-Regular.ttf
+/src/assets/fonts/created.js

@@ -811,7 +811,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     for (const t of day.treatments) {
       let x: number;
       let y: number;
-      let notes = 'HIER: ' + t.notes;
+      let notes = t.notes;
       // string type = t.eventType.toLowerCase();
       // if (showSMB && t.microbolus > 0) {
       //   EntryData entry = day.findNearest(day.entries, null, t.createdAt);
@@ -1044,7 +1044,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         if (!this.showHTMLNotes) {
           notes = t.notes.replace(/<.*>/, '');
 //          notes = JSON.stringify(notes);
-          notes = JSON.stringify(this.ps.getTextWithEmojiObjects(notes));
+          notes = JSON.stringify(this.getTextWithEmojiObjects(notes));
         }
         let x = this.glucX(t.createdAt);
         // *** line length estimation ***

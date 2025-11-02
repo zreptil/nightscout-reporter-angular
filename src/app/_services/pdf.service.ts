@@ -14,7 +14,7 @@ import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
 import {PrintPercentile} from '@/forms/nightscout/print-percentile';
-import emojiRegex from 'emoji-regex';
+import {catchError} from 'rxjs/operators';
 
 export class PdfData {
   isPrinted = false;
@@ -242,8 +242,8 @@ export class PdfService {
     */
   }
 
-  collectBase64Images(list: string[]): Observable<any> {
-    this.images = {};
+  collectBase64Images(list: string[], images = {}): Observable<any> {
+    this.images = images;
     const listObservables: Observable<any>[] = [];
     for (const id of list) {
       listObservables.push(this.collectBase64Image(id));
@@ -253,64 +253,6 @@ export class PdfService {
 
   showPdf(data: any) {
     this._generatePdf(data);
-  }
-
-  getTextWithEmojiObjects(s: string): any[] {
-    let hasUnicodeProp = true;
-    let unicodeRegex: RegExp | null = null;
-// Extended_Pictographic
-    try {
-      unicodeRegex = new RegExp('\\p{Emoji_Presentation}', 'ug');
-      unicodeRegex.test('');  // force compiling
-    } catch (e) {
-      hasUnicodeProp = false;
-    }
-
-    let emojis: string[] = [];
-    let nonEmojis: string[];
-
-    if (hasUnicodeProp && unicodeRegex) {
-      const separator = '[[EMOJI_PLACEHOLDER]]';
-      const stringWithPlaceholders = s.replaceAll(
-        unicodeRegex,
-        (emoji: string) => {
-          emojis.push(emoji);
-          return separator;
-        }
-      );
-      nonEmojis = stringWithPlaceholders.split(separator);
-    } else {
-      const eReg = emojiRegex();
-      const separator = '[[EMOJI_PLACEHOLDER]]';
-
-      let lastIndex = 0;
-      const parts: string[] = [];
-      emojis = [];
-
-      for (const match of s.matchAll(eReg)) {
-        const emoji = match[0];
-        const idx = match.index!;
-        parts.push(s.substring(lastIndex, idx));
-        parts.push(separator);
-        emojis.push(emoji);
-        lastIndex = idx + emoji.length;
-      }
-      parts.push(s.substring(lastIndex));
-
-      nonEmojis = parts.filter((_, i) => i % 2 === 0);
-    }
-
-    const ret: any[] = [];
-    for (let i = 0; i < nonEmojis.length; i++) {
-      const textPart = nonEmojis[i];
-      if (textPart !== '') {
-        ret.push(textPart);
-      }
-      if (i < emojis.length) {
-        ret.push({font: 'NotoEmoji', text: emojis[i], color: 'maroon'});
-      }
-    }
-    return ret;
   }
 
   private collectPages(cfg: FormConfig, idx: number, repData: ReportData, createThumbs?: (pdf: TCreatedPdf) => void): Observable<{ idx: number, docList: any[] }> {
@@ -472,7 +414,6 @@ export class PdfService {
       return;
     }
     await this.loadPdfMaker();
-    // pdfmake changes the
     this.http.get('assets/fonts/pdfmake-fonts.json').subscribe(vfs => {
       let fonts: any = {
         Roboto: {
@@ -480,6 +421,12 @@ export class PdfService {
           bold: 'Roboto-Medium.ttf',
           italics: 'Roboto-Italic.ttf',
           bolditalics: 'Roboto-MediumItalic.ttf'
+        },
+        NotoColorEmoji: {
+          normal: 'NotoColorEmoji-Regular.ttf',
+          bold: 'NotoColorEmoji-Regular.ttf',
+          italics: 'NotoColorEmoji-Regular.ttf',
+          bolditalics: 'NotoColorEmoji-Regular.ttf'
         },
         NotoEmoji: {
           normal: 'NotoEmoji-Medium.ttf',
@@ -537,13 +484,28 @@ export class PdfService {
     });
   }
 
+  /**
+   * Collects a Base64 encoded image URL for the given identifier.
+   *
+   * @param {string} id - The identifier for the image, which may include custom data in the format '@id@urlFormat'.
+   * @return {Observable<{ id: string, url: string }>} An observable emitting an object containing the image `id` and its Base64 encoded `url`. If an error occurs, the `url` will be an empty string.
+   */
   private collectBase64Image(id: string): Observable<{ id: string, url: string }> {
-    const req = new HttpRequest('GET', `assets/img/${id}.png`,
+    let urlFormat = `assets/img/${id}.png`;
+    let imgFormat = 'image/png';
+    if (id.startsWith('@')) {
+      const parts = id.split('@');
+      id = parts[1];
+      urlFormat = parts[2];
+    }
+    const req = new HttpRequest('GET', urlFormat,
       null,
       {responseType: 'arraybuffer'});
     return this.http.request(req)
       .pipe(map(data => {
-        return {id: id, url: `data:image/png;base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+        return {id: id, url: `data:${imgFormat};base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+      }), catchError(_err => {
+        return of({id: id, url: ''});
       }));
   }
 }

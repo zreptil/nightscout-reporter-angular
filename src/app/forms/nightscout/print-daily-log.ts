@@ -449,6 +449,9 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       if (calcText?.text != null) {
         calcText = calcText.text;
         text = JSON.stringify(text);
+      } else if (calcText?.image != null) {
+        calcText = 'W';
+        text = JSON.stringify(text);
       } else {
         text = JSON.stringify({text: text});
       }
@@ -458,6 +461,9 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         if (calcLine?.text != null) {
           calcLine = calcLine.text;
           line = JSON.stringify(line);
+        } else if (calcLine?.image != null) {
+          line = JSON.stringify(calcLine);
+          calcLine = 'W';
         } else {
           line = JSON.stringify({text: line});
         }
@@ -589,12 +595,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
           style: 'total',
           fontSize: size,
           alignment: 'left'
-        }, {
-          text: output,
-          style: style,
-          fontSize: size,
-          alignment: 'left'
-        });
+        }, {columns: this.mixTextImage(output)});
         this._body.push(row);
         this.tableHeadFilled = true;
       }
@@ -678,7 +679,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       !Utils.isEmpty(t.notes) &&
       !type.startsWith('nr-')) {
 //      list.push(`${t.notes.replace(/<br>/g, '\n')}`);
-      const textList = this.ps.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'));
+      const textList = this.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'));
       //const listig = this.ps.getTextWithEmojiObjects('Das sind zwei Emojis');
       for (const entry of textList) {
         list.push(entry);
