@@ -349,7 +349,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     //    number groupMinutes = GLOBALS.isLocal ? 60 : 0;
     let nextTime = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate(), 0, this.groupMinutes);
 
-    let list: string[] = [];
+    let list: any[] = [];
     let flags = new Flags();
     const treatments: TreatmentData[] = [];
 
@@ -426,31 +426,13 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   fillRow(time: Date, src: ReportData, day: DayData, row: any,
-          glucEntry: EntryData, list: string[], flags: Flags, style: string): string[] {
+          glucEntry: EntryData, list: any[], flags: Flags, style: string): string[] {
     if (glucEntry != null && this.showGlucSource) {
       list.splice(0, 0, `Quelle: ${glucEntry.device}`);
     }
     if (!Utils.isEmpty(list)) {
       const oldY = this._y;
       const size = this.fs(10);
-      let text = list[0];
-      for (let i = 1; i < list.length; i++) {
-        const line = list[i];
-        if (text.endsWith(']')) {
-          text = `${text} ${line}`;
-        } else if (text.endsWith('@')) {
-          text = `${text.substring(0, text.length - 1)} ${line}`;
-        } else {
-          text = `${text}, ${line}`;
-        }
-      }
-      const lines = text.split('\n');
-      let y = this._y;
-      let idx = 0;
-      if (lines.length > 1) {
-        y += 2 * this._cellSpace;
-      }
-      const output: string[] = [];
       let wid = this.width - 1.8 - 5.1;
       if (this.showGluc) {
         wid -= 1.6;
@@ -458,11 +440,63 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       if (this.showChanges && this.showChangesColumn) {
         wid -= 1.7;
       }
+      let text = list[0];
+      let y = this._y;
+      let idx = 0;
+      /**
+       * the list can contain items with font defined as {font: ..., text: ...}
+       * and items with images defined as {image: ...}
+       * so the calculation of the length of the lines
+       * needs to be done carefully
+       */
+        //
+        //
+      let calcText = text;
+      if (calcText?.text != null) {
+        calcText = calcText.text;
+        text = JSON.stringify(text);
+      } else if (calcText?.image != null) {
+        // width of images is considered as width of 1 character
+        calcText = 'W';
+        text = JSON.stringify(text);
+      } else {
+        text = JSON.stringify({text: text});
+      }
+      for (let i = 1; i < list.length; i++) {
+        let line = list[i];
+        let calcLine = line;
+        if (calcLine?.text != null) {
+          calcLine = calcLine.text;
+          line = JSON.stringify(line);
+        } else if (calcLine?.image != null) {
+          // width of images is considered as width of 1 character
+          line = JSON.stringify(calcLine);
+          calcLine = 'W';
+        } else {
+          line = JSON.stringify({text: line});
+        }
+        if (calcText.endsWith(']')) {
+          text = `${text} ${line}`;
+          calcText = `${calcText} ${calcLine}`;
+        } else if (calcText.endsWith('@')) {
+          text = `${text.substring(0, text.length - 1)} ${line}`;
+          calcText = `${calcText.substring(0, calcText.length - 1)} ${calcLine}`;
+        } else {
+          text = `${text}, ${line}`;
+          calcText = `${calcText}, ${calcLine}`;
+        }
+      }
+      const lines = text.split('\n');
+      const calcLines = calcText.split('\n');
+      if (lines.length > 1) {
+        y += 2 * this._cellSpace;
+      }
+      const output: any[] = [];
       const charsPerLine = Math.floor(wid / 0.165);
       while (idx < lines.length &&
-      y + this._lineHeight * (Math.floor(lines[idx].length / charsPerLine) + 1) < this._maxY) {
-        y += this._lineHeight * (Math.floor(lines[idx].length / charsPerLine) + 1);
-        output.push(this.getText(y, `${lines[idx]}`));
+      y + this._lineHeight * (Math.floor(calcLines[idx].length / charsPerLine) + 1) < this._maxY) {
+        y += this._lineHeight * (Math.floor(calcLines[idx].length / charsPerLine) + 1);
+        output.push(...JSON.parse(`[${this.getText(y, lines[idx])}]`));
         idx++;
       }
       this._y = y;
@@ -568,16 +602,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
           style: 'total',
           fontSize: size,
           alignment: 'left'
-        }, {
-          text: text,
-          style: style,
-          fontSize: size,
-          alignment: 'left'
-        });
+        }, {columns: this.mixTextImage(output)});
         this._body.push(row);
         this.tableHeadFilled = true;
       }
-
       lines.splice(0, idx);
       if (!Utils.isEmpty(lines) && lines[0] !== '') {
         list = lines.join('\n').split(', ');
@@ -589,8 +617,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     return list;
   }
 
-  getText(y: number, text: string): string {
-//    if (GLOBALS.isLocal)return "${GLOBALS.fmtNumber(y, 1)} - $text";
+  getText(y: number, text: any): string {
+    // if (GLOBALS.isLocal) {
+    //   return `${GLOBALS.fmtNumber(y, 1)} - ${text}`;
+    // }
     return text;
   }
 
@@ -643,7 +673,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   // "timestamp": "2020-08-23T19:56:14Z",
   // "created_at":"2020-08-23T19:56:14.000Z","eventType":"Temporary Override","insulinNeedsScaleFactor":1.2,
   // "duration":0.022495784362157187,"enteredBy":"Loop","utcOffset":0,"carbs":null,"insulin":null}
-  fillList(showTime: boolean, src: ReportData, day: DayData, t: TreatmentData, list: string[], flags: Flags): void {
+  fillList(showTime: boolean, src: ReportData, day: DayData, t: TreatmentData, list: any[], flags: Flags): void {
     let lastIdx = list.length;
     if (this.showDupes && this.showOnlyDupes && t.duplicates < 2) {
       return;
@@ -654,7 +684,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       t.notes != null &&
       !Utils.isEmpty(t.notes) &&
       !type.startsWith('nr-')) {
-      list.push(`${t.notes.replace(/<br>/g, '\n')}`);
+      const textList = this.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'), 0.3);
+      for (const entry of textList) {
+        list.push(entry);
+      }
     }
     if (this.showCarbs && t.carbs != null && t.carbs != 0) {
       list.push(`${this.msgCarbs(t.carbs.toString())}`);

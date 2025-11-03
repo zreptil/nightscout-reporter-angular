@@ -14,6 +14,7 @@ import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 import {PrintCGP} from '@/forms/nightscout/print-cgp';
 import {PrintDailyAnalysis} from '@/forms/nightscout/print-daily-analysis';
 import {PrintPercentile} from '@/forms/nightscout/print-percentile';
+import {catchError} from 'rxjs/operators';
 
 export class PdfData {
   isPrinted = false;
@@ -243,8 +244,8 @@ export class PdfService {
     */
   }
 
-  collectBase64Images(list: string[]): Observable<any> {
-    this.images = {};
+  collectBase64Images(list: string[], images = {}): Observable<any> {
+    this.images = images;
     const listObservables: Observable<any>[] = [];
     for (const id of list) {
       listObservables.push(this.collectBase64Image(id));
@@ -367,7 +368,7 @@ export class PdfService {
   private preprocessData(data: any) {
     if (typeof data === 'object' && data != null) {
       for (const key of Object.keys(data)) {
-        if (key === 'text') {
+        if (key === 'text' && !Array.isArray(data[key])) {
           const text = data[key];
           let isHebrew = false;
           for (let i = 0; i < text?.length; i++) {
@@ -415,7 +416,6 @@ export class PdfService {
       return;
     }
     await this.loadPdfMaker();
-    // pdfmake changes the
     this.http.get('assets/fonts/pdfmake-fonts.json').subscribe(vfs => {
       let fonts: any = {
         Roboto: {
@@ -423,6 +423,20 @@ export class PdfService {
           bold: 'Roboto-Medium.ttf',
           italics: 'Roboto-Italic.ttf',
           bolditalics: 'Roboto-MediumItalic.ttf'
+        },
+        /**
+         * Emoji font from google fonts
+         * url for download:
+         * https://fonts.google.com/noto/specimen/Noto+Emoji
+         * ttf must be copied to assets/fonts/ttf
+         * then convert with pdfmake-font-generator to assets/fonts/created.js
+         * and copied from there to pdfmake-fonts.json
+         */
+        NotoEmoji: {
+          normal: 'NotoEmoji-Regular.ttf',
+          bold: 'NotoEmoji-Regular.ttf',
+          italics: 'NotoEmoji-Regular.ttf',
+          bolditalics: 'NotoEmoji-Regular.ttf'
         }
       };
 
@@ -474,13 +488,28 @@ export class PdfService {
     });
   }
 
+  /**
+   * Collects a Base64 encoded image URL for the given identifier.
+   *
+   * @param {string} id - The identifier for the image, which may include custom data in the format '@id@urlFormat'.
+   * @return {Observable<{ id: string, url: string }>} An observable emitting an object containing the image `id` and its Base64 encoded `url`. If an error occurs, the `url` will be an empty string.
+   */
   private collectBase64Image(id: string): Observable<{ id: string, url: string }> {
-    const req = new HttpRequest('GET', `assets/img/${id}.png`,
+    let urlFormat = `assets/img/${id}.png`;
+    let imgFormat = 'image/png';
+    if (id.startsWith('@')) {
+      const parts = id.split('@');
+      id = parts[1];
+      urlFormat = parts[2];
+    }
+    const req = new HttpRequest('GET', urlFormat,
       null,
       {responseType: 'arraybuffer'});
     return this.http.request(req)
       .pipe(map(data => {
-        return {id: id, url: `data:image/png;base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+        return {id: id, url: `data:${imgFormat};base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+      }), catchError(_err => {
+        return of({id: id, url: ''});
       }));
   }
 }

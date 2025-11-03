@@ -11,6 +11,7 @@ import {LegendData} from '@/_model/legend-data';
 import {PdfService} from '@/_services/pdf.service';
 import {map, Observable} from 'rxjs';
 import {Settings} from '@/_model/settings';
+import emojiRegex from 'emoji-regex';
 
 export class StepData {
   constructor(public min: number, public step: number) {
@@ -148,6 +149,8 @@ export abstract class BasePrint extends FormConfig {
   images: { [key: string]: string } = {};
   // true if there is a page for every selected device for glucosevalues
   hasDevicePages = false;
+  collectedImages: string[] = [];
+  emojiReplacements: any = {};
 
   protected constructor(public ps: PdfService) {
     super(null, false);
@@ -539,6 +542,10 @@ export abstract class BasePrint extends FormConfig {
 
   _isPortrait = true;
 
+  //String _hba1c(double avgGluc)
+  //=> g.fmtNumber((avgGluc + 86) / 33.3, 1, false);
+  //(avgGluc / 18.02 + 2.645) / 1.649;
+
   get isPortrait(): boolean {
     return this._isPortrait;
   }
@@ -546,10 +553,6 @@ export abstract class BasePrint extends FormConfig {
   public set isPortrait(value: boolean) {
     this._isPortrait = value;
   }
-
-  //String _hba1c(double avgGluc)
-  //=> g.fmtNumber((avgGluc + 86) / 33.3, 1, false);
-  //(avgGluc / 18.02 + 2.645) / 1.649;
 
   get width(): number {
     return this.isPortrait ? 21.0 : 29.7;
@@ -1019,20 +1022,20 @@ export abstract class BasePrint extends FormConfig {
     return key === 'all' ? $localize`:@@msgGlucosekurve:Glukosekurve` : key;
   };
 
-  mm(pt: number): number {
-    return pt / 0.35277;
+  mm(value: number): number {
+    return value / 0.35277;
   }
 
-  cm(pt: number): number {
-    return isNaN(pt) ? 0 : pt / 0.035277 * this.scale;
+  cm(value: number): number {
+    return isNaN(value) ? 0 : value / 0.035277 * this.scale;
   }
 
-  cmx(pt: number): number {
-    return this.cm(this.offsetX + pt);
+  cmx(value: number): number {
+    return this.cm(this.offsetX + value);
   }
 
-  cmy(pt: number): number {
-    return this.cm(this.offsetY + pt);
+  cmy(value: number): number {
+    return this.cm(this.offsetY + value);
   }
 
   fs(size: number): number {
@@ -1863,7 +1866,7 @@ export abstract class BasePrint extends FormConfig {
       image: id
     };
 
-    if (this.images[id] != null) {
+    if (this.imgList.indexOf(id) >= 0) {
       if (params.width != 0 && params.height != 0) {
         ret.fit = [this.cm(params.width), this.cm(params.height)];
       } else if (params.width != 0) {
@@ -1984,13 +1987,13 @@ export abstract class BasePrint extends FormConfig {
     return this.colNormBack;
   }
 
-  carbFromData(carb: any, precision = 0): string {
-    return GLOBALS.fmtNumber(carb, precision);
-  }
-
   /// draws a graphic grid
   ///
   /// it uses [horzfs] as the fontsize of the horizontal scale and [vertfs] as the fontsize for the vertical
+
+  carbFromData(carb: any, precision = 0): string {
+    return GLOBALS.fmtNumber(carb, precision);
+  }
 
   /// scale.
   drawGraphicGrid(glucMax: number, graphHeight: number, graphWidth: number, vertCvs: any[], horzCvs: any[],
@@ -2258,131 +2261,178 @@ export abstract class BasePrint extends FormConfig {
 
   getFormPages(repData: ReportData, currentSize: number): Observable<PageData[]> {
     this.repData = repData;
-    return this.ps.collectBase64Images(this.imgList).pipe(map(list => {
+    if (!this.hasData(repData)) {
+      return this.ps.collectBase64Images(this.imgList).pipe(map(list => {
+        for (const entry of list) {
+          this.images[entry.id] = entry.url;
+        }
+        return [this.getEmptyForm(this.isPortrait, repData.status?.status)];
+      }));
+    }
+
+    let ret: PageData[] = [];
+    for (const param of this.params) {
+      param.isForThumbs = repData.isForThumbs;
+    }
+    this.extractParams();
+    for (const param of this.params) {
+      param.isForThumbs = false;
+    }
+    this._pages = [];
+    this._fileSize = currentSize;
+    try {
+      this.scale = 1.0;
+      let colCount = 1;
+      let rowCount = 1;
+      switch (this.pagesPerSheet) {
+        case 2:
+          this.scale = 21 / 29.7;
+          colCount = 1;
+          rowCount = 2;
+          break;
+        case 4:
+          this.scale = 0.5;
+          colCount = 2;
+          rowCount = 2;
+          break;
+        case 8:
+          this.scale = 21 / 29.7 / 2;
+          colCount = 2;
+          rowCount = 4;
+          break;
+        case 16:
+          this.scale = 0.25;
+          colCount = 4;
+          rowCount = 4;
+          break;
+        case 32:
+          this.scale = 21 / 29.7 / 4;
+          colCount = 4;
+          rowCount = 8;
+          break;
+      }
+      this.offsetX = 0.0;
+      this.offsetY = 0.0;
+      this.collectedImages = [];
+      this.fillPages(this._pages);
+      let column = 0;
+      let row = 0;
+      for (let i = 0; i < this._pages.length; i++) {
+        const page = this._pages[i];
+        switch (this.pagesPerSheet) {
+          case 2:
+          case 8:
+          case 32:
+            page.isPortrait = !page.isPortrait;
+            break;
+        }
+        this.offsetX = column * this.width;
+        this.offsetY = row * this.height;
+        page.offset(this.cmx(0), this.cmy(0));
+        if (column === 0 && row === 0) {
+          ret.push(page);
+        } else {
+          ret[ret.length - 1].content.push(page.asElement);
+        }
+        column++;
+
+        if (column >= colCount) {
+          column = 0;
+          row++;
+          if (row >= rowCount && i < this._pages.length - 1) {
+            row = 0;
+            this._addPageBreak(page);
+          }
+        }
+        //        ret.pushAll(page);
+        //        if(page != _pages.last)
+        //          addPageBreak(ret.last);
+      }
+    } catch (ex) {
+      this.offsetX = 0.0;
+      this.offsetY = 0.0;
+      // ret = {
+      //   'pageSize': 'a4',
+      //   'pageOrientation': 'portrait',
+      //   'pageMargins': [cmx(1), cmy(1), cmx(1), cmy(1)],
+      //   'content': [
+      //     {'text': 'Fehler bei Erstellung von \'${title}\'', 'fontSize': fs(20), 'alignment': 'center', 'color': 'red'},
+      //     {'text': '\n$ex', 'fontSize': fs(10), 'alignment': 'left'},
+      //     {'text': '\n$s', 'fontSize': fs(10), 'alignment': 'left'}
+      //   ]
+      // };
+      ret = [
+        new PageData(this.isPortrait, [
+          {
+            margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
+            text: `Fehler bei Erstellung von "${this.title}"`,
+            fontSize: this.fs(20),
+            alignment: 'center',
+            color: 'red'
+          },
+          {
+            margin: [this.cmx(1.0), this.cmy(0.0), this.cmx(1.0), this.cmy(0)],
+            text: `\n${ex}`,
+            fontSize: this.fs(10),
+            alignment: 'left'
+          },
+          {
+            margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
+            text: `\n${(ex as any)?.stack}`,
+            fontSize: this.fs(10),
+            alignment: 'left'
+          }
+        ])
+      ];
+    }
+    return this.ps.collectBase64Images([...this.imgList, ...this.collectedImages]).pipe(map(list => {
       for (const entry of list) {
         this.images[entry.id] = entry.url;
       }
-      if (!this.hasData(repData)) {
-        return [this.getEmptyForm(this.isPortrait, repData.status?.status)];
-      }
-
-      let ret: PageData[] = [];
-      for (const param of this.params) {
-        param.isForThumbs = repData.isForThumbs;
-      }
-      this.extractParams();
-      for (const param of this.params) {
-        param.isForThumbs = false;
-      }
-      this._pages = [];
-      this._fileSize = currentSize;
-      try {
-        this.scale = 1.0;
-        let colCount = 1;
-        let rowCount = 1;
-        switch (this.pagesPerSheet) {
-          case 2:
-            this.scale = 21 / 29.7;
-            colCount = 1;
-            rowCount = 2;
-            break;
-          case 4:
-            this.scale = 0.5;
-            colCount = 2;
-            rowCount = 2;
-            break;
-          case 8:
-            this.scale = 21 / 29.7 / 2;
-            colCount = 2;
-            rowCount = 4;
-            break;
-          case 16:
-            this.scale = 0.25;
-            colCount = 4;
-            rowCount = 4;
-            break;
-          case 32:
-            this.scale = 21 / 29.7 / 4;
-            colCount = 4;
-            rowCount = 8;
-            break;
-        }
-        this.offsetX = 0.0;
-        this.offsetY = 0.0;
-        this.fillPages(this._pages);
-        let column = 0;
-        let row = 0;
-        for (let i = 0; i < this._pages.length; i++) {
-          const page = this._pages[i];
-          switch (this.pagesPerSheet) {
-            case 2:
-            case 8:
-            case 32:
-              page.isPortrait = !page.isPortrait;
-              break;
-          }
-          this.offsetX = column * this.width;
-          this.offsetY = row * this.height;
-          page.offset(this.cmx(0), this.cmy(0));
-          if (column === 0 && row === 0) {
-            ret.push(page);
-          } else {
-            ret[ret.length - 1].content.push(page.asElement);
-          }
-          column++;
-
-          if (column >= colCount) {
-            column = 0;
-            row++;
-            if (row >= rowCount && i < this._pages.length - 1) {
-              row = 0;
-              this._addPageBreak(page);
-            }
-          }
-          //        ret.pushAll(page);
-          //        if(page != _pages.last)
-          //          addPageBreak(ret.last);
-        }
-      } catch (ex) {
-        this.offsetX = 0.0;
-        this.offsetY = 0.0;
-        // ret = {
-        //   'pageSize': 'a4',
-        //   'pageOrientation': 'portrait',
-        //   'pageMargins': [cmx(1), cmy(1), cmx(1), cmy(1)],
-        //   'content': [
-        //     {'text': 'Fehler bei Erstellung von \'${title}\'', 'fontSize': fs(20), 'alignment': 'center', 'color': 'red'},
-        //     {'text': '\n$ex', 'fontSize': fs(10), 'alignment': 'left'},
-        //     {'text': '\n$s', 'fontSize': fs(10), 'alignment': 'left'}
-        //   ]
-        // };
-        ret = [
-          new PageData(this.isPortrait, [
-            {
-              margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
-              text: `Fehler bei Erstellung von "${this.title}"`,
-              fontSize: this.fs(20),
-              alignment: 'center',
-              color: 'red'
-            },
-            {
-              margin: [this.cmx(1.0), this.cmy(0.0), this.cmx(1.0), this.cmy(0)],
-              text: `\n${ex}`,
-              fontSize: this.fs(10),
-              alignment: 'left'
-            },
-            {
-              margin: [this.cmx(1.0), this.cmy(0.5), this.cmx(1.0), this.cmy(0)],
-              text: `\n${(ex as any)?.stack}`,
-              fontSize: this.fs(10),
-              alignment: 'left'
-            }
-          ])
-        ];
-      }
-
+      this.verifyPages(ret);
       return ret;
     }));
+  }
+
+  verifyPages(pages: PageData[]) {
+    for (const page of pages) {
+      page.content = this.verifyPageContent(page.content);
+    }
+  }
+
+  verifyPageContent(content: any[]): any[] {
+    const ret: any[] = [];
+    for (const entry of content) {
+      if (entry == null) {
+      } else if (Array.isArray(entry)) {
+        ret.push(this.verifyPageContent(entry));
+      } else {
+        ret.push(this.verifyImages(entry));
+      }
+    }
+    return ret;
+  }
+
+  verifyImages(data: any): any {
+    if (typeof data !== 'object') {
+      return data;
+    }
+    const ret: any = {};
+    for (const key of Object.keys(data)) {
+      if (data[key] == null) {
+        ret[key] = '';
+      } else if (Array.isArray(data[key])) {
+        ret[key] = this.verifyPageContent(data[key]);
+      } else if (key === 'image' && Utils.isEmpty(this.images[data[key]])) {
+        delete this.images[data[key]];
+        return this.emojiReplacements[data[key]];
+        // return {image: 'nightscout', width: data.width, margins: data.margins};
+        // return {text: 'W', width: 'auto'};
+      } else {
+        ret[key] = this.verifyImages(data[key]);
+      }
+    }
+    return ret;
   }
 
   drawScaleIE(xo: number, yo: number, graphHeight: number, top: number, min: number, max: number, colWidth: number,
@@ -2557,9 +2607,6 @@ export abstract class BasePrint extends FormConfig {
     };
   }
 
-  getTimeConsumingParts(data: ReportData, ret: string[]): void {
-  }
-
   // String get helpHtml {
   //   if (help == null) return null;
   //
@@ -2580,6 +2627,123 @@ export abstract class BasePrint extends FormConfig {
   //   ret += links.toString();
   //   return ret;
   // }
+
+  getTimeConsumingParts(data: ReportData, ret: string[]): void {
+  }
+
+  /**
+   * takes an array of pdfmake-objects and updates the attributes so
+   * that it can be used in a pdfmake-document within a columns-attribute.
+   * @param list list of objects, mixed text and image
+   */
+  mixTextImage(list: any[]): any[] {
+    const ret: any[] = [];
+    for (let i = 0; i < list.length; i++) {
+      if (typeof list[i] === 'string') {
+        list[i] = {text: list[i]};
+      }
+      if (list[i].image != null) {
+        if (typeof list[i + 1] === 'string') {
+          list[i + 1] = {text: list[i + 1]};
+        }
+        if (i < list.length - 1 && list[i + 1].text != null) {
+          list[i + 1].text = ` ${list[i + 1].text}`;
+          list[i + 1].preserveLeadingSpaces = true;
+        }
+        if (i > 0 && list[i - 1].text != null) {
+          list[i - 1].text = `${list[i - 1].text} `;
+          list[i - 1].preserveTrailingSpaces = true;
+        }
+      } else if (list[i].width == null) {
+        list[i].width = 'auto';
+      }
+      ret.push(list[i]);
+    }
+    return ret;
+  }
+
+  /**
+   * Processes a string to replace emoji characters with placeholders or image objects,
+   * based on the provided settings, and returns an array of text and emoji objects.
+   *
+   * @param {string} s - The input string containing text and emojis.
+   * @param {number} width - The width parameter applied to the emoji image objects, when applicable.
+   * @param {boolean} [useImages=true] - Determines whether to use emoji image objects or text-based replacements.
+   * @return {any[]} An array containing processed text parts and emoji objects or image objects.
+   */
+  getTextWithEmojiObjects(s: string, width: number, useImages = true): any[] {
+    let hasUnicodeProp = true;
+    let regEx: RegExp = null;
+// Extended_Pictographic
+    try {
+      regEx = new RegExp('\\p{Emoji_Presentation}', 'ug');
+      regEx.test('');  // force compiling
+    } catch (e) {
+      hasUnicodeProp = false;
+    }
+
+    let emojis: string[] = [];
+    let text: string[];
+
+    const sep = '[[EMOJI_PLACEHOLDER]]';
+    if (hasUnicodeProp && regEx != null) {
+      const stringWithPlaceholders = s.replaceAll(
+        regEx,
+        (emoji: string) => {
+          emojis.push(emoji);
+          return sep;
+        }
+      );
+      text = stringWithPlaceholders.split(sep);
+    } else {
+      regEx = emojiRegex();
+
+      let lastIdx = 0;
+      const parts: string[] = [];
+      emojis = [];
+
+      for (const match of s.matchAll(regEx)) {
+        const emoji = match[0];
+        const idx = match.index!;
+        parts.push(s.substring(lastIdx, idx));
+        parts.push(sep);
+        emojis.push(emoji);
+        lastIdx = idx + emoji.length;
+      }
+      parts.push(s.substring(lastIdx));
+      text = parts.filter((_, i) => i % 2 === 0);
+    }
+    const ret: any[] = [];
+    for (let i = 0; i < text.length; i++) {
+      const textPart = text[i];
+      if (textPart !== '') {
+        ret.push(textPart);
+      }
+      if (i < emojis.length) {
+        const cp = emojis[i].codePointAt(0).toString(16).toLowerCase();
+        this.emojiReplacements[`emoji${cp}`] = {
+          font: 'NotoEmoji',
+          text: emojis[i],
+          color: 'maroon',
+          width: 'auto'
+        };
+        if (useImages) {
+          const pngUrl = `@emoji${cp}@https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/emoji_u${cp}.png`;
+          ret.push({
+            image: `emoji${cp}`,
+            width: this.cm(width),
+            margin: [0, this.cm(width / 3), 0, 0]
+          });
+          if (!this.collectedImages.includes(pngUrl)) {
+            this.collectedImages.push(pngUrl);
+          }
+        } else {
+          ret.push(this.emojiReplacements[`emoji${cp}`]);
+        }
+      }
+    }
+    return ret;
+  }
 
   private hba1cDisplay(avgGluc: number): string {
     if (GLOBALS.ppShowHbA1Cmmol) {

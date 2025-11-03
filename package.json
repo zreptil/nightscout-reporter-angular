@@ -12,6 +12,7 @@
     "build-demo": "ng build --configuration demo",
     "zip": "npm-build-zip --source=dist/nightrep/browser --destination=dist/nightrep/browser --name=nightscout-reporter_local --name_only=true",
     "watch": "ng build --watch --configuration development",
+    "pdfmake-font-generator": "pdfmakefg src/assets/fonts/ttf src/assets/fonts/created.js",
     "i18n-01-extract": "ng extract-i18n --output-path src/locale --out-file messages.de-DE.xliff --format xliff --progress",
     "i18n-02-upload-german": "start https://crowdin.com/project/nightrep/content/files",
     "i18n-03-create-english-source": "tsc tools/i18n-create-english.ts && node tools/i18n-create-english.js",
@@ -64,6 +65,7 @@
     "fs-extra": "^11.3.0",
     "jasmine-core": "~4.5.0",
     "npm-build-zip": "^1.0.3",
+    "pdfmake-font-generator": "^1.0.1",
     "typescript": "~5.8.3"
   }
 }
