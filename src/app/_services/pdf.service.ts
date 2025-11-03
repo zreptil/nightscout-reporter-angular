@@ -422,17 +422,19 @@ export class PdfService {
           italics: 'Roboto-Italic.ttf',
           bolditalics: 'Roboto-MediumItalic.ttf'
         },
-        NotoColorEmoji: {
-          normal: 'NotoColorEmoji-Regular.ttf',
-          bold: 'NotoColorEmoji-Regular.ttf',
-          italics: 'NotoColorEmoji-Regular.ttf',
-          bolditalics: 'NotoColorEmoji-Regular.ttf'
-        },
+        /**
+         * Emoji font from google fonts
+         * url for download:
+         * https://fonts.google.com/noto/specimen/Noto+Emoji
+         * ttf must be copied to assets/fonts/ttf
+         * then convert with pdfmake-font-generator to assets/fonts/created.js
+         * and copied from there to pdfmake-fonts.json
+         */
         NotoEmoji: {
-          normal: 'NotoEmoji-Medium.ttf',
-          bold: 'NotoEmoji-Medium.ttf',
-          italics: 'NotoEmoji-Medium.ttf',
-          bolditalics: 'NotoEmoji-Medium.ttf'
+          normal: 'NotoEmoji-Regular.ttf',
+          bold: 'NotoEmoji-Regular.ttf',
+          italics: 'NotoEmoji-Regular.ttf',
+          bolditalics: 'NotoEmoji-Regular.ttf'
         }
       };
 

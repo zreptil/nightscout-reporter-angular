@@ -2570,7 +2570,13 @@ export abstract class BasePrint extends FormConfig {
   mixTextImage(list: any[]): any[] {
     const ret: any[] = [];
     for (let i = 0; i < list.length; i++) {
+      if (typeof list[i] === 'string') {
+        list[i] = {text: list[i]};
+      }
       if (list[i].image != null) {
+        if (typeof list[i + 1] === 'string') {
+          list[i + 1] = {text: list[i + 1]};
+        }
         if (i < list.length - 1 && list[i + 1].text != null) {
           list[i + 1].text = ` ${list[i + 1].text}`;
           list[i + 1].preserveLeadingSpaces = true;
@@ -2588,13 +2594,15 @@ export abstract class BasePrint extends FormConfig {
   }
 
   /**
-   * Extracts text parts and associated emoji objects from the input string,
-   * replacing emojis with defined placeholders and fetching data for their representation.
+   * Processes a string to replace emoji characters with placeholders or image objects,
+   * based on the provided settings, and returns an array of text and emoji objects.
    *
    * @param {string} s - The input string containing text and emojis.
-   * @return {any[]} - An array containing separated text elements and emoji objects with representation data.
+   * @param {number} width - The width parameter applied to the emoji image objects, when applicable.
+   * @param {boolean} [useImages=true] - Determines whether to use emoji image objects or text-based replacements.
+   * @return {any[]} An array containing processed text parts and emoji objects or image objects.
    */
-  getTextWithEmojiObjects(s: string): any[] {
+  getTextWithEmojiObjects(s: string, width: number, useImages = true): any[] {
     let hasUnicodeProp = true;
     let regEx: RegExp = null;
 // Extended_Pictographic
@@ -2644,22 +2652,28 @@ export abstract class BasePrint extends FormConfig {
       }
       if (i < emojis.length) {
         const cp = emojis[i].codePointAt(0).toString(16).toLowerCase();
-        const pngUrl = `@emoji${cp}@https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/emoji_u${cp}.png`;
         this.emojiReplacements[`emoji${cp}`] = {
           font: 'NotoEmoji',
           text: emojis[i],
           color: 'maroon',
           width: 'auto'
         };
-        ret.push(this.emoji(cp));
-        this.collectedImages.push(pngUrl);
+        if (useImages) {
+          const pngUrl = `@emoji${cp}@https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/emoji_u${cp}.png`;
+          ret.push({
+            image: `emoji${cp}`,
+            width: this.cm(width),
+            margin: [0, this.cm(width / 3), 0, 0]
+          });
+          if (!this.collectedImages.includes(pngUrl)) {
+            this.collectedImages.push(pngUrl);
+          }
+        } else {
+          ret.push(this.emojiReplacements[`emoji${cp}`]);
+        }
       }
     }
     return ret;
-  }
-
-  emoji(key: string) {
-    return {image: `emoji${key}`, width: this.cm(0.3), margin: [0, this.cm(0.1), 0, 0]};
   }
 
   private hba1cDisplay(avgGluc: number): string {

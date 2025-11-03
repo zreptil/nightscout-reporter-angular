@@ -5,6 +5,19 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
+    <br/>
+    <h2 (click)="click(44.4)">
+      <span i18n="version">Version</span><span i18n="v444">4.4.4 - 03.11.2025</span>
+    </h2>
+    <ul [class]="classFor(44.4)">
+      <li class="added" i18n="1444a1">
+        Emojis in Notizen können jetzt auch dargestellt werden. Sie werden dazu als
+        Bilder aus Googles Github heruntergeladen. Sollte es keine Verbindung zu
+        dieser Seite geben, wird der Noto-Emoji-Zeichensatz verwendet, der die
+        Emojis allerdings nur monochrom zur Verfügung stellt. Aktuell werden
+        die Notizen auf den Formularen Protokoll und Tagesgrafik ausgegeben,
+      </li>
+    </ul>
     <h2 (click)="click(44.3)">
       <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
     </h2>

@@ -811,7 +811,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     for (const t of day.treatments) {
       let x: number;
       let y: number;
-      let notes = t.notes;
+      let notes = JSON.stringify(this.getTextWithEmojiObjects(t.notes, 0.2));
       // string type = t.eventType.toLowerCase();
       // if (showSMB && t.microbolus > 0) {
       //   EntryData entry = day.findNearest(day.entries, null, t.createdAt);
@@ -991,7 +991,10 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
 
       if (t.isExercise && this.showExercises) {
         const x = this.glucX(t.createdAt);
-        const wid = this.glucX(new Date(0, 0, 0, 0, 0, t.duration));
+        let wid = this.glucX(new Date(0, 0, 0, 0, 0, t.duration));
+        if (x + wid > this.graphWidth) {
+          wid = this.graphWidth - x;
+        }
         exerciseCvs.canvas.push({
           type: 'rect',
           x: this.cm(x),
@@ -1006,13 +1009,14 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
               x: this.cm(x + 0.05),
               y: this.cm(this.exerciseTop + this.exerciseBarSpace + this.exerciseBarHeight / 2 - 0.13)
             },
-            text: notes,
+            columns: this.mixTextImage(JSON.parse(`${notes}`)),
             fontSize: this.fs(6),
             alignment: 'left',
             color: this.colExerciseText
           });
         }
       } else if (!Utils.isEmpty(t.notes ?? '') && t.duration > 0 && this.showNoteDuration) {
+        console.log('hier', notes);
         const x = this.glucX(t.createdAt);
         const until = new Date(t.createdAt.getTime() + t.duration * 1000);
         const check = new Date(t.createdAt.getTime());
@@ -1034,7 +1038,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
             x: this.cm(x + 0.05),
             y: this.cm(this.exerciseTop + this.exerciseDurationTop + this.exerciseBarHeight / 2 - 0.13)
           },
-          text: notes,
+          columns: this.mixTextImage(JSON.parse(`${notes}`)),
           fontSize: this.fs(6),
           alignment: 'left',
           color: this.colDurationNotesText
@@ -1042,9 +1046,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       } else if (this.showNotes && !Utils.isEmpty(t.notes ?? '') && !t.isECarb) {
         // let notes = t.notes;
         if (!this.showHTMLNotes) {
-          notes = t.notes.replace(/<.*>/, '');
-//          notes = JSON.stringify(notes);
-          notes = JSON.stringify(this.getTextWithEmojiObjects(notes));
+          notes = notes.replace(/<.*>/, '');
         }
         let x = this.glucX(t.createdAt);
         // *** line length estimation ***
@@ -1093,7 +1095,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           });
           graphLegend.stack.push({
             relativePosition: {x: this.cm(x + 0.05), y: this.cm(y + this.notesHeight - 0.25)},
-            text: JSON.parse(`${notes}`),
+            columns: this.mixTextImage(JSON.parse(`${notes}`)),
             fontSize: this.fs(8),
             alignment: 'left',
             color: t.duration > 0 ? this.colDurationNotes : this.colNotes

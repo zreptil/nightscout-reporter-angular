@@ -443,13 +443,20 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       let text = list[0];
       let y = this._y;
       let idx = 0;
-      // the list can contain items with font defined as {font: ..., text: ...}
-      // so the calculation of the length of the lines  needs to be done differently
+      /**
+       * the list can contain items with font defined as {font: ..., text: ...}
+       * and items with images defined as {image: ...}
+       * so the calculation of the length of the lines
+       * needs to be done carefully
+       */
+        //
+        //
       let calcText = text;
       if (calcText?.text != null) {
         calcText = calcText.text;
         text = JSON.stringify(text);
       } else if (calcText?.image != null) {
+        // width of images is considered as width of 1 character
         calcText = 'W';
         text = JSON.stringify(text);
       } else {
@@ -462,6 +469,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
           calcLine = calcLine.text;
           line = JSON.stringify(line);
         } else if (calcLine?.image != null) {
+          // width of images is considered as width of 1 character
           line = JSON.stringify(calcLine);
           calcLine = 'W';
         } else {
@@ -493,7 +501,6 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       }
       this._y = y;
       text = output.join('\n');
-      console.log('output', output);
       if (text !== '') {
         this._y += 2 * this._cellSpace;
         this.addRow(true, this.cm(1.8), row, {
@@ -614,7 +621,6 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     // if (GLOBALS.isLocal) {
     //   return `${GLOBALS.fmtNumber(y, 1)} - ${text}`;
     // }
-    console.log('getText', y, text);
     return text;
   }
 
@@ -678,15 +684,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       t.notes != null &&
       !Utils.isEmpty(t.notes) &&
       !type.startsWith('nr-')) {
-//      list.push(`${t.notes.replace(/<br>/g, '\n')}`);
-      const textList = this.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'));
-      //const listig = this.ps.getTextWithEmojiObjects('Das sind zwei Emojis');
+      const textList = this.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'), 0.3);
       for (const entry of textList) {
         list.push(entry);
       }
-      //list.push('Es ist unglaublich, wie viel man an völligem Schwachsinn in so einen Text reinschreiben kann, ohne einen Zeilenumbruch drin zu haben und damit den Text so lang zu gestaltetn, dass er sicher über mehrere Zeilen aufgeteilt werden muss, egal, was passiert und wie breit auch immer das Blatt sein mag.')
-      //list.push([...this.ps.getTextWithEmojiObjects('Hier sind keine Emojis')]);
-      //console.log(list);
     }
     if (this.showCarbs && t.carbs != null && t.carbs != 0) {
       list.push(`${this.msgCarbs(t.carbs.toString())}`);
