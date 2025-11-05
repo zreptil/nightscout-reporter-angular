@@ -125,7 +125,7 @@ export class OutputParamsComponent implements OnInit {
   }
 
   msgStandardLimits(low: string, high: string, unit: string): string {
-    return $localize`Standard Zielbereich verwenden (${low} ${unit} - ${high} ${unit})`;
+    return $localize`Standard Zielbereich verwenden (${low}\u00A0${unit} - ${high}\u00A0${unit})`;
   }
 
   msgTestData(): string {
