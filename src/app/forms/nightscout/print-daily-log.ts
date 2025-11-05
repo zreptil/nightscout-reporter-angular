@@ -708,15 +708,15 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   msgLogSMB(insulin: number, unit: string): string {
-    return $localize`:@@msgLogSMB:SMB ${insulin}\u00A0${unit}`;
+    return $localize`:@@msgLogSMB:SMB ${insulin}\u2003${unit}`;
   }
 
   msgLogMicroBolus(insulin: string, unit: string): string {
-    return $localize`:@@msgLogMicroBolus:Microbolus ${insulin}\u00A0${unit}`;
+    return $localize`:@@msgLogMicroBolus:Microbolus ${insulin}\u2003${unit}`;
   }
 
   msgMBG(gluc: string, unit: number): string {
-    return $localize`:@@msgMBG:Blutige Messung ${gluc}\u00A0${unit}`;
+    return $localize`:@@msgMBG:Blutige Messung ${gluc}\u2003${unit}`;
   }
 
   msgLogOverride(range: string, duration: number, reason: string, scale: number): string {
