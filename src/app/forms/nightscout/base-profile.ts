@@ -68,7 +68,7 @@ export abstract class BaseProfile extends BasePrint {
   }
 
   msgChangedEntry(name: string, from: string, to: string): string {
-    return $localize`${name}\u00A0${from} => ${to}`;
+    return $localize`${name}\u2003${from} => ${to}`;
   }
 
   override hasData(src: ReportData): boolean {
