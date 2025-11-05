@@ -85,10 +85,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   _page: any[] = [];
   _y: number;
   _bloodValue: number;
-//  number _lineHeight = 0.34;
-  _lineHeight = 0.4;
-  _cellSpace = 0.12; //((23.59 / 70) - 0.3) / 2;
+  _lineHeight = 0.48;
+  _cellSpace = 0.08;
   _maxY: number;
+  _dbgX = 0.2;
 
   constructor(ps: PdfService, suffix: string = null) {
     super(ps);
@@ -197,11 +197,11 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     return true;
   }
 
+//  number _cellSpace = 0.11;
+
   override get footerText(): any {
     return this.footerTextDayTimes;
   }
-
-//  number _cellSpace = 0.11;
 
   get msgLogTempTargetReset(): string {
     return $localize`Aufhebung von temp. Ziel`;
@@ -289,6 +289,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     this.showTempOverrides = true;
     this.groupMinutes = 5;
     // --------------------------- */
+    this._dbgX = 0.2;
     this.fillPagesInternal(pages);
     if (GLOBALS.showBothUnits) {
       GLOBALS.glucMGDLIdx = 1;
@@ -337,7 +338,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   }
 
   lineHeight(lineCount: number): number {
-    return 2 * this._cellSpace + lineCount * (this._lineHeight + this._cellSpace);
+    return 2 * this._cellSpace + lineCount * (this._lineHeight);// + this._cellSpace);
   }
 
   fillTable(day: DayData, pages: PageData[]): void {
@@ -371,7 +372,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       if (e.type === 'cal') {
         const t = new TreatmentData();
         t.createdAt = e.time;
-        t.eventType = `nr-${e.type}`;
+        t.eventType = `nr-cal`;
         t.notes =
           `${BasePrint.msgCalibration(GLOBALS.fmtNumber(e.scale, 2), GLOBALS.fmtNumber(e.intercept, 0), GLOBALS.fmtNumber(e.slope, 2))}`;
         treatments.push(t);
@@ -401,10 +402,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
             this._y += this.lineHeight(1);
             this._isFirstLine = false;
           }
-          list = this.fillRow(time, this.repData, day, row,
-            day.findNearest(day.entries, null, time), list, flags, 'row');
+          list = this.fillRow(time, day, row, day.findNearest(day.entries, null, time),
+            list, flags, 'row');
           row = [];
-          if (!Utils.isEmpty(list) || this._y + this._lineHeight >= this._maxY) {
+          if (!Utils.isEmpty(list) && this._y + this._lineHeight >= this._maxY) {
             this._page.push(this.headerFooter());
             this._page.push(this.getTable(this.tableWidths, this._body));
             pages.push(new PageData(this.isPortrait, this._page));
@@ -425,10 +426,11 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     }
   }
 
-  fillRow(time: Date, src: ReportData, day: DayData, row: any,
-          glucEntry: EntryData, list: any[], flags: Flags, style: string): string[] {
+  fillRow(time: Date, day: DayData, row: any,
+          glucEntry: EntryData, list: any[],
+          flags: Flags, style: string): string[] {
     if (glucEntry != null && this.showGlucSource) {
-      list.splice(0, 0, `Quelle: ${glucEntry.device}`);
+      list.splice(0, 0, `Quelle: ${glucEntry.device ?? '-'}`);
     }
     if (!Utils.isEmpty(list)) {
       const oldY = this._y;
@@ -440,179 +442,231 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       if (this.showChanges && this.showChangesColumn) {
         wid -= 1.7;
       }
-      let text = list[0];
-      let y = this._y;
-      let idx = 0;
-      /**
-       * the list can contain items with font defined as {font: ..., text: ...}
-       * and items with images defined as {image: ...}
-       * so the calculation of the length of the lines
-       * needs to be done carefully
-       */
-        //
-        //
-      let calcText = text;
-      if (calcText?.text != null) {
-        calcText = calcText.text;
-        text = JSON.stringify(text);
-      } else if (calcText?.image != null) {
-        // width of images is considered as width of 1 character
-        calcText = 'W';
-        text = JSON.stringify(text);
-      } else {
-        text = JSON.stringify({text: text});
-      }
-      for (let i = 1; i < list.length; i++) {
-        let line = list[i];
-        let calcLine = line;
-        if (calcLine?.text != null) {
-          calcLine = calcLine.text;
-          line = JSON.stringify(line);
-        } else if (calcLine?.image != null) {
+      const itemList: any[] = [];
+
+      for (let i = 0; i < list.length; i++) {
+        const src = list[i];
+        let item: any = null;
+        if (src?.text != null) {
+          item = {...src};
+          // itemList.push({...src, calc: src.text.length, preserveLeadingSpaces: true});
+        } else if (src?.image != null) {
           // width of images is considered as width of 1 character
-          line = JSON.stringify(calcLine);
-          calcLine = 'W';
+          item = {...src, calc: 1};
+          //itemList.push({...src, calc: 1})
         } else {
-          line = JSON.stringify({text: line});
+          item = {text: src, width: 'auto'};
         }
-        if (calcText.endsWith(']')) {
-          text = `${text} ${line}`;
-          calcText = `${calcText} ${calcLine}`;
-        } else if (calcText.endsWith('@')) {
-          text = `${text.substring(0, text.length - 1)} ${line}`;
-          calcText = `${calcText.substring(0, calcText.length - 1)} ${calcLine}`;
-        } else {
-          text = `${text}, ${line}`;
-          calcText = `${calcText}, ${calcLine}`;
+        if (item.text != null) {
+          if (i > 0) {
+            item.text = ' ' + item.text;
+          }
+          item.calc = item.text.length;
+          item.preserveLeadingSpaces = true;
         }
+        itemList.push(item);
       }
-      const lines = text.split('\n');
-      const calcLines = calcText.split('\n');
-      if (lines.length > 1) {
+      // itemList contains the listentries as json-objects
+      // where calc is the length of the object in number of chars
+      let y = this._y;
+      if (itemList.length > 1) {
         y += 2 * this._cellSpace;
       }
-      const output: any[] = [];
-      const charsPerLine = Math.floor(wid / 0.165);
-      while (idx < lines.length &&
-      y + this._lineHeight * (Math.floor(calcLines[idx].length / charsPerLine) + 1) < this._maxY) {
-        y += this._lineHeight * (Math.floor(calcLines[idx].length / charsPerLine) + 1);
-        output.push(...JSON.parse(`[${this.getText(y, lines[idx])}]`));
-        idx++;
-      }
-      this._y = y;
-      text = output.join('\n');
-      if (text !== '') {
-        this._y += 2 * this._cellSpace;
-        this.addRow(true, this.cm(1.8), row, {
-          text: this.msgTime,
-          style: 'total',
-          fontSize: size,
-          alignment: 'center'
-        }, {
-          text: this.fmtTime(time),
-          style: this.styleForTime(time),
-          fontSize: size,
-          alignment: 'center'
-        });
-        if (this.showGluc) {
-          const gluc = glucEntry?.gluc;
-          if (this._bloodValue == null) {
-            this.addRow(true, this.cm(1.3), row, {
-              text: GLOBALS.getGlucInfo().unit,
-              style: 'total',
-              fontSize: size,
-              alignment: 'center'
-            }, {
-              text: GLOBALS.glucFromData(gluc),
-              style: style,
-              fontSize: size,
-              alignment: 'center',
-              fillColor: this.colForGlucBack(day, gluc)
-            });
+      // this is a primitve calculation of the chars that will surely fit in one line
+      // has to be adjusted when the font-size changes.
+      const charsPerLine = Math.floor(wid / 0.2);
+      const stackNotes: any[] = []
+      let pageFit = true;
+      let charsCount = 0;
+      let idx = 0;
+      let colLine: any = {columns: []}
+      while (idx < itemList.length && pageFit) {
+        if (charsCount + itemList[idx].calc > charsPerLine) {
+          if (itemList[idx].text != null) {
+            const parts: any[] = itemList[idx].text.split(' ');
+            itemList[idx].text = '';
+            while (charsCount + parts[0].length + 1 < charsPerLine) {
+              charsCount += parts[0].length + 1;
+              itemList[idx].text += ' ' + parts[0];
+              parts.splice(0, 1);
+            }
+            if (idx === 0) {
+              itemList[idx].text = itemList[idx].text.trim();
+            }
+            itemList[idx].calc = itemList[idx].text.length;
+            colLine.columns.push(this.removeCalc(itemList[idx]));
+            itemList[idx].text = parts.join(' ').trim();
+            itemList[idx].calc = itemList[idx].text.length;
+            list[0] = itemList[idx];
           } else {
-            this.addRow(true, this.cm(1.3), row, {
-              text: GLOBALS.getGlucInfo().unit,
-              style: 'total',
-              fontSize: size,
-              alignment: 'center'
-            }, {
-              stack: [
-                {
-                  text: GLOBALS.glucFromData(gluc),
-                  style: style,
-                  fontSize: size,
-                  alignment: 'center'
-                },
-                {
-                  text: GLOBALS.glucFromData(this._bloodValue),
-                  style: style,
-                  fontSize: size,
-                  alignment: 'center',
-                  color: this.colBloodValues
-                },
-              ],
-              fillColor: this.colForGlucBack(day, gluc)
-            });
-            this._y += this._lineHeight;
+            list.splice(0, 1);
           }
+          y += this._lineHeight;
+          stackNotes.push(colLine);
+          colLine = {columns: []}
+          charsCount = 0;
+          if (y + this._lineHeight > this._maxY) {
+            pageFit = false;
+          }
+        } else {
+          charsCount += itemList[idx].calc;
+          colLine.columns.push(this.removeCalc(itemList[idx]));
+          list.splice(0, 1);
+          idx++;
         }
-        if (this.showChanges && this.showChangesColumn) {
-          const stack: any[] = [];
-          let x = -0.5;
-          if (flags.hasKatheter) {
-            stack.push({
-              relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
-              image: 'katheter.print',
-              width: this.cm(0.4)
-            });
+      }
+      if (idx === itemList.length) {
+        if (GLOBALS.isDebug) {
+          colLine.columns = [{text: GLOBALS.fmtNumber(y * 10, 2), color: 'red'}];
+        }
+        stackNotes.push(colLine);
+        if (GLOBALS.isDebug) {
+          const yx = this.cm(this._dbgX);
+          this._dbgX += 0.9;
+          if (this._dbgX > 1.1) {
+            this._dbgX = 0.2;
           }
-          if (flags.hasSensor) {
-            stack.push({
-              relativePosition: {x: this.cm(x += 0.5), y: this.cm(0)},
-              image: 'sensor.print',
-              width: this.cm(0.4)
-            });
-          }
-          if (flags.hasAmpulle) {
-            stack.push({
-              relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
-              image: 'ampulle.print',
-              width: this.cm(0.4)
-            });
-          }
-          if (flags.hasBattery) {
-            // noinspection JSUnusedAssignment
-            stack.push({
-              relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
-              image: 'battery.print',
-              width: this.cm(0.4)
-            });
-          }
-          this.addRow(true, this.cm(1.4), row, {
-            text: BasePrint.msgChange,
+          stackNotes.push({
+            columns: [{
+              absolutePosition: {x: this.cm(0.0), y: this.cm(0.0)},
+              canvas: [{
+                type: 'line',
+                x1: yx,
+                y1: this.cm(0.0),
+                x2: yx,
+                y2: this.cm(y),
+                lineWidth: this.cm(this.lw),
+                lineColor: 'red'
+              }, {
+                type: 'rect',
+                x: yx,
+                y: this.cm(y),
+                w: this.cm(0.9),
+                h: this.cm(0.3),
+                color: 'red'
+              }]
+            }, {
+              absolutePosition: {x: yx, y: this.cm(y)},
+              text: GLOBALS.fmtNumber(y * 10, 2),
+              fontSize: this.fs(7),
+              bold: true,
+              color: 'white'
+            }]
+          });
+        }
+        list.splice(0);
+      }
+      console.log('list created', stackNotes[stackNotes.length - 1].columns[stackNotes[stackNotes.length - 1].columns.length - 1], y, this._maxY, pageFit, Utils.jsonize(stackNotes), Utils.jsonize(list));
+      this._y = y + this._lineHeight + 2 * this._cellSpace;
+      this.addRow(true, this.cm(1.8), row, {
+        text: this.msgTime,
+        style: 'total',
+        fontSize: size,
+        alignment: 'center'
+      }, {
+        text: this.fmtTime(time),
+        style: this.styleForTime(time),
+        fontSize: size,
+        alignment: 'center'
+      });
+      if (this.showGluc) {
+        const gluc = glucEntry?.gluc;
+        if (this._bloodValue == null) {
+          this.addRow(true, this.cm(1.3), row, {
+            text: GLOBALS.getGlucInfo().unit,
             style: 'total',
             fontSize: size,
             alignment: 'center'
           }, {
-            stack: stack
+            text: GLOBALS.glucFromData(gluc),
+            style: style,
+            fontSize: size,
+            alignment: 'center',
+            fillColor: this.colForGlucBack(day, gluc)
+          });
+        } else {
+          this.addRow(true, this.cm(1.3), row, {
+            text: GLOBALS.getGlucInfo().unit,
+            style: 'total',
+            fontSize: size,
+            alignment: 'center'
+          }, {
+            stack: [
+              {
+                text: GLOBALS.glucFromData(gluc),
+                style: style,
+                fontSize: size,
+                alignment: 'center'
+              },
+              {
+                text: GLOBALS.glucFromData(this._bloodValue),
+                style: style,
+                fontSize: size,
+                alignment: 'center',
+                color: this.colBloodValues
+              },
+            ],
+            fillColor: this.colForGlucBack(day, gluc)
           });
         }
-        this.addRow(true, this.cm(wid), row, {
-          text: this.getText(oldY, `${this.fmtDate(time, {withShortWeekday: false, withLongWeekday: true})}`),
+      }
+      let stackChange: any[] = [];
+      if (this.showChanges && this.showChangesColumn) {
+        let x = -0.5;
+        if (flags.hasKatheter) {
+          stackChange.push({
+            relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
+            image: 'katheter.print',
+            width: this.cm(0.4)
+          });
+        }
+        if (flags.hasSensor) {
+          stackChange.push({
+            relativePosition: {x: this.cm(x += 0.5), y: this.cm(0)},
+            image: 'sensor.print',
+            width: this.cm(0.4)
+          });
+        }
+        if (flags.hasAmpulle) {
+          stackChange.push({
+            relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
+            image: 'ampulle.print',
+            width: this.cm(0.4)
+          });
+        }
+        if (flags.hasBattery) {
+          // noinspection JSUnusedAssignment
+          stackChange.push({
+            relativePosition: {x: this.cm(x += 0.5), y: this.cm(0.1)},
+            image: 'battery.print',
+            width: this.cm(0.4)
+          });
+        }
+        this.addRow(true, this.cm(1.4), row, {
+          text: BasePrint.msgChange,
           style: 'total',
           fontSize: size,
-          alignment: 'left'
-        }, {columns: this.mixTextImage(output)});
-        this._body.push(row);
-        this.tableHeadFilled = true;
+          alignment: 'center'
+        }, {
+          stack: stackChange
+        });
       }
-      lines.splice(0, idx);
-      if (!Utils.isEmpty(lines) && lines[0] !== '') {
-        list = lines.join('\n').split(', ');
-      } else {
-        list = [];
-      }
+      this.addRow(true, this.cm(wid), row, {
+        text: this.getText(oldY, `${this.fmtDate(time, {withShortWeekday: false, withLongWeekday: true})}`),
+        style: 'total',
+        fontSize: size,
+        alignment: 'left'
+      }, {stack: stackNotes});
+      this._body.push(row);
+      this.tableHeadFilled = true;
     }
+    // list = [];
+    // lines.splice(0, idx);
+    // if (!Utils.isEmpty(lines) && lines[0] !== '') {
+    //   list = lines.join('\n').split(', ');
+    // } else {
+    //   list = [];
+    // }
     this._bloodValue = null;
     return list;
   }
@@ -684,7 +738,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       t.notes != null &&
       !Utils.isEmpty(t.notes) &&
       !type.startsWith('nr-')) {
-      const textList = this.getTextWithEmojiObjects(t.notes.replace(/<br>/g, '\n'), 0.3);
+      const textList = this.getTextWithEmojiObjects(t.notes, 0.3, true);
       for (const entry of textList) {
         list.push(entry);
       }
@@ -718,6 +772,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     }
     if (this.showSMB) {
       if (t.insulin != null && t.insulin != 0 && t.isSMB) {
+        console.log(this.msgLogSMB(123.456, 'HURZ'));
         list.push(this.msgLogSMB(t.insulin, this.msgInsulinUnit));
       } else if (t.microbolus != null && t.microbolus > 0) {
         list.push(this.msgLogMicroBolus(GLOBALS.fmtNumber(t.microbolus, GLOBALS.basalPrecision), this.msgInsulinUnit));
@@ -799,7 +854,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         list.splice(lastIdx, 0, `${t.duplicates} x @`);
       }
       if (list.length != lastIdx && showTime && this.groupMinutes > 1) {
-        const time = `[${this.fmtTime(t.createdAt)}]`;
+        const time = `[${this.fmtTime(t.createdAt)}] `;
         if (lastIdx < 2 || list[lastIdx - 2] != time) {
           list.splice(lastIdx, 0, time);
         }
@@ -830,6 +885,21 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       ],
       pageBreak: ''
     };
+  }
+
+  /**
+   * Removes the `calc` property from the given object if it exists.
+   *
+   * @param {any} item - The object from which the `calc` property should be removed.
+   * @return {any} A new object with the `calc` property removed, if it existed.
+   */
+  removeCalc(item: any): any {
+    const ret = {...item};
+    if (ret.calc != null) {
+      delete ret.calc;
+      ret.preserveLeadingSpaces = true;
+    }
+    return ret;
   }
 
   override getPage(page: number, profile: ProfileGlucData, calc: CalcData): PageData {

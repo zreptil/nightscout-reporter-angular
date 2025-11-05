@@ -592,6 +592,12 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           for (const treatment of src) {
             hasData = true;
             const t = TreatmentData.fromJson(treatment);
+            if (GLOBALS.isLocal) {
+              if (!Utils.isEmpty(t.notes)) {
+                t.notes += ' ';
+              }
+              t.notes += 'This is a very useless text \u2328\ufe0f that only is here to provide me with information \u2139\ufe0f about the behavior of the output when there is a lot of text \ud83e\udd95 to display. I could also use lorem ipsum, but I decided to go with senseless text from my own brain \ud83e\udde0.';
+            }
             // Treatments entered by sync are ignored
             if (t.enteredBy === 'sync') {
             } else if (!Utils.isEmpty(data.ns.treatments) && t.equals(data.ns.treatments[data.ns.treatments.length - 1])) {
