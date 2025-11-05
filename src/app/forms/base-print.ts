@@ -2603,52 +2603,26 @@ export abstract class BasePrint extends FormConfig {
    * @return {any[]} An array containing processed text parts and emoji objects or image objects.
    */
   getTextWithEmojiObjects(s: string, width: number, useImages = true): any[] {
-    let hasUnicodeProp = true;
-    let regEx: RegExp = null;
-// Extended_Pictographic
-    try {
-      regEx = new RegExp('\\p{Emoji_Presentation}', 'ug');
-      regEx.test('');  // force compiling
-    } catch (e) {
-      hasUnicodeProp = false;
+    const texts: string[] = [];
+    const emojis: string[] = [];
+
+    const regEx = emojiRegex();
+    let lastIdx = 0;
+
+    for (const match of s.matchAll(regEx)) {
+      const emoji = match[0];
+      const idx = match.index!;
+      texts.push(s.substring(lastIdx, idx));
+      emojis.push(emoji);
+      lastIdx = idx + emoji.length;
     }
-
-    let emojis: string[] = [];
-    let text: string[];
-
-    const sep = '[[EMOJI_PLACEHOLDER]]';
-    if (hasUnicodeProp && regEx != null) {
-      const stringWithPlaceholders = s.replaceAll(
-        regEx,
-        (emoji: string) => {
-          emojis.push(emoji);
-          return sep;
-        }
-      );
-      text = stringWithPlaceholders.split(sep);
-    } else {
-      regEx = emojiRegex();
-
-      let lastIdx = 0;
-      const parts: string[] = [];
-      emojis = [];
-
-      for (const match of s.matchAll(regEx)) {
-        const emoji = match[0];
-        const idx = match.index!;
-        parts.push(s.substring(lastIdx, idx));
-        parts.push(sep);
-        emojis.push(emoji);
-        lastIdx = idx + emoji.length;
-      }
-      parts.push(s.substring(lastIdx));
-      text = parts.filter((_, i) => i % 2 === 0);
-    }
+    texts.push(s.substring(lastIdx));
+    // console.log('getTextWithEmojiObjects', s, texts, emojis);
     const ret: any[] = [];
-    for (let i = 0; i < text.length; i++) {
-      const textPart = text[i];
-      if (textPart !== '') {
-        ret.push(textPart);
+    for (let i = 0; i < texts.length; i++) {
+      let text = texts[i];
+      if (text !== '') {
+        ret.push(text);
       }
       if (i < emojis.length) {
         const cp = emojis[i].codePointAt(0).toString(16).toLowerCase();
@@ -2656,14 +2630,14 @@ export abstract class BasePrint extends FormConfig {
           font: 'NotoEmoji',
           text: emojis[i],
           color: 'maroon',
-          width: 'auto'
+          width: this.cm(width * 1.5)
         };
         if (useImages) {
           const pngUrl = `@emoji${cp}@https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/emoji_u${cp}.png`;
           ret.push({
             image: `emoji${cp}`,
             width: this.cm(width),
-            margin: [0, this.cm(width / 3), 0, 0]
+            margin: [this.cm(width / 3), this.cm(width / 3), 0, 0]
           });
           if (!this.collectedImages.includes(pngUrl)) {
             this.collectedImages.push(pngUrl);

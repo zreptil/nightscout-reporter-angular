@@ -80,7 +80,7 @@ export class LogComponent implements OnInit {
         let doc = JSON.stringify(link.data);
         if (doc != null) {
           doc = doc.replace(/],/g, '],\n');
-          doc = doc.replace(/,"/g, ',\n"');
+          doc = doc.replace(/","/g, '",\n"');
           doc = doc.replace(/:\[/g, ':\n[');
         }
         doc = btoa(encodeURIComponent(doc).replace(/%([0-9A-F]{2})/g, function (match, p1) {
