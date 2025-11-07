@@ -41,26 +41,30 @@
     </ul>
     <br/>
     <h2 (click)="click(44.4)">
-      <span i18n="version">Version</span><span i18n="v444">4.4.4 - 03.11.2025</span>
+      <span i18n="version">Version</span><span i18n="v444">4.4.4 - 07.11.2025</span>
     </h2>
     <ul [class]="classFor(44.4)">
-      <li class="added" i18n="1444a1">
-        Emojis in Notizen können jetzt auch dargestellt werden. Sie werden dazu als
-        Bilder aus Googles Github heruntergeladen. Sollte es keine Verbindung zu
-        dieser Seite geben, wird der Noto-Emoji-Zeichensatz verwendet, der die
-        Emojis allerdings nur monochrom zur Verfügung stellt. Aktuell werden
+      <li class="added" i18n="444a1">
+        Emojis in Notizen können jetzt auch dargestellt werden. Aktuell werden
         die Notizen auf den Formularen Protokoll und Tagesgrafik ausgegeben,
+      </li>
+      <li class="added" i18n="444a2">
+        In den Ausgabe Parametern gibt es einen neuen Parameter, der steuert, wie
+        Emojis dargestellt werden. Er heisst "Emojis als Bilder einbinden". Wenn diese
+        Option markiert ist, werden die Emojis als Bilder ins PDF eingebunden, wenn es
+        möglich ist, sie aus dem Github-Repository von Google herunterzuladen. Ansonsten
+        werden sie als Zeichen aus dem Noto-Emoji Zeichensatz dargestellt.
       </li>
     </ul>
     <h2 (click)="click(44.3)">
       <span i18n="version">Version</span><span i18n="v443">4.4.3 - 18.09.2025</span>
     </h2>
     <ul [class]="classFor(44.3)">
-      <li class="changed" i18n="1443c1">
+      <li class="changed" i18n="443c1">
         Die Grenzwerte in der Analyse werden jetzt so berechnet, dass sie aufsummiert
         100% ergeben. Durch Rundungen kam es da teilweise zu Abweichungen.
       </li>
-      <li class="changed" i18n="1443c2">
+      <li class="changed" i18n="443c2">
         In den Formularparametern des Protkolls wird die Option "Mehrfache Datensätze kennzeichnen"
         jetzt nicht mehr markiert, wenn die Checkbox für alle Markierungen in der Titelzeile
         des Dialogs angeklickt wird, da diese Option dazu führen kann, dass kein vernünftiges
@@ -71,7 +75,7 @@
       <span i18n="version">Version</span><span i18n="v442">4.4.2 - 06.08.2025</span>
     </h2>
     <ul [class]="classFor(44.2)">
-      <li class="added" i18n="1442c1">
+      <li class="added" i18n="442c1">
         Der Glykämische Risiko Index (GRI) wurde in der Auswertung hinzugefügt. Hier
         gibt es nähere Informationen dazu:
         <a href="https://www.diabetestechnology.org/gri" target="_blank">

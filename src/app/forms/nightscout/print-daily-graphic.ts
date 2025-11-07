@@ -1013,14 +1013,13 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
               x: this.cm(x + 0.05),
               y: this.cm(this.exerciseTop + this.exerciseBarSpace + this.exerciseBarHeight / 2 - 0.13)
             },
-            columns: this.mixTextImage(JSON.parse(`${notes}`)),
+            columns: this.mixTextImage(JSON.parse(notes)),
             fontSize: this.fs(6),
             alignment: 'left',
             color: this.colExerciseText
           });
         }
       } else if (!Utils.isEmpty(t.notes ?? '') && t.duration > 0 && this.showNoteDuration) {
-        console.log('hier', notes);
         const x = this.glucX(t.createdAt);
         const until = new Date(t.createdAt.getTime() + t.duration * 1000);
         const check = new Date(t.createdAt.getTime());
@@ -1042,7 +1041,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
             x: this.cm(x + 0.05),
             y: this.cm(this.exerciseTop + this.exerciseDurationTop + this.exerciseBarHeight / 2 - 0.13)
           },
-          columns: this.mixTextImage(JSON.parse(`${notes}`)),
+          columns: this.mixTextImage(JSON.parse(notes)),
           fontSize: this.fs(6),
           alignment: 'left',
           color: this.colDurationNotesText
@@ -1050,7 +1049,7 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       } else if (this.showNotes && !Utils.isEmpty(t.notes ?? '') && !t.isECarb) {
         // let notes = t.notes;
         if (!this.showHTMLNotes) {
-          notes = notes.replace(/<.*>/, '');
+          notes = notes.replace(/<.*>/g, '');
         }
         let x = this.glucX(t.createdAt);
         // *** line length estimation ***
@@ -1099,8 +1098,8 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
           });
           graphLegend.stack.push({
             relativePosition: {x: this.cm(x + 0.05), y: this.cm(y + this.notesHeight - 0.25)},
-            columns: this.mixTextImage(JSON.parse(`${notes}`)),
-            fontSize: this.fs(8),
+            columns: this.mixTextImage(JSON.parse(notes)),
+            fontSize: this.fs(6),
             alignment: 'left',
             color: t.duration > 0 ? this.colDurationNotes : this.colNotes
           });

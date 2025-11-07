@@ -496,6 +496,7 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       GLOBALS.ppShowDurationWarning = JsonData.toBool(json.d20, true);
       GLOBALS.ppShowHbA1Cmmol = JsonData.toBool(json.d21, false);
       GLOBALS.ppShowSlowServerWarning = JsonData.toBool(json.d22, true);
+      GLOBALS.ppUseEmojiImages = JsonData.toBool(json.d23, true);
     } catch (ex) {
       Log.devError(ex, `Fehler bei DataService.fromDeviceJson`);
     }

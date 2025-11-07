@@ -66,6 +66,8 @@ export let GLOBALS: GlobalsData;
 
 export class GlobalsData extends Settings {
   static _globals: GlobalsData = new GlobalsData();
+  emojiMaxRetries = 5;
+  emojiRetries = this.emojiMaxRetries;
   msgFixAAPS30 = $localize`Die Erstellung der PDFs kann extrem lange dauern. Das liegt an einer Flut von Profil-Switches, die
         durch ein Plugin für die Automatisierung erstellt werden. Das verursacht einen Profil-Switch alle 4 Minuten mit
         Speicherung des kompletten Profils. Wenn die Option aktiv ist, dann werden diese Profil-Switches aussortiert
@@ -81,6 +83,7 @@ export class GlobalsData extends Settings {
     welcome: $localize`Willkommen bei Nightscout Reporter!`,
     whatsnew: $localize`Was bisher geschah...`
   };
+  urlEmojiImage = 'https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/';
   avoidSaveAndLoad = false;
   userList: UserData[] = [];
   shortcutList: ShortcutData[] = [];
@@ -109,6 +112,7 @@ export class GlobalsData extends Settings {
   ppHideLoopData = false;
   ppFixAAPS30 = false;
   ppSkipSensorChange = 0;
+  ppUseEmojiImages = true;
   isCreatingPDF = false;
   isDebug = localStorage.getItem('forceDebug') === 'true';
   isBeta = window.location.href.indexOf('/beta/') >= 0;
@@ -548,6 +552,7 @@ export class GlobalsData extends Settings {
       + `,"d20":"${this.ppShowDurationWarning ? 'true' : 'false'}"`
       + `,"d21":"${this.ppShowHbA1Cmmol ? 'true' : 'false'}"`
       + `,"d22":"${this.ppShowSlowServerWarning ? 'true' : 'false'}"`
+      + `,"d23":"${this.ppUseEmojiImages ? 'true' : 'false'}"`
       + '}';
   }
 
