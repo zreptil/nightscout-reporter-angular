@@ -452,7 +452,6 @@ export class PdfService {
           italics: 'Open Sans Hebrew Italic.ttf',
           bolditalics: 'Open Sans Hebrew Bold Italic.ttf'
         };
-        // vfs = null;
       }
       const pdf: TCreatedPdf = this.pdfMake.createPdf(JSON.parse(JSON.stringify(data)), null, fonts, vfs);
       if (createThumbs != null) {
@@ -505,8 +504,17 @@ export class PdfService {
       {responseType: 'arraybuffer'});
     return this.http.request(req)
       .pipe(map(data => {
-        return {id: id, url: `data:${imgFormat};base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+        if ((data as any)?.body != null) {
+          if (urlFormat.startsWith(GLOBALS.urlEmojiImage)) {
+            GLOBALS.emojiRetries = GLOBALS.emojiMaxRetries;
+          }
+          return {id: id, url: `data:${imgFormat};base64,${btoa(String.fromCharCode(...new Uint8Array((data as any).body)))}`};
+        }
+        return {id: id, url: null};
       }), catchError(_err => {
+        if (urlFormat.startsWith(GLOBALS.urlEmojiImage)) {
+          GLOBALS.emojiRetries--;
+        }
         return of({id: id, url: ''});
       }));
   }

@@ -2360,8 +2360,6 @@ export abstract class BasePrint extends FormConfig {
       } else if (key === 'image' && Utils.isEmpty(this.images[data[key]])) {
         delete this.images[data[key]];
         return this.emojiReplacements[data[key]];
-        // return {image: 'nightscout', width: data.width, margins: data.margins};
-        // return {text: 'W', width: 'auto'};
       } else {
         ret[key] = this.verifyImages(data[key]);
       }
@@ -2599,12 +2597,12 @@ export abstract class BasePrint extends FormConfig {
    *
    * @param {string} s - The input string containing text and emojis.
    * @param {number} width - The width parameter applied to the emoji image objects, when applicable.
-   * @param {boolean} [useImages=true] - Determines whether to use emoji image objects or text-based replacements.
    * @return {any[]} An array containing processed text parts and emoji objects or image objects.
    */
-  getTextWithEmojiObjects(s: string, width: number, useImages = true): any[] {
+  getTextWithEmojiObjects(s: string, width: number): any[] {
     const texts: string[] = [];
     const emojis: string[] = [];
+    const useImages = GLOBALS.ppUseEmojiImages && GLOBALS.emojiRetries > 0;
 
     const regEx = emojiRegex();
     let lastIdx = 0;
@@ -2630,14 +2628,14 @@ export abstract class BasePrint extends FormConfig {
           font: 'NotoEmoji',
           text: emojis[i],
           color: 'maroon',
-          width: this.cm(width * 1.5)
+          width: 'auto'
         };
         if (useImages) {
-          const pngUrl = `@emoji${cp}@https://raw.githubusercontent.com/googlefonts/noto-emoji/refs/tags/v2.034/png/32/emoji_u${cp}.png`;
+          const pngUrl = `@emoji${cp}@${GLOBALS.urlEmojiImage}emoji_u${cp}.png`;
           ret.push({
             image: `emoji${cp}`,
             width: this.cm(width),
-            margin: [this.cm(width / 3), this.cm(width / 3), 0, 0]
+            margin: [this.cm(width / 3), this.cm(width / 4), 0, 0]
           });
           if (!this.collectedImages.includes(pngUrl)) {
             this.collectedImages.push(pngUrl);

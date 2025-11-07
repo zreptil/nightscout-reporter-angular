@@ -79,6 +79,9 @@
         </mat-form-field>
       </div>
     </div>
+    <mat-checkbox [(ngModel)]="globals.ppUseEmojiImages" class="chk" i18n="label for 24 hour format">
+      Emojis als Bilder einbinden
+    </mat-checkbox>
     <div>
       <mat-checkbox [(ngModel)]="globals.ppLatestFirst" class="chk">
         {{ msgLatestFirst }}

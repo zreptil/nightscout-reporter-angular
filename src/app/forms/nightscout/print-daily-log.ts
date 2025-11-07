@@ -86,7 +86,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
   _y: number;
   _bloodValue: number;
   _lineHeight = 0.48;
-  _cellSpace = 0.08;
+  _cellSpace = 0.05;
   _maxY: number;
   _dbgX = 0.2;
 
@@ -405,7 +405,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
           list = this.fillRow(time, day, row, day.findNearest(day.entries, null, time),
             list, flags, 'row');
           row = [];
-          if (!Utils.isEmpty(list) && this._y + this._lineHeight >= this._maxY) {
+          if (!Utils.isEmpty(list) || this._y + this._lineHeight >= this._maxY) {
             this._page.push(this.headerFooter());
             this._page.push(this.getTable(this.tableWidths, this._body));
             pages.push(new PageData(this.isPortrait, this._page));
@@ -516,11 +516,12 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         }
       }
       if (idx === itemList.length) {
-        if (GLOBALS.isDebug) {
+        y += this._lineHeight;
+        if (GLOBALS.isDebug && GLOBALS.createTestData) {
           colLine.columns = [{text: GLOBALS.fmtNumber(y * 10, 2), color: 'red'}];
         }
         stackNotes.push(colLine);
-        if (GLOBALS.isDebug) {
+        if (GLOBALS.isDebug && GLOBALS.createTestData) {
           const yx = this.cm(this._dbgX);
           this._dbgX += 0.9;
           if (this._dbgX > 1.1) {
@@ -556,8 +557,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         }
         list.splice(0);
       }
-      console.log('list created', stackNotes[stackNotes.length - 1].columns[stackNotes[stackNotes.length - 1].columns.length - 1], y, this._maxY, pageFit, Utils.jsonize(stackNotes), Utils.jsonize(list));
-      this._y = y + this._lineHeight + 2 * this._cellSpace;
+      this._y = y + 2 * this._cellSpace;
       this.addRow(true, this.cm(1.8), row, {
         text: this.msgTime,
         style: 'total',
@@ -656,17 +656,10 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         style: 'total',
         fontSize: size,
         alignment: 'left'
-      }, {stack: stackNotes});
+      }, {stack: stackNotes, fontSize: size});
       this._body.push(row);
       this.tableHeadFilled = true;
     }
-    // list = [];
-    // lines.splice(0, idx);
-    // if (!Utils.isEmpty(lines) && lines[0] !== '') {
-    //   list = lines.join('\n').split(', ');
-    // } else {
-    //   list = [];
-    // }
     this._bloodValue = null;
     return list;
   }
@@ -741,7 +734,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       t.notes != null &&
       !Utils.isEmpty(t.notes) &&
       !type.startsWith('nr-')) {
-      const textList = this.getTextWithEmojiObjects(t.notes, 0.3, true);
+      const textList = this.getTextWithEmojiObjects(t.notes, 0.3);
       for (const entry of textList) {
         list.push(entry);
       }
@@ -775,7 +768,6 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     }
     if (this.showSMB) {
       if (t.insulin != null && t.insulin != 0 && t.isSMB) {
-        console.log(this.msgLogSMB(123.456, 'HURZ'));
         list.push(this.msgLogSMB(t.insulin, this.msgInsulinUnit));
       } else if (t.microbolus != null && t.microbolus > 0) {
         list.push(this.msgLogMicroBolus(GLOBALS.fmtNumber(t.microbolus, GLOBALS.basalPrecision), this.msgInsulinUnit));
