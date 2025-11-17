@@ -43,10 +43,6 @@ export class ParamInfo {
     Utils.pushArgs(args, this);
     this.isDeprecated ??= false;
     this.isLoopValue ??= false;
-//  _boolValue = boolValue;
-//  _intValue = intValue;
-//  _stringValue = stringValue;
-//  _literalFormat = literalFormat;
     if (this.boolValue != null) {
       this.type = ParamType.bool;
       this.thumbValue ??= this.boolValue;
@@ -141,6 +137,13 @@ export class ParamInfo {
       }
     }
     return {b: this.boolValue, s: this.stringValue, i: this.intValue, sp: sp};
+  }
+
+  showSubParams(): boolean {
+    if (this.type === ParamType.bool) {
+      return this.boolValue;
+    }
+    return this.isVisible;
   }
 
   handleValueChange(value: any): void {

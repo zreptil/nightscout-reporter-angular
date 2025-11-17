@@ -558,7 +558,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         list.splice(0);
       }
       this._y = y + 2 * this._cellSpace;
-      this.addRow(true, this.cm(1.8), row, {
+      this.addCol(true, this.cm(1.8), row, {
         text: this.msgTime,
         style: 'total',
         fontSize: size,
@@ -572,7 +572,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       if (this.showGluc) {
         const gluc = glucEntry?.gluc;
         if (this._bloodValue == null) {
-          this.addRow(true, this.cm(1.3), row, {
+          this.addCol(true, this.cm(1.3), row, {
             text: GLOBALS.getGlucInfo().unit,
             style: 'total',
             fontSize: size,
@@ -585,7 +585,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
             fillColor: this.colForGlucBack(day, gluc)
           });
         } else {
-          this.addRow(true, this.cm(1.3), row, {
+          this.addCol(true, this.cm(1.3), row, {
             text: GLOBALS.getGlucInfo().unit,
             style: 'total',
             fontSize: size,
@@ -642,7 +642,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
             width: this.cm(0.4)
           });
         }
-        this.addRow(true, this.cm(1.4), row, {
+        this.addCol(true, this.cm(1.4), row, {
           text: BasePrint.msgChange,
           style: 'total',
           fontSize: size,
@@ -651,7 +651,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
           stack: stackChange
         });
       }
-      this.addRow(true, this.cm(wid), row, {
+      this.addCol(true, this.cm(wid), row, {
         text: this.getText(oldY, `${this.fmtDate(time, {withShortWeekday: false, withLongWeekday: true})}`),
         style: 'total',
         fontSize: size,
@@ -857,7 +857,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
     }
   }
 
-  addRow(
+  addCol(
     check: boolean, width: any, dst: any[], head: any, content: any) {
     if (!check) {
       return;

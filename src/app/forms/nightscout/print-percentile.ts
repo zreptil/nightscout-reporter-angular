@@ -541,7 +541,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     let ret = 0;
     if (value.value >= 0.1) {
       const text = JSON.stringify(value.dbg);
-      this.addTableRow(true, this.cm(2.0), row, {
+      this.addTableCol(true, this.cm(2.0), row, {
         text: label,
         style: 'total',
         alignment: 'center',
@@ -552,7 +552,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         alignment: 'left',
         fontSize: f
       });
-      this.addTableRow(true, this.cm(this.width - 2.0), row, {
+      this.addTableCol(true, this.cm(this.width - 2.0), row, {
         text: label,
         style: 'total',
         alignment: 'center',
@@ -607,7 +607,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     const f = this.fs(this.showCol1090 ? 7 : 10);
     const w = (this.width - 4.0 - 2.0 - wid * 100) / colcount - 0.45;
     const h = this.showCol1090 ? 0.35 : 0.5;
-    this.addTableRow(true, this.cm(2.0), row, {
+    this.addTableCol(true, this.cm(2.0), row, {
       text: this.msgTime,
       style: 'total',
       alignment: 'center',
@@ -647,7 +647,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     if (day.entryCountValid(deviceKey) === 0) {
       canvas = [];
     }
-    this.addTableRow(true, this.cm(wid * 100), row, {
+    this.addTableCol(true, this.cm(wid * 100), row, {
       text: this.msgDistribution,
       style: 'total',
       alignment: 'center',
@@ -657,7 +657,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       canvas: canvas
     });
     if (this.showColCount) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgValues,
         style: 'total',
         alignment: 'center',
@@ -670,7 +670,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       });
     }
     if (this.showColAverage) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgAverage,
         style: 'total',
         alignment: 'center',
@@ -683,7 +683,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       });
     }
     if (this.showColMin) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgMin,
         style: 'total',
         alignment: 'center',
@@ -697,7 +697,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     }
     //*
     if (this.showCol1090) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msg10,
         style: 'total',
         alignment: 'center',
@@ -709,7 +709,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
         fontSize: f
       });
     }
-    this.addTableRow(true, this.cm(w), row, {
+    this.addTableCol(true, this.cm(w), row, {
       text: this.msg25,
       style: 'total',
       alignment: 'center',
@@ -720,7 +720,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       alignment: 'right',
       fontSize: f
     });
-    this.addTableRow(true, this.cm(w), row, {
+    this.addTableCol(true, this.cm(w), row, {
       text: this.msgMedian(deviceKey),
       style: 'total',
       alignment: 'center',
@@ -731,7 +731,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       alignment: 'right',
       fontSize: f
     });
-    this.addTableRow(true, this.cm(w), row, {
+    this.addTableCol(true, this.cm(w), row, {
       text: this.msg75,
       style: 'total',
       alignment: 'center',
@@ -743,7 +743,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       fontSize: f
     });
     if (this.showCol1090) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msg90,
         style: 'total',
         alignment: 'center',
@@ -756,7 +756,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       });
     }
     if (this.showColMax) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgMax,
         style: 'total',
         alignment: 'center',
@@ -769,7 +769,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
       });
     }
     if (this.showColStdAbw) {
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgDeviation,
         style: 'total',
         alignment: 'center',
@@ -783,7 +783,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     }
     if (this.showColKH) {
       const value = day.avgCarbsPerDay;
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgCarbShort,
         style: 'total',
         alignment: 'center',
@@ -797,7 +797,7 @@ Basalrate, die zu Beginn des ausgewählten Zeitraums aktiv war.`;
     }
     if (this.showColIE) {
       const value = day.avgInsulinPerDay;
-      this.addTableRow(true, this.cm(w), row, {
+      this.addTableCol(true, this.cm(w), row, {
         text: this.msgGluc,
         style: 'total',
         'alignment': 'center',
