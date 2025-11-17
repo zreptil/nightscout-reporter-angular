@@ -61,6 +61,12 @@ export class Utils {
     return ret;
   }
 
+  /**
+   * Calculates the day of the week (0 for Monday, 6 for Sunday) for a given date.
+   *
+   * @param {Date} date - The date for which to calculate the day of the week.
+   * @return {number} The day of the week, where 0 represents Monday and 6 represents Sunday.
+   */
   static getDow(date: Date): number {
     let ret = date.getDay() - 1;
     if (ret < 0) {
