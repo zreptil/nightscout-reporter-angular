@@ -12,7 +12,7 @@
 <div class="month mat-elevation-z10">
   @for (week of month?.weeks; track $index) {
     <div class="week">
-      @for (day of week.days; track day) {
+      @for (day of week.days; let dayIdx = $index; track dayIdx) {
         @if (!day.isRaised) {
           <button (click)="dayClicked(day)"
                   [class]="dayclass(day)"
