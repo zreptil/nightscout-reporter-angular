@@ -7,6 +7,17 @@ import {PageData} from '@/_model/page-data';
 import {ProfileStoreData} from '@/_model/nightscout/profile-store-data';
 import {ProfileGlucData} from '@/_model/nightscout/profile-gluc-data';
 import {Utils} from '@/classes/utils';
+import {DatepickerPeriod} from '@/_model/datepicker-period';
+
+enum GroupType {
+  None = 0,
+  Week = 1,
+  Month = 2
+}
+
+class FillParams {
+  style: string;
+}
 
 export class PrintDailyStatistics extends BasePrint {
   override help = $localize`:help for daystats@@help-daystats:Dieses Formular zeigt die statistischen Werte für die Tage des ausgewählten Zeitraums
@@ -17,22 +28,30 @@ schwächerer Schrift angezeigt wird.`;
   override baseIdx = '04';
   isFormParam1: boolean;
   override params = [
-    new ParamInfo(4, this.msgParamColCount, {boolValue: true}),
-    new ParamInfo(7, this.msgParamColStdAbw, {boolValue: true}),
-    new ParamInfo(9, this.msgParamColPercentile, {boolValue: true}),
-    new ParamInfo(10, this.msgParamHbA1c, {boolValue: true}),
-    new ParamInfo(8, this.msgParamColVarK, {boolValue: false}),
-    new ParamInfo(1, this.msgParamColBasal, {
+    new ParamInfo(6, this.msgParamColCount, {boolValue: true}),
+    new ParamInfo(9, this.msgParamColStdAbw, {boolValue: true}),
+    new ParamInfo(11, this.msgParamColPercentile, {boolValue: true}),
+    new ParamInfo(12, this.msgParamHbA1c, {boolValue: true}),
+    new ParamInfo(10, this.msgParamColVarK, {boolValue: false}),
+    new ParamInfo(3, this.msgParamColBasal, {
       boolValue: false, subParams: [
         new ParamInfo(1, BasePrint.msgUseDailyBasalrate,
           {boolValue: true, isLoopValue: true})
       ]
     }),
-    new ParamInfo(6, this.msgParamColKH, {boolValue: false}),
-    new ParamInfo(5, this.msgParamColMinMax, {boolValue: false}),
-    new ParamInfo(2, this.msgParamColBolus, {boolValue: false}),
-    new ParamInfo(3, this.msgParamColTDD, {boolValue: false}),
-    new ParamInfo(0, '', {literalFormat: new LiteralFormat(true)}),
+    new ParamInfo(8, this.msgParamColKH, {boolValue: false}),
+    new ParamInfo(7, this.msgParamColMinMax, {boolValue: false}),
+    new ParamInfo(4, this.msgParamColBolus, {boolValue: false}),
+    new ParamInfo(5, this.msgParamColTDD, {boolValue: false}),
+    new ParamInfo(2, '', {literalFormat: new LiteralFormat(true)}),
+    new ParamInfo(0, PrintDailyStatistics.msgParam1, {
+      list: [
+        $localize`Keine`,
+        $localize`1 Woche`,
+        $localize`1 Monat`
+      ],
+      subParams: [new ParamInfo(1, PrintDailyStatistics.msgParam2, {boolValue: true})]
+    }),
   ];
   showHbA1c: boolean;
   showStdabw: boolean;
@@ -45,13 +64,21 @@ schwächerer Schrift angezeigt wird.`;
   showCarbs: boolean;
   showBolus: boolean;
   showTDD: boolean;
-  _maxTDD = 0.0;
-  _basalSum = 0.0;
+  groupType: GroupType;
+  hideGroupDays: boolean;
   override scale = 1.0;
 
   constructor(ps: PdfService, suffix: string = null) {
     super(ps);
     this.init(suffix);
+  }
+
+  static get msgParam1(): string {
+    return $localize`Gruppierung der Tage`;
+  }
+
+  static get msgParam2(): string {
+    return $localize`Zeilen für Tage ausblenden`;
   }
 
   override get title(): string {
@@ -60,8 +87,16 @@ schwächerer Schrift angezeigt wird.`;
 
   override get estimatePageCount(): any {
     let count = GLOBALS.period?.dayCount ?? 0;
+    switch (this.groupType) {
+      case GroupType.Week:
+        count = count / 7;
+        break;
+      case GroupType.Month:
+        count = count / 30;
+        break;
+    }
     count = Math.ceil(count / 19);
-    return {count: count, isEstimated: false};
+    return {count: count, isEstimated: this.groupType === GroupType.None};
   }
 
   get msgParamColCount(): string {
@@ -120,6 +155,19 @@ schwächerer Schrift angezeigt wird.`;
     this.showValueStats = this.params[7].boolValue;
     this.showBolus = this.params[8].boolValue;
     this.showTDD = this.params[9].boolValue;
+    switch (this.params[11].intValue) {
+      case 1:
+        this.groupType = GroupType.Week;
+        break;
+      case 2:
+        this.groupType = GroupType.Month;
+        break;
+      default:
+        this.groupType = GroupType.None;
+        break;
+    }
+    this.params[11].subParams[0].isVisible = this.groupType !== GroupType.None;
+    this.hideGroupDays = this.params[11].subParams[0].boolValue;
   }
 
   override checkValue(param: ParamInfo, value: any): void {
@@ -170,9 +218,9 @@ schwächerer Schrift angezeigt wird.`;
     };
   }
 
-  fillRow(row: any, f: number, firstCol: string[], day: DayData, style: string, countForAverage = 1.0): void {
+  fillRow(row: any, f: number, firstCol: string[], day: DayData, params: FillParams, countForAverage = 1.0): void {
     const deviceKey = 'all';
-    this.addTableRow(
+    this.addTableCol(
       true,
       this.cm(2.9),
       row,
@@ -183,12 +231,12 @@ schwächerer Schrift angezeigt wird.`;
       text = `${text}\n${this.msgTDD}`;
     }
     const tdd = day.ieBasalSum(!this.useDailyBasalrate) + day.ieBolusSum;
-    this.addTableRow(true, this.cm(f * 100), row, {
+    this.addTableCol(true, this.cm(f * 100), row, {
       text: text,
       style: 'total',
       alignment: 'center'
     }, {
-      style: style,
+      style: params.style,
       canvas: [
         {
           type: 'rect',
@@ -220,9 +268,7 @@ schwächerer Schrift angezeigt wird.`;
             color: this.colBasalDay,
             x: this.cm(0),
             y: this.cm(0.3),
-            w: this.cm((style === 'total'
-                ? this._basalSum
-                : day.ieBasalSum(!this.useDailyBasalrate)) *
+            w: this.cm(day.ieBasalSum(!this.useDailyBasalrate) *
               f *
               100 /
               tdd),
@@ -233,9 +279,7 @@ schwächerer Schrift angezeigt wird.`;
           ? {
             type: 'rect',
             color: this.colBolus,
-            x: this.cm((style === 'total'
-                ? this._basalSum
-                : day.ieBasalSum(!this.useDailyBasalrate)) *
+            x: this.cm(day.ieBasalSum(!this.useDailyBasalrate) *
               f *
               100 /
               tdd),
@@ -246,40 +290,40 @@ schwächerer Schrift angezeigt wird.`;
           : {},
       ]
     });
-    this.addTableRow(true, '*', row, {
+    this.addTableCol(true, '*', row, {
       text: this.msgLow(this.targets(this.repData).low),
       style: 'total',
       alignment: 'center',
       fillColor: this.colLowBack
     }, {
       text: `${GLOBALS.fmtNumber(day.lowPrz(deviceKey), 0)} %`,
-      style: style,
+      style: params.style,
       alignment: 'right',
-      fillColor: style === 'total' ? this.colLowBack : null
+      fillColor: params.style === 'total' ? this.colLowBack : null
     });
-    this.addTableRow(true, '*', row, {
+    this.addTableCol(true, '*', row, {
       text: this.msgNormal,
       style: 'total',
       alignment: 'center',
       fillColor: this.colNormBack
     }, {
       text: `${GLOBALS.fmtNumber(day.normPrz(deviceKey), 0)} %`,
-      style: style,
+      style: params.style,
       alignment: 'right',
-      fillColor: style === 'total' ? this.colNormBack : null
+      fillColor: params.style === 'total' ? this.colNormBack : null
     });
-    this.addTableRow(true, '*', row, {
+    this.addTableCol(true, '*', row, {
       text: this.msgHigh(this.targets(this.repData).high),
       style: 'total',
       alignment: 'center',
       fillColor: this.colHighBack
     }, {
       text: `${GLOBALS.fmtNumber(day.highPrz(deviceKey), 0)} %`,
-      style: style,
+      style: params.style,
       alignment: 'right',
-      fillColor: style === 'total' ? this.colHighBack : null
+      fillColor: params.style === 'total' ? this.colHighBack : null
     });
-    this.addTableRow(
+    this.addTableCol(
       this.showBasal,
       'auto',
       row,
@@ -289,8 +333,8 @@ schwächerer Schrift angezeigt wird.`;
         alignment: 'center'
       },
       this.getRowAverage(day.ieBasalSum(!this.useDailyBasalrate), countForAverage,
-        style, 'right'));
-    this.addTableRow(
+        params.style, 'right'));
+    this.addTableCol(
       this.showBolus,
       'auto',
       row,
@@ -299,8 +343,8 @@ schwächerer Schrift angezeigt wird.`;
         style: 'total',
         alignment: 'center'
       },
-      this.getRowAverage(day.ieBolusSum, countForAverage, style, 'right'));
-    this.addTableRow(
+      this.getRowAverage(day.ieBolusSum, countForAverage, params.style, 'right'));
+    this.addTableCol(
       this.showTDD,
       'auto',
       row,
@@ -310,111 +354,111 @@ schwächerer Schrift angezeigt wird.`;
         alignment: 'center'
       },
       this.getRowAverage(day.ieBolusSum + day.ieBasalSum(!this.useDailyBasalrate),
-        countForAverage, style, 'right'));
-    this.addTableRow(this.showCount, 'auto', row, {
+        countForAverage, params.style, 'right'));
+    this.addTableCol(this.showCount, 'auto', row, {
       text: this.msgValues,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.fmtNumber(day.entryCountValid(deviceKey), 0)}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showValueStats, 'auto', row, {
+    this.addTableCol(this.showValueStats, 'auto', row, {
       text: this.msgMin,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.glucFromData(day.min(deviceKey))}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showValueStats, 'auto', row, {
+    this.addTableCol(this.showValueStats, 'auto', row, {
       text: this.msgMax,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.glucFromData(day.max(deviceKey))}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showValueStats, 'auto', row, {
+    this.addTableCol(this.showValueStats, 'auto', row, {
       text: this.msgAverage,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.glucFromData(day.mid(deviceKey), 1)}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(
+    this.addTableCol(
       this.showCarbs,
       'auto',
       row,
       {text: 'KH\nin g', style: 'total', alignment: 'center'},
-      this.getRowAverage(day.carbs, countForAverage, style, 'right'));
-    this.addTableRow(this.showCarbs, 'auto', row, {
+      this.getRowAverage(day.carbs, countForAverage, params.style, 'right'));
+    this.addTableCol(this.showCarbs, 'auto', row, {
       text: this.msgKHPerMeal,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${this.carbFromData(day.avgCarbs)}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showStdabw, 'auto', row, {
+    this.addTableCol(this.showStdabw, 'auto', row, {
       text: this.msgDeviation,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.fmtNumber(day.stdAbw(GLOBALS.glucMGDL, deviceKey), 1)}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showVarK, 'auto', row, {
+    this.addTableCol(this.showVarK, 'auto', row, {
       text: this.msgVarK,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${GLOBALS.fmtNumber(day.varK(deviceKey), 1)}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showPercentile, this.cm(1.5), row, {
+    this.addTableCol(this.showPercentile, this.cm(1.5), row, {
       text: this.msg25,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${this.percentileFor(GlobalsData.percentile(day.entries, 25))}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showPercentile, this.cm(1.5), row, {
+    this.addTableCol(this.showPercentile, this.cm(1.5), row, {
       text: this.msgMedian('all'),
       style: 'total',
       alignment: 'center'
     }, {
       text: `${this.percentileFor(GlobalsData.percentile(day.entries, 50))}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showPercentile, this.cm(1.5), row, {
+    this.addTableCol(this.showPercentile, this.cm(1.5), row, {
       text: this.msg75,
       style: 'total',
       alignment: 'center'
     }, {
       text: `${this.percentileFor(GlobalsData.percentile(day.entries, 75))}`,
-      style: style,
+      style: params.style,
       alignment: 'right'
     });
-    this.addTableRow(this.showHbA1c, this.cm(1.5), row, {
+    this.addTableCol(this.showHbA1c, this.cm(1.5), row, {
       text: this.msgHbA1C,
       style: 'total',
       alignment: 'center',
       color: this.colHbA1c
     }, {
       text: `${this.hba1c(day.mid(deviceKey))}${this.hba1cUnit(true)}`,
-      style: style,
+      style: params.style,
       alignment: 'right',
       color: this.colHbA1c,
       fontSize: this.fs(10 / (GLOBALS.ppShowHbA1Cmmol ? 1.5 : 1))
@@ -466,6 +510,18 @@ schwächerer Schrift angezeigt wird.`;
     }
   }
 
+  fillTotal(totalDay: DayData, day: DayData): void {
+    Utils.pushAll(totalDay.entries, day.entries);
+    Utils.pushAll(totalDay.bloody, day.bloody);
+    Utils.pushAll(totalDay.treatments, day.treatments);
+    Utils.pushAll(totalDay.profile, day.profile);
+    Utils.pushAll(totalDay.basalData.store.listBasal, day.basalData.store.listBasal);
+    totalDay.basalData.targetHigh =
+      Math.max(totalDay.basalData.targetHigh, day.basalData.targetHigh);
+    totalDay.basalData.targetLow =
+      Math.min(totalDay.basalData.targetLow, day.basalData.targetLow);
+  }
+
   _fillPages(pages: PageData[]): void {
     this.tableHeadFilled = false;
     this.tableHeadLine = [];
@@ -503,19 +559,34 @@ schwächerer Schrift angezeigt wird.`;
     totalDay.basalData.targetHigh = 0;
     totalDay.basalData.targetLow = 1000;
     let totalDays = 0;
-    let _maxTDD = 0.0;
-    let _basalSum = 0.0;
     const deviceKey = 'all';
 
-    for (let i = 0; i < this.repData.data.days.length; i++) {
-      const day = this.repData.data.days[GLOBALS.ppLatestFirst ? this.repData.data.days.length - 1 - i : i];
-      day.init();
-      if (day.entryCountValid(deviceKey) == 0) {
-        continue;
-      }
-      _basalSum += day.ieBasalSum(!this.useDailyBasalrate);
-      _maxTDD =
-        Math.max(_maxTDD, day.ieBasalSum(!this.useDailyBasalrate) + day.ieBolusSum);
+    let groupDay = new DayData(null, new ProfileGlucData(new ProfileStoreData('Intern')));
+    groupDay.basalData.store.listBasal = [];
+    groupDay.basalData.targetHigh = 0;
+    groupDay.basalData.targetLow = 1000;
+    let groupStart: DayData = null;
+
+    const appendRow =
+      (rowTitle: string, rowDay: DayData, params: FillParams, count: number) => {
+        const row: any[] = [];
+        this.fillRow(row, f, [rowTitle], rowDay, params);
+        body.push(row);
+        lineCount += count;
+        if (lineCount >= 22) {
+          page.push(this.headerFooter());
+          page.push(this.getTable(this.tableWidths, body));
+          lineCount = 0;
+          pages.push(new PageData(this.isPortrait, page));
+          page = [];
+          body = [];
+          prevProfile = null;
+        }
+      };
+
+    let firstDayOfWeek = GLOBALS.period.firstDayOfWeek;
+    while (firstDayOfWeek > 6) {
+      firstDayOfWeek -= 7;
     }
 
     for (let i = 0; i < this.repData.data.days.length; i++) {
@@ -523,18 +594,10 @@ schwächerer Schrift angezeigt wird.`;
       if (day.entryCountValid(deviceKey) == 0) {
         continue;
       }
+      groupStart ??= day;
       totalDays++;
-      Utils.pushAll(totalDay.entries, day.entries);
-      Utils.pushAll(totalDay.bloody, day.bloody);
-      Utils.pushAll(totalDay.treatments, day.treatments);
-      Utils.pushAll(totalDay.profile, day.profile);
-      Utils.pushAll(totalDay.basalData.store.listBasal, day.basalData.store.listBasal);
-      totalDay.basalData.targetHigh =
-        Math.max(totalDay.basalData.targetHigh, day.basalData.targetHigh);
-      totalDay.basalData.targetLow =
-        Math.min(totalDay.basalData.targetLow, day.basalData.targetLow);
-      const row: any[] = [];
-      this.fillRow(row, f, [this.fmtDate(day.date, {withShortWeekday: true})], day, 'row');
+      this.fillTotal(totalDay, day);
+      this.fillTotal(groupDay, day);
       const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate())).profile;
       if (prevProfile == null ||
         profile.targetLow != prevProfile.targetLow ||
@@ -543,22 +606,49 @@ schwächerer Schrift angezeigt wird.`;
         lineCount += 2;
       }
       prevProfile = profile;
-
-      body.push(row);
-      lineCount++;
-      if (lineCount == 21) {
-        page.push(this.headerFooter());
-        page.push(this.getTable(this.tableWidths, body));
-        lineCount = 0;
-        pages.push(new PageData(this.isPortrait, page));
-        page = [];
-        body = [];
-        prevProfile = null;
+      if (this.groupType === GroupType.None || !this.hideGroupDays) {
+        appendRow(this.fmtDate(day.date, {withShortWeekday: true}), day, {style: 'row'}, 1);
+      }
+      if (this.groupType !== GroupType.None && groupStart != null) {
+        const nextDay = i < this.repData.data.days.length - 1
+          ? this.repData.data.days[GLOBALS.ppLatestFirst ? this.repData.data.days.length - 1 - i - 1 : i + 1]
+          : null;
+        let title: string[] = [];
+        switch (this.groupType) {
+          case GroupType.Week:
+            // show group row when next day is monday
+            if (nextDay == null || Utils.getDow(nextDay?.date) === firstDayOfWeek) {
+              title.push(this.fmtDate(groupStart.date, {withShortWeekday: true}));
+              title.push(this.fmtDate(day.date, {withShortWeekday: true}));
+            }
+            break;
+          case GroupType.Month:
+            // show group row when month of next day is different from month of current day
+            if (nextDay?.date?.getMonth() !== day.date.getMonth()) {
+              title.push(DatepickerPeriod.monthName(groupStart.date));
+              if (groupStart.date.getDate() > 1) {
+                title.splice(0, 0, this.fmtDate(groupStart.date, {withShortWeekday: true}));
+              }
+              if (day.date.getDate() < DatepickerPeriod.daysInMonth(groupStart.date)) {
+                title.push(this.fmtDate(day.date, {withShortWeekday: true}));
+              }
+            }
+            break;
+        }
+        if (title.length > 0) {
+          groupDay.init(null, true);
+          appendRow(Utils.join(title, '\n'), groupDay, {style: 'total'}, 1.75);
+          groupDay = new DayData(null, new ProfileGlucData(new ProfileStoreData('Intern')));
+          groupDay.basalData.store.listBasal = [];
+          groupDay.basalData.targetHigh = 0;
+          groupDay.basalData.targetLow = 1000;
+          groupStart = null;
+        }
       }
     }
     const row: any[] = [];
     totalDay.init(null, true);
-    this.fillRow(row, f, [`${this.msgDaySum(totalDays)}`, this.msgDayAverage], totalDay, 'total', totalDays);
+    this.fillRow(row, f, [`${this.msgDaySum(totalDays)}`, this.msgDayAverage], totalDay, {style: 'total'}, totalDays);
     body.push(row);
 
     if (prevProfile != null) {

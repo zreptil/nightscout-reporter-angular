@@ -75,7 +75,7 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
 
       if (hour === 0) {
         // erste Spalte
-        this.addTableRow(true, this.cm(2.0), row,
+        this.addTableCol(true, this.cm(2.0), row,
           {text: this.msgDate, style: 'total', alignment: 'center'},
           {text: firstCol, style: 'total', alignment: 'center'});
         day = orgDay;
@@ -99,7 +99,7 @@ von 0 Uhr und zeigt an, wo ein neuer Tag beginnt.`;
             number gluc = entry?.gluc ?? null;
       */
       // Stundenspalte
-      this.addTableRow(true, wid, row, {
+      this.addTableCol(true, wid, row, {
         text: this.fmtTime(time),
         style: this.styleForTime(time),
         alignment: 'center'

@@ -1803,7 +1803,7 @@ export abstract class BasePrint extends FormConfig {
     return ret;
   }
 
-  addTableRow(check: boolean, width: any, dst: any, head: any, content: any): void {
+  addTableCol(check: boolean, width: any, dst: any, head: any, content: any): void {
     if (!check) {
       return;
     }

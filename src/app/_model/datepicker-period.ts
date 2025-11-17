@@ -174,6 +174,10 @@ export class DatepickerPeriod {
     return date != null ? DatepickerPeriod.dowShortNames[Utils.getDow(date)] : '';
   }
 
+  static daysInMonth(date: Date) {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  }
+
   _shiftBy(ret: Date, months: number): Date {
     return new Date(ret.getFullYear(), ret.getMonth() - months, ret.getDate());
   }

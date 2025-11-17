@@ -50,7 +50,7 @@
       </mat-form-field>
     </div>
   }
-  @if (param.subParams != null && param.boolValue && param.isVisible) {
+  @if (param.subParams != null && param.showSubParams() && param.isVisible) {
     <div class="subParams">
       <app-form-params [paramList]="param.subParams"></app-form-params>
     </div>
