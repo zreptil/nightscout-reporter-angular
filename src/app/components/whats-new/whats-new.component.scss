@@ -23,7 +23,7 @@ div[header] {
   font-size: 1.2em;
 }
 
-h2 {
+::ng-deep h2 {
   display: flex;
   flex-flow: row;
   font-size: 1.3em;
@@ -37,76 +37,76 @@ h2 {
   cursor: pointer;
 }
 
-ul {
+::ng-deep ul {
   display: flex;
   flex-flow: column;
   margin: 0;
   padding: 0 0 1.5em 0;
-}
 
-li {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 2.0em;
-  position: relative;
-  text-align: justify;
+  li {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 2.0em;
+    position: relative;
+    text-align: justify;
 
-  div[row] {
-    display: flex;
-    flex-flow: row;
-    align-items: flex-start;
+    div[row] {
+      display: flex;
+      flex-flow: row;
+      align-items: flex-start;
+    }
+
+    mat-icon {
+      --v: 24px;
+      font-size: 1em;
+      height: var(--v);
+      width: var(--v);
+      min-width: var(--v);
+      margin-top: 4px;
+    }
   }
 
-  mat-icon {
-    --v: 24px;
-    font-size: 1em;
-    height: var(--v);
-    width: var(--v);
-    min-width: var(--v);
-    margin-top: 4px;
+  li:not(first-child) {
+    padding-top: 0.5em;
   }
-}
 
-li:not(first-child) {
-  padding-top: 0.5em;
-}
+  li:before {
+    content: "-";
+    position: absolute;
+    margin-left: -1.1em;
+    font-weight: bold;
+  }
 
-li:before {
-  content: "-";
-  position: absolute;
-  margin-left: -1.1em;
-  font-weight: bold;
-}
+  .added:before {
+    content: "+";
+  }
 
-.added:before {
-  content: "+";
-}
+  .changed:before {
+    content: "~";
+  }
 
-.changed:before {
-  content: "~";
-}
+  .removed:before {
+    content: "-";
+  }
 
-.removed:before {
-  content: "-";
-}
+  .fixed:before {
+    content: "#";
+  }
 
-.fixed:before {
-  content: "#";
-}
+  .newline {
+    width: 100%;
+    height: 1px;
+    background: var(--whatsnewBodyFore);
+    margin: 0.5em 0;
+  }
 
-.newline {
-  width: 100%;
-  height: 1px;
-  background: var(--whatsnewBodyFore);
-  margin: 0.5em 0;
-}
+  a, a:visited, a:active {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--whatsnewBodyLink);
+  }
 
-a, a:visited, a:active {
-  text-decoration: none;
-  cursor: pointer;
-  color: var(--whatsnewBodyLink);
-}
-
-.hidden {
-  display: none;
+  .hidden {
+    display: none;
+  }
 }

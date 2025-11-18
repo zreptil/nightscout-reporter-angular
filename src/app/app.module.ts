@@ -55,7 +55,9 @@ import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.dir
 import {LaunchComponent} from '@/components/launch/launch.component';
 import {ProgressComponent} from '@/components/progress/progress.component';
 import {LogComponent} from '@/components/log/log.component';
+import {OAuthModule} from 'angular-oauth2-oidc';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {HistoryModule} from '@/history.module';
 import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
 
 @NgModule({
@@ -117,6 +119,10 @@ import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
     ClipboardModule,
     ProgressComponent,
     LogComponent,
+    HistoryModule,
+    OAuthModule.forRoot(),
+    TextareaAutoresizeDirective,
+  ], providers: [
     TextareaAutoresizeDirective, ScrollShadowDirective], providers: [
     provideHttpClient(withInterceptorsFromDi()),
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}

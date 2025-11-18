@@ -47,8 +47,8 @@ schwächerer Schrift angezeigt wird.`;
     new ParamInfo(0, PrintDailyStatistics.msgParam1, {
       list: [
         $localize`Keine`,
-        $localize`1 Woche`,
-        $localize`1 Monat`
+        $localize`Woche`,
+        $localize`Monat`
       ],
       subParams: [new ParamInfo(1, PrintDailyStatistics.msgParam2, {boolValue: true})]
     }),
@@ -566,11 +566,12 @@ schwächerer Schrift angezeigt wird.`;
     groupDay.basalData.targetHigh = 0;
     groupDay.basalData.targetLow = 1000;
     let groupStart: DayData = null;
+    let groupDays = 0;
 
     const appendRow =
       (rowTitle: string, rowDay: DayData, params: FillParams, count: number) => {
         const row: any[] = [];
-        this.fillRow(row, f, [rowTitle], rowDay, params);
+        this.fillRow(row, f, [rowTitle], rowDay, params, groupDays);
         body.push(row);
         lineCount += count;
         if (lineCount >= 22) {
@@ -596,6 +597,7 @@ schwächerer Schrift angezeigt wird.`;
       }
       groupStart ??= day;
       totalDays++;
+      groupDays++;
       this.fillTotal(totalDay, day);
       this.fillTotal(groupDay, day);
       const profile = this.repData.profile(new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate())).profile;
@@ -618,8 +620,25 @@ schwächerer Schrift angezeigt wird.`;
           case GroupType.Week:
             // show group row when next day is monday
             if (nextDay == null || Utils.getDow(nextDay?.date) === firstDayOfWeek) {
-              title.push(this.fmtDate(groupStart.date, {withShortWeekday: true}));
-              title.push(this.fmtDate(day.date, {withShortWeekday: true}));
+              const w = GLOBALS.period.weekOfYear(groupStart?.date);
+              let temp = $localize`Woche ${w.week}`;
+              if (w.year !== groupStart.date.getFullYear()) {
+                temp += ` / ${w.year}`
+              }
+              title.push(temp);
+              temp = Utils.fmtDate(groupStart.date, $localize`dd.MM.`);
+              if (Utils.getDow(groupStart.date) !== GLOBALS.period.firstDayOfWeek % 7) {
+                temp = `\u2026 ${temp}`;
+              }
+              // title.push(this.fmtDate(groupStart.date, {withShortWeekday: true}));
+              if (Utils.compareDate(day.date, groupStart.date) !== 0) {
+                temp += ` - ${Utils.fmtDate(day.date, $localize`dd.MM.`)}`;
+                //   title.push(this.fmtDate(day.date, {withShortWeekday: true}));
+              }
+              if (Utils.getDow(day.date) !== (GLOBALS.period.firstDayOfWeek + 6) % 7) {
+                temp += ' \u2026';
+              }
+              title.push(temp);
             }
             break;
           case GroupType.Month:
@@ -643,6 +662,7 @@ schwächerer Schrift angezeigt wird.`;
           groupDay.basalData.targetHigh = 0;
           groupDay.basalData.targetLow = 1000;
           groupStart = null;
+          groupDays = 0;
         }
       }
     }
