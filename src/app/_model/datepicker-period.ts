@@ -178,6 +178,40 @@ export class DatepickerPeriod {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   }
 
+  /**
+   * Calculates the week number for a given date.
+   *
+   * @param {Date} date - The date for which the ISO week number should be calculated.
+   * @return {number} The ISO week number of the given date.
+   */
+  weekOfYear(date: Date): { week: number, year: number } {
+    const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const msPerDay = 24 * 60 * 60 * 1000;
+    if (this.firstDayOfWeek === 7) {
+      const dayNr = (date.getDay() + 6) % 7;
+      // ISO: The first week of a year is the week that contains the first Thursday of the year
+      tmp.setDate(tmp.getDate() - dayNr + 3);
+      const firstThursday = tmp.valueOf();
+      tmp.setMonth(0, 1);
+      if (tmp.getDay() !== 4) {
+        tmp.setDate(tmp.getDate() + ((4 - tmp.getDay()) + 7) % 7);
+      }
+      return {
+        week: Math.ceil((firstThursday - tmp.valueOf()) / (7 * msPerDay)) + 1,
+        year: tmp.getFullYear()
+      };
+    }
+    const yearStart = new Date(Date.UTC(date.getFullYear(), 0, 1));
+    const dayOfWeekYearStart = yearStart.getUTCDay();
+    const shift = (dayOfWeekYearStart - (this.firstDayOfWeek - 1) + 7) % 7;
+    const firstWeekStart = new Date(yearStart.getTime() - shift * msPerDay);
+    const diff = tmp.getTime() - firstWeekStart.getTime();
+    return {
+      week: Math.floor(diff / (7 * msPerDay)) + 1,
+      year: date.getFullYear()
+    };
+  }
+
   _shiftBy(ret: Date, months: number): Date {
     return new Date(ret.getFullYear(), ret.getMonth() - months, ret.getDate());
   }
