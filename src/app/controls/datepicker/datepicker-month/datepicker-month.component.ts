@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DayData, MonthData} from '@/controls/datepicker/datepicker-month/datepicker-data';
 import {DatepickerPeriod} from '@/_model/datepicker-period';
 import {Utils} from '@/classes/utils';
@@ -13,7 +13,6 @@ import {GlobalsData} from '@/_model/globals-data';
 export class DatepickerMonthComponent implements OnInit {
 
   month: MonthData = null;
-  trigger = new EventEmitter<UIEvent>();
 
   constructor() {
   }

@@ -58,7 +58,7 @@ function createJson(codes: any, list: any): void {
     file = `../temp/${path}/messages.${id}.xliff`;
   }
   const content = fs.readFileSync(getPath(file)).toString();
-  parseTranslationsForLocalize(content).then((result: Record<MessageId, TargetMessage>) => {
+  parseTranslationsForLocalize(content, id).then((result: Record<MessageId, TargetMessage>) => {
     list.push({id: id, data: result});
     codes.splice(0, 1);
     if (codes.length === 0) {
@@ -80,7 +80,7 @@ function getPath(dir: string, file?: string): string {
   return file ? path.join(dir, file) : dir;
 }
 
-function parseTranslationsForLocalize(xml: string): Promise<Record<MessageId, TargetMessage>> {
+function parseTranslationsForLocalize(xml: string, lang: string): Promise<Record<MessageId, TargetMessage>> {
   return xliff.xliff12ToJs(xml).then((parserResult: any) => {
     const xliffContent: any = parserResult.resources['ng2.template'];
     const src = parserResult.sourceLanguage;

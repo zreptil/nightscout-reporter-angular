@@ -123,7 +123,7 @@ import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
     OAuthModule.forRoot(),
     TextareaAutoresizeDirective,
   ], providers: [
-    TextareaAutoresizeDirective, ScrollShadowDirective], providers: [
+    TextareaAutoresizeDirective, ScrollShadowDirective,
     provideHttpClient(withInterceptorsFromDi()),
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}
   ]
