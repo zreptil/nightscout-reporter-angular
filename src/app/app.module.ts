@@ -57,6 +57,7 @@ import {ProgressComponent} from '@/components/progress/progress.component';
 import {LogComponent} from '@/components/log/log.component';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {HistoryModule} from '@/history.module';
 
 @NgModule({
   declarations: [
@@ -116,8 +117,10 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
     ClipboardModule,
     ProgressComponent,
     LogComponent,
+    HistoryModule,
     OAuthModule.forRoot(),
-    TextareaAutoresizeDirective], providers: [
+    TextareaAutoresizeDirective,
+  ], providers: [
     provideHttpClient(withInterceptorsFromDi()),
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}
   ]

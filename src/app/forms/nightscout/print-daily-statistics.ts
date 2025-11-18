@@ -47,8 +47,8 @@ schwächerer Schrift angezeigt wird.`;
     new ParamInfo(0, PrintDailyStatistics.msgParam1, {
       list: [
         $localize`Keine`,
-        $localize`1 Woche`,
-        $localize`1 Monat`
+        $localize`Woche`,
+        $localize`Monat`
       ],
       subParams: [new ParamInfo(1, PrintDailyStatistics.msgParam2, {boolValue: true})]
     }),
