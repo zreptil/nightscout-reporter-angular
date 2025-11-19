@@ -15,6 +15,36 @@ button:not([icon]) {
 .title, .weektitle, .week {
   display: flex;
   flex-direction: row;
+
+  button[big] {
+    font-size: inherit;
+  }
+}
+
+[monthList] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+[yearList] {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+[monthList], [yearList] {
+  display: grid;
+  gap: 0.2em;
+  background: var(--datepickerMonthTitleBack);
+  color: var(--datepickerMonthTitleFore);
+  padding: 0.2em;
+
+  button:not([disabled]) {
+    background-color: var(--datepickerBtnBack);
+    color: var(--datepickerMonthTitleFore);
+  }
+
+  button:not([disabled]).active {
+    background-color: var(--datepickerBtnRaisedKeyBack);
+    color: var(--datepickerBtnRaisedKeyFore);
+  }
 }
 
 .title {
@@ -49,8 +79,13 @@ button:not([icon]) {
   flex-direction: column;
 }
 
-.week {
+button[week] {
+  border-radius: 0;
+  background-color: var(--datepickerMonthTitleBack);
+  color: var(--datepickerMonthTitleFore);
+}
 
+.week {
   button {
     flex: 1;
   }

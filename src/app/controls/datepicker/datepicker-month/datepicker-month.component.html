@@ -1,42 +1,86 @@
-<div class="title">{{ monthName(date) }} {{ date?.getFullYear() }}</div>
-<div class="weektitle">
-  @for (dow of month?.weeks[0].days; track $index) {
-    <button (click)="weekdayClicked(dow)"
-            class="btn" i18n-title="title for button of weekdayname"
-            mat-button
-            title="Als ersten Tag der Woche festlegen">
-      {{ dow.shortName }}
-    </button>
+<div class="title">
+  @switch (globals.dpEditMode) {
+    @case ('day') {
+      <button (click)="setEditMode('month')" big mat-button>{{ monthName(date) }}</button>
+      <button (click)="setEditMode('year')" big mat-button>{{ date?.getFullYear() }}</button>
+    }
+    @case ('month') {
+      <button (click)="setEditMode('year')" big mat-button>{{ date?.getFullYear() }}</button>
+    }
+    @case ('year') {
+      <button (click)="setEditMode('year')" big mat-button>{{ date?.getFullYear() }}</button>
+    }
   }
 </div>
-<div class="month mat-elevation-z10">
-  @for (week of month?.weeks; track $index) {
-    <div class="week">
-      @for (day of week.days; let dayIdx = $index; track dayIdx) {
-        @if (!day.isRaised) {
-          <button (click)="dayClicked(day)"
-                  [class]="dayclass(day)"
-                  [disabled]="!day.isEnabled"
-                  mat-button>{{ day.day }}
+@switch (globals.dpEditMode) {
+  @case ('day') {
+    <div class="weektitle">
+      <button disabled mat-button week></button>
+      @for (dow of month?.weeks[0].days; track $index) {
+        <button (click)="weekdayClicked(dow)"
+                class="btn" i18n-title="title for button of weekdayname"
+                mat-button
+                title="Als ersten Tag der Woche festlegen">
+          {{ dow.shortName }}
+        </button>
+      }
+    </div>
+    <div class="month mat-elevation-z10">
+      @for (week of month?.weeks; track $index) {
+        <div class="week">
+          <button disabled mat-button week>{{ week.weekNumber }}</button>
+          @for (day of week.days; let dayIdx = $index; track dayIdx) {
+            @if (!day.isRaised) {
+              <button (click)="dayClicked(day)"
+                      [class]="dayclass(day)"
+                      [disabled]="!day.isEnabled"
+                      mat-button>{{ day.day }}
+              </button>
+            }
+            @if (day.isRaised) {
+              <button (click)="dayClicked(day)"
+                      [class]="dayclass(day)"
+                      [disabled]="!day.isEnabled"
+                      mat-raised-button>{{ day.day }}
+              </button>
+            }
+          }
+        </div>
+      }
+      <div class="weekmarks">
+        <button disabled mat-button week></button>
+        @for (dow of month?.weeks[0].days; track $index) {
+          <button (click)="period.activateDow(weekday(dow.date), !period.isDowActive(weekday(dow.date)))"
+                  [class]="dowmark(weekday(dow.date))"
+                  mat-button>
+            <mat-icon>{{ period.isDowActive(weekday(dow.date)) ? 'done' : 'close' }}</mat-icon>
           </button>
         }
-        @if (day.isRaised) {
-          <button (click)="dayClicked(day)"
-                  [class]="dayclass(day)"
-                  [disabled]="!day.isEnabled"
-                  mat-raised-button>{{ day.day }}
-          </button>
-        }
+      </div>
+    </div>
+  }
+  @case ('month') {
+    <div monthList>
+      @for (month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; track $index) {
+        <button (click)="monthClicked(month)"
+                [class]="monthclass(month)"
+                [disabled]="monthDisabled(month)"
+                [style]="styleForMonth(month)"
+                mat-button>{{ nameForMonth(month) }}
+        </button>
       }
     </div>
   }
-  <div class="weekmarks">
-    @for (dow of month?.weeks[0].days; track $index) {
-      <button (click)="period.activateDow(weekday(dow.date), !period.isDowActive(weekday(dow.date)))"
-              [class]="dowmark(weekday(dow.date))"
-              mat-button>
-        <mat-icon>{{ period.isDowActive(weekday(dow.date)) ? 'done' : 'close' }}</mat-icon>
-      </button>
-    }
-  </div>
-</div>
+  @case ('year') {
+    <div yearList>
+      @for (year of yearList; track $index) {
+        <button (click)="yearClicked(year)"
+                [class]="yearclass(year)"
+                [disabled]="yearDisabled(year)"
+                [style]="styleForYear(year)"
+                mat-button>{{ year }}
+        </button>
+      }
+    </div>
+  }
+}

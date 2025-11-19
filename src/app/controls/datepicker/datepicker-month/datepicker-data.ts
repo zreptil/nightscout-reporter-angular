@@ -33,7 +33,6 @@ export class DayData {
   }
 
   get isRaised(): boolean {
-
     return this._period.start != null && this._period.end != null
       && Utils.isOnOrAfter(this.date, this._period.start)
       && Utils.isOnOrBefore(this.date, this._period.end);
@@ -59,6 +58,7 @@ export class DayData {
 
 export class WeekData {
   days: DayData[] = [];
+  weekNumber: number;
 
   constructor(public _period: DatepickerPeriod, public _date: Date, public _forMonth: number) {
     let d = new Date(_date.getFullYear(), _date.getMonth(), _date.getDate());
@@ -66,6 +66,7 @@ export class WeekData {
       this.days.push(new DayData(_period, d, _forMonth));
       d = Utils.addDateDays(d, 1);
     }
+    this.weekNumber = _period.weekOfYear(_date)?.week;
   }
 }
 
