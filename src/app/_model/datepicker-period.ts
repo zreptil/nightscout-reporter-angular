@@ -179,6 +179,20 @@ export class DatepickerPeriod {
   }
 
   /**
+   * Calculates the day of the year for a given date.
+   * The result is the number of days since the beginning of the year, starting with 0 for January 1st.
+   *
+   * @param {Date} date - The date for which to calculate the day of the year.
+   * @return {number} The day of the year as a number.
+   */
+  static dayOfYear(date: Date): number {
+    const start = new Date(date.getFullYear(), 0, 1);
+    const diff = date.getTime() - start.getTime();
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+  }
+
+  /**
    * Calculates the week number for a given date.
    *
    * @param {Date} date - The date for which the ISO week number should be calculated.

@@ -24,14 +24,14 @@
       -->
     </div>
     <div class="month">
-      <button (click)="addMonths(-1)"
+      <button (click)="addStep(-1)"
               [disabled]="isMinMonth"
               class="prev"
               mat-button>
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <app-datepicker-month [date]="data.month" [period]="data.period"></app-datepicker-month>
-      <button (click)="addMonths(1)"
+      <app-datepicker-month (dateChanged)="onDateChanged($event)" [date]="data.month" [period]="data.period"></app-datepicker-month>
+      <button (click)="addStep(1)"
               [disabled]="isMaxMonth"
               class="next"
               mat-button>

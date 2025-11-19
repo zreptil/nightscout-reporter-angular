@@ -133,12 +133,26 @@ export class DatepickerDialogComponent implements OnInit {
     this.data.period.refresh();
   }
 
-  addMonths(value: number) {
-    this.data.month = Utils.addDateMonths(this.data.month, value);
+  addStep(value: number) {
+    switch (GLOBALS.dpEditMode) {
+      case 'day':
+        this.data.month = Utils.addDateMonths(this.data.month, value);
+        break;
+      case 'month':
+        this.data.month = new Date(this.data.month.getFullYear() + value, this.data.month.getMonth(), this.data.month.getDate());
+        break;
+      case 'year':
+        this.data.month = new Date(this.data.month.getFullYear() + value * 20, this.data.month.getMonth(), this.data.month.getDate());
+        break;
+    }
   }
 
   clickClear() {
     this.data.period.entryKey = null;
     this.data.period.start = null;
+  }
+
+  protected onDateChanged(date: Date) {
+    this.data.month = date;
   }
 }

@@ -144,6 +144,7 @@ export class GlobalsData extends Settings {
   dragPos: any = {};
   ppShowHbA1Cmmol = false;
   userInfo: number = 0;
+  dpEditMode: 'day' | 'month' | 'year' = 'day';
   private onPeriodChangeSubject: BehaviorSubject<DatepickerPeriod>;
 
   constructor() {

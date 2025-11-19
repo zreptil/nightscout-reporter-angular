@@ -26,6 +26,16 @@ import {HistoryBase} from './history-base';
       angezeigt. Wenn der letzte Tag der Gruppe nicht der letzte Tag im Monat ist, wird dieses Datum
       unter dem Monatsnamen angezeigt.
     </li>
+    <li class="added" i18n="445a2">
+      Der Dialog zur Zeitraumauswahl wurde erweitert. Es werden jetzt auch die Wochennummern angezeigt.
+      Ausserdem ist es möglich, durch Anklicken des Monatsnamen zu dem gewünschten Monat zu navigieren.
+      Dabei wird mit den Navigationsbuttons links und rechts das Jahr erhöht oder verringert. Die Monate
+      und Jahre werden entsprechend der aktuellen Zeitraumauswahl eingefärbt. Durch Anklicken des Jahres
+      kann auch dieses schnell gewechselt werden. Durch Anklicken eines Monats oder Jahres in der Liste
+      wird dann zu der entsprechenden Ansicht gewechselt. Die Zeitraumänderung erfolgt nach wie vor
+      durch Anklicken der Schnellauswahl unter dem Kalender oder durch Anklicken der Tage innerhalb
+      eines Monats. Das Jahr und der Monat dienen nur zur schnelleren Navigation zum gewünschten Datum.
+    </li>
     <li class="fixed" i18n="445f1">
       Die Anzeige des Basalinsulins im Formular "Tagesstatistik" wurde korrigiert.
     </li>
