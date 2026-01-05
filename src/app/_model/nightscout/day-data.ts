@@ -132,11 +132,12 @@ export class DayData {
 
     let isInserted = false;
     // calculate the values based on the profile data
+    let firstValue = true;
     for (let i = 0; i < this._profile.length; i++) {
       const entry = this._profile[i];
       entry.orgValue = entry.value;
       // only work on entry-values that are null (inserted by the code above)
-      if (entry.value == null) {
+      if (entry.value == null && !firstValue) {
         // entry has to be calculated and has a preceding entry
         entry.orgValue = last.orgValue;
         entry.value = entry.adjustedValue(last.orgValue);
@@ -192,6 +193,7 @@ export class DayData {
       }
       last = entry;
       lastTime = last.time(this.date);
+      firstValue = false;
     }
 
     // finalize the entries by recalculating their duration
