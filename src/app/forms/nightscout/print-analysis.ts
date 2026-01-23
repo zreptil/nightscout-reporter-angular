@@ -37,6 +37,7 @@ export class PrintAnalysis extends BasePrint {
   isPreciseTarget: boolean;
   showStdAbw: boolean;
   showHypoGlucs: boolean;
+  showGRI: boolean;
   useDailyBasalrate: boolean;
   useFineLimits: boolean;
   showDevices: boolean;
@@ -48,6 +49,7 @@ export class PrintAnalysis extends BasePrint {
     new ParamInfo(4, PrintAnalysis.msgParam5, {boolValue: false}),
     new ParamInfo(6, BasePrint.msgUseDailyBasalrate, {boolValue: true, isLoopValue: true}),
     new ParamInfo(5, PrintAnalysis.msgParam6, {boolValue: false}),
+    new ParamInfo(7, PrintAnalysis.msgParam7, {boolValue: true}),
   ];
 
   constructor(ps: PdfService, suffix: string = null) {
@@ -77,6 +79,10 @@ export class PrintAnalysis extends BasePrint {
 
   static get msgParam6(): string {
     return $localize`Verwendete Glukosequellen anzeigen`;
+  }
+
+  static get msgParam7(): string {
+    return $localize`GRI anzeigen`;
   }
 
   override get title(): string {
@@ -123,6 +129,7 @@ export class PrintAnalysis extends BasePrint {
     this.showHypoGlucs = this.params[4].boolValue;
     this.useDailyBasalrate = this.params[5].boolValue;
     this.showDevices = this.params[6].boolValue;
+    this.showGRI = this.params[7].boolValue;
   }
 
   msgHypoTitle(value: string): string {
@@ -784,8 +791,9 @@ export class PrintAnalysis extends BasePrint {
         {text: this.pgsQuality(data.pgs), style: 'infounit', colSpan: 2},
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
-      ],
-      [
+      ]]);
+    if (this.showGRI) {
+      tableBody.push([
         {text: '', style: 'infotitle'},
         {text: this.msgGRIFull, style: 'infotitle'},
         {text: GLOBALS.fmtNumber(data.gri, 0), style: 'infodata'},
@@ -805,7 +813,9 @@ export class PrintAnalysis extends BasePrint {
             },
           ]
         },
-      ],
+      ]);
+    }
+    this.addBodyArea(tableBody, this.msgPeriod, [
       [
         {text: '', style: 'infotitle'},
         {text: `${this.msgGlucoseValue}${glucWarnText}`, style: 'infotitle'},

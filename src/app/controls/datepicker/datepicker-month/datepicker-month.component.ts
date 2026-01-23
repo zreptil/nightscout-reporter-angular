@@ -80,6 +80,7 @@ export class DatepickerMonthComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setEditMode('day');
   }
 
   nameForMonth(month: number): string {

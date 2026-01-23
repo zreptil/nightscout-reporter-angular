@@ -7,9 +7,6 @@
     @case ('month') {
       <button (click)="setEditMode('year')" big mat-button>{{ date?.getFullYear() }}</button>
     }
-    @case ('year') {
-      <button (click)="setEditMode('year')" big mat-button>{{ date?.getFullYear() }}</button>
-    }
   }
 </div>
 @switch (globals.dpEditMode) {
