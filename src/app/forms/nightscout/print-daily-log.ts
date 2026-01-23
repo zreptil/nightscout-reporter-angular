@@ -389,8 +389,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         wasAdded = true;
         this.fillList(this.groupMinutes !== 0, this.repData, day, t, list, flags);
       }
-
-      if (this.groupMinutes === 0 || !Utils.isBefore(t.createdAt, nextTime)) {
+      if (this.groupMinutes === 0 || !Utils.isBefore(t.createdAt, nextTime) || i === treatments.length - 1) {
         let time = t.createdAt;
         if (this.groupMinutes !== 0) {
           time = Utils.addTimeMinutes(nextTime, -this.groupMinutes);
@@ -812,6 +811,7 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
       }
       if (t.isSensorChange) {
         list.push(this.msgChangeSensor);
+        list.push(t.enteredBy);
         flags.hasSensor = true;
       }
       if (t.isInsulinChange) {
@@ -844,11 +844,11 @@ erkannt wurden oder wo Notizen erfasst wurden.`;
         JsonData.toNumber(t.raw.insulinNeedsScaleFactor) * 100));
     }
 
-    if (list.length != lastIdx) {
+    if (list.length !== lastIdx) {
       if (this.showDupes && t.duplicates > 1) {
         list.splice(lastIdx, 0, `${t.duplicates} x @`);
       }
-      if (list.length != lastIdx && showTime && this.groupMinutes > 1) {
+      if (list.length !== lastIdx && showTime && this.groupMinutes > 1) {
         const time = `[${this.fmtTime(t.createdAt)}] `;
         if (lastIdx < 2 || list[lastIdx - 2] != time) {
           list.splice(lastIdx, 0, time);
