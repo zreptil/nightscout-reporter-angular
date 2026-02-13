@@ -1,6 +1,6 @@
 {
   "name": "nightscout-reporter",
-  "version": "4.4.1",
+  "version": "4.4.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3002 --open",
