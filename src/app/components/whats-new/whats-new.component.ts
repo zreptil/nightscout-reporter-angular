@@ -9,7 +9,7 @@ import {Utils} from '@/classes/utils';
   selector: 'app-whats-new',
   templateUrl: './whats-new.component.html',
   styleUrls: ['./whats-new.component.scss'],
-  standalone: false,
+  standalone: false
 })
 export class WhatsNewComponent implements AfterViewInit {
 

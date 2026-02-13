@@ -162,7 +162,7 @@ export class WatchGroupComponent {
   }
 
   changeImage(entry: WatchElement): string {
-    const id = entry.type?.substring(7);
+    const id = entry.type?.substring(7).replace(/end_/, '');
     return `assets/img/${GLOBALS.currentChanges?.[id]?.type ?? 'empty'}.print.png`;
   }
 

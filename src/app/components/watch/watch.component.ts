@@ -108,6 +108,7 @@ export class WatchComponent implements OnInit {
   }
 
   get types(): any {
+    const endSuffix = '&nbsp;>';
     return {
       nl: this.msgNL,
       space: this.msgSPACE,
@@ -122,9 +123,13 @@ export class WatchComponent implements OnInit {
       factor: this.msgFACTOR,
       glucorg: this.msgGLUCORG,
       change_sensor: this.msgChangeSensor,
+      change_end_sensor: this.msgChangeSensor + endSuffix,
       change_katheter: this.msgChangeKatheter,
+      change_end_katheter: this.msgChangeKatheter + endSuffix,
       change_ampulle: this.msgChangeAmpulle,
+      change_end_ampulle: this.msgChangeAmpulle + endSuffix,
       change_battery: this.msgChangeBattery,
+      change_end_battery: this.msgChangeBattery + endSuffix,
       pump: this.msgPump,
       llu_schedule: this.msgLLUSchedule,
       llu_autoexec: this.msgLLUAutoExec

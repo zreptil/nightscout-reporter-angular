@@ -364,6 +364,9 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       if (data.themeServerSecret != null) {
         GLOBALS.themeServerSecret = data.themeServerSecret;
       }
+      if (data.backendUrl != null) {
+        this.env.backendUrl = data.backendUrl;
+      }
     }
   }
 
@@ -842,9 +845,13 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
 
     const changes: any = {
       ampulle: new WatchChangeData('ampulle', '?', status?.extendedSettings.iage),
+      end_ampulle: new WatchChangeData('end_ampulle', '?', status?.extendedSettings.iage),
       katheter: new WatchChangeData('katheter', '?', status?.extendedSettings.cage),
+      end_katheter: new WatchChangeData('end_katheter', '?', status?.extendedSettings.cage),
       battery: new WatchChangeData('battery', '?', status?.extendedSettings.bage),
+      end_battery: new WatchChangeData('end_battery', '?', status?.extendedSettings.bage),
       sensor: new WatchChangeData('sensor', '?', status?.extendedSettings.sage),
+      end_sensor: new WatchChangeData('end_sensor', '?', status?.extendedSettings.sage),
 
       pumpClock: new WatchChangeData('pumpClock', '?', status?.extendedSettings.pcage),
       pumpRes: new WatchChangeData('pumpRes', '?', status?.extendedSettings.prage),
@@ -870,19 +877,19 @@ mit Googles Services verhindert oder erteile nach Deaktivierung die Erlaubnis im
       }
       list.sort((a, b) => Utils.compareDate(a.createdAt, b.createdAt));
       for (const change of list) {
-        const timeDisp = Utils.durationText(change.createdAt, GlobalsData.now);
-        if (change.isInsulinChange) {
-          changes['ampulle'].lasttime = timeDisp;
-          changes['ampulle'].calcAlarm(change.createdAt);
-        } else if (change.isSiteChange) {
-          changes['katheter'].lasttime = timeDisp;
-          changes['katheter'].calcAlarm(change.createdAt);
-        } else if (change.isPumpBatteryChange) {
-          changes['battery'].lasttime = timeDisp;
-          changes['battery'].calcAlarm(change.createdAt);
-        } else if (change.isSensorChange) {
-          changes['sensor'].lasttime = timeDisp;
-          changes['sensor'].calcAlarm(change.createdAt);
+        const changeList: any = {
+          ampulle: change.isInsulinChange,
+          katheter: change.isSiteChange,
+          battery: change.isPumpBatteryChange,
+          sensor: change.isSensorChange
+        };
+        for (const key of Object.keys(changeList)) {
+          if (changeList[key]) {
+            changes[key].lasttime = Utils.durationText(change.createdAt, GlobalsData.now);
+            changes[key].calcAlarm(change.createdAt);
+            changes[`end_${key}`].lasttime = Utils.durationText(GlobalsData.now, Utils.addTimeHours(change.createdAt, changes['end_sensor'].age?.urgent));
+            changes[`end_${key}`].calcAlarm(change.createdAt);
+          }
         }
       }
     }

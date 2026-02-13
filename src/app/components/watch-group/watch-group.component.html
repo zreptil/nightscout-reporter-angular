@@ -46,7 +46,11 @@
     @if (entry.type === 'lasttime') {
       <app-watch-entry (click)="onClick(entry)" [element]="entry" [isEditMode]="ws.isEditMode">{{ globals.currentGlucTime }}</app-watch-entry>
     }
-    @if (entry.type.startsWith('change')) {
+    @if (entry.type.startsWith('change_end')) {
+      <app-watch-entry (click)="onClick(entry)" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
+        {{ changeInfo(entry) }}<img [alt]="changeImage(entry)" [src]="changeImage(entry)" class="end">
+      </app-watch-entry>
+    } @else if (entry.type.startsWith('change')) {
       <app-watch-entry (click)="onClick(entry)" [class]="changeClass(entry)" [element]="entry" [isEditMode]="ws.isEditMode">
         <img [alt]="changeImage(entry)" [src]="changeImage(entry)">{{ changeInfo(entry) }}
       </app-watch-entry>

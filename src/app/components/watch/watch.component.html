@@ -1,4 +1,4 @@
-@if (globals.nwCurrPage==='users') {
+@if (globals.nwCurrPage === 'users') {
   <div class="users">
     <div class="scrollable">
       <app-view-users></app-view-users>
@@ -8,7 +8,7 @@
     </button>
   </div>
 }
-@if (globals.nwCurrPage==='themes') {
+@if (globals.nwCurrPage === 'themes') {
   <div class="themes">
     <div class="scrollable">
       <app-view-themes></app-view-themes>
@@ -18,7 +18,7 @@
     </button>
   </div>
 }
-@if (globals.nwCurrPage==='') {
+@if (globals.nwCurrPage === '') {
   <div (click)="clickBackground()" class="root">
     <div content>
       <app-watch-group groupId="tl"></app-watch-group>
@@ -61,7 +61,7 @@
             <button (click)="clickTypeAdd($event)" [disabled]="ws.selected==null" mat-button>
               <mat-icon>arrow_right</mat-icon>
             </button>
-            <div typeName>{{ types[ws.selected?.type] }}</div>
+            <div [innerHTML]="types[ws.selected?.type]" typeName></div>
           </div>
           <button (click)="clickAdd($event)" mat-button>
             <mat-icon>add</mat-icon>

@@ -8,38 +8,7 @@
     <h2 (click)="click(50.0)">
       <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.10.2025</span>
     </h2>
-    <ul [class]="classFor(50.0)">
-      <li class="added" i18n="500a1">
-        In <a href="/watch" target="_blank">NightWatch</a> gibt es eine neue Anzeige für Pumpeninformationen. Diese sind am Icon
-        <img alt="Pumpeninformationen" src="assets/img/pump.print.png"> erkennbar.
-        Dort wird angezeigt, wie lange die letzte Verbindung zur Pumpe zurück liegt,
-        wieviel Insulin noch im Reservoir ist und der Status der Pumpe.
-      </li>
-      <li class="added" i18n="500a2">
-        In den Einstellungen gibt es für die Benutzer jetzt ein zusätzliches Feld für
-        Bemerkungen zu diesem Benutzer. Diese kann auch als Information in der Benutzerliste
-        angezeigt werden.
-      </li>
-      <li class="changed" i18n="500c1">
-        Die Einstellung für die Anzeige der Kacheln wurde erweitert. Jetzt kann man
-        auch das Bild und den Text gleichzeitig auf den Kacheln anzeigen lassen. Das
-        erleichtert es okularherausgeforderten Menschen wie mir, die Formulare besser
-        zu erkennen.
-      </li>
-      <li class="changed" i18n="500c2">
-        Das Formular Tagesanalyse wurde überarbeitet. Man kann jetzt in den Formularparametern
-        festlegen, welche Analysen ausgegeben werden sollen. Die Grafiken werden dann so
-        skaliert, dass sie die gesamte Seite füllen.
-      </li>
-      <li class="fixed" i18n="500f1">
-        Das Nightscout Reporter Icon beim Laden der Seite wurde wieder aktiviert.
-      </li>
-      <li class="fixed" i18n="500f2">
-        Im Formular "Tagesstatistik" wird die Spaltenanzahl nun korrekt überprüft und
-        limitiert.
-      </li>
-    </ul>
-    <br/>
+    <app-v500></app-v500>
     <app-v446></app-v446>
     <app-v445></app-v445>
     <app-v444></app-v444>
