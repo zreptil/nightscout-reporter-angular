@@ -36,5 +36,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/nightscout-reporter-angular:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/nightscout-reporter-angular:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/nightscout-reporter_auto:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/nightscout-reporter_auto:${{ github.sha }}
