@@ -696,6 +696,10 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Patient Glykämischer Status (PGS)`;
   }
 
+  get msgGMIFull(): string {
+    return $localize`Glukose Management Indikator (GMI)`;
+  }
+
   get msgGRIFull(): string {
     return $localize`Glykämischer Risiko Index (GRI)`;
   }

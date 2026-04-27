@@ -780,8 +780,7 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infotitle'},
         {text: this.msgGVIFull, style: 'infotitle'},
         {text: GLOBALS.fmtNumber(data.gvi, 2), style: 'infodata'},
-        {text: this.gviQuality(data.gvi), style: 'infounit', colSpan: 2},
-        {text: '', style: 'infotitle'},
+        {text: this.gviQuality(data.gvi), style: 'infounit', colSpan: 3},
         {text: '', style: 'infounit'},
       ],
       [
@@ -815,7 +814,7 @@ export class PrintAnalysis extends BasePrint {
         },
       ]);
     }
-    this.addBodyArea(tableBody, this.msgPeriod, [
+    tableBody.push(...[
       [
         {text: '', style: 'infotitle'},
         {text: `${this.msgGlucoseValue}${glucWarnText}`, style: 'infotitle'},
@@ -831,13 +830,13 @@ export class PrintAnalysis extends BasePrint {
             {
               type: 'rect',
               x: this.cm(cvsLeft),
-              y: this.cm(0.2),
+              y: this.cm(0),
               w: this.cm(cvsWidth),
-              h: this.cm(0.9),
+              h: this.cm(1.6),
               color: glucWarnColor
             },
           ],
-          rowSpan: 3
+          rowSpan: 4
         },
       ],
       [
@@ -855,6 +854,14 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
       ],
+      [
+        {text: '', style: 'infotitle'},
+        {text: this.msgGMIFull, style: 'infotitle'},
+        {text: GLOBALS.fmtNumber(data.gmi, 2), style: ['infodata', 'hba1c']},
+        {text: '%', style: 'infounit', colSpan: 2},
+        {text: '', style: 'infounit'},
+        {text: '', style: 'infounit'},
+      ]
     ]);
     const treatmentsBody = <any>[
       [
@@ -938,7 +945,7 @@ export class PrintAnalysis extends BasePrint {
     const ret = [
       this.headerFooter(),
       {
-        margin: [this.cm(0), this.cm(this.yorg), this.cm(0), this.cm(0)],
+        margin: [this.cm(0), this.cm(this.yorg - 0.5), this.cm(0), this.cm(0)],
         columns: [
           {
             width: this.cm(this.width),
