@@ -7,6 +7,7 @@ import {StatusData} from './nightscout/status-data';
 import {Utils} from '@/classes/utils';
 import {ProfileStoreData} from '@/_model/nightscout/profile-store-data';
 import {ListData} from '@/_model/nightscout/list-data';
+import {A1CData} from '@/_model/a1c-data';
 
 export class ReportData {
   error: Error;
@@ -24,6 +25,7 @@ export class ReportData {
   deviceList: string[] = [];
   deviceFilter: string[] = [];
   deviceDataList: string[] = [];
+  a1cList: A1CData[] = [];
   mustReload = false;
 
   constructor(public begDate: Date, public endDate: Date) {

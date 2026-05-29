@@ -29,6 +29,7 @@ import {StatisticData} from '@/_model/nightscout/statistic-data';
 import {Settings} from '@/_model/settings';
 import {SettingsComponent} from '@/components/settings/settings.component';
 import {DataSourceService} from '@/_services/sync/data-source.service';
+import {A1CData} from '@/_model/a1c-data';
 
 @Injectable({
   providedIn: 'root'
@@ -240,6 +241,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
 
     const list = GLOBALS.findUrlDataFor(begDate, endDate);
     data.user.profileMaxIdx ??= 0;
+    data.a1cList = [];
     let maxCount = GLOBALS.profileMaxCounts[data.user.profileMaxIdx];
 //*
     for (const urlData of list) {
@@ -412,7 +414,23 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           Log.devError(ex, this.msgProfileError);
         }
       }
+      params = `find[created_at][$gte]=${begDate.getFullYear() - 15}-01-01T00:00:00.000Z&find[eventType]=Note&count=10000`;
+      // find notes in treatments and extract a1c values
+      reqParams = {onDone: urlData.requestDone, timeout: urlData.timeout};
+      url = urlData.fullUrl('treatments.json', params);
+      content = await this.ds.requestJson(url, reqParams);
+      if (content != null) {
+        for (const entry of content) {
+          const regex = /a1c.*?(\d+(?:[.,]\d+)?)\s*/i;
+          const match = entry.notes?.match(regex);
+          const value = match ? parseFloat(match[1].replace(',', '.')) : null;
+          if (value != null) {
+            data.a1cList.push(new A1CData(new Date(entry.created_at), value));
+          }
+        }
+      }
     }
+    data.a1cList.sort((a, b) => b.date.getTime() - a.date.getTime());
     this.ps.max = 5;
     this.ps.value = 1;
     this.ps.text = $localize`Sortiere Profile...`;

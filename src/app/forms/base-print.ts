@@ -671,7 +671,7 @@ export abstract class BasePrint extends FormConfig {
     return $localize`gesch. HbA1c`;
   }
 
-  get msgHbA1CLong(): string {
+  get msgHbA1CEstimated(): string {
     return $localize`Geschätzter HbA1c`;
   }
 
@@ -999,6 +999,10 @@ export abstract class BasePrint extends FormConfig {
     return $localize`Kalibrierung (scale ${scale} / intercept ${intercept} / slope ${slope})`;
   }
 
+  msgHbA1CLab(date: Date): string {
+    return $localize`Labor HbA1c (${Utils.fmtDate(date)})`;
+  }
+
   hba1cUnit(withSpacer = false): string {
     const ret = GLOBALS.ppShowHbA1Cmmol ? $localize`mmol/mol` : '%';
     if (withSpacer) {
@@ -1045,12 +1049,12 @@ export abstract class BasePrint extends FormConfig {
   async loadUserData(_: UserData) {
   }
 
-  hba1c(avgGluc: number): string {
-    return avgGluc == null ? '' : this.hba1cDisplay(avgGluc);
+  hba1c(avgGluc: number, doCalc = true): string {
+    return avgGluc == null ? '' : this.hba1cDisplay(avgGluc, doCalc);
   }
 
-  hba1cValue(avgGluc: number): number {
-    return avgGluc == null ? null : (avgGluc + 46.7) / 28.7;
+  hba1cValue(avgGluc: number, doCalc: boolean): number {
+    return avgGluc == null ? null : doCalc ? (avgGluc + 46.7) / 28.7 : avgGluc;
   }
 
   blendColor(from: string, to: string, factor: number): string {
@@ -1504,7 +1508,12 @@ export abstract class BasePrint extends FormConfig {
     }).replace('@nl@', '<br>');
   }
 
-  fmtTime(date: Date | number, params?: { def?: string, withUnit?: boolean, withMinutes?: boolean, withSeconds?: boolean }): string {
+  fmtTime(date: Date | number, params?: {
+    def?: string,
+    withUnit?: boolean,
+    withMinutes?: boolean,
+    withSeconds?: boolean
+  }): string {
     return GLOBALS.fmtTime(date, params);
   }
 
@@ -1769,7 +1778,11 @@ export abstract class BasePrint extends FormConfig {
             }
           ]
         },
-      GLOBALS.ppHideNightscoutInPDF ? null : this._getFooterImage('nightscout', {x: this.xframe, y: this.height - 1.7, width: 0.7}),
+      GLOBALS.ppHideNightscoutInPDF ? null : this._getFooterImage('nightscout', {
+        x: this.xframe,
+        y: this.height - 1.7,
+        width: 0.7
+      }),
       GLOBALS.ppHideNightscoutInPDF
         ? null
         : {
@@ -1781,7 +1794,10 @@ export abstract class BasePrint extends FormConfig {
       this.footerText == null
         ? null
         : {
-          relativePosition: {x: this.cm(GLOBALS.ppHideNightscoutInPDF ? this.xframe : 7.5), y: this.cm(this.height - 1.7)},
+          relativePosition: {
+            x: this.cm(GLOBALS.ppHideNightscoutInPDF ? this.xframe : 7.5),
+            y: this.cm(this.height - 1.7)
+          },
           stack: this.footerText,
           fontSize: this.fs(10)
         },
@@ -1793,7 +1809,11 @@ export abstract class BasePrint extends FormConfig {
             width: this.cm(this.width - 2 * this.xframe),
             stack: [
               {text: rightText, color: this.colInfo, fontSize: this.fs(10)},
-              !GLOBALS.ppShowUrlInPDF ? null : {text: GlobalsData.user.urlDataFor(params.date).url, color: this.colInfo, fontSize: this.fs(8)}
+              !GLOBALS.ppShowUrlInPDF ? null : {
+                text: GlobalsData.user.urlDataFor(params.date).url,
+                color: this.colInfo,
+                fontSize: this.fs(8)
+              }
             ],
             alignment: 'right'
           }
@@ -2031,7 +2051,10 @@ export abstract class BasePrint extends FormConfig {
       });
       if (i < 24) {
         horzStack.push({
-          relativePosition: {x: this.cm(this.xorg + i * ret.colWidth), y: this.cm(this.yorg + params.graphBottom + 0.05)},
+          relativePosition: {
+            x: this.cm(this.xorg + i * ret.colWidth),
+            y: this.cm(this.yorg + params.graphBottom + 0.05)
+          },
           text: this.fmtTime(i),
           fontSize: params.horzfs
         });
@@ -2064,7 +2087,10 @@ export abstract class BasePrint extends FormConfig {
         //        String text = '${glucFromData(GLOBALS.fmtNumber(i * glucScale, 0))}\n${getGlucInfo()['unit']}';
         const text = `${GLOBALS.glucFromData(GLOBALS.fmtNumber(i * ret.glucScale, 0))}`;
         vertStack.push({
-          relativePosition: {'x': this.cm(this.xorg - 1.5), y: this.cm(this.yorg + (ret.gridLines - i) * ret.lineHeight - 0.2)},
+          relativePosition: {
+            'x': this.cm(this.xorg - 1.5),
+            y: this.cm(this.yorg + (ret.gridLines - i) * ret.lineHeight - 0.2)
+          },
           columns: [
             {width: this.cm(1.2), text: text, fontSize: this.fs(8), alignment: 'right'}
           ]
@@ -2080,7 +2106,10 @@ export abstract class BasePrint extends FormConfig {
       } else {
         const text = `${GLOBALS.getGlucInfo().unit}`;
         vertStack.push({
-          relativePosition: {x: this.cm(this.xorg - 1.5), y: this.cm(this.yorg + (ret.gridLines - i) * ret.lineHeight - 0.2)},
+          relativePosition: {
+            x: this.cm(this.xorg - 1.5),
+            y: this.cm(this.yorg + (ret.gridLines - i) * ret.lineHeight - 0.2)
+          },
           columns: [
             {width: this.cm(1.2), text: text, fontSize: params.vertfs, alignment: 'right'}
           ]
@@ -2717,10 +2746,10 @@ export abstract class BasePrint extends FormConfig {
     return ret;
   }
 
-  private hba1cDisplay(avgGluc: number): string {
+  private hba1cDisplay(avgGluc: number, doCalc: boolean): string {
     if (GLOBALS.ppShowHbA1Cmmol) {
-      return GLOBALS.fmtNumber((this.hba1cValue(avgGluc) - 2.15) * 10.929, 2);
+      return GLOBALS.fmtNumber((this.hba1cValue(avgGluc, doCalc) - 2.15) * 10.929, 2);
     }
-    return GLOBALS.fmtNumber(this.hba1cValue(avgGluc), 1);
+    return GLOBALS.fmtNumber(this.hba1cValue(avgGluc, doCalc), 1);
   }
 }

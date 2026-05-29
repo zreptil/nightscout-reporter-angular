@@ -468,7 +468,7 @@ schwächerer Schrift angezeigt wird.`;
 
   getRowAverage(value: number, countForAverage: number, style: string, alignment: string): any {
     const list = [`${GLOBALS.fmtNumber(value, 1)}`];
-    if (countForAverage > 1.0) {
+    if (countForAverage > 1.0 && style === 'total') {
       list.push(`${GLOBALS.fmtNumber(value / countForAverage, 1)}`);
     }
     return this.getContent(list, style, alignment);

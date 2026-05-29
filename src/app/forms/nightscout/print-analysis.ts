@@ -780,8 +780,7 @@ export class PrintAnalysis extends BasePrint {
         {text: '', style: 'infotitle'},
         {text: this.msgGVIFull, style: 'infotitle'},
         {text: GLOBALS.fmtNumber(data.gvi, 2), style: 'infodata'},
-        {text: this.gviQuality(data.gvi), style: 'infounit', colSpan: 2},
-        {text: '', style: 'infotitle'},
+        {text: this.gviQuality(data.gvi), style: 'infounit', colSpan: 3},
         {text: '', style: 'infounit'},
       ],
       [
@@ -815,7 +814,7 @@ export class PrintAnalysis extends BasePrint {
         },
       ]);
     }
-    this.addBodyArea(tableBody, this.msgPeriod, [
+    tableBody.push(...[
       [
         {text: '', style: 'infotitle'},
         {text: `${this.msgGlucoseValue}${glucWarnText}`, style: 'infotitle'},
@@ -831,18 +830,18 @@ export class PrintAnalysis extends BasePrint {
             {
               type: 'rect',
               x: this.cm(cvsLeft),
-              y: this.cm(0.2),
+              y: this.cm(0),
               w: this.cm(cvsWidth),
-              h: this.cm(0.9),
+              h: this.cm(1.0),
               color: glucWarnColor
             },
           ],
-          rowSpan: 3
+          rowSpan: 4
         },
       ],
       [
         {text: '', style: 'infotitle'},
-        {text: this.msgHbA1CLong, style: 'infotitle'},
+        {text: this.msgHbA1CEstimated, style: 'infotitle'},
         {
           text: this.hba1c(avgGluc),
           style: ['infodata', 'hba1c']
@@ -854,8 +853,26 @@ export class PrintAnalysis extends BasePrint {
         },
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
-      ],
+      ]
     ]);
+    const hba1c = this.repData.a1cList.find(a1c => a1c.date.getTime() <= this.repData.endDate.getTime() + 24 * 3600000);
+    if (hba1c != null) {
+      tableBody.push([
+        {text: '', style: 'infotitle'},
+        {text: this.msgHbA1CLab(hba1c.date), style: 'infotitle'},
+        {
+          text: this.hba1c(hba1c.value, false),
+          style: ['infodata']
+        },
+        {
+          text: this.hba1cUnit(),
+          style: ['infounit'],
+          colSpan: 2
+        },
+        {text: '', style: 'infotitle'},
+        {text: '', style: 'infounit'},
+      ]);
+    }
     const treatmentsBody = <any>[
       [
         {text: '', style: 'infotitle'},
@@ -938,7 +955,7 @@ export class PrintAnalysis extends BasePrint {
     const ret = [
       this.headerFooter(),
       {
-        margin: [this.cm(0), this.cm(this.yorg), this.cm(0), this.cm(0)],
+        margin: [this.cm(0), this.cm(this.yorg - 0.5), this.cm(0), this.cm(0)],
         columns: [
           {
             width: this.cm(this.width),

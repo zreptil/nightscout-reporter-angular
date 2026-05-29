@@ -5,10 +5,9 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <div mat-dialog-content>
-    <h2 (click)="click(50.0)">
-      <span i18n="version">Version</span><span i18n="v500">5.0.0 - xx.10.2025</span>
-    </h2>
+    <br/>
     <app-v500></app-v500>
+    <app-v447></app-v447>
     <app-v446></app-v446>
     <app-v445></app-v445>
     <app-v444></app-v444>
@@ -940,23 +939,30 @@
     <ul [class]="classFor(20.2)">
       <li class="added" i18n="v202a1">
         Es gibt jetzt kleine Hilfebuttons bei den Formularen. In der Listenansicht ersetzen sie die Icons zum Ziehen der
-        Formulare, in der Kachelansicht werden sie links oben auf den Kacheln dargestellt. Die jeweilige Ansicht kann man im
+        Formulare, in der Kachelansicht werden sie links oben auf den Kacheln dargestellt. Die jeweilige Ansicht kann
+        man im
         Hamburgermenü auswählen. Beim Anklicken eines solchen Buttons wird ein Text angezeigt, der beschreibt, was das
         entsprechende Formular darstellt.
       </li>
       <li class="added" i18n="v202a2">
-        Bei den Ausgabeparametern kann jetzt festgelegt werden, in welcher Einheit die Glukosemessungen ausgegeben werden sollen.
-        Diese wird zu Beginn aus den in Nightscout gespeicherten Daten ermittelt und entsprechend vorbelegt. Es ist aber auch
-        möglich, diese Einheit zu ändern oder beide Einheiten ausgeben zu lassen. Wenn beide ausgegeben werden, dann wird jedes
-        Formular auf dem Glukoseangaben vorhanden sind zunächst mit mg/dL und danach nochmal mit mmol/l ausgegeben. Diese Einheit
+        Bei den Ausgabeparametern kann jetzt festgelegt werden, in welcher Einheit die Glukosemessungen ausgegeben
+        werden sollen.
+        Diese wird zu Beginn aus den in Nightscout gespeicherten Daten ermittelt und entsprechend vorbelegt. Es ist aber
+        auch
+        möglich, diese Einheit zu ändern oder beide Einheiten ausgeben zu lassen. Wenn beide ausgegeben werden, dann
+        wird jedes
+        Formular auf dem Glukoseangaben vorhanden sind zunächst mit mg/dL und danach nochmal mit mmol/l ausgegeben.
+        Diese Einheit
         wird auch in den Shortcuts gespeichert.
       </li>
       <li class="changed" i18n="v202c1">
         Die Profilbasalrate im Formular Tagesprofil wird jetzt ebenfalls mit Balken dargestellt.
       </li>
       <li class="changed" i18n="v202c2">
-        iOS Loop missbraucht die Profiltabelle dazu, seine eigenen Settings zu speichern, was bei Benutzern dieser Software
-        dazu führte, dass die Tabelle Profil nicht korrekt geladen werden kann. Deshalb gibt es jetzt in den Einstellungen
+        iOS Loop missbraucht die Profiltabelle dazu, seine eigenen Settings zu speichern, was bei Benutzern dieser
+        Software
+        dazu führte, dass die Tabelle Profil nicht korrekt geladen werden kann. Deshalb gibt es jetzt in den
+        Einstellungen
         die Möglichkeit, die Anzahl der Datensätze, die aus der Profiltabelle geladen werden einzuschränken.
       </li>
     </ul>
@@ -964,27 +970,34 @@
       <span i18n="version">Version</span><span i18n="v201">2.0.1 - 8.9.2020</span></h2>
     <ul [class]="classFor(20.1)">
       <li class="added" i18n="v201a1">
-        Im Protokoll werden nun auch temporäre Overrides ausgegeben, die von iOSLoop in die Behandlungsdaten eingetragen werden.
+        Im Protokoll werden nun auch temporäre Overrides ausgegeben, die von iOSLoop in die Behandlungsdaten eingetragen
+        werden.
       </li>
       <li class="added" i18n="v201a2">
-        Im Tagesprofil kann nun angegeben werden, ob nur der Wert, die prozentuale Anpassung des Profils oder beides angezeigt
-        werden soll. Ausserdem kann eine Linie eingefügt werden, die den im Basalprofil zum jeweiligen Zeitpunkt eingestellten
+        Im Tagesprofil kann nun angegeben werden, ob nur der Wert, die prozentuale Anpassung des Profils oder beides
+        angezeigt
+        werden soll. Ausserdem kann eine Linie eingefügt werden, die den im Basalprofil zum jeweiligen Zeitpunkt
+        eingestellten
         Wert darstellt.
       </li>
       <li class="changed" i18n="v201c1">
-        In der Tagesgrafik werden Profilwechsel nicht mehr angezeigt, wenn sich das Profil beim Wechsel nicht geändert hat. iOSLoop
-        fügt in die Nightscoutdatensätze sehr häufig neue Profile ein, die keine Änderung beinhalten, weil dort zusätzlich andere
+        In der Tagesgrafik werden Profilwechsel nicht mehr angezeigt, wenn sich das Profil beim Wechsel nicht geändert
+        hat. iOSLoop
+        fügt in die Nightscoutdatensätze sehr häufig neue Profile ein, die keine Änderung beinhalten, weil dort
+        zusätzlich andere
         Konfigurationseinstellungen gespeichert werden.
       </li>
       <li class="fixed" i18n="v201f1">
         Ein Fehler beim Laden der ausgewählten Formulare wurde korrigiert.
       </li>
       <li class="fixed" i18n="v201f2">
-        Wenn die Synchronisierung mit Google Drive aufgehoben wird, wird die Berechtigung nun korrekt zurückgesetzt. Wenn man
+        Wenn die Synchronisierung mit Google Drive aufgehoben wird, wird die Berechtigung nun korrekt zurückgesetzt.
+        Wenn man
         sich danach wieder synchronisieren will, werden nochmal die Berechtigungen abgefragt.
       </li>
       <li class="fixed" i18n="v201f3">
-        Ein Fehler wurde behoben, der dafür sorgte, dass temporäre Ziele in der Tagesgrafik mit zeitlicher Verschiebung angezeigt wurden.
+        Ein Fehler wurde behoben, der dafür sorgte, dass temporäre Ziele in der Tagesgrafik mit zeitlicher Verschiebung
+        angezeigt wurden.
       </li>
     </ul>
     <h2 (click)="click(20.0)">
@@ -994,38 +1007,53 @@
         Auf der Seite Protokoll werden jetzt auch Insulinabgaben angezeigt, die z.B. über xdrip eingegeben wurden.
       </li>
       <li class="added" i18n="v200a2">
-        Es gibt jetzt Shortcuts, mit denen man die aktuelle Auswahl der Formulare, deren Parameter und den ausgewählten Zeitraum
-        speichern kann. Beim Aktivieren eines Shortcuts wird das alles wieder so eingestellt, wie es war, als der Shortcut
+        Es gibt jetzt Shortcuts, mit denen man die aktuelle Auswahl der Formulare, deren Parameter und den ausgewählten
+        Zeitraum
+        speichern kann. Beim Aktivieren eines Shortcuts wird das alles wieder so eingestellt, wie es war, als der
+        Shortcut
         gespeichert wurde.
       </li>
       <li class="added" i18n="v200a3">
-        Bei Herokuapp und anderen Anbietern kostenloser Datenbankinstanzen ist der Speicherplatz der Instanz beschränkt, weshalb
-        sie irgendwann voll ist. Dann kann man zwar eine neue Instanz anlegen, Nightscout Reporter benötigt aber für eine lückenlose
-        Darstellung aller Tage Zugriff auf alle Instanzen, für die man eine Auswertung erhalten will. Deshalb können nun mehrere
-        URLs für die Nightscout Instanzen eingegeben werden. Zusätzlich muss noch eingegeben werden, welches der erste und der
-        letzte Tag mit Daten ist. Mit diesen Informationen ist es Nightscout Reporter dann möglich die benötigten Daten lückenlos
+        Bei Herokuapp und anderen Anbietern kostenloser Datenbankinstanzen ist der Speicherplatz der Instanz beschränkt,
+        weshalb
+        sie irgendwann voll ist. Dann kann man zwar eine neue Instanz anlegen, Nightscout Reporter benötigt aber für
+        eine lückenlose
+        Darstellung aller Tage Zugriff auf alle Instanzen, für die man eine Auswertung erhalten will. Deshalb können nun
+        mehrere
+        URLs für die Nightscout Instanzen eingegeben werden. Zusätzlich muss noch eingegeben werden, welches der erste
+        und der
+        letzte Tag mit Daten ist. Mit diesen Informationen ist es Nightscout Reporter dann möglich die benötigten Daten
+        lückenlos
         auch über mehrere Instanzen hinweg auszuwerten.
       </li>
       <li class="added" i18n="v200a4">
-        Wenn im CGP ein Wert den Maximalwert der Skala überschreitet, wird die entsprechende Ecke mit einem gelben Kreis markiert.
+        Wenn im CGP ein Wert den Maximalwert der Skala überschreitet, wird die entsprechende Ecke mit einem gelben Kreis
+        markiert.
       </li>
       <li class="added" i18n="v200a5">
-        Auf dem Einstellungen-Dialog gibt es neben den URL-Eingabefeldern jeweils einen Button, um die URL in einem neuen
+        Auf dem Einstellungen-Dialog gibt es neben den URL-Eingabefeldern jeweils einen Button, um die URL in einem
+        neuen
         Browser-Fenster zu öffnen.
       </li>
       <li class="added" i18n="v200a6">
-        Die Eingabe des Zugriffsschlüssels auf dem Einstellungen-Dialog kann jetzt mit einem Button neben dem Eingabefeld lesbar
+        Die Eingabe des Zugriffsschlüssels auf dem Einstellungen-Dialog kann jetzt mit einem Button neben dem
+        Eingabefeld lesbar
         gemacht werden.
       </li>
       <li class="added" i18n="v200a7">
-        Im Einstellungen Dialog gibt es jetzt die Möglichkeit, die Einstellungen zu exportieren und zu importieren. Beim Export wird
-        eine Datei mit den allgemeinen Einstellungen geschrieben, beim Import wird so eine Datei wieder eingelesen. Damit kann man
+        Im Einstellungen Dialog gibt es jetzt die Möglichkeit, die Einstellungen zu exportieren und zu importieren. Beim
+        Export wird
+        eine Datei mit den allgemeinen Einstellungen geschrieben, beim Import wird so eine Datei wieder eingelesen.
+        Damit kann man
         auch ohne Google Drive Zugriff die Einstellungen über verschiedene Browser hinweg manuell synchronisieren.
       </li>
       <li class="added" i18n="v200a8">
-        Im Protokoll gibt es jetzt die Möglichkeit, sich doppelte Datensätze markieren zu lassen. Sie werden von Nightscout Reporter
-        zwar rausgefiltert, aber er kann anzeigen, wie oft ein bestimmter Datensatz in den Daten gefunden wurde. Man kann dort auch
-        angeben, dass er nur mehrfach vorhandene Datensätze ausgeben soll. So kann man mögliche Diskrepanzen zwischen Nightscout
+        Im Protokoll gibt es jetzt die Möglichkeit, sich doppelte Datensätze markieren zu lassen. Sie werden von
+        Nightscout Reporter
+        zwar rausgefiltert, aber er kann anzeigen, wie oft ein bestimmter Datensatz in den Daten gefunden wurde. Man
+        kann dort auch
+        angeben, dass er nur mehrfach vorhandene Datensätze ausgeben soll. So kann man mögliche Diskrepanzen zwischen
+        Nightscout
         Reporter und anderen Reporting Tools herausfinden.
       </li>
       <li class="fixed" i18n="v200f1">
@@ -1052,9 +1080,12 @@
       <span i18n="version">Version</span><span i18n="v148">1.4.8 - 12.6.2020</span></h2>
     <ul [class]="classFor(14.8)">
       <li class="added" i18n="v148a1">
-        Im Dialog der Ausgabe Parameter wurde rechts oben der Schieberegler "zu Vergleichszwecken" hinzugefügt. Wenn dieser
-        aktiviert ist, dann wird überall der Standard Zielbereich verwendet. Intern wird das auch noch für andere Anpassungen
-        verwendet. Diese Option ist dafür gedacht, dass man seine Ausdrucke mit anderen Diabetikern vergleichen kann. Das ist
+        Im Dialog der Ausgabe Parameter wurde rechts oben der Schieberegler "zu Vergleichszwecken" hinzugefügt. Wenn
+        dieser
+        aktiviert ist, dann wird überall der Standard Zielbereich verwendet. Intern wird das auch noch für andere
+        Anpassungen
+        verwendet. Diese Option ist dafür gedacht, dass man seine Ausdrucke mit anderen Diabetikern vergleichen kann.
+        Das ist
         zum Beispiel zur Vorlage bei Ärzten und Diabetesberatern sinnvoll.
       </li>
     </ul>
