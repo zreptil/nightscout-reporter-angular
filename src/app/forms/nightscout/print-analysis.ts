@@ -832,7 +832,7 @@ export class PrintAnalysis extends BasePrint {
               x: this.cm(cvsLeft),
               y: this.cm(0),
               w: this.cm(cvsWidth),
-              h: this.cm(1.6),
+              h: this.cm(1.0),
               color: glucWarnColor
             },
           ],
@@ -841,7 +841,7 @@ export class PrintAnalysis extends BasePrint {
       ],
       [
         {text: '', style: 'infotitle'},
-        {text: this.msgHbA1CLong, style: 'infotitle'},
+        {text: this.msgHbA1CEstimated, style: 'infotitle'},
         {
           text: this.hba1c(avgGluc),
           style: ['infodata', 'hba1c']
@@ -853,16 +853,26 @@ export class PrintAnalysis extends BasePrint {
         },
         {text: '', style: 'infotitle'},
         {text: '', style: 'infounit'},
-      ],
-      [
-        {text: '', style: 'infotitle'},
-        {text: this.msgGMIFull, style: 'infotitle'},
-        {text: GLOBALS.fmtNumber(data.gmi, 2), style: ['infodata', 'hba1c']},
-        {text: '%', style: 'infounit', colSpan: 2},
-        {text: '', style: 'infounit'},
-        {text: '', style: 'infounit'},
       ]
     ]);
+    const hba1c = this.repData.a1cList.find(a1c => a1c.date.getTime() <= this.repData.endDate.getTime() + 24 * 3600000);
+    if (hba1c != null) {
+      tableBody.push([
+        {text: '', style: 'infotitle'},
+        {text: this.msgHbA1CLab(hba1c.date), style: 'infotitle'},
+        {
+          text: this.hba1c(hba1c.value, false),
+          style: ['infodata']
+        },
+        {
+          text: this.hba1cUnit(),
+          style: ['infounit'],
+          colSpan: 2
+        },
+        {text: '', style: 'infotitle'},
+        {text: '', style: 'infounit'},
+      ]);
+    }
     const treatmentsBody = <any>[
       [
         {text: '', style: 'infotitle'},
