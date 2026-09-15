@@ -425,6 +425,7 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
             data.a1cList.push(new A1CData(new Date(entry.created_at), value));
           }
         }
+        Log.displayLink(`hba1c (${data.a1cList.length})`, url, {count: data.a1cList.length, type: 'debug'});
       }
     }
     data.a1cList.sort((a, b) => b.date.getTime() - a.date.getTime());
