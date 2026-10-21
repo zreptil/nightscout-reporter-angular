@@ -1227,29 +1227,53 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     const params = new ProfileParams();
     params.treatments = day.treatments;
     const profile = src.profile(date, params).profile;
-    const targetValues: any[] = [];
+    let targetValues: any[] = [];
     let lastTarget = -1.0;
+    let lastEntry = null;
+    let lastX = -1;
     const yHigh = this.glucY(Math.min(this.glucMax, this.targets(this.repData).high));
     const yLow = this.glucY(this.targets(this.repData).low);
+    const targetSections: any[] = [];
     for (let i = 0; i < profile.store.listTargetLow.length; i++) {
       if (i < profile.store.listTargetHigh.length) {
         let low = profile.store.listTargetLow[i].value;
         let high = profile.store.listTargetHigh[i].value;
-        if (!GLOBALS.glucMGDLFromStatus) {
-          low *= 18.02;
-          high *= 18.02;
+        if (low != null && high != null) {
+          console.log(profile.store.listTargetLow[i]);
+          if (!GLOBALS.glucMGDLFromStatus) {
+            low *= 18.02;
+            high *= 18.02;
+          }
+          const x = this.glucX(profile.store.listTargetLow[i].time(day.date));
+          if (lastEntry != null) {
+            const endTime = Utils.addTimeSeconds(lastEntry.time(day.date), lastEntry.duration);
+            const xLast = this.glucX(endTime);
+            if (xLast < x) {
+              targetValues.push({x: this.cm(xLast), y: this.cm(lastTarget)});
+              targetSections.push(targetValues);
+              lastTarget = -1;
+              targetValues = [];
+            }
+          }
+          const y = this.glucY((low + high) / 2);
+          if (lastTarget >= 0) {
+            targetValues.push({x: this.cm(x), y: this.cm(lastTarget)});
+          }
+          targetValues.push({x: this.cm(x), y: this.cm(y)});
+          lastTarget = y;
+          lastX = x;
+          lastEntry = profile.store.listTargetLow[i];
         }
-        const x = this.glucX(profile.store.listTargetLow[i].time(day.date));
-        const y = this.glucY((low + high) / 2);
-        if (lastTarget >= 0) {
-          targetValues.push({x: this.cm(x), y: this.cm(lastTarget)});
-        }
-        targetValues.push({x: this.cm(x), y: this.cm(y)});
-        lastTarget = y;
       }
     }
-    targetValues.push({x: this.cm(this.glucX(new Date(0, 1, 1, 23, 59, 59, 999))), y: this.cm(lastTarget)});
-
+    let endTime = new Date(0, 1, 1, 23, 59, 59, 999);
+    if (lastEntry != null) {
+      endTime = Utils.addTimeSeconds(lastEntry.time(day.date), lastEntry.duration);
+    }
+    console.log(endTime);
+    targetValues.push({x: this.cm(this.glucX(endTime)), y: this.cm(lastTarget)});
+    targetSections.push(targetValues);
+    console.log(targetSections);
     const limitLines: any = {
       relativePosition: {x: this.cm(xo), y: this.cm(yo)},
       canvas: [
@@ -1284,13 +1308,15 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
       ]
     };
     if (this.showTargetValue) {
-      limitLines.canvas.push({
-        type: 'polyline',
-        lineWidth: this.cm(this.lw * 2),
-        closePath: false,
-        lineColor: this.colTargetValue,
-        points: targetValues
-      });
+      for (const target of targetSections) {
+        limitLines.canvas.push({
+          type: 'polyline',
+          lineWidth: this.cm(this.lw * 2),
+          closePath: false,
+          lineColor: this.colTargetValue,
+          points: target
+        });
+      }
     }
     let y = yo + grid.lineHeight * grid.gridLines;
     if (this.showBasalProfile || this.showBasalDay) {
