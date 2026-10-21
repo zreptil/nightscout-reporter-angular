@@ -1239,7 +1239,6 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
         let low = profile.store.listTargetLow[i].value;
         let high = profile.store.listTargetHigh[i].value;
         if (low != null && high != null) {
-          console.log(profile.store.listTargetLow[i]);
           if (!GLOBALS.glucMGDLFromStatus) {
             low *= 18.02;
             high *= 18.02;
@@ -1270,10 +1269,8 @@ aber für einen Überblick über den Verlauf ist das ganz nützlich.`;
     if (lastEntry != null) {
       endTime = Utils.addTimeSeconds(lastEntry.time(day.date), lastEntry.duration);
     }
-    console.log(endTime);
     targetValues.push({x: this.cm(this.glucX(endTime)), y: this.cm(lastTarget)});
     targetSections.push(targetValues);
-    console.log(targetSections);
     const limitLines: any = {
       relativePosition: {x: this.cm(xo), y: this.cm(yo)},
       canvas: [
