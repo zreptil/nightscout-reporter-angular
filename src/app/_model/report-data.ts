@@ -105,9 +105,11 @@ export class ReportData {
 
     let idx = -1;
     // find last profile that starts before the given time
-    for (let i = ret.lastIdx; i < this.profiles.length; i++) {
+    for (let i = this.profiles.length - 1; i >= ret.lastIdx && idx < 0; i--) {
       if (Utils.differenceInSeconds(this.profiles[i].startDate, time) <= 0) {
-        idx = i;
+        if (this.profiles[i].store[this.profiles[i].defaultProfile]?.listBasal?.length > 0) {
+          idx = i;
+        }
       }
     }
 
@@ -138,13 +140,14 @@ export class ReportData {
         }
       }
     } else {
-      ret.profile.targetHigh = 180.0;
-      ret.profile.targetLow = 70.0;
+      ret.profile.targetHigh = this.status?.settings?.bgTargetTop ?? 180.0;
+      ret.profile.targetLow = this.status?.settings?.bgTargetBottom ?? 70.0;
     }
 
     if (profile != null) {
       const date = new Date(time?.getFullYear(), time?.getMonth(), time?.getDate());
       ret.profile = new ProfileGlucData(profile.current);
+      ret.profile.store.listBasal = ret.profile.store.listBasal.sort((a, b) => a.timeAsSeconds - b.timeAsSeconds);
       ret.profile.basal = ret.profile.find(date, time, ret.profile.store.listBasal);
       ret.profile.carbRatio = ret.profile.find(date, time, ret.profile.store.listCarbratio);
       ret.profile.sens = ret.profile.find(date, time, ret.profile.store.listSens);

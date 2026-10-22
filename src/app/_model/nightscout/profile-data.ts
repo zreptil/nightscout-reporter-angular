@@ -124,10 +124,10 @@ export class ProfileData extends JsonData {
     // list.add(e);
     // list.add(entry);
 
-    let idx = list.findIndex((e) => e.timeForCalc >= time);
+    let idx = list.findIndex((e) => +e.timeForCalc >= +time);
     // there is no profile entry after the mixin
     if (idx < 0) {
-      idx = list.findIndex((e) => e.timeForCalc + e.duration >= time);
+      idx = list.findIndex((e) => +e.timeForCalc + +e.duration >= +time);
       if (idx < 0) {
         Utils.last(list).duration = time - Utils.last(list).timeForCalc;
         if (Utils.last(list).duration < 0) {

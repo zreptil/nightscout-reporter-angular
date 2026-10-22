@@ -282,7 +282,6 @@ Du kannst versuchen, in den Einstellungen die Anzahl an auszulesenden Profildate
           }
           data.profiles.sort((a, b) => Utils.compareDate(a.startDate, b.startDate));
         }
-
         const check = Utils.addDateDays(new Date(begDate.getFullYear(), begDate.getMonth(), begDate.getDate(), 23, 59, 59, 999), -1);
         if (src.length === maxCount && Utils.isAfter(Utils.last(data.profiles).startDate, check)) {
           Log.warn(this.msgTooMuchProfiles(maxCount, uploaders.length, uploaders.join(', ')));
